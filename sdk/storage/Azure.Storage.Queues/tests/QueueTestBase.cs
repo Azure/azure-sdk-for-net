@@ -25,6 +25,8 @@ namespace Azure.Storage.Queues.Tests
         public string GetNewQueueName() => QueuesClientBuilder.GetNewQueueName();
         public string GetNewMessageId() => QueuesClientBuilder.GetNewMessageId();
 
+        public Uri GetDefaultPrimaryEndpoint() => new Uri(QueuesClientBuilder.Tenants.TestConfigDefault.QueueServiceEndpoint);
+
         protected string SecondaryStorageTenantPrimaryHost() =>
             new Uri(Tenants.TestConfigSecondary.QueueServiceEndpoint).Host;
 

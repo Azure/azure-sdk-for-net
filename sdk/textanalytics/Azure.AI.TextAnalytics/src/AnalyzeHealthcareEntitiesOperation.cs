@@ -29,6 +29,7 @@ namespace Azure.AI.TextAnalytics
         private DateTimeOffset? _expiresOn;
         private DateTimeOffset _lastModified;
         private DateTimeOffset _createdOn;
+        private string _displayName;
         private Page<AnalyzeHealthcareEntitiesResultCollection> _firstPage;
 
         /// <summary>
@@ -36,6 +37,11 @@ namespace Azure.AI.TextAnalytics
         /// of the long-running operation.
         /// </summary>
         public override string Id { get; }
+
+        /// <summary>
+        /// Display Name of the operation.
+        /// </summary>
+        public virtual string DisplayName => _displayName;
 
         /// <summary>
         /// Time when the operation was created on.
@@ -81,6 +87,8 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
+        /// <exception cref="ArgumentException"><paramref name="operationId"/> is an empty string or does not represent a valid continuation token from the <see cref="Id"/> property returned on the original operation.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="operationId"/> or <paramref name="client"/> is null.</exception>
         public AnalyzeHealthcareEntitiesOperation(string operationId, TextAnalyticsClient client)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -258,6 +266,7 @@ namespace Azure.AI.TextAnalytics
                 ? await _serviceClient.HealthStatusAsync(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken).ConfigureAwait(false)
                 : _serviceClient.HealthStatus(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken);
 
+            _displayName = response.Value.DisplayName;
             _createdOn = response.Value.CreatedOn;
             _expiresOn = response.Value.ExpiresOn;
             _lastModified = response.Value.LastModifiedOn;
@@ -272,21 +281,18 @@ namespace Azure.AI.TextAnalytics
 
                 return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
             }
-            else if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
-            {
-                RequestFailedException requestFailedException = await ClientCommon
-                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
-                    .ConfigureAwait(false);
 
-                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse, requestFailedException);
-            }
-            else if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
+            if (response.Value.Status == TextAnalyticsOperationStatus.Running || response.Value.Status == TextAnalyticsOperationStatus.NotStarted || response.Value.Status == TextAnalyticsOperationStatus.Cancelling)
             {
-                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse,
-                    new RequestFailedException("The operation was canceled so no value is available."));
+                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Pending(rawResponse);
             }
 
-            return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Pending(rawResponse);
+            if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
+            {
+                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse, new RequestFailedException("The operation was canceled so no value is available."));
+            }
+
+            return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse, new RequestFailedException(rawResponse));
         }
     }
 }

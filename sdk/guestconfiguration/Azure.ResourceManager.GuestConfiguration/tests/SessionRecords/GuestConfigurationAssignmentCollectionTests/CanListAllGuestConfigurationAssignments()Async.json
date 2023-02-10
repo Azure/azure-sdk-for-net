@@ -1,0 +1,1084 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7f03163e3b75754eb31bb2127938bf5e-6022929156f22a45-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "cb2bdb8297d1ae7079d1410ebd030362",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "456",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Sep 2022 22:06:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1a5b808b-4020-4b1b-abcd-4241d367a4f2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "1a5b808b-4020-4b1b-abcd-4241d367a4f2",
+        "x-ms-routing-request-id": "WESTUS2:20220906T220658Z:1a5b808b-4020-4b1b-abcd-4241d367a4f2"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071",
+        "authorizationSource": "Bypassed",
+        "managedByTenants": [
+          {
+            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+          }
+        ],
+        "subscriptionId": "f66367e1-cf7d-407b-ba39-53230cc79071",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "MGMT GCRP Package Test 001",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourcegroups/GuestConfigurationSDKTestRecord?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6efcea24df1d1142a4144bc8648f2297-efb9d09cc8310045-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "effd506dfb7139c7ba908dc20ccb46c6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "276",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Sep 2022 22:06:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b9f5c42d-5713-4829-9ebb-f150c63cc1be",
+        "x-ms-ratelimit-remaining-subscription-reads": "11981",
+        "x-ms-request-id": "b9f5c42d-5713-4829-9ebb-f150c63cc1be",
+        "x-ms-routing-request-id": "WESTUS2:20220906T220658Z:b9f5c42d-5713-4829-9ebb-f150c63cc1be"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord",
+        "name": "GuestConfigurationSDKTestRecord",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "centraluseuap",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments?api-version=2022-01-25",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-28dc26a7265b0b4c94ccc91cef6659c2-278102b64ee2ae4c-00",
+        "User-Agent": "azsdk-net-ResourceManager.GuestConfiguration/1.0.0-alpha.20220906.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "80785491fc98fe9950fb06148f9280a4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "41089",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Sep 2022 22:06:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "96e5a703-45b8-4598-91f1-7d8164279293",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "96e5a703-45b8-4598-91f1-7d8164279293",
+        "x-ms-routing-request-id": "WESTUS2:20220906T220658Z:96e5a703-45b8-4598-91f1-7d8164279293",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "location": "westcentralus",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol",
+            "name": "AuditSecureProtocol",
+            "properties": {
+              "complianceStatus": "Pending",
+              "assignmentHash": "",
+              "parameterHash": "PQ==",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/50ec0893-4b59-4f72-8b1f-f0228f8b867e",
+              "lastComplianceStatusChecked": "2022-09-06T22:03:39Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "AuditSecureProtocol",
+                "version": "1.0.0.3",
+                "contentUri": null,
+                "contentHash": null,
+                "contentType": null,
+                "assignmentType": "ApplyAndAutoCorrect",
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": null,
+                    "value": null
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/EnforcePasswordHistory",
+            "name": "EnforcePasswordHistory",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "85EAF241398562D7642302B6CA7A519F32E1BDF522A91A0D51F7EA9D60A38A3D.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/EnforcePasswordHistory/reports/fc030075-d67b-4522-b6d1-29253125f6be",
+              "lastComplianceStatusChecked": "2022-09-06T21:51:53Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "EnforcePasswordHistory",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/EnforcePasswordHistory/EnforcePasswordHistory_1.1.0.0.zip",
+                "contentHash": "85EAF241398562D7642302B6CA7A519F32E1BDF522A91A0D51F7EA9D60A38A3D",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MaximumPasswordAge",
+            "name": "MaximumPasswordAge",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "91BB3DB1428495C5D6EBA458D76CB5229BA7DB512A2D668436F9A1959D471DC3.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MaximumPasswordAge/reports/408a69de-bb6b-42c5-a598-3b5826ae4285",
+              "lastComplianceStatusChecked": "2022-09-06T21:51:24Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "MaximumPasswordAge",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/MaximumPasswordAge/MaximumPasswordAge_1.1.0.0.zip",
+                "contentHash": "91BB3DB1428495C5D6EBA458D76CB5229BA7DB512A2D668436F9A1959D471DC3",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MinimumPasswordLength",
+            "name": "MinimumPasswordLength",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "8DD4119898B8F8732418E7653FC18C8DD8E1A1EAFAA265A83807701298A6495B.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MinimumPasswordLength/reports/5ff62aae-cb2c-438a-944a-d568381b5921",
+              "lastComplianceStatusChecked": "2022-09-06T21:52:23Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "MinimumPasswordLength",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/MinimumPasswordLength/MinimumPasswordLength_1.1.0.0.zip",
+                "contentHash": "8DD4119898B8F8732418E7653FC18C8DD8E1A1EAFAA265A83807701298A6495B",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/PasswordMustMeetComplexityRequirements",
+            "name": "PasswordMustMeetComplexityRequirements",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "384CD91B0CE343DA488411FD7410E20730460DB2DE3CFC3C68406D83DB0A8BB8.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/PasswordMustMeetComplexityRequirements/reports/004042e9-a38b-4095-ad24-3af765c4e984",
+              "lastComplianceStatusChecked": "2022-09-06T21:52:51Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "PasswordMustMeetComplexityRequirements",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/PasswordMustMeetComplexityRequirements/PasswordMustMeetComplexityRequirements_1.2.0.0.zip",
+                "contentHash": "384CD91B0CE343DA488411FD7410E20730460DB2DE3CFC3C68406D83DB0A8BB8",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/StorePasswordsUsingReversibleEncryption",
+            "name": "StorePasswordsUsingReversibleEncryption",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "A8F8DDAB043F8104431AAC96274B94673AD94A7E661DC24EDCDA223D049CC79A.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/StorePasswordsUsingReversibleEncryption/reports/5b9291db-27cc-4719-aaa2-53b3cd5fa12a",
+              "lastComplianceStatusChecked": "2022-09-06T21:53:20Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "StorePasswordsUsingReversibleEncryption",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/StorePasswordsUsingReversibleEncryption/StorePasswordsUsingReversibleEncryption_1.2.0.0.zip",
+                "contentHash": "A8F8DDAB043F8104431AAC96274B94673AD94A7E661DC24EDCDA223D049CC79A",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MinimumPasswordAge",
+            "name": "MinimumPasswordAge",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "884FC235767ABE8FEE1BCA84ADEC88C34C6601582FA6AE4B7548D25AEB61CD3F.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MinimumPasswordAge/reports/219be256-c19c-4f1d-be35-b81b13ae6814",
+              "lastComplianceStatusChecked": "2022-09-06T21:53:53Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "MinimumPasswordAge",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/MinimumPasswordAge/MinimumPasswordAge_1.12.0.0.zip",
+                "contentHash": "884FC235767ABE8FEE1BCA84ADEC88C34C6601582FA6AE4B7548D25AEB61CD3F",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WhitelistedApplication",
+            "name": "WhitelistedApplication",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "943383BA3D98E328D4F7B50AA6C2C184EBB53BE0F5749B170843D5916EEC0636.46289149C966CE13132789EDA471E59FFF83E6C0049C11DEAD81252F85761901",
+              "parameterHash": "W0luc3RhbGxlZEFwcGxpY2F0aW9uXWJ3aGl0ZWxpc3RlZGFwcDtOYW1lPWZvbw==",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WhitelistedApplication/reports/bb7df4f4-8704-444b-9adf-45488e2397c7",
+              "lastComplianceStatusChecked": "2022-09-06T21:54:17Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WhitelistedApplication",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WhitelistedApplication/WhitelistedApplication_1.9.0.0.zip",
+                "contentHash": "943383BA3D98E328D4F7B50AA6C2C184EBB53BE0F5749B170843D5916EEC0636",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[InstalledApplication]bwhitelistedapp;Name",
+                    "value": "foo"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AdministratorsGroupMembersToExclude",
+            "name": "AdministratorsGroupMembersToExclude",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "86585B863F156D3401FA6495CE3B9C537C7F56BA0B5ED979F6B1C461A018A8C9.DDCEC7FF2C6ABA4F1C81237F14FAB71CA73007EAA4635425CF88E8A8F2FD4A80",
+              "parameterHash": "W0xvY2FsR3JvdXBdQWRtaW5pc3RyYXRvcnNHcm91cDtNZW1iZXJzVG9FeGNsdWRlPWZvbw==",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AdministratorsGroupMembersToExclude/reports/7e22a666-321f-433b-b8d5-8f02c9a36805",
+              "lastComplianceStatusChecked": "2022-09-06T21:54:46Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "AdministratorsGroupMembersToExclude",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/AdministratorsGroupMembersToExclude/AdministratorsGroupMembersToExclude_1.0.0.0.zip",
+                "contentHash": "86585B863F156D3401FA6495CE3B9C537C7F56BA0B5ED979F6B1C461A018A8C9",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[LocalGroup]AdministratorsGroup;MembersToExclude",
+                    "value": "foo"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsLogAnalyticsAgentConnection",
+            "name": "WindowsLogAnalyticsAgentConnection",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "3FF1DCDBDBD11685585F15C6EC505D99EA0FF741DEF11EF219FFCDDA7BAA458A.E2D9DC438C5314CC3E0B659A4F77D0929ED8365554537AA07D8742EAB583067C",
+              "parameterHash": "W0xvZ0FuYWx5dGljc0FnZW50XUxvZ0FuYWx5dGljc0FnZW50MTtXb3Jrc3BhY2VJZD0xMjM0NTY3ODk=",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsLogAnalyticsAgentConnection/reports/5cd92d34-ca14-4215-93fb-6d17096f57d0",
+              "lastComplianceStatusChecked": "2022-09-06T21:55:57Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsLogAnalyticsAgentConnection",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsLogAnalyticsAgentConnection/WindowsLogAnalyticsAgentConnection_1.0.0.0.zip",
+                "contentHash": "3FF1DCDBDBD11685585F15C6EC505D99EA0FF741DEF11EF219FFCDDA7BAA458A",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[LogAnalyticsAgent]LogAnalyticsAgent1;WorkspaceId",
+                    "value": "123456789"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsDomainMembership",
+            "name": "WindowsDomainMembership",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "A2B558D3AC26948FD4920CF9AA25BF626AF938EC5BDB4FBF13CF32BCD513EDC0.57003021CBC439E383CF89FB84644950EC74A7A8E58E0002C0FE4CCD8CB6ED3F",
+              "parameterHash": "W0RvbWFpbk1lbWJlcnNoaXBdV2luZG93c0RvbWFpbk1lbWJlcnNoaXA7RG9tYWluTmFtZT1mb28=",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsDomainMembership/reports/3df1d0ae-001c-4feb-8907-372625b6a704",
+              "lastComplianceStatusChecked": "2022-09-06T21:56:19Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsDomainMembership",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsDomainMembership/WindowsDomainMembership_1.0.0.1.zip",
+                "contentHash": "A2B558D3AC26948FD4920CF9AA25BF626AF938EC5BDB4FBF13CF32BCD513EDC0",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[DomainMembership]WindowsDomainMembership;DomainName",
+                    "value": "foo"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsDscConfiguration",
+            "name": "WindowsDscConfiguration",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "2361330D667D13524284A193E8F0A9BC026EC38BBA8E9CD42AF76672DBC137D9.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsDscConfiguration/reports/db58787f-3845-4296-ad5a-0495cf57e831",
+              "lastComplianceStatusChecked": "2022-09-06T21:57:22Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsDscConfiguration",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsDscConfiguration/WindowsDscConfiguration_1.4.0.0.zip",
+                "contentHash": "2361330D667D13524284A193E8F0A9BC026EC38BBA8E9CD42AF76672DBC137D9",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsRemoteConnection",
+            "name": "WindowsRemoteConnection",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "FF99C173178328E2F6F18CC6F3F08F401DFB8B03B71362BDCFBE42D69241A852.D7334FD945595FCEDD42099E70BE8FB7FBA67D027978A627FA1382F5C81A2623",
+              "parameterHash": "W1dpbmRvd3NSZW1vdGVDb25uZWN0aW9uXVdpbmRvd3NSZW1vdGVDb25uZWN0aW9uMTtob3N0PTEwLjAuMC4xLFtXaW5kb3dzUmVtb3RlQ29ubmVjdGlvbl1XaW5kb3dzUmVtb3RlQ29ubmVjdGlvbjE7cG9ydD04OCxbV2luZG93c1JlbW90ZUNvbm5lY3Rpb25dV2luZG93c1JlbW90ZUNvbm5lY3Rpb24xO3Nob3VsZENvbm5lY3Q9RmFsc2U=",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsRemoteConnection/reports/78115099-ff34-4c1d-ad7e-1076241408dc",
+              "lastComplianceStatusChecked": "2022-09-06T21:58:26Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsRemoteConnection",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsRemoteConnection/WindowsRemoteConnection_1.8.0.0.zip",
+                "contentHash": "FF99C173178328E2F6F18CC6F3F08F401DFB8B03B71362BDCFBE42D69241A852",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[WindowsRemoteConnection]WindowsRemoteConnection1;host",
+                    "value": "10.0.0.1"
+                  },
+                  {
+                    "name": "[WindowsRemoteConnection]WindowsRemoteConnection1;port",
+                    "value": "88"
+                  },
+                  {
+                    "name": "[WindowsRemoteConnection]WindowsRemoteConnection1;shouldConnect",
+                    "value": "False"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AdministratorsGroupMembers",
+            "name": "AdministratorsGroupMembers",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": null,
+              "parameterHash": "W0xvY2FsR3JvdXBdQWRtaW5pc3RyYXRvcnNHcm91cDtNZW1iZXJzPWZvbw==",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AdministratorsGroupMembers/reports/05f9a69f-8432-4ed4-995f-8b3f47798f2d",
+              "lastComplianceStatusChecked": "2022-09-06T21:58:57Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "AdministratorsGroupMembers",
+                "version": "1.*",
+                "contentUri": null,
+                "contentHash": null,
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[LocalGroup]AdministratorsGroup;Members",
+                    "value": "foo"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MachineLastBootUpTime",
+            "name": "MachineLastBootUpTime",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "BACD1E947E246E87B4BFA1DB5997C8FE68A771E9BE5E4B37AF30B64933F53062.FF9AF857EC2FB8E82DCB343CD965CE2375D4FA4C0A578A034D32C3343932E0F8",
+              "parameterHash": "W01hY2hpbmVVcFRpbWVdTWFjaGluZUxhc3RCb290VXBUaW1lO051bWJlck9mRGF5cz0xMg==",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MachineLastBootUpTime/reports/61fec78b-3d89-4453-8e3c-276a61738bdd",
+              "lastComplianceStatusChecked": "2022-09-06T21:59:20Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "MachineLastBootUpTime",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/MachineLastBootUpTime/MachineLastBootUpTime_1.0.0.2.zip",
+                "contentHash": "BACD1E947E246E87B4BFA1DB5997C8FE68A771E9BE5E4B37AF30B64933F53062",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[MachineUpTime]MachineLastBootUpTime;NumberOfDays",
+                    "value": "12"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsTimeZone",
+            "name": "WindowsTimeZone",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "C5CE8E99498DFC578F5F29850F1C08CC39124C0439C0E371CF135012ECFC3DBD.CC858FFB9BED9CB6ECD5074697FA37F682C19D67FFB3DEC159F18F49EE5F019C",
+              "parameterHash": "W1dpbmRvd3NUaW1lWm9uZV1XaW5kb3dzVGltZVpvbmUxO1RpbWVab25lPShVVEMtMDg6MDApIFBhY2lmaWMgVGltZSAoVVMgJiBDYW5hZGEp",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsTimeZone/reports/feaa95ac-45d6-4921-9f6d-8f8ce5feaf53",
+              "lastComplianceStatusChecked": "2022-09-06T21:59:50Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsTimeZone",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsTimeZone/WindowsTimeZone_1.1.0.0.zip",
+                "contentHash": "C5CE8E99498DFC578F5F29850F1C08CC39124C0439C0E371CF135012ECFC3DBD",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[WindowsTimeZone]WindowsTimeZone1;TimeZone",
+                    "value": "(UTC-08:00) Pacific Time (US \u0026 Canada)"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AdministratorsGroupMembersToInclude",
+            "name": "AdministratorsGroupMembersToInclude",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "7C52765C0A4C634FE42B493787353D35A91705DC10664758B2FDAA0391E0D9D6.9BDE463CDBA9A857B50F294D9D47D90D614ADAEC91EED0436BCB65C4FE683F3D",
+              "parameterHash": "W0xvY2FsR3JvdXBdQWRtaW5pc3RyYXRvcnNHcm91cDtNZW1iZXJzVG9JbmNsdWRlPWZvbw==",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AdministratorsGroupMembersToInclude/reports/f653ead2-5a16-44d2-a144-973bf72101f4",
+              "lastComplianceStatusChecked": "2022-09-06T22:00:17Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "AdministratorsGroupMembersToInclude",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/AdministratorsGroupMembersToInclude/AdministratorsGroupMembersToInclude_1.0.0.0.zip",
+                "contentHash": "7C52765C0A4C634FE42B493787353D35A91705DC10664758B2FDAA0391E0D9D6",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[LocalGroup]AdministratorsGroup;MembersToInclude",
+                    "value": "foo"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsPowerShellModules",
+            "name": "WindowsPowerShellModules",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "F44F88303B1E807B7E8A8C334C5EFF62B35F932B155AC8B556B65B8446BB3C5F.0865CFF6BC350C9A45E252FB50A8568FB0D58061BD089C2295034094475A0350",
+              "parameterHash": "W1Bvd2VyU2hlbGxNb2R1bGVzXVBvd2VyU2hlbGxNb2R1bGVzMTtNb2R1bGVzPWZvbw==",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsPowerShellModules/reports/16af35bc-c75d-4d3c-8824-0b721c09484f",
+              "lastComplianceStatusChecked": "2022-09-06T22:06:26Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsPowerShellModules",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsPowerShellModules/WindowsPowerShellModules_1.2.0.0.zip",
+                "contentHash": "F44F88303B1E807B7E8A8C334C5EFF62B35F932B155AC8B556B65B8446BB3C5F",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[PowerShellModules]PowerShellModules1;Modules",
+                    "value": "foo"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/NotInstalledApplication",
+            "name": "NotInstalledApplication",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "888EF085E390A83166C1C04C9506416462594594653F473A271B74E291DB34A9.2392ADE6C7A850B9DF40B19B4D5D125D90FE0A2E8AC6C5ED9211A78DDA07495D",
+              "parameterHash": "W0luc3RhbGxlZEFwcGxpY2F0aW9uXU5vdEluc3RhbGxlZEFwcGxpY2F0aW9uUmVzb3VyY2UxO05hbWU9Zm9v",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/NotInstalledApplication/reports/84b44941-d544-45c5-8486-ae829b9deb2c",
+              "lastComplianceStatusChecked": "2022-09-06T22:00:40Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "NotInstalledApplication",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/NotInstalledApplication/NotInstalledApplication_1.4.0.0.zip",
+                "contentHash": "888EF085E390A83166C1C04C9506416462594594653F473A271B74E291DB34A9",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[InstalledApplication]NotInstalledApplicationResource1;Name",
+                    "value": "foo"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsDefenderExploitGuard",
+            "name": "WindowsDefenderExploitGuard",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "E79CFED8B86245F8090E6CA5469F861D8EB3C7411E6C98CB4DF99A7628F11573.517E990CF48B300455C7E3CDCA6431A3B90079559088C45934D7CC3EF1F8E82B",
+              "parameterHash": "W1dpbmRvd3NEZWZlbmRlckV4cGxvaXRHdWFyZF1XaW5kb3dzRGVmZW5kZXJFeHBsb2l0R3VhcmQxO05vdEF2YWlsYWJsZU1hY2hpbmVTdGF0ZT1Ob24tQ29tcGxpYW50",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsDefenderExploitGuard/reports/0c15c8b4-3e6f-496f-88d6-87d38cde4c5e",
+              "lastComplianceStatusChecked": "2022-09-06T21:55:30Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsDefenderExploitGuard",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsDefenderExploitGuard/WindowsDefenderExploitGuard_1.14.0.0.zip",
+                "contentHash": "E79CFED8B86245F8090E6CA5469F861D8EB3C7411E6C98CB4DF99A7628F11573",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[WindowsDefenderExploitGuard]WindowsDefenderExploitGuard1;NotAvailableMachineState",
+                    "value": "Non-Compliant"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsSerialConsole",
+            "name": "WindowsSerialConsole",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "044389D77AE0D38240EE569956DF14D321D4650D46F447E135E3AC7F0636F654.B3F38E5D32A1E9C8390F38593470B8570272251FCD16DD7AC548C2AF20F7B3D8",
+              "parameterHash": "W1dpbmRvd3NTZXJpYWxDb25zb2xlXVdpbmRvd3NTZXJpYWxDb25zb2xlO0VNU1BvcnROdW1iZXI9MSxbV2luZG93c1NlcmlhbENvbnNvbGVdV2luZG93c1NlcmlhbENvbnNvbGU7RU1TQmF1ZFJhdGU9MTE1MjAw",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsSerialConsole/reports/73b91a75-13ba-4d9c-b534-9c50318e15fd",
+              "lastComplianceStatusChecked": "2022-09-06T21:49:37Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsSerialConsole",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsSerialConsole/WindowsSerialConsole_1.2.0.0.zip",
+                "contentHash": "044389D77AE0D38240EE569956DF14D321D4650D46F447E135E3AC7F0636F654",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[WindowsSerialConsole]WindowsSerialConsole;EMSPortNumber",
+                    "value": "1"
+                  },
+                  {
+                    "name": "[WindowsSerialConsole]WindowsSerialConsole;EMSBaudRate",
+                    "value": "115200"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsServiceStatus",
+            "name": "WindowsServiceStatus",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "0D4EFB2626B29E1315B1FDA616F42A21BF99633487DA98DA38C697BF2676B114.F9811F33624BC9B89783770384FA4E9A62D8DFEA2B4AD55E9B828EE06315457B",
+              "parameterHash": "W1dpbmRvd3NTZXJ2aWNlU3RhdHVzXVdpbmRvd3NTZXJ2aWNlU3RhdHVzMTtTZXJ2aWNlTmFtZT1mb28=",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsServiceStatus/reports/1433ffcc-16ca-4145-9976-13b8aba9c1cc",
+              "lastComplianceStatusChecked": "2022-09-06T21:50:00Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsServiceStatus",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsServiceStatus/WindowsServiceStatus_1.6.0.0.zip",
+                "contentHash": "0D4EFB2626B29E1315B1FDA616F42A21BF99633487DA98DA38C697BF2676B114",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[WindowsServiceStatus]WindowsServiceStatus1;ServiceName",
+                    "value": "foo"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsPendingReboot",
+            "name": "WindowsPendingReboot",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "E8F6587B27C35A1094EC306D9542437B3F39F03463C68CACD87E8004DF1F8DDE.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsPendingReboot/reports/f3b2a1a6-18e3-4de1-887a-fb1f7c0dd8de",
+              "lastComplianceStatusChecked": "2022-09-06T21:50:25Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsPendingReboot",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsPendingReboot/WindowsPendingReboot_1.2.0.0.zip",
+                "contentHash": "E8F6587B27C35A1094EC306D9542437B3F39F03463C68CACD87E8004DF1F8DDE",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsCertificateInTrustedRoot",
+            "name": "WindowsCertificateInTrustedRoot",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "9CD9D85375591E668DD5F7405E855168988C9D236120D02B2A85793533FAC182.36CC3223A6D87F05BCC7403AA046E632641F507CA05423DDADB809F017998E73",
+              "parameterHash": "W0NlcnRpZmljYXRlU3RvcmVdQ2VydGlmaWNhdGVTdG9yZTE7Q2VydGlmaWNhdGVUaHVtYnByaW50c1RvSW5jbHVkZT0xMjM0NTY3ODk=",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestVM/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsCertificateInTrustedRoot/reports/c485ced9-dbb1-438b-9266-38cc8d332b5e",
+              "lastComplianceStatusChecked": "2022-09-06T21:50:55Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsCertificateInTrustedRoot",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsCertificateInTrustedRoot/WindowsCertificateInTrustedRoot_1.1.0.0.zip",
+                "contentHash": "9CD9D85375591E668DD5F7405E855168988C9D236120D02B2A85793533FAC182",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[CertificateStore]CertificateStore1;CertificateThumbprintsToInclude",
+                    "value": "123456789"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "553064322",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "f66367e1-cf7d-407b-ba39-53230cc79071"
+  }
+}

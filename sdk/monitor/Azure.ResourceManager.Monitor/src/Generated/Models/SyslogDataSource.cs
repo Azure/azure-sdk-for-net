@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of SyslogDataSource. </summary>
         public SyslogDataSource()
         {
-            Streams = new ChangeTrackingList<KnownSyslogDataSourceStream>();
-            FacilityNames = new ChangeTrackingList<KnownSyslogDataSourceFacilityName>();
-            LogLevels = new ChangeTrackingList<KnownSyslogDataSourceLogLevel>();
+            Streams = new ChangeTrackingList<SyslogDataSourceStream>();
+            FacilityNames = new ChangeTrackingList<SyslogDataSourceFacilityName>();
+            LogLevels = new ChangeTrackingList<SyslogDataSourceLogLevel>();
         }
 
         /// <summary> Initializes a new instance of SyslogDataSource. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
-        internal SyslogDataSource(IList<KnownSyslogDataSourceStream> streams, IList<KnownSyslogDataSourceFacilityName> facilityNames, IList<KnownSyslogDataSourceLogLevel> logLevels, string name)
+        internal SyslogDataSource(IList<SyslogDataSourceStream> streams, IList<SyslogDataSourceFacilityName> facilityNames, IList<SyslogDataSourceLogLevel> logLevels, string name)
         {
             Streams = streams;
             FacilityNames = facilityNames;
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
         /// </summary>
-        public IList<KnownSyslogDataSourceStream> Streams { get; }
+        public IList<SyslogDataSourceStream> Streams { get; }
         /// <summary> The list of facility names. </summary>
-        public IList<KnownSyslogDataSourceFacilityName> FacilityNames { get; }
+        public IList<SyslogDataSourceFacilityName> FacilityNames { get; }
         /// <summary> The log levels to collect. </summary>
-        public IList<KnownSyslogDataSourceLogLevel> LogLevels { get; }
+        public IList<SyslogDataSourceLogLevel> LogLevels { get; }
         /// <summary>
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.

@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static VirtualNetworkRuleListResult DeserializeVirtualNetworkRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualNetworkRuleData>> value = default;
+            Optional<IReadOnlyList<SqlServerVirtualNetworkRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualNetworkRuleData> array = new List<VirtualNetworkRuleData>();
+                    List<SqlServerVirtualNetworkRuleData> array = new List<SqlServerVirtualNetworkRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(item));
+                        array.Add(SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

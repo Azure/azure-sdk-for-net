@@ -14,61 +14,61 @@ namespace Azure.ResourceManager.Communication.Models
     {
         internal static DomainPropertiesVerificationRecords DeserializeDomainPropertiesVerificationRecords(JsonElement element)
         {
-            Optional<DnsRecord> domain = default;
-            Optional<DnsRecord> spf = default;
-            Optional<DnsRecord> dkim = default;
-            Optional<DnsRecord> dkiM2 = default;
-            Optional<DnsRecord> dmarc = default;
+            Optional<VerificationDnsRecord> domain = default;
+            Optional<VerificationDnsRecord> spf = default;
+            Optional<VerificationDnsRecord> dkim = default;
+            Optional<VerificationDnsRecord> dkiM2 = default;
+            Optional<VerificationDnsRecord> dmarc = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Domain"))
+                if (property.NameEquals("Domain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    domain = DnsRecord.DeserializeDnsRecord(property.Value);
+                    domain = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
                     continue;
                 }
-                if (property.NameEquals("SPF"))
+                if (property.NameEquals("SPF"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    spf = DnsRecord.DeserializeDnsRecord(property.Value);
+                    spf = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
                     continue;
                 }
-                if (property.NameEquals("DKIM"))
+                if (property.NameEquals("DKIM"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dkim = DnsRecord.DeserializeDnsRecord(property.Value);
+                    dkim = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
                     continue;
                 }
-                if (property.NameEquals("DKIM2"))
+                if (property.NameEquals("DKIM2"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dkiM2 = DnsRecord.DeserializeDnsRecord(property.Value);
+                    dkiM2 = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
                     continue;
                 }
-                if (property.NameEquals("DMARC"))
+                if (property.NameEquals("DMARC"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dmarc = DnsRecord.DeserializeDnsRecord(property.Value);
+                    dmarc = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
                     continue;
                 }
             }

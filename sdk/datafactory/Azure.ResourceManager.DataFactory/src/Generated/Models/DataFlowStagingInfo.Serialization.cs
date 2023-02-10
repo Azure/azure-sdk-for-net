@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedService))
             {
-                writer.WritePropertyName("linkedService");
+                writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
             if (Optional.IsDefined(FolderPath))
             {
-                writer.WritePropertyName("folderPath");
+                writer.WritePropertyName("folderPath"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(FolderPath);
 #else
@@ -35,21 +35,21 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFlowStagingInfo DeserializeDataFlowStagingInfo(JsonElement element)
         {
-            Optional<LinkedServiceReference> linkedService = default;
+            Optional<FactoryLinkedServiceReference> linkedService = default;
             Optional<BinaryData> folderPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedService"))
+                if (property.NameEquals("linkedService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("folderPath"))
+                if (property.NameEquals("folderPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

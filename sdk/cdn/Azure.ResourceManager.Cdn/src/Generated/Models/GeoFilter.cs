@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -21,14 +22,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="relativePath"/> or <paramref name="countryCodes"/> is null. </exception>
         public GeoFilter(string relativePath, GeoFilterAction action, IEnumerable<string> countryCodes)
         {
-            if (relativePath == null)
-            {
-                throw new ArgumentNullException(nameof(relativePath));
-            }
-            if (countryCodes == null)
-            {
-                throw new ArgumentNullException(nameof(countryCodes));
-            }
+            Argument.AssertNotNull(relativePath, nameof(relativePath));
+            Argument.AssertNotNull(countryCodes, nameof(countryCodes));
 
             RelativePath = relativePath;
             Action = action;

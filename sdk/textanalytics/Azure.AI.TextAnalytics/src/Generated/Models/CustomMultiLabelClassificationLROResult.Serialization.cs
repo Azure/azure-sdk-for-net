@@ -17,52 +17,52 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("results");
+            writer.WritePropertyName("results"u8);
             writer.WriteObjectValue(Results);
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(TaskName))
             {
-                writer.WritePropertyName("taskName");
+                writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
             }
-            writer.WritePropertyName("lastUpdateDateTime");
+            writer.WritePropertyName("lastUpdateDateTime"u8);
             writer.WriteStringValue(LastUpdateDateTime, "O");
-            writer.WritePropertyName("status");
+            writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WriteEndObject();
         }
 
         internal static CustomMultiLabelClassificationLROResult DeserializeCustomMultiLabelClassificationLROResult(JsonElement element)
         {
-            CustomMultiLabelClassificationResult results = default;
+            CustomLabelClassificationResult results = default;
             AnalyzeTextLROResultsKind kind = default;
             Optional<string> taskName = default;
             DateTimeOffset lastUpdateDateTime = default;
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
-                    results = CustomMultiLabelClassificationResult.DeserializeCustomMultiLabelClassificationResult(property.Value);
+                    results = CustomLabelClassificationResult.DeserializeCustomLabelClassificationResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new AnalyzeTextLROResultsKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("taskName"))
+                if (property.NameEquals("taskName"u8))
                 {
                     taskName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastUpdateDateTime"))
+                if (property.NameEquals("lastUpdateDateTime"u8))
                 {
                     lastUpdateDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new TextAnalyticsOperationStatus(property.Value.GetString());
                     continue;

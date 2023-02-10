@@ -20,7 +20,8 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
 {
     public class SviCRUDTests : WorkloadsManagementTestBase
     {
-        public SviCRUDTests(bool isAsync) : base(isAsync)
+        public SviCRUDTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
             JsonPathSanitizers.Add("$.properties.configuration.infrastructureConfiguration.virtualMachineConfiguration" +
                 ".osProfile.osConfiguration.ssh.publicKeys.[*].keyData");
@@ -114,10 +115,12 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
             Assert.AreEqual(sviObjectstatus.Value.Data.Status, SapVirtualInstanceStatus.Running);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task TestSVIPatchCall()
+        //[TestCase(null)] TODO: need to re-record
+        //[TestCase(false)] TODO: need to re-record
+        //[TestCase(true)] TODO: need to re-record
+        public async Task TestSVIPatchCall(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             string sviName = "B83";
             string rgName = "svi-loop-test-register-02Jul-singleserver-88";
             string subID = "49d64d54-e966-4c46-a868-1999802b762c";

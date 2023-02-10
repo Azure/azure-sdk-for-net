@@ -20,13 +20,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CoreCount))
             {
-                writer.WritePropertyName("coreCount");
+                writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
             if (Optional.IsDefined(ComputeType))
             {
-                writer.WritePropertyName("computeType");
+                writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType);
+            }
+            if (Optional.IsDefined(DataProcessIntervalMinutes))
+            {
+                writer.WritePropertyName("dataProcessIntervalMinutes"u8);
+                writer.WriteNumberValue(DataProcessIntervalMinutes.Value);
             }
             writer.WriteEndObject();
         }
@@ -35,9 +40,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Optional<int> coreCount = default;
             Optional<string> computeType = default;
+            Optional<int> dataProcessIntervalMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("coreCount"))
+                if (property.NameEquals("coreCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,13 +53,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     coreCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     computeType = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("dataProcessIntervalMinutes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dataProcessIntervalMinutes = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new LinkConnectionCompute(Optional.ToNullable(coreCount), computeType.Value);
+            return new LinkConnectionCompute(Optional.ToNullable(coreCount), computeType.Value, Optional.ToNullable(dataProcessIntervalMinutes));
         }
 
         internal partial class LinkConnectionComputeConverter : JsonConverter<LinkConnectionCompute>

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsCollectionDefined(Buildpacks))
             {
-                writer.WritePropertyName("buildpacks");
+                writer.WritePropertyName("buildpacks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Buildpacks)
                 {
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IList<WritableSubResource>> buildpacks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("buildpacks"))
+                if (property.NameEquals("buildpacks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     buildpacks = array;
                     continue;

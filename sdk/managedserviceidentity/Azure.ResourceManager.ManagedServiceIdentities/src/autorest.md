@@ -9,7 +9,7 @@ csharp: true
 library-name: ManagedServiceIdentities
 namespace: Azure.ResourceManager.ManagedServiceIdentities
 require: https://github.com/Azure/azure-rest-api-specs/blob/1ddabd9234338d209f9755beac5c13cc0ae3b5f7/specification/msi/resource-manager/readme.md
-tag: package-2018-11-30
+tag: package-preview-2022-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -48,4 +48,9 @@ rename-rules:
 
 rename-mapping:
   Identity: UserAssignedIdentity
+  AzureResource: IdentityAssociatedResourceData
+  FederatedIdentityCredential.properties.issuer: IssuerUri
+
+generate-arm-resource-extensions:
+  - /{scope}/providers/Microsoft.ManagedIdentity/identities/default
 ```

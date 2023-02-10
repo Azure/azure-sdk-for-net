@@ -23,10 +23,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public DedicatedHostData(AzureLocation location, ComputeSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             VirtualMachines = new ChangeTrackingList<SubResource>();
@@ -48,7 +45,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningOn"> The date when the host was first provisioned. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The dedicated host instance view. </param>
-        /// <param name="timeCreated"> Specifies the time at which the Dedicated Host resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </param>
+        /// <param name="timeCreated"> Specifies the time at which the Dedicated Host resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2021-11-01. </param>
         internal DedicatedHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, int? platformFaultDomain, bool? autoReplaceOnFailure, string hostId, IReadOnlyList<SubResource> virtualMachines, DedicatedHostLicenseType? licenseType, DateTimeOffset? provisioningOn, string provisioningState, DedicatedHostInstanceView instanceView, DateTimeOffset? timeCreated) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
@@ -81,7 +78,7 @@ namespace Azure.ResourceManager.Compute
         public string ProvisioningState { get; }
         /// <summary> The dedicated host instance view. </summary>
         public DedicatedHostInstanceView InstanceView { get; }
-        /// <summary> Specifies the time at which the Dedicated Host resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </summary>
+        /// <summary> Specifies the time at which the Dedicated Host resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2021-11-01. </summary>
         public DateTimeOffset? TimeCreated { get; }
     }
 }

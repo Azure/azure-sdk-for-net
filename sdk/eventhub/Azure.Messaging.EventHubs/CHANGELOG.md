@@ -8,7 +8,70 @@
 
 ### Bugs Fixed
 
+- Corrected log message issue causing formatting to fail when developer code for processing events leaks an exception.  This obscured the warning that was intended to be emitted to the error handler.
+
 ### Other Changes
+
+- Calling `ToString` on an `EventHubsException` now includes details of any inner exception.
+
+## 5.7.5 (2022-11-22)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Jason Gilbertson _([GitHub](https://github.com/jagilber))_
+
+### Bugs Fixed
+
+- Corrected an indexing issue with the log event source, causing an exception to surface when the buffered producer completed its idle state.
+
+## 5.7.4 (2022-11-08)
+
+### Bugs Fixed
+
+- Telemetry will now use a parent activity instead of links when the event processor is configured to use a `eventBatchMaximumCount` of 1.
+
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.5.12.  This resolves a rare race condition encountered when creating an AMQP link that could cause the link to hang.
+
+### Other Changes
+
+- Adjusted the frequency that a warning logged when the processor owns more partitions than a basic heuristic believes is ideal.  Warnings will no longer log on each load balancing cycle, only when the number of partitions owned changes.
+
+- Added timing information to logs for AMQP publish and read operations.
+
+## 5.7.3 (2022-10-11)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+- Anshul Mathur _([GitHub](https://github.com/anshmathur))_
+
+### Other Changes
+
+- Added additional heuristics for the `EventProcessor<T>` configuration to help discover issues that can impact processor performance and stability; these validations will produce warnings at processor start-up should potential concerns be found.
+
+- Exception messages have been updated to include a link to the Event Hubs troubleshooting guide.
+
+- Miscellaneous performance improvements by reducing memory allocations. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+## 5.7.2 (2022-08-09)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Bugs Fixed
+
+- Fixed a regression with the `EventHubProducerClient` overloads of `SendAsync` which accept an enumerable of events.  When specifying a partition key, it was ignored when sending.  As a result, the Event Hub applied round-robin partition assignment, spreading events across partitions rather than grouping them in a single partition.
+
+### Other Changes
+
+- Reduced memory allocations when converting messages into the underlying AMQP primitives. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 ## 5.7.1 (2022-07-07)
 
@@ -24,7 +87,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Bugs Fixed
 
-- Fixed an issue with the `EventHubBufferedProducerClient` where it was not properly identifying when buffers were empty and should enter an idle state; this caused the background task that manages publishing to spin and consume an unreasonable amount of resources. 
+- Fixed an issue with the `EventHubBufferedProducerClient` where it was not properly identifying when buffers were empty and should enter an idle state; this caused the background task that manages publishing to spin and consume an unreasonable amount of resources.
 
 - Fixed an issue with event processor startup validation where an invalid consumer group was not properly detected.
 
@@ -44,12 +107,12 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Features Added
 
-- The `EventHubBufferedProducerClient` is being introduced, intended to allow for efficient publishing of events without having to explicitly manage batches in the application.  More information can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hub-buffered-producer.md).  
+- The `EventHubBufferedProducerClient` is being introduced, intended to allow for efficient publishing of events without having to explicitly manage batches in the application.  More information can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hub-buffered-producer.md).
   _(Thanks to [danielmarbach](https://github.com/danielmarbach) for his contributions to the implementation)_
 
 - An additional base class for event processors, `PluggableCheckpointStoreEventProcessor<T>`, has been added to simplify creating customized event processors and integrate with concrete `CheckpointStore` implementations.
 
-- An abstract `CheckpointStore` is now available for use with the `PluggableCheckpointStoreEventProcessor<T>` to simplify creating customized event processors and allow reusing existing checkpoint store implementations. 
+- An abstract `CheckpointStore` is now available for use with the `PluggableCheckpointStoreEventProcessor<T>` to simplify creating customized event processors and allow reusing existing checkpoint store implementations.
 
 - Support for cancellation tokens has been improved for AMQP operations, enabling earlier detection of cancellation requests without needing to wait for the configured timeout to elapse.
 
@@ -91,7 +154,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - An additional base class for event processors, `PluggableCheckpointStoreEventProcessor<T>`, has been added to simplify creating customized event processors and integrate with concrete `CheckpointStore` implementations.
 
-- An abstract `CheckpointStore` is now available for use with the `PluggableCheckpointStoreEventProcessor<T>` to simplify creating customized event processors and allow reusing existing checkpoint store implementations. 
+- An abstract `CheckpointStore` is now available for use with the `PluggableCheckpointStoreEventProcessor<T>` to simplify creating customized event processors and allow reusing existing checkpoint store implementations.
 
 ### Other Changes
 
@@ -139,7 +202,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Bugs Fixed
 
-- Fixed an issue for publishing with idempotent retries enabled where the client and service state could become out-of-sync for error scenarios with ambiguous outcomes. When this occurred, callers had no way to detect or correct the condition and it was possible that new events would fail to publish or be incorrectly identified as duplicates by the service. 
+- Fixed an issue for publishing with idempotent retries enabled where the client and service state could become out-of-sync for error scenarios with ambiguous outcomes. When this occurred, callers had no way to detect or correct the condition and it was possible that new events would fail to publish or be incorrectly identified as duplicates by the service.
 
 ### Other Changes
 
@@ -408,7 +471,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - `EventData` has been integrated with the new Schema Registry service, via use of the `ObjectSerializer` with `BinaryData`.
 
-- When publishing events to Event Hubs, timeouts or other transient failures may introduce ambiguity into the understanding of whether a batch of events was received by the service.  To assist in this scenario, the option to publish events idempotently across all retries of a publish operation has been added to the `EventHubProducerClient`. 
+- When publishing events to Event Hubs, timeouts or other transient failures may introduce ambiguity into the understanding of whether a batch of events was received by the service.  To assist in this scenario, the option to publish events idempotently across all retries of a publish operation has been added to the `EventHubProducerClient`.
 
 **Note:** The idempotent publishing feature is new to the Event Hubs service, and Azure Schema Registry is a new hosted schema repository service provided by Azure Event Hubs.  Both offerings may not yet be available in all regions or Azure clouds.
 
@@ -507,7 +570,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - A cleanup sweep was performed to tune small areas to be more efficient and perform fewer allocations.
 
-## 5.1.0 
+## 5.1.0
 
 ### Acknowledgments
 
@@ -520,7 +583,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 #### General availability of preview features
 
-- The set of features from v5.1.0-preview.1 are now generally available.  This includes the `EventProcessor<TPartition>` and `PartitionReceiver` types which focus on advanced application scenarios which require greater low-level control. 
+- The set of features from v5.1.0-preview.1 are now generally available.  This includes the `EventProcessor<TPartition>` and `PartitionReceiver` types which focus on advanced application scenarios which require greater low-level control.
 
 #### Publishing events
 
@@ -529,14 +592,14 @@ Thank you to our developer community members who helped to make the Event Hubs c
 #### Bug fixes and foundation
 
 - The transport producers used for sending events to a specific partition are now managed by a pool with sliding expiration to enable more efficient resource use and cleanup.  _(A community contribution, courtesy of [albertodenatale](https://github.com/albertodenatale))_
-	
+
 - Timing operations have been refactored to make use of a more efficient approach with fewer allocations.  (A community contribution, courtesy of _[danielmarbach](https://github.com/albertodenatale))_
 
 - Fixed a bug with EventDataBatch; it is now thread-safe.
 
 - Minor enhancements to reduce allocations and improve efficiency
 
-## 5.1.0-preview.1 
+## 5.1.0-preview.1
 
 ### Acknowledgments
 
@@ -575,7 +638,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - For special cases, the live tests may be instructed to use existing Azure resources instead of dynamically creating dedicated resources for the run.  (A community contribution, courtesy of [albertodenatale](https://github.com/albertodenatale))
 
-## 5.0.1 
+## 5.0.1
 
 ### Acknowledgements
 
@@ -597,9 +660,9 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Namespaces have been reorganized to align types to their functional area, reducing the number of types in the root namespace and offering better context for where a type is used.  Cross-functional types have been left in the root while specialized types were moved to the `Producer`, `Consumer`, or `Processor` namespaces.
 
-- The hierarchy of custom exceptions has been flattened, with only the `EventHubsException` remaining.  The well-known failure scenarios that had previously been represented as stand-alone types are now exposed by a new `Reason` property to allow for applying exception filtering and other logic where inspecting the text of an exception message wouldn't be ideal. 
+- The hierarchy of custom exceptions has been flattened, with only the `EventHubsException` remaining.  The well-known failure scenarios that had previously been represented as stand-alone types are now exposed by a new `Reason` property to allow for applying exception filtering and other logic where inspecting the text of an exception message wouldn't be ideal.
 
-## 5.0.0-preview.6 
+## 5.0.0-preview.6
 
 ### Acknowledgements
 
@@ -611,7 +674,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 #### Bug fixes and foundation
 
-- A bug with the use of Azure.Identity credential scopes has been fixed; Azure identities should now allow for proper authorization with Event Hubs resources.   
+- A bug with the use of Azure.Identity credential scopes has been fixed; Azure identities should now allow for proper authorization with Event Hubs resources.
 _(A community contribution, courtesy of [albertodenatale](https://github.com/albertodenatale))_
 
 - A bug with the renewal of connection string-based credentials has been fixed; clients using a connection string will now properly refresh when necessary instead of experiencing an error.
@@ -632,10 +695,10 @@ _(A community contribution, courtesy of [albertodenatale](https://github.com/alb
 
 #### Authorization
 
-- Test and sample infrastructure has been updated to work with Azure.Identity credentials in addition to connection strings.  
+- Test and sample infrastructure has been updated to work with Azure.Identity credentials in addition to connection strings.
 _(A community contribution, courtesy of [albertodenatale](https://github.com/albertodenatale))_
-  
-- A sample demonstrating the use of an Azure Active Identity principal with Event Hubs is now available.  
+
+- A sample demonstrating the use of an Azure Active Identity principal with Event Hubs is now available.
 _(A community contribution, courtesy of [albertodenatale](https://github.com/albertodenatale))_
 
 - The `EventHubsSharedKeyCredential` has been removed from this release for further design and improvements; it is intended to be reintroduced in the future.
@@ -648,9 +711,9 @@ _(A community contribution, courtesy of [albertodenatale](https://github.com/alb
 
 - A collection of internal supporting types were moved into a new [shared library](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Shared) to allow them to be shared as source between the Event Hubs client libraries.  The tests assoociated with these types were also moved to the shared library for locality with the source being tested.
 
-## 5.0.0-preview.5 
+## 5.0.0-preview.5
 
-### Acknowledgments 
+### Acknowledgments
 
 Thank you to our developer community members who helped to make the Azure SDKs better with their contributions to this release:
 
@@ -660,15 +723,15 @@ Thank you to our developer community members who helped to make the Azure SDKs b
 
 #### Organization and naming
 
-- The early stages of a large refactoring of the Event Hub client type hierarchy is complete;  Event Hub producers and consumers are now stand-alone clients that can be created independently, and which may or may not share a connection to the Event Hubs service at the discretion of the developer.    
+- The early stages of a large refactoring of the Event Hub client type hierarchy is complete;  Event Hub producers and consumers are now stand-alone clients that can be created independently, and which may or may not share a connection to the Event Hubs service at the discretion of the developer.
 
   **_Please Note:_** These changes are part of a larger effort that is currently in process.  The client types have not yet been refactored to remove affinity to a specific partition which leaves some operations feeling somewhat awkward with the new structure.
-  
+
 #### Bug fixes and foundation improvements
 
-- Client types using Azure identity for authorization should now be working properly; a bug was fixed to allow the proper authorization scopes to be requested.  
+- Client types using Azure identity for authorization should now be working properly; a bug was fixed to allow the proper authorization scopes to be requested.
   _(A community contribution, courtesy of [albertodenatale](https://github.com/albertodenatale))_
-  
+
 - Service communication is now being performed by an internal communication stack; previously, it had been delegated to an internal copy of the legacy client library.
 
 - Cancellation tokens are now supported throughout the client hierarchy and across operations.
@@ -683,7 +746,7 @@ Thank you to our developer community members who helped to make the Azure SDKs b
 
 - The information about the last event enqueued to an Event Hub partition is now presented on-demand as an immutable object, if the tracking option was enabled.  This ensures that the properties are stable and consistent when being read, rather than being subject to in-place updates each time a new event is received.
 
-## 5.0.0-preview.4 
+## 5.0.0-preview.4
 
 ### Changes
 
@@ -701,7 +764,7 @@ Thank you to our developer community members who helped to make the Azure SDKs b
 
 - Improved stability and performance with refactorings around hot paths and areas of technical debt.
 
-## 5.0.0-preview.3 
+## 5.0.0-preview.3
 
 ### Changes
 
@@ -711,7 +774,7 @@ Thank you to our developer community members who helped to make the Azure SDKs b
 
 - The `EventHubConsumer` can be configured to track information about the last event to be enqueued into its associated partition in order to allow for monitoring the backlog of events to be processed without the need to make explicit calls to request partition properties from the `EventHubClient`.
 
-- Consuming events using `SubscribeToEvents` has been refactored for better performance and lower resource use. 
+- Consuming events using `SubscribeToEvents` has been refactored for better performance and lower resource use.
 
 #### Event Processor
 
@@ -727,7 +790,7 @@ Thank you to our developer community members who helped to make the Azure SDKs b
 
 - Some public types were scoped in a way that made them difficult to mock for library consumers.  These have been re-scoped to `protected internal` for better testability.  `EventData` and metadata types were the significant instances.
 
-## 5.0.0-preview.2 
+## 5.0.0-preview.2
 
 ### Changes
 
@@ -770,7 +833,7 @@ Thank you to our developer community members who helped to make the Azure SDKs b
 - An option for fixed retry has been added to accompany the exponential retry that was in place previously.
 Operation timeouts have been moved from the associated client options and incorporated into the retry options and retry policies.
 
-## 5.0.0-preview.1 
+## 5.0.0-preview.1
 
 Version 5.0.0-preview.1 is a preview of our efforts in creating a client library that is developer-friendly, idiomatic to the .NET ecosystem, and as consistent across different languages and platforms as possible.  The principles that guide our efforts can be found in the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 

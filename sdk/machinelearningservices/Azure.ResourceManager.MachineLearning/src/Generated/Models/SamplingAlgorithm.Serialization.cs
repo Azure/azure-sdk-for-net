@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("samplingAlgorithmType");
+            writer.WritePropertyName("samplingAlgorithmType"u8);
             writer.WriteStringValue(SamplingAlgorithmType.ToString());
             writer.WriteEndObject();
         }
@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Random": return RandomSamplingAlgorithm.DeserializeRandomSamplingAlgorithm(element);
                 }
             }
-            SamplingAlgorithmType samplingAlgorithmType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("samplingAlgorithmType"))
-                {
-                    samplingAlgorithmType = new SamplingAlgorithmType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new SamplingAlgorithm(samplingAlgorithmType);
+            return UnknownSamplingAlgorithm.DeserializeUnknownSamplingAlgorithm(element);
         }
     }
 }

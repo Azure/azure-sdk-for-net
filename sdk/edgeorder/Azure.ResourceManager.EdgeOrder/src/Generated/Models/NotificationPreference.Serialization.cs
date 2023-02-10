@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("stageName");
+            writer.WritePropertyName("stageName"u8);
             writer.WriteStringValue(StageName.ToString());
-            writer.WritePropertyName("sendNotification");
-            writer.WriteBooleanValue(SendNotification);
+            writer.WritePropertyName("sendNotification"u8);
+            writer.WriteBooleanValue(IsNotificationRequired);
             writer.WriteEndObject();
         }
 
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             bool sendNotification = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stageName"))
+                if (property.NameEquals("stageName"u8))
                 {
                     stageName = new NotificationStageName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sendNotification"))
+                if (property.NameEquals("sendNotification"u8))
                 {
                     sendNotification = property.Value.GetBoolean();
                     continue;

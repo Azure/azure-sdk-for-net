@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -13,33 +14,30 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosDBSqlTriggerResourceInfo
     {
         /// <summary> Initializes a new instance of CosmosDBSqlTriggerResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL trigger. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public CosmosDBSqlTriggerResourceInfo(string id)
+        /// <param name="triggerName"> Name of the Cosmos DB SQL trigger. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        public CosmosDBSqlTriggerResourceInfo(string triggerName)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(triggerName, nameof(triggerName));
 
-            Id = id;
+            TriggerName = triggerName;
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlTriggerResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL trigger. </param>
+        /// <param name="triggerName"> Name of the Cosmos DB SQL trigger. </param>
         /// <param name="body"> Body of the Trigger. </param>
         /// <param name="triggerType"> Type of the Trigger. </param>
         /// <param name="triggerOperation"> The operation the trigger is associated with. </param>
-        internal CosmosDBSqlTriggerResourceInfo(string id, string body, CosmosDBSqlTriggerType? triggerType, CosmosDBSqlTriggerOperation? triggerOperation)
+        internal CosmosDBSqlTriggerResourceInfo(string triggerName, string body, CosmosDBSqlTriggerType? triggerType, CosmosDBSqlTriggerOperation? triggerOperation)
         {
-            Id = id;
+            TriggerName = triggerName;
             Body = body;
             TriggerType = triggerType;
             TriggerOperation = triggerOperation;
         }
 
         /// <summary> Name of the Cosmos DB SQL trigger. </summary>
-        public string Id { get; set; }
+        public string TriggerName { get; set; }
         /// <summary> Body of the Trigger. </summary>
         public string Body { get; set; }
         /// <summary> Type of the Trigger. </summary>

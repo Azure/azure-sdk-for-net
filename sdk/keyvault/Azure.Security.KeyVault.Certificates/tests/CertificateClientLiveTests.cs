@@ -769,6 +769,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.AreEqual(certificatePolicy.KeySize, updatePolicy.KeySize);
         }
 
+        [RecordedTest]
         [TestCase("application/x-pkcs12")]
         [TestCase("application/x-pem-file")]
         public async Task DownloadLatestCertificate(string contentType)
@@ -815,6 +816,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CollectionAssert.AreEqual(plaintext, decrypted);
         }
 
+        [RecordedTest]
         [TestCase("application/x-pkcs12")]
         [TestCase("application/x-pem-file")]
         public async Task DownloadVersionedCertificate(string contentType)
@@ -872,6 +874,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CollectionAssert.AreEqual(plaintext, decrypted);
         }
 
+        [RecordedTest]
         [TestCase("application/x-pkcs12")]
         [TestCase("application/x-pem-file")]
         public async Task DownloadNonExportableCertificate(string contentType)
@@ -931,7 +934,15 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
+            try
+            {
+                await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
+            }
+            catch (InvalidOperationException ex) when (ex.Message.Contains("An internal error has occurred"))
+            {
+                // This test fails often enough with an internal HTTP 500 to ignore.
+                Assert.Inconclusive("The service encountered an internal error");
+            }
 
             // Sign data remotely.
             byte[] plaintext = Encoding.UTF8.GetBytes(nameof(DownloadECDsaCertificateSignRemoteVerifyLocal));
@@ -1016,6 +1027,30 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 certificate?.Dispose();
             }
         }
+
+        [RecordedTest]
+        public async Task RecoverCertificate()
+        {
+            string certificateName = Recording.GenerateId();
+            CertificateOperation createOperation = await Client.StartCreateCertificateAsync(certificateName, CertificatePolicy.Default);
+            KeyVaultCertificateWithPolicy certificate = await createOperation.WaitForCompletionAsync();
+
+            DeleteCertificateOperation deleteOperation = await Client.StartDeleteCertificateAsync(certificateName);
+            await deleteOperation.WaitForCompletionAsync();
+
+            RecoverDeletedCertificateOperation recoverOperation = await Client.StartRecoverDeletedCertificateAsync(certificateName);
+            KeyVaultCertificateWithPolicy recoveredCertificate = await recoverOperation.WaitForCompletionAsync();
+
+            Assert.That(recoveredCertificate, Is.EqualTo(certificate).Using<KeyVaultCertificateWithPolicy>(AreEquivalent));
+        }
+
+        private static bool AreEquivalent(KeyVaultCertificateWithPolicy a, KeyVaultCertificateWithPolicy b) =>
+            string.Equals(a.Name, b.Name) &&
+            string.Equals(a.Properties.Version, b.Properties.Version) &&
+            a.Properties.CreatedOn == b.Properties.CreatedOn &&
+            string.Equals(a.Policy.Subject, b.Policy.Subject) &&
+            string.Equals(a.Policy.IssuerName, b.Policy.IssuerName) &&
+            string.Equals(a.Policy.CertificateType, b.Policy.CertificateType);
 
         public CryptographyClient GetCryptographyClient(Uri keyId) => InstrumentClient(
                 new CryptographyClient(

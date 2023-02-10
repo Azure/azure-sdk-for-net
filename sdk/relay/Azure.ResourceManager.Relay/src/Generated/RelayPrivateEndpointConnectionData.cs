@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="connectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal RelayPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, ConnectionState connectionState, EndPointProvisioningState? provisioningState, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal RelayPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, RelayPrivateLinkServiceConnectionState connectionState, RelayPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary> Details about the state of the connection. </summary>
-        public ConnectionState ConnectionState { get; set; }
+        public RelayPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>
-        public EndPointProvisioningState? ProvisioningState { get; set; }
+        public RelayPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; }
     }

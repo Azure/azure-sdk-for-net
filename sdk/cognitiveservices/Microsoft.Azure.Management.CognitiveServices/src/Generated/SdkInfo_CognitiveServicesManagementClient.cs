@@ -19,17 +19,17 @@ namespace Microsoft.Azure.Management.CognitiveServices
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("CognitiveServices", "Accounts", "2022-03-01"),
-                new Tuple<string, string, string>("CognitiveServices", "CheckDomainAvailability", "2022-03-01"),
-                new Tuple<string, string, string>("CognitiveServices", "CheckSkuAvailability", "2022-03-01"),
-                new Tuple<string, string, string>("CognitiveServices", "CommitmentPlans", "2022-03-01"),
-                new Tuple<string, string, string>("CognitiveServices", "CommitmentTiers", "2022-03-01"),
-                new Tuple<string, string, string>("CognitiveServices", "DeletedAccounts", "2022-03-01"),
-                new Tuple<string, string, string>("CognitiveServices", "Deployments", "2022-03-01"),
-                new Tuple<string, string, string>("CognitiveServices", "Operations", "2022-03-01"),
-                new Tuple<string, string, string>("CognitiveServices", "PrivateEndpointConnections", "2022-03-01"),
-                new Tuple<string, string, string>("CognitiveServices", "PrivateLinkResources", "2022-03-01"),
-                new Tuple<string, string, string>("CognitiveServices", "ResourceSkus", "2022-03-01"),
+                new Tuple<string, string, string>("CognitiveServices", "Accounts", "2022-10-01"),
+                new Tuple<string, string, string>("CognitiveServices", "CheckDomainAvailability", "2022-10-01"),
+                new Tuple<string, string, string>("CognitiveServices", "CheckSkuAvailability", "2022-10-01"),
+                new Tuple<string, string, string>("CognitiveServices", "CommitmentPlans", "2022-10-01"),
+                new Tuple<string, string, string>("CognitiveServices", "CommitmentTiers", "2022-10-01"),
+                new Tuple<string, string, string>("CognitiveServices", "DeletedAccounts", "2022-10-01"),
+                new Tuple<string, string, string>("CognitiveServices", "Deployments", "2022-10-01"),
+                new Tuple<string, string, string>("CognitiveServices", "Operations", "2022-10-01"),
+                new Tuple<string, string, string>("CognitiveServices", "PrivateEndpointConnections", "2022-10-01"),
+                new Tuple<string, string, string>("CognitiveServices", "PrivateLinkResources", "2022-10-01"),
+                new Tuple<string, string, string>("CognitiveServices", "ResourceSkus", "2022-10-01"),
               }.AsEnumerable();
           }
       }
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/cognitiveservices/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\Repos\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "ad5110c7ba2113d5f77946338231f45ac4d09c82";
+      public static readonly String GithubCommidId = "4b2f5a45a34e351e38e8b075cf1da5a775fd414a";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

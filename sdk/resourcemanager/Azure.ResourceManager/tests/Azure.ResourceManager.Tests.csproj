@@ -8,11 +8,11 @@
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.csproj" />
-    <ProjectReference Include="..\..\..\compute\Azure.ResourceManager.Compute\src\Azure.ResourceManager.Compute.csproj" />
-    <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Compute" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Unit\TestAssets\Identity\*.json">

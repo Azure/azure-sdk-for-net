@@ -1,0 +1,93 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-live-test-comm.communication.azure.com/emails:send?api-version=2021-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "282",
+        "Content-Type": "application/json",
+        "repeatability-first-sent": "Sanitized",
+        "repeatability-request-id": "Sanitized",
+        "User-Agent": "azsdk-net-Communication.Email/1.0.0-alpha.20221110.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "597880a58a68657ded14c827b1f4ec70",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 10 Nov 2022 21:16:37 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sender": "DoNotReply@3276b20a-aa29-4ec2-9cf7-b517715b101b.azurecomm.net",
+        "content": {
+          "subject": "subject",
+          "plainText": "Test"
+        },
+        "recipients": {
+          "to": [
+            {
+              "email": "acseaastesting@gmail.com",
+              "displayName": "ToAddress"
+            }
+          ],
+          "bCC": [
+            {
+              "email": "acseaastesting@gmail.com",
+              "displayName": "BccAddress"
+            }
+          ]
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-10-01-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "0",
+        "Date": "Thu, 10 Nov 2022 21:16:41 GMT",
+        "mise-correlation-id": "b08408ca-4c5f-45a6-9f39-d97435063e68",
+        "Operation-Location": "https://sdk-live-test-comm.communication.azure.com/emails/ba4ecc2d-719f-4580-8ab1-2ea41d2f51a4/status",
+        "Repeatability-Result": "accepted",
+        "x-azure-ref": "20221110T211641Z-hvb1cv81ux3d15kk2y0vp09x4g00000005k000000002cpy0",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-request-id": "ba4ecc2d-719f-4580-8ab1-2ea41d2f51a4"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://sdk-live-test-comm.communication.azure.com/emails/ba4ecc2d-719f-4580-8ab1-2ea41d2f51a4/status?api-version=2021-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Communication.Email/1.0.0-alpha.20221110.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "34130f8ae22c3b5909281cb76475f6cd",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 10 Nov 2022 21:16:38 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Accept-Ranges": "bytes",
+        "api-supported-versions": "2021-10-01-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "70",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 10 Nov 2022 21:16:41 GMT",
+        "mise-correlation-id": "900f7a79-43f5-46c4-bde5-671cf81d3302",
+        "Retry-After": "60",
+        "x-azure-ref": "20221110T211641Z-hvb1cv81ux3d15kk2y0vp09x4g00000005k000000002cq05",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "messageId": "ba4ecc2d-719f-4580-8ab1-2ea41d2f51a4",
+        "status": "Queued"
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_CONNECTION_STRING_EMAIL": "endpoint=https://sdk-live-test-comm.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "594771075",
+    "RECIPIENT_ADDRESS": "acseaastesting@gmail.com",
+    "SENDER_ADDRESS": "DoNotReply@3276b20a-aa29-4ec2-9cf7-b517715b101b.azurecomm.net"
+  }
+}

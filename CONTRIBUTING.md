@@ -8,8 +8,8 @@
 
 - Install Visual Studio 2022 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
-- Install the **.NET Core cross-platform development** workloads in VisualStudio
-- Install **.NET Core 6.0.100 SDK** for your specific platform. (or a higher version within the 6.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/6.0)
+- Install the **.NET cross-platform development** workloads in VisualStudio
+- Install **.NET 7.0.100 SDK** for your specific platform. (or a higher version within the 7.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/7.0)
 - Install the latest version of git (https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher, if you plan to make public API changes or are working with generated code snippets.
 - Install [NodeJS](https://nodejs.org/) (16.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
@@ -182,7 +182,7 @@ In some cases, you might want to test against the latest versions of the client 
 
 If you make public API changes or additions, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings. This generates a file in the library's directory similar to the example found in `sdk\template\Azure.Template\api\Azure.Template.netstandard2.0.cs`.
 
-Running the script for a project in `sdk\tables` would look like this: 
+Running the script for a project in `sdk\tables` would look like this:
 ```
 eng\scripts\Export-API.ps1 tables
 ```
@@ -191,7 +191,7 @@ eng\scripts\Export-API.ps1 tables
 If the specific client library has sample snippets in markdown format, they were most likely created with help of the `eng\scripts\Update-Snippets.ps1` script.
 Any changes made to the snippet markdown should be done via updating the corresponding C# snippet code and subsequently running the script.
 
-Running the script for a project, for example in `sdk\keyvault`, would look like this: 
+Running the script for a project, for example in `sdk\keyvault`, would look like this:
 ```
 eng\scripts\Update-Snippets.ps1 keyvault
 ```
@@ -211,13 +211,13 @@ string ignored = "this code will not appear in the snippet markdown";
 
 #endregion
 ```
- will be mapped to any markdown file with a corresponding code region in the format below where the snippet names match: 
+ will be mapped to any markdown file with a corresponding code region in the format below where the snippet names match:
 
 **\`\`\`C# Snippet:\<snippetName>**
 
 **\`\`\`**
 
-See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample01_HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md). 
+See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample01_HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md).
 Note that snippet names need to be globally unique under a given service directory.
 
 Snippets also can be integrated into XML doc comments. For example:
@@ -238,7 +238,7 @@ For general information about samples, see the [Samples Guidelines](https://azur
 
 ## Updating Source on Build
 You can run `eng\scripts\Export-API.ps1` and `eng\scripts\Update-Snippets.ps1` simultaneously as part of the build by setting as true either:
-1. The property `UpdateSourceOnBuild` 
+1. The property `UpdateSourceOnBuild`
 2. The Environment variable `AZURE_DEV_UPDATESOURCESONBUILD=true`
 
 e.g.
@@ -329,7 +329,7 @@ As you can see in the example below, we want to use the `Azure.Data.Tables` vers
 
 ## Preparing a new library release
 
-To prepare a package for release you should make use of `.\eng\common\scripts\Prepare-Release.ps1` script passing it appropriate arguments for the package intended for release. This script will correctly update the package version and changelog in the repo as well as update the DevOps release work items for that release. 
+To prepare a package for release you should make use of `.\eng\common\scripts\Prepare-Release.ps1` script passing it appropriate arguments for the package intended for release. This script will correctly update the package version and changelog in the repo as well as update the DevOps release work items for that release.
 
 ```
 .\eng\common\scripts\Prepare-Release.ps1 <PackageName> [<ServiceDirectory>] [<ReleaseDate>] [-ReleaseTrackingOnly]
@@ -419,7 +419,7 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
        {
            private const ServiceVersion Latest = ServiceVersion.V2019_06_01;
            internal static StorageManagementClientOptions Default { get; } = new StorageManagementClientOptions();
-   
+
            public StorageManagementClientOptions(ServiceVersion serviceVersion = Latest)
            {
                VersionString = serviceVersion switch
@@ -428,9 +428,9 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
                    _ => throw new ArgumentOutOfRangeException(nameof(serviceVersion))
                };
            }
-   
+
            internal string VersionString { get; }
-   
+
            public enum ServiceVersion
            {
    #pragma warning disable CA1707 // Identifiers should not contain underscores
@@ -449,7 +449,7 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
            public FileSharesClient(string subscriptionId, TokenCredential tokenCredential): this(subscriptionId, tokenCredential, StorageManagementClientOptions.Default)
            {
            }
-   
+
            public FileSharesClient(string subscriptionId, TokenCredential tokenCredential, StorageManagementClientOptions options):
                this(new ClientDiagnostics(options), ManagementClientPipeline.Build(options, tokenCredential), subscriptionId, apiVersion: options.VersionString)
            {
@@ -520,8 +520,8 @@ Once all of the above steps are met, the following process will be followed:
 
 |                          | Linux (Ubuntu 20.04) | MacOS 10.15 | Windows Server 2019 |
 | ------------------------ | :------------------: | :---------: | :-----------------: |
-| **.NET 6**               | x                    | x           | x                   |
-| **.NET Core 3.1**        | x                    | x           | x                   |
+| **.NET 7.0**             | x                    | x           | x                   |
+| **.NET 6.0**             | x                    | x           | x                   |
 | **.NET Framework 4.6.1** |                      |             | x                   |
 
 ### Issues with Generated Code
@@ -538,7 +538,7 @@ For more information on how we version see [Versioning](https://github.com/Azure
 
 ## Breaking Changes
 
-For information about breaking changes see [Breaking Change Rules](https://github.com/dotnet/corefx/blob/main/Documentation/coding-guidelines/breaking-change-rules.md).
+For information about breaking changes see [Breaking Change Rules](https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/breaking-change-rules.md).
 
 ## Debugging
 

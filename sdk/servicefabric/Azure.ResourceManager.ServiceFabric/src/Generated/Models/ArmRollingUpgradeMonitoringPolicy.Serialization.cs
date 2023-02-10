@@ -18,33 +18,33 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FailureAction))
             {
-                writer.WritePropertyName("failureAction");
+                writer.WritePropertyName("failureAction"u8);
                 writer.WriteStringValue(FailureAction.Value.ToString());
             }
             if (Optional.IsDefined(HealthCheckWaitDuration))
             {
-                writer.WritePropertyName("healthCheckWaitDuration");
+                writer.WritePropertyName("healthCheckWaitDuration"u8);
                 writer.WriteStringValue(HealthCheckWaitDuration.Value, "c");
             }
             if (Optional.IsDefined(HealthCheckStableDuration))
             {
-                writer.WritePropertyName("healthCheckStableDuration");
+                writer.WritePropertyName("healthCheckStableDuration"u8);
                 writer.WriteStringValue(HealthCheckStableDuration.Value, "c");
             }
             if (Optional.IsDefined(HealthCheckRetryTimeout))
             {
-                writer.WritePropertyName("healthCheckRetryTimeout");
-                writer.WriteStringValue(HealthCheckRetryTimeout);
+                writer.WritePropertyName("healthCheckRetryTimeout"u8);
+                writer.WriteStringValue(HealthCheckRetryTimeout.Value, "c");
             }
             if (Optional.IsDefined(UpgradeTimeout))
             {
-                writer.WritePropertyName("upgradeTimeout");
-                writer.WriteStringValue(UpgradeTimeout);
+                writer.WritePropertyName("upgradeTimeout"u8);
+                writer.WriteStringValue(UpgradeTimeout.Value, "c");
             }
             if (Optional.IsDefined(UpgradeDomainTimeout))
             {
-                writer.WritePropertyName("upgradeDomainTimeout");
-                writer.WriteStringValue(UpgradeDomainTimeout);
+                writer.WritePropertyName("upgradeDomainTimeout"u8);
+                writer.WriteStringValue(UpgradeDomainTimeout.Value, "c");
             }
             writer.WriteEndObject();
         }
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<ArmUpgradeFailureAction> failureAction = default;
             Optional<TimeSpan> healthCheckWaitDuration = default;
             Optional<TimeSpan> healthCheckStableDuration = default;
-            Optional<string> healthCheckRetryTimeout = default;
-            Optional<string> upgradeTimeout = default;
-            Optional<string> upgradeDomainTimeout = default;
+            Optional<TimeSpan> healthCheckRetryTimeout = default;
+            Optional<TimeSpan> upgradeTimeout = default;
+            Optional<TimeSpan> upgradeDomainTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("failureAction"))
+                if (property.NameEquals("failureAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     failureAction = new ArmUpgradeFailureAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthCheckWaitDuration"))
+                if (property.NameEquals("healthCheckWaitDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     healthCheckWaitDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("healthCheckStableDuration"))
+                if (property.NameEquals("healthCheckStableDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,23 +89,38 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     healthCheckStableDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("healthCheckRetryTimeout"))
+                if (property.NameEquals("healthCheckRetryTimeout"u8))
                 {
-                    healthCheckRetryTimeout = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    healthCheckRetryTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("upgradeTimeout"))
+                if (property.NameEquals("upgradeTimeout"u8))
                 {
-                    upgradeTimeout = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    upgradeTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("upgradeDomainTimeout"))
+                if (property.NameEquals("upgradeDomainTimeout"u8))
                 {
-                    upgradeDomainTimeout = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    upgradeDomainTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
             }
-            return new ArmRollingUpgradeMonitoringPolicy(Optional.ToNullable(failureAction), Optional.ToNullable(healthCheckWaitDuration), Optional.ToNullable(healthCheckStableDuration), healthCheckRetryTimeout.Value, upgradeTimeout.Value, upgradeDomainTimeout.Value);
+            return new ArmRollingUpgradeMonitoringPolicy(Optional.ToNullable(failureAction), Optional.ToNullable(healthCheckWaitDuration), Optional.ToNullable(healthCheckStableDuration), Optional.ToNullable(healthCheckRetryTimeout), Optional.ToNullable(upgradeTimeout), Optional.ToNullable(upgradeDomainTimeout));
         }
     }
 }

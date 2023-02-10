@@ -1,17 +1,26 @@
 # Release History
 
-## 1.2.0 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Added `string RawID { get; }` and `static CommunicationIdentifier FromRawId(string rawId)` to `CommunicationIdentifier` to translate between a `CommunicationIdentifier` and its underlying canonical rawId representation. Developers can now use the rawId as an encoded format for identifiers to store in their databases or as stable keys in general.
-- Always include `rawId` when serializing identifiers to wire format.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.1 (2022-11-01)
+
+### Bugs Fixed
+- Fixed the logic of `PhoneNumberIdentifier` to always maintain the original phone number string whether it included the leading + sign or not.
+
+## 1.2.0 (2022-09-01)
+
+### Features Added
+
+- Added `string RawID { get; }` and `static CommunicationIdentifier FromRawId(string rawId)` to `CommunicationIdentifier` to translate between a `CommunicationIdentifier` and its underlying canonical rawId representation. Developers can now use the rawId as an encoded format for identifiers to store in their databases or as stable keys in general.
+- Always include `rawId` when serializing identifiers to wire format.
 
 ## 1.1.0 (2022-02-23)
 - Optimization added: When the proactive refreshing is enabled and the token refresher fails to provide a token that's not about to expire soon, the subsequent refresh attempts will be scheduled for when the token reaches half of its remaining lifetime until a token with long enough validity (>10 minutes) is obtained.

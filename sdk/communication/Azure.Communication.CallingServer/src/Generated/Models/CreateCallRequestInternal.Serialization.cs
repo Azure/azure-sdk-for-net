@@ -15,22 +15,27 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targets");
+            writer.WritePropertyName("targets"u8);
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source);
             if (Optional.IsDefined(Subject))
             {
-                writer.WritePropertyName("subject");
+                writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            writer.WritePropertyName("callbackUri");
+            writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
+            if (Optional.IsDefined(MediaStreamingConfiguration))
+            {
+                writer.WritePropertyName("mediaStreamingConfiguration"u8);
+                writer.WriteObjectValue(MediaStreamingConfiguration);
+            }
             writer.WriteEndObject();
         }
     }

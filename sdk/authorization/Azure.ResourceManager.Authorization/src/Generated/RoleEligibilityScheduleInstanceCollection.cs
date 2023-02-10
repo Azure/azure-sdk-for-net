@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -45,8 +44,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets the specified role eligibility schedule instance.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}
-        /// Operation Id: RoleEligibilityScheduleInstances_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,8 +81,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets the specified role eligibility schedule instance.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}
-        /// Operation Id: RoleEligibilityScheduleInstances_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,94 +118,62 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets role eligibility schedule instances of a role eligibility schedule.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances
-        /// Operation Id: RoleEligibilityScheduleInstances_ListForScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleInstances_ListForScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo(&apos;{userId}&apos;) to return all role eligibility schedules for the user. Use $filter=asTarget() to return all role eligibility schedules created for the current user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RoleEligibilityScheduleInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleEligibilityScheduleInstanceResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RoleEligibilityScheduleInstanceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _roleEligibilityScheduleInstanceRestClient.ListForScopeAsync(Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleEligibilityScheduleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RoleEligibilityScheduleInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _roleEligibilityScheduleInstanceRestClient.ListForScopeNextPageAsync(nextLink, Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleEligibilityScheduleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleEligibilityScheduleInstanceRestClient.CreateListForScopeRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleEligibilityScheduleInstanceRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleEligibilityScheduleInstanceResource(Client, RoleEligibilityScheduleInstanceData.DeserializeRoleEligibilityScheduleInstanceData(e)), _roleEligibilityScheduleInstanceClientDiagnostics, Pipeline, "RoleEligibilityScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets role eligibility schedule instances of a role eligibility schedule.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances
-        /// Operation Id: RoleEligibilityScheduleInstances_ListForScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleInstances_ListForScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo(&apos;{userId}&apos;) to return all role eligibility schedules for the user. Use $filter=asTarget() to return all role eligibility schedules created for the current user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoleEligibilityScheduleInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleEligibilityScheduleInstanceResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<RoleEligibilityScheduleInstanceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _roleEligibilityScheduleInstanceRestClient.ListForScope(Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleEligibilityScheduleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RoleEligibilityScheduleInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _roleEligibilityScheduleInstanceRestClient.ListForScopeNextPage(nextLink, Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleEligibilityScheduleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleEligibilityScheduleInstanceRestClient.CreateListForScopeRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleEligibilityScheduleInstanceRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleEligibilityScheduleInstanceResource(Client, RoleEligibilityScheduleInstanceData.DeserializeRoleEligibilityScheduleInstanceData(e)), _roleEligibilityScheduleInstanceClientDiagnostics, Pipeline, "RoleEligibilityScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}
-        /// Operation Id: RoleEligibilityScheduleInstances_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,8 +199,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}
-        /// Operation Id: RoleEligibilityScheduleInstances_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

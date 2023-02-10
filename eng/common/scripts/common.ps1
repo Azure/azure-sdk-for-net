@@ -15,6 +15,7 @@ $EngScriptsDir = Join-Path $EngDir "scripts"
 . (Join-Path $EngCommonScriptsDir Invoke-DevOpsAPI.ps1)
 . (Join-Path $EngCommonScriptsDir artifact-metadata-parsing.ps1)
 . (Join-Path $EngCommonScriptsDir "Helpers" git-helpers.ps1)
+. (Join-Path $EngCommonScriptsDir "Helpers" Package-Helpers.ps1)
 
 # Setting expected from common languages settings
 $Language = "Unknown"
@@ -56,3 +57,6 @@ $GetDocsMsTocChildrenForManagementPackagesFn = "Get-${Language}-DocsMsTocChildre
 $UpdateDocsMsTocFn = "Get-${Language}-UpdatedDocsMsToc"
 $GetPackageLevelReadmeFn = "Get-${Language}-PackageLevelReadme"
 $GetRepositoryLinkFn = "Get-${Language}-RepositoryLink"
+$GetEmitterAdditionalOptionsFn = "Get-${Language}-EmitterAdditionalOptions"
+$GetEmitterNameFn = "Get-${Language}-EmitterName"
+$GetEmitterPackageJsonPathFn = "Get-${Language}-EmitterPackageJsonPath"

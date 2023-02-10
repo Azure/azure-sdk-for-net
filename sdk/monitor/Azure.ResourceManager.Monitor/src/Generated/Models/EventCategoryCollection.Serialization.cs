@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static EventCategoryCollection DeserializeEventCategoryCollection(JsonElement element)
         {
-            IReadOnlyList<LocalizableString> value = default;
+            IReadOnlyList<MonitorLocalizableString> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<LocalizableString> array = new List<LocalizableString>();
+                    List<MonitorLocalizableString> array = new List<MonitorLocalizableString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LocalizableString.DeserializeLocalizableString(item));
+                        array.Add(MonitorLocalizableString.DeserializeMonitorLocalizableString(item));
                     }
                     value = array;
                     continue;

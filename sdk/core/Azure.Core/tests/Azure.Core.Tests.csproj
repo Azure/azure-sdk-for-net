@@ -15,6 +15,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="System.Linq.Async" />
+    <PackageReference Include="Polly" />  
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
@@ -31,8 +32,10 @@
     <Compile Include="..\src\Shared\AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\GZipUtf8JsonRequestContent.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\HttpPipelineMessageHandler.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\NoBodyResponseOfT.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\NoValueResponseOfT.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\ObjectNotDisposedException.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\PageResponseEnumerator.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\RetriableStream.cs" LinkBase="Shared" />
@@ -41,10 +44,12 @@
     <Compile Include="..\src\Shared\ValueStopwatch.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\LightweightPkcs8Decoder.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\PemReader.cs" LinkBase="Shared" />
-    <Compile Include="..\src\Shared\TypeBinder.cs" LinkBase="Shared" /> 
+    <Compile Include="..\src\Shared\TypeBinder.cs" LinkBase="Shared" />
     <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\*.cs" LinkBase="Shared\Mgmt" />
     <Compile Include="..\..\Azure.Core.TestFramework\src\Instrumentation\ZeroPollingStrategy.cs" LinkBase="Shared\TestFramework" />
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\src\Shared\ApiVersionString.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\GuidUtilities.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="PemReaderTests.Keys.cs" DependentUpon="PemReaderTests.cs" />

@@ -100,7 +100,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// each node in the pool.</param>
         /// <param name="identity">The identity of the Batch pool, if
         /// configured.</param>
-        public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), IList<ResizeError> resizeErrors = default(IList<ResizeError>), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), BatchPoolIdentity identity = default(BatchPoolIdentity))
+        /// <param name="targetNodeCommunicationMode">The desired node
+        /// communication mode for the pool.</param>
+        /// <param name="currentNodeCommunicationMode">The current state of the
+        /// pool communication mode.</param>
+        public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), IList<ResizeError> resizeErrors = default(IList<ResizeError>), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), BatchPoolIdentity identity = default(BatchPoolIdentity), NodeCommunicationMode? targetNodeCommunicationMode = default(NodeCommunicationMode?), NodeCommunicationMode? currentNodeCommunicationMode = default(NodeCommunicationMode?))
         {
             Id = id;
             DisplayName = displayName;
@@ -138,6 +142,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             Stats = stats;
             MountConfiguration = mountConfiguration;
             Identity = identity;
+            TargetNodeCommunicationMode = targetNodeCommunicationMode;
+            CurrentNodeCommunicationMode = currentNodeCommunicationMode;
             CustomInit();
         }
 
@@ -510,6 +516,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "identity")]
         public BatchPoolIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the desired node communication mode for the pool.
+        /// </summary>
+        /// <remarks>
+        /// If omitted, the default value is Default. Possible values include:
+        /// 'default', 'classic', 'simplified'
+        /// </remarks>
+        [JsonProperty(PropertyName = "targetNodeCommunicationMode")]
+        public NodeCommunicationMode? TargetNodeCommunicationMode { get; set; }
+
+        /// <summary>
+        /// Gets the current state of the pool communication mode.
+        /// </summary>
+        /// <remarks>
+        /// Possible values include: 'default', 'classic', 'simplified'
+        /// </remarks>
+        [JsonProperty(PropertyName = "currentNodeCommunicationMode")]
+        public NodeCommunicationMode? CurrentNodeCommunicationMode { get; private set; }
 
     }
 }

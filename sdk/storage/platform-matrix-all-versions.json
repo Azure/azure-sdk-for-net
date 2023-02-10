@@ -5,14 +5,14 @@
           "OSVmImage": "MMSUbuntu20.04",
           "Pool": "azsdk-pool-mms-ubuntu-2004-storage"
       },
-      "windows-2019": {
-          "OSVmImage": "MMS2019",
+      "windows-2022": {
+          "OSVmImage": "MMS2022",
           "Pool": "azsdk-pool-mms-win-2019-storage"
       }
     },
     "TestTargetFramework": [
-        "netcoreapp3.1",
-        "net5.0"
+        "net6.0",
+        "net7.0"
     ],
     "AZURE_LIVE_TEST_SERVICE_VERSIONS": [
         "V2019_02_02",
@@ -27,7 +27,9 @@
         "V2021_02_12",
         "V2021_04_10",
         "V2021_06_08",
-        "V2021_08_06"
+        "V2021_08_06",
+        "V2021_10_04",
+        "V2021_12_02"
     ]
   }
 }

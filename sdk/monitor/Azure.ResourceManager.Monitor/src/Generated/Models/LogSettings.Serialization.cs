@@ -17,14 +17,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Category))
             {
-                writer.WritePropertyName("category");
+                writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            writer.WritePropertyName("enabled");
+            if (Optional.IsDefined(CategoryGroup))
+            {
+                writer.WritePropertyName("categoryGroup"u8);
+                writer.WriteStringValue(CategoryGroup);
+            }
+            writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(RetentionPolicy))
             {
-                writer.WritePropertyName("retentionPolicy");
+                writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
             writer.WriteEndObject();
@@ -33,21 +38,27 @@ namespace Azure.ResourceManager.Monitor.Models
         internal static LogSettings DeserializeLogSettings(JsonElement element)
         {
             Optional<string> category = default;
+            Optional<string> categoryGroup = default;
             bool enabled = default;
             Optional<RetentionPolicy> retentionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("categoryGroup"u8))
+                {
+                    categoryGroup = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("retentionPolicy"))
+                if (property.NameEquals("retentionPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new LogSettings(category.Value, enabled, retentionPolicy.Value);
+            return new LogSettings(category.Value, categoryGroup.Value, enabled, retentionPolicy.Value);
         }
     }
 }

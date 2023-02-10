@@ -27,94 +27,88 @@ namespace Azure.ResourceManager.ContainerService
             );
         }
 
-        /// <summary> Gets a collection of OSOptionProfileResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of OSOptionProfileResources and their operations over a OSOptionProfileResource. </returns>
-        public static OSOptionProfileCollection GetOSOptionProfiles(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetOSOptionProfiles();
-        }
-
         /// <summary>
-        /// Gets supported OS options in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default
-        /// Operation Id: ManagedClusters_GetOSOptions
+        /// Gets a list of managed clusters in the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static async Task<Response<OSOptionProfileResource>> GetOSOptionProfileAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceType = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetOSOptionProfiles().GetAsync(location, resourceType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets supported OS options in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default
-        /// Operation Id: ManagedClusters_GetOSOptions
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static Response<OSOptionProfileResource> GetOSOptionProfile(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceType = null, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetOSOptionProfiles().Get(location, resourceType, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetContainerServiceManagedClustersAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of managed clusters in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedClusters
-        /// Operation Id: ManagedClusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedClusterResource> GetManagedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetManagedClustersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of managed clusters in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedClusters
-        /// Operation Id: ManagedClusters_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedClusterResource> GetManagedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetManagedClusters(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetContainerServiceManagedClusters(cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of snapshots in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/snapshots
-        /// Operation Id: Snapshots_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/snapshots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SnapshotResource> GetSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AgentPoolSnapshotResource> GetAgentPoolSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSnapshotsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAgentPoolSnapshotsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of snapshots in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/snapshots
-        /// Operation Id: Snapshots_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/snapshots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SnapshotResource> GetSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AgentPoolSnapshotResource> GetAgentPoolSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSnapshots(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAgentPoolSnapshots(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -126,18 +120,26 @@ namespace Azure.ResourceManager.ContainerService
             );
         }
 
-        /// <summary> Gets a collection of ManagedClusterResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ContainerServiceManagedClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ManagedClusterResources and their operations over a ManagedClusterResource. </returns>
-        public static ManagedClusterCollection GetManagedClusters(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ContainerServiceManagedClusterResources and their operations over a ContainerServiceManagedClusterResource. </returns>
+        public static ContainerServiceManagedClusterCollection GetContainerServiceManagedClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetManagedClusters();
+            return GetExtensionClient(resourceGroupResource).GetContainerServiceManagedClusters();
         }
 
         /// <summary>
         /// Gets a managed cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}
-        /// Operation Id: ManagedClusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
@@ -145,15 +147,23 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ManagedClusterResource>> GetManagedClusterAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerServiceManagedClusterResource>> GetContainerServiceManagedClusterAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetManagedClusters().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetContainerServiceManagedClusters().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a managed cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}
-        /// Operation Id: ManagedClusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
@@ -161,39 +171,31 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ManagedClusterResource> GetManagedCluster(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<ContainerServiceManagedClusterResource> GetContainerServiceManagedCluster(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetManagedClusters().Get(resourceName, cancellationToken);
+            return resourceGroupResource.GetContainerServiceManagedClusters().Get(resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SnapshotResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of AgentPoolSnapshotResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
-        public static SnapshotCollection GetSnapshots(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AgentPoolSnapshotResources and their operations over a AgentPoolSnapshotResource. </returns>
+        public static AgentPoolSnapshotCollection GetAgentPoolSnapshots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetSnapshots();
-        }
-
-        /// <summary>
-        /// Gets a snapshot.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/snapshots/{resourceName}
-        /// Operation Id: Snapshots_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SnapshotResource>> GetSnapshotAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetSnapshots().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return GetExtensionClient(resourceGroupResource).GetAgentPoolSnapshots();
         }
 
         /// <summary>
         /// Gets a snapshot.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/snapshots/{resourceName}
-        /// Operation Id: Snapshots_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/snapshots/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
@@ -201,9 +203,33 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SnapshotResource> GetSnapshot(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AgentPoolSnapshotResource>> GetAgentPoolSnapshotAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSnapshots().Get(resourceName, cancellationToken);
+            return await resourceGroupResource.GetAgentPoolSnapshots().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a snapshot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/snapshots/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the managed cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AgentPoolSnapshotResource> GetAgentPoolSnapshot(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetAgentPoolSnapshots().Get(resourceName, cancellationToken);
         }
 
         #region OSOptionProfileResource
@@ -244,58 +270,58 @@ namespace Azure.ResourceManager.ContainerService
         }
         #endregion
 
-        #region ManagedClusterResource
+        #region ContainerServiceManagedClusterResource
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ManagedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerServiceManagedClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerServiceManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceManagedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedClusterResource" /> object. </returns>
-        public static ManagedClusterResource GetManagedClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerServiceManagedClusterResource" /> object. </returns>
+        public static ContainerServiceManagedClusterResource GetContainerServiceManagedClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedClusterResource.ValidateResourceId(id);
-                return new ManagedClusterResource(client, id);
+                ContainerServiceManagedClusterResource.ValidateResourceId(id);
+                return new ContainerServiceManagedClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MaintenanceConfigurationResource
+        #region ContainerServiceMaintenanceConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="MaintenanceConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerServiceMaintenanceConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerServiceMaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceMaintenanceConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceConfigurationResource" /> object. </returns>
-        public static MaintenanceConfigurationResource GetMaintenanceConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerServiceMaintenanceConfigurationResource" /> object. </returns>
+        public static ContainerServiceMaintenanceConfigurationResource GetContainerServiceMaintenanceConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MaintenanceConfigurationResource.ValidateResourceId(id);
-                return new MaintenanceConfigurationResource(client, id);
+                ContainerServiceMaintenanceConfigurationResource.ValidateResourceId(id);
+                return new ContainerServiceMaintenanceConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AgentPoolResource
+        #region ContainerServiceAgentPoolResource
         /// <summary>
-        /// Gets an object representing an <see cref="AgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AgentPoolResource.CreateResourceIdentifier" /> to create an <see cref="AgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerServiceAgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerServiceAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceAgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AgentPoolResource" /> object. </returns>
-        public static AgentPoolResource GetAgentPoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerServiceAgentPoolResource" /> object. </returns>
+        public static ContainerServiceAgentPoolResource GetContainerServiceAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AgentPoolResource.ValidateResourceId(id);
-                return new AgentPoolResource(client, id);
+                ContainerServiceAgentPoolResource.ValidateResourceId(id);
+                return new ContainerServiceAgentPoolResource(client, id);
             }
             );
         }
@@ -339,20 +365,20 @@ namespace Azure.ResourceManager.ContainerService
         }
         #endregion
 
-        #region SnapshotResource
+        #region AgentPoolSnapshotResource
         /// <summary>
-        /// Gets an object representing a <see cref="SnapshotResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AgentPoolSnapshotResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AgentPoolSnapshotResource.CreateResourceIdentifier" /> to create an <see cref="AgentPoolSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SnapshotResource" /> object. </returns>
-        public static SnapshotResource GetSnapshotResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AgentPoolSnapshotResource" /> object. </returns>
+        public static AgentPoolSnapshotResource GetAgentPoolSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SnapshotResource.ValidateResourceId(id);
-                return new SnapshotResource(client, id);
+                AgentPoolSnapshotResource.ValidateResourceId(id);
+                return new AgentPoolSnapshotResource(client, id);
             }
             );
         }

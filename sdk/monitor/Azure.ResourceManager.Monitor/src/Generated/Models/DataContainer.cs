@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -15,17 +16,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of DataContainer. </summary>
         /// <param name="workspace"> Log Analytics workspace information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspace"/> is null. </exception>
-        public DataContainer(WorkspaceInfo workspace)
+        internal DataContainer(DataContainerWorkspace workspace)
         {
-            if (workspace == null)
-            {
-                throw new ArgumentNullException(nameof(workspace));
-            }
+            Argument.AssertNotNull(workspace, nameof(workspace));
 
             Workspace = workspace;
         }
 
         /// <summary> Log Analytics workspace information. </summary>
-        public WorkspaceInfo Workspace { get; set; }
+        public DataContainerWorkspace Workspace { get; }
     }
 }

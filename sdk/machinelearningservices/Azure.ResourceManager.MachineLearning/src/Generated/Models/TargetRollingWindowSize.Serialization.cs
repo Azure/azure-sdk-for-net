@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("mode");
+            writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
             writer.WriteEndObject();
         }
@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Custom": return CustomTargetRollingWindowSize.DeserializeCustomTargetRollingWindowSize(element);
                 }
             }
-            TargetRollingWindowSizeMode mode = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("mode"))
-                {
-                    mode = new TargetRollingWindowSizeMode(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new TargetRollingWindowSize(mode);
+            return UnknownTargetRollingWindowSize.DeserializeUnknownTargetRollingWindowSize(element);
         }
     }
 }

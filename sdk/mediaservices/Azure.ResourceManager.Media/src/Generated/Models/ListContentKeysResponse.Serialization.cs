@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ListContentKeysResponse
+    internal partial class ListContentKeysResponse
     {
         internal static ListContentKeysResponse DeserializeListContentKeysResponse(JsonElement element)
         {
             Optional<IReadOnlyList<StreamingLocatorContentKey>> contentKeys = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contentKeys"))
+                if (property.NameEquals("contentKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

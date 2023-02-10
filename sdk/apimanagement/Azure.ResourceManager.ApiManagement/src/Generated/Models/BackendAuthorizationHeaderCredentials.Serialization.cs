@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("scheme");
+            writer.WritePropertyName("scheme"u8);
             writer.WriteStringValue(Scheme);
-            writer.WritePropertyName("parameter");
+            writer.WritePropertyName("parameter"u8);
             writer.WriteStringValue(Parameter);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string parameter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scheme"))
+                if (property.NameEquals("scheme"u8))
                 {
                     scheme = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameter"))
+                if (property.NameEquals("parameter"u8))
                 {
                     parameter = property.Value.GetString();
                     continue;

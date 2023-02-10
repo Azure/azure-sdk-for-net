@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,6 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+    // Data plane generated client.
     /// <summary> The PlantingData service client. </summary>
     public partial class PlantingDataClient
     {
@@ -70,52 +69,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>PlantingData</c>:
-        /// <code>{
-        ///   avgPlantingRate: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   plantingProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Planting product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PlantingDataClient.xml" path="doc/members/member[@name='GetPlantingDataAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetPlantingDataAsync(string farmerId, string plantingDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -143,52 +97,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>PlantingData</c>:
-        /// <code>{
-        ///   avgPlantingRate: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   plantingProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Planting product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PlantingDataClient.xml" path="doc/members/member[@name='GetPlantingData(String,String,RequestContext)']/*" />
         public virtual Response GetPlantingData(string farmerId, string plantingDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -217,94 +126,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>PlantingData</c>:
-        /// <code>{
-        ///   avgPlantingRate: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   plantingProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Planting product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>PlantingData</c>:
-        /// <code>{
-        ///   avgPlantingRate: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   plantingProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Planting product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PlantingDataClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string plantingDataId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -333,94 +155,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>PlantingData</c>:
-        /// <code>{
-        ///   avgPlantingRate: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   plantingProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Planting product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>PlantingData</c>:
-        /// <code>{
-        ///   avgPlantingRate: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   plantingProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Planting product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PlantingDataClient.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string farmerId, string plantingDataId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -448,6 +183,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PlantingDataClient.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string farmerId, string plantingDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -475,6 +211,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PlantingDataClient.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
         public virtual Response Delete(string farmerId, string plantingDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -534,74 +271,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>PlantingDataListResponseValue</c>:
-        /// <code>{
-        ///   avgPlantingRate: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   plantingProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Planting product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PlantingDataClient.xml" path="doc/members/member[@name='GetAllPlantingDataByFarmerIdAsync(String,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllPlantingDataByFarmerIdAsync(string farmerId, double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return GetAllPlantingDataByFarmerIdImplementationAsync("PlantingDataClient.GetAllPlantingDataByFarmerId", farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAllPlantingDataByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, double? minAvgPlantingRate, double? maxAvgPlantingRate, double? minTotalMaterial, double? maxTotalMaterial, double? minAvgMaterial, double? maxAvgMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllPlantingDataByFarmerIdRequest(farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllPlantingDataByFarmerIdNextPageRequest(nextLink, farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllPlantingDataByFarmerIdRequest(farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllPlantingDataByFarmerIdNextPageRequest(nextLink, farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantingDataClient.GetAllPlantingDataByFarmerId", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of planting data resources under a particular farm. </summary>
@@ -644,74 +321,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>PlantingDataListResponseValue</c>:
-        /// <code>{
-        ///   avgPlantingRate: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   plantingProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Planting product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PlantingDataClient.xml" path="doc/members/member[@name='GetAllPlantingDataByFarmerId(String,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllPlantingDataByFarmerId(string farmerId, double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return GetAllPlantingDataByFarmerIdImplementation("PlantingDataClient.GetAllPlantingDataByFarmerId", farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetAllPlantingDataByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, double? minAvgPlantingRate, double? maxAvgPlantingRate, double? minTotalMaterial, double? maxTotalMaterial, double? minAvgMaterial, double? maxAvgMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllPlantingDataByFarmerIdRequest(farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllPlantingDataByFarmerIdNextPageRequest(nextLink, farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllPlantingDataByFarmerIdRequest(farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllPlantingDataByFarmerIdNextPageRequest(nextLink, farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantingDataClient.GetAllPlantingDataByFarmerId", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of planting data resources across all farmers. </summary>
@@ -751,72 +368,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>PlantingDataListResponseValue</c>:
-        /// <code>{
-        ///   avgPlantingRate: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   plantingProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Planting product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PlantingDataClient.xml" path="doc/members/member[@name='GetAllPlantingDataAsync(Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllPlantingDataAsync(double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetAllPlantingDataImplementationAsync("PlantingDataClient.GetAllPlantingData", minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAllPlantingDataImplementationAsync(string diagnosticsScopeName, double? minAvgPlantingRate, double? maxAvgPlantingRate, double? minTotalMaterial, double? maxTotalMaterial, double? minAvgMaterial, double? maxAvgMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllPlantingDataRequest(minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllPlantingDataNextPageRequest(nextLink, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllPlantingDataRequest(minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllPlantingDataNextPageRequest(nextLink, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantingDataClient.GetAllPlantingData", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of planting data resources across all farmers. </summary>
@@ -856,72 +413,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>PlantingDataListResponseValue</c>:
-        /// <code>{
-        ///   avgPlantingRate: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   plantingProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Planting product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PlantingDataClient.xml" path="doc/members/member[@name='GetAllPlantingData(Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllPlantingData(double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetAllPlantingDataImplementation("PlantingDataClient.GetAllPlantingData", minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetAllPlantingDataImplementation(string diagnosticsScopeName, double? minAvgPlantingRate, double? maxAvgPlantingRate, double? minTotalMaterial, double? maxTotalMaterial, double? minAvgMaterial, double? maxAvgMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllPlantingDataRequest(minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllPlantingDataNextPageRequest(nextLink, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllPlantingDataRequest(minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllPlantingDataNextPageRequest(nextLink, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantingDataClient.GetAllPlantingData", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetAllPlantingDataByFarmerIdRequest(string farmerId, double? minAvgPlantingRate, double? maxAvgPlantingRate, double? minTotalMaterial, double? maxTotalMaterial, double? minAvgMaterial, double? maxAvgMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)

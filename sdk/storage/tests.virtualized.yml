@@ -1,0 +1,26 @@
+trigger: none
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: storage
+    TimeoutInMinutes: 180
+    MatrixReplace:
+      # Use dedicated storage pool in canadacentral with higher memory capacity
+      - Pool=(.*)-general/$1-storage
+    MatrixConfigs:
+      - Name: Storage_virtualized
+        Path: sdk/storage/platform-matrix-virtualized.json
+        Selection: sparse
+        GenerateVMJobs: true
+    EnvVars:
+      AZURE_ONLY_TEST_LATEST_SERVICE_VERSION: true
+    DeployTestResources: false
+    TestSetupSteps:
+      - template: /sdk/storage/tests-install-azurite.yml
+      - pwsh: |
+          $config = @'
+            $(live-test-config-net-virtualized-xml)
+          '@
+          sdk/storage/set-test-configuration.ps1 -TestConfigurationXmlContent $config
+        displayName: Set Static Test Configuration

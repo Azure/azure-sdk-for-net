@@ -32,6 +32,7 @@ namespace Azure.AI.TextAnalytics.Models
         private const string CustomEntityRecognitionLROResultsValue = "CustomEntityRecognitionLROResults";
         private const string CustomSingleLabelClassificationLROResultsValue = "CustomSingleLabelClassificationLROResults";
         private const string CustomMultiLabelClassificationLROResultsValue = "CustomMultiLabelClassificationLROResults";
+        private const string AbstractiveSummarizationLROResultsValue = "AbstractiveSummarizationLROResults";
 
         /// <summary> SentimentAnalysisLROResults. </summary>
         public static AnalyzeTextLROResultsKind SentimentAnalysisLROResults { get; } = new AnalyzeTextLROResultsKind(SentimentAnalysisLROResultsValue);
@@ -53,6 +54,8 @@ namespace Azure.AI.TextAnalytics.Models
         public static AnalyzeTextLROResultsKind CustomSingleLabelClassificationLROResults { get; } = new AnalyzeTextLROResultsKind(CustomSingleLabelClassificationLROResultsValue);
         /// <summary> CustomMultiLabelClassificationLROResults. </summary>
         public static AnalyzeTextLROResultsKind CustomMultiLabelClassificationLROResults { get; } = new AnalyzeTextLROResultsKind(CustomMultiLabelClassificationLROResultsValue);
+        /// <summary> AbstractiveSummarizationLROResults. </summary>
+        public static AnalyzeTextLROResultsKind AbstractiveSummarizationLROResults { get; } = new AnalyzeTextLROResultsKind(AbstractiveSummarizationLROResultsValue);
         /// <summary> Determines if two <see cref="AnalyzeTextLROResultsKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeTextLROResultsKind left, AnalyzeTextLROResultsKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeTextLROResultsKind"/> values are not the same. </summary>

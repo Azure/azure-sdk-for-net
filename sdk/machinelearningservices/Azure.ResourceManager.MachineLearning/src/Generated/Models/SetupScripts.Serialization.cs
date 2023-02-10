@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Scripts))
             {
-                writer.WritePropertyName("scripts");
+                writer.WritePropertyName("scripts"u8);
                 writer.WriteObjectValue(Scripts);
             }
             writer.WriteEndObject();
@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static SetupScripts DeserializeSetupScripts(JsonElement element)
         {
-            Optional<ScriptsToExecute> scripts = default;
+            Optional<MachineLearningScriptsToExecute> scripts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scripts"))
+                if (property.NameEquals("scripts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scripts = ScriptsToExecute.DeserializeScriptsToExecute(property.Value);
+                    scripts = MachineLearningScriptsToExecute.DeserializeMachineLearningScriptsToExecute(property.Value);
                     continue;
                 }
             }

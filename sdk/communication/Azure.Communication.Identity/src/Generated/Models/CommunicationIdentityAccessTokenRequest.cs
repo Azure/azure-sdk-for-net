@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication.Identity;
+using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
 {
@@ -20,15 +21,14 @@ namespace Azure.Communication.Identity.Models
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> is null. </exception>
         public CommunicationIdentityAccessTokenRequest(IEnumerable<CommunicationTokenScope> scopes)
         {
-            if (scopes == null)
-            {
-                throw new ArgumentNullException(nameof(scopes));
-            }
+            Argument.AssertNotNull(scopes, nameof(scopes));
 
             Scopes = scopes.ToList();
         }
 
         /// <summary> List of scopes attached to the token. </summary>
         public IList<CommunicationTokenScope> Scopes { get; }
+        /// <summary> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </summary>
+        public int? ExpiresInMinutes { get; set; }
     }
 }

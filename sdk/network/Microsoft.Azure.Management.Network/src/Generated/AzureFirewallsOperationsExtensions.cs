@@ -253,6 +253,48 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Retrieves a list of all IP prefixes that azure firewall has learned to not
+            /// SNAT.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='azureFirewallName'>
+            /// The name of the azure firewall.
+            /// </param>
+            public static IPPrefixesList ListLearnedPrefixes(this IAzureFirewallsOperations operations, string resourceGroupName, string azureFirewallName)
+            {
+                return operations.ListLearnedPrefixesAsync(resourceGroupName, azureFirewallName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves a list of all IP prefixes that azure firewall has learned to not
+            /// SNAT.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='azureFirewallName'>
+            /// The name of the azure firewall.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPPrefixesList> ListLearnedPrefixesAsync(this IAzureFirewallsOperations operations, string resourceGroupName, string azureFirewallName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListLearnedPrefixesWithHttpMessagesAsync(resourceGroupName, azureFirewallName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes the specified Azure Firewall.
             /// </summary>
             /// <param name='operations'>
@@ -376,6 +418,48 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<AzureFirewall> BeginUpdateTagsAsync(this IAzureFirewallsOperations operations, string resourceGroupName, string azureFirewallName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, azureFirewallName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves a list of all IP prefixes that azure firewall has learned to not
+            /// SNAT.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='azureFirewallName'>
+            /// The name of the azure firewall.
+            /// </param>
+            public static IPPrefixesList BeginListLearnedPrefixes(this IAzureFirewallsOperations operations, string resourceGroupName, string azureFirewallName)
+            {
+                return operations.BeginListLearnedPrefixesAsync(resourceGroupName, azureFirewallName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves a list of all IP prefixes that azure firewall has learned to not
+            /// SNAT.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='azureFirewallName'>
+            /// The name of the azure firewall.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPPrefixesList> BeginListLearnedPrefixesAsync(this IAzureFirewallsOperations operations, string resourceGroupName, string azureFirewallName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginListLearnedPrefixesWithHttpMessagesAsync(resourceGroupName, azureFirewallName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

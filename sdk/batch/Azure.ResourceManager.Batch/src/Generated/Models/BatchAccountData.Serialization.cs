@@ -13,47 +13,96 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    public partial class BatchAccountData
+    public partial class BatchAccountData : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                if (PublicNetworkAccess != null)
+                {
+                    writer.WritePropertyName("publicNetworkAccess"u8);
+                    writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("publicNetworkAccess");
+                }
+            }
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                if (NetworkProfile != null)
+                {
+                    writer.WritePropertyName("networkProfile"u8);
+                    writer.WriteObjectValue(NetworkProfile);
+                }
+                else
+                {
+                    writer.WriteNull("networkProfile");
+                }
+            }
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+        }
+
         internal static BatchAccountData DeserializeBatchAccountData(JsonElement element)
         {
-            Optional<BatchAccountIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> accountEndpoint = default;
             Optional<string> nodeManagementEndpoint = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<PoolAllocationMode> poolAllocationMode = default;
-            Optional<KeyVaultReference> keyVaultReference = default;
-            Optional<PublicNetworkAccessType?> publicNetworkAccess = default;
-            Optional<BatchVirtualMachineNetworkProfile> networkProfile = default;
+            Optional<BatchProvisioningState> provisioningState = default;
+            Optional<BatchAccountPoolAllocationMode> poolAllocationMode = default;
+            Optional<BatchKeyVaultReference> keyVaultReference = default;
+            Optional<BatchPublicNetworkAccess?> publicNetworkAccess = default;
+            Optional<BatchNetworkProfile> networkProfile = default;
             Optional<IReadOnlyList<BatchPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<AutoStorageProperties> autoStorage = default;
-            Optional<Models.EncryptionProperties> encryption = default;
+            Optional<BatchAccountAutoStorageConfiguration> autoStorage = default;
+            Optional<BatchAccountEncryptionConfiguration> encryption = default;
             Optional<int?> dedicatedCoreQuota = default;
             Optional<int?> lowPriorityCoreQuota = default;
-            Optional<IReadOnlyList<VirtualMachineFamilyCoreQuota>> dedicatedCoreQuotaPerVmFamily = default;
+            Optional<IReadOnlyList<BatchVmFamilyCoreQuota>> dedicatedCoreQuotaPerVmFamily = default;
             Optional<bool> dedicatedCoreQuotaPerVmFamilyEnforced = default;
             Optional<int> poolQuota = default;
             Optional<int> activeJobAndJobScheduleQuota = default;
-            Optional<IReadOnlyList<AuthenticationMode>> allowedAuthenticationModes = default;
+            Optional<IReadOnlyList<BatchAuthenticationMode>> allowedAuthenticationModes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = BatchAccountIdentity.DeserializeBatchAccountIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +112,7 @@ namespace Azure.ResourceManager.Batch
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,32 +127,32 @@ namespace Azure.ResourceManager.Batch
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,67 +161,67 @@ namespace Azure.ResourceManager.Batch
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("accountEndpoint"))
+                        if (property0.NameEquals("accountEndpoint"u8))
                         {
                             accountEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeManagementEndpoint"))
+                        if (property0.NameEquals("nodeManagementEndpoint"u8))
                         {
                             nodeManagementEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToProvisioningState();
+                            provisioningState = new BatchProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("poolAllocationMode"))
+                        if (property0.NameEquals("poolAllocationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            poolAllocationMode = property0.Value.GetString().ToPoolAllocationMode();
+                            poolAllocationMode = property0.Value.GetString().ToBatchAccountPoolAllocationMode();
                             continue;
                         }
-                        if (property0.NameEquals("keyVaultReference"))
+                        if (property0.NameEquals("keyVaultReference"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            keyVaultReference = KeyVaultReference.DeserializeKeyVaultReference(property0.Value);
+                            keyVaultReference = BatchKeyVaultReference.DeserializeBatchKeyVaultReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 publicNetworkAccess = null;
                                 continue;
                             }
-                            publicNetworkAccess = property0.Value.GetString().ToPublicNetworkAccessType();
+                            publicNetworkAccess = property0.Value.GetString().ToBatchPublicNetworkAccess();
                             continue;
                         }
-                        if (property0.NameEquals("networkProfile"))
+                        if (property0.NameEquals("networkProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 networkProfile = null;
                                 continue;
                             }
-                            networkProfile = BatchVirtualMachineNetworkProfile.DeserializeBatchVirtualMachineNetworkProfile(property0.Value);
+                            networkProfile = BatchNetworkProfile.DeserializeBatchNetworkProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -187,27 +236,27 @@ namespace Azure.ResourceManager.Batch
                             privateEndpointConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("autoStorage"))
+                        if (property0.NameEquals("autoStorage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoStorage = AutoStorageProperties.DeserializeAutoStorageProperties(property0.Value);
+                            autoStorage = BatchAccountAutoStorageConfiguration.DeserializeBatchAccountAutoStorageConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("encryption"))
+                        if (property0.NameEquals("encryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            encryption = BatchAccountEncryptionConfiguration.DeserializeBatchAccountEncryptionConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("dedicatedCoreQuota"))
+                        if (property0.NameEquals("dedicatedCoreQuota"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -217,7 +266,7 @@ namespace Azure.ResourceManager.Batch
                             dedicatedCoreQuota = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("lowPriorityCoreQuota"))
+                        if (property0.NameEquals("lowPriorityCoreQuota"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -227,22 +276,22 @@ namespace Azure.ResourceManager.Batch
                             lowPriorityCoreQuota = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("dedicatedCoreQuotaPerVMFamily"))
+                        if (property0.NameEquals("dedicatedCoreQuotaPerVMFamily"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 dedicatedCoreQuotaPerVmFamily = null;
                                 continue;
                             }
-                            List<VirtualMachineFamilyCoreQuota> array = new List<VirtualMachineFamilyCoreQuota>();
+                            List<BatchVmFamilyCoreQuota> array = new List<BatchVmFamilyCoreQuota>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualMachineFamilyCoreQuota.DeserializeVirtualMachineFamilyCoreQuota(item));
+                                array.Add(BatchVmFamilyCoreQuota.DeserializeBatchVmFamilyCoreQuota(item));
                             }
                             dedicatedCoreQuotaPerVmFamily = array;
                             continue;
                         }
-                        if (property0.NameEquals("dedicatedCoreQuotaPerVMFamilyEnforced"))
+                        if (property0.NameEquals("dedicatedCoreQuotaPerVMFamilyEnforced"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -252,7 +301,7 @@ namespace Azure.ResourceManager.Batch
                             dedicatedCoreQuotaPerVmFamilyEnforced = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("poolQuota"))
+                        if (property0.NameEquals("poolQuota"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -262,7 +311,7 @@ namespace Azure.ResourceManager.Batch
                             poolQuota = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("activeJobAndJobScheduleQuota"))
+                        if (property0.NameEquals("activeJobAndJobScheduleQuota"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -272,17 +321,17 @@ namespace Azure.ResourceManager.Batch
                             activeJobAndJobScheduleQuota = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("allowedAuthenticationModes"))
+                        if (property0.NameEquals("allowedAuthenticationModes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                allowedAuthenticationModes = null;
                                 continue;
                             }
-                            List<AuthenticationMode> array = new List<AuthenticationMode>();
+                            List<BatchAuthenticationMode> array = new List<BatchAuthenticationMode>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString().ToAuthenticationMode());
+                                array.Add(item.GetString().ToBatchAuthenticationMode());
                             }
                             allowedAuthenticationModes = array;
                             continue;
@@ -291,7 +340,7 @@ namespace Azure.ResourceManager.Batch
                     continue;
                 }
             }
-            return new BatchAccountData(id, name, type, systemData.Value, identity.Value, accountEndpoint.Value, nodeManagementEndpoint.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, Optional.ToList(privateEndpointConnections), autoStorage.Value, encryption.Value, Optional.ToNullable(dedicatedCoreQuota), Optional.ToNullable(lowPriorityCoreQuota), Optional.ToList(dedicatedCoreQuotaPerVmFamily), Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced), Optional.ToNullable(poolQuota), Optional.ToNullable(activeJobAndJobScheduleQuota), Optional.ToList(allowedAuthenticationModes), Optional.ToNullable(location), Optional.ToDictionary(tags));
+            return new BatchAccountData(id, name, type, systemData.Value, identity, accountEndpoint.Value, nodeManagementEndpoint.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, Optional.ToList(privateEndpointConnections), autoStorage.Value, encryption.Value, Optional.ToNullable(dedicatedCoreQuota), Optional.ToNullable(lowPriorityCoreQuota), Optional.ToList(dedicatedCoreQuotaPerVmFamily), Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced), Optional.ToNullable(poolQuota), Optional.ToNullable(activeJobAndJobScheduleQuota), Optional.ToList(allowedAuthenticationModes), Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

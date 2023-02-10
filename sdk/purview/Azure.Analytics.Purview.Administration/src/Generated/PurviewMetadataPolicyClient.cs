@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,6 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Administration
 {
+    // Data plane generated client.
     /// <summary> The PurviewMetadataPolicy service client. </summary>
     public partial class PurviewMetadataPolicyClient
     {
@@ -44,76 +42,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>MetadataPolicy</c>:
-        /// <code>{
-        ///   name: string, # Optional. The name of policy
-        ///   id: string, # Optional. The id of policy
-        ///   version: number, # Optional. The version of policy
-        ///   properties: {
-        ///     description: string, # Optional. The description of policy
-        ///     decisionRules: [
-        ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-        ///       }
-        ///     ], # Optional. The DecisionRules of policy
-        ///     attributeRules: [
-        ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        ///         id: string, # Optional. The id for rule
-        ///         name: string, # Optional. The name for rule
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-        ///       }
-        ///     ], # Optional. The AttributeRules of policy
-        ///     collection: {
-        ///       type: string, # Optional. The type of reference
-        ///       referenceName: string, # Optional. The name of reference
-        ///     }, # Optional. The collection reference for a policy
-        ///     parentCollectionName: string, # Optional. The parent collection of the policy
-        ///   }, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>MetadataPolicy</c>:
-        /// <code>{
-        ///   name: string, # Optional. The name of policy
-        ///   id: string, # Optional. The id of policy
-        ///   version: number, # Optional. The version of policy
-        ///   properties: {
-        ///     description: string, # Optional. The description of policy
-        ///     decisionRules: [
-        ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-        ///       }
-        ///     ], # Optional. The DecisionRules of policy
-        ///     attributeRules: [
-        ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        ///         id: string, # Optional. The id for rule
-        ///         name: string, # Optional. The name for rule
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-        ///       }
-        ///     ], # Optional. The AttributeRules of policy
-        ///     collection: {
-        ///       type: string, # Optional. The type of reference
-        ///       referenceName: string, # Optional. The name of reference
-        ///     }, # Optional. The collection reference for a policy
-        ///     parentCollectionName: string, # Optional. The parent collection of the policy
-        ///   }, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='UpdateMetadataPolicyAsync(String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
@@ -140,76 +69,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>MetadataPolicy</c>:
-        /// <code>{
-        ///   name: string, # Optional. The name of policy
-        ///   id: string, # Optional. The id of policy
-        ///   version: number, # Optional. The version of policy
-        ///   properties: {
-        ///     description: string, # Optional. The description of policy
-        ///     decisionRules: [
-        ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-        ///       }
-        ///     ], # Optional. The DecisionRules of policy
-        ///     attributeRules: [
-        ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        ///         id: string, # Optional. The id for rule
-        ///         name: string, # Optional. The name for rule
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-        ///       }
-        ///     ], # Optional. The AttributeRules of policy
-        ///     collection: {
-        ///       type: string, # Optional. The type of reference
-        ///       referenceName: string, # Optional. The name of reference
-        ///     }, # Optional. The collection reference for a policy
-        ///     parentCollectionName: string, # Optional. The parent collection of the policy
-        ///   }, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>MetadataPolicy</c>:
-        /// <code>{
-        ///   name: string, # Optional. The name of policy
-        ///   id: string, # Optional. The id of policy
-        ///   version: number, # Optional. The version of policy
-        ///   properties: {
-        ///     description: string, # Optional. The description of policy
-        ///     decisionRules: [
-        ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-        ///       }
-        ///     ], # Optional. The DecisionRules of policy
-        ///     attributeRules: [
-        ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        ///         id: string, # Optional. The id for rule
-        ///         name: string, # Optional. The name for rule
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-        ///       }
-        ///     ], # Optional. The AttributeRules of policy
-        ///     collection: {
-        ///       type: string, # Optional. The type of reference
-        ///       referenceName: string, # Optional. The name of reference
-        ///     }, # Optional. The collection reference for a policy
-        ///     parentCollectionName: string, # Optional. The parent collection of the policy
-        ///   }, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='UpdateMetadataPolicy(String,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
@@ -235,43 +95,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>MetadataPolicy</c>:
-        /// <code>{
-        ///   name: string, # Optional. The name of policy
-        ///   id: string, # Optional. The id of policy
-        ///   version: number, # Optional. The version of policy
-        ///   properties: {
-        ///     description: string, # Optional. The description of policy
-        ///     decisionRules: [
-        ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-        ///       }
-        ///     ], # Optional. The DecisionRules of policy
-        ///     attributeRules: [
-        ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        ///         id: string, # Optional. The id for rule
-        ///         name: string, # Optional. The name for rule
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-        ///       }
-        ///     ], # Optional. The AttributeRules of policy
-        ///     collection: {
-        ///       type: string, # Optional. The type of reference
-        ///       referenceName: string, # Optional. The name of reference
-        ///     }, # Optional. The collection reference for a policy
-        ///     parentCollectionName: string, # Optional. The parent collection of the policy
-        ///   }, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='GetMetadataPolicyAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetMetadataPolicyAsync(string policyId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
@@ -297,43 +121,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>MetadataPolicy</c>:
-        /// <code>{
-        ///   name: string, # Optional. The name of policy
-        ///   id: string, # Optional. The id of policy
-        ///   version: number, # Optional. The version of policy
-        ///   properties: {
-        ///     description: string, # Optional. The description of policy
-        ///     decisionRules: [
-        ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-        ///       }
-        ///     ], # Optional. The DecisionRules of policy
-        ///     attributeRules: [
-        ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
-        ///         id: string, # Optional. The id for rule
-        ///         name: string, # Optional. The name for rule
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-        ///       }
-        ///     ], # Optional. The AttributeRules of policy
-        ///     collection: {
-        ///       type: string, # Optional. The type of reference
-        ///       referenceName: string, # Optional. The name of reference
-        ///     }, # Optional. The collection reference for a policy
-        ///     parentCollectionName: string, # Optional. The parent collection of the policy
-        ///   }, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='GetMetadataPolicy(String,RequestContext)']/*" />
         public virtual Response GetMetadataPolicy(string policyId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
@@ -356,52 +144,24 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='GetMetadataPoliciesAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetMetadataPoliciesAsync(RequestContext context = null)
         {
-            return GetMetadataPoliciesImplementationAsync("PurviewMetadataPolicyClient.GetMetadataPolicies", context);
-        }
-
-        private AsyncPageable<BinaryData> GetMetadataPoliciesImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetMetadataPoliciesRequest(context)
-                        : CreateGetMetadataPoliciesNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetadataPoliciesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetadataPoliciesNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataPolicyClient.GetMetadataPolicies", "value", "nextLink", context);
         }
 
         /// <summary> List or Get metadata policies. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='GetMetadataPolicies(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetMetadataPolicies(RequestContext context = null)
         {
-            return GetMetadataPoliciesImplementation("PurviewMetadataPolicyClient.GetMetadataPolicies", context);
-        }
-
-        private Pageable<BinaryData> GetMetadataPoliciesImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetMetadataPoliciesRequest(context)
-                        : CreateGetMetadataPoliciesNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetadataPoliciesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetadataPoliciesNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataPolicyClient.GetMetadataPolicies", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetMetadataPoliciesRequest(RequestContext context)

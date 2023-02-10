@@ -9,9 +9,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
-    [LiveOnly]
-    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
-    public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
+    public partial class DocumentAnalysisSamples
     {
         [RecordedTest]
         public async Task AnalyzePrebuiltDocumentFromFileAsync()
@@ -29,10 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
             using var stream = new FileStream(filePath, FileMode.Open);
 
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-document", stream);
-
-            await operation.WaitForCompletionAsync();
-
+            AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", stream);
             AnalyzeResult result = operation.Value;
 
             Console.WriteLine("Detected key-value pairs:");
@@ -61,7 +56,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                     Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-                    for (int j = 0; j < 4; j++)
+                    for (int j = 0; j < line.BoundingPolygon.Count; j++)
                     {
                         Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
                     }
@@ -74,7 +69,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                     Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
                     Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-                    for (int j = 0; j < 4; j++)
+                    for (int j = 0; j < selectionMark.BoundingPolygon.Count; j++)
                     {
                         Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
                     }
@@ -94,7 +89,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                     foreach (DocumentSpan span in style.Spans)
                     {
-                        Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+                        Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
                     }
                 }
             }

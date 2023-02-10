@@ -20,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetBigDataPool"/> or <paramref name="jobProperties"/> is null. </exception>
         public SparkJobDefinition(BigDataPoolReference targetBigDataPool, SparkJobProperties jobProperties)
         {
-            if (targetBigDataPool == null)
-            {
-                throw new ArgumentNullException(nameof(targetBigDataPool));
-            }
-            if (jobProperties == null)
-            {
-                throw new ArgumentNullException(nameof(jobProperties));
-            }
+            Argument.AssertNotNull(targetBigDataPool, nameof(targetBigDataPool));
+            Argument.AssertNotNull(jobProperties, nameof(jobProperties));
 
             TargetBigDataPool = targetBigDataPool;
             JobProperties = jobProperties;
@@ -37,15 +31,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SparkJobDefinition. </summary>
         /// <param name="description"> The description of the Spark job definition. </param>
         /// <param name="targetBigDataPool"> Big data pool reference. </param>
+        /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>
         /// <param name="requiredSparkVersion"> The required Spark version of the application. </param>
         /// <param name="language"> The language of the Spark application. </param>
         /// <param name="jobProperties"> The properties of the Spark job. </param>
         /// <param name="folder"> The folder that this Spark job definition is in. If not specified, this Spark job definition will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SparkJobDefinition(string description, BigDataPoolReference targetBigDataPool, string requiredSparkVersion, string language, SparkJobProperties jobProperties, SparkJobDefinitionFolder folder, IDictionary<string, object> additionalProperties)
+        internal SparkJobDefinition(string description, BigDataPoolReference targetBigDataPool, SparkConfigurationReference targetSparkConfiguration, string requiredSparkVersion, string language, SparkJobProperties jobProperties, SparkJobDefinitionFolder folder, IDictionary<string, object> additionalProperties)
         {
             Description = description;
             TargetBigDataPool = targetBigDataPool;
+            TargetSparkConfiguration = targetSparkConfiguration;
             RequiredSparkVersion = requiredSparkVersion;
             Language = language;
             JobProperties = jobProperties;
@@ -57,6 +53,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string Description { get; set; }
         /// <summary> Big data pool reference. </summary>
         public BigDataPoolReference TargetBigDataPool { get; set; }
+        /// <summary> The spark configuration of the spark job. </summary>
+        public SparkConfigurationReference TargetSparkConfiguration { get; set; }
         /// <summary> The required Spark version of the application. </summary>
         public string RequiredSparkVersion { get; set; }
         /// <summary> The language of the Spark application. </summary>

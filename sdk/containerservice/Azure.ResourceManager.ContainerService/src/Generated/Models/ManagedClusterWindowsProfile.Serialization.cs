@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.ContainerService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("adminUsername");
+            writer.WritePropertyName("adminUsername"u8);
             writer.WriteStringValue(AdminUsername);
             if (Optional.IsDefined(AdminPassword))
             {
-                writer.WritePropertyName("adminPassword");
+                writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
             if (Optional.IsDefined(LicenseType))
             {
-                writer.WritePropertyName("licenseType");
+                writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(EnableCSIProxy))
+            if (Optional.IsDefined(IsCsiProxyEnabled))
             {
-                writer.WritePropertyName("enableCSIProxy");
-                writer.WriteBooleanValue(EnableCSIProxy.Value);
+                writer.WritePropertyName("enableCSIProxy"u8);
+                writer.WriteBooleanValue(IsCsiProxyEnabled.Value);
             }
             if (Optional.IsDefined(GmsaProfile))
             {
-                writer.WritePropertyName("gmsaProfile");
+                writer.WritePropertyName("gmsaProfile"u8);
                 writer.WriteObjectValue(GmsaProfile);
             }
             writer.WriteEndObject();
@@ -44,42 +44,42 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             string adminUsername = default;
             Optional<string> adminPassword = default;
-            Optional<LicenseType> licenseType = default;
-            Optional<bool> enableCSIProxy = default;
+            Optional<WindowsVmLicenseType> licenseType = default;
+            Optional<bool> enableCsiProxy = default;
             Optional<WindowsGmsaProfile> gmsaProfile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("adminUsername"))
+                if (property.NameEquals("adminUsername"u8))
                 {
                     adminUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adminPassword"))
+                if (property.NameEquals("adminPassword"u8))
                 {
                     adminPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("licenseType"))
+                if (property.NameEquals("licenseType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    licenseType = new LicenseType(property.Value.GetString());
+                    licenseType = new WindowsVmLicenseType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enableCSIProxy"))
+                if (property.NameEquals("enableCSIProxy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableCSIProxy = property.Value.GetBoolean();
+                    enableCsiProxy = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("gmsaProfile"))
+                if (property.NameEquals("gmsaProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterWindowsProfile(adminUsername, adminPassword.Value, Optional.ToNullable(licenseType), Optional.ToNullable(enableCSIProxy), gmsaProfile.Value);
+            return new ManagedClusterWindowsProfile(adminUsername, adminPassword.Value, Optional.ToNullable(licenseType), Optional.ToNullable(enableCsiProxy), gmsaProfile.Value);
         }
     }
 }

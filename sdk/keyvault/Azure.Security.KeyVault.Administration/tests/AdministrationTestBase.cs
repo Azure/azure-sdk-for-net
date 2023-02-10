@@ -16,25 +16,27 @@ namespace Azure.Security.KeyVault.Administration.Tests
     /// Base class for recorded Administration tests.
     /// </summary>
     [ClientTestFixture(
-        KeyVaultAdministrationClientOptions.ServiceVersion.V7_2,
-        KeyVaultAdministrationClientOptions.ServiceVersion.V7_3)]
+        KeyVaultAdministrationClientOptions.ServiceVersion.V7_4_Preview_1,
+        KeyVaultAdministrationClientOptions.ServiceVersion.V7_3,
+        KeyVaultAdministrationClientOptions.ServiceVersion.V7_2)]
     public abstract class AdministrationTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         // Queue deletes, but poll on the top of the purge stack to increase likelihood of others being purged by then.
         private readonly ConcurrentQueue<string> _keysToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _keysToPurge = new ConcurrentStack<string>();
-        private readonly KeyVaultAdministrationClientOptions.ServiceVersion _serviceVersion;
 
         protected AdministrationTestBase(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
             : base(isAsync, mode)
         {
-            _serviceVersion = serviceVersion;
+            ServiceVersion = serviceVersion;
         }
 
         /// <summary>
         /// Gets a <see cref="KeyClient"/> after tests have started.
         /// </summary>
         protected KeyClient KeyClient { get; private set; }
+
+        protected KeyVaultAdministrationClientOptions.ServiceVersion ServiceVersion { get; }
 
         /// <summary>
         /// Gets the endpoint to connect. By default it is <see cref="KeyVaultTestEnvironment.ManagedHsmUrl"/>.
@@ -114,7 +116,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 new KeyClient(
                     Uri,
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(new KeyClientOptions
+                    InstrumentClientOptions(new KeyClientOptions(KeyClientOptions.ServiceVersion.V7_3)
                     {
                         Diagnostics =
                         {

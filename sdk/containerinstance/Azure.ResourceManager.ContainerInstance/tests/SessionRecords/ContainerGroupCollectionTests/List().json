@@ -1,0 +1,1823 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-95ed942ad557c740bc1740720919ff4e-e1f22d65d5321741-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "275fdd02631d88227bb0ab6e5b5b333e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "401",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:15 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9893b7f5-e098-48cf-94f5-80a18c18f02f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11975",
+        "x-ms-request-id": "9893b7f5-e098-48cf-94f5-80a18c18f02f",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024715Z:9893b7f5-e098-48cf-94f5-80a18c18f02f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "cc943344-3e50-4367-928f-79e03a97639d",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "ACI Test Automation 1",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourcegroups/testRg3617?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-6d1e7e4f9591674bbe7cc92b56dec6db-ca8a462ae2ea6443-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "37be6c5ba9cd2874f6ed8bf08acd8344",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "217",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "be7a81e9-286b-40b9-9cfd-e23f1f8697d4",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "be7a81e9-286b-40b9-9cfd-e23f1f8697d4",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024716Z:be7a81e9-286b-40b9-9cfd-e23f1f8697d4"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617",
+        "name": "testRg3617",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp8813?api-version=2022-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "1040",
+        "Content-Type": "application/json",
+        "traceparent": "00-8a4caebf38b57647a1e788de7116c14b-77ab576c11cca441-00",
+        "User-Agent": "azsdk-net-ResourceManager.ContainerInstance/1.1.0-alpha.20230125.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "af1f90327e3f63a491d49fe4122d9f2e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "identity": {
+          "type": "SystemAssigned"
+        },
+        "tags": {},
+        "location": "westus",
+        "properties": {
+          "containers": [
+            {
+              "name": "containergrp8813",
+              "properties": {
+                "image": "alpine",
+                "command": [
+                  "/bin/sh",
+                  "-c",
+                  "while true; do sleep 10; done"
+                ],
+                "ports": [
+                  {
+                    "port": 80
+                  }
+                ],
+                "environmentVariables": [
+                  {
+                    "name": "secretEnv",
+                    "secureValue": "secretValue1"
+                  }
+                ],
+                "resources": {
+                  "requests": {
+                    "memoryInGB": 1.5,
+                    "cpu": 1
+                  }
+                },
+                "livenessProbe": {
+                  "exec": {
+                    "command": [
+                      "ls"
+                    ]
+                  },
+                  "periodSeconds": 20
+                }
+              }
+            }
+          ],
+          "restartPolicy": "Never",
+          "ipAddress": {
+            "ports": [
+              {
+                "protocol": "TCP",
+                "port": 80
+              }
+            ],
+            "type": "Public",
+            "dnsNameLabel": "containergrp8813"
+          },
+          "osType": "Linux",
+          "diagnostics": {
+            "logAnalytics": {
+              "workspaceId": "workspaceid",
+              "workspaceKey": "workspacekey"
+            }
+          },
+          "sku": "Standard",
+          "encryptionProperties": {
+            "vaultBaseUrl": "https://cloudaci-cloudtest.vault.azure.net/",
+            "keyName": "testencryptionkey",
+            "keyVersion": "804d3f1d5ce2456b9bc3dc9e35aaa67e"
+          },
+          "initContainers": [
+            {
+              "name": "containergrp8813init",
+              "properties": {
+                "image": "alpine",
+                "command": [
+                  "/bin/sh",
+                  "-c",
+                  "sleep 5"
+                ],
+                "environmentVariables": [
+                  {
+                    "name": "secretEnv",
+                    "secureValue": "secretValue1"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/f1146f6d-279d-489e-baf6-b9c2633bf0a5?api-version=2018-06-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1467",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:19 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5eaa44da-207a-492e-bdc9-9b06dc9f9474",
+        "x-ms-ratelimit-remaining-subscription-resource-requests-pt1h": "1795",
+        "x-ms-ratelimit-remaining-subscription-resource-requests-pt5m": "895",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "westus:f1146f6d-279d-489e-baf6-b9c2633bf0a5",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024719Z:5eaa44da-207a-492e-bdc9-9b06dc9f9474"
+      },
+      "ResponseBody": {
+        "properties": {
+          "sku": "Standard",
+          "encryptionProperties": {
+            "vaultBaseUrl": "https://cloudaci-cloudtest.vault.azure.net/",
+            "keyName": "testencryptionkey",
+            "keyVersion": "804d3f1d5ce2456b9bc3dc9e35aaa67e"
+          },
+          "provisioningState": "Pending",
+          "containers": [
+            {
+              "name": "containergrp8813",
+              "properties": {
+                "image": "alpine",
+                "command": [
+                  "/bin/sh",
+                  "-c",
+                  "while true; do sleep 10; done"
+                ],
+                "ports": [
+                  {
+                    "port": 80
+                  }
+                ],
+                "environmentVariables": [
+                  {
+                    "name": "secretEnv"
+                  }
+                ],
+                "resources": {
+                  "requests": {
+                    "memoryInGB": 1.5,
+                    "cpu": 1.0
+                  }
+                },
+                "livenessProbe": {
+                  "exec": {
+                    "command": [
+                      "ls"
+                    ]
+                  },
+                  "periodSeconds": 20
+                }
+              }
+            }
+          ],
+          "initContainers": [
+            {
+              "name": "containergrp8813init",
+              "properties": {
+                "image": "alpine",
+                "command": [
+                  "/bin/sh",
+                  "-c",
+                  "sleep 5"
+                ],
+                "environmentVariables": [
+                  {
+                    "name": "secretEnv"
+                  }
+                ]
+              }
+            }
+          ],
+          "restartPolicy": "Never",
+          "ipAddress": {
+            "ports": [
+              {
+                "protocol": "TCP",
+                "port": 80
+              }
+            ],
+            "type": "Public",
+            "dnsNameLabel": "containergrp8813",
+            "autoGeneratedDomainNameLabelScope": "Unsecure",
+            "fqdn": "containergrp8813.westus.azurecontainer.io"
+          },
+          "osType": "Linux",
+          "instanceView": {
+            "events": [],
+            "state": "Pending"
+          },
+          "diagnostics": {
+            "logAnalytics": {
+              "workspaceId": "workspaceid"
+            }
+          }
+        },
+        "identity": {
+          "principalId": "732612f5-aaef-4213-861f-9493ac015cb1",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+          "type": "SystemAssigned"
+        },
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp8813",
+        "name": "containergrp8813",
+        "type": "Microsoft.ContainerInstance/containerGroups",
+        "location": "westus",
+        "tags": {}
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/f1146f6d-279d-489e-baf6-b9c2633bf0a5?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-8a4caebf38b57647a1e788de7116c14b-e577b4819f871d49-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "a2295c2ad61eed1b19d43cd4d543e4c0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:19 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cd5dfd71-176d-4988-9404-8154567762da",
+        "x-ms-ratelimit-remaining-subscription-reads": "11974",
+        "x-ms-request-id": "westus:19f5033c-20f5-44ee-8d14-7a804670b3c1",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024719Z:cd5dfd71-176d-4988-9404-8154567762da"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp8813",
+        "status": "Pending",
+        "startTime": "2023-01-26T02:47:19.6729413Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/f1146f6d-279d-489e-baf6-b9c2633bf0a5?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-8a4caebf38b57647a1e788de7116c14b-2d1dc424e8e5e146-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "5dffc2eb57f4fde85d35b018080dcba0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "fba0c991-a1e3-4684-8696-cf5fb56ced1b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11973",
+        "x-ms-request-id": "westus:ce24eec0-f2f8-494d-a9c4-8d510a941a29",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024721Z:fba0c991-a1e3-4684-8696-cf5fb56ced1b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp8813",
+        "status": "Pending",
+        "startTime": "2023-01-26T02:47:19.6729413Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/f1146f6d-279d-489e-baf6-b9c2633bf0a5?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-8a4caebf38b57647a1e788de7116c14b-7a2e5f71c1e81b43-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "b6ba76f1fc04b40f54a0d441f95e14bb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:21 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "58c76674-cf10-444f-914b-5f688d155afd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11972",
+        "x-ms-request-id": "westus:0811a0cf-430b-430e-ad2c-531805ebaeba",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024722Z:58c76674-cf10-444f-914b-5f688d155afd"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp8813",
+        "status": "Pending",
+        "startTime": "2023-01-26T02:47:19.6729413Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/f1146f6d-279d-489e-baf6-b9c2633bf0a5?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-8a4caebf38b57647a1e788de7116c14b-0cb0af8770c8b840-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d5abb54285f2d333732c45e92602e50b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9e5696d4-d217-40d8-99d6-5904e7ab7378",
+        "x-ms-ratelimit-remaining-subscription-reads": "11971",
+        "x-ms-request-id": "westus:b69bea48-a4fd-4785-a63a-67d4ac5654f8",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024723Z:9e5696d4-d217-40d8-99d6-5904e7ab7378"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp8813",
+        "status": "Pending",
+        "startTime": "2023-01-26T02:47:19.6729413Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/f1146f6d-279d-489e-baf6-b9c2633bf0a5?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-8a4caebf38b57647a1e788de7116c14b-e2064e9a8d01b542-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "5fe39b092e89efbcb24a095382a603fe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a4a36b0b-7ec2-4f6a-8748-da32668df22e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11970",
+        "x-ms-request-id": "westus:06245c49-63a5-4414-b3d6-0bafc2e67f51",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024725Z:a4a36b0b-7ec2-4f6a-8748-da32668df22e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp8813",
+        "status": "Pending",
+        "startTime": "2023-01-26T02:47:19.6729413Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/f1146f6d-279d-489e-baf6-b9c2633bf0a5?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-8a4caebf38b57647a1e788de7116c14b-f70a479f98a26f44-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "53d6f420f5626cae42e742d7b6268e51",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "24eee2c4-00e1-4c80-bce6-2449e6191ff5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11969",
+        "x-ms-request-id": "westus:1bc6d6bc-ae1e-4f1f-8e9e-0f00768ae3d0",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024729Z:24eee2c4-00e1-4c80-bce6-2449e6191ff5"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp8813",
+        "status": "Pending",
+        "startTime": "2023-01-26T02:47:19.6729413Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/f1146f6d-279d-489e-baf6-b9c2633bf0a5?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-8a4caebf38b57647a1e788de7116c14b-7e873ff400d9554e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "5d38c8bbb57b1432f9bb22a77bdf50cc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:37 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c18f2ee4-67dd-4fb8-86b1-1747fd1ab9e5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11968",
+        "x-ms-request-id": "westus:728ca2a8-8ad6-4fbb-bb9b-b302971ad9a4",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024737Z:c18f2ee4-67dd-4fb8-86b1-1747fd1ab9e5"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp8813",
+        "status": "Pending",
+        "startTime": "2023-01-26T02:47:19.6729413Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/f1146f6d-279d-489e-baf6-b9c2633bf0a5?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-8a4caebf38b57647a1e788de7116c14b-7091ceabf7ad7e45-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "31c84728922c13a8ed761ca2ebe4388c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "248",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:53 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "823f7155-4299-4f91-ad21-8aa9172adec1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11967",
+        "x-ms-request-id": "westus:7651679c-6580-4182-a72c-40a37eaf393e",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024753Z:823f7155-4299-4f91-ad21-8aa9172adec1"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp8813",
+        "status": "Succeeded",
+        "startTime": "2023-01-26T02:47:19.6729413Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp8813?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-8a4caebf38b57647a1e788de7116c14b-e8a33eeac1d03142-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "b998b8bca56d6b82c2c259a7d206f062",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1808",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:53 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "91b4eb3a-8f16-4f6a-83cb-245febe6e2f8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11966",
+        "x-ms-request-id": "westus:c90be99f-5bdf-449c-8cf4-4f4f8a50b2ff",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024753Z:91b4eb3a-8f16-4f6a-83cb-245febe6e2f8"
+      },
+      "ResponseBody": {
+        "properties": {
+          "sku": "Standard",
+          "encryptionProperties": {
+            "vaultBaseUrl": "https://cloudaci-cloudtest.vault.azure.net/",
+            "keyName": "testencryptionkey",
+            "keyVersion": "804d3f1d5ce2456b9bc3dc9e35aaa67e"
+          },
+          "provisioningState": "Succeeded",
+          "containers": [
+            {
+              "name": "containergrp8813",
+              "properties": {
+                "image": "alpine",
+                "command": [
+                  "/bin/sh",
+                  "-c",
+                  "while true; do sleep 10; done"
+                ],
+                "ports": [
+                  {
+                    "port": 80
+                  }
+                ],
+                "environmentVariables": [
+                  {
+                    "name": "secretEnv"
+                  }
+                ],
+                "instanceView": {
+                  "restartCount": 0,
+                  "currentState": {
+                    "state": "Running",
+                    "startTime": "2023-01-26T02:47:44.811Z",
+                    "detailStatus": ""
+                  }
+                },
+                "resources": {
+                  "requests": {
+                    "memoryInGB": 1.5,
+                    "cpu": 1.0
+                  }
+                },
+                "livenessProbe": {
+                  "exec": {
+                    "command": [
+                      "ls"
+                    ]
+                  },
+                  "periodSeconds": 20
+                }
+              }
+            }
+          ],
+          "initContainers": [
+            {
+              "name": "containergrp8813init",
+              "properties": {
+                "image": "alpine",
+                "command": [
+                  "/bin/sh",
+                  "-c",
+                  "sleep 5"
+                ],
+                "environmentVariables": [
+                  {
+                    "name": "secretEnv"
+                  }
+                ],
+                "instanceView": {
+                  "restartCount": 0,
+                  "currentState": {
+                    "state": "Terminated",
+                    "startTime": "2023-01-26T02:47:38.332Z",
+                    "exitCode": 0,
+                    "finishTime": "2023-01-26T02:47:43.875Z",
+                    "detailStatus": "Completed"
+                  }
+                }
+              }
+            }
+          ],
+          "restartPolicy": "Never",
+          "ipAddress": {
+            "ports": [
+              {
+                "protocol": "TCP",
+                "port": 80
+              }
+            ],
+            "ip": "20.253.148.125",
+            "type": "Public",
+            "dnsNameLabel": "containergrp8813",
+            "autoGeneratedDomainNameLabelScope": "Unsecure",
+            "fqdn": "containergrp8813.westus.azurecontainer.io"
+          },
+          "osType": "Linux",
+          "instanceView": {
+            "events": [],
+            "state": "Running"
+          },
+          "diagnostics": {
+            "logAnalytics": {
+              "workspaceId": "workspaceid"
+            }
+          }
+        },
+        "identity": {
+          "principalId": "732612f5-aaef-4213-861f-9493ac015cb1",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+          "type": "SystemAssigned"
+        },
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp8813",
+        "name": "containergrp8813",
+        "type": "Microsoft.ContainerInstance/containerGroups",
+        "location": "westus",
+        "tags": {}
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp7080?api-version=2022-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "864",
+        "Content-Type": "application/json",
+        "traceparent": "00-459ddd4929f6db4fbae47cd8a4344cb8-04fe4a2426da164a-00",
+        "User-Agent": "azsdk-net-ResourceManager.ContainerInstance/1.1.0-alpha.20230125.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "5d6faf76245c20292570049890281582",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "identity": {
+          "type": "SystemAssigned"
+        },
+        "tags": {},
+        "location": "westus",
+        "properties": {
+          "containers": [
+            {
+              "name": "containergrp7080",
+              "properties": {
+                "image": "alpine",
+                "command": [
+                  "/bin/sh",
+                  "-c",
+                  "while true; do sleep 10; done"
+                ],
+                "ports": [
+                  {
+                    "port": 80
+                  }
+                ],
+                "environmentVariables": [
+                  {
+                    "name": "secretEnv",
+                    "secureValue": "secretValue1"
+                  }
+                ],
+                "resources": {
+                  "requests": {
+                    "memoryInGB": 1.5,
+                    "cpu": 1
+                  }
+                },
+                "livenessProbe": {
+                  "exec": {
+                    "command": [
+                      "ls"
+                    ]
+                  },
+                  "periodSeconds": 20
+                }
+              }
+            }
+          ],
+          "restartPolicy": "Never",
+          "osType": "Linux",
+          "sku": "Standard",
+          "encryptionProperties": {
+            "vaultBaseUrl": "https://cloudaci-cloudtest.vault.azure.net/",
+            "keyName": "testencryptionkey",
+            "keyVersion": "804d3f1d5ce2456b9bc3dc9e35aaa67e"
+          },
+          "initContainers": [
+            {
+              "name": "containergrp7080init",
+              "properties": {
+                "image": "alpine",
+                "command": [
+                  "/bin/sh",
+                  "-c",
+                  "sleep 5"
+                ],
+                "environmentVariables": [
+                  {
+                    "name": "secretEnv",
+                    "secureValue": "secretValue1"
+                  }
+                ]
+              }
+            }
+          ],
+          "priority": "Spot"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/681a05ce-3b71-4c20-a8c6-8179cd0b7f0a?api-version=2018-06-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1223",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1c32d036-250e-492e-8833-11f6cd96c591",
+        "x-ms-ratelimit-remaining-subscription-resource-requests-pt1h": "1794",
+        "x-ms-ratelimit-remaining-subscription-resource-requests-pt5m": "894",
+        "x-ms-ratelimit-remaining-subscription-writes": "1193",
+        "x-ms-request-id": "westus:681a05ce-3b71-4c20-a8c6-8179cd0b7f0a",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024755Z:1c32d036-250e-492e-8833-11f6cd96c591"
+      },
+      "ResponseBody": {
+        "properties": {
+          "sku": "Standard",
+          "encryptionProperties": {
+            "vaultBaseUrl": "https://cloudaci-cloudtest.vault.azure.net/",
+            "keyName": "testencryptionkey",
+            "keyVersion": "804d3f1d5ce2456b9bc3dc9e35aaa67e"
+          },
+          "provisioningState": "Pending",
+          "containers": [
+            {
+              "name": "containergrp7080",
+              "properties": {
+                "image": "alpine",
+                "command": [
+                  "/bin/sh",
+                  "-c",
+                  "while true; do sleep 10; done"
+                ],
+                "ports": [
+                  {
+                    "port": 80
+                  }
+                ],
+                "environmentVariables": [
+                  {
+                    "name": "secretEnv"
+                  }
+                ],
+                "resources": {
+                  "requests": {
+                    "memoryInGB": 1.5,
+                    "cpu": 1.0
+                  }
+                },
+                "livenessProbe": {
+                  "exec": {
+                    "command": [
+                      "ls"
+                    ]
+                  },
+                  "periodSeconds": 20
+                }
+              }
+            }
+          ],
+          "initContainers": [
+            {
+              "name": "containergrp7080init",
+              "properties": {
+                "image": "alpine",
+                "command": [
+                  "/bin/sh",
+                  "-c",
+                  "sleep 5"
+                ],
+                "environmentVariables": [
+                  {
+                    "name": "secretEnv"
+                  }
+                ]
+              }
+            }
+          ],
+          "restartPolicy": "Never",
+          "osType": "Linux",
+          "instanceView": {
+            "events": [],
+            "state": "Pending"
+          },
+          "priority": "Spot"
+        },
+        "identity": {
+          "principalId": "09730f19-b32d-4078-a492-9bc946fa7e37",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+          "type": "SystemAssigned"
+        },
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp7080",
+        "name": "containergrp7080",
+        "type": "Microsoft.ContainerInstance/containerGroups",
+        "location": "westus",
+        "tags": {}
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/681a05ce-3b71-4c20-a8c6-8179cd0b7f0a?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-459ddd4929f6db4fbae47cd8a4344cb8-7a59685a6ac0af46-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "34750bb92fc9935f6e9948357ed23199",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "804dbd5d-13a0-4b64-90a5-799920737b1f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11965",
+        "x-ms-request-id": "westus:ee2a50f5-62cf-42db-809c-79aa53de1255",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024756Z:804dbd5d-13a0-4b64-90a5-799920737b1f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp7080",
+        "status": "Pending",
+        "startTime": "2023-01-26T02:47:55.7215091Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/681a05ce-3b71-4c20-a8c6-8179cd0b7f0a?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-459ddd4929f6db4fbae47cd8a4344cb8-c3fdeccf5a866b49-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "1a3c24441b2d17002caa01ecbaf01fe4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:56 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "97caa5e2-983f-413a-9f06-e200c8529db6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11964",
+        "x-ms-request-id": "westus:e5c83cf2-74ab-419f-9e80-ba3c15fa29a5",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024757Z:97caa5e2-983f-413a-9f06-e200c8529db6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp7080",
+        "status": "Pending",
+        "startTime": "2023-01-26T02:47:55.7215091Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/681a05ce-3b71-4c20-a8c6-8179cd0b7f0a?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-459ddd4929f6db4fbae47cd8a4344cb8-e15c2806e8acf14b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "85df7e8ae0b366b88c2fd8fd154d4689",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "dafcbb9a-39d0-4c2f-8e7a-a04f83cbd708",
+        "x-ms-ratelimit-remaining-subscription-reads": "11963",
+        "x-ms-request-id": "westus:c29f7cef-512b-4cfb-a030-c1a76089baa0",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024758Z:dafcbb9a-39d0-4c2f-8e7a-a04f83cbd708"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp7080",
+        "status": "Pending",
+        "startTime": "2023-01-26T02:47:55.7215091Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/681a05ce-3b71-4c20-a8c6-8179cd0b7f0a?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-459ddd4929f6db4fbae47cd8a4344cb8-d2f61a8ba9c96d4d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "dcf4d03dcb049e590b5d081f2d72d97e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:47:58 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "17dde582-4b7a-4287-9f12-39af9f06ce74",
+        "x-ms-ratelimit-remaining-subscription-reads": "11962",
+        "x-ms-request-id": "westus:a7d0ea03-4e6d-47a6-933b-aab421b78673",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024759Z:17dde582-4b7a-4287-9f12-39af9f06ce74"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp7080",
+        "status": "Pending",
+        "startTime": "2023-01-26T02:47:55.7215091Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/681a05ce-3b71-4c20-a8c6-8179cd0b7f0a?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-459ddd4929f6db4fbae47cd8a4344cb8-fd9f3adb2ceef248-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "00aa6479acf364e66cd58efd420201df",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:48:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1f45e22d-3747-411b-9569-39478e45b546",
+        "x-ms-ratelimit-remaining-subscription-reads": "11961",
+        "x-ms-request-id": "westus:b4ca1040-5e4f-4dc5-9ee4-d7a8ef2d949c",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024801Z:1f45e22d-3747-411b-9569-39478e45b546"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp7080",
+        "status": "Pending",
+        "startTime": "2023-01-26T02:47:55.7215091Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/681a05ce-3b71-4c20-a8c6-8179cd0b7f0a?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-459ddd4929f6db4fbae47cd8a4344cb8-219bdfd88b9fea4a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e9af776443fcbee024407956d8993819",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:48:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7e16f951-0d84-4b04-a8ba-3ecc23a899b6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11960",
+        "x-ms-request-id": "westus:c39f7cb7-a3c3-44f0-85cc-e184e4ecdb5b",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024805Z:7e16f951-0d84-4b04-a8ba-3ecc23a899b6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp7080",
+        "status": "Pending",
+        "startTime": "2023-01-26T02:47:55.7215091Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/681a05ce-3b71-4c20-a8c6-8179cd0b7f0a?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-459ddd4929f6db4fbae47cd8a4344cb8-a0320c388188464e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "b1835a5646a29096ea8f6f2e3c5b5c08",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:48:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "374f1421-813e-4834-97bd-16ad07ab54b1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11959",
+        "x-ms-request-id": "westus:827f822f-3b63-46b6-98d3-c0cbf0456ff0",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024813Z:374f1421-813e-4834-97bd-16ad07ab54b1"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp7080",
+        "status": "Pending",
+        "startTime": "2023-01-26T02:47:55.7215091Z",
+        "properties": {
+          "events": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/providers/Microsoft.ContainerInstance/locations/westus/operations/681a05ce-3b71-4c20-a8c6-8179cd0b7f0a?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-459ddd4929f6db4fbae47cd8a4344cb8-49ee2a7966acf249-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "b6bb285befc3368184ebdbb232908bd2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "878",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:48:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cd166847-c002-45e7-acbd-339b2da2ae96",
+        "x-ms-ratelimit-remaining-subscription-reads": "11958",
+        "x-ms-request-id": "westus:476ae416-2230-4536-b147-a2b2c9923742",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024829Z:cd166847-c002-45e7-acbd-339b2da2ae96"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp7080",
+        "status": "Succeeded",
+        "startTime": "2023-01-26T02:47:55.7215091Z",
+        "properties": {
+          "events": [
+            {
+              "count": 1,
+              "firstTimestamp": "2023-01-26T02:48:02Z",
+              "lastTimestamp": "2023-01-26T02:48:02Z",
+              "name": "Pulling",
+              "message": "pulling image \u0022alpine@sha256:93d5a28ff72d288d69b5997b8ba47396d2cbb62a72b5d87cd3351094b5d578a0\u0022",
+              "type": "Normal"
+            },
+            {
+              "count": 1,
+              "firstTimestamp": "2023-01-26T02:48:05Z",
+              "lastTimestamp": "2023-01-26T02:48:05Z",
+              "name": "Pulled",
+              "message": "Successfully pulled image \u0022alpine@sha256:93d5a28ff72d288d69b5997b8ba47396d2cbb62a72b5d87cd3351094b5d578a0\u0022",
+              "type": "Normal"
+            },
+            {
+              "count": 1,
+              "firstTimestamp": "2023-01-26T02:48:22Z",
+              "lastTimestamp": "2023-01-26T02:48:22Z",
+              "name": "Started",
+              "message": "Started container",
+              "type": "Normal"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp7080?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-459ddd4929f6db4fbae47cd8a4344cb8-8f9ff965a7f65e44-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e7a7759c507f1d3ce11eff6cd3b182c9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2196",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:48:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "76d2bb1b-d8cf-45e2-bf46-08ee68496a31",
+        "x-ms-ratelimit-remaining-subscription-reads": "11957",
+        "x-ms-request-id": "westus:73e95807-177d-4867-8f59-799589b66676",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024830Z:76d2bb1b-d8cf-45e2-bf46-08ee68496a31"
+      },
+      "ResponseBody": {
+        "properties": {
+          "sku": "Standard",
+          "encryptionProperties": {
+            "vaultBaseUrl": "https://cloudaci-cloudtest.vault.azure.net/",
+            "keyName": "testencryptionkey",
+            "keyVersion": "804d3f1d5ce2456b9bc3dc9e35aaa67e"
+          },
+          "provisioningState": "Succeeded",
+          "containers": [
+            {
+              "name": "containergrp7080",
+              "properties": {
+                "image": "alpine",
+                "command": [
+                  "/bin/sh",
+                  "-c",
+                  "while true; do sleep 10; done"
+                ],
+                "ports": [
+                  {
+                    "port": 80
+                  }
+                ],
+                "environmentVariables": [
+                  {
+                    "name": "secretEnv"
+                  }
+                ],
+                "instanceView": {
+                  "restartCount": 0,
+                  "currentState": {
+                    "state": "Running",
+                    "startTime": "2023-01-26T02:48:22.098Z",
+                    "detailStatus": ""
+                  },
+                  "events": [
+                    {
+                      "count": 1,
+                      "firstTimestamp": "2023-01-26T02:48:02Z",
+                      "lastTimestamp": "2023-01-26T02:48:02Z",
+                      "name": "Pulling",
+                      "message": "pulling image \u0022alpine@sha256:93d5a28ff72d288d69b5997b8ba47396d2cbb62a72b5d87cd3351094b5d578a0\u0022",
+                      "type": "Normal"
+                    },
+                    {
+                      "count": 1,
+                      "firstTimestamp": "2023-01-26T02:48:05Z",
+                      "lastTimestamp": "2023-01-26T02:48:05Z",
+                      "name": "Pulled",
+                      "message": "Successfully pulled image \u0022alpine@sha256:93d5a28ff72d288d69b5997b8ba47396d2cbb62a72b5d87cd3351094b5d578a0\u0022",
+                      "type": "Normal"
+                    },
+                    {
+                      "count": 1,
+                      "firstTimestamp": "2023-01-26T02:48:22Z",
+                      "lastTimestamp": "2023-01-26T02:48:22Z",
+                      "name": "Started",
+                      "message": "Started container",
+                      "type": "Normal"
+                    }
+                  ]
+                },
+                "resources": {
+                  "requests": {
+                    "memoryInGB": 1.5,
+                    "cpu": 1.0
+                  }
+                },
+                "livenessProbe": {
+                  "exec": {
+                    "command": [
+                      "ls"
+                    ]
+                  },
+                  "periodSeconds": 20
+                }
+              }
+            }
+          ],
+          "initContainers": [
+            {
+              "name": "containergrp7080init",
+              "properties": {
+                "image": "alpine",
+                "command": [
+                  "/bin/sh",
+                  "-c",
+                  "sleep 5"
+                ],
+                "environmentVariables": [
+                  {
+                    "name": "secretEnv"
+                  }
+                ],
+                "instanceView": {
+                  "restartCount": 0,
+                  "currentState": {
+                    "state": "Terminated",
+                    "startTime": "2023-01-26T02:48:15.613Z",
+                    "exitCode": 0,
+                    "finishTime": "2023-01-26T02:48:21.103Z",
+                    "detailStatus": "Completed"
+                  },
+                  "events": []
+                }
+              }
+            }
+          ],
+          "restartPolicy": "Never",
+          "osType": "Linux",
+          "instanceView": {
+            "events": [],
+            "state": "Running"
+          },
+          "priority": "Spot"
+        },
+        "identity": {
+          "principalId": "09730f19-b32d-4078-a492-9bc946fa7e37",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+          "type": "SystemAssigned"
+        },
+        "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp7080",
+        "name": "containergrp7080",
+        "type": "Microsoft.ContainerInstance/containerGroups",
+        "location": "westus",
+        "tags": {}
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-14c0bceb2ea5a245a573c64648118537-1d2a176538b12740-00",
+        "User-Agent": "azsdk-net-ResourceManager.ContainerInstance/1.1.0-alpha.20230125.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "affa71e482de6655d84d2db66be35d5a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:48:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f9d57ae6-6eca-4ac4-b9f5-fe8c813004c4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11956",
+        "x-ms-request-id": "westus:7ec9797a-8065-44df-a936-7991416cfa9e",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024830Z:f9d57ae6-6eca-4ac4-b9f5-fe8c813004c4"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "sku": "Standard",
+              "encryptionProperties": {
+                "vaultBaseUrl": "https://cloudaci-cloudtest.vault.azure.net/",
+                "keyName": "testencryptionkey",
+                "keyVersion": "804d3f1d5ce2456b9bc3dc9e35aaa67e"
+              },
+              "provisioningState": "Succeeded",
+              "containers": [
+                {
+                  "name": "containergrp7080",
+                  "properties": {
+                    "image": "alpine",
+                    "command": [
+                      "/bin/sh",
+                      "-c",
+                      "while true; do sleep 10; done"
+                    ],
+                    "ports": [
+                      {
+                        "port": 80
+                      }
+                    ],
+                    "environmentVariables": [
+                      {
+                        "name": "secretEnv"
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "memoryInGB": 1.5,
+                        "cpu": 1.0
+                      }
+                    },
+                    "livenessProbe": {
+                      "exec": {
+                        "command": [
+                          "ls"
+                        ]
+                      },
+                      "periodSeconds": 20
+                    }
+                  }
+                }
+              ],
+              "initContainers": [
+                {
+                  "name": "containergrp7080init",
+                  "properties": {
+                    "image": "alpine",
+                    "command": [
+                      "/bin/sh",
+                      "-c",
+                      "sleep 5"
+                    ],
+                    "environmentVariables": [
+                      {
+                        "name": "secretEnv"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "restartPolicy": "Never",
+              "osType": "Linux",
+              "priority": "Spot"
+            },
+            "identity": {
+              "principalId": "09730f19-b32d-4078-a492-9bc946fa7e37",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "type": "SystemAssigned"
+            },
+            "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp7080",
+            "name": "containergrp7080",
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "location": "westus",
+            "tags": {}
+          },
+          {
+            "properties": {
+              "sku": "Standard",
+              "encryptionProperties": {
+                "vaultBaseUrl": "https://cloudaci-cloudtest.vault.azure.net/",
+                "keyName": "testencryptionkey",
+                "keyVersion": "804d3f1d5ce2456b9bc3dc9e35aaa67e"
+              },
+              "provisioningState": "Succeeded",
+              "containers": [
+                {
+                  "name": "containergrp8813",
+                  "properties": {
+                    "image": "alpine",
+                    "command": [
+                      "/bin/sh",
+                      "-c",
+                      "while true; do sleep 10; done"
+                    ],
+                    "ports": [
+                      {
+                        "port": 80
+                      }
+                    ],
+                    "environmentVariables": [
+                      {
+                        "name": "secretEnv"
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "memoryInGB": 1.5,
+                        "cpu": 1.0
+                      }
+                    },
+                    "livenessProbe": {
+                      "exec": {
+                        "command": [
+                          "ls"
+                        ]
+                      },
+                      "periodSeconds": 20
+                    }
+                  }
+                }
+              ],
+              "initContainers": [
+                {
+                  "name": "containergrp8813init",
+                  "properties": {
+                    "image": "alpine",
+                    "command": [
+                      "/bin/sh",
+                      "-c",
+                      "sleep 5"
+                    ],
+                    "environmentVariables": [
+                      {
+                        "name": "secretEnv"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "restartPolicy": "Never",
+              "ipAddress": {
+                "ports": [
+                  {
+                    "protocol": "TCP",
+                    "port": 80
+                  }
+                ],
+                "ip": "20.253.148.125",
+                "type": "Public",
+                "dnsNameLabel": "containergrp8813",
+                "autoGeneratedDomainNameLabelScope": "Unsecure",
+                "fqdn": "containergrp8813.westus.azurecontainer.io"
+              },
+              "osType": "Linux",
+              "diagnostics": {
+                "logAnalytics": {
+                  "workspaceId": "workspaceid"
+                }
+              }
+            },
+            "identity": {
+              "principalId": "732612f5-aaef-4213-861f-9493ac015cb1",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "type": "SystemAssigned"
+            },
+            "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp8813",
+            "name": "containergrp8813",
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "location": "westus",
+            "tags": {}
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5e3d46852f9f104f98859fcb9146a53a-4844129a22a54745-00",
+        "User-Agent": "azsdk-net-ResourceManager.ContainerInstance/1.1.0-alpha.20230125.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "c6929d0375b30b89ec9dd5a5f01562d2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Jan 2023 02:48:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d8b171d7-7742-4e4d-bec7-6ff05fabad3d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11955",
+        "x-ms-request-id": "westus:e7f03484-e1b2-4921-a538-79f723025441",
+        "x-ms-routing-request-id": "WESTUS2:20230126T024830Z:d8b171d7-7742-4e4d-bec7-6ff05fabad3d"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "sku": "Standard",
+              "encryptionProperties": {
+                "vaultBaseUrl": "https://cloudaci-cloudtest.vault.azure.net/",
+                "keyName": "testencryptionkey",
+                "keyVersion": "804d3f1d5ce2456b9bc3dc9e35aaa67e"
+              },
+              "provisioningState": "Succeeded",
+              "containers": [
+                {
+                  "name": "containergrp7080",
+                  "properties": {
+                    "image": "alpine",
+                    "command": [
+                      "/bin/sh",
+                      "-c",
+                      "while true; do sleep 10; done"
+                    ],
+                    "ports": [
+                      {
+                        "port": 80
+                      }
+                    ],
+                    "environmentVariables": [
+                      {
+                        "name": "secretEnv"
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "memoryInGB": 1.5,
+                        "cpu": 1.0
+                      }
+                    },
+                    "livenessProbe": {
+                      "exec": {
+                        "command": [
+                          "ls"
+                        ]
+                      },
+                      "periodSeconds": 20
+                    }
+                  }
+                }
+              ],
+              "initContainers": [
+                {
+                  "name": "containergrp7080init",
+                  "properties": {
+                    "image": "alpine",
+                    "command": [
+                      "/bin/sh",
+                      "-c",
+                      "sleep 5"
+                    ],
+                    "environmentVariables": [
+                      {
+                        "name": "secretEnv"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "restartPolicy": "Never",
+              "osType": "Linux",
+              "priority": "Spot"
+            },
+            "identity": {
+              "principalId": "09730f19-b32d-4078-a492-9bc946fa7e37",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "type": "SystemAssigned"
+            },
+            "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp7080",
+            "name": "containergrp7080",
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "location": "westus",
+            "tags": {}
+          },
+          {
+            "properties": {
+              "sku": "Standard",
+              "encryptionProperties": {
+                "vaultBaseUrl": "https://cloudaci-cloudtest.vault.azure.net/",
+                "keyName": "testencryptionkey",
+                "keyVersion": "804d3f1d5ce2456b9bc3dc9e35aaa67e"
+              },
+              "provisioningState": "Succeeded",
+              "containers": [
+                {
+                  "name": "containergrp8813",
+                  "properties": {
+                    "image": "alpine",
+                    "command": [
+                      "/bin/sh",
+                      "-c",
+                      "while true; do sleep 10; done"
+                    ],
+                    "ports": [
+                      {
+                        "port": 80
+                      }
+                    ],
+                    "environmentVariables": [
+                      {
+                        "name": "secretEnv"
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "memoryInGB": 1.5,
+                        "cpu": 1.0
+                      }
+                    },
+                    "livenessProbe": {
+                      "exec": {
+                        "command": [
+                          "ls"
+                        ]
+                      },
+                      "periodSeconds": 20
+                    }
+                  }
+                }
+              ],
+              "initContainers": [
+                {
+                  "name": "containergrp8813init",
+                  "properties": {
+                    "image": "alpine",
+                    "command": [
+                      "/bin/sh",
+                      "-c",
+                      "sleep 5"
+                    ],
+                    "environmentVariables": [
+                      {
+                        "name": "secretEnv"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "restartPolicy": "Never",
+              "ipAddress": {
+                "ports": [
+                  {
+                    "protocol": "TCP",
+                    "port": 80
+                  }
+                ],
+                "ip": "20.253.148.125",
+                "type": "Public",
+                "dnsNameLabel": "containergrp8813",
+                "autoGeneratedDomainNameLabelScope": "Unsecure",
+                "fqdn": "containergrp8813.westus.azurecontainer.io"
+              },
+              "osType": "Linux",
+              "diagnostics": {
+                "logAnalytics": {
+                  "workspaceId": "workspaceid"
+                }
+              }
+            },
+            "identity": {
+              "principalId": "732612f5-aaef-4213-861f-9493ac015cb1",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "type": "SystemAssigned"
+            },
+            "id": "/subscriptions/cc943344-3e50-4367-928f-79e03a97639d/resourceGroups/testRg3617/providers/Microsoft.ContainerInstance/containerGroups/containergrp8813",
+            "name": "containergrp8813",
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "location": "westus",
+            "tags": {}
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "RandomSeed": "1124912186",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "cc943344-3e50-4367-928f-79e03a97639d"
+  }
+}

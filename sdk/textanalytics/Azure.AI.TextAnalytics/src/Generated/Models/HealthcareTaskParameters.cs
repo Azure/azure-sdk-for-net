@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.AI.TextAnalytics;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Supported parameters for a Healthcare task. </summary>
@@ -19,15 +21,19 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="loggingOptOut"></param>
         /// <param name="modelVersion"></param>
         /// <param name="fhirVersion"> The FHIR Spec version that the result will use to format the fhirBundle. For additional information see https://www.hl7.org/fhir/overview.html. </param>
+        /// <param name="documentType"> Document type that can be provided as input for Fhir Documents. Expect to have fhirVersion provided when used. Behavior of using None enum is the same as not using the documentType parameter. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        internal HealthcareTaskParameters(bool? loggingOptOut, string modelVersion, FhirVersion? fhirVersion, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
+        internal HealthcareTaskParameters(bool? loggingOptOut, string modelVersion, WellKnownFhirVersion? fhirVersion, HealthcareDocumentType? documentType, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
         {
             FhirVersion = fhirVersion;
+            DocumentType = documentType;
             StringIndexType = stringIndexType;
         }
 
         /// <summary> The FHIR Spec version that the result will use to format the fhirBundle. For additional information see https://www.hl7.org/fhir/overview.html. </summary>
-        public FhirVersion? FhirVersion { get; set; }
+        public WellKnownFhirVersion? FhirVersion { get; set; }
+        /// <summary> Document type that can be provided as input for Fhir Documents. Expect to have fhirVersion provided when used. Behavior of using None enum is the same as not using the documentType parameter. </summary>
+        public HealthcareDocumentType? DocumentType { get; set; }
         /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>
         public StringIndexType? StringIndexType { get; set; }
     }

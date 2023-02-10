@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="capacity"/> is null. </exception>
         internal IotHubSkuDescription(IotHubSkuInfo sku, IotHubCapacity capacity)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-            if (capacity == null)
-            {
-                throw new ArgumentNullException(nameof(capacity));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
+            Argument.AssertNotNull(capacity, nameof(capacity));
 
             Sku = sku;
             Capacity = capacity;
@@ -35,7 +30,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="sku"> The type of the resource. </param>
         /// <param name="capacity"> IotHub capacity. </param>
-        internal IotHubSkuDescription(string resourceType, IotHubSkuInfo sku, IotHubCapacity capacity)
+        internal IotHubSkuDescription(ResourceType? resourceType, IotHubSkuInfo sku, IotHubCapacity capacity)
         {
             ResourceType = resourceType;
             Sku = sku;
@@ -43,7 +38,7 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> The type of the resource. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The type of the resource. </summary>
         public IotHubSkuInfo Sku { get; }
         /// <summary> IotHub capacity. </summary>

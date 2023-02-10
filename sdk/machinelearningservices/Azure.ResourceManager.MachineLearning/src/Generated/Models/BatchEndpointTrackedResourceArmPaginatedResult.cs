@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of BatchEndpointTrackedResourceArmPaginatedResult. </summary>
         internal BatchEndpointTrackedResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<BatchEndpointData>();
+            Value = new ChangeTrackingList<MachineLearningBatchEndpointData>();
         }
 
         /// <summary> Initializes a new instance of BatchEndpointTrackedResourceArmPaginatedResult. </summary>
         /// <param name="nextLink"> The link to the next page of BatchEndpoint objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type BatchEndpoint. </param>
-        internal BatchEndpointTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<BatchEndpointData> value)
+        internal BatchEndpointTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningBatchEndpointData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The link to the next page of BatchEndpoint objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
         /// <summary> An array of objects of type BatchEndpoint. </summary>
-        public IReadOnlyList<BatchEndpointData> Value { get; }
+        public IReadOnlyList<MachineLearningBatchEndpointData> Value { get; }
     }
 }

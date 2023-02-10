@@ -24,10 +24,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurations"/> is null. </exception>
         public DnsResolverInboundEndpointData(AzureLocation location, IEnumerable<InboundEndpointIPConfiguration> ipConfigurations) : base(location)
         {
-            if (ipConfigurations == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurations));
-            }
+            Argument.AssertNotNull(ipConfigurations, nameof(ipConfigurations));
 
             IPConfigurations = ipConfigurations.ToList();
         }
@@ -43,7 +40,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="ipConfigurations"> IP configurations for the inbound endpoint. </param>
         /// <param name="provisioningState"> The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the inbound endpoint resource. </param>
-        internal DnsResolverInboundEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<InboundEndpointIPConfiguration> ipConfigurations, DnsResolverProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, systemData, tags, location)
+        internal DnsResolverInboundEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<InboundEndpointIPConfiguration> ipConfigurations, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             IPConfigurations = ipConfigurations;
@@ -58,6 +55,6 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public DnsResolverProvisioningState? ProvisioningState { get; }
         /// <summary> The resourceGuid property of the inbound endpoint resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
     }
 }

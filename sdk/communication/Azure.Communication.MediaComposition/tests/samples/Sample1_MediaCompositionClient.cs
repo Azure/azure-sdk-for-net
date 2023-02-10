@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -69,22 +68,111 @@ namespace Azure.Communication.MediaComposition.Tests.samples
         {
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
-            #region Snippet:UpdateMediaComposition
-            var layout = new MediaCompositionLayout()
+            #region Snippet:UpdateLayout
+            var layout = new AutoGridLayout(new List<string>() { "acsGroupCall" })
             {
                 Resolution = new(720, 480),
-                Presenter = new("jill", "jack")
-                {
-                    SupportPosition = SupportPosition.BottomRight,
-                    SupportAspectRatio = 3 / 2
-                }
             };
-            var response = await mediaCompositionClient.UpdateAsync(mediaCompositionId, layout);
-            #endregion Snippet:UpdateMediaComposition
-            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+
+            var response = await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, layout);
+            #endregion Snippet:UpdateLayout
+            Assert.IsNotNull(response.Value.Layout);
+            Assert.IsTrue(response.Value.Layout is AutoGridLayout);
             Assert.AreEqual(response.Value.Layout.Resolution.Width, 720);
             Assert.AreEqual(response.Value.Layout.Resolution.Height, 480);
-            Assert.IsNotNull(response.Value.Layout.Presenter);
+            await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+        }
+
+        [Test]
+        public async Task UpsertInputsMediaCompositionAsync()
+        {
+            var mediaCompositionClient = CreateClient();
+            await CreateMediaCompositionHelper(mediaCompositionClient);
+            #region Snippet:UpsertInputs
+            var inputsToUpsert = new Dictionary<string, MediaInput>()
+            {
+                ["james"] = new ParticipantInput
+                (
+                    id: new CommunicationUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"),
+                    call: "acsGroupCall"
+                )
+                {
+                    PlaceholderImageUri = "https://imageendpoint"
+                }
+            };
+
+            var response = await mediaCompositionClient.UpsertInputsAsync(mediaCompositionId, inputsToUpsert);
+            #endregion Snippet:UpsertInputs
+            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            response.Value.Inputs.TryGetValue("james", out var james);
+            Assert.IsNotNull(james);
+            response.Value.Inputs.TryGetValue("jack", out var jack);
+            Assert.IsNotNull(jack);
+            await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+        }
+
+        [Test]
+        public async Task RemoveInputsMediaCompositionAsync()
+        {
+            var mediaCompositionClient = CreateClient();
+            await CreateMediaCompositionHelper(mediaCompositionClient);
+            var layout = new AutoGridLayout(new List<string>() { "acsGroupCall" })
+            {
+                Resolution = new(720, 480),
+            };
+
+            await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, layout);
+            #region Snippet:RemoveInputs
+            var inputIdsToRemove = new List<string>()
+            {
+                "jane", "jerry"
+            };
+            var response = await mediaCompositionClient.RemoveInputsAsync(mediaCompositionId, inputIdsToRemove);
+            #endregion Snippet:RemoveInputs
+            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            response.Value.Inputs.TryGetValue("jane", out var jane);
+            Assert.IsNull(jane);
+            response.Value.Inputs.TryGetValue("jerry", out var jerry);
+            Assert.IsNull(jerry);
+            await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+        }
+
+        [Test]
+        public async Task UpsertOutputsMediaCompositionAsync()
+        {
+            var mediaCompositionClient = CreateClient();
+            await CreateMediaCompositionHelper(mediaCompositionClient);
+            #region Snippet:UpsertOutputs
+            var outputsToUpsert = new Dictionary<string, MediaOutput>()
+            {
+                ["youtube"] = new RtmpOutput("key", new(1920, 1080), "rtmp://a.rtmp.youtube.com/live2")
+            };
+
+            var response = await mediaCompositionClient.UpsertOutputsAsync(mediaCompositionId, outputsToUpsert);
+            #endregion Snippet:UpsertOutputs
+            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            response.Value.Outputs.TryGetValue("youtube", out var youtube);
+            Assert.IsNotNull(youtube);
+            response.Value.Outputs.TryGetValue("acsGroupCall", out var acsGroupCall);
+            Assert.IsNotNull(acsGroupCall);
+            await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+        }
+
+        [Test]
+        public async Task RemoveOutputsMediaCompositionAsync()
+        {
+            var mediaCompositionClient = CreateClient();
+            await CreateMediaCompositionHelper(mediaCompositionClient);
+            #region Snippet:RemoveOutputs
+            var outputIdsToRemove = new List<string>()
+            {
+                "acsGroupCall"
+            };
+            var response = await mediaCompositionClient.RemoveOutputsAsync(mediaCompositionId, outputIdsToRemove);
+            #endregion Snippet:RemoveOutputs
+            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            response.Value.Outputs.TryGetValue("acsGroupCall", out var acsGroupCall);
+            Assert.IsNull(acsGroupCall);
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
         }
 
@@ -120,72 +208,53 @@ namespace Azure.Communication.MediaComposition.Tests.samples
             #endregion Snippet:DeleteMediaComposition
         }
 
-        private async Task<Response<MediaCompositionBody>> CreateMediaCompositionHelper(MediaCompositionClient mediaCompositionClient)
+        private async Task<Response<MediaComposition>> CreateMediaCompositionHelper(MediaCompositionClient mediaCompositionClient)
         {
             #region Snippet:CreateMediaComposition
-            var gridLayoutOptions = new GridLayoutOptions(2, 2);
-            gridLayoutOptions.InputIds.Add(new List<string> { "jill", "jack" });
-            gridLayoutOptions.InputIds.Add(new List<string> { "jane", "jerry" });
-            var layout = new MediaCompositionLayout()
+            var layout = new GridLayout(2, 2, new List<List<string>>{ new List<string> { "jill", "jack" }, new List<string> { "jane", "jerry" } })
             {
-                Resolution = new(1920, 1080),
-                Grid = gridLayoutOptions
+                Resolution = new(1920, 1080)
             };
 
             var inputs = new Dictionary<string, MediaInput>()
             {
-                ["jill"] = new()
+                ["jill"] = new ParticipantInput
+                (
+                    id: new CommunicationUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"),
+                    call: "acsGroupCall")
                 {
-                    Participant = new(
-                        id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7") },
-                        call: "teamsMeeting")
-                    {
-                        PlaceholderImageUri = "https://imageendpoint"
-                    }
+                    PlaceholderImageUri = "https://imageendpoint"
                 },
-                ["jack"] = new()
+                ["jack"] = new ParticipantInput
+                (
+                    id: new CommunicationUserIdentifier("fa4337b5-f13a-41c5-a34f-f2aa46699b61"),
+                    call: "acsGroupCall")
                 {
-                    Participant = new(
-                        id: new() { MicrosoftTeamsUser = new("fa4337b5-f13a-41c5-a34f-f2aa46699b61") },
-                        call: "teamsMeeting")
-                    {
-                        PlaceholderImageUri = "https://imageendpoint"
-                    }
+                    PlaceholderImageUri = "https://imageendpoint"
                 },
-                ["jane"] = new()
+                ["jane"] = new ParticipantInput
+                (
+                    id: new CommunicationUserIdentifier("2dd69470-dc25-49cf-b5c3-f562f08bf3b2"),
+                    call: "acsGroupCall"
+                )
                 {
-                    Participant = new(
-                        id: new() { MicrosoftTeamsUser = new("2dd69470-dc25-49cf-b5c3-f562f08bf3b2") },
-                        call: "teamsMeeting")
-                    {
-                        PlaceholderImageUri = "https://imageendpoint"
-                    }
+                    PlaceholderImageUri = "https://imageendpoint"
                 },
-                ["jerry"] = new()
+                ["jerry"] = new ParticipantInput
+                (
+                    id: new CommunicationUserIdentifier("30e29fde-ac1c-448f-bb34-0f3448d5a677"),
+                    call: "acsGroupCall")
                 {
-                    Participant = new(
-                        id: new() { MicrosoftTeamsUser = new("30e29fde-ac1c-448f-bb34-0f3448d5a677") },
-                        call: "teamsMeeting")
-                    {
-                        PlaceholderImageUri = "https://imageendpoint"
-                    }
+                    PlaceholderImageUri = "https://imageendpoint"
                 },
-                ["teamsMeeting"] = new()
-                {
-                    TeamsMeeting = new("https://teamsJoinUrl")
-                }
+                ["acsGroupCall"] = new GroupCallInput("d12d2277-ffec-4e22-9979-8c0d8c13d193")
             };
 
             var outputs = new Dictionary<string, MediaOutput>()
             {
-                {
-                    "acsGroupCall",
-                    new()
-                    {
-                        GroupCall = new("d12d2277-ffec-4e22-9979-8c0d8c13d193")
-                    }
-                }
+                ["acsGroupCall"] = new GroupCallOutput("d12d2277-ffec-4e22-9979-8c0d8c13d193")
             };
+
             var response = await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, inputs, outputs);
             #endregion Snippet:CreateMediaComposition
             return response;

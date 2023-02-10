@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="encryption"> Type of encryption. </param>
         /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
         /// <param name="tags"> Azure resource tags. </param>
-        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, StorageTargetType? protocolType, ElasticSanEncryptionType? encryption, NetworkRuleSet networkAcls, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ElasticSanProvisioningState? provisioningState, StorageTargetType? protocolType, ElasticSanEncryptionType? encryption, NetworkRuleSet networkAcls, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ProtocolType = protocolType;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> State of the operation on the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ElasticSanProvisioningState? ProvisioningState { get; }
         /// <summary> Type of storage target. </summary>
         public StorageTargetType? ProtocolType { get; set; }
         /// <summary> Type of encryption. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> A collection of rules governing the accessibility from specific network locations. </summary>
         internal NetworkRuleSet NetworkAcls { get; set; }
         /// <summary> The list of virtual network rules. </summary>
-        public IList<VirtualNetworkRule> VirtualNetworkRules
+        public IList<ElasticSanVirtualNetworkRule> VirtualNetworkRules
         {
             get
             {

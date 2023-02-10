@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
-                writer.WritePropertyName("linkedServiceName");
+                writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
-                writer.WritePropertyName("policy");
+                writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn");
+                writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(UserProperties))
             {
-                writer.WritePropertyName("userProperties");
+                writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(StorageLinkedServices))
             {
-                writer.WritePropertyName("storageLinkedServices");
+                writer.WritePropertyName("storageLinkedServices"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageLinkedServices)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(Arguments))
             {
-                writer.WritePropertyName("arguments");
+                writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
@@ -84,16 +84,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(GetDebugInfo))
             {
-                writer.WritePropertyName("getDebugInfo");
+                writer.WritePropertyName("getDebugInfo"u8);
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
-            writer.WritePropertyName("className");
+            writer.WritePropertyName("className"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ClassName);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(ClassName.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("jarFilePath");
+            writer.WritePropertyName("jarFilePath"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(JarFilePath);
 #else
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
             if (Optional.IsDefined(JarLinkedService))
             {
-                writer.WritePropertyName("jarLinkedService");
+                writer.WritePropertyName("jarLinkedService"u8);
                 writer.WriteObjectValue(JarLinkedService);
             }
             if (Optional.IsCollectionDefined(JarLibs))
             {
-                writer.WritePropertyName("jarLibs");
+                writer.WritePropertyName("jarLibs"u8);
                 writer.WriteStartArray();
                 foreach (var item in JarLibs)
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(Defines))
             {
-                writer.WritePropertyName("defines");
+                writer.WritePropertyName("defines"u8);
                 writer.WriteStartObject();
                 foreach (var item in Defines)
                 {
@@ -148,36 +148,36 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HDInsightMapReduceActivity DeserializeHDInsightMapReduceActivity(JsonElement element)
         {
-            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
-            Optional<IList<LinkedServiceReference>> storageLinkedServices = default;
+            Optional<IList<ActivityUserProperty>> userProperties = default;
+            Optional<IList<FactoryLinkedServiceReference>> storageLinkedServices = default;
             Optional<IList<BinaryData>> arguments = default;
-            Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
+            Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
             BinaryData className = default;
             BinaryData jarFilePath = default;
-            Optional<LinkedServiceReference> jarLinkedService = default;
+            Optional<FactoryLinkedServiceReference> jarLinkedService = default;
             Optional<IList<BinaryData>> jarLibs = default;
             Optional<IDictionary<string, BinaryData>> defines = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -187,22 +187,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -217,22 +217,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"))
+                if (property.NameEquals("userProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UserProperty> array = new List<UserProperty>();
+                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserProperty.DeserializeUserProperty(item));
+                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
                     }
                     userProperties = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -241,22 +241,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("storageLinkedServices"))
+                        if (property0.NameEquals("storageLinkedServices"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<LinkedServiceReference> array = new List<LinkedServiceReference>();
+                            List<FactoryLinkedServiceReference> array = new List<FactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkedServiceReference.DeserializeLinkedServiceReference(item));
+                                array.Add(FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(item));
                             }
                             storageLinkedServices = array;
                             continue;
                         }
-                        if (property0.NameEquals("arguments"))
+                        if (property0.NameEquals("arguments"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -271,37 +271,37 @@ namespace Azure.ResourceManager.DataFactory.Models
                             arguments = array;
                             continue;
                         }
-                        if (property0.NameEquals("getDebugInfo"))
+                        if (property0.NameEquals("getDebugInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            getDebugInfo = new HDInsightActivityDebugInfoOption(property0.Value.GetString());
+                            getDebugInfo = new HDInsightActivityDebugInfoOptionSetting(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("className"))
+                        if (property0.NameEquals("className"u8))
                         {
                             className = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("jarFilePath"))
+                        if (property0.NameEquals("jarFilePath"u8))
                         {
                             jarFilePath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("jarLinkedService"))
+                        if (property0.NameEquals("jarLinkedService"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            jarLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
+                            jarLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("jarLibs"))
+                        if (property0.NameEquals("jarLibs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             jarLibs = array;
                             continue;
                         }
-                        if (property0.NameEquals("defines"))
+                        if (property0.NameEquals("defines"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

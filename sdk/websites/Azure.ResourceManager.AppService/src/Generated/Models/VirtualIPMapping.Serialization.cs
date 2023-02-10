@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualIP))
             {
-                writer.WritePropertyName("virtualIP");
+                writer.WritePropertyName("virtualIP"u8);
                 writer.WriteStringValue(VirtualIP);
             }
             if (Optional.IsDefined(InternalHttpPort))
             {
-                writer.WritePropertyName("internalHttpPort");
+                writer.WritePropertyName("internalHttpPort"u8);
                 writer.WriteNumberValue(InternalHttpPort.Value);
             }
             if (Optional.IsDefined(InternalHttpsPort))
             {
-                writer.WritePropertyName("internalHttpsPort");
+                writer.WritePropertyName("internalHttpsPort"u8);
                 writer.WriteNumberValue(InternalHttpsPort.Value);
             }
-            if (Optional.IsDefined(InUse))
+            if (Optional.IsDefined(IsInUse))
             {
-                writer.WritePropertyName("inUse");
-                writer.WriteBooleanValue(InUse.Value);
+                writer.WritePropertyName("inUse"u8);
+                writer.WriteBooleanValue(IsInUse.Value);
             }
             if (Optional.IsDefined(ServiceName))
             {
-                writer.WritePropertyName("serviceName");
+                writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
             writer.WriteEndObject();
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> serviceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualIP"))
+                if (property.NameEquals("virtualIP"u8))
                 {
                     virtualIP = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("internalHttpPort"))
+                if (property.NameEquals("internalHttpPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
                     internalHttpPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("internalHttpsPort"))
+                if (property.NameEquals("internalHttpsPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
                     internalHttpsPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("inUse"))
+                if (property.NameEquals("inUse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
                     inUse = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("serviceName"))
+                if (property.NameEquals("serviceName"u8))
                 {
                     serviceName = property.Value.GetString();
                     continue;

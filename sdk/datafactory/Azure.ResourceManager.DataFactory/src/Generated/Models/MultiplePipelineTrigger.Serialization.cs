@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Pipelines))
             {
-                writer.WritePropertyName("pipelines");
+                writer.WritePropertyName("pipelines"u8);
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "BlobEventsTrigger": return BlobEventsTrigger.DeserializeBlobEventsTrigger(element);
-                    case "BlobTrigger": return BlobTrigger.DeserializeBlobTrigger(element);
+                    case "BlobEventsTrigger": return AzureBlobEventsTrigger.DeserializeAzureBlobEventsTrigger(element);
+                    case "BlobTrigger": return AzureBlobTrigger.DeserializeAzureBlobTrigger(element);
                     case "CustomEventsTrigger": return CustomEventsTrigger.DeserializeCustomEventsTrigger(element);
                     case "ScheduleTrigger": return ScheduleTrigger.DeserializeScheduleTrigger(element);
                 }
             }
             Optional<IList<TriggerPipelineReference>> pipelines = default;
-            string type = default;
+            string type = "MultiplePipelineTrigger";
             Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
+            Optional<FactoryTriggerRuntimeState> runtimeState = default;
             Optional<IList<BinaryData>> annotations = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pipelines"))
+                if (property.NameEquals("pipelines"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,27 +96,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                     pipelines = array;
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runtimeState"))
+                if (property.NameEquals("runtimeState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    runtimeState = new TriggerRuntimeState(property.Value.GetString());
+                    runtimeState = new FactoryTriggerRuntimeState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

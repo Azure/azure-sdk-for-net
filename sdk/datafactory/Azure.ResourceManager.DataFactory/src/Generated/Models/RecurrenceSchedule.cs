@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Minutes = new ChangeTrackingList<int>();
             Hours = new ChangeTrackingList<int>();
-            WeekDays = new ChangeTrackingList<DaysOfWeek>();
+            WeekDays = new ChangeTrackingList<FactoryDayOfWeek>();
             MonthDays = new ChangeTrackingList<int>();
             MonthlyOccurrences = new ChangeTrackingList<RecurrenceScheduleOccurrence>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="monthDays"> The month days. </param>
         /// <param name="monthlyOccurrences"> The monthly occurrences. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal RecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<DaysOfWeek> weekDays, IList<int> monthDays, IList<RecurrenceScheduleOccurrence> monthlyOccurrences, IDictionary<string, BinaryData> additionalProperties)
+        internal RecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<FactoryDayOfWeek> weekDays, IList<int> monthDays, IList<RecurrenceScheduleOccurrence> monthlyOccurrences, IDictionary<string, BinaryData> additionalProperties)
         {
             Minutes = minutes;
             Hours = hours;
@@ -47,12 +47,41 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The hours. </summary>
         public IList<int> Hours { get; }
         /// <summary> The days of the week. </summary>
-        public IList<DaysOfWeek> WeekDays { get; }
+        public IList<FactoryDayOfWeek> WeekDays { get; }
         /// <summary> The month days. </summary>
         public IList<int> MonthDays { get; }
         /// <summary> The monthly occurrences. </summary>
         public IList<RecurrenceScheduleOccurrence> MonthlyOccurrences { get; }
-        /// <summary> Additional Properties. </summary>
+        /// <summary>
+        /// Additional Properties
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

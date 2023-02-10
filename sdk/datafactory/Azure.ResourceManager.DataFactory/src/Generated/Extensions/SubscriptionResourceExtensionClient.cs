@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -50,99 +49,67 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary>
         /// Lists factories under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/factories
-        /// Operation Id: Factories_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/factories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Factories_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataFactoryResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryResource> GetDataFactoriesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataFactoryResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataFactories");
-                scope.Start();
-                try
-                {
-                    var response = await DataFactoryFactoriesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataFactoryResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataFactories");
-                scope.Start();
-                try
-                {
-                    var response = await DataFactoryFactoriesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataFactoryFactoriesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataFactoryFactoriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryResource(Client, DataFactoryData.DeserializeDataFactoryData(e)), DataFactoryFactoriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataFactories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists factories under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/factories
-        /// Operation Id: Factories_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/factories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Factories_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataFactoryResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryResource> GetDataFactories(CancellationToken cancellationToken = default)
         {
-            Page<DataFactoryResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataFactories");
-                scope.Start();
-                try
-                {
-                    var response = DataFactoryFactoriesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataFactoryResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataFactories");
-                scope.Start();
-                try
-                {
-                    var response = DataFactoryFactoriesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataFactoryFactoriesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataFactoryFactoriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryResource(Client, DataFactoryData.DeserializeDataFactoryData(e)), DataFactoryFactoriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataFactories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Updates a factory&apos;s repo information.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/configureFactoryRepo
-        /// Operation Id: Factories_ConfigureFactoryRepo
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/configureFactoryRepo</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Factories_ConfigureFactoryRepo</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataFactoryResource>> ConfigureFactoryRepoAsync(string locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryResource>> ConfigureFactoryRepoInformationAsync(AzureLocation locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
-            using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ConfigureFactoryRepo");
+            using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ConfigureFactoryRepoInformation");
             scope.Start();
             try
             {
@@ -158,15 +125,23 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary>
         /// Updates a factory&apos;s repo information.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/configureFactoryRepo
-        /// Operation Id: Factories_ConfigureFactoryRepo
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/configureFactoryRepo</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Factories_ConfigureFactoryRepo</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataFactoryResource> ConfigureFactoryRepo(string locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryResource> ConfigureFactoryRepoInformation(AzureLocation locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
-            using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ConfigureFactoryRepo");
+            using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ConfigureFactoryRepoInformation");
             scope.Start();
             try
             {
@@ -182,13 +157,21 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary>
         /// Get exposure control feature for specific location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/getFeatureValue
-        /// Operation Id: ExposureControl_GetFeatureValue
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/getFeatureValue</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExposureControl_GetFeatureValue</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="content"> The exposure control request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExposureControlResult>> GetFeatureValueExposureControlAsync(string locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExposureControlResult>> GetFeatureValueExposureControlAsync(AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ExposureControlClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFeatureValueExposureControl");
             scope.Start();
@@ -206,13 +189,21 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary>
         /// Get exposure control feature for specific location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/getFeatureValue
-        /// Operation Id: ExposureControl_GetFeatureValue
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/getFeatureValue</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExposureControl_GetFeatureValue</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="content"> The exposure control request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExposureControlResult> GetFeatureValueExposureControl(string locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ExposureControlResult> GetFeatureValueExposureControl(AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ExposureControlClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFeatureValueExposureControl");
             scope.Start();

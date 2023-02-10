@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string GETValue = "GET";
+        private const string GetValue = "GET";
         private const string PostValue = "POST";
-        private const string PUTValue = "PUT";
+        private const string PutValue = "PUT";
         private const string DeleteValue = "DELETE";
         private const string OptionsValue = "OPTIONS";
         private const string HeadValue = "HEAD";
         private const string TraceValue = "TRACE";
 
         /// <summary> GET. </summary>
-        public static AzureFunctionActivityMethod GET { get; } = new AzureFunctionActivityMethod(GETValue);
+        public static AzureFunctionActivityMethod Get { get; } = new AzureFunctionActivityMethod(GetValue);
         /// <summary> POST. </summary>
         public static AzureFunctionActivityMethod Post { get; } = new AzureFunctionActivityMethod(PostValue);
         /// <summary> PUT. </summary>
-        public static AzureFunctionActivityMethod PUT { get; } = new AzureFunctionActivityMethod(PUTValue);
+        public static AzureFunctionActivityMethod Put { get; } = new AzureFunctionActivityMethod(PutValue);
         /// <summary> DELETE. </summary>
         public static AzureFunctionActivityMethod Delete { get; } = new AzureFunctionActivityMethod(DeleteValue);
         /// <summary> OPTIONS. </summary>

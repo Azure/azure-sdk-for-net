@@ -7,7 +7,11 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> The event data for a Job output. </summary>
+    /// <summary>
+    /// The event data for a Job output.
+    /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+    /// </summary>
     public partial class MediaJobOutput
     {
         /// <summary> Initializes a new instance of MediaJobOutput. </summary>

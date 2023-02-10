@@ -18,26 +18,26 @@ namespace Azure.ResourceManager.Relay
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RelayType))
             {
-                writer.WritePropertyName("relayType");
+                writer.WritePropertyName("relayType"u8);
                 writer.WriteStringValue(RelayType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(RequiresClientAuthorization))
+            if (Optional.IsDefined(IsClientAuthorizationRequired))
             {
-                writer.WritePropertyName("requiresClientAuthorization");
-                writer.WriteBooleanValue(RequiresClientAuthorization.Value);
+                writer.WritePropertyName("requiresClientAuthorization"u8);
+                writer.WriteBooleanValue(IsClientAuthorizationRequired.Value);
             }
-            if (Optional.IsDefined(RequiresTransportSecurity))
+            if (Optional.IsDefined(IsTransportSecurityRequired))
             {
-                writer.WritePropertyName("requiresTransportSecurity");
-                writer.WriteBooleanValue(RequiresTransportSecurity.Value);
+                writer.WritePropertyName("requiresTransportSecurity"u8);
+                writer.WriteBooleanValue(IsTransportSecurityRequired.Value);
             }
             if (Optional.IsDefined(UserMetadata))
             {
-                writer.WritePropertyName("userMetadata");
+                writer.WritePropertyName("userMetadata"u8);
                 writer.WriteStringValue(UserMetadata);
             }
             writer.WriteEndObject();
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.Relay
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> updatedAt = default;
             Optional<int> listenerCount = default;
-            Optional<Relaytype> relayType = default;
+            Optional<RelayType> relayType = default;
             Optional<bool> requiresClientAuthorization = default;
             Optional<bool> requiresTransportSecurity = default;
             Optional<string> userMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,32 +71,32 @@ namespace Azure.ResourceManager.Relay
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Relay
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("isDynamic"))
+                        if (property0.NameEquals("isDynamic"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Relay
                             isDynamic = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("createdAt"))
+                        if (property0.NameEquals("createdAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Relay
                             createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("updatedAt"))
+                        if (property0.NameEquals("updatedAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Relay
                             updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("listenerCount"))
+                        if (property0.NameEquals("listenerCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -145,17 +145,17 @@ namespace Azure.ResourceManager.Relay
                             listenerCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("relayType"))
+                        if (property0.NameEquals("relayType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            relayType = property0.Value.GetString().ToRelaytype();
+                            relayType = property0.Value.GetString().ToRelayType();
                             continue;
                         }
-                        if (property0.NameEquals("requiresClientAuthorization"))
+                        if (property0.NameEquals("requiresClientAuthorization"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Relay
                             requiresClientAuthorization = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("requiresTransportSecurity"))
+                        if (property0.NameEquals("requiresTransportSecurity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Relay
                             requiresTransportSecurity = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("userMetadata"))
+                        if (property0.NameEquals("userMetadata"u8))
                         {
                             userMetadata = property0.Value.GetString();
                             continue;

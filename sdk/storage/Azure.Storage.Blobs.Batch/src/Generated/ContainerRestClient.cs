@@ -9,6 +9,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -112,5 +113,92 @@ namespace Azure.Storage.Blobs.Batch
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateSubmitBatchRequest(string containerName, long contentLength, string multipartContentType, RequestContent content, int? timeout, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(containerName, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "batch", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", _version);
+            request.Headers.Add("Accept", "application/xml");
+            request.Headers.Add("Content-Length", contentLength);
+            request.Headers.Add("Content-Type", multipartContentType);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
+        /// <param name="containerName"> The container name. </param>
+        /// <param name="contentLength"> The length of the request. </param>
+        /// <param name="multipartContentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="multipartContentType"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SubmitBatchAsync(string containerName, long contentLength, string multipartContentType, RequestContent content, int? timeout = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(containerName, nameof(containerName));
+            Argument.AssertNotNull(multipartContentType, nameof(multipartContentType));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Container.SubmitBatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSubmitBatchRequest(containerName, contentLength, multipartContentType, content, timeout, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
+        /// <param name="containerName"> The container name. </param>
+        /// <param name="contentLength"> The length of the request. </param>
+        /// <param name="multipartContentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="multipartContentType"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SubmitBatch(string containerName, long contentLength, string multipartContentType, RequestContent content, int? timeout = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(containerName, nameof(containerName));
+            Argument.AssertNotNull(multipartContentType, nameof(multipartContentType));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Container.SubmitBatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSubmitBatchRequest(containerName, contentLength, multipartContentType, content, timeout, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
     }
 }

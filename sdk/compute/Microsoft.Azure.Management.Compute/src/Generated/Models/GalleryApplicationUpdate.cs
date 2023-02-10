@@ -55,7 +55,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="endOfLifeDate">The end of life date of the gallery
         /// Application Definition. This property can be used for
         /// decommissioning purposes. This property is updatable.</param>
-        public GalleryApplicationUpdate(OperatingSystemTypes supportedOSType, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?))
+        /// <param name="customActions">A list of custom actions that can be
+        /// performed with all of the Gallery Application Versions within this
+        /// Gallery Application.</param>
+        public GalleryApplicationUpdate(OperatingSystemTypes supportedOSType, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), IList<GalleryApplicationCustomAction> customActions = default(IList<GalleryApplicationCustomAction>))
             : base(id, name, type, tags)
         {
             Description = description;
@@ -64,6 +67,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             ReleaseNoteUri = releaseNoteUri;
             EndOfLifeDate = endOfLifeDate;
             SupportedOSType = supportedOSType;
+            CustomActions = customActions;
             CustomInit();
         }
 
@@ -118,6 +122,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         public OperatingSystemTypes SupportedOSType { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of custom actions that can be performed with
+        /// all of the Gallery Application Versions within this Gallery
+        /// Application.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customActions")]
+        public IList<GalleryApplicationCustomAction> CustomActions { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -125,6 +137,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (CustomActions != null)
+            {
+                foreach (var element in CustomActions)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
         }
     }
 }

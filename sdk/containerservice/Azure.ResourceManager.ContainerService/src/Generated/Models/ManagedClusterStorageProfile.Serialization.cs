@@ -15,52 +15,58 @@ namespace Azure.ResourceManager.ContainerService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskCSIDriver))
+            if (Optional.IsDefined(DiskCsiDriver))
             {
-                writer.WritePropertyName("diskCSIDriver");
-                writer.WriteObjectValue(DiskCSIDriver);
+                writer.WritePropertyName("diskCSIDriver"u8);
+                writer.WriteObjectValue(DiskCsiDriver);
             }
-            if (Optional.IsDefined(FileCSIDriver))
+            if (Optional.IsDefined(FileCsiDriver))
             {
-                writer.WritePropertyName("fileCSIDriver");
-                writer.WriteObjectValue(FileCSIDriver);
+                writer.WritePropertyName("fileCSIDriver"u8);
+                writer.WriteObjectValue(FileCsiDriver);
             }
             if (Optional.IsDefined(SnapshotController))
             {
-                writer.WritePropertyName("snapshotController");
+                writer.WritePropertyName("snapshotController"u8);
                 writer.WriteObjectValue(SnapshotController);
+            }
+            if (Optional.IsDefined(BlobCsiDriver))
+            {
+                writer.WritePropertyName("blobCSIDriver"u8);
+                writer.WriteObjectValue(BlobCsiDriver);
             }
             writer.WriteEndObject();
         }
 
         internal static ManagedClusterStorageProfile DeserializeManagedClusterStorageProfile(JsonElement element)
         {
-            Optional<ManagedClusterStorageProfileDiskCSIDriver> diskCSIDriver = default;
-            Optional<ManagedClusterStorageProfileFileCSIDriver> fileCSIDriver = default;
+            Optional<ManagedClusterStorageProfileDiskCsiDriver> diskCsiDriver = default;
+            Optional<ManagedClusterStorageProfileFileCsiDriver> fileCsiDriver = default;
             Optional<ManagedClusterStorageProfileSnapshotController> snapshotController = default;
+            Optional<ManagedClusterStorageProfileBlobCsiDriver> blobCsiDriver = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskCSIDriver"))
+                if (property.NameEquals("diskCSIDriver"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskCSIDriver = ManagedClusterStorageProfileDiskCSIDriver.DeserializeManagedClusterStorageProfileDiskCSIDriver(property.Value);
+                    diskCsiDriver = ManagedClusterStorageProfileDiskCsiDriver.DeserializeManagedClusterStorageProfileDiskCsiDriver(property.Value);
                     continue;
                 }
-                if (property.NameEquals("fileCSIDriver"))
+                if (property.NameEquals("fileCSIDriver"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileCSIDriver = ManagedClusterStorageProfileFileCSIDriver.DeserializeManagedClusterStorageProfileFileCSIDriver(property.Value);
+                    fileCsiDriver = ManagedClusterStorageProfileFileCsiDriver.DeserializeManagedClusterStorageProfileFileCsiDriver(property.Value);
                     continue;
                 }
-                if (property.NameEquals("snapshotController"))
+                if (property.NameEquals("snapshotController"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,8 +76,18 @@ namespace Azure.ResourceManager.ContainerService.Models
                     snapshotController = ManagedClusterStorageProfileSnapshotController.DeserializeManagedClusterStorageProfileSnapshotController(property.Value);
                     continue;
                 }
+                if (property.NameEquals("blobCSIDriver"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    blobCsiDriver = ManagedClusterStorageProfileBlobCsiDriver.DeserializeManagedClusterStorageProfileBlobCsiDriver(property.Value);
+                    continue;
+                }
             }
-            return new ManagedClusterStorageProfile(diskCSIDriver.Value, fileCSIDriver.Value, snapshotController.Value);
+            return new ManagedClusterStorageProfile(diskCsiDriver.Value, fileCsiDriver.Value, snapshotController.Value, blobCsiDriver.Value);
         }
     }
 }

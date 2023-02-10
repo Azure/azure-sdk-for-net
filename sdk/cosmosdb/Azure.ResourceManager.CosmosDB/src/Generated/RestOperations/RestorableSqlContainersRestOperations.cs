@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-10-15";
+            _apiVersion = apiVersion ?? "2022-08-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, string instanceId, string restorableSqlDatabaseRid, string startTime, string endTime)
+        internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, Guid instanceId, string restorableSqlDatabaseRid, string startTime, string endTime)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -78,12 +78,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="startTime"> The snapshot create timestamp after which snapshots need to be listed. </param>
         /// <param name="endTime"> The snapshot create timestamp before which snapshots need to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RestorableSqlContainersListResult>> ListAsync(string subscriptionId, AzureLocation location, string instanceId, string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<RestorableSqlContainersListResult>> ListAsync(string subscriptionId, AzureLocation location, Guid instanceId, string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var message = CreateListRequest(subscriptionId, location, instanceId, restorableSqlDatabaseRid, startTime, endTime);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -109,12 +108,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="startTime"> The snapshot create timestamp after which snapshots need to be listed. </param>
         /// <param name="endTime"> The snapshot create timestamp before which snapshots need to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RestorableSqlContainersListResult> List(string subscriptionId, AzureLocation location, string instanceId, string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<RestorableSqlContainersListResult> List(string subscriptionId, AzureLocation location, Guid instanceId, string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var message = CreateListRequest(subscriptionId, location, instanceId, restorableSqlDatabaseRid, startTime, endTime);
             _pipeline.Send(message, cancellationToken);

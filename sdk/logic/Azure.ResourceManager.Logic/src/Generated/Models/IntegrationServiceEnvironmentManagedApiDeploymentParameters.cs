@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Logic.Models
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiDeploymentParameters. </summary>
         /// <param name="contentLinkDefinition"> The integration service environment managed api content link for deployment. </param>
-        internal IntegrationServiceEnvironmentManagedApiDeploymentParameters(ContentLink contentLinkDefinition)
+        internal IntegrationServiceEnvironmentManagedApiDeploymentParameters(LogicContentLink contentLinkDefinition)
         {
             ContentLinkDefinition = contentLinkDefinition;
         }
 
         /// <summary> The integration service environment managed api content link for deployment. </summary>
-        public ContentLink ContentLinkDefinition { get; set; }
+        public LogicContentLink ContentLinkDefinition { get; set; }
     }
 }

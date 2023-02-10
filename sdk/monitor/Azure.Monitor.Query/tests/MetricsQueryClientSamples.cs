@@ -54,7 +54,7 @@ namespace Azure.Monitor.Query.Tests
             #region Snippet:QueryMetricsWithAggregations
 #if SNIPPET
             string resourceId =
-                "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
+                "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.KeyVault/vaults/TestVault";
 #else
             string resourceId = TestEnvironment.MetricsResource;
 #endif

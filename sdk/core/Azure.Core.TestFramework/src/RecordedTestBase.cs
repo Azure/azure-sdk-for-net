@@ -7,8 +7,11 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 using Azure.Core.TestFramework.Models;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -43,6 +46,8 @@ namespace Azure.Core.TestFramework
         protected override DateTime TestStartTime => _testStartTime;
 
         public const string SanitizeValue = "Sanitized";
+        public const string AssetsJson = "assets.json";
+        public string AssetsJsonPath { get; set; }
 
         /// <summary>
         /// The list of JSON path sanitizers to use when sanitizing a JSON request or response body.
@@ -177,6 +182,25 @@ namespace Azure.Core.TestFramework
         {
         };
 
+        private bool _useLocalDebugProxy;
+
+        /// <summary>
+        /// If set to true, the proxy will be configured to connect on ports 5000 and 5001. This is useful when running the proxy locally for debugging recorded test issues.
+        /// </summary>
+        protected bool UseLocalDebugProxy
+        {
+            get => _useLocalDebugProxy;
+
+            set
+            {
+                if (value && TestEnvironment.GlobalIsRunningInCI)
+                {
+                    throw new AssertionException($"Setting {nameof(UseLocalDebugProxy)} must not be merged");
+                }
+                _useLocalDebugProxy = value;
+            }
+        }
+
         /// <summary>
         /// Creats a new instance of <see cref="RecordedTestBase"/>.
         /// </summary>
@@ -185,6 +209,7 @@ namespace Azure.Core.TestFramework
         protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
         {
             Mode = mode ?? TestEnvironment.GlobalTestMode;
+            AssetsJsonPath = GetAssetsJson();
         }
 
         protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile) =>
@@ -222,9 +247,46 @@ namespace Azure.Core.TestFramework
 
             string fileName = $"{name}{version}{async}.json";
 
-            return Path.Combine(
+            var repoRoot = TestEnvironment.RepositoryRoot;
+
+            // this needs to be updated to purely relative to repo root
+            var result = Path.Combine(
                 GetSessionFileDirectory(),
                 fileName);
+
+            if (!string.IsNullOrWhiteSpace(AssetsJsonPath))
+            {
+                return Regex.Replace(result.Replace(repoRoot, String.Empty), @"^[\\/]*", string.Empty);
+            }
+            else
+            {
+                return result;
+            }
+        }
+
+        private string GetAssetsJson()
+        {
+            var path = GetSessionFileDirectory();
+
+            while (true)
+            {
+                var assetsJsonPresent = File.Exists(Path.Combine(path, "assets.json"));
+
+                // Check for root .git directory or, less commonly, a .git file for git worktrees.
+                string gitRootPath = Path.Combine(path, ".git");
+                var isGitRoot = Directory.Exists(gitRootPath) || File.Exists(gitRootPath);
+
+                if (assetsJsonPresent)
+                {
+                    return Path.Combine(path, AssetsJson);
+                }
+                else if (isGitRoot)
+                {
+                    return null;
+                }
+
+                path = Path.GetDirectoryName(path);
+            }
         }
 
         private string GetSessionFileDirectory()
@@ -273,7 +335,7 @@ namespace Azure.Core.TestFramework
 
             if (Mode != RecordedTestMode.Live)
             {
-                _proxy = TestProxy.Start();
+                _proxy = TestProxy.Start(UseLocalDebugProxy);
             }
         }
 
@@ -302,7 +364,7 @@ namespace Azure.Core.TestFramework
                     // TestCase attribute allows specifying a test name
                     foreach (var attribute in method.GetCustomAttributes(true))
                     {
-                        if (attribute is ITestData { TestName: { } name})
+                        if (attribute is ITestData { TestName: { } name })
                         {
                             knownMethods.Add(name);
                         }
@@ -330,6 +392,14 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        protected async Task SetProxyOptionsAsync(ProxyOptions options)
+        {
+            if (Mode == RecordedTestMode.Record && options != null)
+            {
+                await _proxy.Client.SetRecordingTransportOptionsAsync(Recording.RecordingId, options).ConfigureAwait(false);
+            }
+        }
+
         [SetUp]
         public virtual async Task StartTestRecordingAsync()
         {
@@ -341,13 +411,13 @@ namespace Azure.Core.TestFramework
             if (Mode != RecordedTestMode.Live &&
                 test.Properties.ContainsKey("_SkipRecordings"))
             {
-                throw new IgnoreException((string) test.Properties.Get("_SkipRecordings"));
+                throw new IgnoreException((string)test.Properties.Get("_SkipRecordings"));
             }
 
             if (Mode == RecordedTestMode.Live &&
                 test.Properties.ContainsKey("_SkipLive"))
             {
-                throw new IgnoreException((string) test.Properties.Get("_SkipLive"));
+                throw new IgnoreException((string)test.Properties.Get("_SkipLive"));
             }
 
             Recording = await CreateTestRecordingAsync(Mode, GetSessionFilePath());

@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("odata.type");
+            writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceUri");
+                writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(LegacyResourceId))
             {
-                writer.WritePropertyName("legacyResourceId");
+                writer.WritePropertyName("legacyResourceId"u8);
                 writer.WriteStringValue(LegacyResourceId);
             }
             if (Optional.IsDefined(ResourceLocation))
             {
-                writer.WritePropertyName("resourceLocation");
+                writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
             if (Optional.IsDefined(MetricNamespace))
             {
-                writer.WritePropertyName("metricNamespace");
+                writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
             writer.WriteEndObject();
@@ -50,45 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     case "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource": return RuleMetricDataSource.DeserializeRuleMetricDataSource(element);
                 }
             }
-            string odataType = default;
-            Optional<ResourceIdentifier> resourceUri = default;
-            Optional<string> legacyResourceId = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> metricNamespace = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceUri"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resourceUri = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("legacyResourceId"))
-                {
-                    legacyResourceId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceLocation"))
-                {
-                    resourceLocation = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("metricNamespace"))
-                {
-                    metricNamespace = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new RuleDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value);
+            return UnknownRuleDataSource.DeserializeUnknownRuleDataSource(element);
         }
     }
 }

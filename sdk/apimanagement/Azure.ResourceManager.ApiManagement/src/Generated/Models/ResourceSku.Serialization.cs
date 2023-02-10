@@ -14,17 +14,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ResourceSku DeserializeResourceSku(JsonElement element)
         {
-            Optional<SkuType> name = default;
+            Optional<ApiManagementServiceSkuType> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = new SkuType(property.Value.GetString());
+                    name = new ApiManagementServiceSkuType(property.Value.GetString());
                     continue;
                 }
             }

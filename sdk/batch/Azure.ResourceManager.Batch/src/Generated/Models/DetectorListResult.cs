@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of DetectorListResult. </summary>
         internal DetectorListResult()
         {
-            Value = new ChangeTrackingList<DetectorResponseData>();
+            Value = new ChangeTrackingList<BatchAccountDetectorData>();
         }
 
         /// <summary> Initializes a new instance of DetectorListResult. </summary>
         /// <param name="value"> The collection of Batch account detectors returned by the listing operation. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal DetectorListResult(IReadOnlyList<DetectorResponseData> value, string nextLink)
+        internal DetectorListResult(IReadOnlyList<BatchAccountDetectorData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The collection of Batch account detectors returned by the listing operation. </summary>
-        public IReadOnlyList<DetectorResponseData> Value { get; }
+        public IReadOnlyList<BatchAccountDetectorData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -16,14 +19,14 @@ namespace Azure.IoT.DeviceUpdate.Tests.Samples
             #region Snippet:AzDeviceUpdateSample2_CreateDeviceUpdateClient
 #if SNIPPET
             Uri endpoint = new Uri("https://<account-id>.api.adu.microsoft.com");
-            var instanceId = "<instance-id>"
-            var credentials = new DefaultAzureCredential();
+            string instanceId = "<instance-id>"
+            TokenCredential credentials = new DefaultAzureCredential();
 #else
             Uri endpoint = TestEnvironment.AccountEndPoint;
             string instanceId = TestEnvironment.InstanceId;
-            var credentials = TestEnvironment.Credential;
+            TokenCredential credentials = TestEnvironment.Credential;
 #endif
-            var client = new DeviceUpdateClient(endpoint, instanceId, credentials);
+            DeviceUpdateClient client = new DeviceUpdateClient(endpoint, instanceId, credentials);
             #endregion
 
             #region Snippet:AzDeviceUpdateSample2_GetUpdate
@@ -36,25 +39,86 @@ namespace Azure.IoT.DeviceUpdate.Tests.Samples
             string name = TestEnvironment.UpdateName;
             string version = TestEnvironment.UpdateVersion;
 #endif
-            var response = client.GetUpdate(provider, name, version);
-            Console.WriteLine(response.Content.ToString());
+            Response response = client.GetUpdate(provider, name, version);
+            JsonDocument update = JsonDocument.Parse(response.Content.ToMemory());
+            Console.WriteLine("Update:");
+            Console.WriteLine($"  Provider: {update.RootElement.GetProperty("updateId").GetProperty("provider").GetString()}");
+            Console.WriteLine($"  Name: {update.RootElement.GetProperty("updateId").GetProperty("name").GetString()}");
+            Console.WriteLine($"  Version: {update.RootElement.GetProperty("updateId").GetProperty("version").GetString()}");
+            Console.WriteLine("Metadata:");
+            Console.WriteLine(update.RootElement.ToString());
             #endregion
 
             #region Snippet:AzDeviceUpdateSample2_EnumerateUpdateFileIdentities
-            var fileIds = client.GetFiles(provider, name, version);
+            Pageable<BinaryData> fileIds = client.GetFiles(provider, name, version);
+            List<string> files = new List<string>();
             foreach (var fileId in fileIds)
             {
-                var doc = JsonDocument.Parse(fileId.ToMemory());
-                Console.WriteLine(doc.RootElement.GetString());
+                JsonDocument doc = JsonDocument.Parse(fileId.ToMemory());
+                files.Add(doc.RootElement.GetString());
             }
             #endregion
 
             #region Snippet:AzDeviceUpdateSample2_EnumerateUpdateFiles
-            var files = client.GetFiles(provider, name, version);
             foreach (var file in files)
             {
-                var doc = JsonDocument.Parse(file.ToMemory());
-                Console.WriteLine(doc.RootElement.GetString());
+                Console.WriteLine("\nFile:");
+                Console.WriteLine($"  FileId: {file}");
+                Response fileResponse = client.GetFile(provider, name, version, file);
+                JsonDocument fileDoc = JsonDocument.Parse(fileResponse.Content.ToMemory());
+                Console.WriteLine("Metadata:");
+                Console.WriteLine(fileDoc.RootElement.ToString());
+            }
+            #endregion
+        }
+
+        [Test]
+        public async Task GetUpdatesAsync()
+        {
+            Uri endpoint = TestEnvironment.AccountEndPoint;
+            string instanceId = TestEnvironment.InstanceId;
+            TokenCredential credentials = TestEnvironment.Credential;
+            DeviceUpdateClient client = new DeviceUpdateClient(endpoint, instanceId, credentials);
+
+            #region Snippet:AzDeviceUpdateSample2_GetUpdateAsync
+#if SNIPPET
+            string provider = "<update-provider>";
+            string name = "<update-name>";
+            string version = "<update-version>";
+#else
+            string provider = TestEnvironment.UpdateProvider;
+            string name = TestEnvironment.UpdateName;
+            string version = TestEnvironment.UpdateVersion;
+#endif
+            Response response = await client.GetUpdateAsync(provider, name, version);
+            JsonDocument update = JsonDocument.Parse(response.Content.ToMemory());
+            Console.WriteLine("Update:");
+            Console.WriteLine($"  Provider: {update.RootElement.GetProperty("updateId").GetProperty("provider").GetString()}");
+            Console.WriteLine($"  Name: {update.RootElement.GetProperty("updateId").GetProperty("name").GetString()}");
+            Console.WriteLine($"  Version: {update.RootElement.GetProperty("updateId").GetProperty("version").GetString()}");
+            Console.WriteLine("Metadata:");
+            Console.WriteLine(update.RootElement.ToString());
+            #endregion
+
+            #region Snippet:AzDeviceUpdateSample2_EnumerateUpdateFileIdentitiesAsync
+            AsyncPageable<BinaryData> fileIds = client.GetFilesAsync(provider, name, version);
+            List<string> files = new List<string>();
+            await foreach (var fileId in fileIds)
+            {
+                JsonDocument doc = JsonDocument.Parse(fileId.ToMemory());
+                files.Add(doc.RootElement.GetString());
+            }
+            #endregion
+
+            #region Snippet:AzDeviceUpdateSample2_EnumerateUpdateFilesAsync
+            foreach (var file in files)
+            {
+                Console.WriteLine("\nFile:");
+                Console.WriteLine($"  FileId: {file}");
+                Response fileResponse = await client.GetFileAsync(provider, name, version, file);
+                JsonDocument fileDoc = JsonDocument.Parse(fileResponse.Content.ToMemory());
+                Console.WriteLine("Metadata:");
+                Console.WriteLine(fileDoc.RootElement.ToString());
             }
             #endregion
         }

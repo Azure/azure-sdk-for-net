@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
         }
 
+        protected NetworkServiceClientTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
+            : base(isAsync, resourceType, apiVersion, mode)
+        {
+        }
+
         public bool IsTestTenant = false;
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
         public Dictionary<string, string> Tags { get; internal set; }
@@ -761,6 +766,15 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         protected VirtualNetworkGatewayCollection GetVirtualNetworkGatewayCollection(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetVirtualNetworkGateways();
+        }
+
+        protected async Task<BackendAddressPoolResource> GetFirstPoolAsync(LoadBalancerResource loadBalancer)
+        {
+            await foreach (var pool in loadBalancer.GetBackendAddressPools())
+            {
+                return pool;
+            }
+            throw new InvalidOperationException($"Pool list was empty for {loadBalancer.Id}");
         }
     }
 }

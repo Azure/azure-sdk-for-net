@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UserAssignedIdentity))
             {
-                writer.WritePropertyName("userAssignedIdentity");
+                writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
             }
             writer.WriteEndObject();
@@ -25,12 +25,17 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static ManagedIdentity DeserializeManagedIdentity(JsonElement element)
         {
-            Optional<string> userAssignedIdentity = default;
+            Optional<ResourceIdentifier> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userAssignedIdentity"))
+                if (property.NameEquals("userAssignedIdentity"u8))
                 {
-                    userAssignedIdentity = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    userAssignedIdentity = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

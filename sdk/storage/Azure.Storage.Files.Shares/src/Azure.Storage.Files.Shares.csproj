@@ -1,12 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
+    <!-- Remove this line when Azure.Core is released for net6.0  -->
+    <RunApiCompat Condition="'$(TargetFramework)' == 'net6.0'">false</RunApiCompat>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Files.Shares client library</AssemblyTitle>
-    <Version>12.12.0-beta.1</Version>
+    <Version>12.13.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>12.11.0</ApiCompatVersion>
+    <ApiCompatVersion>12.12.1</ApiCompatVersion>
     <DefineConstants>FileSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Files;Microsoft;Azure;File;Files;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
     <Description>
@@ -55,14 +57,15 @@
     <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SasQueryParametersInternals.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageArgument.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageClientConfiguration.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureStorageSharedSources)StorageClientDiagnostics.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageClientOptions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageCollectionEnumerator.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageExceptionExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageMemoryPool.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageRequestFailedDetailsParser.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageRequestValidationPipelinePolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageProgressExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyCredentialInternals.cs" LinkBase="Shared" />
@@ -72,6 +75,7 @@
     <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SlicedStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StreamPartition.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)TransferValidationOptionsExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared" />

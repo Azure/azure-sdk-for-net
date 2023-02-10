@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Sql.Models
         internal static StorageCapability DeserializeStorageCapability(JsonElement element)
         {
             Optional<StorageCapabilityStorageAccountType> storageAccountType = default;
-            Optional<CapabilityStatus> status = default;
+            Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccountType"))
+                if (property.NameEquals("storageAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Sql.Models
                     storageAccountType = new StorageCapabilityStorageAccountType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = property.Value.GetString().ToCapabilityStatus();
+                    status = property.Value.GetString().ToSqlCapabilityStatus();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;

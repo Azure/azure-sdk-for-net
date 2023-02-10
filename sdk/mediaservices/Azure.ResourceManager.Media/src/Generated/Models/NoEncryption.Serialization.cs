@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledProtocols))
             {
-                writer.WritePropertyName("enabledProtocols");
+                writer.WritePropertyName("enabledProtocols"u8);
                 writer.WriteObjectValue(EnabledProtocols);
             }
             writer.WriteEndObject();
@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static NoEncryption DeserializeNoEncryption(JsonElement element)
         {
-            Optional<EnabledProtocols> enabledProtocols = default;
+            Optional<MediaEnabledProtocols> enabledProtocols = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabledProtocols"))
+                if (property.NameEquals("enabledProtocols"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enabledProtocols = EnabledProtocols.DeserializeEnabledProtocols(property.Value);
+                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
                     continue;
                 }
             }

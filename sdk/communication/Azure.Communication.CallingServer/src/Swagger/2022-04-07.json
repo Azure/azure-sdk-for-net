@@ -1,1412 +1,2336 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "version": "2022-04-07-preview",
-        "title": "Azure Communication Service ServerCalling APIs"
-    },
-    "schemes": [
-        "https"
-    ],
-    "consumes": [
-        "application/json"
-    ],
-    "produces": [
-        "application/json"
-    ],
-    "paths": {
-        "/calling/callConnections": {
-            "post": {
-                "tags": [
-                    "PreConnections"
-                ],
-                "summary": "Create an outbound call.",
-                "description": "Create an outbound call.",
-                "operationId": "ServerCalling_CreateCall",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "The create call request.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/CreateCallRequest"
-                        }
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Returns the create call response.",
-                        "schema": {
-                            "$ref": "#/definitions/CallConnectionPropertiesDto"
-                        }
-                    }
-                },
-                "x-ms-examples": {
-                    "Create an outbound call.": {
-                        "$ref": "./examples/ServerCalling_CreateCall.json"
-                    }
-                }
-            }
-        },
-        "/calling/callConnections:answer": {
-            "post": {
-                "tags": [
-                    "PreConnections"
-                ],
-                "summary": "Answer a Call.",
-                "description": "Answer a call using the IncomingCallContext from Event Grid.",
-                "operationId": "ServerCalling_AnswerCall",
-                "parameters": [
-                    {
-                        "name": "answerCallRequest",
-                        "in": "body",
-                        "description": "The answer call request.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/AnswerCallRequest"
-                        }
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns the answer call response.",
-                        "schema": {
-                            "$ref": "#/definitions/CallConnectionPropertiesDto"
-                        }
-                    }
-                },
-                "x-ms-examples": {
-                    "Answer a Call.": {
-                        "$ref": "./examples/ServerCalling_AnswerCall.json"
-                    }
-                }
-            }
-        },
-        "/calling/callConnections:redirect": {
-            "post": {
-                "tags": [
-                    "PreConnections"
-                ],
-                "summary": "Redirect a call.",
-                "description": "Redirect a call.",
-                "operationId": "ServerCalling_RedirectCall",
-                "parameters": [
-                    {
-                        "name": "redirectCallRequest",
-                        "in": "body",
-                        "description": "",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/RedirectCallRequest"
-                        }
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "202": {
-                        "description": "Returns the redirect call response."
-                    }
-                },
-                "x-ms-examples": {
-                    "Redirect a call.": {
-                        "$ref": "./examples/ServerCalling_RedirectCall.json"
-                    }
-                }
-            }
-        },
-        "/calling/callConnections:reject": {
-            "post": {
-                "tags": [
-                    "PreConnections"
-                ],
-                "summary": "Reject the call.",
-                "description": "Reject the call.",
-                "operationId": "ServerCalling_RejectCall",
-                "parameters": [
-                    {
-                        "name": "rejectCallRequest",
-                        "in": "body",
-                        "description": "The reject call request.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/RejectCallRequest"
-                        }
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "202": {
-                        "description": "Returns the reject call response."
-                    }
-                },
-                "x-ms-examples": {
-                    "Reject the call.": {
-                        "$ref": "./examples/ServerCalling_RejectCall.json"
-                    }
-                }
-            }
-        },
-        "/calling/callConnections/{callConnectionId}": {
-            "get": {
-                "tags": [
-                    "MidConnections"
-                ],
-                "summary": "Get call connection.",
-                "operationId": "CallConnections_GetCall",
-                "parameters": [
-                    {
-                        "name": "callConnectionId",
-                        "in": "path",
-                        "description": "The call connection id.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns the get call response.",
-                        "schema": {
-                            "$ref": "#/definitions/CallConnectionPropertiesDto"
-                        }
-                    }
-                },
-                "x-ms-examples": {
-                    "Get call connection.": {
-                        "$ref": "./examples/CallConnections_GetCall.json"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "MidConnections"
-                ],
-                "summary": "Hangup the call.",
-                "description": "Hangup the call.",
-                "operationId": "CallConnections_HangupCall",
-                "parameters": [
-                    {
-                        "name": "callConnectionId",
-                        "in": "path",
-                        "description": "The call connection id.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Returns the hangup call response."
-                    }
-                },
-                "x-ms-examples": {
-                    "Hangup the call.": {
-                        "$ref": "./examples/CallConnections_HangupCall.json"
-                    }
-                }
-            }
-        },
-        "/calling/callConnections/{callConnectionId}:terminate": {
-            "post": {
-                "tags": [
-                    "MidConnections"
-                ],
-                "summary": "Terminate a call using CallConnectionId.",
-                "description": "Terminate a call using CallConnectionId.",
-                "operationId": "CallConnections_TerminateCall",
-                "parameters": [
-                    {
-                        "name": "callConnectionId",
-                        "in": "path",
-                        "description": "The terminate call request.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "202": {
-                        "description": "Returns the terminate call response."
-                    }
-                },
-                "x-ms-examples": {
-                    "Terminate a call using CallConnectionId.": {
-                        "$ref": "./examples/CallConnections_TerminateCall.json"
-                    }
-                }
-            }
-        },
-        "/calling/callConnections/{callConnectionId}:transferToParticipant": {
-            "post": {
-                "tags": [
-                    "MidConnections"
-                ],
-                "summary": "Transfer the call to a participant.",
-                "description": "Transfer the call to a participant.",
-                "operationId": "CallConnections_TransferToParticipant",
-                "parameters": [
-                    {
-                        "name": "callConnectionId",
-                        "in": "path",
-                        "description": "The call connection id.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "transferToParticipantRequest",
-                        "in": "body",
-                        "description": "The transfer to participant request.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/TransferToParticipantRequest"
-                        }
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "202": {
-                        "description": "Returns the transfer call response.",
-                        "schema": {
-                            "$ref": "#/definitions/TransferCallResponse"
-                        }
-                    }
-                },
-                "x-ms-examples": {
-                    "Transfer the call to a participant.": {
-                        "$ref": "./examples/CallConnections_TransferToParticipant.json"
-                    }
-                }
-            }
-        },
-        "/calling/callConnections/{callConnectionId}/content:play": {
-            "post": {
-                "tags": [
-                    "MidConnections"
-                ],
-                "summary": "Plays audio to participants in the call.",
-                "description": "Plays audio to participants in the call.",
-                "operationId": "Content_Play",
-                "parameters": [
-                    {
-                        "name": "callConnectionId",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "playRequest",
-                        "in": "body",
-                        "description": "",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/PlayRequest"
-                        }
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Returns the play audio response.",
-                        "schema": {
-                            "$ref": "#/definitions/PlayResponse"
-                        }
-                    }
-                },
-                "x-ms-examples": {
-                    "Plays audio to participants in the call.": {
-                        "$ref": "./examples/Content_Play.json"
-                    }
-                }
-            }
-        },
-        "/calling/callConnections/{callConnectionId}/participants": {
-            "get": {
-                "tags": [
-                    "MidConnections"
-                ],
-                "summary": "Get participants from a call.",
-                "description": "Get participants from a call.",
-                "operationId": "CallConnections_GetParticipants",
-                "parameters": [
-                    {
-                        "name": "callConnectionId",
-                        "in": "path",
-                        "description": "The call connection Id",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns the get participants response.",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/AcsCallParticipantDto"
-                            }
-                        }
-                    }
-                },
-                "x-ms-examples": {
-                    "Get participants from a call.": {
-                        "$ref": "./examples/CallConnections_GetParticipants.json"
-                    }
-                }
-            }
-        },
-        "/calling/callConnections/{callConnectionId}/participants:add": {
-            "post": {
-                "tags": [
-                    "MidConnections"
-                ],
-                "summary": "Add participants to the call.",
-                "description": "Add participants to the call.",
-                "operationId": "CallConnections_AddParticipant",
-                "parameters": [
-                    {
-                        "name": "callConnectionId",
-                        "in": "path",
-                        "description": "The call connection Id",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "addParticipantsRequest",
-                        "in": "body",
-                        "description": "The add participants request.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/AddParticipantsRequest"
-                        }
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "202": {
-                        "description": "Returns the add participant response.",
-                        "schema": {
-                            "$ref": "#/definitions/AddParticipantsResponse"
-                        }
-                    }
-                },
-                "x-ms-examples": {
-                    "Add participants to the call.": {
-                        "$ref": "./examples/CallConnections_AddParticipant.json"
-                    }
-                }
-            }
-        },
-        "/calling/callConnections/{callConnectionId}/participants:remove": {
-            "post": {
-                "tags": [
-                    "MidConnections"
-                ],
-                "summary": "Remove participant from the call using identifier.",
-                "description": "Remove participant from the call using identifier.",
-                "operationId": "CallConnections_RemoveParticipants",
-                "parameters": [
-                    {
-                        "name": "callConnectionId",
-                        "in": "path",
-                        "description": "The call connection id.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "removeParticipantsRequest",
-                        "in": "body",
-                        "description": "The participants to be removed from the call.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/RemoveParticipantsRequest"
-                        }
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "202": {
-                        "description": "Returns the remove participant response.",
-                        "schema": {
-                            "$ref": "#/definitions/RemoveParticipantsResponse"
-                        }
-                    }
-                },
-                "x-ms-examples": {
-                    "Remove participant from the call using identifier.": {
-                        "$ref": "./examples/CallConnections_RemoveParticipants.json"
-                    }
-                }
-            }
-        },
-        "/calling/callConnections/{callConnectionId}/participants:get": {
-            "post": {
-                "tags": [
-                    "MidConnections"
-                ],
-                "summary": "Get a participant from a call.",
-                "description": "Get a participant from a call.",
-                "operationId": "CallConnections_GetParticipant",
-                "parameters": [
-                    {
-                        "name": "callConnectionId",
-                        "in": "path",
-                        "description": "The call connection Id",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "getParticipantsRequest",
-                        "in": "body",
-                        "description": "The get participant request.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/GetParticipantRequest"
-                        }
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns the get participant response.",
-                        "schema": {
-                            "$ref": "#/definitions/AcsCallParticipantDto"
-                        }
-                    }
-                },
-                "x-ms-examples": {
-                    "Get a participant from a call.": {
-                        "$ref": "./examples/CallConnections_GetParticipant.json"
-                    }
-                }
-            }
-        },
-        "/calling/recordings": {
-            "post": {
-                "tags": [
-                    "Content_Recording"
-                ],
-                "summary": "Start recording the call.",
-                "operationId": "Content_Recording",
-                "parameters": [
-                    {
-                        "name": "startCallRecording",
-                        "in": "body",
-                        "description": "The request body of start call recording request.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/StartCallRecordingRequest"
-                        }
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns the start call recording response.",
-                        "schema": {
-                            "$ref": "#/definitions/StartCallRecordingResponse"
-                        }
-                    }
-                },
-                "x-ms-examples": {
-                    "Start recording the call.": {
-                        "$ref": "./examples/Content_Recording.json"
-                    }
-                }
-            }
-        },
-        "/calling/recordings/{recordingId}": {
-            "get": {
-                "tags": [
-                    "Content_Recording"
-                ],
-                "summary": "Get call recording properties.",
-                "operationId": "ServerCalls_GetRecordingProperties",
-                "parameters": [
-                    {
-                        "name": "recordingId",
-                        "in": "path",
-                        "description": "The recording id.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns the recording properties.",
-                        "schema": {
-                            "$ref": "#/definitions/GetCallRecordingStateResponse"
-                        }
-                    }
-                },
-                "x-ms-examples": {
-                    "Get call recording properties.": {
-                        "$ref": "./examples/ServerCalls_GetRecordingProperties.json"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Content_Recording"
-                ],
-                "summary": "Stop recording the call.",
-                "operationId": "ServerCalls_StopRecording",
-                "parameters": [
-                    {
-                        "name": "recordingId",
-                        "in": "path",
-                        "description": "The recording id.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns the stop call recording response."
-                    }
-                },
-                "x-ms-examples": {
-                    "Stop recording the call.": {
-                        "$ref": "./examples/ServerCalls_StopRecording.json"
-                    }
-                }
-            }
-        },
-        "/calling/recordings/{recordingId}/:pause": {
-            "post": {
-                "tags": [
-                    "Content_Recording"
-                ],
-                "summary": "Pause recording the call.",
-                "operationId": "ServerCalls_PauseRecording",
-                "parameters": [
-                    {
-                        "name": "recordingId",
-                        "in": "path",
-                        "description": "The recording id.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns the pause call recording response."
-                    }
-                },
-                "x-ms-examples": {
-                    "Pause recording the call.": {
-                        "$ref": "./examples/ServerCalls_PauseRecording.json"
-                    }
-                }
-            }
-        },
-        "/calling/recordings/{recordingId}/:resume": {
-            "post": {
-                "tags": [
-                    "Content_Recording"
-                ],
-                "summary": "Resume recording the call.",
-                "operationId": "ServerCalls_ResumeRecording",
-                "parameters": [
-                    {
-                        "name": "recordingId",
-                        "in": "path",
-                        "description": "The recording id.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns the resume call recording response."
-                    }
-                },
-                "x-ms-examples": {
-                    "Resume recording the call.": {
-                        "$ref": "./examples/ServerCalls_ResumeRecording.json"
-                    }
-                }
-            }
-        }
-    },
-    "definitions": {
-        "CreateCallRequest": {
-            "required": [
-                "targets",
-                "source",
-                "callbackUri"
-            ],
-            "type": "object",
-            "properties": {
-                "targets": {
-                    "description": "The targets of the call.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/CommunicationIdentifierModel"
-                    }
-                },
-                "source": {
-                    "$ref": "#/definitions/CallSourceDto"
-                },
-                "subject": {
-                    "description": "The subject.",
-                    "type": "string"
-                },
-                "callbackUri": {
-                    "description": "The callback URI.",
-                    "type": "string"
-                }
-            }
-        },
-        "CommunicationIdentifierModel": {
-            "type": "object",
-            "properties": {
-                "rawId": {
-                    "description": "Full ID of the identifier.",
-                    "type": "string"
-                },
-                "communicationUser": {
-                    "$ref": "#/definitions/CommunicationUserIdentifierModel",
-                    "description": "The communication user."
-                },
-                "phoneNumber": {
-                    "$ref": "#/definitions/PhoneNumberIdentifierModel",
-                    "description": "The phone number."
-                },
-                "microsoftTeamsUser": {
-                    "$ref": "#/definitions/MicrosoftTeamsUserIdentifierModel",
-                    "description": "The Microsoft Teams user."
-                }
-            }
-        },
-        "CallSourceDto": {
-            "required": [
-                "identifier"
-            ],
-            "type": "object",
-            "properties": {
-                "callerId": {
-                    "$ref": "#/definitions/PhoneNumberIdentifierModel",
-                    "description": "The alternate identity of the source of the call if dialing out to a pstn number"
-                },
-                "identifier": {
-                    "$ref": "#/definitions/CommunicationIdentifierModel"
-                }
-            }
-        },
-        "CommunicationUserIdentifierModel": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                }
-            }
-        },
-        "PhoneNumberIdentifierModel": {
-            "type": "object",
-            "properties": {
-                "value": {
-                    "type": "string"
-                }
-            }
-        },
-        "CommunicationCloudEnvironmentModel": {
-            "enum": [
-                "public",
-                "dod",
-                "gcch"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-                "name": "CommunicationCloudEnvironmentModel",
-                "modelAsString": true
-            }
-        },
-        "MicrosoftTeamsUserIdentifierModel": {
-            "required": [
-                "userId"
-            ],
-            "type": "object",
-            "properties": {
-                "userId": {
-                    "type": "string"
-                },
-                "isAnonymous": {
-                    "type": "boolean"
-                },
-                "cloud": {
-                    "$ref": "#/definitions/CommunicationCloudEnvironmentModel"
-                }
-            }
-        },
-        "CallConnectionStateModel": {
-            "description": "The state of the call connection.",
-            "enum": [
-                "unknown",
-                "connecting",
-                "connected",
-                "transferring",
-                "transferAccepted",
-                "disconnecting",
-                "disconnected"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-                "name": "CallConnectionStateModel",
-                "modelAsString": true
-            }
-        },
-        "CallConnectionPropertiesDto": {
-            "type": "object",
-            "properties": {
-                "callConnectionId": {
-                    "description": "The call connection id.",
-                    "type": "string"
-                },
-                "serverCallId": {
-                    "description": "The server call id.",
-                    "type": "string"
-                },
-                "source": {
-                    "$ref": "#/definitions/CommunicationIdentifierModel",
-                    "description": "The source of the call."
-                },
-                "alternateCallerId": {
-                    "$ref": "#/definitions/PhoneNumberIdentifierModel",
-                    "description": "The alternate identity of the source of the call if dialing out to a pstn number"
-                },
-                "targets": {
-                    "description": "The targets of the call.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/CommunicationIdentifierModel"
-                    }
-                },
-                "callConnectionState": {
-                    "$ref": "#/definitions/CallConnectionStateModel"
-                },
-                "subject": {
-                    "description": "The subject.",
-                    "type": "string"
-                },
-                "callbackUri": {
-                    "description": "The callback URI.",
-                    "type": "string"
-                }
-            }
-        },
-        "AnswerCallRequest": {
-            "description": "The request payload for answering the call.",
-            "required": [
-                "incomingCallContext"
-            ],
-            "type": "object",
-            "properties": {
-                "incomingCallContext": {
-                    "description": "The context associated with the call.",
-                    "type": "string"
-                },
-                "callbackUri": {
-                    "description": "The callback uri.",
-                    "type": "string"
-                }
-            }
-        },
-        "RedirectCallRequest": {
-            "description": "The request payload for redirecting the call.",
-            "required": [
-                "incomingCallContext",
-                "target"
-            ],
-            "type": "object",
-            "properties": {
-                "incomingCallContext": {
-                    "description": "The context associated with the call.",
-                    "type": "string"
-                },
-                "target": {
-                    "$ref": "#/definitions/CommunicationIdentifierModel",
-                    "description": "The target identity to redirect the call to."
-                }
-            }
-        },
-        "CallRejectReason": {
-            "description": "The rejection reason.",
-            "enum": [
-                "none",
-                "busy",
-                "forbidden"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-                "name": "CallRejectReason",
-                "modelAsString": true
-            }
-        },
-        "RejectCallRequest": {
-            "description": "The request payload for rejecting the call.",
-            "required": [
-                "incomingCallContext"
-            ],
-            "type": "object",
-            "properties": {
-                "incomingCallContext": {
-                    "description": "The context associated with the call.",
-                    "type": "string"
-                },
-                "callRejectReason": {
-                    "$ref": "#/definitions/CallRejectReason"
-                }
-            }
-        },
-        "TransferToParticipantRequest": {
-            "description": "The transfer call to participant request.",
-            "required": [
-                "targetParticipant"
-            ],
-            "type": "object",
-            "properties": {
-                "targetParticipant": {
-                    "$ref": "#/definitions/CommunicationIdentifierModel",
-                    "description": "The identity of the target where call should be transferred to."
-                },
-                "transfereeCallerId": {
-                    "$ref": "#/definitions/PhoneNumberIdentifierModel",
-                    "description": "The caller ID of the transferee when transferring to PSTN."
-                },
-                "userToUserInformation": {
-                    "description": "The user to user information.",
-                    "type": "string"
-                },
-                "operationContext": {
-                    "description": "The operation context.",
-                    "type": "string"
-                }
-            }
-        },
-        "CallingOperationStatusDto": {
-            "description": "The status of the operation",
-            "enum": [
-                "notStarted",
-                "running",
-                "completed",
-                "failed"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-                "name": "CallingOperationStatusDto",
-                "modelAsString": true
-            }
-        },
-        "TransferCallResponse": {
-            "required": [
-                "status"
-            ],
-            "type": "object",
-            "properties": {
-                "operationId": {
-                    "description": "The operation id.",
-                    "type": "string"
-                },
-                "status": {
-                    "$ref": "#/definitions/CallingOperationStatusDto"
-                },
-                "operationContext": {
-                    "description": "The operation context provided by client.",
-                    "type": "string"
-                },
-                "resultDetails": {
-                    "$ref": "#/definitions/CallingOperationResultDetailsDto",
-                    "description": "The result info for the operation."
-                }
-            }
-        },
-        "CallingOperationResultDetailsDto": {
-            "required": [
-                "code",
-                "subcode"
-            ],
-            "type": "object",
-            "properties": {
-                "code": {
-                    "format": "int32",
-                    "description": "The result code associated with the operation.",
-                    "type": "integer"
-                },
-                "subcode": {
-                    "format": "int32",
-                    "description": "The subcode that further classifies the result.",
-                    "type": "integer"
-                },
-                "message": {
-                    "description": "The message is a detail explanation of subcode.",
-                    "type": "string"
-                }
-            }
-        },
-        "PlayRequest": {
-            "required": [
-                "playSourceInfo",
-                "playTo"
-            ],
-            "type": "object",
-            "properties": {
-                "playSourceInfo": {
-                    "$ref": "#/definitions/PlaySource",
-                    "description": "The source of the audio to be played."
-                },
-                "playTo": {
-                    "description": "The list of call participants play provided audio to. \r\nPlays to everyone in the call when not provided.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/CommunicationIdentifierModel"
-                    }
-                },
-                "playOptions": {
-                    "$ref": "#/definitions/PlayOptions",
-                    "description": "Defines options for playing the audio."
-                }
-            }
-        },
-        "PlaySourceType": {
-            "description": "Defines the type of the play source",
-            "enum": [
-                "file"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-                "name": "PlaySourceType",
-                "modelAsString": true
-            }
-        },
-        "PlaySource": {
-            "required": [
-                "sourceType"
-            ],
-            "type": "object",
-            "properties": {
-                "sourceType": {
-                    "$ref": "#/definitions/PlaySourceType"
-                },
-                "playSourceId": {
-                    "description": "Defines the identifier to be used for caching related media",
-                    "type": "string"
-                }
-            }
-        },
-        "PlayOptions": {
-            "required": [
-                "loop"
-            ],
-            "type": "object",
-            "properties": {
-                "loop": {
-                    "description": "The option to play the provided audio source in loop when set to true",
-                    "type": "boolean"
-                }
-            }
-        },
-        "PlayResponse": {
-            "required": [
-                "status"
-            ],
-            "type": "object",
-            "properties": {
-                "operationId": {
-                    "description": "The operation id.",
-                    "type": "string"
-                },
-                "status": {
-                    "$ref": "#/definitions/CallingOperationStatusDto"
-                },
-                "operationContext": {
-                    "description": "The operation context provided by client.",
-                    "type": "string"
-                },
-                "resultDetails": {
-                    "$ref": "#/definitions/CallingOperationResultDetailsDto",
-                    "description": "The result info for the operation."
-                }
-            }
-        },
-        "AcsCallParticipantDto": {
-            "type": "object",
-            "properties": {
-                "identifier": {
-                    "$ref": "#/definitions/CommunicationIdentifierModel",
-                    "description": "Communication identifier of the participant"
-                },
-                "isMuted": {
-                    "description": "Is participant muted",
-                    "type": "boolean"
-                }
-            }
-        },
-        "AddParticipantsRequest": {
-            "required": [
-                "participantsToAdd"
-            ],
-            "type": "object",
-            "properties": {
-                "sourceCallerId": {
-                    "$ref": "#/definitions/PhoneNumberIdentifierModel",
-                    "description": "The source caller Id that's shown to the PSTN participant being invited. Required only when inviting a PSTN participant."
-                },
-                "participantsToAdd": {
-                    "description": "The participants to invite.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/CommunicationIdentifierModel"
-                    }
-                },
-                "invitationTimeoutInSeconds": {
-                    "format": "int32",
-                    "description": "Gets or sets the timeout to wait for the invited participant to pickup.\r\nThe maximum value of this is 180 seconds",
-                    "type": "integer"
-                },
-                "operationContext": {
-                    "description": "The operation context.",
-                    "type": "string"
-                }
-            }
-        },
-        "AddParticipantsResponse": {
-            "required": [
-                "status"
-            ],
-            "type": "object",
-            "properties": {
-                "operationId": {
-                    "description": "The operation id.",
-                    "type": "string"
-                },
-                "status": {
-                    "$ref": "#/definitions/CallingOperationStatusDto"
-                },
-                "operationContext": {
-                    "description": "The operation context provided by client.",
-                    "type": "string"
-                },
-                "resultDetails": {
-                    "$ref": "#/definitions/CallingOperationResultDetailsDto",
-                    "description": "The result info for the operation."
-                }
-            }
-        },
-        "RemoveParticipantsRequest": {
-            "description": "The remove participant by identifier request.",
-            "required": [
-                "participantsToRemove"
-            ],
-            "type": "object",
-            "properties": {
-                "participantsToRemove": {
-                    "description": "The participants to invite.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/CommunicationIdentifierModel"
-                    }
-                },
-                "operationContext": {
-                    "description": "The operation context.",
-                    "type": "string"
-                }
-            }
-        },
-        "RemoveParticipantsResponse": {
-            "required": [
-                "status"
-            ],
-            "type": "object",
-            "properties": {
-                "operationId": {
-                    "description": "The operation id.",
-                    "type": "string"
-                },
-                "status": {
-                    "$ref": "#/definitions/CallingOperationStatusDto"
-                },
-                "operationContext": {
-                    "description": "The operation context provided by client.",
-                    "type": "string"
-                },
-                "resultDetails": {
-                    "$ref": "#/definitions/CallingOperationResultDetailsDto",
-                    "description": "The result info for the operation."
-                }
-            }
-        },
-        "CommunicationErrorResponse": {
-            "description": "The Communication Services error response",
-            "required": [
-                "error"
-            ],
-            "type": "object",
-            "properties": {
-                "error": {
-                    "$ref": "#/definitions/CommunicationError"
-                }
-            }
-        },
-        "CommunicationError": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "target": {
-                    "type": "string"
-                },
-                "details": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/CommunicationError"
-                    }
-                },
-                "innererror": {
-                    "$ref": "#/definitions/CommunicationError"
-                }
-            }
-        },
-        "GetParticipantRequest": {
-            "type": "object",
-            "properties": {
-                "participant": {
-                    "$ref": "#/definitions/CommunicationIdentifierModel"
-                }
-            }
-        },
-        "RecordingContentType": {
-            "description": "The content type of call recording.",
-            "enum": [
-                "audio",
-                "audioVideo"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-                "name": "RecordingContentType",
-                "modelAsString": true
-            }
-        },
-        "RecordingChannelType": {
-            "description": "The channel type of call recording.",
-            "enum": [
-                "mixed",
-                "unmixed"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-                "name": "RecordingChannelType",
-                "modelAsString": true
-            }
-        },
-        "RecordingFormatType": {
-            "description": "The format type of call recording.",
-            "enum": [
-                "wav",
-                "mp3",
-                "mp4"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-                "name": "RecordingFormatType",
-                "modelAsString": true
-            }
-        },
-        "StartCallRecordingRequest": {
-            "description": "The request payload start for call recording operation with call locator.",
-            "required": [
-                "callLocator"
-            ],
-            "type": "object",
-            "properties": {
-                "callLocator": {
-                    "$ref": "#/definitions/CallLocator",
-                    "description": "The call locator."
-                },
-                "recordingStateCallbackUri": {
-                    "description": "The uri to send notifications to.",
-                    "type": "string"
-                },
-                "recordingContentType": {
-                    "$ref": "#/definitions/RecordingContentType"
-                },
-                "recordingChannelType": {
-                    "$ref": "#/definitions/RecordingChannelType"
-                },
-                "recordingFormatType": {
-                    "$ref": "#/definitions/RecordingFormatType"
-                }
-            }
-        },
-        "CallLocatorKind": {
-            "description": "The call locator kind.",
-            "enum": [
-                "groupCallLocator",
-                "serverCallLocator"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-                "name": "CallLocatorKind",
-                "modelAsString": true
-            }
-        },
-        "CallLocator": {
-            "description": "The locator used for joining or taking action on a call.",
-            "type": "object",
-            "properties": {
-                "groupCallId": {
-                    "description": "The group call id",
-                    "type": "string"
-                },
-                "serverCallId": {
-                    "description": "The server call id.",
-                    "type": "string"
-                },
-                "kind": {
-                    "$ref": "#/definitions/CallLocatorKind"
-                }
-            }
-        },
-        "StartCallRecordingResponse": {
-            "description": "The response payload of start call recording operation.",
-            "type": "object",
-            "properties": {
-                "recordingId": {
-                    "description": "The recording id of the started recording",
-                    "type": "string"
-                }
-            }
-        },
-        "RecordingState": {
-            "enum": [
-                "active",
-                "inactive"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-                "name": "RecordingState",
-                "modelAsString": true
-            }
-        },
-        "GetCallRecordingStateResponse": {
-            "type": "object",
-            "properties": {
-                "recordingState": {
-                    "$ref": "#/definitions/RecordingState"
-                }
-            }
-        }
-    },
-    "parameters": {
-        "ApiVersionParameter": {
-            "name": "api-version",
-            "in": "query",
-            "description": "Version of API to invoke.",
-            "required": true,
-            "type": "string",
-            "x-ms-parameter-location": "method"
-        },
-        "Endpoint": {
-            "name": "endpoint",
-            "in": "path",
-            "description": "The endpoint of the Azure Communication resource.",
-            "required": true,
-            "type": "string",
-            "x-ms-skip-url-encoding": true,
-            "x-ms-parameter-location": "client"
-        }
-    },
-    "responses": {
-        "400": {
-            "description": "BadRequest",
-            "schema": {
-                "$ref": "#/definitions/CommunicationErrorResponse"
-            },
-            "x-ms-error-response": true
-        },
-        "401": {
-            "description": "Unauthorized",
-            "schema": {
-                "$ref": "#/definitions/CommunicationErrorResponse"
-            },
-            "x-ms-error-response": true
-        },
-        "403": {
-            "description": "Forbidden",
-            "schema": {
-                "$ref": "#/definitions/CommunicationErrorResponse"
-            },
-            "x-ms-error-response": true
-        },
-        "404": {
-            "description": "NotFound",
-            "schema": {
-                "$ref": "#/definitions/CommunicationErrorResponse"
-            },
-            "x-ms-error-response": true
-        },
-        "500": {
-            "description": "InternalServerError",
-            "schema": {
-                "$ref": "#/definitions/CommunicationErrorResponse"
-            },
-            "x-ms-error-response": true
-        }
-    },
-    "x-ms-parameterized-host": {
-        "hostTemplate": "{endpoint}",
-        "useSchemePrefix": false,
+  "swagger": "2.0",
+  "info": {
+    "version": "2022-04-07-preview",
+    "title": "Azure Communication Service ServerCalling APIs"
+  },
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/calling/callConnections": {
+      "post": {
+        "tags": [
+          "PreConnections"
+        ],
+        "summary": "Create an outbound call.",
+        "description": "Create an outbound call.",
+        "operationId": "ServerCalling_CreateCall",
         "parameters": [
-            {
-                "$ref": "#/parameters/Endpoint"
+          {
+            "name": "createCallRequest",
+            "in": "body",
+            "description": "The create call request.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateCallRequest"
             }
-        ]
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Returns the create call response.",
+            "schema": {
+              "$ref": "#/definitions/CallConnectionProperties"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Create an outbound call.": {
+            "$ref": "./examples/ServerCalling_CreateCall.json"
+          }
+        }
+      }
+    },
+    "/calling/callConnections:answer": {
+      "post": {
+        "tags": [
+          "PreConnections"
+        ],
+        "summary": "Answer a Call.",
+        "description": "Answer a call using the IncomingCallContext from Event Grid.",
+        "operationId": "ServerCalling_AnswerCall",
+        "parameters": [
+          {
+            "name": "answerCallRequest",
+            "in": "body",
+            "description": "The answer call request.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AnswerCallRequest"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the answer call response.",
+            "schema": {
+              "$ref": "#/definitions/CallConnectionProperties"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Answer a Call.": {
+            "$ref": "./examples/ServerCalling_AnswerCall.json"
+          }
+        }
+      }
+    },
+    "/calling/callConnections:redirect": {
+      "post": {
+        "tags": [
+          "PreConnections"
+        ],
+        "summary": "Redirect a call.",
+        "description": "Redirect a call.",
+        "operationId": "ServerCalling_RedirectCall",
+        "parameters": [
+          {
+            "name": "redirectCallRequest",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RedirectCallRequest"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Returns the redirect call response."
+          }
+        },
+        "x-ms-examples": {
+          "Redirect a call.": {
+            "$ref": "./examples/ServerCalling_RedirectCall.json"
+          }
+        }
+      }
+    },
+    "/calling/callConnections:reject": {
+      "post": {
+        "tags": [
+          "PreConnections"
+        ],
+        "summary": "Reject the call.",
+        "description": "Reject the call.",
+        "operationId": "ServerCalling_RejectCall",
+        "parameters": [
+          {
+            "name": "rejectCallRequest",
+            "in": "body",
+            "description": "The reject call request.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RejectCallRequest"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Returns the reject call response."
+          }
+        },
+        "x-ms-examples": {
+          "Reject the call.": {
+            "$ref": "./examples/ServerCalling_RejectCall.json"
+          }
+        }
+      }
+    },
+    "/calling/callConnections/{callConnectionId}": {
+      "get": {
+        "tags": [
+          "MidConnections"
+        ],
+        "summary": "Get call connection.",
+        "operationId": "CallConnections_GetCall",
+        "parameters": [
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "The call connection id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the get call response.",
+            "schema": {
+              "$ref": "#/definitions/CallConnectionProperties"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get call connection.": {
+            "$ref": "./examples/CallConnections_GetCall.json"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "MidConnections"
+        ],
+        "summary": "Hangup the call.",
+        "description": "Hangup the call.",
+        "operationId": "CallConnections_HangupCall",
+        "parameters": [
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "The call connection id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Returns the hangup call response."
+          }
+        },
+        "x-ms-examples": {
+          "Hangup the call.": {
+            "$ref": "./examples/CallConnections_HangupCall.json"
+          }
+        }
+      }
+    },
+    "/calling/callConnections/{callConnectionId}:terminate": {
+      "post": {
+        "tags": [
+          "MidConnections"
+        ],
+        "summary": "Terminate a call using CallConnectionId.",
+        "description": "Terminate a call using CallConnectionId.",
+        "operationId": "CallConnections_TerminateCall",
+        "parameters": [
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "The terminate call request.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Returns the terminate call response."
+          }
+        },
+        "x-ms-examples": {
+          "Terminate a call using CallConnectionId.": {
+            "$ref": "./examples/CallConnections_TerminateCall.json"
+          }
+        }
+      }
+    },
+    "/calling/callConnections/{callConnectionId}:transferToParticipant": {
+      "post": {
+        "tags": [
+          "MidConnections"
+        ],
+        "summary": "Transfer the call to a participant.",
+        "description": "Transfer the call to a participant.",
+        "operationId": "CallConnections_TransferToParticipant",
+        "parameters": [
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "The call connection id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "transferToParticipantRequest",
+            "in": "body",
+            "description": "The transfer to participant request.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TransferToParticipantRequest"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Returns the transfer call response.",
+            "schema": {
+              "$ref": "#/definitions/TransferCallResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Transfer the call to a participant.": {
+            "$ref": "./examples/CallConnections_TransferToParticipant.json"
+          }
+        }
+      }
+    },
+    "/calling/callConnections/{callConnectionId}:play": {
+      "post": {
+        "tags": [
+          "MidConnections"
+        ],
+        "summary": "Plays audio to participants in the call.",
+        "description": "Plays audio to participants in the call.",
+        "operationId": "Content_Play",
+        "parameters": [
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "playRequest",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PlayRequest"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Returns the play audio response."
+          }
+        },
+        "x-ms-examples": {
+          "Plays audio to participants in the call.": {
+            "$ref": "./examples/Content_Play.json"
+          }
+        }
+      }
+    },
+    "/calling/callConnections/{callConnectionId}:cancelAllMediaOperations": {
+      "post": {
+        "tags": [
+          "MidConnections"
+        ],
+        "summary": "Cancel all media operations in a call.",
+        "description": "Cancel all media operations in a call.",
+        "operationId": "Content_CancelAllMediaOperations",
+        "parameters": [
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "The call connection id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Returns the cancel all media operations response."
+          }
+        },
+        "x-ms-examples": {
+          "Cancel all media operations in a call.": {
+            "$ref": "./examples/Content_CancelAllMediaOperations.json"
+          }
+        }
+      }
+    },
+    "/calling/callConnections/{callConnectionId}:recognize": {
+      "post": {
+        "tags": [
+          "MidConnections"
+        ],
+        "summary": "Recognize media from call.",
+        "description": "Recognize media from call.",
+        "operationId": "Content_Recognize",
+        "parameters": [
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "The call connection id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "recognizeRequest",
+            "in": "body",
+            "description": "The media recognize request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RecognizeRequest"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Returns the recognize response."
+          }
+        },
+        "x-ms-examples": {
+          "Recognize media from call.": {
+            "$ref": "./examples/Content_Recognize.json"
+          }
+        }
+      }
+    },
+    "/calling/callConnections/{callConnectionId}/participants": {
+      "get": {
+        "tags": [
+          "MidConnections"
+        ],
+        "summary": "Get participants from a call.",
+        "description": "Get participants from a call.",
+        "operationId": "CallConnections_GetParticipants",
+        "parameters": [
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "The call connection Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the get participants response.",
+            "schema": {
+              "$ref": "#/definitions/GetParticipantsResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get participants from a call.": {
+            "$ref": "./examples/CallConnections_ListParticipants.json"
+          }
+        }
+      }
+    },
+    "/calling/callConnections/{callConnectionId}/participants:add": {
+      "post": {
+        "tags": [
+          "MidConnections"
+        ],
+        "summary": "Add participants to the call.",
+        "description": "Add participants to the call.",
+        "operationId": "CallConnections_AddParticipant",
+        "parameters": [
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "The call connection Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "addParticipantsRequest",
+            "in": "body",
+            "description": "The add participants request.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddParticipantsRequest"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Returns the add participant response.",
+            "schema": {
+              "$ref": "#/definitions/AddParticipantsResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Add participants to the call.": {
+            "$ref": "./examples/CallConnections_AddParticipant.json"
+          }
+        }
+      }
+    },
+    "/calling/callConnections/{callConnectionId}/participants:remove": {
+      "post": {
+        "tags": [
+          "MidConnections"
+        ],
+        "summary": "Remove participant from the call using identifier.",
+        "description": "Remove participant from the call using identifier.",
+        "operationId": "CallConnections_RemoveParticipants",
+        "parameters": [
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "The call connection id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "removeParticipantsRequest",
+            "in": "body",
+            "description": "The participants to be removed from the call.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RemoveParticipantsRequest"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Returns the remove participant response.",
+            "schema": {
+              "$ref": "#/definitions/RemoveParticipantsResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Remove participant from the call using identifier.": {
+            "$ref": "./examples/CallConnections_RemoveParticipants.json"
+          }
+        }
+      }
+    },
+    "/calling/callConnections/{callConnectionId}/participants/{participantMri}": {
+      "get": {
+        "tags": [
+          "MidConnections"
+        ],
+        "summary": "Get participant from a call.",
+        "description": "Get participant from a call.",
+        "operationId": "CallConnections_GetParticipant",
+        "parameters": [
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "The call connection Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "participantMri",
+            "in": "path",
+            "description": "MRI of the participants to retrieve.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the get participant response.",
+            "schema": {
+              "$ref": "#/definitions/AcsCallParticipant"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get participant from a call.": {
+            "$ref": "./examples/CallConnections_GetParticipant.json"
+          }
+        }
+      }
+    },
+    "/calling/recordings": {
+      "post": {
+        "tags": [
+          "Content_Recording"
+        ],
+        "summary": "Start recording the call.",
+        "operationId": "Content_Recording",
+        "parameters": [
+          {
+            "name": "startCallRecording",
+            "in": "body",
+            "description": "The request body of start call recording request.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/StartCallRecordingRequest"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the start call recording response.",
+            "schema": {
+              "$ref": "#/definitions/RecordingStateResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Start recording the call.": {
+            "$ref": "./examples/Content_Recording.json"
+          }
+        }
+      }
+    },
+    "/calling/recordings/{recordingId}": {
+      "get": {
+        "tags": [
+          "Content_Recording"
+        ],
+        "summary": "Get call recording properties.",
+        "operationId": "ServerCalls_GetRecordingProperties",
+        "parameters": [
+          {
+            "name": "recordingId",
+            "in": "path",
+            "description": "The recording id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the recording properties.",
+            "schema": {
+              "$ref": "#/definitions/RecordingStateResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get call recording properties.": {
+            "$ref": "./examples/ServerCalls_GetRecordingProperties.json"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Content_Recording"
+        ],
+        "summary": "Stop recording the call.",
+        "operationId": "ServerCalls_StopRecording",
+        "parameters": [
+          {
+            "name": "recordingId",
+            "in": "path",
+            "description": "The recording id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Returns the stop call recording response."
+          }
+        },
+        "x-ms-examples": {
+          "Stop recording the call.": {
+            "$ref": "./examples/ServerCalls_StopRecording.json"
+          }
+        }
+      }
+    },
+    "/calling/recordings/{recordingId}:pause": {
+      "post": {
+        "tags": [
+          "Content_Recording"
+        ],
+        "summary": "Pause recording the call.",
+        "operationId": "ServerCalls_PauseRecording",
+        "parameters": [
+          {
+            "name": "recordingId",
+            "in": "path",
+            "description": "The recording id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Returns the pause call recording response."
+          }
+        },
+        "x-ms-examples": {
+          "Pause recording the call.": {
+            "$ref": "./examples/ServerCalls_PauseRecording.json"
+          }
+        }
+      }
+    },
+    "/calling/recordings/{recordingId}:resume": {
+      "post": {
+        "tags": [
+          "Content_Recording"
+        ],
+        "summary": "Resume recording the call.",
+        "operationId": "ServerCalls_ResumeRecording",
+        "parameters": [
+          {
+            "name": "recordingId",
+            "in": "path",
+            "description": "The recording id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Returns the resume call recording response."
+          }
+        },
+        "x-ms-examples": {
+          "Resume recording the call.": {
+            "$ref": "./examples/ServerCalls_ResumeRecording.json"
+          }
+        }
+      }
     }
+  },
+  "definitions": {
+    "CreateCallRequest": {
+      "required": [
+        "targets",
+        "source",
+        "callbackUri"
+      ],
+      "type": "object",
+      "properties": {
+        "targets": {
+          "description": "The targets of the call.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationIdentifierModel"
+          }
+        },
+        "source": {
+          "$ref": "#/definitions/CallSource",
+          "description": "The source of the call."
+        },
+        "subject": {
+          "description": "The subject.",
+          "type": "string"
+        },
+        "callbackUri": {
+          "description": "The callback URI.",
+          "type": "string"
+        },
+        "mediaStreamingConfiguration": {
+          "$ref": "#/definitions/MediaStreamingConfiguration",
+          "description": "Media Streaming Configuration."
+        }
+      }
+    },
+    "CommunicationIdentifierModelKind": {
+      "description": "Type of CommunicationIdentifierModel.",
+      "enum": [
+        "unknown",
+        "communicationUser",
+        "phoneNumber",
+        "microsoftTeamsUser"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "CommunicationIdentifierModelKind",
+        "modelAsString": true
+      }
+    },
+    "CommunicationIdentifierModel": {
+      "type": "object",
+      "properties": {
+        "rawId": {
+          "description": "Full ID of the identifier.",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/definitions/CommunicationIdentifierModelKind"
+        },
+        "communicationUser": {
+          "$ref": "#/definitions/CommunicationUserIdentifierModel",
+          "description": "The communication user."
+        },
+        "phoneNumber": {
+          "$ref": "#/definitions/PhoneNumberIdentifierModel",
+          "description": "The phone number."
+        },
+        "microsoftTeamsUser": {
+          "$ref": "#/definitions/MicrosoftTeamsUserIdentifierModel",
+          "description": "The Microsoft Teams user."
+        }
+      }
+    },
+    "CallSource": {
+      "required": [
+        "identifier"
+      ],
+      "type": "object",
+      "properties": {
+        "callerId": {
+          "$ref": "#/definitions/PhoneNumberIdentifierModel",
+          "description": "The alternate identity of the source of the call if dialing out to a pstn number"
+        },
+        "displayName": {
+          "description": "Display name of the call if dialing out to a pstn number",
+          "type": "string"
+        },
+        "identifier": {
+          "$ref": "#/definitions/CommunicationIdentifierModel",
+          "description": "The identifier of the source of the call"
+        }
+      }
+    },
+    "MediaStreamingTransportType": {
+      "description": "The type of transport to be used for media streaming, eg. Websocket",
+      "enum": [
+        "websocket"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "MediaStreamingTransportType",
+        "modelAsString": true
+      }
+    },
+    "MediaStreamingContentType": {
+      "description": "Content type to stream, eg. audio, audio/video",
+      "enum": [
+        "audio"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "MediaStreamingContentType",
+        "modelAsString": true
+      }
+    },
+    "MediaStreamingAudioChannelType": {
+      "description": "Audio channel type to stream, eg. unmixed audio, mixed audio",
+      "enum": [
+        "mixed",
+        "unmixed"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "MediaStreamingAudioChannelType",
+        "modelAsString": true
+      }
+    },
+    "MediaStreamingConfiguration": {
+      "required": [
+        "transportUrl",
+        "transportType",
+        "contentType",
+        "audioChannelType"
+      ],
+      "type": "object",
+      "properties": {
+        "transportUrl": {
+          "description": "Transport URL for media streaming",
+          "type": "string"
+        },
+        "transportType": {
+          "$ref": "#/definitions/MediaStreamingTransportType"
+        },
+        "contentType": {
+          "$ref": "#/definitions/MediaStreamingContentType"
+        },
+        "audioChannelType": {
+          "$ref": "#/definitions/MediaStreamingAudioChannelType"
+        }
+      }
+    },
+    "CommunicationUserIdentifierModel": {
+      "required": [
+        "id"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "PhoneNumberIdentifierModel": {
+      "required": [
+        "value"
+      ],
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "CommunicationCloudEnvironmentModel": {
+      "enum": [
+        "public",
+        "dod",
+        "gcch"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "CommunicationCloudEnvironmentModel",
+        "modelAsString": true
+      }
+    },
+    "MicrosoftTeamsUserIdentifierModel": {
+      "required": [
+        "userId"
+      ],
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "isAnonymous": {
+          "type": "boolean"
+        },
+        "cloud": {
+          "$ref": "#/definitions/CommunicationCloudEnvironmentModel"
+        }
+      }
+    },
+    "CallConnectionStateModel": {
+      "description": "The state of the call connection.",
+      "enum": [
+        "unknown",
+        "connecting",
+        "connected",
+        "transferring",
+        "transferAccepted",
+        "disconnecting",
+        "disconnected"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "CallConnectionStateModel",
+        "modelAsString": true
+      }
+    },
+    "CallConnectionProperties": {
+      "type": "object",
+      "properties": {
+        "callConnectionId": {
+          "description": "The call connection id.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "The server call id.",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/definitions/CallSource",
+          "description": "The source of the call."
+        },
+        "targets": {
+          "description": "The targets of the call.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationIdentifierModel"
+          }
+        },
+        "callConnectionState": {
+          "$ref": "#/definitions/CallConnectionStateModel"
+        },
+        "subject": {
+          "description": "The subject.",
+          "type": "string"
+        },
+        "callbackUri": {
+          "description": "The callback URI.",
+          "type": "string"
+        },
+        "mediaSubscriptionId": {
+          "description": "SubscriptionId for media streaming",
+          "type": "string"
+        }
+      }
+    },
+    "AnswerCallRequest": {
+      "description": "The request payload for answering the call.",
+      "required": [
+        "incomingCallContext",
+        "callbackUri"
+      ],
+      "type": "object",
+      "properties": {
+        "incomingCallContext": {
+          "description": "The context associated with the call.",
+          "type": "string"
+        },
+        "callbackUri": {
+          "description": "The callback uri.",
+          "type": "string"
+        },
+        "mediaStreamingConfiguration": {
+          "$ref": "#/definitions/MediaStreamingConfiguration",
+          "description": "Media Streaming Configuration."
+        }
+      }
+    },
+    "RedirectCallRequest": {
+      "description": "The request payload for redirecting the call.",
+      "required": [
+        "incomingCallContext",
+        "target"
+      ],
+      "type": "object",
+      "properties": {
+        "incomingCallContext": {
+          "description": "The context associated with the call.",
+          "type": "string"
+        },
+        "target": {
+          "$ref": "#/definitions/CommunicationIdentifierModel",
+          "description": "The target identity to redirect the call to."
+        }
+      }
+    },
+    "CallRejectReason": {
+      "description": "The rejection reason.",
+      "enum": [
+        "none",
+        "busy",
+        "forbidden"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "CallRejectReason",
+        "modelAsString": true
+      }
+    },
+    "RejectCallRequest": {
+      "description": "The request payload for rejecting the call.",
+      "required": [
+        "incomingCallContext"
+      ],
+      "type": "object",
+      "properties": {
+        "incomingCallContext": {
+          "description": "The context associated with the call.",
+          "type": "string"
+        },
+        "callRejectReason": {
+          "$ref": "#/definitions/CallRejectReason"
+        }
+      }
+    },
+    "TransferToParticipantRequest": {
+      "description": "The transfer call to participant request.",
+      "required": [
+        "targetParticipant"
+      ],
+      "type": "object",
+      "properties": {
+        "targetParticipant": {
+          "$ref": "#/definitions/CommunicationIdentifierModel",
+          "description": "The identity of the target where call should be transferred to."
+        },
+        "transfereeCallerId": {
+          "$ref": "#/definitions/PhoneNumberIdentifierModel",
+          "description": "The caller ID of the transferee when transferring to PSTN."
+        },
+        "userToUserInformation": {
+          "description": "The user to user information.",
+          "type": "string"
+        },
+        "operationContext": {
+          "description": "The operation context.",
+          "type": "string"
+        }
+      }
+    },
+    "TransferCallResponse": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "description": "The operation context provided by client.",
+          "type": "string"
+        }
+      }
+    },
+    "PlayRequest": {
+      "required": [
+        "playSourceInfo"
+      ],
+      "type": "object",
+      "properties": {
+        "playSourceInfo": {
+          "$ref": "#/definitions/PlaySource",
+          "description": "The source of the audio to be played."
+        },
+        "playTo": {
+          "description": "The list of call participants play provided audio to. \r\nPlays to everyone in the call when not provided.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationIdentifierModel"
+          }
+        },
+        "playOptions": {
+          "$ref": "#/definitions/PlayOptions",
+          "description": "Defines options for playing the audio."
+        },
+        "operationContext": {
+          "description": "The value to identify context of the operation.",
+          "type": "string"
+        }
+      }
+    },
+    "PlaySourceType": {
+      "description": "Defines the type of the play source",
+      "enum": [
+        "file"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "PlaySourceType",
+        "modelAsString": true
+      }
+    },
+    "PlaySource": {
+      "required": [
+        "sourceType"
+      ],
+      "type": "object",
+      "properties": {
+        "sourceType": {
+          "$ref": "#/definitions/PlaySourceType"
+        },
+        "playSourceId": {
+          "description": "Defines the identifier to be used for caching related media",
+          "type": "string"
+        },
+        "fileSource": {
+          "$ref": "#/definitions/FileSource",
+          "description": "Defines the file source info to be used for play"
+        }
+      }
+    },
+    "PlayOptions": {
+      "required": [
+        "loop"
+      ],
+      "type": "object",
+      "properties": {
+        "loop": {
+          "description": "The option to play the provided audio source in loop when set to true",
+          "type": "boolean"
+        }
+      }
+    },
+    "FileSource": {
+      "required": [
+        "uri"
+      ],
+      "type": "object",
+      "properties": {
+        "uri": {
+          "description": "Uri for the audio file to be played",
+          "type": "string"
+        }
+      }
+    },
+    "RecognizeInputType": {
+      "description": "Determines the type of the recognition.",
+      "enum": [
+        "dtmf"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "RecognizeInputType",
+        "modelAsString": true
+      }
+    },
+    "RecognizeRequest": {
+      "required": [
+        "recognizeInputType",
+        "recognizeOptions"
+      ],
+      "type": "object",
+      "properties": {
+        "recognizeInputType": {
+          "$ref": "#/definitions/RecognizeInputType"
+        },
+        "playPrompt": {
+          "$ref": "#/definitions/PlaySource",
+          "description": "The source of the audio to be played for recognition."
+        },
+        "interruptCallMediaOperation": {
+          "description": "If set recognize can barge into other existing queued-up/currently-processing requests.",
+          "type": "boolean"
+        },
+        "recognizeOptions": {
+          "$ref": "#/definitions/RecognizeOptions",
+          "description": "Defines options for recognition."
+        },
+        "operationContext": {
+          "description": "The value to identify context of the operation.",
+          "type": "string"
+        }
+      }
+    },
+    "RecognizeOptions": {
+      "required": [
+        "targetParticipant"
+      ],
+      "type": "object",
+      "properties": {
+        "interruptPrompt": {
+          "description": "Determines if we interrupt the prompt and start recognizing.",
+          "type": "boolean"
+        },
+        "initialSilenceTimeoutInSeconds": {
+          "format": "int32",
+          "description": "Time to wait for first input after prompt (if any).",
+          "maximum": 300,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "targetParticipant": {
+          "$ref": "#/definitions/CommunicationIdentifierModel",
+          "description": "Target participant of DTMF tone recognition."
+        },
+        "dtmfOptions": {
+          "$ref": "#/definitions/DtmfOptions",
+          "description": "Defines configurations for DTMF."
+        }
+      }
+    },
+    "Tone": {
+      "enum": [
+        "zero",
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+        "a",
+        "b",
+        "c",
+        "d",
+        "pound",
+        "asterisk"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "Tone",
+        "modelAsString": true
+      }
+    },
+    "DtmfOptions": {
+      "description": "Options for DTMF recognition",
+      "type": "object",
+      "properties": {
+        "interToneTimeoutInSeconds": {
+          "format": "int32",
+          "description": "Time to wait between DTMF inputs to stop recognizing.",
+          "maximum": 60,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "maxTonesToCollect": {
+          "format": "int32",
+          "description": "Maximum number of DTMF tones to be collected.",
+          "type": "integer"
+        },
+        "stopTones": {
+          "description": "List of tones that will stop recognizing.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tone"
+          }
+        }
+      }
+    },
+    "GetParticipantsResponse": {
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AcsCallParticipant"
+          }
+        },
+        "nextLink": {
+          "type": "string"
+        }
+      }
+    },
+    "AcsCallParticipant": {
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "$ref": "#/definitions/CommunicationIdentifierModel",
+          "description": "Communication identifier of the participant"
+        },
+        "isMuted": {
+          "description": "Is participant muted",
+          "type": "boolean"
+        }
+      }
+    },
+    "AddParticipantsRequest": {
+      "required": [
+        "participantsToAdd"
+      ],
+      "type": "object",
+      "properties": {
+        "sourceCallerId": {
+          "$ref": "#/definitions/PhoneNumberIdentifierModel",
+          "description": "The source caller Id that's shown to the PSTN participant being invited. Required only when inviting a PSTN participant."
+        },
+        "participantsToAdd": {
+          "description": "The participants to invite.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationIdentifierModel"
+          }
+        },
+        "invitationTimeoutInSeconds": {
+          "format": "int32",
+          "description": "Gets or sets the timeout to wait for the invited participant to pickup.\r\nThe maximum value of this is 180 seconds",
+          "maximum": 180,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "operationContext": {
+          "description": "The operation context.",
+          "type": "string"
+        }
+      }
+    },
+    "AddParticipantsResponse": {
+      "type": "object",
+      "properties": {
+        "participants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AcsCallParticipant"
+          }
+        },
+        "operationContext": {
+          "description": "The operation context provided by client.",
+          "type": "string"
+        }
+      }
+    },
+    "RemoveParticipantsRequest": {
+      "description": "The remove participant by identifier request.",
+      "required": [
+        "participantsToRemove"
+      ],
+      "type": "object",
+      "properties": {
+        "participantsToRemove": {
+          "description": "The participants to invite.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationIdentifierModel"
+          }
+        },
+        "operationContext": {
+          "description": "The operation context.",
+          "type": "string"
+        }
+      }
+    },
+    "RemoveParticipantsResponse": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "description": "The operation context provided by client.",
+          "type": "string"
+        }
+      }
+    },
+    "RecordingContentType": {
+      "description": "The content type of call recording.",
+      "enum": [
+        "audio",
+        "audioVideo"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "RecordingContentType",
+        "modelAsString": true
+      }
+    },
+    "RecordingChannelType": {
+      "description": "The channel type of call recording.",
+      "enum": [
+        "mixed",
+        "unmixed"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "RecordingChannelType",
+        "modelAsString": true
+      }
+    },
+    "RecordingFormatType": {
+      "description": "The format type of call recording.",
+      "enum": [
+        "wav",
+        "mp3",
+        "mp4"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "RecordingFormatType",
+        "modelAsString": true
+      }
+    },
+    "StartCallRecordingRequest": {
+      "description": "The request payload start for call recording operation with call locator.",
+      "required": [
+        "callLocator"
+      ],
+      "type": "object",
+      "properties": {
+        "callLocator": {
+          "$ref": "#/definitions/CallLocator",
+          "description": "The call locator."
+        },
+        "recordingStateCallbackUri": {
+          "description": "The uri to send notifications to.",
+          "type": "string"
+        },
+        "recordingContentType": {
+          "$ref": "#/definitions/RecordingContentType"
+        },
+        "recordingChannelType": {
+          "$ref": "#/definitions/RecordingChannelType"
+        },
+        "recordingFormatType": {
+          "$ref": "#/definitions/RecordingFormatType"
+        },
+        "channelAffinity": {
+          "description": "The channel affinity of call recording.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ChannelAffinity"
+          }
+        }
+      }
+    },
+    "CallLocatorKind": {
+      "description": "The call locator kind.",
+      "enum": [
+        "groupCallLocator",
+        "serverCallLocator"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "CallLocatorKind",
+        "modelAsString": true
+      }
+    },
+    "CallLocator": {
+      "description": "The locator used for joining or taking action on a call.",
+      "type": "object",
+      "properties": {
+        "groupCallId": {
+          "description": "The group call id",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "The server call id.",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/definitions/CallLocatorKind"
+        }
+      }
+    },
+    "ChannelAffinity": {
+      "description": "Channel affinity for a participant",
+      "type": "object",
+      "properties": {
+        "channel": {
+          "format": "int32",
+          "description": "Channel number to which bitstream from a particular participant will be written.",
+          "type": "integer"
+        },
+        "participant": {
+          "$ref": "#/definitions/CommunicationIdentifierModel",
+          "description": "The identifier for the participant whose bitstream will be written to the channel \r\nrepresented by the channel number."
+        }
+      }
+    },
+    "RecordingState": {
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "RecordingState",
+        "modelAsString": true
+      }
+    },
+    "RecordingStateResponse": {
+      "type": "object",
+      "properties": {
+        "recordingId": {
+          "type": "string"
+        },
+        "recordingState": {
+          "$ref": "#/definitions/RecordingState"
+        }
+      }
+    },
+    "AddParticipantsFailedEvent": {
+      "type": "object",
+      "properties": {
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "operationContext": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "readOnly": true
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationIdentifierModel"
+          },
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "ResultInformation": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "subCode": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "AddParticipantsSucceededEvent": {
+      "type": "object",
+      "properties": {
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "operationContext": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "readOnly": true
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationIdentifierModel"
+          },
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "CallConnectedEvent": {
+      "type": "object",
+      "properties": {
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "CallDisconnectedEvent": {
+      "type": "object",
+      "properties": {
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "CallTransferAcceptedEvent": {
+      "type": "object",
+      "properties": {
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "operationContext": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "CallTransferFailedEvent": {
+      "type": "object",
+      "properties": {
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "operationContext": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "ParticipantsUpdatedEvent": {
+      "type": "object",
+      "properties": {
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationIdentifierModel"
+          },
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "RecordingStateChangedEvent": {
+      "type": "object",
+      "properties": {
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "recordingId": {
+          "description": "The call recording id",
+          "type": "string",
+          "readOnly": true
+        },
+        "state": {
+          "$ref": "#/definitions/RecordingState"
+        },
+        "startDateTime": {
+          "format": "date-time",
+          "description": "The time of the recording started",
+          "type": "string",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "PlayCompleted": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "PlayFailed": {
+      "type": "object",
+      "properties": {
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "operationContext": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "RecognitionType": {
+      "description": "Determines the sub-type of the recognize operation.\r\nIn case of cancel operation the this field is not set and is returned empty",
+      "enum": [
+        "dtmf"
+      ],
+      "type": "string",
+      "readOnly": true,
+      "x-ms-enum": {
+        "name": "RecognitionType",
+        "modelAsString": true
+      }
+    },
+    "RecognizeCompleted": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Result information defines the code, subcode and message",
+          "readOnly": true
+        },
+        "recognitionType": {
+          "$ref": "#/definitions/RecognitionType"
+        },
+        "collectTonesResult": {
+          "$ref": "#/definitions/CollectTonesResult",
+          "description": "Defines the result for RecognitionType = Dtmf",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "CollectTonesResult": {
+      "type": "object",
+      "properties": {
+        "tones": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tone"
+          },
+          "readOnly": true
+        }
+      }
+    },
+    "RecognizeFailed": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "CommunicationErrorResponse": {
+      "description": "The Communication Services error response",
+      "required": [
+        "error"
+      ],
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/CommunicationError"
+        }
+      }
+    },
+    "CommunicationError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationError"
+          }
+        },
+        "innererror": {
+          "$ref": "#/definitions/CommunicationError"
+        }
+      }
+    }
+  },
+  "parameters": {
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "description": "Version of API to invoke.",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "Endpoint": {
+      "name": "endpoint",
+      "in": "path",
+      "description": "The endpoint of the Azure Communication resource.",
+      "required": true,
+      "type": "string",
+      "x-ms-skip-url-encoding": true,
+      "x-ms-parameter-location": "client"
+    }
+  },
+  "responses": {
+    "400": {
+      "description": "BadRequest",
+      "schema": {
+        "$ref": "#/definitions/CommunicationErrorResponse"
+      },
+      "x-ms-error-response": true
+    },
+    "401": {
+      "description": "Unauthorized",
+      "schema": {
+        "$ref": "#/definitions/CommunicationErrorResponse"
+      },
+      "x-ms-error-response": true
+    },
+    "403": {
+      "description": "Forbidden",
+      "schema": {
+        "$ref": "#/definitions/CommunicationErrorResponse"
+      },
+      "x-ms-error-response": true
+    },
+    "404": {
+      "description": "NotFound",
+      "schema": {
+        "$ref": "#/definitions/CommunicationErrorResponse"
+      },
+      "x-ms-error-response": true
+    },
+    "500": {
+      "description": "InternalServerError",
+      "schema": {
+        "$ref": "#/definitions/CommunicationErrorResponse"
+      },
+      "x-ms-error-response": true
+    }
+  },
+  "x-ms-parameterized-host": {
+    "hostTemplate": "{endpoint}",
+    "useSchemePrefix": false,
+    "parameters": [
+      {
+        "$ref": "#/parameters/Endpoint"
+      }
+    ]
+  }
 }

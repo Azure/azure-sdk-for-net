@@ -3,19 +3,16 @@
 
 using System;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
+[assembly: CodeGenSuppressType("ConfigurationClientOptions")]
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
     /// Options that allow users to configure the requests sent to the App Configuration service.
     /// </summary>
-    public class ConfigurationClientOptions : ClientOptions
+    public partial class ConfigurationClientOptions : ClientOptions
     {
-        /// <summary>
-        /// The latest service version supported by this client library.
-        /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V1_0;
+        private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
         /// <summary>
         /// The versions of the App Configuration service supported by this client library.
@@ -26,15 +23,16 @@ namespace Azure.Data.AppConfiguration
             /// <summary>
             /// Version 1.0.
             /// </summary>
-            V1_0 = 0
+            V1_0 = 0,
+
+            ///// <summary>
+            ///// Version 2022-11-01-preview.
+            ///// </summary>
+            //V2022_11_01_Preview = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
-        /// <summary>
-        /// Gets the <see cref="ServiceVersion"/> of the service API used when
-        /// making requests.
-        /// </summary>
-        internal ServiceVersion Version { get; }
+        internal string Version { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationClientOptions"/>
@@ -46,20 +44,14 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         public ConfigurationClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version;
-            this.ConfigureLogging();
-        }
-
-        internal string GetVersionString()
-        {
-            switch (Version)
+            Version = version switch
             {
-                case ServiceVersion.V1_0:
-                    return "1.0";
+                ServiceVersion.V1_0 => "1.0",
+                // ServiceVersion.V2022_11_01_Preview => "2022-11-01-preview",
 
-                default:
-                    throw new ArgumentException(Version.ToString());
-            }
+                _ => throw new NotSupportedException()
+            };
+            this.ConfigureLogging();
         }
     }
 }

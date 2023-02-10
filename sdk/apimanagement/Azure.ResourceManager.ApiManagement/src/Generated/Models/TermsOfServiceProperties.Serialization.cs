@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Text))
             {
-                writer.WritePropertyName("text");
+                writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsDisplayEnabled))
             {
-                writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(IsDisplayEnabled.Value);
             }
-            if (Optional.IsDefined(ConsentRequired))
+            if (Optional.IsDefined(IsConsentRequired))
             {
-                writer.WritePropertyName("consentRequired");
-                writer.WriteBooleanValue(ConsentRequired.Value);
+                writer.WritePropertyName("consentRequired"u8);
+                writer.WriteBooleanValue(IsConsentRequired.Value);
             }
             writer.WriteEndObject();
         }
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<bool> consentRequired = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("consentRequired"))
+                if (property.NameEquals("consentRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

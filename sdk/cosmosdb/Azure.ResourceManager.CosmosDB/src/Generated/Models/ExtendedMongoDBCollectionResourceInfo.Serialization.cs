@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(CollectionName);
             if (Optional.IsCollectionDefined(ShardKey))
             {
-                writer.WritePropertyName("shardKey");
+                writer.WritePropertyName("shardKey"u8);
                 writer.WriteStartObject();
                 foreach (var item in ShardKey)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsCollectionDefined(Indexes))
             {
-                writer.WritePropertyName("indexes");
+                writer.WritePropertyName("indexes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Indexes)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsDefined(AnalyticalStorageTtl))
             {
-                writer.WritePropertyName("analyticalStorageTtl");
+                writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
             writer.WriteEndObject();
@@ -55,16 +55,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<ETag> etag = default;
             string id = default;
             Optional<IDictionary<string, string>> shardKey = default;
-            Optional<IList<MongoIndex>> indexes = default;
+            Optional<IList<MongoDBIndex>> indexes = default;
             Optional<int> analyticalStorageTtl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("_rid"))
+                if (property.NameEquals("_rid"u8))
                 {
                     rid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("_ts"))
+                if (property.NameEquals("_ts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     ts = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("_etag"))
+                if (property.NameEquals("_etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("shardKey"))
+                if (property.NameEquals("shardKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,22 +104,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     shardKey = dictionary;
                     continue;
                 }
-                if (property.NameEquals("indexes"))
+                if (property.NameEquals("indexes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MongoIndex> array = new List<MongoIndex>();
+                    List<MongoDBIndex> array = new List<MongoDBIndex>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoIndex.DeserializeMongoIndex(item));
+                        array.Add(MongoDBIndex.DeserializeMongoDBIndex(item));
                     }
                     indexes = array;
                     continue;
                 }
-                if (property.NameEquals("analyticalStorageTtl"))
+                if (property.NameEquals("analyticalStorageTtl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

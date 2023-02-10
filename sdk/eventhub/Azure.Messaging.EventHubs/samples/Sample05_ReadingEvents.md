@@ -193,7 +193,7 @@ The `ReadEventsFromPartitionAsync` method of the `EventHubConsumerClient` allows
 
 Because an Event Hub represents a potentially infinite series of events, the enumerator will not exit when no further events are available in the Event Hub partitions.  Instead, it will wait for more events to be published.  To stop reading, applications will need to either signal a [CancellationToken](https://docs.microsoft.com/dotnet/api/system.threading.cancellationtoken?view=netcore-3.1) or call `break` from the body of the loop.  
 
-This example illustrates the `CancellationToeken` approach, reading from the beginning of the partition for only 30 seconds, regardless of how many events are read.
+This example illustrates the `CancellationToken` approach, reading from the beginning of the partition for only 30 seconds, regardless of how many events are read.
 
 ```C# Snippet:EventHubs_Sample05_ReadPartition
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";

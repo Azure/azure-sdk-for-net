@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -21,8 +20,8 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="ContainerRegistryPrivateLinkResource" /> and their operations.
-    /// Each <see cref="ContainerRegistryPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="RegistryResource" />.
-    /// To get a <see cref="ContainerRegistryPrivateLinkResourceCollection" /> instance call the GetContainerRegistryPrivateLinkResources method from an instance of <see cref="RegistryResource" />.
+    /// Each <see cref="ContainerRegistryPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="ContainerRegistryResource" />.
+    /// To get a <see cref="ContainerRegistryPrivateLinkResourceCollection" /> instance call the GetContainerRegistryPrivateLinkResources method from an instance of <see cref="ContainerRegistryResource" />.
     /// </summary>
     public partial class ContainerRegistryPrivateLinkResourceCollection : ArmCollection, IEnumerable<ContainerRegistryPrivateLinkResource>, IAsyncEnumerable<ContainerRegistryPrivateLinkResource>
     {
@@ -49,14 +48,22 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != RegistryResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, RegistryResource.ResourceType), nameof(id));
+            if (id.ResourceType != ContainerRegistryResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets a private link resource by a specified group name for a container registry.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources/{groupName}
-        /// Operation Id: Registries_GetPrivateLinkResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_GetPrivateLinkResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary>
         /// Gets a private link resource by a specified group name for a container registry.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources/{groupName}
-        /// Operation Id: Registries_GetPrivateLinkResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_GetPrivateLinkResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,92 +128,60 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary>
         /// Lists the private link resources for a container registry.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources
-        /// Operation Id: Registries_ListPrivateLinkResources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_ListPrivateLinkResources</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerRegistryPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerRegistryPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerRegistryPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerRegistryPrivateLinkResourceRegistriesClientDiagnostics.CreateScope("ContainerRegistryPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerRegistryPrivateLinkResourceRegistriesRestClient.ListPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerRegistryPrivateLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerRegistryPrivateLinkResourceRegistriesClientDiagnostics.CreateScope("ContainerRegistryPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerRegistryPrivateLinkResourceRegistriesRestClient.ListPrivateLinkResourcesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryPrivateLinkResourceRegistriesRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryPrivateLinkResourceRegistriesRestClient.CreateListPrivateLinkResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryPrivateLinkResource(Client, ContainerRegistryPrivateLinkResourceData.DeserializeContainerRegistryPrivateLinkResourceData(e)), _containerRegistryPrivateLinkResourceRegistriesClientDiagnostics, Pipeline, "ContainerRegistryPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists the private link resources for a container registry.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources
-        /// Operation Id: Registries_ListPrivateLinkResources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_ListPrivateLinkResources</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerRegistryPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerRegistryPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ContainerRegistryPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerRegistryPrivateLinkResourceRegistriesClientDiagnostics.CreateScope("ContainerRegistryPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerRegistryPrivateLinkResourceRegistriesRestClient.ListPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerRegistryPrivateLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerRegistryPrivateLinkResourceRegistriesClientDiagnostics.CreateScope("ContainerRegistryPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerRegistryPrivateLinkResourceRegistriesRestClient.ListPrivateLinkResourcesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryPrivateLinkResourceRegistriesRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryPrivateLinkResourceRegistriesRestClient.CreateListPrivateLinkResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryPrivateLinkResource(Client, ContainerRegistryPrivateLinkResourceData.DeserializeContainerRegistryPrivateLinkResourceData(e)), _containerRegistryPrivateLinkResourceRegistriesClientDiagnostics, Pipeline, "ContainerRegistryPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources/{groupName}
-        /// Operation Id: Registries_GetPrivateLinkResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_GetPrivateLinkResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +207,16 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources/{groupName}
-        /// Operation Id: Registries_GetPrivateLinkResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_GetPrivateLinkResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

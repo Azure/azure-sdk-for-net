@@ -1,0 +1,502 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1aac14f694b4b8469c7d0f9d8602bc0c-c0e053a451cc4242-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a4355b7dd59115011daa2be1cd93419c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Nov 2022 08:11:22 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "17c6260f-7ce5-447e-827f-5828af49207a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "17c6260f-7ce5-447e-827f-5828af49207a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221102T081123Z:17c6260f-7ce5-447e-827f-5828af49207a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/DnsRG4425?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-6e536b76e674de43b8b44535377213f3-0dae6706fd34c14d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "438111eb33779b1638627f6280523278",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "215",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Nov 2022 08:11:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "bc16f1b8-492b-48fa-ad54-c639d6df65ae",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "bc16f1b8-492b-48fa-ad54-c639d6df65ae",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221102T081125Z:bc16f1b8-492b-48fa-ad54-c639d6df65ae"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DnsRG4425",
+        "name": "DnsRG4425",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DnsRG4425/providers/Microsoft.Network/dnsZones/2022dnszone6404.com?api-version=2018-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "47",
+        "Content-Type": "application/json",
+        "traceparent": "00-279345e31bb2d445aedcb2b9c5c2d898-20bd2102953a5942-00",
+        "User-Agent": "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20221102.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ff050c29fd021ad0dc2c87a4134df985",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "Global",
+        "properties": {}
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "531",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Nov 2022 08:11:29 GMT",
+        "ETag": "00000002-0000-0000-974f-16b592eed801",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "989fc533-c5c0-47bf-b1de-92c3c3ed12e1",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "11995",
+        "x-ms-request-id": "ff050c29-fd02-1ad0-dc2c-87a4134df985",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221102T081129Z:989fc533-c5c0-47bf-b1de-92c3c3ed12e1",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dnsrg4425/providers/Microsoft.Network/dnszones/2022dnszone6404.com",
+        "name": "2022dnszone6404.com",
+        "type": "Microsoft.Network/dnszones",
+        "etag": "00000002-0000-0000-974f-16b592eed801",
+        "location": "global",
+        "tags": {},
+        "properties": {
+          "maxNumberOfRecordSets": 10000,
+          "maxNumberOfRecordsPerRecordSet": null,
+          "nameServers": [
+            "ns1-07.azure-dns.com.",
+            "ns2-07.azure-dns.net.",
+            "ns3-07.azure-dns.org.",
+            "ns4-07.azure-dns.info."
+          ],
+          "numberOfRecordSets": 2,
+          "zoneType": "Public"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dnsrg4425/providers/Microsoft.Network/dnsZones/2022dnszone6404.com/MX/mx9705?api-version=2018-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "143",
+        "Content-Type": "application/json",
+        "traceparent": "00-aea8baa2ed647444855a7693ba2462bc-6adceda47bc00c46-00",
+        "User-Agent": "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20221102.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1256a35d2805091e597281b39c57f969",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "TTL": 3600,
+          "MXRecords": [
+            {
+              "preference": 10,
+              "exchange": "mymail1.contoso.com"
+            },
+            {
+              "preference": 11,
+              "exchange": "mymail2.contoso.com"
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "496",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Nov 2022 08:11:31 GMT",
+        "ETag": "7b4fe635-597d-4251-ae4a-2c055c8cde58",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "576dd053-93d4-4dd2-8f96-eaf2d371db3f",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "11999",
+        "x-ms-request-id": "1256a35d-2805-091e-5972-81b39c57f969",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221102T081131Z:576dd053-93d4-4dd2-8f96-eaf2d371db3f",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dnsrg4425/providers/Microsoft.Network/dnszones/2022dnszone6404.com/MX/mx9705",
+        "name": "mx9705",
+        "type": "Microsoft.Network/dnszones/MX",
+        "etag": "7b4fe635-597d-4251-ae4a-2c055c8cde58",
+        "properties": {
+          "fqdn": "mx9705.2022dnszone6404.com.",
+          "TTL": 3600,
+          "MXRecords": [
+            {
+              "exchange": "mymail1.contoso.com",
+              "preference": 10
+            },
+            {
+              "exchange": "mymail2.contoso.com",
+              "preference": 11
+            }
+          ],
+          "targetResource": {},
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dnsrg4425/providers/Microsoft.Network/dnsZones/2022dnszone6404.com/MX/mx9705?api-version=2018-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-05b8f2fdec498d4296d39f69e9d0abd8-89834e9d125fcb43-00",
+        "User-Agent": "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20221102.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "96346a48e8c7b013289a078ff6251586",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "496",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Nov 2022 08:11:32 GMT",
+        "ETag": "7b4fe635-597d-4251-ae4a-2c055c8cde58",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8740a9a8-9145-407b-8eda-9d77679a10dd",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "499",
+        "x-ms-request-id": "96346a48-e8c7-b013-289a-078ff6251586",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221102T081132Z:8740a9a8-9145-407b-8eda-9d77679a10dd",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dnsrg4425/providers/Microsoft.Network/dnszones/2022dnszone6404.com/MX/mx9705",
+        "name": "mx9705",
+        "type": "Microsoft.Network/dnszones/MX",
+        "etag": "7b4fe635-597d-4251-ae4a-2c055c8cde58",
+        "properties": {
+          "fqdn": "mx9705.2022dnszone6404.com.",
+          "TTL": 3600,
+          "MXRecords": [
+            {
+              "exchange": "mymail1.contoso.com",
+              "preference": 10
+            },
+            {
+              "exchange": "mymail2.contoso.com",
+              "preference": 11
+            }
+          ],
+          "targetResource": {},
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dnsrg4425/providers/Microsoft.Network/dnsZones/2022dnszone6404.com/MX/mx9705?api-version=2018-05-01",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "27",
+        "Content-Type": "application/json",
+        "traceparent": "00-c628f54ab655554298e6a2a502382301-aedd17710dad6746-00",
+        "User-Agent": "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20221102.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8ef4e2dd7121e423e7f6a98a4f6740d4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "TTL": 7200
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "496",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Nov 2022 08:11:34 GMT",
+        "ETag": "fb907081-5c1a-4ed6-83c7-ad8bd85c2c7d",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7a50966c-808a-45d3-bb68-69f2cafc6a52",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "11998",
+        "x-ms-request-id": "8ef4e2dd-7121-e423-e7f6-a98a4f6740d4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221102T081134Z:7a50966c-808a-45d3-bb68-69f2cafc6a52",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dnsrg4425/providers/Microsoft.Network/dnszones/2022dnszone6404.com/MX/mx9705",
+        "name": "mx9705",
+        "type": "Microsoft.Network/dnszones/MX",
+        "etag": "fb907081-5c1a-4ed6-83c7-ad8bd85c2c7d",
+        "properties": {
+          "fqdn": "mx9705.2022dnszone6404.com.",
+          "TTL": 7200,
+          "MXRecords": [
+            {
+              "exchange": "mymail1.contoso.com",
+              "preference": 10
+            },
+            {
+              "exchange": "mymail2.contoso.com",
+              "preference": 11
+            }
+          ],
+          "targetResource": {},
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dnsrg4425/providers/Microsoft.Network/dnsZones/2022dnszone6404.com/MX/mx9705?api-version=2018-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-aa19a72b15ae5b44add08a892a4392db-02b53a8b6c44b648-00",
+        "User-Agent": "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20221102.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e3ca3b8deec475d68fa6e96a218f1333",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "496",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Nov 2022 08:11:34 GMT",
+        "ETag": "fb907081-5c1a-4ed6-83c7-ad8bd85c2c7d",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "86f9ceb8-b0e7-4581-b85d-f2ac0150fb3b",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "498",
+        "x-ms-request-id": "e3ca3b8d-eec4-75d6-8fa6-e96a218f1333",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221102T081134Z:86f9ceb8-b0e7-4581-b85d-f2ac0150fb3b",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dnsrg4425/providers/Microsoft.Network/dnszones/2022dnszone6404.com/MX/mx9705",
+        "name": "mx9705",
+        "type": "Microsoft.Network/dnszones/MX",
+        "etag": "fb907081-5c1a-4ed6-83c7-ad8bd85c2c7d",
+        "properties": {
+          "fqdn": "mx9705.2022dnszone6404.com.",
+          "TTL": 7200,
+          "MXRecords": [
+            {
+              "exchange": "mymail1.contoso.com",
+              "preference": 10
+            },
+            {
+              "exchange": "mymail2.contoso.com",
+              "preference": 11
+            }
+          ],
+          "targetResource": {},
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dnsrg4425/providers/Microsoft.Network/dnsZones/2022dnszone6404.com/MX?api-version=2018-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-15b11fb08dd29747a662979e648b1f2f-e849bd9a17e6a24b-00",
+        "User-Agent": "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20221102.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b9d6fb5d6a63d6484650aed13f8861c1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "508",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Nov 2022 08:11:35 GMT",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a2a8ba85-d7e4-463d-8567-9631bc71ada3",
+        "x-ms-ratelimit-remaining-subscription-resource-entities-read": "59999",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "497",
+        "x-ms-request-id": "b9d6fb5d-6a63-d648-4650-aed13f8861c1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221102T081135Z:a2a8ba85-d7e4-463d-8567-9631bc71ada3",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dnsrg4425/providers/Microsoft.Network/dnszones/2022dnszone6404.com/MX/mx9705",
+            "name": "mx9705",
+            "type": "Microsoft.Network/dnszones/MX",
+            "etag": "fb907081-5c1a-4ed6-83c7-ad8bd85c2c7d",
+            "properties": {
+              "fqdn": "mx9705.2022dnszone6404.com.",
+              "TTL": 7200,
+              "MXRecords": [
+                {
+                  "exchange": "mymail1.contoso.com",
+                  "preference": 10
+                },
+                {
+                  "exchange": "mymail2.contoso.com",
+                  "preference": 11
+                }
+              ],
+              "targetResource": {},
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dnsrg4425/providers/Microsoft.Network/dnsZones/2022dnszone6404.com/MX/mx9705?api-version=2018-05-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b07116b6745a854783ca232905b0b9e7-365ec2860739bd4c-00",
+        "User-Agent": "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20221102.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ba023359325aeec10c7ffe7a88b8c257",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "0",
+        "Date": "Wed, 02 Nov 2022 08:11:36 GMT",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0e5ca48e-fe4f-400d-a1ba-57741ffc7373",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "11999",
+        "x-ms-request-id": "ba023359-325a-eec1-0c7f-fe7a88b8c257",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221102T081136Z:0e5ca48e-fe4f-400d-a1ba-57741ffc7373",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dnsrg4425/providers/Microsoft.Network/dnsZones/2022dnszone6404.com/MX/mx9705?api-version=2018-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7eccd877984e2348996cd06d3ee5e697-777f978c56ba594c-00",
+        "User-Agent": "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20221102.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "532d75e387902270f3f49c7440043607",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "161",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Nov 2022 08:11:37 GMT",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "04420e7c-902c-48da-8ce4-33eda5af0bfa",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "496",
+        "x-ms-request-id": "532d75e3-8790-2270-f3f4-9c7440043607",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221102T081137Z:04420e7c-902c-48da-8ce4-33eda5af0bfa",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "code": "NotFound",
+        "message": "The resource record \u0027mx9705\u0027 does not exist in resource group \u0027dnsrg4425\u0027 of subscription \u0027db1ab6f0-4769-4b27-930e-01e2ef9c123c\u0027."
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "22595196",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

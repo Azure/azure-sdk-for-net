@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="systemCpuUsage"></param>
         /// <param name="onlineCpuCount"></param>
         /// <param name="throttlingData"></param>
-        internal ContainerCpuStatistics(ContainerCpuUsage cpuUsage, long? systemCpuUsage, int? onlineCpuCount, ContainerThrottlingData throttlingData)
+        internal ContainerCpuStatistics(ContainerCpuUsage cpuUsage, long? systemCpuUsage, int? onlineCpuCount, ContainerThrottlingInfo throttlingData)
         {
             CpuUsage = cpuUsage;
             SystemCpuUsage = systemCpuUsage;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets or sets the online cpu count. </summary>
         public int? OnlineCpuCount { get; set; }
         /// <summary> Gets or sets the throttling data. </summary>
-        public ContainerThrottlingData ThrottlingData { get; set; }
+        public ContainerThrottlingInfo ThrottlingData { get; set; }
     }
 }

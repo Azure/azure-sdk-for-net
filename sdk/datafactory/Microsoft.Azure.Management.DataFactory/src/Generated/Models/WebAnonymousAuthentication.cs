@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the WebAnonymousAuthentication class.
         /// </summary>
         /// <param name="url">The URL of the web service endpoint, e.g.
-        /// http://www.microsoft.com . Type: string (or Expression with
+        /// https://www.microsoft.com . Type: string (or Expression with
         /// resultType string).</param>
         public WebAnonymousAuthentication(object url)
             : base(url)

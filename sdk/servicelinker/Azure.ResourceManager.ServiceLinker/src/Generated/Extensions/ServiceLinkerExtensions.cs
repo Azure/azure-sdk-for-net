@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.ServiceLinker
     /// <summary> A class to add extension methods to Azure.ResourceManager.ServiceLinker. </summary>
     public static partial class ServiceLinkerExtensions
     {
+        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ArmResourceExtensionClient(client, scope);
+            }
+            );
+        }
+
         private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
         {
             return armResource.GetCachedClient((client) =>
@@ -34,10 +43,27 @@ namespace Azure.ResourceManager.ServiceLinker
             return GetExtensionClient(armResource).GetLinkerResources();
         }
 
+        /// <summary> Gets a collection of LinkerResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of LinkerResources and their operations over a LinkerResource. </returns>
+        public static LinkerResourceCollection GetLinkerResources(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetExtensionClient(client, scope).GetLinkerResources();
+        }
+
         /// <summary>
         /// Returns Linker resource for a given name.
-        /// Request Path: /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
-        /// Operation Id: Linker_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="linkerName"> The name Linker resource. </param>
@@ -52,8 +78,41 @@ namespace Azure.ResourceManager.ServiceLinker
 
         /// <summary>
         /// Returns Linker resource for a given name.
-        /// Request Path: /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
-        /// Operation Id: Linker_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="linkerName"> The name Linker resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<LinkerResource>> GetLinkerResourceAsync(this ArmClient client, ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
+        {
+            return await client.GetLinkerResources(scope).GetAsync(linkerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns Linker resource for a given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="linkerName"> The name Linker resource. </param>
@@ -64,6 +123,31 @@ namespace Azure.ResourceManager.ServiceLinker
         public static Response<LinkerResource> GetLinkerResource(this ArmResource armResource, string linkerName, CancellationToken cancellationToken = default)
         {
             return armResource.GetLinkerResources().Get(linkerName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns Linker resource for a given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="linkerName"> The name Linker resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<LinkerResource> GetLinkerResource(this ArmClient client, ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
+        {
+            return client.GetLinkerResources(scope).Get(linkerName, cancellationToken);
         }
 
         #region LinkerResource

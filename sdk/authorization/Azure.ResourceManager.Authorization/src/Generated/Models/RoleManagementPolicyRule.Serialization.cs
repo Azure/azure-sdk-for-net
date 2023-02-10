@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("ruleType");
+            writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
             }
             writer.WriteEndObject();
@@ -43,38 +43,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     case "RoleManagementPolicyNotificationRule": return RoleManagementPolicyNotificationRule.DeserializeRoleManagementPolicyNotificationRule(element);
                 }
             }
-            Optional<ResourceIdentifier> id = default;
-            RoleManagementPolicyRuleType ruleType = default;
-            Optional<RoleManagementPolicyRuleTarget> target = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("ruleType"))
-                {
-                    ruleType = new RoleManagementPolicyRuleType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("target"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);
-                    continue;
-                }
-            }
-            return new RoleManagementPolicyRule(id.Value, ruleType, target.Value);
+            return UnknownRoleManagementPolicyRule.DeserializeUnknownRoleManagementPolicyRule(element);
         }
     }
 }

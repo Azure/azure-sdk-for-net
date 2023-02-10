@@ -1,42 +1,40 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://jolovappconfiguration-azconfig-net.azconfig.io/locks/key-678097465?api-version=1.0",
+      "RequestUri": "https://shrejaappconfiguration-azconfig-net.azconfig.io/locks/key-50873316?api-version=1.0",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson, application/problem\u002Bjson",
         "Authorization": "Sanitized",
         "Content-Length": "0",
-        "Date": "Tue, 16 Nov 2021 00:14:59 GMT",
-        "traceparent": "00-d3537e06f20d2c4eaa6c916f4ab242ab-3d97a3ee94b5fa4b-00",
-        "User-Agent": "azsdk-net-Data.AppConfiguration/1.3.0-alpha.20211115.1 (.NET Core 3.1.21; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "676a7124452f71b994926b08371d5f43",
+        "Date": "Tue, 31 Jan 2023 20:26:19 GMT",
+        "traceparent": "00-3a0edbae00eda97b936eb86a54a8e42c-1d14eae89d2cd3c9-00",
+        "User-Agent": "azsdk-net-Data.AppConfiguration/1.3.0-alpha.20230131.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "51eef15363ab9c084f668017ba563e09",
         "x-ms-content-sha256": "47DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU=",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
-      "StatusCode": 401,
+      "StatusCode": 404,
       "ResponseHeaders": {
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-useragent, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, retry-after-ms, x-ms-request-id, x-ms-client-session-id, x-ms-effective-locale, WWW-Authenticate, traceparent, tracestate",
         "Connection": "keep-alive",
         "Content-Length": "0",
-        "Date": "Tue, 16 Nov 2021 00:14:59 GMT",
-        "Server": "openresty/1.17.8.2",
+        "Date": "Tue, 31 Jan 2023 20:26:39 GMT",
+        "Server": "openresty/1.21.4.1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "WWW-Authenticate": [
-          "HMAC-SHA256 error=\u0022invalid_token\u0022, error_description=\u0022Invalid Signature\u0022",
-          "Bearer"
-        ],
-        "x-ms-client-request-id": "676a7124452f71b994926b08371d5f43",
-        "x-ms-correlation-request-id": "6b448f8b-3465-4558-8879-6d482c089a0f",
-        "x-ms-request-id": "6b448f8b-3465-4558-8879-6d482c089a0f"
+        "Sync-Token": "zAJw6V16=Nzo1IzEyOTM2MDU=;sn=1293605",
+        "x-ms-client-request-id": "51eef15363ab9c084f668017ba563e09",
+        "x-ms-correlation-request-id": "df3da39a-76dc-4fff-a770-62d2ba0bcda8",
+        "x-ms-request-id": "df3da39a-76dc-4fff-a770-62d2ba0bcda8"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "APPCONFIGURATION_CONNECTION_STRING": "Endpoint=https://jolovappconfiguration-azconfig-net.azconfig.io;Id=SjGj-l2-s0:Ene0MJoG/VoFWC0SQAs/;Secret=Kg==",
-    "RandomSeed": "1772166546"
+    "APPCONFIGURATION_CONNECTION_STRING": "Endpoint=https://shrejaappconfiguration-azconfig-net.azconfig.io;Id=RoMR-l1-s0:NgGvLRBi23WLJ6PQ6mcy;Secret=Kg==",
+    "RandomSeed": "1977028345"
   }
 }

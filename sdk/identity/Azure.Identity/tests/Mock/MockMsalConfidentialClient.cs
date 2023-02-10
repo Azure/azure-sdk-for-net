@@ -18,8 +18,8 @@ namespace Azure.Identity.Tests.Mock
         public MockMsalConfidentialClient()
         { }
 
-        public MockMsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
-            :base(pipeline, tenantId, clientId, clientSecret, redirectUrl, options, regionalAuthority)
+        public MockMsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, TokenCredentialOptions options)
+            :base(pipeline, tenantId, clientId, clientSecret, redirectUrl, options)
         { }
 
         public MockMsalConfidentialClient(AuthenticationResult result)

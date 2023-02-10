@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<IReadOnlyList<RestorableLocationResourceInfo>> restorableLocations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,32 +40,32 @@ namespace Azure.ResourceManager.CosmosDB
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.CosmosDB
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("accountName"))
+                        if (property0.NameEquals("accountName"u8))
                         {
                             accountName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("creationTime"))
+                        if (property0.NameEquals("creationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB
                             creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("deletionTime"))
+                        if (property0.NameEquals("deletionTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB
                             deletionTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("apiType"))
+                        if (property0.NameEquals("apiType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB
                             apiType = new CosmosDBApiType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("restorableLocations"))
+                        if (property0.NameEquals("restorableLocations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

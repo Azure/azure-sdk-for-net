@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-04-10")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-12-02")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -569,7 +569,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateFilterBlobsRequest(int? timeout, string @where, string marker, int? maxresults)
+        internal HttpMessage CreateFilterBlobsRequest(int? timeout, string @where, string marker, int? maxresults, IEnumerable<FilterBlobsIncludeItem> include)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -594,6 +594,10 @@ namespace Azure.Storage.Blobs
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
+            if (include != null)
+            {
+                uri.AppendQueryDelimited("include", include, ",", true);
+            }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
@@ -605,10 +609,11 @@ namespace Azure.Storage.Blobs
         /// <param name="where"> Filters the results to return only to return only blobs whose tags match the specified expression. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FilterBlobSegment, ServiceFilterBlobsHeaders>> FilterBlobsAsync(int? timeout = null, string @where = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FilterBlobSegment, ServiceFilterBlobsHeaders>> FilterBlobsAsync(int? timeout = null, string @where = null, string marker = null, int? maxresults = null, IEnumerable<FilterBlobsIncludeItem> include = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateFilterBlobsRequest(timeout, @where, marker, maxresults);
+            using var message = CreateFilterBlobsRequest(timeout, @where, marker, maxresults, include);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceFilterBlobsHeaders(message.Response);
             switch (message.Response.Status)
@@ -633,10 +638,11 @@ namespace Azure.Storage.Blobs
         /// <param name="where"> Filters the results to return only to return only blobs whose tags match the specified expression. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FilterBlobSegment, ServiceFilterBlobsHeaders> FilterBlobs(int? timeout = null, string @where = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FilterBlobSegment, ServiceFilterBlobsHeaders> FilterBlobs(int? timeout = null, string @where = null, string marker = null, int? maxresults = null, IEnumerable<FilterBlobsIncludeItem> include = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateFilterBlobsRequest(timeout, @where, marker, maxresults);
+            using var message = CreateFilterBlobsRequest(timeout, @where, marker, maxresults, include);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceFilterBlobsHeaders(message.Response);
             switch (message.Response.Status)

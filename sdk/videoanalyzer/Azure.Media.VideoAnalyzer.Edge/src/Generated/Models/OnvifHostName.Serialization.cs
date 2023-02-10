@@ -17,12 +17,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FromDhcp))
             {
-                writer.WritePropertyName("fromDhcp");
+                writer.WritePropertyName("fromDhcp"u8);
                 writer.WriteBooleanValue(FromDhcp.Value);
             }
             if (Optional.IsDefined(Hostname))
             {
-                writer.WritePropertyName("hostname");
+                writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> hostname = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fromDhcp"))
+                if (property.NameEquals("fromDhcp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     fromDhcp = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("hostname"))
+                if (property.NameEquals("hostname"u8))
                 {
                     hostname = property.Value.GetString();
                     continue;

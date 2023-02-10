@@ -1,0 +1,218 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/batch/json?api-version=1.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "102",
+        "Content-Type": "application/json",
+        "traceparent": "00-63967bb0db152d156c86bc23afddb631-649183036bdac7a8-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
+        "x-ms-client-request-id": "cd3aeefc46c8aaf77164afeb0a82f53b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "batchItems": [
+          {
+            "query": "?query=Microsoft%20Campus"
+          },
+          {
+            "query": "?query=Millenium\u0026countrySet=US"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "2",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 08 Sep 2022 18:56:27 GMT",
+        "Location": "https://atlas.microsoft.com/search/address/batch/22256f73-57ce-4a58-af48-447038ae9e51?api-version=1.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 877C18FB5C454118AE99A34D54FBAAF9 Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:28Z"
+      },
+      "ResponseBody": "\u0022\u0022"
+    },
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/batch/22256f73-57ce-4a58-af48-447038ae9e51?api-version=1.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
+        "x-ms-client-request-id": "c3f8878546f2c5220daf2a587e198c08",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Thu, 08 Sep 2022 18:56:28 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 7A5A99ABDF0D427297DC79FE1E7C764B Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:28Z"
+      },
+      "ResponseBody": {
+        "batchItems": [
+          {
+            "statusCode": 200,
+            "response": {
+              "summary": {
+                "query": "microsoft campus",
+                "queryType": "NON_NEAR",
+                "queryTime": 5,
+                "numResults": 1,
+                "offset": 0,
+                "totalResults": 1,
+                "fuzzyLevel": 1
+              },
+              "results": [
+                {
+                  "type": "Street",
+                  "id": "US/STR/p2/1557700",
+                  "score": 4.1924114227,
+                  "matchConfidence": {
+                    "score": 1
+                  },
+                  "address": {
+                    "streetName": "Microsoft West Campus Road",
+                    "municipality": "Redmond",
+                    "countrySecondarySubdivision": "King",
+                    "countrySubdivision": "WA",
+                    "countrySubdivisionName": "Washington",
+                    "countryCode": "US",
+                    "country": "United States",
+                    "countryCodeISO3": "USA",
+                    "freeformAddress": "Microsoft West Campus Road, Redmond, WA",
+                    "localName": "Redmond"
+                  },
+                  "position": {
+                    "lat": 47.65977,
+                    "lon": -122.13888
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 47.66039,
+                      "lon": -122.14335
+                    },
+                    "btmRightPoint": {
+                      "lat": 47.65778,
+                      "lon": -122.13749
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "statusCode": 200,
+            "response": {
+              "summary": {
+                "query": "millenium",
+                "queryType": "NON_NEAR",
+                "queryTime": 4,
+                "numResults": 2,
+                "offset": 0,
+                "totalResults": 2,
+                "fuzzyLevel": 1
+              },
+              "results": [
+                {
+                  "type": "Street",
+                  "id": "US/STR/p1/1964792",
+                  "score": 2.0959999561,
+                  "matchConfidence": {
+                    "score": 1
+                  },
+                  "address": {
+                    "streetName": "East Millenium Court",
+                    "municipalitySubdivision": "Hedrick Acres",
+                    "municipality": "Tucson",
+                    "countrySecondarySubdivision": "Pima",
+                    "countrySubdivision": "AZ",
+                    "countrySubdivisionName": "Arizona",
+                    "postalCode": "85719",
+                    "extendedPostalCode": "85719-2548, 85719-2569",
+                    "countryCode": "US",
+                    "country": "United States",
+                    "countryCodeISO3": "USA",
+                    "freeformAddress": "East Millenium Court, Tucson, AZ 85719",
+                    "localName": "Tucson"
+                  },
+                  "position": {
+                    "lat": 32.26198,
+                    "lon": -110.9588
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 32.26199,
+                      "lon": -110.95947
+                    },
+                    "btmRightPoint": {
+                      "lat": 32.26195,
+                      "lon": -110.95733
+                    }
+                  }
+                },
+                {
+                  "type": "Street",
+                  "id": "US/STR/p2/4573596",
+                  "score": 2.0754508972,
+                  "matchConfidence": {
+                    "score": 0.9356123084875305
+                  },
+                  "address": {
+                    "streetName": "Millenium Parkway",
+                    "municipality": "Livonia",
+                    "countrySecondarySubdivision": "Wayne",
+                    "countrySubdivision": "MI",
+                    "countrySubdivisionName": "Michigan",
+                    "postalCode": "48150",
+                    "countryCode": "US",
+                    "country": "United States",
+                    "countryCodeISO3": "USA",
+                    "freeformAddress": "Millenium Parkway, Livonia, MI 48150",
+                    "localName": "Livonia"
+                  },
+                  "position": {
+                    "lat": 42.38173,
+                    "lon": -83.33054
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 42.38318,
+                      "lon": -83.33075
+                    },
+                    "btmRightPoint": {
+                      "lat": 42.38035,
+                      "lon": -83.33002
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "summary": {
+          "successfulRequests": 2,
+          "totalRequests": 2
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "1059627877"
+  }
+}

@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static DataContainerResourceArmPaginatedResult DeserializeDataContainerResourceArmPaginatedResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DataContainerData>> value = default;
+            Optional<IReadOnlyList<MachineLearningDataContainerData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataContainerData> array = new List<DataContainerData>();
+                    List<MachineLearningDataContainerData> array = new List<MachineLearningDataContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataContainerData.DeserializeDataContainerData(item));
+                        array.Add(MachineLearningDataContainerData.DeserializeMachineLearningDataContainerData(item));
                     }
                     value = array;
                     continue;

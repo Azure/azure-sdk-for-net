@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/resourcegroups/sdk-test-rg-8776?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/sdk-test-rg-8776?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -32,7 +32,7 @@
         "x-ms-routing-request-id": "CANADACENTRAL:20220502T205800Z:acbcc7e3-6eed-4991-bdb8-cbd37a1f6848"
       },
       "ResponseBody": {
-        "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-8776",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdk-test-rg-8776",
         "name": "sdk-test-rg-8776",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus",
@@ -43,7 +43,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-8776/providers/Microsoft.IoTCentral/iotApps/test-app-2757?api-version=2021-11-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdk-test-rg-8776/providers/Microsoft.IoTCentral/iotApps/test-app-2757?api-version=2021-11-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -68,7 +68,7 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "azure-asyncoperation": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/9a9345ab-8f27-4727-9020-800d4346ac8e?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+        "azure-asyncoperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.IoTCentral/locations/westus/operationResults/9a9345ab-8f27-4727-9020-800d4346ac8e?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
         "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
         "Content-Length": "667",
         "Content-Type": "application/json; charset=utf-8",
@@ -94,7 +94,7 @@
         "X-XSS-Protection": "1; mode=block"
       },
       "ResponseBody": {
-        "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-8776/providers/Microsoft.IoTCentral/iotApps/test-app-2757",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdk-test-rg-8776/providers/Microsoft.IoTCentral/iotApps/test-app-2757",
         "name": "test-app-2757",
         "type": "Microsoft.IoTCentral/IoTApps",
         "location": "westus",
@@ -124,7 +124,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/9a9345ab-8f27-4727-9020-800d4346ac8e?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.IoTCentral/locations/westus/operationResults/9a9345ab-8f27-4727-9020-800d4346ac8e?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -161,7 +161,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/9a9345ab-8f27-4727-9020-800d4346ac8e?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.IoTCentral/locations/westus/operationResults/9a9345ab-8f27-4727-9020-800d4346ac8e?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -198,7 +198,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/9a9345ab-8f27-4727-9020-800d4346ac8e?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.IoTCentral/locations/westus/operationResults/9a9345ab-8f27-4727-9020-800d4346ac8e?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -235,7 +235,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-8776/providers/Microsoft.IoTCentral/iotApps/test-app-2757?api-version=2021-11-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdk-test-rg-8776/providers/Microsoft.IoTCentral/iotApps/test-app-2757?api-version=2021-11-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -270,7 +270,7 @@
         "X-XSS-Protection": "1; mode=block"
       },
       "ResponseBody": {
-        "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-8776/providers/Microsoft.IoTCentral/iotApps/test-app-2757",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdk-test-rg-8776/providers/Microsoft.IoTCentral/iotApps/test-app-2757",
         "name": "test-app-2757",
         "type": "Microsoft.IoTCentral/IoTApps",
         "location": "westus",
@@ -300,7 +300,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-8776/providers/Microsoft.IoTCentral/iotApps/test-app-2757?api-version=2021-11-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdk-test-rg-8776/providers/Microsoft.IoTCentral/iotApps/test-app-2757?api-version=2021-11-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -336,7 +336,7 @@
         "X-XSS-Protection": "1; mode=block"
       },
       "ResponseBody": {
-        "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-8776/providers/Microsoft.IoTCentral/iotApps/test-app-2757",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdk-test-rg-8776/providers/Microsoft.IoTCentral/iotApps/test-app-2757",
         "name": "test-app-2757",
         "type": "Microsoft.IoTCentral/IoTApps",
         "location": "westus",
@@ -369,6 +369,6 @@
   "Variables": {
     "RandomSeed": "2130667809",
     "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "77969078-2897-47b0-9143-917252379303"
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

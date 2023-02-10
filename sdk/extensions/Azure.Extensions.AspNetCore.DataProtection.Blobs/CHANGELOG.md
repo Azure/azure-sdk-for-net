@@ -1,7 +1,42 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0 (2023-02-07)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Tom Longhurst _([GitHub](https://github.com/thomhurst))_
+
+### Features Added
+
+- Added an overload when configuring data protection which allows token credentials to be created by a factory on-demand.  _(A community contribution, courtesy of [thomhurst](https://github.com/thomhurst))_
+
+### Other Changes
+
+- Updated dependency version of `Microsoft.AspNetCore.DataProtection` to mitigate [CVE-2021-24112](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-24112).  Note that the vulnerability only exists in a dependency referenced by the `netcoreapp3.0` target, which reach end-of-life in December, 2019.
+
+## 1.2.3 (2022-09-12)
+
+### Other Changes
+
+- Updated dependency version of `System.Security.Cryptography` to mitigate [CVE-2022-34716](https://github.com/advisories/GHSA-2m65-m22p-9wjw).
+
+## 1.2.2 (2022-09-06)
+
+### Other Changes
+
+- Updating the `Azure.Storage.Blobs` package to 12.13.1 to mitigate warnings for [CVE-2022-30187](https://github.com/advisories/GHSA-64x4-9hc6-r2h6).  Note that no vulnerability exists, as the feature under advisement is not used by the `Azure.Extensions.AspNetCore.DataProtection.Blobs` package.
 
 ## 1.2.1 (2021-05-14)
 

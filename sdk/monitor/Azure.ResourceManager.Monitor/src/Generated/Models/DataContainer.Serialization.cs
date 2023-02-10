@@ -10,24 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataContainer : IUtf8JsonSerializable
+    public partial class DataContainer
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("workspace");
-            writer.WriteObjectValue(Workspace);
-            writer.WriteEndObject();
-        }
-
         internal static DataContainer DeserializeDataContainer(JsonElement element)
         {
-            WorkspaceInfo workspace = default;
+            DataContainerWorkspace workspace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workspace"))
+                if (property.NameEquals("workspace"u8))
                 {
-                    workspace = WorkspaceInfo.DeserializeWorkspaceInfo(property.Value);
+                    workspace = DataContainerWorkspace.DeserializeDataContainerWorkspace(property.Value);
                     continue;
                 }
             }

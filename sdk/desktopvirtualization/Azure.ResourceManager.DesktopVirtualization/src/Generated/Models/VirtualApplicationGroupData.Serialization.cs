@@ -21,32 +21,32 @@ namespace Azure.ResourceManager.DesktopVirtualization
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedBy))
             {
-                writer.WritePropertyName("managedBy");
+                writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Plan))
             {
-                writer.WritePropertyName("plan");
+                writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -55,27 +55,27 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            writer.WritePropertyName("hostPoolArmPath");
-            writer.WriteStringValue(HostPoolArmPath);
-            writer.WritePropertyName("applicationGroupType");
+            writer.WritePropertyName("hostPoolArmPath"u8);
+            writer.WriteStringValue(HostPoolId);
+            writer.WritePropertyName("applicationGroupType"u8);
             writer.WriteStringValue(ApplicationGroupType.ToString());
             if (Optional.IsDefined(MigrationRequest))
             {
-                writer.WritePropertyName("migrationRequest");
+                writer.WritePropertyName("migrationRequest"u8);
                 writer.WriteObjectValue(MigrationRequest);
             }
             writer.WriteEndObject();
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static VirtualApplicationGroupData DeserializeVirtualApplicationGroupData(JsonElement element)
         {
-            Optional<string> managedBy = default;
+            Optional<ResourceIdentifier> managedBy = default;
             Optional<string> kind = default;
             Optional<ETag> etag = default;
-            Optional<ResourceModelWithAllowedPropertySetIdentity> identity = default;
-            Optional<ResourceModelWithAllowedPropertySetSku> sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<DesktopVirtualizationSku> sku = default;
             Optional<ArmPlan> plan = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -99,24 +99,29 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> objectId = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
-            string hostPoolArmPath = default;
-            Optional<string> workspaceArmPath = default;
-            ApplicationGroupType applicationGroupType = default;
-            Optional<MigrationRequestProperties> migrationRequest = default;
-            Optional<bool> cloudPcResource = default;
+            ResourceIdentifier hostPoolArmPath = default;
+            Optional<ResourceIdentifier> workspaceArmPath = default;
+            VirtualApplicationGroupType applicationGroupType = default;
+            Optional<DesktopVirtualizationMigrationProperties> migrationRequest = default;
+            Optional<bool> cloudPCResource = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("managedBy"))
+                if (property.NameEquals("managedBy"u8))
                 {
-                    managedBy = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    managedBy = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,37 +131,37 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = ResourceModelWithAllowedPropertySetIdentity.DeserializeResourceModelWithAllowedPropertySetIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ResourceModelWithAllowedPropertySetSku.DeserializeResourceModelWithAllowedPropertySetSku(property.Value);
+                    sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("plan"))
+                if (property.NameEquals("plan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.ToString());
+                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,37 +176,37 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -210,61 +215,66 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("objectId"))
+                        if (property0.NameEquals("objectId"u8))
                         {
                             objectId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hostPoolArmPath"))
+                        if (property0.NameEquals("hostPoolArmPath"u8))
                         {
-                            hostPoolArmPath = property0.Value.GetString();
+                            hostPoolArmPath = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("workspaceArmPath"))
+                        if (property0.NameEquals("workspaceArmPath"u8))
                         {
-                            workspaceArmPath = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                workspaceArmPath = null;
+                                continue;
+                            }
+                            workspaceArmPath = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("applicationGroupType"))
+                        if (property0.NameEquals("applicationGroupType"u8))
                         {
-                            applicationGroupType = new ApplicationGroupType(property0.Value.GetString());
+                            applicationGroupType = new VirtualApplicationGroupType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("migrationRequest"))
+                        if (property0.NameEquals("migrationRequest"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            migrationRequest = MigrationRequestProperties.DeserializeMigrationRequestProperties(property0.Value);
+                            migrationRequest = DesktopVirtualizationMigrationProperties.DeserializeDesktopVirtualizationMigrationProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("cloudPcResource"))
+                        if (property0.NameEquals("cloudPcResource"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cloudPcResource = property0.Value.GetBoolean();
+                            cloudPCResource = property0.Value.GetBoolean();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VirtualApplicationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, migrationRequest.Value, Optional.ToNullable(cloudPcResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity.Value, sku.Value, plan);
+            return new VirtualApplicationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, migrationRequest.Value, Optional.ToNullable(cloudPCResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
         }
     }
 }

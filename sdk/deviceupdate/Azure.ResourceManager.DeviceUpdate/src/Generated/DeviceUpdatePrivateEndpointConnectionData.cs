@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
         public DeviceUpdatePrivateEndpointConnectionData(DeviceUpdatePrivateLinkServiceConnectionState connectionState)
         {
-            if (connectionState == null)
-            {
-                throw new ArgumentNullException(nameof(connectionState));
-            }
+            Argument.AssertNotNull(connectionState, nameof(connectionState));
 
             ConnectionState = connectionState;
             GroupIds = new ChangeTrackingList<string>();

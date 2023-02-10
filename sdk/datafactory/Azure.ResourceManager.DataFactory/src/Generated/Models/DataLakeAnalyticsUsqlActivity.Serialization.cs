@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
-                writer.WritePropertyName("linkedServiceName");
+                writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
-                writer.WritePropertyName("policy");
+                writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn");
+                writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(UserProperties))
             {
-                writer.WritePropertyName("userProperties");
+                writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("scriptPath");
+            writer.WritePropertyName("scriptPath"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ScriptPath);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(ScriptPath.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("scriptLinkedService");
+            writer.WritePropertyName("scriptLinkedService"u8);
             writer.WriteObjectValue(ScriptLinkedService);
             if (Optional.IsDefined(DegreeOfParallelism))
             {
-                writer.WritePropertyName("degreeOfParallelism");
+                writer.WritePropertyName("degreeOfParallelism"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DegreeOfParallelism);
 #else
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
+                writer.WritePropertyName("priority"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Priority);
 #else
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
-                writer.WritePropertyName("runtimeVersion");
+                writer.WritePropertyName("runtimeVersion"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(RuntimeVersion);
 #else
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(CompilationMode))
             {
-                writer.WritePropertyName("compilationMode");
+                writer.WritePropertyName("compilationMode"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CompilationMode);
 #else
@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataLakeAnalyticsUsqlActivity DeserializeDataLakeAnalyticsUsqlActivity(JsonElement element)
         {
-            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            Optional<IList<ActivityUserProperty>> userProperties = default;
             BinaryData scriptPath = default;
-            LinkedServiceReference scriptLinkedService = default;
+            FactoryLinkedServiceReference scriptLinkedService = default;
             Optional<BinaryData> degreeOfParallelism = default;
             Optional<BinaryData> priority = default;
             Optional<IDictionary<string, BinaryData>> parameters = default;
@@ -150,17 +150,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -170,22 +170,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -200,22 +200,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"))
+                if (property.NameEquals("userProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UserProperty> array = new List<UserProperty>();
+                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserProperty.DeserializeUserProperty(item));
+                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
                     }
                     userProperties = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -224,17 +224,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("scriptPath"))
+                        if (property0.NameEquals("scriptPath"u8))
                         {
                             scriptPath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("scriptLinkedService"))
+                        if (property0.NameEquals("scriptLinkedService"u8))
                         {
-                            scriptLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
+                            scriptLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("degreeOfParallelism"))
+                        if (property0.NameEquals("degreeOfParallelism"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             degreeOfParallelism = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("priority"))
+                        if (property0.NameEquals("priority"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             priority = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("parameters"))
+                        if (property0.NameEquals("parameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             parameters = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("runtimeVersion"))
+                        if (property0.NameEquals("runtimeVersion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             runtimeVersion = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("compilationMode"))
+                        if (property0.NameEquals("compilationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

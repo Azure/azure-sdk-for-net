@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ManagedClusterAgentPoolProfileProperties. </summary>
         /// <param name="count"> Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1. </param>
         /// <param name="vmSize"> VM size availability varies by region. If a node contains insufficient compute resources (memory, cpu, etc) pods might fail to run correctly. For more details on restricted VM sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions. </param>
-        /// <param name="osDiskSizeGB"> OS Disk Size in GB to be used to specify the disk size for every machine in the master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified. </param>
+        /// <param name="osDiskSizeInGB"> OS Disk Size in GB to be used to specify the disk size for every machine in the master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified. </param>
         /// <param name="osDiskType"> The default is &apos;Ephemeral&apos; if the VM supports it and has a cache disk larger than the requested OSDiskSizeGB. Otherwise, defaults to &apos;Managed&apos;. May not be changed after creation. For more information see [Ephemeral OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os). </param>
         /// <param name="kubeletDiskType"> Determines the placement of emptyDir volumes, container runtime data root, and Kubelet ephemeral storage. </param>
         /// <param name="workloadRuntime"> Determines the type of workload a node can run. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="podSubnetId"> If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
         /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
         /// <param name="osType"> The operating system type. The default is Linux. </param>
-        /// <param name="ossku"> Specifies an OS SKU. This value must not be specified if OSType is Windows. </param>
+        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </param>
         /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
         /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
         /// <param name="enableAutoScaling"> Whether to enable auto-scaler. </param>
@@ -59,15 +59,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="kubeletConfig"> The Kubelet configuration on the agent pool nodes. </param>
         /// <param name="linuxOSConfig"> The OS configuration of Linux agent nodes. </param>
         /// <param name="enableEncryptionAtHost"> This is only supported on certain VM sizes and in certain Azure regions. For more information, see: https://docs.microsoft.com/azure/aks/enable-host-encryption. </param>
-        /// <param name="enableUltraSSD"> Whether to enable UltraSSD. </param>
+        /// <param name="enableUltraSsd"> Whether to enable UltraSSD. </param>
         /// <param name="enableFips"> See [Add a FIPS-enabled node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview) for more details. </param>
         /// <param name="gpuInstanceProfile"> GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU. </param>
         /// <param name="creationData"> CreationData to be used to specify the source Snapshot ID if the node pool will be created/upgraded using a snapshot. </param>
-        internal ManagedClusterAgentPoolProfileProperties(int? count, string vmSize, int? osDiskSizeGB, OSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string vnetSubnetId, string podSubnetId, int? maxPods, OSType? osType, Ossku? ossku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, PowerState powerState, IList<string> availabilityZones, bool? enableNodePublicIP, string nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, string proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSSD, bool? enableFips, GPUInstanceProfile? gpuInstanceProfile, CreationData creationData)
+        /// <param name="hostGroupId"> This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}. For more information see [Azure dedicated hosts](https://docs.microsoft.com/azure/virtual-machines/dedicated-hosts). </param>
+        internal ManagedClusterAgentPoolProfileProperties(int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServicePowerState powerState, IList<string> availabilityZones, bool? enableNodePublicIP, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSsd, bool? enableFips, GpuInstanceProfile? gpuInstanceProfile, ContainerServiceCreationData creationData, ResourceIdentifier hostGroupId)
         {
             Count = count;
             VmSize = vmSize;
-            OSDiskSizeGB = osDiskSizeGB;
+            OSDiskSizeInGB = osDiskSizeInGB;
             OSDiskType = osDiskType;
             KubeletDiskType = kubeletDiskType;
             WorkloadRuntime = workloadRuntime;
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             PodSubnetId = podSubnetId;
             MaxPods = maxPods;
             OSType = osType;
-            OSSKU = ossku;
+            OSSku = osSku;
             MaxCount = maxCount;
             MinCount = minCount;
             EnableAutoScaling = enableAutoScaling;
@@ -101,10 +102,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             KubeletConfig = kubeletConfig;
             LinuxOSConfig = linuxOSConfig;
             EnableEncryptionAtHost = enableEncryptionAtHost;
-            EnableUltraSSD = enableUltraSSD;
+            EnableUltraSsd = enableUltraSsd;
             EnableFips = enableFips;
             GpuInstanceProfile = gpuInstanceProfile;
             CreationData = creationData;
+            HostGroupId = hostGroupId;
         }
 
         /// <summary> Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1. </summary>
@@ -112,23 +114,23 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> VM size availability varies by region. If a node contains insufficient compute resources (memory, cpu, etc) pods might fail to run correctly. For more details on restricted VM sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions. </summary>
         public string VmSize { get; set; }
         /// <summary> OS Disk Size in GB to be used to specify the disk size for every machine in the master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified. </summary>
-        public int? OSDiskSizeGB { get; set; }
+        public int? OSDiskSizeInGB { get; set; }
         /// <summary> The default is &apos;Ephemeral&apos; if the VM supports it and has a cache disk larger than the requested OSDiskSizeGB. Otherwise, defaults to &apos;Managed&apos;. May not be changed after creation. For more information see [Ephemeral OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os). </summary>
-        public OSDiskType? OSDiskType { get; set; }
+        public ContainerServiceOSDiskType? OSDiskType { get; set; }
         /// <summary> Determines the placement of emptyDir volumes, container runtime data root, and Kubelet ephemeral storage. </summary>
         public KubeletDiskType? KubeletDiskType { get; set; }
         /// <summary> Determines the type of workload a node can run. </summary>
         public WorkloadRuntime? WorkloadRuntime { get; set; }
         /// <summary> If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>
-        public string VnetSubnetId { get; set; }
+        public ResourceIdentifier VnetSubnetId { get; set; }
         /// <summary> If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>
-        public string PodSubnetId { get; set; }
+        public ResourceIdentifier PodSubnetId { get; set; }
         /// <summary> The maximum number of pods that can run on a node. </summary>
         public int? MaxPods { get; set; }
         /// <summary> The operating system type. The default is Linux. </summary>
-        public OSType? OSType { get; set; }
-        /// <summary> Specifies an OS SKU. This value must not be specified if OSType is Windows. </summary>
-        public Ossku? OSSKU { get; set; }
+        public ContainerServiceOSType? OSType { get; set; }
+        /// <summary> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </summary>
+        public ContainerServiceOSSku? OSSku { get; set; }
         /// <summary> The maximum number of nodes for auto-scaling. </summary>
         public int? MaxCount { get; set; }
         /// <summary> The minimum number of nodes for auto-scaling. </summary>
@@ -164,15 +166,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The current deployment or provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> When an Agent Pool is first created it is initially Running. The Agent Pool can be stopped by setting this field to Stopped. A stopped Agent Pool stops all of its VMs and does not accrue billing charges. An Agent Pool can only be stopped if it is Running and provisioning state is Succeeded. </summary>
-        internal PowerState PowerState { get; set; }
+        internal ContainerServicePowerState PowerState { get; set; }
         /// <summary> Tells whether the cluster is Running or Stopped. </summary>
-        public Code? PowerStateCode
+        public ContainerServiceStateCode? PowerStateCode
         {
             get => PowerState is null ? default : PowerState.Code;
             set
             {
                 if (PowerState is null)
-                    PowerState = new PowerState();
+                    PowerState = new ContainerServicePowerState();
                 PowerState.Code = value;
             }
         }
@@ -182,7 +184,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Some scenarios may require nodes in a node pool to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. For more information see [assigning a public IP per node](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#assign-a-public-ip-per-node-for-your-node-pools). The default is false. </summary>
         public bool? EnableNodePublicIP { get; set; }
         /// <summary> This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}. </summary>
-        public string NodePublicIPPrefixId { get; set; }
+        public ResourceIdentifier NodePublicIPPrefixId { get; set; }
         /// <summary> The Virtual Machine Scale Set priority. If not specified, the default is &apos;Regular&apos;. </summary>
         public ScaleSetPriority? ScaleSetPriority { get; set; }
         /// <summary> This cannot be specified unless the scaleSetPriority is &apos;Spot&apos;. If not specified, the default is &apos;Delete&apos;. </summary>
@@ -196,7 +198,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </summary>
         public IList<string> NodeTaints { get; }
         /// <summary> The ID for Proximity Placement Group. </summary>
-        public string ProximityPlacementGroupId { get; set; }
+        public ResourceIdentifier ProximityPlacementGroupId { get; set; }
         /// <summary> The Kubelet configuration on the agent pool nodes. </summary>
         public KubeletConfig KubeletConfig { get; set; }
         /// <summary> The OS configuration of Linux agent nodes. </summary>
@@ -204,23 +206,26 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> This is only supported on certain VM sizes and in certain Azure regions. For more information, see: https://docs.microsoft.com/azure/aks/enable-host-encryption. </summary>
         public bool? EnableEncryptionAtHost { get; set; }
         /// <summary> Whether to enable UltraSSD. </summary>
-        public bool? EnableUltraSSD { get; set; }
+        public bool? EnableUltraSsd { get; set; }
         /// <summary> See [Add a FIPS-enabled node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview) for more details. </summary>
         public bool? EnableFips { get; set; }
         /// <summary> GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU. </summary>
-        public GPUInstanceProfile? GpuInstanceProfile { get; set; }
+        public GpuInstanceProfile? GpuInstanceProfile { get; set; }
         /// <summary> CreationData to be used to specify the source Snapshot ID if the node pool will be created/upgraded using a snapshot. </summary>
-        internal CreationData CreationData { get; set; }
+        internal ContainerServiceCreationData CreationData { get; set; }
         /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>
-        public string CreationDataSourceResourceId
+        public ResourceIdentifier CreationDataSourceResourceId
         {
             get => CreationData is null ? default : CreationData.SourceResourceId;
             set
             {
                 if (CreationData is null)
-                    CreationData = new CreationData();
+                    CreationData = new ContainerServiceCreationData();
                 CreationData.SourceResourceId = value;
             }
         }
+
+        /// <summary> This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}. For more information see [Azure dedicated hosts](https://docs.microsoft.com/azure/virtual-machines/dedicated-hosts). </summary>
+        public ResourceIdentifier HostGroupId { get; set; }
     }
 }

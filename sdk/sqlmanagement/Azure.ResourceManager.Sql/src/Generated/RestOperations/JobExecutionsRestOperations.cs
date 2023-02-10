@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobExecutionData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlServerJobExecutionData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -514,13 +514,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        JobExecutionData value = default;
+                        SqlServerJobExecutionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobExecutionData.DeserializeJobExecutionData(document.RootElement);
+                        value = SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobExecutionData)null, message.Response);
+                    return Response.FromValue((SqlServerJobExecutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobExecutionData> Get(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, CancellationToken cancellationToken = default)
+        public Response<SqlServerJobExecutionData> Get(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -550,13 +550,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        JobExecutionData value = default;
+                        SqlServerJobExecutionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobExecutionData.DeserializeJobExecutionData(document.RootElement);
+                        value = SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobExecutionData)null, message.Response);
+                    return Response.FromValue((SqlServerJobExecutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

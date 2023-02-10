@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [OneTimeTearDown]
-        public void GlobalTeardown()
+        public async Task GlobalTeardown()
         {
-            _sqlContainer.Delete(WaitUntil.Completed);
-            _sqlDatabase.Delete(WaitUntil.Completed);
-            _databaseAccount.Delete(WaitUntil.Completed);
+            await _sqlContainer.DeleteAsync(WaitUntil.Completed);
+            await _sqlDatabase.DeleteAsync(WaitUntil.Completed);
+            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
         }
 
         [SetUp]
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlTriggerCreateAndUpdate()
         {
             var trigger = await CreateSqlTrigger(null);
-            Assert.AreEqual(_triggerName, trigger.Data.Resource.Id);
+            Assert.AreEqual(_triggerName, trigger.Data.Resource.TriggerName);
             Assert.That(trigger.Data.Resource.Body, Contains.Substring("First Hello World"));
             Assert.AreEqual(trigger.Data.Resource.TriggerOperation, CosmosDBSqlTriggerOperation.All);
             Assert.AreEqual(trigger.Data.Resource.TriggerType, CosmosDBSqlTriggerType.Pre);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.True(ifExists);
 
             CosmosDBSqlTriggerResource trigger2 = await SqlTriggerCollection.GetAsync(_triggerName);
-            Assert.AreEqual(_triggerName, trigger2.Data.Resource.Id);
+            Assert.AreEqual(_triggerName, trigger2.Data.Resource.TriggerName);
 
             VerifySqlTriggers(trigger, trigger2);
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             });
 
             trigger = (await SqlTriggerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _triggerName, updateOptions)).Value;
-            Assert.AreEqual(_triggerName, trigger.Data.Resource.Id);
+            Assert.AreEqual(_triggerName, trigger.Data.Resource.TriggerName);
             Assert.That(trigger.Data.Resource.Body, Contains.Substring("Second Hello World"));
             Assert.AreEqual(trigger.Data.Resource.TriggerOperation, CosmosDBSqlTriggerOperation.Create);
             Assert.AreEqual(trigger.Data.Resource.TriggerType, CosmosDBSqlTriggerType.Post);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
+            Assert.AreEqual(expectedValue.Data.Resource.TriggerName, actualValue.Data.Resource.TriggerName);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
             Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
             Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);

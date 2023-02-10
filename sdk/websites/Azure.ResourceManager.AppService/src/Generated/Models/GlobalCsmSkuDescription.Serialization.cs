@@ -19,67 +19,67 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> tier = default;
             Optional<string> size = default;
             Optional<string> family = default;
-            Optional<SkuCapacity> capacity = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<Capability>> capabilities = default;
+            Optional<AppServiceSkuCapacity> capacity = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
+            Optional<IReadOnlyList<AppServiceSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    capacity = SkuCapacity.DeserializeSkuCapacity(property.Value);
+                    capacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Capability> array = new List<Capability>();
+                    List<AppServiceSkuCapability> array = new List<AppServiceSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Capability.DeserializeCapability(item));
+                        array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item));
                     }
                     capabilities = array;
                     continue;

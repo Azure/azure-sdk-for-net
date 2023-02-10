@@ -14,17 +14,22 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationServiceEnvironmentSkuDefinition DeserializeIntegrationServiceEnvironmentSkuDefinition(JsonElement element)
         {
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             Optional<IntegrationServiceEnvironmentSkuDefinitionSku> sku = default;
             Optional<IntegrationServiceEnvironmentSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
                     sku = IntegrationServiceEnvironmentSkuDefinitionSku.DeserializeIntegrationServiceEnvironmentSkuDefinitionSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationServiceEnvironmentSkuDefinition(resourceType.Value, sku.Value, capacity.Value);
+            return new IntegrationServiceEnvironmentSkuDefinition(Optional.ToNullable(resourceType), sku.Value, capacity.Value);
         }
     }
 }

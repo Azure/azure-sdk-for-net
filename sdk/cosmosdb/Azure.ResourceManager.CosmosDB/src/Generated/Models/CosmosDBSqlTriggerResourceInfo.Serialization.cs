@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(TriggerName);
             if (Optional.IsDefined(Body))
             {
-                writer.WritePropertyName("body");
+                writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
             if (Optional.IsDefined(TriggerType))
             {
-                writer.WritePropertyName("triggerType");
+                writer.WritePropertyName("triggerType"u8);
                 writer.WriteStringValue(TriggerType.Value.ToString());
             }
             if (Optional.IsDefined(TriggerOperation))
             {
-                writer.WritePropertyName("triggerOperation");
+                writer.WritePropertyName("triggerOperation"u8);
                 writer.WriteStringValue(TriggerOperation.Value.ToString());
             }
             writer.WriteEndObject();
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<CosmosDBSqlTriggerOperation> triggerOperation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("body"))
+                if (property.NameEquals("body"u8))
                 {
                     body = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerType"))
+                if (property.NameEquals("triggerType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     triggerType = new CosmosDBSqlTriggerType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("triggerOperation"))
+                if (property.NameEquals("triggerOperation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

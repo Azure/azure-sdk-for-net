@@ -7,7 +7,11 @@
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The AnalyzeTextLROTask. </summary>
+    /// <summary>
+    /// The AnalyzeTextLROTask.
+    /// Please note <see cref="AnalyzeTextLROTask"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AbstractiveSummarizationLROTask"/>, <see cref="CustomEntitiesLROTask"/>, <see cref="CustomMultiLabelClassificationLROTask"/>, <see cref="CustomSingleLabelClassificationLROTask"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="ExtractiveSummarizationLROTask"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/> and <see cref="SentimentAnalysisLROTask"/>.
+    /// </summary>
     internal partial class AnalyzeTextLROTask : TaskIdentifier
     {
         /// <summary> Initializes a new instance of AnalyzeTextLROTask. </summary>

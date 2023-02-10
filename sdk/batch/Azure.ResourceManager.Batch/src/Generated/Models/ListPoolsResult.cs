@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of ListPoolsResult. </summary>
         internal ListPoolsResult()
         {
-            Value = new ChangeTrackingList<PoolData>();
+            Value = new ChangeTrackingList<BatchAccountPoolData>();
         }
 
         /// <summary> Initializes a new instance of ListPoolsResult. </summary>
         /// <param name="value"> The collection of returned pools. </param>
         /// <param name="nextLink"> The continuation token. </param>
-        internal ListPoolsResult(IReadOnlyList<PoolData> value, string nextLink)
+        internal ListPoolsResult(IReadOnlyList<BatchAccountPoolData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The collection of returned pools. </summary>
-        public IReadOnlyList<PoolData> Value { get; }
+        public IReadOnlyList<BatchAccountPoolData> Value { get; }
         /// <summary> The continuation token. </summary>
         public string NextLink { get; }
     }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LinkedServices))
             {
-                writer.WritePropertyName("linkedServices");
+                writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
                 foreach (var item in LinkedServices)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(Datasets))
             {
-                writer.WritePropertyName("datasets");
+                writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
@@ -41,26 +41,26 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CustomActivityReferenceObject DeserializeCustomActivityReferenceObject(JsonElement element)
         {
-            Optional<IList<LinkedServiceReference>> linkedServices = default;
+            Optional<IList<FactoryLinkedServiceReference>> linkedServices = default;
             Optional<IList<DatasetReference>> datasets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServices"))
+                if (property.NameEquals("linkedServices"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LinkedServiceReference> array = new List<LinkedServiceReference>();
+                    List<FactoryLinkedServiceReference> array = new List<FactoryLinkedServiceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkedServiceReference.DeserializeLinkedServiceReference(item));
+                        array.Add(FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(item));
                     }
                     linkedServices = array;
                     continue;
                 }
-                if (property.NameEquals("datasets"))
+                if (property.NameEquals("datasets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

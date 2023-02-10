@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal static CosmosDBMetricDefinition DeserializeCosmosDBMetricDefinition(JsonElement element)
         {
             Optional<IReadOnlyList<CosmosDBMetricAvailability>> metricAvailabilities = default;
-            Optional<PrimaryAggregationType> primaryAggregationType = default;
+            Optional<CosmosDBMetricPrimaryAggregationType> primaryAggregationType = default;
             Optional<CosmosDBMetricUnitType> unit = default;
             Optional<ResourceIdentifier> resourceUri = default;
             Optional<CosmosDBMetricName> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metricAvailabilities"))
+                if (property.NameEquals("metricAvailabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     metricAvailabilities = array;
                     continue;
                 }
-                if (property.NameEquals("primaryAggregationType"))
+                if (property.NameEquals("primaryAggregationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryAggregationType = new PrimaryAggregationType(property.Value.GetString());
+                    primaryAggregationType = new CosmosDBMetricPrimaryAggregationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     unit = new CosmosDBMetricUnitType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceUri"))
+                if (property.NameEquals("resourceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     resourceUri = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

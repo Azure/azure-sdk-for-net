@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of PersonalComputeInstanceSettings. </summary>
         /// <param name="assignedUser"> A user explicitly assigned to a personal compute instance. </param>
-        internal PersonalComputeInstanceSettings(AssignedUser assignedUser)
+        internal PersonalComputeInstanceSettings(MachineLearningComputeInstanceAssignedUser assignedUser)
         {
             AssignedUser = assignedUser;
         }
 
         /// <summary> A user explicitly assigned to a personal compute instance. </summary>
-        public AssignedUser AssignedUser { get; set; }
+        public MachineLearningComputeInstanceAssignedUser AssignedUser { get; set; }
     }
 }

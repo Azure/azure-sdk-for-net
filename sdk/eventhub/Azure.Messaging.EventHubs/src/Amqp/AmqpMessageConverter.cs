@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Core.Amqp;
+using Azure.Core.Amqp.Shared;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
@@ -394,191 +395,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                              string partitionKey)
         {
             var sourceMessage = source.GetRawAmqpMessage();
-
-            var message = sourceMessage switch
-            {
-                _ when sourceMessage.Body.TryGetData(out var dataBody) => AmqpMessage.Create(TranslateDataBody(dataBody)),
-                _ when sourceMessage.Body.TryGetSequence(out var sequenceBody) => AmqpMessage.Create(TranslateSequenceBody(sequenceBody)),
-                _ when sourceMessage.Body.TryGetValue(out var valueBody) => AmqpMessage.Create(TranslateValueBody(valueBody)),
-                _ => AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(Array.Empty<byte>()) })
-            };
-
-            // Header
-
-            if (sourceMessage.HasSection(AmqpMessageSection.Header))
-            {
-                if (sourceMessage.Header.DeliveryCount.HasValue)
-                {
-                    message.Header.DeliveryCount = sourceMessage.Header.DeliveryCount;
-                }
-
-                if (sourceMessage.Header.Durable.HasValue)
-                {
-                    message.Header.Durable = sourceMessage.Header.Durable;
-                }
-
-                if (sourceMessage.Header.Priority.HasValue)
-                {
-                    message.Header.Priority = sourceMessage.Header.Priority;
-                }
-
-                if (sourceMessage.Header.TimeToLive.HasValue)
-                {
-                    message.Header.Ttl = (uint?)sourceMessage.Header.TimeToLive.Value.TotalMilliseconds;
-                }
-
-                if (sourceMessage.Header.FirstAcquirer.HasValue)
-                {
-                    message.Header.FirstAcquirer = sourceMessage.Header.FirstAcquirer;
-                }
-            }
-
-            // Properties
-
-            if (sourceMessage.HasSection(AmqpMessageSection.Properties))
-            {
-                if (sourceMessage.Properties.AbsoluteExpiryTime.HasValue)
-                {
-                    message.Properties.AbsoluteExpiryTime = sourceMessage.Properties.AbsoluteExpiryTime.Value.UtcDateTime;
-                }
-
-                if (!string.IsNullOrEmpty(sourceMessage.Properties.ContentEncoding))
-                {
-                    message.Properties.ContentEncoding = sourceMessage.Properties.ContentEncoding;
-                }
-
-                if (!string.IsNullOrEmpty(sourceMessage.Properties.ContentType))
-                {
-                    message.Properties.ContentType = sourceMessage.Properties.ContentType;
-                }
-
-                if (sourceMessage.Properties.CorrelationId.HasValue)
-                {
-                    message.Properties.CorrelationId = sourceMessage.Properties.CorrelationId.Value.ToString();
-                }
-
-                if (sourceMessage.Properties.CreationTime.HasValue)
-                {
-                    message.Properties.CreationTime = sourceMessage.Properties.CreationTime.Value.UtcDateTime;
-                }
-
-                if (!string.IsNullOrEmpty(sourceMessage.Properties.GroupId))
-                {
-                    message.Properties.GroupId = sourceMessage.Properties.GroupId;
-                }
-
-                if (sourceMessage.Properties.GroupSequence.HasValue)
-                {
-                    message.Properties.GroupSequence = sourceMessage.Properties.GroupSequence;
-                }
-
-                if (sourceMessage.Properties.MessageId.HasValue)
-                {
-                    message.Properties.MessageId = sourceMessage.Properties.MessageId.Value.ToString();
-                }
-
-                if (sourceMessage.Properties.ReplyTo.HasValue)
-                {
-                    message.Properties.ReplyTo = sourceMessage.Properties.ReplyTo.Value.ToString();
-                }
-
-                if (!string.IsNullOrEmpty(sourceMessage.Properties.ReplyToGroupId))
-                {
-                    message.Properties.ReplyToGroupId = sourceMessage.Properties.ReplyToGroupId;
-                }
-
-                if (!string.IsNullOrEmpty(sourceMessage.Properties.Subject))
-                {
-                    message.Properties.Subject = sourceMessage.Properties.Subject;
-                }
-
-                if (sourceMessage.Properties.To.HasValue)
-                {
-                    message.Properties.To = sourceMessage.Properties.To.Value.ToString();
-                }
-
-                if (sourceMessage.Properties.UserId.HasValue)
-                {
-                    if (MemoryMarshal.TryGetArray(sourceMessage.Properties.UserId.Value, out var segment))
-                    {
-                        message.Properties.UserId = segment;
-                    }
-                    else
-                    {
-                        message.Properties.UserId = new ArraySegment<byte>(sourceMessage.Properties.UserId.Value.ToArray());
-                    }
-                }
-            }
-
-            // Application Properties
-
-            if ((sourceMessage.HasSection(AmqpMessageSection.ApplicationProperties)) && (sourceMessage.ApplicationProperties.Count > 0))
-            {
-                message.ApplicationProperties ??= new ApplicationProperties();
-
-                foreach (var pair in sourceMessage.ApplicationProperties)
-                {
-                    if (TryCreateAmqpPropertyValueForEventProperty(pair.Value, out var amqpValue))
-                    {
-                        message.ApplicationProperties.Map[pair.Key] = amqpValue;
-                    }
-                    else
-                    {
-                        throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidAmqpMessageDictionaryTypeMask, nameof(sourceMessage.ApplicationProperties), pair.Key, pair.Value.GetType().Name));
-                    }
-                }
-            }
-
-            // Message Annotations
-
-            if (sourceMessage.HasSection(AmqpMessageSection.MessageAnnotations))
-            {
-                foreach (var pair in sourceMessage.MessageAnnotations)
-                {
-                    if (TryCreateAmqpPropertyValueForEventProperty(pair.Value, out var amqpValue))
-                    {
-                        message.MessageAnnotations.Map[pair.Key] = amqpValue;
-                    }
-                    else
-                    {
-                        throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidAmqpMessageDictionaryTypeMask, nameof(sourceMessage.MessageAnnotations), pair.Key, pair.Value.GetType().Name));
-                    }
-                }
-            }
-
-            // Delivery Annotations
-
-            if (sourceMessage.HasSection(AmqpMessageSection.DeliveryAnnotations))
-            {
-                foreach (var pair in sourceMessage.DeliveryAnnotations)
-                {
-                    if (TryCreateAmqpPropertyValueForEventProperty(pair.Value, out var amqpValue))
-                    {
-                        message.DeliveryAnnotations.Map[pair.Key] = amqpValue;
-                    }
-                    else
-                    {
-                        throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidAmqpMessageDictionaryTypeMask, nameof(sourceMessage.DeliveryAnnotations), pair.Key, pair.Value.GetType().Name));
-                    }
-                }
-            }
-
-            // Footer
-
-            if (sourceMessage.HasSection(AmqpMessageSection.Footer))
-            {
-                foreach (var pair in sourceMessage.Footer)
-                {
-                    if (TryCreateAmqpPropertyValueForEventProperty(pair.Value, out var amqpValue))
-                    {
-                        message.Footer.Map[pair.Key] = amqpValue;
-                    }
-                    else
-                    {
-                        throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidAmqpMessageDictionaryTypeMask, nameof(sourceMessage.Footer), pair.Key, pair.Value.GetType().Name));
-                    }
-                }
-            }
+            var message = AmqpAnnotatedMessageConverter.ToAmqpMessage(sourceMessage);
 
             // Special cases
 
@@ -601,208 +418,52 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         private static EventData BuildEventFromAmqpMessage(AmqpMessage source)
         {
-            var message = source switch
-            {
-                _ when TryGetDataBody(source, out var dataBody) => new AmqpAnnotatedMessage(dataBody),
-                _ when TryGetSequenceBody(source, out var sequenceBody) => new AmqpAnnotatedMessage(sequenceBody),
-                _ when TryGetValueBody(source, out var valueBody) => new AmqpAnnotatedMessage(valueBody),
-                _ => new AmqpAnnotatedMessage(AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegment(ReadOnlyMemory<byte>.Empty)))
-            };
+            var message = AmqpAnnotatedMessageConverter.FromAmqpMessage(source);
 
-            // Header
-
-            if ((source.Sections & SectionFlag.Header) > 0)
-            {
-                if (source.Header.DeliveryCount.HasValue)
-                {
-                    message.Header.DeliveryCount = source.Header.DeliveryCount;
-                }
-
-                if (source.Header.Durable.HasValue)
-                {
-                    message.Header.Durable = source.Header.Durable;
-                }
-
-                if (source.Header.Priority.HasValue)
-                {
-                    message.Header.Priority = source.Header.Priority;
-                }
-
-                if (source.Header.FirstAcquirer.HasValue)
-                {
-                    message.Header.FirstAcquirer = source.Header.FirstAcquirer;
-                }
-
-                if (source.Header.DeliveryCount.HasValue)
-                {
-                    message.Header.DeliveryCount = source.Header.DeliveryCount;
-                }
-
-                if (source.Header.Ttl.HasValue)
-                {
-                    message.Header.TimeToLive = TimeSpan.FromMilliseconds(source.Header.Ttl.Value);
-                }
-            }
-
-            // Properties
-
-            if ((source.Sections & SectionFlag.Properties) > 0)
-            {
-                if (source.Properties.AbsoluteExpiryTime.HasValue)
-                {
-                    message.Properties.AbsoluteExpiryTime = source.Properties.AbsoluteExpiryTime;
-                }
-
-                if (!string.IsNullOrEmpty(source.Properties.ContentEncoding.Value))
-                {
-                    message.Properties.ContentEncoding = source.Properties.ContentEncoding.Value;
-                }
-
-                if (!string.IsNullOrEmpty(source.Properties.ContentType.Value))
-                {
-                    message.Properties.ContentType = source.Properties.ContentType.Value;
-                }
-
-                if (source.Properties.CorrelationId != null)
-                {
-                    message.Properties.CorrelationId = new AmqpMessageId(source.Properties.CorrelationId.ToString());
-                }
-
-                if (source.Properties.CreationTime.HasValue)
-                {
-                    message.Properties.CreationTime = source.Properties.CreationTime;
-                }
-
-                if (!string.IsNullOrEmpty(source.Properties.GroupId))
-                {
-                    message.Properties.GroupId = source.Properties.GroupId;
-                }
-
-                if (source.Properties.GroupSequence.HasValue)
-                {
-                    message.Properties.GroupSequence = source.Properties.GroupSequence;
-                }
-
-                if (source.Properties.MessageId != null)
-                {
-                    message.Properties.MessageId = new AmqpMessageId(source.Properties.MessageId.ToString());
-                }
-
-                if (source.Properties.ReplyTo != null)
-                {
-                    message.Properties.ReplyTo = new AmqpAddress(source.Properties.ReplyTo.ToString());
-                }
-
-                if (!string.IsNullOrEmpty(source.Properties.ReplyToGroupId))
-                {
-                    message.Properties.ReplyToGroupId = source.Properties.ReplyToGroupId;
-                }
-
-                if (!string.IsNullOrEmpty(source.Properties.Subject))
-                {
-                    message.Properties.Subject = source.Properties.Subject;
-                }
-
-                if (source.Properties.To != null)
-                {
-                    message.Properties.To = new AmqpAddress(source.Properties.To.ToString());
-                }
-
-                if (source.Properties.UserId != null)
-                {
-                    message.Properties.UserId = source.Properties.UserId;
-                }
-            }
-
-            // Application Properties
-
-            if ((source.Sections & SectionFlag.ApplicationProperties) > 0)
-            {
-                foreach (var pair in source.ApplicationProperties.Map)
-                {
-                    if (TryCreateEventPropertyForAmqpProperty(pair.Value, out var eventValue))
-                    {
-                        message.ApplicationProperties[pair.Key.ToString()] = eventValue;
-                    }
-                }
-            }
-
-            // Message Annotations
+            // Message Annotations - special handling for Event Hub service annotations
 
             if ((source.Sections & SectionFlag.MessageAnnotations) > 0)
             {
-                foreach (var pair in source.MessageAnnotations.Map)
-                {
-                    if (TryCreateEventPropertyForAmqpProperty(pair.Value, out var eventValue))
-                    {
-                        if (SystemPropertyDateTimeKeys.Contains(pair.Key.ToString()))
-                        {
-                            eventValue = eventValue switch
-                            {
-                                DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
-                                long longValue => new DateTimeOffset(longValue, TimeSpan.Zero),
-                                _ => eventValue
-                            };
-                        }
-                        else if (SystemPropertyLongKeys.Contains(pair.Key.ToString()))
-                        {
-                            eventValue = eventValue switch
-                            {
-                                string stringValue when long.TryParse(stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var longValue) => longValue,
-                                _ => eventValue
-                            };
-                        }
-
-                        message.MessageAnnotations[pair.Key.ToString()] = eventValue;
-                    }
-                }
+                NormalizeBrokerProperties(message.MessageAnnotations, source.MessageAnnotations.Map);
             }
 
-            // Delivery Annotations
+            // Delivery Annotations - special handling for Event Hub service annotations
 
             if ((source.Sections & SectionFlag.DeliveryAnnotations) > 0)
             {
-                foreach (var pair in source.DeliveryAnnotations.Map)
-                {
-                    if (TryCreateEventPropertyForAmqpProperty(pair.Value, out var eventValue))
-                    {
-                        if (SystemPropertyDateTimeKeys.Contains(pair.Key.ToString()))
-                        {
-                            eventValue = eventValue switch
-                            {
-                                DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
-                                long longValue => new DateTimeOffset(longValue, TimeSpan.Zero),
-                                _ => eventValue
-                            };
-                        }
-                        else if (SystemPropertyLongKeys.Contains(pair.Key.ToString()))
-                        {
-                            eventValue = eventValue switch
-                            {
-                                string stringValue when long.TryParse(stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var longValue) => longValue,
-                                _ => eventValue
-                            };
-                        }
-
-                        message.DeliveryAnnotations[pair.Key.ToString()] = eventValue;
-                    }
-                }
-            }
-
-            // Footer
-
-            if ((source.Sections & SectionFlag.Footer) > 0)
-            {
-                foreach (var pair in source.Footer.Map)
-                {
-                    if (TryCreateEventPropertyForAmqpProperty(pair.Value, out var eventValue))
-                    {
-                        message.Footer[pair.Key.ToString()] = eventValue;
-                    }
-                }
+                NormalizeBrokerProperties(message.DeliveryAnnotations, source.DeliveryAnnotations.Map);
             }
 
             return new EventData(message);
+        }
+
+        private static void NormalizeBrokerProperties(IDictionary<string, object> properties, Annotations sourceProperties)
+        {
+            foreach (var pair in sourceProperties)
+            {
+                string keyString = pair.Key.ToString();
+                if (SystemPropertyDateTimeKeys.Contains(keyString))
+                {
+                    properties[keyString] =
+                        pair.Value switch
+                        {
+                            DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
+                            long longValue => new DateTimeOffset(longValue, TimeSpan.Zero),
+                            _ => pair.Value
+                        };
+                }
+                else if (SystemPropertyLongKeys.Contains(keyString))
+                {
+                    properties[keyString] =
+                        pair.Value switch
+                        {
+                            string stringValue when long.TryParse(stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture,
+                                    out var longValue) =>
+                                longValue,
+                            _ => pair.Value
+                        };
+                }
+            }
         }
 
         /// <summary>
@@ -1133,7 +794,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 case AmqpMap map when allowBodyTypes:
                 {
-                    var dict = new Dictionary<string, object>();
+                    var dict = new Dictionary<string, object>(map.Count);
 
                     foreach (var pair in map)
                     {
@@ -1142,7 +803,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                     eventPropertyValue = dict;
                     break;
-                };
+                }
 
                 default:
                     var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, Resources.FailedToSerializeUnsupportedType, amqpPropertyValue.GetType().FullName));
@@ -1208,13 +869,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         private static ArraySegment<byte> ReadStreamToArraySegment(Stream stream)
         {
-            if (stream == null)
-            {
-                return new ArraySegment<byte>();
-            }
-
             switch (stream)
             {
+                case { Length: < 1 }:
+                    return default;
+
                 case BufferListStream bufferListStream:
                     return bufferListStream.ReadBytes((int)stream.Length);
 
@@ -1222,14 +881,22 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
                     memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                    return new ArraySegment<byte>(memStreamCopy.ToArray());
+                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                    {
+                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                    }
+                    return segment;
                 }
 
                 default:
                 {
-                    using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-                    stream.CopyTo(memStream, StreamBufferSizeInBytes);
-                    return new ArraySegment<byte>(memStream.ToArray());
+                    using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
+                    stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                    {
+                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                    }
+                    return segment;
                 }
             }
         }

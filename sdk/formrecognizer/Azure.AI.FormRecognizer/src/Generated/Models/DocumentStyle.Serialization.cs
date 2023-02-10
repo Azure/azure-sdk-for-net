@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isHandwritten"))
+                if (property.NameEquals("isHandwritten"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     isHandwritten = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("spans"))
+                if (property.NameEquals("spans"u8))
                 {
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -40,7 +40,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     spans = array;
                     continue;
                 }
-                if (property.NameEquals("confidence"))
+                if (property.NameEquals("confidence"u8))
                 {
                     confidence = property.Value.GetSingle();
                     continue;

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
+using System;
 using System.ComponentModel;
 using System.Net;
 using Azure.Core;
@@ -37,6 +37,26 @@ namespace Azure.Messaging.ServiceBus
         public IWebProxy WebProxy { get; set; }
 
         /// <summary>
+        /// A property used to set the <see cref="ServiceBusClient"/> ID to identify the client. This can be used to correlate logs
+        /// and exceptions. If <c>null</c> or empty, a random unique value will be used.
+        /// </summary>
+        ///
+        public string Identifier { get; set; }
+
+        /// <summary>
+        ///   A custom endpoint address that can be used when establishing the connection to the Service Bus
+        ///   service.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   The custom endpoint address will be used in place of the default endpoint provided by the Service
+        ///   Bus namespace when establishing the connection. The connection string or fully qualified namespace
+        ///   will still be needed in order to validate the connection with the service.
+        /// </remarks>
+        ///
+        public Uri CustomEndpointAddress { get; set; }
+
+        /// <summary>
         /// The set of options to use for determining whether a failed operation should be retried and,
         /// if so, the amount of time to wait between retry attempts.  These options also control the
         /// amount of time allowed for receiving messages and other interactions with the Service Bus service.
@@ -60,12 +80,6 @@ namespace Azure.Messaging.ServiceBus
         /// transactions are not being used or should be limited to a single entity.
         ///</value>
         public bool EnableCrossEntityTransactions { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether or not to enable metrics for the associated <see cref="ServiceBusClient"/> instance.
-        /// If set to <value>true</value>, <see cref="ServiceBusClient.GetTransportMetrics"/> can be called.
-        /// </summary>
-        internal bool EnableTransportMetrics { get; set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -109,7 +123,8 @@ namespace Azure.Messaging.ServiceBus
                 WebProxy = WebProxy,
                 RetryOptions = RetryOptions.Clone(),
                 EnableCrossEntityTransactions = EnableCrossEntityTransactions,
-                EnableTransportMetrics = EnableTransportMetrics
+                CustomEndpointAddress = CustomEndpointAddress,
+                Identifier = Identifier
             };
     }
 }

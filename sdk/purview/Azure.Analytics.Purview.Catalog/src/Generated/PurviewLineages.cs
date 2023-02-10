@@ -13,7 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    /// <summary> The PurviewLineages service client. </summary>
+    // Data plane generated sub-client.
+    /// <summary> The PurviewLineages sub-client. </summary>
     public partial class PurviewLineages
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
@@ -60,39 +61,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AtlasLineageInfo</c>:
-        /// <code>{
-        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
-        ///   lineageDepth: number, # Optional. The depth of lineage.
-        ///   lineageWidth: number, # Optional. The width of lineage.
-        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
-        ///   childrenCount: number, # Optional. The number of children node.
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-        ///   parentRelations: [
-        ///     {
-        ///       childEntityId: string, # Optional. The GUID of child entity.
-        ///       relationshipId: string, # Optional. The GUID of relationship.
-        ///       parentEntityId: string, # Optional. The GUID of parent entity.
-        ///     }
-        ///   ], # Optional. An array of parentRelations relations.
-        ///   relations: [
-        ///     {
-        ///       fromEntityId: string, # Optional. The GUID of from-entity.
-        ///       relationshipId: string, # Optional. The GUID of relationship.
-        ///       toEntityId: string, # Optional. The GUID of to-entity.
-        ///     }
-        ///   ], # Optional. An array of lineage relations.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageGraphAsync(String,String,Int32,Int32,Boolean,Boolean,RequestContext)']/*" />
         public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -124,39 +93,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AtlasLineageInfo</c>:
-        /// <code>{
-        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
-        ///   lineageDepth: number, # Optional. The depth of lineage.
-        ///   lineageWidth: number, # Optional. The width of lineage.
-        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
-        ///   childrenCount: number, # Optional. The number of children node.
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-        ///   parentRelations: [
-        ///     {
-        ///       childEntityId: string, # Optional. The GUID of child entity.
-        ///       relationshipId: string, # Optional. The GUID of relationship.
-        ///       parentEntityId: string, # Optional. The GUID of parent entity.
-        ///     }
-        ///   ], # Optional. An array of parentRelations relations.
-        ///   relations: [
-        ///     {
-        ///       fromEntityId: string, # Optional. The GUID of from-entity.
-        ///       relationshipId: string, # Optional. The GUID of relationship.
-        ///       toEntityId: string, # Optional. The GUID of to-entity.
-        ///     }
-        ///   ], # Optional. An array of lineage relations.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageGraph(String,String,Int32,Int32,Boolean,Boolean,RequestContext)']/*" />
         public virtual Response GetLineageGraph(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -187,39 +124,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AtlasLineageInfo</c>:
-        /// <code>{
-        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
-        ///   lineageDepth: number, # Optional. The depth of lineage.
-        ///   lineageWidth: number, # Optional. The width of lineage.
-        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
-        ///   childrenCount: number, # Optional. The number of children node.
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-        ///   parentRelations: [
-        ///     {
-        ///       childEntityId: string, # Optional. The GUID of child entity.
-        ///       relationshipId: string, # Optional. The GUID of relationship.
-        ///       parentEntityId: string, # Optional. The GUID of parent entity.
-        ///     }
-        ///   ], # Optional. An array of parentRelations relations.
-        ///   relations: [
-        ///     {
-        ///       fromEntityId: string, # Optional. The GUID of from-entity.
-        ///       relationshipId: string, # Optional. The GUID of relationship.
-        ///       toEntityId: string, # Optional. The GUID of to-entity.
-        ///     }
-        ///   ], # Optional. An array of lineage relations.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='NextPageLineageAsync(String,String,Boolean,Int32,Int32,RequestContext)']/*" />
         public virtual async Task<Response> NextPageLineageAsync(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -250,39 +155,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AtlasLineageInfo</c>:
-        /// <code>{
-        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
-        ///   lineageDepth: number, # Optional. The depth of lineage.
-        ///   lineageWidth: number, # Optional. The width of lineage.
-        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
-        ///   childrenCount: number, # Optional. The number of children node.
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-        ///   parentRelations: [
-        ///     {
-        ///       childEntityId: string, # Optional. The GUID of child entity.
-        ///       relationshipId: string, # Optional. The GUID of relationship.
-        ///       parentEntityId: string, # Optional. The GUID of parent entity.
-        ///     }
-        ///   ], # Optional. An array of parentRelations relations.
-        ///   relations: [
-        ///     {
-        ///       fromEntityId: string, # Optional. The GUID of from-entity.
-        ///       relationshipId: string, # Optional. The GUID of relationship.
-        ///       toEntityId: string, # Optional. The GUID of to-entity.
-        ///     }
-        ///   ], # Optional. An array of lineage relations.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='NextPageLineage(String,String,Boolean,Int32,Int32,RequestContext)']/*" />
         public virtual Response NextPageLineage(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -322,39 +195,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AtlasLineageInfo</c>:
-        /// <code>{
-        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
-        ///   lineageDepth: number, # Optional. The depth of lineage.
-        ///   lineageWidth: number, # Optional. The width of lineage.
-        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
-        ///   childrenCount: number, # Optional. The number of children node.
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-        ///   parentRelations: [
-        ///     {
-        ///       childEntityId: string, # Optional. The GUID of child entity.
-        ///       relationshipId: string, # Optional. The GUID of relationship.
-        ///       parentEntityId: string, # Optional. The GUID of parent entity.
-        ///     }
-        ///   ], # Optional. An array of parentRelations relations.
-        ///   relations: [
-        ///     {
-        ///       fromEntityId: string, # Optional. The GUID of from-entity.
-        ///       relationshipId: string, # Optional. The GUID of relationship.
-        ///       toEntityId: string, # Optional. The GUID of to-entity.
-        ///     }
-        ///   ], # Optional. An array of lineage relations.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageByUniqueAttributeAsync(String,String,Int32,Int32,Boolean,Boolean,RequestContext)']/*" />
         public virtual async Task<Response> GetLineageByUniqueAttributeAsync(string typeName, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
@@ -394,39 +235,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AtlasLineageInfo</c>:
-        /// <code>{
-        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
-        ///   lineageDepth: number, # Optional. The depth of lineage.
-        ///   lineageWidth: number, # Optional. The width of lineage.
-        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
-        ///   childrenCount: number, # Optional. The number of children node.
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-        ///   parentRelations: [
-        ///     {
-        ///       childEntityId: string, # Optional. The GUID of child entity.
-        ///       relationshipId: string, # Optional. The GUID of relationship.
-        ///       parentEntityId: string, # Optional. The GUID of parent entity.
-        ///     }
-        ///   ], # Optional. An array of parentRelations relations.
-        ///   relations: [
-        ///     {
-        ///       fromEntityId: string, # Optional. The GUID of from-entity.
-        ///       relationshipId: string, # Optional. The GUID of relationship.
-        ///       toEntityId: string, # Optional. The GUID of to-entity.
-        ///     }
-        ///   ], # Optional. An array of lineage relations.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageByUniqueAttribute(String,String,Int32,Int32,Boolean,Boolean,RequestContext)']/*" />
         public virtual Response GetLineageByUniqueAttribute(string typeName, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));

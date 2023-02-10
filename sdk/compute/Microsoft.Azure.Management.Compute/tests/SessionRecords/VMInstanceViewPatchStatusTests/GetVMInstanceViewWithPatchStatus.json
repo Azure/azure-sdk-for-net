@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/virtualMachines/imageVM/instanceView?api-version=2022-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL1JHZm9yU0RLdGVzdFJlc291cmNlcy9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvdmlydHVhbE1hY2hpbmVzL2ltYWdlVk0vaW5zdGFuY2VWaWV3P2FwaS12ZXJzaW9uPTIwMjItMDMtMDE=",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/virtualMachines/imageVM/instanceView?api-version=2022-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL1JHZm9yU0RLdGVzdFJlc291cmNlcy9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvdmlydHVhbE1hY2hpbmVzL2ltYWdlVk0vaW5zdGFuY2VWaWV3P2FwaS12ZXJzaW9uPTIwMjItMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c6e74c3b-94fc-48f8-9a9e-2ea9420b8be4"
+          "2bbe726a-40a0-4267-95f9-6615a044149c"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.47003",
+          "FxVersion/4.700.22.51102",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/53.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/59.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -27,13 +27,13 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/LowCostGet3Min;3999,Microsoft.Compute/LowCostGet30Min;31994"
+          "Microsoft.Compute/LowCostGet3Min;3998,Microsoft.Compute/LowCostGet30Min;31996"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "d5a774e6-cfbd-41c0-88fe-194446daab99"
+          "f3b21c17-0bb7-41bd-af38-dc95961d557d"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -43,19 +43,19 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "272e7098-b1ee-4f1d-8923-42bb7bc6fd8a"
+          "ab6e5f56-5a35-4697-bb54-2957b2c53c2a"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20220405T155100Z:272e7098-b1ee-4f1d-8923-42bb7bc6fd8a"
+          "CANADACENTRAL:20221117T011014Z:ab6e5f56-5a35-4697-bb54-2957b2c53c2a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 05 Apr 2022 15:51:00 GMT"
+          "Thu, 17 Nov 2022 01:10:13 GMT"
         ],
         "Content-Length": [
-          "1841"
+          "4770"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -64,7 +64,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"patchStatus\": {\r\n    \"hotpatchStatus\": {\r\n      \"hotpatchEnablementStatus\": \"Disabled\",\r\n      \"hotpatchReadinessStatus\": \"EnablementRequired\",\r\n      \"lastRefreshedTime\": \"2021-03-24T16:05:19.0174555+00:00\",\r\n      \"error\": {\r\n        \"details\": [],\r\n        \"code\": \"Success\",\r\n        \"message\": \"0 error/s reported\"\r\n      }\r\n    },\r\n    \"availablePatchSummary\": {\r\n      \"assessmentActivityId\": \"dc781b28-4bf7-4563-85f0-8d4015cde5c4\",\r\n      \"status\": \"Succeeded\",\r\n      \"startTime\": \"2021-03-24T16:04:45.2816268+00:00\",\r\n      \"lastModifiedTime\": \"2021-03-24T16:05:19.0174555+00:00\",\r\n      \"criticalAndSecurityPatchCount\": 3,\r\n      \"otherPatchCount\": 5,\r\n      \"rebootPending\": false,\r\n      \"error\": {\r\n        \"details\": [],\r\n        \"code\": \"Success\",\r\n        \"message\": \"0 error/s reported\"\r\n      }\r\n    }\r\n  },\r\n  \"disks\": [\r\n    {\r\n      \"name\": \"imageVM_OsDisk_1_1193bfcbb54745ae8343a2e08b157601\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"time\": \"2022-03-11T00:09:29.9868794+00:00\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"imageDisk\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"time\": \"2022-03-11T00:09:29.9868794+00:00\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"bootDiagnostics\": {},\r\n  \"hyperVGeneration\": \"V1\",\r\n  \"statuses\": [\r\n    {\r\n      \"code\": \"ProvisioningState/succeeded\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Provisioning succeeded\",\r\n      \"time\": \"2022-03-11T00:09:30.0024806+00:00\"\r\n    },\r\n    {\r\n      \"code\": \"PowerState/deallocated\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"VM deallocated\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"computerName\": \"imageVM\",\r\n  \"osName\": \"Windows Server 2019 Datacenter\",\r\n  \"osVersion\": \"10.0.17763.1697\",\r\n  \"vmAgent\": {\r\n    \"vmAgentVersion\": \"2.7.41491.1071\",\r\n    \"statuses\": [\r\n      {\r\n        \"code\": \"ProvisioningState/succeeded\",\r\n        \"level\": \"Info\",\r\n        \"displayStatus\": \"Ready\",\r\n        \"message\": \"GuestAgent is running and processing the extensions.\",\r\n        \"time\": \"2022-11-16T20:09:50.431-05:00\"\r\n      }\r\n    ],\r\n    \"extensionHandlers\": [\r\n      {\r\n        \"type\": \"Microsoft.Azure.Geneva.GenevaMonitoring\",\r\n        \"typeHandlerVersion\": \"2.37.0.3\",\r\n        \"status\": {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Ready\",\r\n          \"message\": \"ExtensionOperation:enable. Status:Success\"\r\n        }\r\n      },\r\n      {\r\n        \"type\": \"Microsoft.Azure.Security.AntimalwareSignature.AntimalwareConfiguration\",\r\n        \"typeHandlerVersion\": \"2.58.42\",\r\n        \"status\": {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Ready\"\r\n        }\r\n      },\r\n      {\r\n        \"type\": \"Microsoft.CPlat.Core.RunCommandHandlerWindows\",\r\n        \"typeHandlerVersion\": \"2.0.3\",\r\n        \"status\": {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Ready\"\r\n        }\r\n      },\r\n      {\r\n        \"type\": \"Microsoft.CPlat.Core.WindowsPatchExtension\",\r\n        \"typeHandlerVersion\": \"1.5.57\",\r\n        \"status\": {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Ready\"\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"patchStatus\": {\r\n    \"hotpatchStatus\": {\r\n      \"hotpatchEnablementStatus\": \"Disabled\",\r\n      \"hotpatchReadinessStatus\": \"EnablementRequired\",\r\n      \"lastRefreshedTime\": \"2022-10-26T05:06:55.8029254-04:00\",\r\n      \"error\": {\r\n        \"details\": [],\r\n        \"code\": \"Success\",\r\n        \"message\": \"0 error/s reported\"\r\n      }\r\n    },\r\n    \"availablePatchSummary\": {\r\n      \"assessmentActivityId\": \"33ce588e-4058-4b19-84a0-cbb1f1533501\",\r\n      \"status\": \"Succeeded\",\r\n      \"startTime\": \"2022-10-26T05:06:04.3255691-04:00\",\r\n      \"lastModifiedTime\": \"2022-10-26T05:06:55.8029254-04:00\",\r\n      \"criticalAndSecurityPatchCount\": 2,\r\n      \"otherPatchCount\": 5,\r\n      \"rebootPending\": false,\r\n      \"error\": {\r\n        \"details\": [],\r\n        \"code\": \"Success\",\r\n        \"message\": \"0 error/s reported\"\r\n      }\r\n    },\r\n    \"configurationStatuses\": [\r\n      {\r\n        \"code\": \"PatchModeConfigurationState/Ready\",\r\n        \"level\": \"Info\",\r\n        \"displayStatus\": \"Ready\",\r\n        \"time\": \"2022-10-26T05:06:46.7044505-04:00\"\r\n      }\r\n    ]\r\n  },\r\n  \"disks\": [\r\n    {\r\n      \"name\": \"imageVM_OsDisk_1_1193bfcbb54745ae8343a2e08b157601\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"time\": \"2022-11-15T15:49:10.8712587-05:00\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"imageDisk\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"time\": \"2022-11-15T15:49:10.8712587-05:00\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"bootDiagnostics\": {},\r\n  \"extensions\": [\r\n    {\r\n      \"name\": \"Microsoft.Azure.Geneva.GenevaMonitoring\",\r\n      \"type\": \"Microsoft.Azure.Geneva.GenevaMonitoring\",\r\n      \"typeHandlerVersion\": \"2.37.0.3\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"message\": \"ExtensionOperation:enable. Status:Success\",\r\n          \"time\": \"2022-11-16T20:09:23-05:00\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Azure.Security.AntimalwareSignature.AntimalwareConfiguration\",\r\n      \"type\": \"Microsoft.Azure.Security.AntimalwareSignature.AntimalwareConfiguration\",\r\n      \"typeHandlerVersion\": \"2.58.42\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"message\": \"Enable AntimalwareSignature extension complete\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"hyperVGeneration\": \"V1\",\r\n  \"statuses\": [\r\n    {\r\n      \"code\": \"ProvisioningState/failed/InternalExecutionError\",\r\n      \"level\": \"Error\",\r\n      \"displayStatus\": \"Provisioning failed\",\r\n      \"message\": \"The fabric operation failed.\",\r\n      \"time\": \"2022-11-15T16:06:43.1311385-05:00\"\r\n    },\r\n    {\r\n      \"code\": \"PowerState/running\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"VM running\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

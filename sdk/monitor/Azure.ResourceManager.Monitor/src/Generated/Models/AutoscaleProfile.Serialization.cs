@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("capacity");
+            writer.WritePropertyName("capacity"u8);
             writer.WriteObjectValue(Capacity);
-            writer.WritePropertyName("rules");
+            writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(FixedDate))
             {
-                writer.WritePropertyName("fixedDate");
+                writer.WritePropertyName("fixedDate"u8);
                 writer.WriteObjectValue(FixedDate);
             }
             if (Optional.IsDefined(Recurrence))
             {
-                writer.WritePropertyName("recurrence");
+                writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);
             }
             writer.WriteEndObject();
@@ -43,43 +43,43 @@ namespace Azure.ResourceManager.Monitor.Models
         internal static AutoscaleProfile DeserializeAutoscaleProfile(JsonElement element)
         {
             string name = default;
-            ScaleCapacity capacity = default;
-            IList<ScaleRule> rules = default;
-            Optional<TimeWindow> fixedDate = default;
+            MonitorScaleCapacity capacity = default;
+            IList<AutoscaleRule> rules = default;
+            Optional<MonitorTimeWindow> fixedDate = default;
             Optional<MonitorRecurrence> recurrence = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
-                    capacity = ScaleCapacity.DeserializeScaleCapacity(property.Value);
+                    capacity = MonitorScaleCapacity.DeserializeMonitorScaleCapacity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("rules"))
+                if (property.NameEquals("rules"u8))
                 {
-                    List<ScaleRule> array = new List<ScaleRule>();
+                    List<AutoscaleRule> array = new List<AutoscaleRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScaleRule.DeserializeScaleRule(item));
+                        array.Add(AutoscaleRule.DeserializeAutoscaleRule(item));
                     }
                     rules = array;
                     continue;
                 }
-                if (property.NameEquals("fixedDate"))
+                if (property.NameEquals("fixedDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fixedDate = TimeWindow.DeserializeTimeWindow(property.Value);
+                    fixedDate = MonitorTimeWindow.DeserializeMonitorTimeWindow(property.Value);
                     continue;
                 }
-                if (property.NameEquals("recurrence"))
+                if (property.NameEquals("recurrence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

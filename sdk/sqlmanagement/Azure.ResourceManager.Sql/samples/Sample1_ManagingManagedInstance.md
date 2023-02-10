@@ -88,11 +88,11 @@ ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
     AdministratorLogin = "myAdministratorLogin",
     AdministratorLoginPassword = "abcdef123456789*",
     SubnetId = subnetId,
-    PublicDataEndpointEnabled = false,
+    IsPublicDataEndpointEnabled = false,
     MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/0000-0000-0000-0000/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default"),
     ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
     TimezoneId = "UTC",
-    ZoneRedundant = false,
+    IsZoneRedundant = false,
 };
 string managedInstanceName = "myManagedInstance";
 var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);

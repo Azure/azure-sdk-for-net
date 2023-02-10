@@ -88,8 +88,8 @@ namespace Azure.Security.KeyVault.Certificates
         async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response response = async
-                ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name, "/", _value.Properties.Version).ConfigureAwait(false)
-                : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name, "/", _value.Properties.Version);
+                ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name).ConfigureAwait(false)
+                : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name);
 
             switch (response.Status)
             {

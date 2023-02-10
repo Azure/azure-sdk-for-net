@@ -58,9 +58,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// Create or update the metadata of an Iot hub. The usual pattern to
         /// modify a property is to retrieve the IoT hub metadata and security
         /// metadata, and then combine them with the modified values in a new
-        /// body to update the IoT hub. If certain properties are missing in
-        /// the JSON, updating IoT Hub may cause these values to fallback to
-        /// default, which may lead to unexpected behavior.
+        /// body to update the IoT hub.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the IoT hub.
@@ -90,7 +88,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IotHubDescription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IotHubDescription iotHubDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IotHubDescription,IotHubResourceCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IotHubDescription iotHubDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update an existing IoT Hubs tags.
         /// </summary>
@@ -122,7 +120,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IotHubDescription>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IotHubDescription,IotHubResourceUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an IoT hub
         /// </summary>
@@ -150,7 +148,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<object>> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object,IotHubResourceDeleteHeaders>> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all the IoT hubs in a subscription
         /// </summary>
@@ -746,9 +744,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// Create or update the metadata of an Iot hub. The usual pattern to
         /// modify a property is to retrieve the IoT hub metadata and security
         /// metadata, and then combine them with the modified values in a new
-        /// body to update the IoT hub. If certain properties are missing in
-        /// the JSON, updating IoT Hub may cause these values to fallback to
-        /// default, which may lead to unexpected behavior.
+        /// body to update the IoT hub.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the IoT hub.
@@ -778,7 +774,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IotHubDescription>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IotHubDescription iotHubDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IotHubDescription,IotHubResourceCreateOrUpdateHeaders>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IotHubDescription iotHubDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update an existing IoT Hubs tags.
         /// </summary>
@@ -810,7 +806,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IotHubDescription>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IotHubDescription,IotHubResourceUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an IoT hub
         /// </summary>
@@ -838,7 +834,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<object>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object,IotHubResourceDeleteHeaders>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all the IoT hubs in a subscription
         /// </summary>

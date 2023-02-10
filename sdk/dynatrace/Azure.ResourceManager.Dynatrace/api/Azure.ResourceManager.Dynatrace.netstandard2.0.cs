@@ -2,32 +2,88 @@ namespace Azure.ResourceManager.Dynatrace
 {
     public static partial class DynatraceExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetDynatraceMonitor(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> GetDynatraceMonitorAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.DynatraceMonitorResource GetDynatraceMonitorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.DynatraceMonitorCollection GetDynatraceMonitors(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetDynatraceMonitors(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetDynatraceMonitorsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource GetDynatraceSingleSignOnResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.MonitorResource GetMonitorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Dynatrace.MonitorResource> GetMonitorResource(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.MonitorResource>> GetMonitorResourceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.MonitorResourceCollection GetMonitorResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Dynatrace.MonitorResource> GetMonitorResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.MonitorResource> GetMonitorResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.TagRuleResource GetTagRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource GetDynatraceTagRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DynatraceSingleSignOnResource : Azure.ResourceManager.ArmResource
+    public partial class DynatraceMonitorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>, System.Collections.IEnumerable
+    {
+        protected DynatraceMonitorCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string monitorName, Azure.ResourceManager.Dynatrace.DynatraceMonitorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string monitorName, Azure.ResourceManager.Dynatrace.DynatraceMonitorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> Get(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> GetAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DynatraceMonitorData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public DynatraceMonitorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties DynatraceEnvironmentProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory? LiftrResourceCategory { get { throw null; } }
+        public int? LiftrResourcePreference { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus? MonitoringStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo PlanData { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo UserInfo { get { throw null; } set { } }
+    }
+    public partial class DynatraceMonitorResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected DynatraceSingleSignOnResource() { }
-        public virtual Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResourceData Data { get { throw null; } }
+        protected DynatraceMonitorResource() { }
+        public virtual Azure.ResourceManager.Dynatrace.DynatraceMonitorData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string configurationName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo> GetAccountCredentials(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo>> GetAccountCredentialsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentEnabledAppServiceInfo> GetAppServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentEnabledAppServiceInfo> GetAppServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> GetDynatraceSingleSignOn(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>> GetDynatraceSingleSignOnAsync(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnCollection GetDynatraceSingleSignOns() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> GetDynatraceTagRule(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> GetDynatraceTagRuleAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Dynatrace.DynatraceTagRuleCollection GetDynatraceTagRules() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorVmInfo> GetHosts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorVmInfo> GetHostsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult> GetLinkableEnvironments(Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult> GetLinkableEnvironmentsAsync(Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails> GetMonitoredResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails> GetMonitoredResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult> GetSsoDetails(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult>> GetSsoDetailsAsync(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.Models.DynatraceVmExtensionPayload> GetVmHostPayload(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.Models.DynatraceVmExtensionPayload>> GetVmHostPayloadAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> Update(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> UpdateAsync(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DynatraceSingleSignOnResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>, System.Collections.IEnumerable
+    public partial class DynatraceSingleSignOnCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>, System.Collections.IEnumerable
     {
-        protected DynatraceSingleSignOnResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string configurationName, Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string configurationName, Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected DynatraceSingleSignOnCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string configurationName, Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string configurationName, Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> Get(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -38,229 +94,462 @@ namespace Azure.ResourceManager.Dynatrace
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DynatraceSingleSignOnResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class DynatraceSingleSignOnData : Azure.ResourceManager.Models.ResourceData
     {
-        public DynatraceSingleSignOnResourceData() { }
+        public DynatraceSingleSignOnData() { }
         public System.Collections.Generic.IList<string> AadDomains { get { throw null; } }
         public System.Guid? EnterpriseAppId { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.SingleSignOnState? SingleSignOnState { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState? SingleSignOnState { get { throw null; } set { } }
         public System.Uri SingleSignOnUri { get { throw null; } set { } }
     }
-    public partial class MonitorResource : Azure.ResourceManager.ArmResource
+    public partial class DynatraceSingleSignOnResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected MonitorResource() { }
-        public virtual Azure.ResourceManager.Dynatrace.MonitorResourceData Data { get { throw null; } }
+        protected DynatraceSingleSignOnResource() { }
+        public virtual Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.MonitorResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.MonitorResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.MonitorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.Models.AccountInfoSecure> GetAccountCredentials(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.Models.AccountInfoSecure>> GetAccountCredentialsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.AppServiceInfo> GetAppServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.AppServiceInfo> GetAppServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.MonitorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> GetDynatraceSingleSignOnResource(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>> GetDynatraceSingleSignOnResourceAsync(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResourceCollection GetDynatraceSingleSignOnResources() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.VmInfo> GetHosts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.VmInfo> GetHostsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult> GetLinkableEnvironments(Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult> GetLinkableEnvironmentsAsync(Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.MonitoredResourceDetails> GetMonitoredResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.MonitoredResourceDetails> GetMonitoredResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.Models.SsoDetailsResult> GetSsoDetails(Azure.ResourceManager.Dynatrace.Models.SsoDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.Models.SsoDetailsResult>> GetSsoDetailsAsync(Azure.ResourceManager.Dynatrace.Models.SsoDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.TagRuleResource> GetTagRule(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.TagRuleResource>> GetTagRuleAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Dynatrace.TagRuleCollection GetTagRules() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.Models.VmExtensionPayload> GetVmHostPayload(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.Models.VmExtensionPayload>> GetVmHostPayloadAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.MonitorResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.MonitorResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.MonitorResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.MonitorResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.MonitorResource> Update(Azure.ResourceManager.Dynatrace.Models.MonitorResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.MonitorResource>> UpdateAsync(Azure.ResourceManager.Dynatrace.Models.MonitorResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string configurationName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MonitorResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.MonitorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.MonitorResource>, System.Collections.IEnumerable
+    public partial class DynatraceTagRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>, System.Collections.IEnumerable
     {
-        protected MonitorResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.MonitorResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string monitorName, Azure.ResourceManager.Dynatrace.MonitorResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.MonitorResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string monitorName, Azure.ResourceManager.Dynatrace.MonitorResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.MonitorResource> Get(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.MonitorResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.MonitorResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.MonitorResource>> GetAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dynatrace.MonitorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.MonitorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dynatrace.MonitorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.MonitorResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class MonitorResourceData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public MonitorResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties DynatraceEnvironmentProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.IdentityProperties Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory? LiftrResourceCategory { get { throw null; } }
-        public int? LiftrResourcePreference { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.MonitoringStatus? MonitoringStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.PlanData PlanData { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.UserInfo UserInfo { get { throw null; } set { } }
-    }
-    public partial class TagRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.TagRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.TagRuleResource>, System.Collections.IEnumerable
-    {
-        protected TagRuleCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.TagRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleSetName, Azure.ResourceManager.Dynatrace.TagRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.TagRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleSetName, Azure.ResourceManager.Dynatrace.TagRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected DynatraceTagRuleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleSetName, Azure.ResourceManager.Dynatrace.DynatraceTagRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleSetName, Azure.ResourceManager.Dynatrace.DynatraceTagRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.TagRuleResource> Get(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.TagRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.TagRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.TagRuleResource>> GetAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dynatrace.TagRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.TagRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dynatrace.TagRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.TagRuleResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> Get(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> GetAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TagRuleData : Azure.ResourceManager.Models.ResourceData
+    public partial class DynatraceTagRuleData : Azure.ResourceManager.Models.ResourceData
     {
-        public TagRuleData() { }
-        public Azure.ResourceManager.Dynatrace.Models.LogRules LogRules { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dynatrace.Models.FilteringTag> MetricRulesFilteringTags { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public DynatraceTagRuleData() { }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules LogRules { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag> MetricRulesFilteringTags { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState? ProvisioningState { get { throw null; } }
     }
-    public partial class TagRuleResource : Azure.ResourceManager.ArmResource
+    public partial class DynatraceTagRuleResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected TagRuleResource() { }
-        public virtual Azure.ResourceManager.Dynatrace.TagRuleData Data { get { throw null; } }
+        protected DynatraceTagRuleResource() { }
+        public virtual Azure.ResourceManager.Dynatrace.DynatraceTagRuleData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.TagRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.TagRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.TagRuleResource> Update(Azure.ResourceManager.Dynatrace.Models.TagRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.TagRuleResource>> UpdateAsync(Azure.ResourceManager.Dynatrace.Models.TagRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> Update(Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> UpdateAsync(Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class AccountInfo
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AadLogsSendingStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus>
     {
-        public AccountInfo() { }
-        public string AccountId { get { throw null; } set { } }
-        public string RegionId { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AadLogsSendingStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
-    public partial class AccountInfoSecure
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ActivityLogsSendingStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus>
     {
-        internal AccountInfoSecure() { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ActivityLogsSendingStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DynatraceAccountCredentialsInfo
+    {
+        internal DynatraceAccountCredentialsInfo() { }
         public string AccountId { get { throw null; } }
         public string ApiKey { get { throw null; } }
         public string RegionId { get { throw null; } }
     }
-    public partial class AppServiceInfo
+    public partial class DynatraceAccountInfo
     {
-        internal AppServiceInfo() { }
-        public Azure.ResourceManager.Dynatrace.Models.AutoUpdateSetting? AutoUpdateSetting { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.AvailabilityState? AvailabilityState { get { throw null; } }
-        public string HostGroup { get { throw null; } }
-        public string HostName { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.LogModule? LogModule { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.MonitoringType? MonitoringType { get { throw null; } }
-        public string ResourceId { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.UpdateStatus? UpdateStatus { get { throw null; } }
-        public string Version { get { throw null; } }
+        public DynatraceAccountInfo() { }
+        public string AccountId { get { throw null; } set { } }
+        public string RegionId { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AutoUpdateSetting : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.AutoUpdateSetting>
+    public partial class DynatraceBillingPlanInfo
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AutoUpdateSetting(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.AutoUpdateSetting Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.AutoUpdateSetting Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.AutoUpdateSetting other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.AutoUpdateSetting left, Azure.ResourceManager.Dynatrace.Models.AutoUpdateSetting right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.AutoUpdateSetting (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.AutoUpdateSetting left, Azure.ResourceManager.Dynatrace.Models.AutoUpdateSetting right) { throw null; }
-        public override string ToString() { throw null; }
+        public DynatraceBillingPlanInfo() { }
+        public string BillingCycle { get { throw null; } set { } }
+        public System.DateTimeOffset? EffectiveOn { get { throw null; } set { } }
+        public string PlanDetails { get { throw null; } set { } }
+        public string UsageType { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AvailabilityState : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.AvailabilityState>
+    public partial class DynatraceEnvironmentInfo
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AvailabilityState(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState Crashed { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState Lost { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState Monitored { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState PreMonitored { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState Shutdown { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState UnexpectedShutdown { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState Unknown { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState Unmonitored { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.AvailabilityState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.AvailabilityState left, Azure.ResourceManager.Dynatrace.Models.AvailabilityState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.AvailabilityState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.AvailabilityState left, Azure.ResourceManager.Dynatrace.Models.AvailabilityState right) { throw null; }
-        public override string ToString() { throw null; }
+        public DynatraceEnvironmentInfo() { }
+        public string EnvironmentId { get { throw null; } set { } }
+        public string IngestionKey { get { throw null; } set { } }
+        public System.Uri LandingUri { get { throw null; } set { } }
+        public System.Uri LogsIngestionEndpoint { get { throw null; } set { } }
     }
     public partial class DynatraceEnvironmentProperties
     {
         public DynatraceEnvironmentProperties() { }
-        public Azure.ResourceManager.Dynatrace.Models.AccountInfo AccountInfo { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.EnvironmentInfo EnvironmentInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceAccountInfo AccountInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentInfo EnvironmentInfo { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnProperties SingleSignOnProperties { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynatraceLogModuleState : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DynatraceLogModuleState(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState left, Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState left, Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DynatraceMonitoredResourceDetails
+    {
+        internal DynatraceMonitoredResourceDetails() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public string ReasonForLogsStatus { get { throw null; } }
+        public string ReasonForMetricsStatus { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus? SendingLogsStatus { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus? SendingMetricsStatus { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynatraceMonitoringStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DynatraceMonitoringStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynatraceMonitorMarketplaceSubscriptionStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DynatraceMonitorMarketplaceSubscriptionStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus Active { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus Suspended { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DynatraceMonitorPatch
+    {
+        public DynatraceMonitorPatch() { }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties DynatraceEnvironmentProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus? MonitoringStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo PlanData { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo UserInfo { get { throw null; } set { } }
+    }
+    public partial class DynatraceMonitorResourceFilteringTag
+    {
+        public DynatraceMonitorResourceFilteringTag() { }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction? Action { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
+    public partial class DynatraceMonitorResourceLogRules
+    {
+        public DynatraceMonitorResourceLogRules() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag> FilteringTags { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus? SendAadLogs { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus? SendActivityLogs { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus? SendSubscriptionLogs { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynatraceMonitorResourceTagAction : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DynatraceMonitorResourceTagAction(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction Exclude { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction Include { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction left, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction left, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DynatraceMonitorUserInfo
+    {
+        public DynatraceMonitorUserInfo() { }
+        public string Country { get { throw null; } set { } }
+        public string EmailAddress { get { throw null; } set { } }
+        public string FirstName { get { throw null; } set { } }
+        public string LastName { get { throw null; } set { } }
+        public string PhoneNumber { get { throw null; } set { } }
+    }
+    public partial class DynatraceMonitorVmInfo
+    {
+        internal DynatraceMonitorVmInfo() { }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting? AutoUpdateSetting { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState? AvailabilityState { get { throw null; } }
+        public string HostGroup { get { throw null; } }
+        public string HostName { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState? LogModule { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType? MonitoringType { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus? UpdateStatus { get { throw null; } }
+        public string Version { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynatraceOneAgentAutoUpdateSetting : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DynatraceOneAgentAutoUpdateSetting(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting left, Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting left, Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynatraceOneAgentAvailabilityState : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DynatraceOneAgentAvailabilityState(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState Crashed { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState Lost { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState Monitored { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState PreMonitored { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState Shutdown { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState UnexpectedShutdown { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState Unknown { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState Unmonitored { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState left, Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState left, Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DynatraceOneAgentEnabledAppServiceInfo
+    {
+        internal DynatraceOneAgentEnabledAppServiceInfo() { }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting? AutoUpdateSetting { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState? AvailabilityState { get { throw null; } }
+        public string HostGroup { get { throw null; } }
+        public string HostName { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState? LogModule { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType? MonitoringType { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus? UpdateStatus { get { throw null; } }
+        public string Version { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynatraceOneAgentMonitoringType : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DynatraceOneAgentMonitoringType(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType CloudInfrastructure { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType FullStack { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType left, Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType left, Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynatraceOneAgentUpdateStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DynatraceOneAgentUpdateStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus Incompatible { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus Outdated { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus Scheduled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus Suppressed { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus Unknown { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus UpdateInProgress { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus UpdatePending { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus UpdateProblem { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus UpToDate { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynatraceProvisioningState : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DynatraceProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState left, Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState left, Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DynatraceSingleSignOnProperties
     {
         public DynatraceSingleSignOnProperties() { }
         public System.Collections.Generic.IList<string> AadDomains { get { throw null; } }
         public System.Guid? EnterpriseAppId { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.SingleSignOnState? SingleSignOnState { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState? SingleSignOnState { get { throw null; } set { } }
         public System.Uri SingleSignOnUri { get { throw null; } set { } }
     }
-    public partial class EnvironmentInfo
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynatraceSingleSignOnState : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState>
     {
-        public EnvironmentInfo() { }
-        public string EnvironmentId { get { throw null; } set { } }
-        public string IngestionKey { get { throw null; } set { } }
-        public System.Uri LandingUri { get { throw null; } set { } }
-        public string LogsIngestionEndpoint { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DynatraceSingleSignOnState(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState Disable { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState Enable { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState Existing { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState Initial { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState left, Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState left, Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState right) { throw null; }
+        public override string ToString() { throw null; }
     }
-    public partial class FilteringTag
+    public partial class DynatraceSsoDetailsContent
     {
-        public FilteringTag() { }
-        public Azure.ResourceManager.Dynatrace.Models.TagAction? Action { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
+        public DynatraceSsoDetailsContent() { }
+        public string UserPrincipal { get { throw null; } set { } }
     }
-    public partial class IdentityProperties
+    public partial class DynatraceSsoDetailsResult
     {
-        public IdentityProperties(Azure.ResourceManager.Dynatrace.Models.ManagedIdentityType managedIdentityType) { }
-        public Azure.ResourceManager.Dynatrace.Models.ManagedIdentityType ManagedIdentityType { get { throw null; } set { } }
-        public string PrincipalId { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+        internal DynatraceSsoDetailsResult() { }
+        public System.Collections.Generic.IReadOnlyList<string> AadDomains { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> AdminUsers { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus? IsSsoEnabled { get { throw null; } }
+        public System.Uri MetadataUri { get { throw null; } }
+        public System.Uri SingleSignOnUri { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynatraceSsoStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DynatraceSsoStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DynatraceTagRulePatch
+    {
+        public DynatraceTagRulePatch() { }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules LogRules { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag> MetricRulesFilteringTags { get { throw null; } }
+    }
+    public partial class DynatraceVmExtensionPayload
+    {
+        internal DynatraceVmExtensionPayload() { }
+        public string EnvironmentId { get { throw null; } }
+        public string IngestionKey { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LiftrResourceCategory : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory>
@@ -292,376 +581,60 @@ namespace Azure.ResourceManager.Dynatrace.Models
         internal LinkableEnvironmentResult() { }
         public string EnvironmentId { get { throw null; } }
         public string EnvironmentName { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.PlanData PlanData { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo PlanData { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LogModule : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.LogModule>
+    public readonly partial struct LogsSendingStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public LogModule(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.LogModule Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.LogModule Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.LogModule other) { throw null; }
+        public LogsSendingStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.LogModule left, Azure.ResourceManager.Dynatrace.Models.LogModule right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.LogModule (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.LogModule left, Azure.ResourceManager.Dynatrace.Models.LogModule right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LogRules
-    {
-        public LogRules() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dynatrace.Models.FilteringTag> FilteringTags { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus? SendAadLogs { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus? SendActivityLogs { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus? SendSubscriptionLogs { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedIdentityType : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.ManagedIdentityType>
+    public readonly partial struct MetricsSendingStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ManagedIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.ManagedIdentityType SystemAndUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.ManagedIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.ManagedIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.ManagedIdentityType other) { throw null; }
+        public MetricsSendingStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.ManagedIdentityType left, Azure.ResourceManager.Dynatrace.Models.ManagedIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.ManagedIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.ManagedIdentityType left, Azure.ResourceManager.Dynatrace.Models.ManagedIdentityType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MarketplaceSubscriptionStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.MarketplaceSubscriptionStatus>
+    public readonly partial struct SubscriptionLogsSendingStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public MarketplaceSubscriptionStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.MarketplaceSubscriptionStatus Active { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.MarketplaceSubscriptionStatus Suspended { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.MarketplaceSubscriptionStatus other) { throw null; }
+        public SubscriptionLogsSendingStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.Dynatrace.Models.MarketplaceSubscriptionStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.MarketplaceSubscriptionStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.Dynatrace.Models.MarketplaceSubscriptionStatus right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class MonitoredResourceDetails
-    {
-        internal MonitoredResourceDetails() { }
-        public string Id { get { throw null; } }
-        public string ReasonForLogsStatus { get { throw null; } }
-        public string ReasonForMetricsStatus { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus? SendingLogsStatus { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus? SendingMetricsStatus { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MonitoringStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.MonitoringStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MonitoringStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.MonitoringStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.MonitoringStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.MonitoringStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.MonitoringStatus left, Azure.ResourceManager.Dynatrace.Models.MonitoringStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.MonitoringStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.MonitoringStatus left, Azure.ResourceManager.Dynatrace.Models.MonitoringStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MonitoringType : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.MonitoringType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MonitoringType(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.MonitoringType CloudInfrastructure { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.MonitoringType FullStack { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.MonitoringType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.MonitoringType left, Azure.ResourceManager.Dynatrace.Models.MonitoringType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.MonitoringType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.MonitoringType left, Azure.ResourceManager.Dynatrace.Models.MonitoringType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MonitorResourcePatch
-    {
-        public MonitorResourcePatch() { }
-        public Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties DynatraceEnvironmentProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.MonitoringStatus? MonitoringStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.PlanData PlanData { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.UserInfo UserInfo { get { throw null; } set { } }
-    }
-    public partial class PlanData
-    {
-        public PlanData() { }
-        public string BillingCycle { get { throw null; } set { } }
-        public System.DateTimeOffset? EffectiveOn { get { throw null; } set { } }
-        public string PlanDetails { get { throw null; } set { } }
-        public string UsageType { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.ProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.ProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.ProvisioningState Deleted { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.ProvisioningState NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.ProvisioningState left, Azure.ResourceManager.Dynatrace.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.ProvisioningState left, Azure.ResourceManager.Dynatrace.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SendAadLogsStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SendAadLogsStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendAadLogsStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SendActivityLogsStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SendActivityLogsStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendActivityLogsStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SendingLogsStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SendingLogsStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SendingMetricsStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SendingMetricsStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus left, Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus left, Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SendSubscriptionLogsStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SendSubscriptionLogsStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus left, Azure.ResourceManager.Dynatrace.Models.SendSubscriptionLogsStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SingleSignOnState : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SingleSignOnState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SingleSignOnState(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.SingleSignOnState Disable { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SingleSignOnState Enable { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SingleSignOnState Existing { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SingleSignOnState Initial { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SingleSignOnState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SingleSignOnState left, Azure.ResourceManager.Dynatrace.Models.SingleSignOnState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SingleSignOnState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SingleSignOnState left, Azure.ResourceManager.Dynatrace.Models.SingleSignOnState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SsoDetailsContent
-    {
-        public SsoDetailsContent() { }
-        public string UserPrincipal { get { throw null; } set { } }
-    }
-    public partial class SsoDetailsResult
-    {
-        internal SsoDetailsResult() { }
-        public System.Collections.Generic.IReadOnlyList<string> AadDomains { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> AdminUsers { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.SsoStatus? IsSsoEnabled { get { throw null; } }
-        public System.Uri MetadataUri { get { throw null; } }
-        public System.Uri SingleSignOnUri { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SsoStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SsoStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SsoStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.SsoStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SsoStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SsoStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SsoStatus left, Azure.ResourceManager.Dynatrace.Models.SsoStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SsoStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SsoStatus left, Azure.ResourceManager.Dynatrace.Models.SsoStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TagAction : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.TagAction>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TagAction(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.TagAction Exclude { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.TagAction Include { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.TagAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.TagAction left, Azure.ResourceManager.Dynatrace.Models.TagAction right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.TagAction (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.TagAction left, Azure.ResourceManager.Dynatrace.Models.TagAction right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class TagRulePatch
-    {
-        public TagRulePatch() { }
-        public Azure.ResourceManager.Dynatrace.Models.LogRules LogRules { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dynatrace.Models.FilteringTag> MetricRulesFilteringTags { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UpdateStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.UpdateStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public UpdateStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.UpdateStatus Incompatible { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.UpdateStatus Outdated { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.UpdateStatus Scheduled { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.UpdateStatus Suppressed { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.UpdateStatus Unknown { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.UpdateStatus UP2Date { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.UpdateStatus UpdateINProgress { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.UpdateStatus UpdatePending { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.UpdateStatus UpdateProblem { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.UpdateStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.UpdateStatus left, Azure.ResourceManager.Dynatrace.Models.UpdateStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.UpdateStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.UpdateStatus left, Azure.ResourceManager.Dynatrace.Models.UpdateStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class UserInfo
-    {
-        public UserInfo() { }
-        public string Country { get { throw null; } set { } }
-        public string EmailAddress { get { throw null; } set { } }
-        public string FirstName { get { throw null; } set { } }
-        public string LastName { get { throw null; } set { } }
-        public string PhoneNumber { get { throw null; } set { } }
-    }
-    public partial class VmExtensionPayload
-    {
-        internal VmExtensionPayload() { }
-        public string EnvironmentId { get { throw null; } }
-        public string IngestionKey { get { throw null; } }
-    }
-    public partial class VmInfo
-    {
-        internal VmInfo() { }
-        public Azure.ResourceManager.Dynatrace.Models.AutoUpdateSetting? AutoUpdateSetting { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.AvailabilityState? AvailabilityState { get { throw null; } }
-        public string HostGroup { get { throw null; } }
-        public string HostName { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.LogModule? LogModule { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.MonitoringType? MonitoringType { get { throw null; } }
-        public string ResourceId { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.UpdateStatus? UpdateStatus { get { throw null; } }
-        public string Version { get { throw null; } }
     }
 }

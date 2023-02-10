@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "138",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c5e7a3695471db438fb6ee7a0f4e2e64-29fba943980e3240-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220427.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "3468c774aa62ae64335aa59bac9e8fbf",
+        "traceparent": "00-fd0cd1eaea897f08c74187cb7b909b09-83c3fc5ef6e558ff-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d61dfcdb284b77356e102feff8388558",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,11 +27,12 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "494763b6-1afa-4cce-8081-1f2692d25a75",
+        "apim-request-id": "39540317-770f-4c8a-a874-fc8c0f757a69",
         "Content-Length": "206",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Wed, 27 Apr 2022 22:38:31 GMT",
+        "Date": "Fri, 14 Oct 2022 22:16:59 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "8"
@@ -45,7 +46,7 @@
               "detectedLanguage": {
                 "name": "Spanish",
                 "iso6391Name": "es",
-                "confidenceScore": 0.93
+                "confidenceScore": 0.92
               },
               "warnings": []
             }
@@ -57,7 +58,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1675683536",
+    "RandomSeed": "896059427",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

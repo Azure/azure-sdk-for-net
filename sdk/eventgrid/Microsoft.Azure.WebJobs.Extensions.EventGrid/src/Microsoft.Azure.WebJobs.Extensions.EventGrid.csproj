@@ -4,7 +4,7 @@
     <Description>This extension adds bindings for EventGrid</Description>
     <Version>3.3.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>3.2.0</ApiCompatVersion>
+    <ApiCompatVersion>3.2.1</ApiCompatVersion>
     <NoWarn>$(NoWarn);AZC0001;CS1591</NoWarn>
     <AssemblyOriginatorKeyFile>sign.snk</AssemblyOriginatorKeyFile>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>

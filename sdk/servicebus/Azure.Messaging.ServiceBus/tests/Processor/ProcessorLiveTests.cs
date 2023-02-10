@@ -95,6 +95,84 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        [TestCase(1, false)]
+        [TestCase(5, true)]
+        [TestCase(10, false)]
+        [TestCase(20, true)]
+        public async Task ProcessMessagesWithCustomIdentifier(int numThreads, bool autoComplete)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: false))
+            {
+                await using var client = CreateClient(60);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                // use double the number of threads so we can make sure we test that we don't
+                // retrieve more messages than expected when there are more messages available
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+                var messageSendCt = numThreads * 2;
+                ServiceBusMessageBatch messageBatch = ServiceBusTestUtilities.AddMessages(batch, messageSendCt);
+
+                await sender.SendMessagesAsync(messageBatch);
+
+                var options = new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = numThreads,
+                    AutoCompleteMessages = autoComplete,
+                    PrefetchCount = 20,
+                    Identifier = "MyServiceBusProcessor"
+                };
+                await using var processor = client.CreateProcessor(scope.QueueName, options);
+                int messageCt = 0;
+
+                TaskCompletionSource<bool>[] completionSources = Enumerable
+                .Range(0, numThreads)
+                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
+                .ToArray();
+                var completionSourceIndex = -1;
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                await processor.StartProcessingAsync();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.Identifier, args.Identifier);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
+                    try
+                    {
+                        var message = args.Message;
+                        if (!autoComplete)
+                        {
+                            await args.CompleteMessageAsync(message, args.CancellationToken);
+                        }
+                        Interlocked.Increment(ref messageCt);
+                    }
+                    finally
+                    {
+                        var setIndex = Interlocked.Increment(ref completionSourceIndex);
+                        if (setIndex < numThreads)
+                        {
+                            completionSources[setIndex].SetResult(true);
+                        }
+                    }
+                }
+                await Task.WhenAll(completionSources.Select(source => source.Task));
+                var start = DateTime.UtcNow;
+                await processor.StopProcessingAsync();
+                var stop = DateTime.UtcNow;
+                Assert.Less(stop - start, TimeSpan.FromSeconds(10));
+
+                // we complete each task after one message being processed, so the total number of messages
+                // processed should equal the number of threads, but it's possible that we may process a few more per thread.
+                Assert.IsTrue(messageCt >= numThreads);
+                Assert.IsTrue(messageCt <= messageSendCt, messageCt.ToString());
+            }
+        }
+
+        [Test]
         [TestCase(1)]
         [TestCase(5)]
         [TestCase(10)]
@@ -987,6 +1065,69 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public async Task CanUpdatePrefetchCount()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 200;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = 20
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        await args.AbandonMessageAsync(args.Message);
+                    }
+
+                    var count = Interlocked.Increment(ref receivedCount);
+                    if (count == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    // decrease prefetch
+                    if (count == 100)
+                    {
+                        processor.UpdatePrefetchCount(1);
+                        Assert.AreEqual(20, processor.MaxConcurrentCalls);
+                        Assert.AreEqual(1, processor.PrefetchCount);
+                    }
+
+                    // increase prefetch
+                    if (count == 150)
+                    {
+                        Assert.LessOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 20);
+                        processor.UpdatePrefetchCount(10);
+                        Assert.AreEqual(20, processor.MaxConcurrentCalls);
+                        Assert.AreEqual(10, processor.PrefetchCount);
+                    }
+                    if (count == 175)
+                    {
+                        Assert.GreaterOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 15);
+                    }
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
         public async Task StopProcessingDoesNotResultInRedeliveredMessages()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
@@ -1084,9 +1225,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                     if (count == 1)
                     {
-                        var received = await args.GetReceiveActions().ReceiveMessagesAsync(messageCount);
+                        ProcessorReceiveActions receiveActions = args.GetReceiveActions();
+                        var received = await receiveActions.ReceiveMessagesAsync(messageCount);
                         Assert.IsNotEmpty(received);
                         count = Interlocked.Add(ref receivedCount, received.Count);
+
+                        var peeked = await receiveActions.PeekMessagesAsync(2);
+                        Assert.AreEqual(2, peeked.Count);
+                        var lastSeq = peeked[1].SequenceNumber;
+                        var nextPeek = await receiveActions.PeekMessagesAsync(1);
+                        Assert.Greater(nextPeek.Single().SequenceNumber, lastSeq);
+
+                        var peekWithSeq = await receiveActions.PeekMessagesAsync(1, fromSequenceNumber: lastSeq);
+                        Assert.AreEqual(lastSeq, peekWithSeq.Single().SequenceNumber);
                     }
 
                     if (manualRenew)

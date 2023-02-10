@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -13,19 +14,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraKeyspaceResourceInfo
     {
         /// <summary> Initializes a new instance of CassandraKeyspaceResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB Cassandra keyspace. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public CassandraKeyspaceResourceInfo(string id)
+        /// <param name="keyspaceName"> Name of the Cosmos DB Cassandra keyspace. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
+        public CassandraKeyspaceResourceInfo(string keyspaceName)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(keyspaceName, nameof(keyspaceName));
 
-            Id = id;
+            KeyspaceName = keyspaceName;
         }
 
         /// <summary> Name of the Cosmos DB Cassandra keyspace. </summary>
-        public string Id { get; set; }
+        public string KeyspaceName { get; set; }
     }
 }

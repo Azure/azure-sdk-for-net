@@ -23,5 +23,5 @@
     <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\*.cs" LinkBase="Shared\Mgmt" />
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
   </ItemGroup>
-  
+
 </Project>

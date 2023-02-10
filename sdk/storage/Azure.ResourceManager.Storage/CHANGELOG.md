@@ -1,16 +1,74 @@
 # Release History
 
-## 1.0.0-beta.11 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Refined quite a few names of types and properties according to internal review comments.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2022-12-06)
+
+### Bugs Fixed
+
+- Renamed `ExpiresOn` to `ExpireOn`.
+
+### Other Changes
+
+- Upgraded API version to 2022-09-01
+
+## 1.0.0 (2022-09-08)
+
+This package is the first stable release of the Azure Storage management library.
+
+### Other Changes
+
+- Optimized the implementation of methods related to tag operations.
+
+## 1.0.0-beta.12 (2022-08-18)
+
+This package is the RC release of the Azure Storage management library.
+
+### Breaking Changes
+
+- Various naming changes according to review comments.
+- Changed the return type of the method `RestoreBlobRanges` to `StorageAccountRestoreBlobRangesOperation`.
+
+### Other Changes
+
+- Upgraded API version to 2022-05-01
+
+## 1.0.0-beta.11 (2022-07-21)
+
+This package is the RC release of the Azure Storage management library.
+
+### Features Added
+
+- Added Update methods in resource classes.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `Storage` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ETag` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the format of all binary type properties / parameters.
+- Corrected all acronyms that don't follow [Microsoft .NET Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters that end with units.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.2.0
+- Upgraded dependent `Azure.Core` to 1.25.0
 
 ## 1.0.0-beta.10 (2022-06-24)
 
@@ -28,14 +86,14 @@
 - Flattened property from a read-only model no longer has setters.
 - The type of flattened primitive property changed to its corresponding nullable type.
 - Renamed class `PrivateLinkResource` to `StoragePrivateLinkResource`.
-- Added an `Update` method using the implementation of `CreateOrUpdate` if the resource previously does not have a `Update` method.
+- Added an `Update` method using the implementation of `CreateOrUpdate` if the resource previously doesn't have a `Update` method.
 
 ## 1.0.0-beta.8 (2022-04-08)
 
 ### Breaking Changes
 
 - Simplify `type` property names.
-- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it's only used as input.
 
 ### Other Changes
 
@@ -45,7 +103,7 @@
 
 ### Breaking Changes
 
-- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Now all the resource classes would have a `Resource` suffix (if it previously doesn't have one).
 - Renamed some models to more comprehensive names.
 - `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
 - All properties of the type `object` were changed to `BinaryData`.
@@ -106,24 +164,29 @@
 
 ## 1.0.0-beta.1 (2021-09-01)
 
-This package follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
+### Breaking Changes
 
-This is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
+New design of track 2 initial commit.
+
+### Package Name
+
+The package name has been changed from `Microsoft.Azure.Management.Storage` to `Azure.ResourceManager.Storage`
 
 ### General New Features
 
-    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
-    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing
-    - HTTP pipeline with custom policies
-    - Better error-handling
-    - Support uniform telemetry across all languages
+This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
-> NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
+    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
+    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
+    - HTTP pipeline with custom policies.
+    - Better error-handling.
+    - Support uniform telemetry across all languages.
 
-#### Package Name
-The package name has been changed from `Microsoft.Azure.Management.Storage` to `Azure.ResourceManager.Storage`
+This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-#### Management Client Changes
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+
+### Management Client Changes
 
 Example: Create a storage account:
 
@@ -162,7 +225,7 @@ string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
 StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
-StorageSku sku = new StorageSku(StorageSkuName.PremiumLRS);
+StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
 StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
 {
     Tags =

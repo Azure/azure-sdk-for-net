@@ -3,11 +3,11 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-
 azure-arm: true
 library-name: ContainerInstance
 namespace: Azure.ResourceManager.ContainerInstance
-require: https://github.com/Azure/azure-rest-api-specs/blob/4716fb039c67e1bee1d5448af9ce57e4942832fe/specification/containerinstance/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/f5a5c4331869641fb5fa86f2e1e78ecd8e456483/specification/containerinstance/resource-manager/readme.md
+tag: package-preview-2022-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -44,36 +44,59 @@ rename-rules:
   Etag: ETag|etag
   TCP: Tcp
   UDP: Udp
+  Noreuse: NoReuse
 
 override-operation-name:
   Location_ListCachedImages: GetCachedImagesWithLocation
   Location_ListCapabilities: GetCapabilitiesWithLocation
-  Location_ListUsage: GetUsageWithLocation
+  Location_ListUsage: GetUsagesWithLocation
+  Containers_ExecuteCommand: ExecuteContainerCommand
+  Containers_ListLogs: GetContainerLogs
 
-directive:
-  - rename-model:
-      from: Container
-      to: ContainerInstanceContainer
-  - rename-model:
-      from: Volume
-      to: ContainerInstanceVolume
-  - rename-model:
-      from: Logs
-      to: ContainerLogs
-  - rename-model:
-      from: Event
-      to: ContainerEvent
-      
-  - from: containerInstance.json
-    where: $.definitions
-    transform: >
-      $.ContainerAttachResponse["x-ms-client-name"] = "ContainerAttachResult";
-      $.ContainerExecResponse["x-ms-client-name"] = "ContainerExecResult";
-      $.Capabilities["x-ms-client-name"] = "ContainerInstanceCapabilities";
-      $.ContainerGroupSubnetId.properties.id["x-ms-format"] = "arm-id";
-      $.InitContainerDefinition["x-ms-client-name"] = "InitContainerDefinitionContent";
-      $.LogAnalytics.properties.workspaceId["x-ms-format"] = "arm-id";
-  - from: swagger-document
-    where: $.definitions.ContainerHttpGet.scheme["x-ms-enum"]
-    transform: $["name"] = "ContainerInstanceScheme"
+# If the model is generally used across the RP or we need to avoid duplication, prepend the RP name.
+# If the model is used by a single container instance, simply use Container prefix in the rename-mapping section as it's simpler and consistent with the original pattern in swagger.
+prepend-rp-prefix:
+  - UsageListResult
+  - UsageName
+  - OperatingSystemTypes
+  - AzureFileVolume
+  - GitRepoVolume
+  - Container
+
+rename-mapping:
+  Logs: ContainerLogs
+  Event: ContainerEvent
+  AzureFileVolume.readOnly: IsReadOnly
+  VolumeMount.readOnly: IsReadOnly
+  CapabilitiesCapabilities: ContainerSupportedCapabilities
+  ContainerProbe.timeoutSeconds: TimeoutInSeconds
+  ContainerProbe.initialDelaySeconds: InitialDelayInSeconds
+  ContainerProbe.periodSeconds: PeriodInSeconds
+  Scheme: ContainerHttpGetScheme
+  Port: ContainerGroupPort
+  IpAddress.ip: -|ip-address
+  IpAddress: ContainerGroupIPAddress
+  GpuResource: ContainerGpuResourceInfo
+  ContainerGroupPropertiesInstanceView: ContainerGroupInstanceView
+  ContainerPropertiesInstanceView: ContainerInstanceView
+  ContainerAttachResponse: ContainerAttachResult
+  ContainerExecResponse: ContainerExecResult
+  ContainerGroupSubnetId.id: -|arm-id
+  InitContainerDefinition: InitContainerDefinitionContent
+  LogAnalytics.workspaceResourceId: -|arm-id
+  ResourceRequests: ContainerResourceRequestsContent
+  DnsConfiguration: ContainerGroupDnsConfiguration
+  EncryptionProperties: ContainerGroupEncryptionProperties
+  HttpHeader: ContainerHttpHeader
+  ImageRegistryCredential: ContainerGroupImageRegistryCredential
+  Volume: ContainerVolume
+  VolumeMount: ContainerVolumeMount
+  Capabilities: ContainerCapabilities
+  CapabilitiesListResult: ContainerCapabilitiesListResult
+  ResourceLimits: ContainerResourceLimits
+  ResourceRequirements: ContainerResourceRequirements
+  EnvironmentVariable: ContainerEnvironmentVariable
+  GpuSku: ContainerGpuSku
+  LogAnalytics: ContainerGroupLogAnalytics
+  LogAnalyticsLogType: ContainerGroupLogAnalyticsLogType
 ```

@@ -15,27 +15,32 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static VmHostsListResponse DeserializeVmHostsListResponse(JsonElement element)
         {
-            IReadOnlyList<VmInfo> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<DynatraceMonitorVmInfo>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<VmInfo> array = new List<VmInfo>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DynatraceMonitorVmInfo> array = new List<DynatraceMonitorVmInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmInfo.DeserializeVmInfo(item));
+                        array.Add(DynatraceMonitorVmInfo.DeserializeDynatraceMonitorVmInfo(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new VmHostsListResponse(value, nextLink);
+            return new VmHostsListResponse(Optional.ToList(value), nextLink.Value);
         }
     }
 }

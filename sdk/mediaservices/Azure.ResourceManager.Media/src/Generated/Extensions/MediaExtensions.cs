@@ -28,148 +28,96 @@ namespace Azure.ResourceManager.Media
             );
         }
 
-        /// <summary> Gets a collection of LocationMediaServicesOperationResultResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of LocationMediaServicesOperationResultResources and their operations over a LocationMediaServicesOperationResultResource. </returns>
-        public static LocationMediaServicesOperationResultCollection GetLocationMediaServicesOperationResults(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetLocationMediaServicesOperationResults();
-        }
-
         /// <summary>
-        /// Get media service operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
-        /// Operation Id: MediaServicesOperationResults_Get
+        /// List Media Services accounts in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Media/mediaservices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> Location name. </param>
-        /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<LocationMediaServicesOperationResultResource>> GetLocationMediaServicesOperationResultAsync(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MediaServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MediaServicesAccountResource> GetMediaServicesAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetLocationMediaServicesOperationResults().GetAsync(locationName, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get media service operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
-        /// Operation Id: MediaServicesOperationResults_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> Location name. </param>
-        /// <param name="operationId"> Operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<LocationMediaServicesOperationResultResource> GetLocationMediaServicesOperationResult(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetLocationMediaServicesOperationResults().Get(locationName, operationId, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMediaServicesAccountsAsync(cancellationToken);
         }
 
         /// <summary>
         /// List Media Services accounts in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/mediaservices
-        /// Operation Id: Mediaservices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Media/mediaservices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MediaserviceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MediaserviceResource> GetMediaservicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MediaServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MediaServicesAccountResource> GetMediaServicesAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetMediaservicesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List Media Services accounts in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/mediaservices
-        /// Operation Id: Mediaservices_ListBySubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MediaserviceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MediaserviceResource> GetMediaservices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetMediaservices(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMediaServicesAccounts(cancellationToken);
         }
 
         /// <summary>
         /// Checks whether the Media Service resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/checkNameAvailability
-        /// Operation Id: Locations_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> Location name. </param>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<EntityNameAvailabilityCheckOutput>> CheckNameAvailabilityLocationAsync(this SubscriptionResource subscriptionResource, string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<MediaServicesNameAvailabilityResult>> CheckMediaServicesNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, MediaServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityLocationAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckMediaServicesNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks whether the Media Service resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/checkNameAvailability
-        /// Operation Id: Locations_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> Location name. </param>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        public static Response<EntityNameAvailabilityCheckOutput> CheckNameAvailabilityLocation(this SubscriptionResource subscriptionResource, string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<MediaServicesNameAvailabilityResult> CheckMediaServicesNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation locationName, MediaServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityLocation(locationName, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get media service operation status.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationStatuses/{operationId}
-        /// Operation Id: MediaServicesOperationStatuses_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> Location name. </param>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        public static async Task<Response<MediaServiceOperationStatus>> GetMediaServicesOperationStatusAsync(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetExtensionClient(subscriptionResource).GetMediaServicesOperationStatusAsync(locationName, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get media service operation status.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationStatuses/{operationId}
-        /// Operation Id: MediaServicesOperationStatuses_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> Location name. </param>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        public static Response<MediaServiceOperationStatus> GetMediaServicesOperationStatus(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetExtensionClient(subscriptionResource).GetMediaServicesOperationStatus(locationName, operationId, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckMediaServicesNameAvailability(locationName, content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -181,18 +129,26 @@ namespace Azure.ResourceManager.Media
             );
         }
 
-        /// <summary> Gets a collection of MediaserviceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of MediaServicesAccountResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of MediaserviceResources and their operations over a MediaserviceResource. </returns>
-        public static MediaserviceCollection GetMediaservices(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of MediaServicesAccountResources and their operations over a MediaServicesAccountResource. </returns>
+        public static MediaServicesAccountCollection GetMediaServicesAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetMediaservices();
+            return GetExtensionClient(resourceGroupResource).GetMediaServicesAccounts();
         }
 
         /// <summary>
         /// Get the details of a Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -200,15 +156,23 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MediaserviceResource>> GetMediaserviceAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MediaServicesAccountResource>> GetMediaServicesAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMediaservices().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetMediaServicesAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the details of a Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -216,177 +180,139 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<MediaserviceResource> GetMediaservice(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        public static Response<MediaServicesAccountResource> GetMediaServicesAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMediaservices().Get(accountName, cancellationToken);
+            return resourceGroupResource.GetMediaServicesAccounts().Get(accountName, cancellationToken);
         }
 
-        #region AccountFilterResource
+        #region MediaServicesAccountFilterResource
         /// <summary>
-        /// Gets an object representing an <see cref="AccountFilterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccountFilterResource.CreateResourceIdentifier" /> to create an <see cref="AccountFilterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaServicesAccountFilterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaServicesAccountFilterResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesAccountFilterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccountFilterResource" /> object. </returns>
-        public static AccountFilterResource GetAccountFilterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MediaServicesAccountFilterResource" /> object. </returns>
+        public static MediaServicesAccountFilterResource GetMediaServicesAccountFilterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AccountFilterResource.ValidateResourceId(id);
-                return new AccountFilterResource(client, id);
+                MediaServicesAccountFilterResource.ValidateResourceId(id);
+                return new MediaServicesAccountFilterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MediaserviceResource
+        #region MediaServicesAccountResource
         /// <summary>
-        /// Gets an object representing a <see cref="MediaserviceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaserviceResource.CreateResourceIdentifier" /> to create a <see cref="MediaserviceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaServicesAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaServicesAccountResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaserviceResource" /> object. </returns>
-        public static MediaserviceResource GetMediaserviceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MediaServicesAccountResource" /> object. </returns>
+        public static MediaServicesAccountResource GetMediaServicesAccountResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MediaserviceResource.ValidateResourceId(id);
-                return new MediaserviceResource(client, id);
+                MediaServicesAccountResource.ValidateResourceId(id);
+                return new MediaServicesAccountResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LocationMediaServicesOperationResultResource
+        #region MediaServicesPrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="LocationMediaServicesOperationResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LocationMediaServicesOperationResultResource.CreateResourceIdentifier" /> to create a <see cref="LocationMediaServicesOperationResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaServicesPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocationMediaServicesOperationResultResource" /> object. </returns>
-        public static LocationMediaServicesOperationResultResource GetLocationMediaServicesOperationResultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MediaServicesPrivateLinkResource" /> object. </returns>
+        public static MediaServicesPrivateLinkResource GetMediaServicesPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LocationMediaServicesOperationResultResource.ValidateResourceId(id);
-                return new LocationMediaServicesOperationResultResource(client, id);
+                MediaServicesPrivateLinkResource.ValidateResourceId(id);
+                return new MediaServicesPrivateLinkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MediaPrivateLinkResource
+        #region MediaServicesPrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="MediaPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MediaPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaServicesPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaPrivateLinkResource" /> object. </returns>
-        public static MediaPrivateLinkResource GetMediaPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MediaServicesPrivateEndpointConnectionResource" /> object. </returns>
+        public static MediaServicesPrivateEndpointConnectionResource GetMediaServicesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MediaPrivateLinkResource.ValidateResourceId(id);
-                return new MediaPrivateLinkResource(client, id);
+                MediaServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new MediaServicesPrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MediaPrivateEndpointConnectionResource
+        #region MediaAssetResource
         /// <summary>
-        /// Gets an object representing a <see cref="MediaPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MediaPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaAssetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaAssetResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaPrivateEndpointConnectionResource" /> object. </returns>
-        public static MediaPrivateEndpointConnectionResource GetMediaPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MediaAssetResource" /> object. </returns>
+        public static MediaAssetResource GetMediaAssetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MediaPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new MediaPrivateEndpointConnectionResource(client, id);
+                MediaAssetResource.ValidateResourceId(id);
+                return new MediaAssetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AssetResource
+        #region MediaAssetFilterResource
         /// <summary>
-        /// Gets an object representing an <see cref="AssetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssetResource.CreateResourceIdentifier" /> to create an <see cref="AssetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaAssetFilterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaAssetFilterResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetFilterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssetResource" /> object. </returns>
-        public static AssetResource GetAssetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MediaAssetFilterResource" /> object. </returns>
+        public static MediaAssetFilterResource GetMediaAssetFilterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AssetResource.ValidateResourceId(id);
-                return new AssetResource(client, id);
+                MediaAssetFilterResource.ValidateResourceId(id);
+                return new MediaAssetFilterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AssetFilterResource
+        #region MediaAssetTrackResource
         /// <summary>
-        /// Gets an object representing an <see cref="AssetFilterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssetFilterResource.CreateResourceIdentifier" /> to create an <see cref="AssetFilterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaAssetTrackResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaAssetTrackResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetTrackResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssetFilterResource" /> object. </returns>
-        public static AssetFilterResource GetAssetFilterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MediaAssetTrackResource" /> object. </returns>
+        public static MediaAssetTrackResource GetMediaAssetTrackResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AssetFilterResource.ValidateResourceId(id);
-                return new AssetFilterResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MediaServiceAssetTrackResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MediaServiceAssetTrackResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaServiceAssetTrackResource.CreateResourceIdentifier" /> to create a <see cref="MediaServiceAssetTrackResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaServiceAssetTrackResource" /> object. </returns>
-        public static MediaServiceAssetTrackResource GetMediaServiceAssetTrackResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MediaServiceAssetTrackResource.ValidateResourceId(id);
-                return new MediaServiceAssetTrackResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MediaServiceAssetTrackOperationResultResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MediaServiceAssetTrackOperationResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MediaServiceAssetTrackOperationResultResource.CreateResourceIdentifier" /> to create a <see cref="MediaServiceAssetTrackOperationResultResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MediaServiceAssetTrackOperationResultResource" /> object. </returns>
-        public static MediaServiceAssetTrackOperationResultResource GetMediaServiceAssetTrackOperationResultResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MediaServiceAssetTrackOperationResultResource.ValidateResourceId(id);
-                return new MediaServiceAssetTrackOperationResultResource(client, id);
+                MediaAssetTrackResource.ValidateResourceId(id);
+                return new MediaAssetTrackResource(client, id);
             }
             );
         }
@@ -411,39 +337,39 @@ namespace Azure.ResourceManager.Media
         }
         #endregion
 
-        #region TransformResource
+        #region MediaTransformResource
         /// <summary>
-        /// Gets an object representing a <see cref="TransformResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TransformResource.CreateResourceIdentifier" /> to create a <see cref="TransformResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaTransformResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaTransformResource.CreateResourceIdentifier" /> to create a <see cref="MediaTransformResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TransformResource" /> object. </returns>
-        public static TransformResource GetTransformResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MediaTransformResource" /> object. </returns>
+        public static MediaTransformResource GetMediaTransformResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TransformResource.ValidateResourceId(id);
-                return new TransformResource(client, id);
+                MediaTransformResource.ValidateResourceId(id);
+                return new MediaTransformResource(client, id);
             }
             );
         }
         #endregion
 
-        #region JobResource
+        #region MediaJobResource
         /// <summary>
-        /// Gets an object representing a <see cref="JobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaJobResource.CreateResourceIdentifier" /> to create a <see cref="MediaJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobResource" /> object. </returns>
-        public static JobResource GetJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MediaJobResource" /> object. </returns>
+        public static MediaJobResource GetMediaJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                JobResource.ValidateResourceId(id);
-                return new JobResource(client, id);
+                MediaJobResource.ValidateResourceId(id);
+                return new MediaJobResource(client, id);
             }
             );
         }
@@ -487,39 +413,39 @@ namespace Azure.ResourceManager.Media
         }
         #endregion
 
-        #region LiveEventResource
+        #region MediaLiveEventResource
         /// <summary>
-        /// Gets an object representing a <see cref="LiveEventResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LiveEventResource.CreateResourceIdentifier" /> to create a <see cref="LiveEventResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaLiveEventResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaLiveEventResource.CreateResourceIdentifier" /> to create a <see cref="MediaLiveEventResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LiveEventResource" /> object. </returns>
-        public static LiveEventResource GetLiveEventResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MediaLiveEventResource" /> object. </returns>
+        public static MediaLiveEventResource GetMediaLiveEventResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LiveEventResource.ValidateResourceId(id);
-                return new LiveEventResource(client, id);
+                MediaLiveEventResource.ValidateResourceId(id);
+                return new MediaLiveEventResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LiveOutputResource
+        #region MediaLiveOutputResource
         /// <summary>
-        /// Gets an object representing a <see cref="LiveOutputResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LiveOutputResource.CreateResourceIdentifier" /> to create a <see cref="LiveOutputResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MediaLiveOutputResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MediaLiveOutputResource.CreateResourceIdentifier" /> to create a <see cref="MediaLiveOutputResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LiveOutputResource" /> object. </returns>
-        public static LiveOutputResource GetLiveOutputResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MediaLiveOutputResource" /> object. </returns>
+        public static MediaLiveOutputResource GetMediaLiveOutputResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LiveOutputResource.ValidateResourceId(id);
-                return new LiveOutputResource(client, id);
+                MediaLiveOutputResource.ValidateResourceId(id);
+                return new MediaLiveOutputResource(client, id);
             }
             );
         }

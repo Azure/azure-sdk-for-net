@@ -31,7 +31,7 @@ namespace Azure.Core.TestFramework
                 }
                 else if (obj is string)
                 {
-                    _comparable = new VersionString(obj as string);
+                    _comparable = new ApiVersionString(obj as string);
                 }
                 else
                 {

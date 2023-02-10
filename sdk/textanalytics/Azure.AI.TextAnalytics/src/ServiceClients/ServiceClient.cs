@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
 using Azure.Core.Pipeline;
+using static Azure.AI.TextAnalytics.TextAnalyticsClientOptions;
 
 namespace Azure.AI.TextAnalytics.ServiceClients
 {
@@ -18,7 +19,16 @@ namespace Azure.AI.TextAnalytics.ServiceClients
     ///
     internal abstract class ServiceClient
     {
+        public ServiceClient(TextAnalyticsClientOptions options)
+        {
+            Options = options;
+        }
+
         public abstract ClientDiagnostics Diagnostics { get; }
+
+        protected TextAnalyticsClientOptions Options { get; }
+
+        protected ServiceVersion ServiceVersion => Options.Version;
 
         #region Detect Language
 
@@ -50,6 +60,15 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public abstract Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(IEnumerable<string> documents, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default);
         public abstract Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default);
         public abstract Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(IEnumerable<TextDocumentInput> documents, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default);
+
+        #endregion
+
+        #region Recognize Custom Entities
+
+        public abstract RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default);
+        public abstract RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default);
+        public abstract Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default);
+        public abstract Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default);
 
         #endregion
 
@@ -94,34 +113,138 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public abstract Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default);
         public abstract Task CancelHealthcareJobAsync(string jobId, CancellationToken cancellationToken = default);
         public abstract void CancelHealthcareJob(string jobId, CancellationToken cancellationToken = default);
+        public abstract Task<Response<HealthcareJobStatusResult>> HealthStatusAsync(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
+        public abstract Response<HealthcareJobStatusResult> HealthStatus(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
+        public abstract Task<Response<HealthcareJobStatusResult>> HealthStatusNextPageAsync(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
+        public abstract Response<HealthcareJobStatusResult> HealthStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
 
         #endregion
 
         #region Analyze Operation
 
         public abstract Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default);
-
         public abstract AnalyzeActionsOperation StartAnalyzeActions(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default);
-
         public abstract AnalyzeActionsOperation StartAnalyzeActions(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default);
-
         public abstract Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default);
-
         public abstract Task<Response<AnalyzeTextJobStatusResult>> AnalyzeStatusAsync(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
-
         public abstract Response<AnalyzeTextJobStatusResult> AnalyzeStatus(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
-
         public abstract Task<Response<AnalyzeTextJobStatusResult>> AnalyzeStatusNextPageAsync(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
-
         public abstract Response<AnalyzeTextJobStatusResult> AnalyzeStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
+        public abstract Task CancelAnalyzeActionsJobAsync(string jobId, CancellationToken cancellationToken = default);
+        public abstract void CancelAnalyzeActionsJob(string jobId, CancellationToken cancellationToken = default);
 
-        public abstract Task<Response<HealthcareJobStatusResult>> HealthStatusAsync(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
+        #endregion
 
-        public abstract Response<HealthcareJobStatusResult> HealthStatus(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
+        #region Single Label Classify
 
-        public abstract Task<Response<HealthcareJobStatusResult>> HealthStatusNextPageAsync(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
+        public abstract ClassifyDocumentOperation StartSingleLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
+        public abstract ClassifyDocumentOperation StartSingleLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
+        public abstract Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
+        public abstract Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
 
-        public abstract Response<HealthcareJobStatusResult> HealthStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
+        #endregion
+
+        #region Multi Label Classify
+
+        public abstract ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
+        public abstract ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
+        public abstract Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
+        public abstract Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
+
+        #endregion
+
+        #region Dynamic Classify
+
+        public virtual Response<ClassificationCategoryCollection> DynamicClassify(
+            string document,
+            IEnumerable<string> categories,
+            ClassificationType? classificationType = default,
+            string language = default,
+            CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassify)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
+            IEnumerable<string> documents,
+            IEnumerable<string> categories,
+            ClassificationType? classificationType = default,
+            string language = default,
+            TextAnalyticsRequestOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatch)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
+            IEnumerable<TextDocumentInput> documents,
+            IEnumerable<string> categories,
+            ClassificationType? classificationType = default,
+            TextAnalyticsRequestOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatch)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Task<Response<ClassificationCategoryCollection>> DynamicClassifyAsync(
+            string document,
+            IEnumerable<string> categories,
+            ClassificationType? classificationType = default,
+            string language = default,
+            CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
+            IEnumerable<string> documents,
+            IEnumerable<string> categories,
+            ClassificationType? classificationType = default,
+            string language = default,
+            TextAnalyticsRequestOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatchAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
+            IEnumerable<TextDocumentInput> documents,
+            IEnumerable<string> categories,
+            ClassificationType? classificationType = default,
+            TextAnalyticsRequestOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatchAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        #endregion
+
+        #region Extractive Summarize
+
+        public virtual ExtractiveSummarizeOperation StartExtractiveSummarize(IEnumerable<string> documents, string language = default, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarize)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual ExtractiveSummarizeOperation StartExtractiveSummarize(IEnumerable<TextDocumentInput> documents, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarize)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Task<ExtractiveSummarizeOperation> StartExtractiveSummarizeAsync(IEnumerable<string> documents, string language = default, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarizeAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Task<ExtractiveSummarizeOperation> StartExtractiveSummarizeAsync(IEnumerable<TextDocumentInput> documents, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarizeAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        #endregion
+
+        #region Abstractive Summarize
+
+        public virtual AbstractiveSummarizeOperation StartAbstractiveSummarize(IEnumerable<string> documents, string language = default, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarize)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual AbstractiveSummarizeOperation StartAbstractiveSummarize(IEnumerable<TextDocumentInput> documents, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarize)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Task<AbstractiveSummarizeOperation> StartAbstractiveSummarizeAsync(IEnumerable<string> documents, string language = default, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarizeAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Task<AbstractiveSummarizeOperation> StartAbstractiveSummarizeAsync(IEnumerable<TextDocumentInput> documents, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarizeAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        #endregion
+
+        #region Long Running Operations
+
+        public abstract Task<Response<AnalyzeTextJobState>> AnalyzeTextJobStatusAsync(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
+        public abstract Response<AnalyzeTextJobState> AnalyzeTextJobStatus(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
+        public abstract Task<Response<AnalyzeTextJobState>> AnalyzeTextJobStatusNextPageAsync(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
+        public abstract Response<AnalyzeTextJobState> AnalyzeTextJobStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
 
         #endregion
     }

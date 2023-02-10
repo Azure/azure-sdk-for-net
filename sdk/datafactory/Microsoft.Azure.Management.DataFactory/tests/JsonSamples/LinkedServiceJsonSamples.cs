@@ -3408,5 +3408,21 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string GoogleSheetsLinkedService = @"
+{
+    name: ""LinkedService-GoogleSheets"",
+    properties:
+    {
+        type: ""GoogleSheets"",
+        typeProperties: {
+            apiToken: {
+                value : ""fakeApiToken"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
     }
 }

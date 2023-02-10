@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyId");
+            writer.WritePropertyName("keyId"u8);
             writer.WriteStringValue(KeyId);
-            writer.WritePropertyName("secretSource");
+            writer.WritePropertyName("secretSource"u8);
             JsonSerializer.Serialize(writer, SecretSource); if (Optional.IsDefined(SecretVersion))
             {
-                writer.WritePropertyName("secretVersion");
+                writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SecretType.ToString());
             writer.WriteEndObject();
         }
@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.Cdn.Models
             SecretType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyId"))
+                if (property.NameEquals("keyId"u8))
                 {
                     keyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretSource"))
+                if (property.NameEquals("secretSource"u8))
                 {
-                    secretSource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    secretSource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("secretVersion"))
+                if (property.NameEquals("secretVersion"u8))
                 {
                     secretVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new SecretType(property.Value.GetString());
                     continue;

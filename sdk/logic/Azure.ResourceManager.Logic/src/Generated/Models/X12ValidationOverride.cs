@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -14,23 +15,20 @@ namespace Azure.ResourceManager.Logic.Models
     {
         /// <summary> Initializes a new instance of X12ValidationOverride. </summary>
         /// <param name="messageId"> The message id on which the validation settings has to be applied. </param>
-        /// <param name="validateEDITypes"> The value indicating whether to validate EDI types. </param>
-        /// <param name="validateXSDTypes"> The value indicating whether to validate XSD types. </param>
+        /// <param name="validateEdiTypes"> The value indicating whether to validate EDI types. </param>
+        /// <param name="validateXsdTypes"> The value indicating whether to validate XSD types. </param>
         /// <param name="allowLeadingAndTrailingSpacesAndZeroes"> The value indicating whether to allow leading and trailing spaces and zeroes. </param>
         /// <param name="validateCharacterSet"> The value indicating whether to validate character Set. </param>
         /// <param name="trimLeadingAndTrailingSpacesAndZeroes"> The value indicating whether to trim leading and trailing spaces and zeroes. </param>
         /// <param name="trailingSeparatorPolicy"> The trailing separator policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
-        public X12ValidationOverride(string messageId, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool validateCharacterSet, bool trimLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy)
+        public X12ValidationOverride(string messageId, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool validateCharacterSet, bool trimLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy)
         {
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
+            Argument.AssertNotNull(messageId, nameof(messageId));
 
             MessageId = messageId;
-            ValidateEDITypes = validateEDITypes;
-            ValidateXSDTypes = validateXSDTypes;
+            ValidateEdiTypes = validateEdiTypes;
+            ValidateXsdTypes = validateXsdTypes;
             AllowLeadingAndTrailingSpacesAndZeroes = allowLeadingAndTrailingSpacesAndZeroes;
             ValidateCharacterSet = validateCharacterSet;
             TrimLeadingAndTrailingSpacesAndZeroes = trimLeadingAndTrailingSpacesAndZeroes;
@@ -40,9 +38,9 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The message id on which the validation settings has to be applied. </summary>
         public string MessageId { get; set; }
         /// <summary> The value indicating whether to validate EDI types. </summary>
-        public bool ValidateEDITypes { get; set; }
+        public bool ValidateEdiTypes { get; set; }
         /// <summary> The value indicating whether to validate XSD types. </summary>
-        public bool ValidateXSDTypes { get; set; }
+        public bool ValidateXsdTypes { get; set; }
         /// <summary> The value indicating whether to allow leading and trailing spaces and zeroes. </summary>
         public bool AllowLeadingAndTrailingSpacesAndZeroes { get; set; }
         /// <summary> The value indicating whether to validate character Set. </summary>

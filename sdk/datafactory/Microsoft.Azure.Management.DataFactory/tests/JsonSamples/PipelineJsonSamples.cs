@@ -7604,6 +7604,7 @@ namespace DataFactory.Tests.JsonSamples
           ""type"": ""LinkedServiceReference""
         },
         ""typeProperties"": {
+          ""scriptBlockExecutionTimeout"": ""12:00:00"",
           ""scripts"": [
             {
               ""text"": ""@pipeline().parameters.query"",

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -20,16 +21,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Location = location;
             Sku = sku;
             Zones = new ChangeTrackingList<string>();
-            PublicIPAddresses = new ChangeTrackingList<string>();
-            PrivateIPAddresses = new ChangeTrackingList<string>();
+            PublicIPAddresses = new ChangeTrackingList<IPAddress>();
+            PrivateIPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of AdditionalLocation. </summary>
@@ -43,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="gatewayRegionalUri"> Gateway URL of the API Management service in the Region. </param>
         /// <param name="disableGateway"> Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in this additional location. </param>
         /// <param name="platformVersion"> Compute Platform Version running the service. </param>
-        internal AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku, IList<string> zones, IReadOnlyList<string> publicIPAddresses, IReadOnlyList<string> privateIPAddresses, string publicIPAddressId, VirtualNetworkConfiguration virtualNetworkConfiguration, Uri gatewayRegionalUri, bool? disableGateway, PlatformVersion? platformVersion)
+        internal AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku, IList<string> zones, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, VirtualNetworkConfiguration virtualNetworkConfiguration, Uri gatewayRegionalUri, bool? disableGateway, PlatformVersion? platformVersion)
         {
             Location = location;
             Sku = sku;
@@ -64,11 +62,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
         public IList<string> Zones { get; }
         /// <summary> Public Static Load Balanced IP addresses of the API Management service in the additional location. Available only for Basic, Standard, Premium and Isolated SKU. </summary>
-        public IReadOnlyList<string> PublicIPAddresses { get; }
+        public IReadOnlyList<IPAddress> PublicIPAddresses { get; }
         /// <summary> Private Static Load Balanced IP addresses of the API Management service which is deployed in an Internal Virtual Network in a particular additional location. Available only for Basic, Standard, Premium and Isolated SKU. </summary>
-        public IReadOnlyList<string> PrivateIPAddresses { get; }
+        public IReadOnlyList<IPAddress> PrivateIPAddresses { get; }
         /// <summary> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the location. Supported only for Premium SKU being deployed in Virtual Network. </summary>
-        public string PublicIPAddressId { get; set; }
+        public ResourceIdentifier PublicIPAddressId { get; set; }
         /// <summary> Virtual network configuration for the location. </summary>
         public VirtualNetworkConfiguration VirtualNetworkConfiguration { get; set; }
         /// <summary> Gateway URL of the API Management service in the Region. </summary>

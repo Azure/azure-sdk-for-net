@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary>
         /// Lists factories under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/factories
-        /// Operation Id: Factories_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/factories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Factories_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -43,8 +51,16 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary>
         /// Lists factories under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/factories
-        /// Operation Id: Factories_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/factories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Factories_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -56,56 +72,74 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary>
         /// Updates a factory&apos;s repo information.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/configureFactoryRepo
-        /// Operation Id: Factories_ConfigureFactoryRepo
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/configureFactoryRepo</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Factories_ConfigureFactoryRepo</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationId"/> or <paramref name="factoryRepoUpdate"/> is null. </exception>
-        public static async Task<Response<DataFactoryResource>> ConfigureFactoryRepoAsync(this SubscriptionResource subscriptionResource, string locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="factoryRepoUpdate"/> is null. </exception>
+        public static async Task<Response<DataFactoryResource>> ConfigureFactoryRepoInformationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationId, nameof(locationId));
             Argument.AssertNotNull(factoryRepoUpdate, nameof(factoryRepoUpdate));
 
-            return await GetExtensionClient(subscriptionResource).ConfigureFactoryRepoAsync(locationId, factoryRepoUpdate, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).ConfigureFactoryRepoInformationAsync(locationId, factoryRepoUpdate, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Updates a factory&apos;s repo information.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/configureFactoryRepo
-        /// Operation Id: Factories_ConfigureFactoryRepo
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/configureFactoryRepo</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Factories_ConfigureFactoryRepo</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationId"/> or <paramref name="factoryRepoUpdate"/> is null. </exception>
-        public static Response<DataFactoryResource> ConfigureFactoryRepo(this SubscriptionResource subscriptionResource, string locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="factoryRepoUpdate"/> is null. </exception>
+        public static Response<DataFactoryResource> ConfigureFactoryRepoInformation(this SubscriptionResource subscriptionResource, AzureLocation locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationId, nameof(locationId));
             Argument.AssertNotNull(factoryRepoUpdate, nameof(factoryRepoUpdate));
 
-            return GetExtensionClient(subscriptionResource).ConfigureFactoryRepo(locationId, factoryRepoUpdate, cancellationToken);
+            return GetExtensionClient(subscriptionResource).ConfigureFactoryRepoInformation(locationId, factoryRepoUpdate, cancellationToken);
         }
 
         /// <summary>
         /// Get exposure control feature for specific location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/getFeatureValue
-        /// Operation Id: ExposureControl_GetFeatureValue
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/getFeatureValue</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExposureControl_GetFeatureValue</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="content"> The exposure control request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationId"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<ExposureControlResult>> GetFeatureValueExposureControlAsync(this SubscriptionResource subscriptionResource, string locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ExposureControlResult>> GetFeatureValueExposureControlAsync(this SubscriptionResource subscriptionResource, AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationId, nameof(locationId));
             Argument.AssertNotNull(content, nameof(content));
 
             return await GetExtensionClient(subscriptionResource).GetFeatureValueExposureControlAsync(locationId, content, cancellationToken).ConfigureAwait(false);
@@ -113,18 +147,24 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary>
         /// Get exposure control feature for specific location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/getFeatureValue
-        /// Operation Id: ExposureControl_GetFeatureValue
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/getFeatureValue</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExposureControl_GetFeatureValue</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="content"> The exposure control request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationId"/> or <paramref name="content"/> is null. </exception>
-        public static Response<ExposureControlResult> GetFeatureValueExposureControl(this SubscriptionResource subscriptionResource, string locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<ExposureControlResult> GetFeatureValueExposureControl(this SubscriptionResource subscriptionResource, AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationId, nameof(locationId));
             Argument.AssertNotNull(content, nameof(content));
 
             return GetExtensionClient(subscriptionResource).GetFeatureValueExposureControl(locationId, content, cancellationToken);
@@ -149,8 +189,16 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary>
         /// Gets a factory.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}
-        /// Operation Id: Factories_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Factories_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="factoryName"> The factory name. </param>
@@ -166,8 +214,16 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary>
         /// Gets a factory.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}
-        /// Operation Id: Factories_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Factories_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="factoryName"> The factory name. </param>
@@ -200,191 +256,191 @@ namespace Azure.ResourceManager.DataFactory
         }
         #endregion
 
-        #region IntegrationRuntimeResource
+        #region FactoryIntegrationRuntimeResource
         /// <summary>
-        /// Gets an object representing an <see cref="IntegrationRuntimeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IntegrationRuntimeResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationRuntimeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryIntegrationRuntimeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryIntegrationRuntimeResource.CreateResourceIdentifier" /> to create a <see cref="FactoryIntegrationRuntimeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IntegrationRuntimeResource" /> object. </returns>
-        public static IntegrationRuntimeResource GetIntegrationRuntimeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryIntegrationRuntimeResource" /> object. </returns>
+        public static FactoryIntegrationRuntimeResource GetFactoryIntegrationRuntimeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IntegrationRuntimeResource.ValidateResourceId(id);
-                return new IntegrationRuntimeResource(client, id);
+                FactoryIntegrationRuntimeResource.ValidateResourceId(id);
+                return new FactoryIntegrationRuntimeResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LinkedServiceResource
+        #region FactoryLinkedServiceResource
         /// <summary>
-        /// Gets an object representing a <see cref="LinkedServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LinkedServiceResource.CreateResourceIdentifier" /> to create a <see cref="LinkedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryLinkedServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryLinkedServiceResource.CreateResourceIdentifier" /> to create a <see cref="FactoryLinkedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LinkedServiceResource" /> object. </returns>
-        public static LinkedServiceResource GetLinkedServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryLinkedServiceResource" /> object. </returns>
+        public static FactoryLinkedServiceResource GetFactoryLinkedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LinkedServiceResource.ValidateResourceId(id);
-                return new LinkedServiceResource(client, id);
+                FactoryLinkedServiceResource.ValidateResourceId(id);
+                return new FactoryLinkedServiceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatasetResource
+        #region FactoryDatasetResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatasetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatasetResource.CreateResourceIdentifier" /> to create a <see cref="DatasetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryDatasetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryDatasetResource.CreateResourceIdentifier" /> to create a <see cref="FactoryDatasetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatasetResource" /> object. </returns>
-        public static DatasetResource GetDatasetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryDatasetResource" /> object. </returns>
+        public static FactoryDatasetResource GetFactoryDatasetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatasetResource.ValidateResourceId(id);
-                return new DatasetResource(client, id);
+                FactoryDatasetResource.ValidateResourceId(id);
+                return new FactoryDatasetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataFactoryPipelineResource
+        #region FactoryPipelineResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryPipelineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryPipelineResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryPipelineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryPipelineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryPipelineResource.CreateResourceIdentifier" /> to create a <see cref="FactoryPipelineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryPipelineResource" /> object. </returns>
-        public static DataFactoryPipelineResource GetDataFactoryPipelineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryPipelineResource" /> object. </returns>
+        public static FactoryPipelineResource GetFactoryPipelineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFactoryPipelineResource.ValidateResourceId(id);
-                return new DataFactoryPipelineResource(client, id);
+                FactoryPipelineResource.ValidateResourceId(id);
+                return new FactoryPipelineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataFactoryTriggerResource
+        #region FactoryTriggerResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryTriggerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryTriggerResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryTriggerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryTriggerResource.CreateResourceIdentifier" /> to create a <see cref="FactoryTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryTriggerResource" /> object. </returns>
-        public static DataFactoryTriggerResource GetDataFactoryTriggerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryTriggerResource" /> object. </returns>
+        public static FactoryTriggerResource GetFactoryTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFactoryTriggerResource.ValidateResourceId(id);
-                return new DataFactoryTriggerResource(client, id);
+                FactoryTriggerResource.ValidateResourceId(id);
+                return new FactoryTriggerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataFlowResource
+        #region FactoryDataFlowResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFlowResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFlowResource.CreateResourceIdentifier" /> to create a <see cref="DataFlowResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryDataFlowResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryDataFlowResource.CreateResourceIdentifier" /> to create a <see cref="FactoryDataFlowResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFlowResource" /> object. </returns>
-        public static DataFlowResource GetDataFlowResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryDataFlowResource" /> object. </returns>
+        public static FactoryDataFlowResource GetFactoryDataFlowResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFlowResource.ValidateResourceId(id);
-                return new DataFlowResource(client, id);
+                FactoryDataFlowResource.ValidateResourceId(id);
+                return new FactoryDataFlowResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedVirtualNetworkResource
+        #region FactoryVirtualNetworkResource
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="ManagedVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="FactoryVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedVirtualNetworkResource" /> object. </returns>
-        public static ManagedVirtualNetworkResource GetManagedVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryVirtualNetworkResource" /> object. </returns>
+        public static FactoryVirtualNetworkResource GetFactoryVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedVirtualNetworkResource.ValidateResourceId(id);
-                return new ManagedVirtualNetworkResource(client, id);
+                FactoryVirtualNetworkResource.ValidateResourceId(id);
+                return new FactoryVirtualNetworkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedPrivateEndpointResource
+        #region FactoryPrivateEndpointResource
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedPrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="ManagedPrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryPrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="FactoryPrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedPrivateEndpointResource" /> object. </returns>
-        public static ManagedPrivateEndpointResource GetManagedPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryPrivateEndpointResource" /> object. </returns>
+        public static FactoryPrivateEndpointResource GetFactoryPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedPrivateEndpointResource.ValidateResourceId(id);
-                return new ManagedPrivateEndpointResource(client, id);
+                FactoryPrivateEndpointResource.ValidateResourceId(id);
+                return new FactoryPrivateEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataFactoryPrivateEndpointConnectionResource
+        #region FactoryPrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="FactoryPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryPrivateEndpointConnectionResource" /> object. </returns>
-        public static DataFactoryPrivateEndpointConnectionResource GetDataFactoryPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryPrivateEndpointConnectionResource" /> object. </returns>
+        public static FactoryPrivateEndpointConnectionResource GetFactoryPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFactoryPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new DataFactoryPrivateEndpointConnectionResource(client, id);
+                FactoryPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new FactoryPrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataFactoryGlobalParameterResource
+        #region FactoryGlobalParameterResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryGlobalParameterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryGlobalParameterResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryGlobalParameterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryGlobalParameterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryGlobalParameterResource.CreateResourceIdentifier" /> to create a <see cref="FactoryGlobalParameterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryGlobalParameterResource" /> object. </returns>
-        public static DataFactoryGlobalParameterResource GetDataFactoryGlobalParameterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryGlobalParameterResource" /> object. </returns>
+        public static FactoryGlobalParameterResource GetFactoryGlobalParameterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFactoryGlobalParameterResource.ValidateResourceId(id);
-                return new DataFactoryGlobalParameterResource(client, id);
+                FactoryGlobalParameterResource.ValidateResourceId(id);
+                return new FactoryGlobalParameterResource(client, id);
             }
             );
         }

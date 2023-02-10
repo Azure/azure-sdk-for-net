@@ -17,6 +17,10 @@ namespace Microsoft.Azure.WebJobs
         public string ConsumerGroup { get { throw null; } set { } }
         public string EventHubName { get { throw null; } }
     }
+    public static partial class IAsyncCollectorExtensions
+    {
+        public static System.Threading.Tasks.Task AddAsync(this Microsoft.Azure.WebJobs.IAsyncCollector<Azure.Messaging.EventHubs.EventData> instance, Azure.Messaging.EventHubs.EventData eventData, string partitionKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
 }
 namespace Microsoft.Azure.WebJobs.EventHubs
 {
@@ -48,6 +52,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         FromStart = 0,
         FromEnd = 1,
         FromEnqueuedTime = 2,
+    }
+    public partial class TriggerPartitionContext : Azure.Messaging.EventHubs.Consumer.PartitionContext
+    {
+        public TriggerPartitionContext(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId) : base (default(string), default(string), default(string), default(string)) { }
+        public bool IsCheckpointingAfterInvocation { get { throw null; } }
     }
 }
 namespace Microsoft.Extensions.Hosting

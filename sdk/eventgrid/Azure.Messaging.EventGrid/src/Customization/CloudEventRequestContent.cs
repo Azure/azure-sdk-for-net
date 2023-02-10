@@ -14,14 +14,16 @@ namespace Azure.Messaging.EventGrid
 {
     internal class CloudEventRequestContent : RequestContent
     {
-        private IEnumerable<CloudEvent> _cloudEvents;
+        private readonly IEnumerable<CloudEvent> _cloudEvents;
         private const string TraceParentHeaderName = "traceparent";
         private const string TraceStateHeaderName = "tracestate";
+        private readonly bool _isDistributedTracingEnabled;
         private byte[] _data;
 
-        public CloudEventRequestContent(IEnumerable<CloudEvent> cloudEvents)
+        public CloudEventRequestContent(IEnumerable<CloudEvent> cloudEvents, bool isDistributedTracingEnabled)
         {
             _cloudEvents = cloudEvents;
+            _isDistributedTracingEnabled = isDistributedTracingEnabled;
         }
 
         public override void Dispose()
@@ -54,25 +56,28 @@ namespace Azure.Messaging.EventGrid
                 return;
             }
 
-            string currentActivityId = null;
-            string traceState = null;
-            Activity currentActivity = Activity.Current;
-            if (currentActivity != null && currentActivity.IsW3CFormat())
+            if (_isDistributedTracingEnabled)
             {
-                currentActivityId = currentActivity.Id;
-                traceState = currentActivity.GetTraceState();
-            }
-
-            foreach (CloudEvent cloudEvent in _cloudEvents)
-            {
-                if (currentActivityId != null &&
-                    !cloudEvent.ExtensionAttributes.ContainsKey(TraceParentHeaderName) &&
-                    !cloudEvent.ExtensionAttributes.ContainsKey(TraceStateHeaderName))
+                string currentActivityId = null;
+                string traceState = null;
+                Activity currentActivity = Activity.Current;
+                if (currentActivity != null && currentActivity.IsW3CFormat())
                 {
-                    cloudEvent.ExtensionAttributes.Add(TraceParentHeaderName, currentActivityId);
-                    if (traceState != null)
+                    currentActivityId = currentActivity.Id;
+                    traceState = currentActivity.GetTraceState();
+                }
+
+                foreach (CloudEvent cloudEvent in _cloudEvents)
+                {
+                    if (currentActivityId != null &&
+                        !cloudEvent.ExtensionAttributes.ContainsKey(TraceParentHeaderName) &&
+                        !cloudEvent.ExtensionAttributes.ContainsKey(TraceStateHeaderName))
                     {
-                        cloudEvent.ExtensionAttributes.Add(TraceStateHeaderName, traceState);
+                        cloudEvent.ExtensionAttributes.Add(TraceParentHeaderName, currentActivityId);
+                        if (traceState != null)
+                        {
+                            cloudEvent.ExtensionAttributes.Add(TraceStateHeaderName, traceState);
+                        }
                     }
                 }
             }

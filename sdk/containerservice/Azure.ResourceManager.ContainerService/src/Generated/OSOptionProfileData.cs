@@ -20,12 +20,9 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Initializes a new instance of OSOptionProfileData. </summary>
         /// <param name="osOptionPropertyList"> The list of OS options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osOptionPropertyList"/> is null. </exception>
-        internal OSOptionProfileData(IEnumerable<OSOptionProperty> osOptionPropertyList)
+        internal OSOptionProfileData(IEnumerable<ContainerServiceOSOptionProperty> osOptionPropertyList)
         {
-            if (osOptionPropertyList == null)
-            {
-                throw new ArgumentNullException(nameof(osOptionPropertyList));
-            }
+            Argument.AssertNotNull(osOptionPropertyList, nameof(osOptionPropertyList));
 
             OSOptionPropertyList = osOptionPropertyList.ToList();
         }
@@ -36,12 +33,12 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="osOptionPropertyList"> The list of OS options. </param>
-        internal OSOptionProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<OSOptionProperty> osOptionPropertyList) : base(id, name, resourceType, systemData)
+        internal OSOptionProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<ContainerServiceOSOptionProperty> osOptionPropertyList) : base(id, name, resourceType, systemData)
         {
             OSOptionPropertyList = osOptionPropertyList;
         }
 
         /// <summary> The list of OS options. </summary>
-        public IReadOnlyList<OSOptionProperty> OSOptionPropertyList { get; }
+        public IReadOnlyList<ContainerServiceOSOptionProperty> OSOptionPropertyList { get; }
     }
 }

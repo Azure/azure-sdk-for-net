@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(KeyType))
             {
-                writer.WritePropertyName("keyType");
+                writer.WritePropertyName("keyType"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Optional<bool> enabled = default;
             Optional<DateTimeOffset> lastEnabledTime = default;
-            Optional<StorageKeyType> keyType = default;
+            Optional<StorageEncryptionKeyType> keyType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("lastEnabledTime"))
+                if (property.NameEquals("lastEnabledTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.Storage.Models
                     lastEnabledTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("keyType"))
+                if (property.NameEquals("keyType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyType = new StorageKeyType(property.Value.GetString());
+                    keyType = new StorageEncryptionKeyType(property.Value.GetString());
                     continue;
                 }
             }

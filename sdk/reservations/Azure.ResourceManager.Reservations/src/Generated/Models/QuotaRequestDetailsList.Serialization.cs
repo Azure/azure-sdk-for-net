@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static QuotaRequestDetailsList DeserializeQuotaRequestDetailsList(JsonElement element)
         {
-            Optional<IReadOnlyList<QuotaRequestDetailsData>> value = default;
+            Optional<IReadOnlyList<QuotaRequestDetailData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<QuotaRequestDetailsData> array = new List<QuotaRequestDetailsData>();
+                    List<QuotaRequestDetailData> array = new List<QuotaRequestDetailData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaRequestDetailsData.DeserializeQuotaRequestDetailsData(item));
+                        array.Add(QuotaRequestDetailData.DeserializeQuotaRequestDetailData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

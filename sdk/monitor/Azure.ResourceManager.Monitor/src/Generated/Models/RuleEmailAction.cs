@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specifies the action to send email when the rule condition is evaluated. The discriminator is always RuleEmailAction in this case. </summary>
-    public partial class RuleEmailAction : RuleAction
+    public partial class RuleEmailAction : AlertRuleAction
     {
         /// <summary> Initializes a new instance of RuleEmailAction. </summary>
         public RuleEmailAction()

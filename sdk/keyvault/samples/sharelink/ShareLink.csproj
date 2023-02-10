@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Azure.Security.KeyVault.Storage</RootNamespace>
     <NoWarn>
       $(NoWarn);
@@ -13,36 +13,54 @@
       CA2016;
       AZC0100;
     </NoWarn>
-    <IncludeAzureCoreSharedCode>true</IncludeAzureCoreSharedCode>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" />
     <PackageReference Include="System.CommandLine" VersionOverride="2.0.0-beta1.21216.1" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsSample)' == 'true'">
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsSample)' != 'true'">
     <!-- Use decentralized package references when building outside https://github.com/Azure/azure-sdk-for-net -->
-    <PackageReference Update="Azure.Core" Version="1.14.0" />
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210602.1" PrivateAssets="All" />
+    <PackageReference Update="Azure.Core" Version="1.26.0" />
     <PackageReference Update="Azure.Identity" Version="1.4.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.1.1" />
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210602.1" PrivateAssets="All" />
     <PackageReference Update="System.CommandLine" Version="%(VersionOverride)" />
     <PackageReference Update="System.Text.Json" Version="4.6.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\AppContextSwitchHelper.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\Argument.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\AsyncLockWithValue.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\ClientDiagnostics.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\ConstantDelayStrategy.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\ContentTypeUtilities.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\DelayStrategy.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\DiagnosticScope.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\DiagnosticScopeFactory.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\HttpMessageSanitizer.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\OperationInternal.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\OperationInternalBase.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\OperationInternalOfT.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\OperationPoller.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\RetryAfterDelayStrategy.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\TaskExtensions.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\VoidValue.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(IsSample)' == 'true'">
     <!-- Link files needed for Key Vault -->
-    <Compile Include="..\..\Azure.Security.KeyVault.Shared\src\ChallengeBasedAuthenticationPolicy.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Security.KeyVault.Shared\src\ChallengeBasedAuthenticationPolicy.cs" LinkBase="Shared\KeyVault" />
   </ItemGroup>
 
   <Target Name="CopySource">

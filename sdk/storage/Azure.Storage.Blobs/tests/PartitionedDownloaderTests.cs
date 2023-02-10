@@ -174,7 +174,7 @@ namespace Azure.Storage.Blobs.Test
             blockClient.Setup(c => c.DownloadStreamingInternal(
                 It.IsAny<HttpRange>(),
                 It.IsAny<BlobRequestConditions>(),
-                false,
+                It.IsAny<DownloadTransferValidationOptions>(),
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 _async,
@@ -204,25 +204,25 @@ namespace Azure.Storage.Blobs.Test
             blockClient.Setup(c => c.DownloadStreamingInternal(
                 It.IsAny<HttpRange>(),
                 It.IsAny<BlobRequestConditions>(),
-                false,
+                It.IsAny<DownloadTransferValidationOptions>(),
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 _async,
                 s_cancellationToken)
-            ).Returns<HttpRange, BlobRequestConditions, bool, IProgress<long>, string, bool, CancellationToken>(
-                (range, conditions, rangeGetHash, progress, operationName, async, cancellation) =>
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, async, cancellation) =>
                 {
                     return async
                         ? dataSource.GetStreamAsync(
                             range,
                             conditions,
-                            rangeGetHash,
+                            validation,
                             progress: progress,
                             cancellation)
                         : Task.FromResult(dataSource.GetStream(
                             range,
                             conditions,
-                            rangeGetHash,
+                            validation,
                             progress: progress,
                             cancellation));
                 });
@@ -251,15 +251,36 @@ namespace Azure.Storage.Blobs.Test
                 _length = length;
             }
 
-            public async Task<Response<BlobDownloadStreamingResult>> GetStreamAsync(HttpRange range, BlobRequestConditions conditions = default, bool hash = default, IProgress<long> progress = default, CancellationToken token = default)
+            public async Task<Response<BlobDownloadStreamingResult>> GetStreamInternal(
+                HttpRange range,
+                BlobRequestConditions conditions,
+                DownloadTransferValidationOptions transferValidation,
+                IProgress<long> progress,
+                string operationName,
+                bool async,
+                CancellationToken cancellationToken)
+            {
+                if (async)
+                {
+                    await Task.Delay(25);
+                }
+                return GetStream(
+                    range,
+                    conditions,
+                    transferValidation,
+                    progress,
+                    cancellationToken);
+            }
+
+            public async Task<Response<BlobDownloadStreamingResult>> GetStreamAsync(HttpRange range, BlobRequestConditions conditions = default, DownloadTransferValidationOptions validation = default, IProgress<long> progress = default, CancellationToken token = default)
             {
                 await Task.Delay(25);
-                return GetStream(range, conditions, hash, progress, token);
+                return GetStream(range, conditions, validation, progress, token);
             }
 
             public HttpRange FullRange => new HttpRange(0, _length);
 
-            public Response<BlobDownloadStreamingResult> GetStream(HttpRange range, BlobRequestConditions conditions, bool hash, IProgress<long> progress, CancellationToken token)
+            public Response<BlobDownloadStreamingResult> GetStream(HttpRange range, BlobRequestConditions conditions, DownloadTransferValidationOptions validation, IProgress<long> progress, CancellationToken token)
             {
                 lock (Requests)
                 {

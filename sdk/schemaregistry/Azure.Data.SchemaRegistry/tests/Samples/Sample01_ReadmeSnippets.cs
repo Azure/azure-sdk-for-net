@@ -19,7 +19,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         [OneTimeSetUp]
         public void CreateSchemaRegistryClient()
         {
-            string fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpoint;
+            string fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpointAvro;
 
             #region Snippet:SchemaRegistryCreateSchemaRegistryClient
             // Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
@@ -96,6 +96,22 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 
             #region Snippet:SchemaRegistryRetrieveSchema
             SchemaRegistrySchema schema = client.GetSchema(schemaId);
+            string definition = schema.Definition;
+            #endregion
+
+            Assert.AreEqual(Regex.Replace(_definition, @"\s+", string.Empty), definition);
+        }
+
+        [Test]
+        [Order(4)]
+        public void RetrieveSchemaVersion()
+        {
+            string groupName = _schemaProperties.GroupName;
+            string name = _schemaProperties.Name;
+            int version = 1;
+
+            #region Snippet:SchemaRegistryRetrieveSchemaVersion
+            SchemaRegistrySchema schema = client.GetSchema(groupName, name, version);
             string definition = schema.Definition;
             #endregion
 

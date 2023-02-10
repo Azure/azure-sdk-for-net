@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     {
         internal static NotificationHubListResult DeserializeNotificationHubListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NotificationHubResourceData>> value = default;
+            Optional<IReadOnlyList<NotificationHubData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NotificationHubResourceData> array = new List<NotificationHubResourceData>();
+                    List<NotificationHubData> array = new List<NotificationHubData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationHubResourceData.DeserializeNotificationHubResourceData(item));
+                        array.Add(NotificationHubData.DeserializeNotificationHubData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

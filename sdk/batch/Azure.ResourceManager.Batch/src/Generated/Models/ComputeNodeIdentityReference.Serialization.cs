@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             writer.WriteEndObject();
@@ -25,12 +25,17 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static ComputeNodeIdentityReference DeserializeComputeNodeIdentityReference(JsonElement element)
         {
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

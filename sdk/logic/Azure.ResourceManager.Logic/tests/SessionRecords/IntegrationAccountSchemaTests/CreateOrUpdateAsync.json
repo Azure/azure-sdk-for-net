@@ -1,0 +1,106 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-9192/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5389?api-version=2019-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-53195d51044c68488bc5bbd5cb9ae24c-4262f11868530243-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220824.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "cf16de9222b54e125128cc5c4c9da30f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "331",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 09:08:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0d5cfab8-1084-4f8d-b58b-7a727c4718cd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11976",
+        "x-ms-request-id": "centralus:31cae594-3c1e-40dc-8f01-63a842727938",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T090811Z:0d5cfab8-1084-4f8d-b58b-7a727c4718cd"
+      },
+      "ResponseBody": {
+        "properties": {
+          "state": "Enabled"
+        },
+        "sku": {
+          "name": "Standard"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-9192/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5389",
+        "name": "intergrationAccount5389",
+        "type": "Microsoft.Logic/integrationAccounts",
+        "location": "centralus",
+        "tags": {}
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-9192/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5389/schemas/schema4469?api-version=2019-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "10966",
+        "Content-Type": "application/json",
+        "traceparent": "00-91d47a27783d5543a5509cd333b4189e-ffd18960e2ad1543-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220824.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "db7ab67cdf137626eaba9923f086009c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "centralus",
+        "properties": {
+          "schemaType": "Xml",
+          "content": "\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-16\u0022?\u003E\r\n\u003Cxs:schema xmlns:b=\u0022http://schemas.microsoft.com/BizTalk/2003\u0022 xmlns=\u0022http://Inbound_EDI.OrderFile\u0022 targetNamespace=\u0022http://Inbound_EDI.OrderFile\u0022 xmlns:xs=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003E\r\n  \u003Cxs:annotation\u003E\r\n    \u003Cxs:appinfo\u003E\r\n      \u003Cb:schemaInfo default_pad_char=\u0022 \u0022 count_positions_by_byte=\u0022false\u0022 parser_optimization=\u0022speed\u0022 lookahead_depth=\u00223\u0022 suppress_empty_nodes=\u0022false\u0022 generate_empty_nodes=\u0022true\u0022 allow_early_termination=\u0022false\u0022 early_terminate_optional_fields=\u0022false\u0022 allow_message_breakup_of_infix_root=\u0022false\u0022 compile_parse_tables=\u0022false\u0022 standard=\u0022Flat File\u0022 root_reference=\u0022OrderFile\u0022 /\u003E\r\n      \u003CschemaEditorExtension:schemaInfo namespaceAlias=\u0022b\u0022 extensionClass=\u0022Microsoft.BizTalk.FlatFileExtension.FlatFileExtension\u0022 standardName=\u0022Flat File\u0022 xmlns:schemaEditorExtension=\u0022http://schemas.microsoft.com/BizTalk/2003/SchemaEditorExtensions\u0022 /\u003E\r\n    \u003C/xs:appinfo\u003E\r\n  \u003C/xs:annotation\u003E\r\n  \u003Cxs:element name=\u0022OrderFile\u0022\u003E\r\n    \u003Cxs:annotation\u003E\r\n      \u003Cxs:appinfo\u003E\r\n        \u003Cb:recordInfo structure=\u0022delimited\u0022 preserve_delimiter_for_empty_data=\u0022true\u0022 suppress_trailing_delimiters=\u0022false\u0022 sequence_number=\u00221\u0022 /\u003E\r\n      \u003C/xs:appinfo\u003E\r\n    \u003C/xs:annotation\u003E\r\n    \u003Cxs:complexType\u003E\r\n      \u003Cxs:sequence\u003E\r\n        \u003Cxs:annotation\u003E\r\n          \u003Cxs:appinfo\u003E\r\n            \u003Cb:groupInfo sequence_number=\u00220\u0022 /\u003E\r\n          \u003C/xs:appinfo\u003E\r\n        \u003C/xs:annotation\u003E\r\n        \u003Cxs:element name=\u0022Order\u0022\u003E\r\n          \u003Cxs:annotation\u003E\r\n            \u003Cxs:appinfo\u003E\r\n              \u003Cb:recordInfo sequence_number=\u00221\u0022 structure=\u0022delimited\u0022 preserve_delimiter_for_empty_data=\u0022true\u0022 suppress_trailing_delimiters=\u0022false\u0022 child_delimiter_type=\u0022hex\u0022 child_delimiter=\u00220x0D 0x0A\u0022 child_order=\u0022infix\u0022 /\u003E\r\n            \u003C/xs:appinfo\u003E\r\n          \u003C/xs:annotation\u003E\r\n          \u003Cxs:complexType\u003E\r\n            \u003Cxs:sequence\u003E\r\n              \u003Cxs:annotation\u003E\r\n                \u003Cxs:appinfo\u003E\r\n                  \u003Cb:groupInfo sequence_number=\u00220\u0022 /\u003E\r\n                \u003C/xs:appinfo\u003E\r\n              \u003C/xs:annotation\u003E\r\n              \u003Cxs:element name=\u0022Header\u0022\u003E\r\n                \u003Cxs:annotation\u003E\r\n                  \u003Cxs:appinfo\u003E\r\n                    \u003Cb:recordInfo sequence_number=\u00221\u0022 structure=\u0022delimited\u0022 preserve_delimiter_for_empty_data=\u0022true\u0022 suppress_trailing_delimiters=\u0022false\u0022 child_delimiter_type=\u0022char\u0022 child_delimiter=\u0022|\u0022 child_order=\u0022infix\u0022 tag_name=\u0022HDR|\u0022 /\u003E\r\n                  \u003C/xs:appinfo\u003E\r\n                \u003C/xs:annotation\u003E\r\n                \u003Cxs:complexType\u003E\r\n                  \u003Cxs:sequence\u003E\r\n                    \u003Cxs:annotation\u003E\r\n                      \u003Cxs:appinfo\u003E\r\n                        \u003Cb:groupInfo sequence_number=\u00220\u0022 /\u003E\r\n                      \u003C/xs:appinfo\u003E\r\n                    \u003C/xs:annotation\u003E\r\n                    \u003Cxs:element name=\u0022PODate\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00221\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022PONumber\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo justification=\u0022left\u0022 sequence_number=\u00222\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022CustomerID\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00223\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022CustomerContactName\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00224\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022CustomerContactPhone\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00225\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                  \u003C/xs:sequence\u003E\r\n                \u003C/xs:complexType\u003E\r\n              \u003C/xs:element\u003E\r\n              \u003Cxs:element minOccurs=\u00221\u0022 maxOccurs=\u0022unbounded\u0022 name=\u0022LineItems\u0022\u003E\r\n                \u003Cxs:annotation\u003E\r\n                  \u003Cxs:appinfo\u003E\r\n                    \u003Cb:recordInfo sequence_number=\u00222\u0022 structure=\u0022delimited\u0022 preserve_delimiter_for_empty_data=\u0022true\u0022 suppress_trailing_delimiters=\u0022false\u0022 child_delimiter_type=\u0022char\u0022 child_delimiter=\u0022|\u0022 child_order=\u0022infix\u0022 tag_name=\u0022DTL|\u0022 /\u003E\r\n                  \u003C/xs:appinfo\u003E\r\n                \u003C/xs:annotation\u003E\r\n                \u003Cxs:complexType\u003E\r\n                  \u003Cxs:sequence\u003E\r\n                    \u003Cxs:annotation\u003E\r\n                      \u003Cxs:appinfo\u003E\r\n                        \u003Cb:groupInfo sequence_number=\u00220\u0022 /\u003E\r\n                      \u003C/xs:appinfo\u003E\r\n                    \u003C/xs:annotation\u003E\r\n                    \u003Cxs:element name=\u0022PONumber\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00221\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022ItemOrdered\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00222\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022Quantity\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00223\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022UOM\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00224\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022Price\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00225\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022ExtendedPrice\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00226\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                    \u003Cxs:element name=\u0022Description\u0022 type=\u0022xs:string\u0022\u003E\r\n                      \u003Cxs:annotation\u003E\r\n                        \u003Cxs:appinfo\u003E\r\n                          \u003Cb:fieldInfo sequence_number=\u00227\u0022 justification=\u0022left\u0022 /\u003E\r\n                        \u003C/xs:appinfo\u003E\r\n                      \u003C/xs:annotation\u003E\r\n                    \u003C/xs:element\u003E\r\n                  \u003C/xs:sequence\u003E\r\n                \u003C/xs:complexType\u003E\r\n              \u003C/xs:element\u003E\r\n            \u003C/xs:sequence\u003E\r\n          \u003C/xs:complexType\u003E\r\n        \u003C/xs:element\u003E\r\n      \u003C/xs:sequence\u003E\r\n    \u003C/xs:complexType\u003E\r\n  \u003C/xs:element\u003E\r\n\u003C/xs:schema\u003E",
+          "contentType": "application/xml"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "785",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 09:08:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "19a7716e-96a5-4144-b928-21b09b283c10",
+        "x-ms-ratelimit-remaining-subscription-writes": "1183",
+        "x-ms-request-id": "centralus:b5062906-436a-4552-bf8e-31c87602b715",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T090813Z:19a7716e-96a5-4144-b928-21b09b283c10"
+      },
+      "ResponseBody": {
+        "properties": {
+          "schemaType": "Xml",
+          "targetNamespace": "http://Inbound_EDI.OrderFile",
+          "documentName": "OrderFile",
+          "contentLink": {
+            "uri": "https://prod-02.centralus.logic.azure.com:443/integrationAccounts/28f6057cb323449ca5a09fd89e07a982/schemas/schema4469/contents/Value?api-version=2015-08-01-preview\u0026se=2022-08-24T13%3A08%3A13.0057658Z\u0026sp=%2Fschemas%2Fschema4469%2Fread\u0026sv=1.0\u0026sig=_6YuYOteeKOt5bMVF-x-CMhGsyQtgTu7YjUGwUZWWRo",
+            "contentSize": 7901
+          },
+          "createdTime": "2022-08-24T09:08:12.9260673Z",
+          "changedTime": "2022-08-24T09:08:12.9263281Z"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-9192/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5389/schemas/schema4469",
+        "name": "schema4469",
+        "type": "Microsoft.Logic/integrationAccounts/schemas"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1053971131",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

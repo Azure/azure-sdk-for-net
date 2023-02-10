@@ -1,8 +1,8 @@
-## Using the Processor
+# Using the processor
 
 This sample demonstrates how to use the processor. The processor offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers.
 
-### Processing messages
+## Processing messages
 
 ```C# Snippet:ServiceBusProcessMessages
 string connectionString = "<connection_string>";
@@ -69,9 +69,3 @@ await processor.StartProcessingAsync();
 // since the processing happens in the background, we add a Console.ReadKey to allow the processing to continue until a key is pressed.
 Console.ReadKey();
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample04_Processor.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample04_Processor.cs)

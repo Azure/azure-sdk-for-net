@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Storageaccounts))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
-                writer.WritePropertyName("storageaccounts");
+                writer.WritePropertyName("storageaccounts"u8);
                 writer.WriteStartArray();
-                foreach (var item in Storageaccounts)
+                foreach (var item in StorageAccounts)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static StorageProfile DeserializeStorageProfile(JsonElement element)
         {
-            Optional<IList<StorageAccount>> storageaccounts = default;
+            Optional<IList<HDInsightStorageAccountInfo>> storageaccounts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageaccounts"))
+                if (property.NameEquals("storageaccounts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<StorageAccount> array = new List<StorageAccount>();
+                    List<HDInsightStorageAccountInfo> array = new List<HDInsightStorageAccountInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccount.DeserializeStorageAccount(item));
+                        array.Add(HDInsightStorageAccountInfo.DeserializeHDInsightStorageAccountInfo(item));
                     }
                     storageaccounts = array;
                     continue;

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -19,25 +20,22 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         internal ContentKeyPolicyProperties(IEnumerable<ContentKeyPolicyOption> options)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             Options = options.ToList();
         }
 
         /// <summary> Initializes a new instance of ContentKeyPolicyProperties. </summary>
         /// <param name="policyId"> The legacy Policy ID. </param>
-        /// <param name="created"> The creation date of the Policy. </param>
-        /// <param name="lastModified"> The last modified date of the Policy. </param>
+        /// <param name="createdOn"> The creation date of the Policy. </param>
+        /// <param name="lastModifiedOn"> The last modified date of the Policy. </param>
         /// <param name="description"> A description for the Policy. </param>
         /// <param name="options"> The Key Policy options. </param>
-        internal ContentKeyPolicyProperties(Guid? policyId, DateTimeOffset? created, DateTimeOffset? lastModified, string description, IReadOnlyList<ContentKeyPolicyOption> options)
+        internal ContentKeyPolicyProperties(Guid? policyId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IReadOnlyList<ContentKeyPolicyOption> options)
         {
             PolicyId = policyId;
-            Created = created;
-            LastModified = lastModified;
+            CreatedOn = createdOn;
+            LastModifiedOn = lastModifiedOn;
             Description = description;
             Options = options;
         }
@@ -45,9 +43,9 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The legacy Policy ID. </summary>
         public Guid? PolicyId { get; }
         /// <summary> The creation date of the Policy. </summary>
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The last modified date of the Policy. </summary>
-        public DateTimeOffset? LastModified { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> A description for the Policy. </summary>
         public string Description { get; }
         /// <summary> The Key Policy options. </summary>

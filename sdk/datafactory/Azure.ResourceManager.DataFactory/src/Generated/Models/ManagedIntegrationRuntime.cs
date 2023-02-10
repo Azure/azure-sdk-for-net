@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Managed integration runtime, including managed elastic and managed dedicated integration runtimes. </summary>
-    public partial class ManagedIntegrationRuntime : IntegrationRuntime
+    public partial class ManagedIntegrationRuntime : IntegrationRuntimeDefinition
     {
         /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>
         public ManagedIntegrationRuntime()
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The name of virtual network to which Azure-SSIS integration runtime will join. </summary>
         internal IntegrationRuntimeCustomerVirtualNetwork CustomerVirtualNetwork { get; set; }
         /// <summary> The ID of subnet to which Azure-SSIS integration runtime will join. </summary>
-        public string CustomerVirtualNetworkSubnetId
+        public ResourceIdentifier CustomerVirtualNetworkSubnetId
         {
             get => CustomerVirtualNetwork is null ? default : CustomerVirtualNetwork.SubnetId;
             set

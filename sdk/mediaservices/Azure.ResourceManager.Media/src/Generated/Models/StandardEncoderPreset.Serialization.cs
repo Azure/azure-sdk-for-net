@@ -16,75 +16,102 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(ExperimentalOptions))
+            {
+                writer.WritePropertyName("experimentalOptions"u8);
+                writer.WriteStartObject();
+                foreach (var item in ExperimentalOptions)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(Filters))
             {
-                writer.WritePropertyName("filters");
+                writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
             }
-            writer.WritePropertyName("codecs");
+            writer.WritePropertyName("codecs"u8);
             writer.WriteStartArray();
             foreach (var item in Codecs)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("formats");
+            writer.WritePropertyName("formats"u8);
             writer.WriteStartArray();
             foreach (var item in Formats)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
 
         internal static StandardEncoderPreset DeserializeStandardEncoderPreset(JsonElement element)
         {
-            Optional<Filters> filters = default;
-            IList<Codec> codecs = default;
-            IList<Format> formats = default;
+            Optional<IDictionary<string, string>> experimentalOptions = default;
+            Optional<FilteringOperations> filters = default;
+            IList<MediaCodecBase> codecs = default;
+            IList<MediaFormatBase> formats = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filters"))
+                if (property.NameEquals("experimentalOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    filters = Filters.DeserializeFilters(property.Value);
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    experimentalOptions = dictionary;
                     continue;
                 }
-                if (property.NameEquals("codecs"))
+                if (property.NameEquals("filters"u8))
                 {
-                    List<Codec> array = new List<Codec>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    filters = FilteringOperations.DeserializeFilteringOperations(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("codecs"u8))
+                {
+                    List<MediaCodecBase> array = new List<MediaCodecBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Codec.DeserializeCodec(item));
+                        array.Add(MediaCodecBase.DeserializeMediaCodecBase(item));
                     }
                     codecs = array;
                     continue;
                 }
-                if (property.NameEquals("formats"))
+                if (property.NameEquals("formats"u8))
                 {
-                    List<Format> array = new List<Format>();
+                    List<MediaFormatBase> array = new List<MediaFormatBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Format.DeserializeFormat(item));
+                        array.Add(MediaFormatBase.DeserializeMediaFormatBase(item));
                     }
                     formats = array;
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
             }
-            return new StandardEncoderPreset(odataType, filters.Value, codecs, formats);
+            return new StandardEncoderPreset(odataType, Optional.ToDictionary(experimentalOptions), filters.Value, codecs, formats);
         }
     }
 }

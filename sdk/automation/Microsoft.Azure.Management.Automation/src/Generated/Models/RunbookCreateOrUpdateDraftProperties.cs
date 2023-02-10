@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         /// <param name="runbookType">Gets or sets the type of the runbook.
         /// Possible values include: 'Script', 'Graph', 'PowerShellWorkflow',
-        /// 'PowerShell', 'GraphPowerShellWorkflow', 'GraphPowerShell'</param>
+        /// 'PowerShell', 'GraphPowerShellWorkflow', 'GraphPowerShell',
+        /// 'Python2', 'Python3'</param>
         /// <param name="draft">Gets or sets the draft runbook
         /// properties.</param>
         /// <param name="logVerbose">Gets or sets verbose log option.</param>
@@ -75,7 +76,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Gets or sets the type of the runbook. Possible values include:
         /// 'Script', 'Graph', 'PowerShellWorkflow', 'PowerShell',
-        /// 'GraphPowerShellWorkflow', 'GraphPowerShell'
+        /// 'GraphPowerShellWorkflow', 'GraphPowerShell', 'Python2', 'Python3'
         /// </summary>
         [JsonProperty(PropertyName = "runbookType")]
         public string RunbookType { get; set; }

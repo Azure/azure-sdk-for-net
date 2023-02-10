@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,8 +19,6 @@ namespace Azure.ResourceManager.Relay
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _namespacesClientDiagnostics;
-        private NamespacesRestOperations _namespacesRestClient;
         private ClientDiagnostics _relayNamespaceNamespacesClientDiagnostics;
         private NamespacesRestOperations _relayNamespaceNamespacesRestClient;
 
@@ -37,8 +34,6 @@ namespace Azure.ResourceManager.Relay
         {
         }
 
-        private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Relay", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private NamespacesRestOperations NamespacesRestClient => _namespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics RelayNamespaceNamespacesClientDiagnostics => _relayNamespaceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Relay", RelayNamespaceResource.ResourceType.Namespace, Diagnostics);
         private NamespacesRestOperations RelayNamespaceNamespacesRestClient => _relayNamespaceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RelayNamespaceResource.ResourceType));
 
@@ -50,18 +45,26 @@ namespace Azure.ResourceManager.Relay
 
         /// <summary>
         /// Check the specified namespace name availability.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Relay/checkNameAvailability
-        /// Operation Id: Namespaces_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Relay/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="checkNameAvailability"> Parameters to check availability of the specified namespace name. </param>
+        /// <param name="content"> Parameters to check availability of the specified namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityNamespaceAsync(CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RelayNameAvailabilityResult>> CheckRelayNamespaceNameAvailabilityAsync(RelayNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityNamespace");
+            using var scope = RelayNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckRelayNamespaceNameAvailability");
             scope.Start();
             try
             {
-                var response = await NamespacesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, checkNameAvailability, cancellationToken).ConfigureAwait(false);
+                var response = await RelayNamespaceNamespacesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -73,18 +76,26 @@ namespace Azure.ResourceManager.Relay
 
         /// <summary>
         /// Check the specified namespace name availability.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Relay/checkNameAvailability
-        /// Operation Id: Namespaces_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Relay/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="checkNameAvailability"> Parameters to check availability of the specified namespace name. </param>
+        /// <param name="content"> Parameters to check availability of the specified namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityNamespace(CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
+        public virtual Response<RelayNameAvailabilityResult> CheckRelayNamespaceNameAvailability(RelayNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityNamespace");
+            using var scope = RelayNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckRelayNamespaceNameAvailability");
             scope.Start();
             try
             {
-                var response = NamespacesRestClient.CheckNameAvailability(Id.SubscriptionId, checkNameAvailability, cancellationToken);
+                var response = RelayNamespaceNamespacesRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -96,86 +107,46 @@ namespace Azure.ResourceManager.Relay
 
         /// <summary>
         /// Lists all the available namespaces within the subscription regardless of the resourceGroups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Relay/namespaces
-        /// Operation Id: Namespaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Relay/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RelayNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RelayNamespaceResource> GetRelayNamespacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RelayNamespaceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RelayNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRelayNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = await RelayNamespaceNamespacesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RelayNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RelayNamespaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RelayNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRelayNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = await RelayNamespaceNamespacesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RelayNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RelayNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RelayNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceResource(Client, RelayNamespaceData.DeserializeRelayNamespaceData(e)), RelayNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRelayNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the available namespaces within the subscription regardless of the resourceGroups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Relay/namespaces
-        /// Operation Id: Namespaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Relay/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RelayNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RelayNamespaceResource> GetRelayNamespaces(CancellationToken cancellationToken = default)
         {
-            Page<RelayNamespaceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RelayNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRelayNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = RelayNamespaceNamespacesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RelayNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RelayNamespaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RelayNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRelayNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = RelayNamespaceNamespacesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RelayNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RelayNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RelayNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceResource(Client, RelayNamespaceData.DeserializeRelayNamespaceData(e)), RelayNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRelayNamespaces", "value", "nextLink", cancellationToken);
         }
     }
 }

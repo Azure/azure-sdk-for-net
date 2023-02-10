@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Inputs))
             {
-                writer.WritePropertyName("inputs");
+                writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
-                writer.WritePropertyName("outputs");
+                writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
@@ -39,26 +39,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(LinkedServiceName))
             {
-                writer.WritePropertyName("linkedServiceName");
+                writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
-                writer.WritePropertyName("policy");
+                writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn");
+                writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(UserProperties))
             {
-                writer.WritePropertyName("userProperties");
+                writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
@@ -76,15 +76,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source);
-            writer.WritePropertyName("sink");
+            writer.WritePropertyName("sink"u8);
             writer.WriteObjectValue(Sink);
             if (Optional.IsDefined(Translator))
             {
-                writer.WritePropertyName("translator");
+                writer.WritePropertyName("translator"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Translator);
 #else
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(EnableStaging))
             {
-                writer.WritePropertyName("enableStaging");
+                writer.WritePropertyName("enableStaging"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EnableStaging);
 #else
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(StagingSettings))
             {
-                writer.WritePropertyName("stagingSettings");
+                writer.WritePropertyName("stagingSettings"u8);
                 writer.WriteObjectValue(StagingSettings);
             }
             if (Optional.IsDefined(ParallelCopies))
             {
-                writer.WritePropertyName("parallelCopies");
+                writer.WritePropertyName("parallelCopies"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ParallelCopies);
 #else
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(DataIntegrationUnits))
             {
-                writer.WritePropertyName("dataIntegrationUnits");
+                writer.WritePropertyName("dataIntegrationUnits"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DataIntegrationUnits);
 #else
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(EnableSkipIncompatibleRow))
             {
-                writer.WritePropertyName("enableSkipIncompatibleRow");
+                writer.WritePropertyName("enableSkipIncompatibleRow"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EnableSkipIncompatibleRow);
 #else
@@ -134,22 +134,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
-                writer.WritePropertyName("redirectIncompatibleRowSettings");
+                writer.WritePropertyName("redirectIncompatibleRowSettings"u8);
                 writer.WriteObjectValue(RedirectIncompatibleRowSettings);
             }
             if (Optional.IsDefined(LogStorageSettings))
             {
-                writer.WritePropertyName("logStorageSettings");
+                writer.WritePropertyName("logStorageSettings"u8);
                 writer.WriteObjectValue(LogStorageSettings);
             }
             if (Optional.IsDefined(LogSettings))
             {
-                writer.WritePropertyName("logSettings");
+                writer.WritePropertyName("logSettings"u8);
                 writer.WriteObjectValue(LogSettings);
             }
             if (Optional.IsCollectionDefined(PreserveRules))
             {
-                writer.WritePropertyName("preserveRules");
+                writer.WritePropertyName("preserveRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in PreserveRules)
                 {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(Preserve))
             {
-                writer.WritePropertyName("preserve");
+                writer.WritePropertyName("preserve"u8);
                 writer.WriteStartArray();
                 foreach (var item in Preserve)
                 {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(ValidateDataConsistency))
             {
-                writer.WritePropertyName("validateDataConsistency");
+                writer.WritePropertyName("validateDataConsistency"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ValidateDataConsistency);
 #else
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(SkipErrorFile))
             {
-                writer.WritePropertyName("skipErrorFile");
+                writer.WritePropertyName("skipErrorFile"u8);
                 writer.WriteObjectValue(SkipErrorFile);
             }
             writer.WriteEndObject();
@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Optional<IList<DatasetReference>> inputs = default;
             Optional<IList<DatasetReference>> outputs = default;
-            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
-            CopySource source = default;
+            Optional<IList<ActivityUserProperty>> userProperties = default;
+            CopyActivitySource source = default;
             CopySink sink = default;
             Optional<BinaryData> translator = default;
             Optional<BinaryData> enableStaging = default;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     inputs = array;
                     continue;
                 }
-                if (property.NameEquals("outputs"))
+                if (property.NameEquals("outputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -262,17 +262,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     outputs = array;
                     continue;
                 }
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -282,22 +282,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -312,22 +312,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"))
+                if (property.NameEquals("userProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UserProperty> array = new List<UserProperty>();
+                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserProperty.DeserializeUserProperty(item));
+                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
                     }
                     userProperties = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -336,17 +336,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("source"))
+                        if (property0.NameEquals("source"u8))
                         {
-                            source = CopySource.DeserializeCopySource(property0.Value);
+                            source = CopyActivitySource.DeserializeCopyActivitySource(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("sink"))
+                        if (property0.NameEquals("sink"u8))
                         {
                             sink = CopySink.DeserializeCopySink(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("translator"))
+                        if (property0.NameEquals("translator"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             translator = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("enableStaging"))
+                        if (property0.NameEquals("enableStaging"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             enableStaging = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("stagingSettings"))
+                        if (property0.NameEquals("stagingSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             stagingSettings = StagingSettings.DeserializeStagingSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("parallelCopies"))
+                        if (property0.NameEquals("parallelCopies"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             parallelCopies = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("dataIntegrationUnits"))
+                        if (property0.NameEquals("dataIntegrationUnits"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             dataIntegrationUnits = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("enableSkipIncompatibleRow"))
+                        if (property0.NameEquals("enableSkipIncompatibleRow"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             enableSkipIncompatibleRow = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("redirectIncompatibleRowSettings"))
+                        if (property0.NameEquals("redirectIncompatibleRowSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             redirectIncompatibleRowSettings = RedirectIncompatibleRowSettings.DeserializeRedirectIncompatibleRowSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("logStorageSettings"))
+                        if (property0.NameEquals("logStorageSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             logStorageSettings = LogStorageSettings.DeserializeLogStorageSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("logSettings"))
+                        if (property0.NameEquals("logSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             logSettings = LogSettings.DeserializeLogSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("preserveRules"))
+                        if (property0.NameEquals("preserveRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             preserveRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("preserve"))
+                        if (property0.NameEquals("preserve"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             preserve = array;
                             continue;
                         }
-                        if (property0.NameEquals("validateDataConsistency"))
+                        if (property0.NameEquals("validateDataConsistency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             validateDataConsistency = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("skipErrorFile"))
+                        if (property0.NameEquals("skipErrorFile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

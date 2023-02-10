@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview\u0026showStats=false",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "136",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c295d662d8ee4c4a890d122cfcd4ee39-1ed6ce1b631a7d4e-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220427.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "082a15f994691c8c7829c9a65c38d269",
+        "traceparent": "00-637bf427e1f4627162f904e2d0510f9a-24c7ab6d3d26f13e-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3fdf17d69a1bd3f08198575e1bfb19cd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -29,28 +29,28 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "1e7846c4-ba6f-4bca-ae1b-bce4e6e47162",
+        "apim-request-id": "45cc89bc-b8e6-4d8d-ae4c-50f5256190ab",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 27 Apr 2022 22:38:26 GMT",
+        "Date": "Fri, 14 Oct 2022 22:16:57 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "12"
+        "x-envoy-upstream-service-time": "4"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidRequest",
-          "message": "Invalid document in request.",
+          "message": "Invalid Document in request.",
           "innererror": {
             "code": "InvalidDocument",
-            "message": "At least one document is missing an Id attribute."
+            "message": "At least one input is missing an Id attribute."
           }
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "783264843",
+    "RandomSeed": "1613272234",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

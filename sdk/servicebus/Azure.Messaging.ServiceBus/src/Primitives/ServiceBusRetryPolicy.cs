@@ -26,22 +26,30 @@ namespace Azure.Messaging.ServiceBus
     ///
     public abstract class ServiceBusRetryPolicy
     {
-        private static readonly TimeSpan ServerBusyBaseSleepTime = TimeSpan.FromSeconds(10);
+        /// <summary>
+        /// Represents a state flag that is used to make sure the server busy value can be observed with
+        /// reasonable fresh values without having to acquire a lock.
+        /// </summary>
+        private volatile int _serverBusyState;
 
-        private readonly object serverBusyLock = new object();
-
-        // This is a volatile copy of IsServerBusy. IsServerBusy is synchronized with a lock, whereas encounteredServerBusy is kept volatile for performance reasons.
-        private volatile bool encounteredServerBusy;
+        private const int ServerNotBusyState = 0; // default value of serverBusy
+        private const int ServerBusyState = 1;
 
         /// <summary>
         /// Determines whether or not the server returned a busy error.
         /// </summary>
-        private bool IsServerBusy { get; set; }
+        internal bool IsServerBusy => _serverBusyState == ServerBusyState;
 
         /// <summary>
         /// Gets the exception message when a server busy error is returned.
         /// </summary>
-        private string ServerBusyExceptionMessage { get; set; }
+        internal string ServerBusyExceptionMessage { get; set; }
+
+        /// <summary>
+        /// Gets the server busy base sleep time
+        /// </summary>
+        /// <remarks>Defaults to TimeSpan.FromSeconds(10)</remarks>
+        internal TimeSpan ServerBusyBaseSleepTime { get; set; } = TimeSpan.FromSeconds(10);
 
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
@@ -119,7 +127,7 @@ namespace Azure.Messaging.ServiceBus
             T1 t1,
             TransportConnectionScope scope,
             CancellationToken cancellationToken,
-            bool logRetriesAsVerbose = false)
+            bool logTimeoutRetriesAsVerbose = false)
       {
             var failedAttemptCount = 0;
 
@@ -144,14 +152,13 @@ namespace Azure.Messaging.ServiceBus
                 {
                     return await operation(t1, tryTimeout, cancellationToken).ConfigureAwait(false);
                 }
-
                 catch (Exception ex)
                 {
                     Exception activeEx = AmqpExceptionHelper.TranslateException(ex);
 
                     if (activeEx is ServiceBusException { Reason: ServiceBusFailureReason.ServiceBusy })
                     {
-                        SetServerBusy(activeEx.Message);
+                        SetServerBusy(activeEx.Message, cancellationToken);
                     }
 
                     // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
@@ -161,7 +168,7 @@ namespace Azure.Messaging.ServiceBus
                     TimeSpan? retryDelay = CalculateRetryDelay(activeEx, failedAttemptCount);
                     if (retryDelay.HasValue && !scope.IsDisposed && !cancellationToken.IsCancellationRequested)
                     {
-                        if (logRetriesAsVerbose)
+                        if (logTimeoutRetriesAsVerbose && activeEx is ServiceBusException { Reason: ServiceBusFailureReason.ServiceTimeout })
                         {
                             Logger.RunOperationExceptionEncounteredVerbose(activeEx.ToString());
                         }
@@ -185,49 +192,42 @@ namespace Azure.Messaging.ServiceBus
             throw new TaskCanceledException();
         }
 
-        internal void SetServerBusy(string exceptionMessage)
+        private void SetServerBusy(string exceptionMessage, CancellationToken cancellationToken)
         {
             // multiple call to this method will not prolong the timer.
-            if (encounteredServerBusy)
+            if (_serverBusyState == ServerBusyState)
             {
                 return;
             }
 
-            lock (serverBusyLock)
-            {
-                if (!encounteredServerBusy)
-                {
-                    encounteredServerBusy = true;
-                    ServerBusyExceptionMessage = string.IsNullOrWhiteSpace(exceptionMessage) ?
-                        Resources.DefaultServerBusyException : exceptionMessage;
-                    IsServerBusy = true;
-                    _ = ScheduleResetServerBusy();
-                }
-            }
+            ServerBusyExceptionMessage = string.IsNullOrWhiteSpace(exceptionMessage) ?
+                Resources.DefaultServerBusyException : exceptionMessage;
+            Interlocked.Exchange(ref _serverBusyState, ServerBusyState);
+            _ = ScheduleResetServerBusy(cancellationToken);
         }
 
-        internal void ResetServerBusy()
+        private void ResetServerBusy()
         {
-            if (!encounteredServerBusy)
+            if (_serverBusyState == ServerNotBusyState)
             {
                 return;
             }
 
-            lock (serverBusyLock)
-            {
-                if (encounteredServerBusy)
-                {
-                    encounteredServerBusy = false;
-                    ServerBusyExceptionMessage = Resources.DefaultServerBusyException;
-                    IsServerBusy = false;
-                }
-            }
+            ServerBusyExceptionMessage = Resources.DefaultServerBusyException;
+            Interlocked.Exchange(ref _serverBusyState, ServerNotBusyState);
         }
 
-        private async Task ScheduleResetServerBusy()
+        private async Task ScheduleResetServerBusy(CancellationToken cancellationToken)
         {
-            await Task.Delay(ServerBusyBaseSleepTime).ConfigureAwait(false);
-            ResetServerBusy();
+            try
+            {
+                await Task.Delay(ServerBusyBaseSleepTime, cancellationToken).ConfigureAwait(false);
+                ResetServerBusy();
+            }
+            catch (OperationCanceledException)
+            {
+                // ignored
+            }
         }
     }
 }

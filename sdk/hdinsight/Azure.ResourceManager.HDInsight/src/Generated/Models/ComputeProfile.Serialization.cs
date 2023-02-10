@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Roles))
             {
-                writer.WritePropertyName("roles");
+                writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static ComputeProfile DeserializeComputeProfile(JsonElement element)
         {
-            Optional<IList<Role>> roles = default;
+            Optional<IList<HDInsightClusterRole>> roles = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("roles"))
+                if (property.NameEquals("roles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Role> array = new List<Role>();
+                    List<HDInsightClusterRole> array = new List<HDInsightClusterRole>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Role.DeserializeRole(item));
+                        array.Add(HDInsightClusterRole.DeserializeHDInsightClusterRole(item));
                     }
                     roles = array;
                     continue;

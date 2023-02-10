@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -222,13 +222,10 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (data != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(data);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -240,14 +237,15 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="certificateName"> Name of the Certificate. </param>
         /// <param name="data"> Certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/>, <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContainerAppCertificateData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string environmentName, string certificateName, ContainerAppCertificateData data = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerAppCertificateData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string environmentName, string certificateName, ContainerAppCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, environmentName, certificateName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -272,14 +270,15 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="certificateName"> Name of the Certificate. </param>
         /// <param name="data"> Certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/>, <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContainerAppCertificateData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string environmentName, string certificateName, ContainerAppCertificateData data = null, CancellationToken cancellationToken = default)
+        public Response<ContainerAppCertificateData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string environmentName, string certificateName, ContainerAppCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, environmentName, certificateName, data);
             _pipeline.Send(message, cancellationToken);

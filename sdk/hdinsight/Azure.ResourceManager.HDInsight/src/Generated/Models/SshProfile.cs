@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of SshProfile. </summary>
         public SshProfile()
         {
-            PublicKeys = new ChangeTrackingList<SshPublicKey>();
+            PublicKeys = new ChangeTrackingList<HDInsightSshPublicKey>();
         }
 
         /// <summary> Initializes a new instance of SshProfile. </summary>
         /// <param name="publicKeys"> The list of SSH public keys. </param>
-        internal SshProfile(IList<SshPublicKey> publicKeys)
+        internal SshProfile(IList<HDInsightSshPublicKey> publicKeys)
         {
             PublicKeys = publicKeys;
         }
 
         /// <summary> The list of SSH public keys. </summary>
-        public IList<SshPublicKey> PublicKeys { get; }
+        public IList<HDInsightSshPublicKey> PublicKeys { get; }
     }
 }

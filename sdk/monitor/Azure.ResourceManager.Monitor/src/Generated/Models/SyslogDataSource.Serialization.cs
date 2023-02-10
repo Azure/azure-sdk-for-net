@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Streams))
             {
-                writer.WritePropertyName("streams");
+                writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
                 foreach (var item in Streams)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(FacilityNames))
             {
-                writer.WritePropertyName("facilityNames");
+                writer.WritePropertyName("facilityNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in FacilityNames)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(LogLevels))
             {
-                writer.WritePropertyName("logLevels");
+                writer.WritePropertyName("logLevels"u8);
                 writer.WriteStartArray();
                 foreach (var item in LogLevels)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();
@@ -56,58 +56,58 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static SyslogDataSource DeserializeSyslogDataSource(JsonElement element)
         {
-            Optional<IList<KnownSyslogDataSourceStream>> streams = default;
-            Optional<IList<KnownSyslogDataSourceFacilityName>> facilityNames = default;
-            Optional<IList<KnownSyslogDataSourceLogLevel>> logLevels = default;
+            Optional<IList<SyslogDataSourceStream>> streams = default;
+            Optional<IList<SyslogDataSourceFacilityName>> facilityNames = default;
+            Optional<IList<SyslogDataSourceLogLevel>> logLevels = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("streams"))
+                if (property.NameEquals("streams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnownSyslogDataSourceStream> array = new List<KnownSyslogDataSourceStream>();
+                    List<SyslogDataSourceStream> array = new List<SyslogDataSourceStream>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new KnownSyslogDataSourceStream(item.GetString()));
+                        array.Add(new SyslogDataSourceStream(item.GetString()));
                     }
                     streams = array;
                     continue;
                 }
-                if (property.NameEquals("facilityNames"))
+                if (property.NameEquals("facilityNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnownSyslogDataSourceFacilityName> array = new List<KnownSyslogDataSourceFacilityName>();
+                    List<SyslogDataSourceFacilityName> array = new List<SyslogDataSourceFacilityName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new KnownSyslogDataSourceFacilityName(item.GetString()));
+                        array.Add(new SyslogDataSourceFacilityName(item.GetString()));
                     }
                     facilityNames = array;
                     continue;
                 }
-                if (property.NameEquals("logLevels"))
+                if (property.NameEquals("logLevels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnownSyslogDataSourceLogLevel> array = new List<KnownSyslogDataSourceLogLevel>();
+                    List<SyslogDataSourceLogLevel> array = new List<SyslogDataSourceLogLevel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new KnownSyslogDataSourceLogLevel(item.GetString()));
+                        array.Add(new SyslogDataSourceLogLevel(item.GetString()));
                     }
                     logLevels = array;
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

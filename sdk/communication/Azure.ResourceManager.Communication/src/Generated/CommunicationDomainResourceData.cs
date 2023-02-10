@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="verificationRecords"> List of DnsRecord. </param>
         /// <param name="validSenderUsernames"> Collection of valid sender usernames. This is a key-value pair where key=username and value=display name. </param>
         /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
-        internal CommunicationDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainsProvisioningState? provisioningState, string dataLocation, string fromSenderDomain, string mailFromSenderDomain, DomainManagement? domainManagement, DomainPropertiesVerificationStates verificationStates, DomainPropertiesVerificationRecords verificationRecords, IDictionary<string, string> validSenderUsernames, UserEngagementTracking? userEngagementTracking) : base(id, name, resourceType, systemData, tags, location)
+        internal CommunicationDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProvisioningState? provisioningState, string dataLocation, string fromSenderDomain, string mailFromSenderDomain, DomainManagement? domainManagement, DomainPropertiesVerificationStates verificationStates, DomainPropertiesVerificationRecords verificationRecords, IDictionary<string, string> validSenderUsernames, UserEngagementTracking? userEngagementTracking) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             DataLocation = dataLocation;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public DomainsProvisioningState? ProvisioningState { get; }
+        public DomainProvisioningState? ProvisioningState { get; }
         /// <summary> The location where the Domains resource data is stored at rest. </summary>
         public string DataLocation { get; }
         /// <summary> P2 sender domain that is displayed to the email recipients [RFC 5322]. </summary>

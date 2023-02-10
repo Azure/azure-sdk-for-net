@@ -61,6 +61,10 @@ namespace Azure.Identity
 
                 message = GetMessageFromResponse(json.RootElement);
             }
+            catch (JsonException jex)
+            {
+                throw new CredentialUnavailableException(UnexpectedResponse, jex);
+            }
             catch (Exception e)
             {
                 exception = e;

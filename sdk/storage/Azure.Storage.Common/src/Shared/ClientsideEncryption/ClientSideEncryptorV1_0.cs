@@ -68,13 +68,18 @@ namespace Azure.Storage.Cryptography
             EncryptionData encryptionData = default;
             Stream ciphertext = default;
 
-            using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider() { Key = generatedKey })
+#if NET6_0_OR_GREATER
+            using (Aes aes = Aes.Create())
+#else
+            using (Aes aes = new AesCryptoServiceProvider())
+#endif
             {
-                encryptionData = await CreateEncryptionDataInternal(aesProvider, async, cancellationToken).ConfigureAwait(false);
+                aes.Key = generatedKey;
+                encryptionData = await CreateEncryptionDataInternal(aes, async, cancellationToken).ConfigureAwait(false);
 
                 ciphertext = new CryptoStream(
                     plaintext,
-                    aesProvider.CreateEncryptor(),
+                    aes.CreateEncryptor(),
                     CryptoStreamMode.Read);
             }
 
@@ -101,13 +106,18 @@ namespace Azure.Storage.Cryptography
             var ciphertext = new MemoryStream();
             byte[] bufferedCiphertext = default;
 
-            using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider() { Key = generatedKey })
+#if NET6_0_OR_GREATER
+            using (Aes aes = Aes.Create())
+#else
+            using (Aes aes = new AesCryptoServiceProvider())
+#endif
             {
-                encryptionData = await CreateEncryptionDataInternal(aesProvider, async, cancellationToken).ConfigureAwait(false);
+                aes.Key = generatedKey;
+                encryptionData = await CreateEncryptionDataInternal(aes, async, cancellationToken).ConfigureAwait(false);
 
                 var transformStream = new CryptoStream(
                     ciphertext,
-                    aesProvider.CreateEncryptor(),
+                    aes.CreateEncryptor(),
                     CryptoStreamMode.Write);
 
                 if (async)
@@ -154,17 +164,21 @@ namespace Azure.Storage.Cryptography
             var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             EncryptionData encryptionData = default;
             Stream writeStream = default;
-
-            using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider() { Key = generatedKey })
+#if NET6_0_OR_GREATER
+            using (Aes aes = Aes.Create())
+#else
+            using (Aes aes = new AesCryptoServiceProvider())
+#endif
             {
-                encryptionData = await CreateEncryptionDataInternal(aesProvider, async, cancellationToken).ConfigureAwait(false);
+                aes.Key = generatedKey;
+                encryptionData = await CreateEncryptionDataInternal(aes, async, cancellationToken).ConfigureAwait(false);
 
                 writeStream = new CryptoStream(
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     // analyzer struggles to recognize async pattern with a Func instead of a proper method.
                     await openWriteInternal(encryptionData, async, cancellationToken).ConfigureAwait(false),
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    aesProvider.CreateEncryptor(),
+                    aes.CreateEncryptor(),
                     CryptoStreamMode.Write);
             }
 
@@ -174,14 +188,11 @@ namespace Azure.Storage.Cryptography
         /// <summary>
         /// Creates <see cref="EncryptionData"/> from this instance data and a given AES provider.
         /// </summary>
-        private async Task<EncryptionData> CreateEncryptionDataInternal(
-            AesCryptoServiceProvider aesProvider,
-            bool async,
-            CancellationToken cancellationToken)
+        private async Task<EncryptionData> CreateEncryptionDataInternal(Aes aes, bool async, CancellationToken cancellationToken)
             => await EncryptionData.CreateInternalV1_0(
-                contentEncryptionIv: aesProvider.IV,
+                contentEncryptionIv: aes.IV,
                 keyWrapAlgorithm: _keyWrapAlgorithm,
-                contentEncryptionKey: aesProvider.Key,
+                contentEncryptionKey: aes.Key,
                 keyEncryptionKey: _keyEncryptionKey,
                 async: async,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -193,12 +204,16 @@ namespace Azure.Storage.Cryptography
         /// <returns>The generated key bytes.</returns>
         private static byte[] CreateKey(int numBits)
         {
+#if NET6_0_OR_GREATER
+            return RandomNumberGenerator.GetBytes(numBits / 8);
+#else
             using (var secureRng = new RNGCryptoServiceProvider())
             {
                 var buff = new byte[numBits / 8];
                 secureRng.GetBytes(buff);
                 return buff;
             }
+#endif
         }
     }
 }

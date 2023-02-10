@@ -16,27 +16,27 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static TagRuleListResult DeserializeTagRuleListResult(JsonElement element)
         {
-            IReadOnlyList<TagRuleData> value = default;
-            string nextLink = default;
+            IReadOnlyList<DynatraceTagRuleData> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<TagRuleData> array = new List<TagRuleData>();
+                    List<DynatraceTagRuleData> array = new List<DynatraceTagRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TagRuleData.DeserializeTagRuleData(item));
+                        array.Add(DynatraceTagRuleData.DeserializeDynatraceTagRuleData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new TagRuleListResult(value, nextLink);
+            return new TagRuleListResult(value, nextLink.Value);
         }
     }
 }

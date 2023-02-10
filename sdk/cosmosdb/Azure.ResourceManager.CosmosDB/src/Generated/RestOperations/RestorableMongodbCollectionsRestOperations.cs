@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-10-15";
+            _apiVersion = apiVersion ?? "2022-08-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, string instanceId, string restorableMongoDBDatabaseRid)
+        internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, Guid instanceId, string restorableMongoDBDatabaseRid)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,12 +68,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="restorableMongoDBDatabaseRid"> The resource ID of the MongoDB database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RestorableMongoDBCollectionsListResult>> ListAsync(string subscriptionId, AzureLocation location, string instanceId, string restorableMongoDBDatabaseRid = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<RestorableMongoDBCollectionsListResult>> ListAsync(string subscriptionId, AzureLocation location, Guid instanceId, string restorableMongoDBDatabaseRid = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var message = CreateListRequest(subscriptionId, location, instanceId, restorableMongoDBDatabaseRid);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -97,12 +96,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="restorableMongoDBDatabaseRid"> The resource ID of the MongoDB database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RestorableMongoDBCollectionsListResult> List(string subscriptionId, AzureLocation location, string instanceId, string restorableMongoDBDatabaseRid = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<RestorableMongoDBCollectionsListResult> List(string subscriptionId, AzureLocation location, Guid instanceId, string restorableMongoDBDatabaseRid = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var message = CreateListRequest(subscriptionId, location, instanceId, restorableMongoDBDatabaseRid);
             _pipeline.Send(message, cancellationToken);

@@ -23,6 +23,7 @@ namespace BatchClientIntegrationTests
     using Xunit.Abstractions;
     using Protocol = Microsoft.Azure.Batch.Protocol;
     using Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities;
+    using System.Net.PeerToPeer;
 
     public class CloudPoolIntegrationTests
     {
@@ -1131,6 +1132,56 @@ namespace BatchClientIntegrationTests
             }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public async Task TestNodeCommunicationMode()
+        {
+            static async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                string poolId = "TestNodeCommunicationMode-" + TestUtilities.GetMyName();
+
+                try
+                {
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        PoolFixture.VMSize,
+                        new CloudServiceConfiguration(PoolFixture.OSFamily),
+                        targetDedicatedComputeNodes: 0);
+
+                    //Set NodeCommunicationMode to Default
+                    pool.TargetNodeCommunicationMode = NodeCommunicationMode.Default;
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+                    Assert.NotNull(pool.CurrentNodeCommunicationMode);
+                    Assert.Equal(NodeCommunicationMode.Default, pool.TargetNodeCommunicationMode);
+
+                    //Then to Simplified
+                    pool.TargetNodeCommunicationMode = NodeCommunicationMode.Simplified;
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    pool = batchCli.PoolOperations.GetPool(poolId);
+                    Assert.NotNull(pool.CurrentNodeCommunicationMode);
+                    Assert.Equal(NodeCommunicationMode.Simplified, pool.TargetNodeCommunicationMode);
+
+                    //Then to Classic
+                    pool.TargetNodeCommunicationMode = NodeCommunicationMode.Classic;
+                    await pool.CommitChangesAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+                    Assert.NotNull(pool.CurrentNodeCommunicationMode);
+                    Assert.Equal(NodeCommunicationMode.Classic, pool.TargetNodeCommunicationMode);
+
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
         #region Test helpers

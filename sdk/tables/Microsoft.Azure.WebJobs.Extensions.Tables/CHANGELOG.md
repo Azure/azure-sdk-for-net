@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Custom defined entity models that implement `ITableEntity` explicitly will now be serialized properly ([#26514](https://github.com/Azure/azure-sdk-for-net/issues/26514))
 
 ## 1.0.0 (2022-04-11)
 

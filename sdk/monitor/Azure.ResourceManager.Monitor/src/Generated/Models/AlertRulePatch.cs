@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public AlertRulePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Actions = new ChangeTrackingList<RuleAction>();
+            Actions = new ChangeTrackingList<AlertRuleAction>();
         }
 
         /// <summary> Resource tags. </summary>
@@ -33,22 +33,22 @@ namespace Azure.ResourceManager.Monitor.Models
         public bool? IsEnabled { get; set; }
         /// <summary>
         /// the condition that results in the alert rule being activated.
-        /// Please note <see cref="RuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="AlertRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
         /// </summary>
-        public RuleCondition Condition { get; set; }
+        public AlertRuleCondition Condition { get; set; }
         /// <summary>
         /// action that is performed when the alert rule becomes active, and when an alert condition is resolved.
-        /// Please note <see cref="RuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </summary>
-        public RuleAction Action { get; set; }
+        public AlertRuleAction Action { get; set; }
         /// <summary>
         /// the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved.
-        /// Please note <see cref="RuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </summary>
-        public IList<RuleAction> Actions { get; }
+        public IList<AlertRuleAction> Actions { get; }
         /// <summary> Last time the rule was updated in ISO8601 format. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
     }

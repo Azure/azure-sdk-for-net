@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static AzureMonitorPrivateLinkScopeListResult DeserializeAzureMonitorPrivateLinkScopeListResult(JsonElement element)
         {
-            IReadOnlyList<PrivateLinkScopeData> value = default;
+            IReadOnlyList<MonitorPrivateLinkScopeData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<PrivateLinkScopeData> array = new List<PrivateLinkScopeData>();
+                    List<MonitorPrivateLinkScopeData> array = new List<MonitorPrivateLinkScopeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkScopeData.DeserializePrivateLinkScopeData(item));
+                        array.Add(MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

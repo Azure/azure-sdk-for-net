@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -19,28 +20,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="queueEndpoint"> The queue endpoint of the azure storage account. </param>
         /// <param name="tableEndpoint"> The table endpoint of the azure storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="protectedAccountKeyName"/>, <paramref name="blobEndpoint"/>, <paramref name="queueEndpoint"/> or <paramref name="tableEndpoint"/> is null. </exception>
-        public DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string blobEndpoint, string queueEndpoint, string tableEndpoint)
+        public DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, Uri blobEndpoint, Uri queueEndpoint, Uri tableEndpoint)
         {
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (protectedAccountKeyName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedAccountKeyName));
-            }
-            if (blobEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(blobEndpoint));
-            }
-            if (queueEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(queueEndpoint));
-            }
-            if (tableEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(tableEndpoint));
-            }
+            Argument.AssertNotNull(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNull(protectedAccountKeyName, nameof(protectedAccountKeyName));
+            Argument.AssertNotNull(blobEndpoint, nameof(blobEndpoint));
+            Argument.AssertNotNull(queueEndpoint, nameof(queueEndpoint));
+            Argument.AssertNotNull(tableEndpoint, nameof(tableEndpoint));
 
             StorageAccountName = storageAccountName;
             ProtectedAccountKeyName = protectedAccountKeyName;
@@ -56,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="blobEndpoint"> The blob endpoint of the azure storage account. </param>
         /// <param name="queueEndpoint"> The queue endpoint of the azure storage account. </param>
         /// <param name="tableEndpoint"> The table endpoint of the azure storage account. </param>
-        internal DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string protectedAccountKeyName2, string blobEndpoint, string queueEndpoint, string tableEndpoint)
+        internal DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string protectedAccountKeyName2, Uri blobEndpoint, Uri queueEndpoint, Uri tableEndpoint)
         {
             StorageAccountName = storageAccountName;
             ProtectedAccountKeyName = protectedAccountKeyName;
@@ -73,10 +59,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> The secondary protected diagnostics storage key name. If one of the storage account keys is rotated the cluster will fallback to using the other. </summary>
         public string ProtectedAccountKeyName2 { get; set; }
         /// <summary> The blob endpoint of the azure storage account. </summary>
-        public string BlobEndpoint { get; set; }
+        public Uri BlobEndpoint { get; set; }
         /// <summary> The queue endpoint of the azure storage account. </summary>
-        public string QueueEndpoint { get; set; }
+        public Uri QueueEndpoint { get; set; }
         /// <summary> The table endpoint of the azure storage account. </summary>
-        public string TableEndpoint { get; set; }
+        public Uri TableEndpoint { get; set; }
     }
 }

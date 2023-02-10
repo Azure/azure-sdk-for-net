@@ -48,11 +48,4 @@ If the key is deleted for any reason, we can use the backup value to restore it 
 KeyVaultKey restoredKey = client.RestoreKeyBackup(memoryStream.ToArray());
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample2_BackupAndRestore.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample2_BackupAndRestore.cs)
-* [Asynchronous Sample2_BackupAndRestore.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample2_BackupAndRestoreAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

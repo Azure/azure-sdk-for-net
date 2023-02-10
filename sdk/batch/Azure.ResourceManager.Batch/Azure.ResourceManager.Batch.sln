@@ -1,19 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{55ED41CE-5314-4E12-BDF8-024A5DC5381B}") = "Azure.ResourceManager.Batch", "src\Azure.ResourceManager.Batch.csproj", "{CD6780C7-6290-42AB-B5CD-F8CFAF1248DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Batch", "src\Azure.ResourceManager.Batch.csproj", "{CD6780C7-6290-42AB-B5CD-F8CFAF1248DE}"
 EndProject
-Project("{55ED41CE-5314-4E12-BDF8-024A5DC5381B}") = "Azure.ResourceManager.Batch.Tests", "tests\Azure.ResourceManager.Batch.Tests.csproj", "{97228A51-6A22-4C1C-9534-037AD1A33016}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Batch.Tests", "tests\Azure.ResourceManager.Batch.Tests.csproj", "{97228A51-6A22-4C1C-9534-037AD1A33016}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{6C24EDAE-AC7C-4B4A-85A1-345A6FE6E9D1}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {301C9602-B035-4DD3-BE7D-539A5123FFE6}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -47,5 +43,23 @@ Global
 		{97228A51-6A22-4C1C-9534-037AD1A33016}.Release|x64.Build.0 = Release|Any CPU
 		{97228A51-6A22-4C1C-9534-037AD1A33016}.Release|x86.ActiveCfg = Release|Any CPU
 		{97228A51-6A22-4C1C-9534-037AD1A33016}.Release|x86.Build.0 = Release|Any CPU
+		{6C24EDAE-AC7C-4B4A-85A1-345A6FE6E9D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C24EDAE-AC7C-4B4A-85A1-345A6FE6E9D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C24EDAE-AC7C-4B4A-85A1-345A6FE6E9D1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6C24EDAE-AC7C-4B4A-85A1-345A6FE6E9D1}.Debug|x64.Build.0 = Debug|Any CPU
+		{6C24EDAE-AC7C-4B4A-85A1-345A6FE6E9D1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6C24EDAE-AC7C-4B4A-85A1-345A6FE6E9D1}.Debug|x86.Build.0 = Debug|Any CPU
+		{6C24EDAE-AC7C-4B4A-85A1-345A6FE6E9D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C24EDAE-AC7C-4B4A-85A1-345A6FE6E9D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C24EDAE-AC7C-4B4A-85A1-345A6FE6E9D1}.Release|x64.ActiveCfg = Release|Any CPU
+		{6C24EDAE-AC7C-4B4A-85A1-345A6FE6E9D1}.Release|x64.Build.0 = Release|Any CPU
+		{6C24EDAE-AC7C-4B4A-85A1-345A6FE6E9D1}.Release|x86.ActiveCfg = Release|Any CPU
+		{6C24EDAE-AC7C-4B4A-85A1-345A6FE6E9D1}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {301C9602-B035-4DD3-BE7D-539A5123FFE6}
 	EndGlobalSection
 EndGlobal

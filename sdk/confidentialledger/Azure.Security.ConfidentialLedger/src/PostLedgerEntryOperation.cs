@@ -14,7 +14,7 @@ namespace Azure.Security.ConfidentialLedger
     /// Tracks the status of a call to <see cref="ConfidentialLedgerClient.PostLedgerEntry"/> and <see cref="ConfidentialLedgerClient.PostLedgerEntryAsync"/>
     /// until completion.
     /// </summary>
-    public class PostLedgerEntryOperation : Operation, IOperation
+    internal class PostLedgerEntryOperation : Operation, IOperation
     {
         private readonly ConfidentialLedgerClient _client;
         private OperationInternal _operationInternal;

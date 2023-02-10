@@ -62,6 +62,11 @@ namespace Azure.Identity
                 _beforeBuildClient(pubAppBuilder);
             }
 
+            if (DisableInstanceDiscovery)
+            {
+                pubAppBuilder.WithInstanceDiscovery(false);
+            }
+
             return new ValueTask<IPublicClientApplication>(pubAppBuilder.Build());
         }
 
@@ -172,14 +177,14 @@ namespace Azure.Identity
                 .ConfigureAwait(false);
         }
 
-        public async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string claims, string username, SecureString password, string tenantId, bool async, CancellationToken cancellationToken)
+        public async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string claims, string username, string password, string tenantId, bool async, CancellationToken cancellationToken)
         {
             var result = await AcquireTokenByUsernamePasswordCoreAsync(scopes, claims, username, password, tenantId, async, cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
 
-        protected virtual async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordCoreAsync(string[] scopes, string claims, string username, SecureString password, string tenantId, bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordCoreAsync(string[] scopes, string claims, string username, string password, string tenantId, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
             var builder = client

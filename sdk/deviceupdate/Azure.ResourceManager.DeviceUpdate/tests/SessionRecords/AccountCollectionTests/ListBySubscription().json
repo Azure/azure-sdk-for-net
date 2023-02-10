@@ -1,44 +1,43 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
-        "traceparent": "00-096947856cea1a48bf80dd8b86d6fb5a-ac4977eb5fed5d4c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "4e1b4cc9d2e8fc791e68a3d410437095",
+        "traceparent": "00-8f5f7b7632c2878d416d589421be4d7e-244fce122ee74e95-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "2ac6729bdebbde6227d821f73d7dcd2e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "458",
+        "Content-Length": "461",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:38:25 GMT",
+        "Date": "Wed, 10 Aug 2022 03:43:56 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "348bcf29-9a13-42c3-a71f-d4d1f9312173",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "348bcf29-9a13-42c3-a71f-d4d1f9312173",
-        "x-ms-routing-request-id": "WESTUS:20220607T063825Z:348bcf29-9a13-42c3-a71f-d4d1f9312173"
+        "x-ms-correlation-request-id": "2d58a1bd-0405-481c-81a9-a4df5ae5639b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "2d58a1bd-0405-481c-81a9-a4df5ae5639b",
+        "x-ms-routing-request-id": "WESTUS:20220810T034357Z:2d58a1bd-0405-481c-81a9-a4df5ae5639b"
       },
       "ResponseBody": {
-        "id": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603",
+        "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
         "tags": {
           "Env": "NonProd",
           "IsHostedOnBehalfOf": "False"
         },
-        "subscriptionId": "cf65b9a6-fe0f-4011-881c-aba5a5fb8603",
+        "subscriptionId": "a645d3be-5a4a-40ef-82a1-d5f5358a424c",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": "AzureDeviceUpdate/PPE-MS",
+        "displayName": "AzureDeviceUpdate/Canary-MS",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Internal_2014-09-01",
@@ -48,16 +47,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourcegroups/testRg-1500?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourcegroups/testRg-251?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "20",
+        "Content-Length": "21",
         "Content-Type": "application/json",
-        "traceparent": "00-8312b61f05e1b8408fbc0f83036732c7-e3ede58ff8e2d640-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "6e3fe77c15600071c16066fff5f323f6",
+        "traceparent": "00-c787917c1211453d1a32cd9b11cc6de5-01b3854c1c302cc5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "9fc5724eae70a54e1a744dc480b049cd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -66,21 +65,21 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "244",
+        "Content-Length": "242",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:38:26 GMT",
+        "Date": "Wed, 10 Aug 2022 03:43:57 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "bf93d37a-8781-4667-8946-88f03a59ed96",
+        "x-ms-correlation-request-id": "a0833097-37a6-4f75-8bf7-8e989d6c971b",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "bf93d37a-8781-4667-8946-88f03a59ed96",
-        "x-ms-routing-request-id": "WESTUS:20220607T063826Z:bf93d37a-8781-4667-8946-88f03a59ed96"
+        "x-ms-request-id": "a0833097-37a6-4f75-8bf7-8e989d6c971b",
+        "x-ms-routing-request-id": "WESTUS:20220810T034357Z:a0833097-37a6-4f75-8bf7-8e989d6c971b"
       },
       "ResponseBody": {
-        "id": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500",
-        "name": "testRg-1500",
+        "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251",
+        "name": "testRg-251",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus",
         "tags": {
@@ -92,16 +91,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251/providers/Microsoft.DeviceUpdate/accounts/Account-7748?api-version=2022-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "64",
         "Content-Type": "application/json",
-        "traceparent": "00-5802df83b6899244ab5e4a54cbb92993-ddd939cae9447d4e-00",
-        "User-Agent": "azsdk-net-ResourceManager.DeviceUpdate/1.0.0-alpha.20220606.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "f8b3407d63dbf01b70cc7973a77b2598",
+        "traceparent": "00-ad7dea871c13c68b3f158f2ff97ad6fd-98fee912118568dd-00",
+        "User-Agent": "azsdk-net-ResourceManager.DeviceUpdate/1.0.0-alpha.20220809.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "9fc0563517aebf829c1a1fdc2c4c1e1f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -113,36 +112,37 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-03-01-preview, 2022-04-01-preview",
-        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898?api-version=2022-04-01-preview",
+        "api-supported-versions": "2020-03-01-preview, 2022-04-01-preview, 2022-10-01",
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59?api-version=2022-10-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "577",
+        "Content-Length": "576",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:38:28 GMT",
-        "ETag": "\u0022f503767b-0000-0800-0000-629ef2640000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:43:59 GMT",
+        "ETag": "\u0022c6001f3f-0000-0800-0000-62f3297f0000\u0022",
         "Expires": "-1",
+        "mise-correlation-id": "6345079c-8178-44d4-b1ff-67f0eb4c9ba6",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1110211d-7433-43ca-a91f-168471cd898a",
+        "x-ms-correlation-request-id": "6ccf890b-72ac-4a67-95aa-b45dbf87a037",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "079e5c64-9902-42f7-8d1d-07a00a52768b",
-        "x-ms-routing-request-id": "WESTUS:20220607T063828Z:1110211d-7433-43ca-a91f-168471cd898a"
+        "x-ms-request-id": "a7ab5f8f-87c5-43bc-bba3-86149588b707",
+        "x-ms-routing-request-id": "WESTUS:20220810T034359Z:6ccf890b-72ac-4a67-95aa-b45dbf87a037"
       },
       "ResponseBody": {
-        "id": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589",
-        "name": "Account-6589",
+        "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251/providers/Microsoft.DeviceUpdate/accounts/Account-7748",
+        "name": "Account-7748",
         "type": "microsoft.deviceupdate/accounts",
         "location": "westus2",
         "tags": {},
         "systemData": {
           "createdBy": "1e5942b3-36f1-43eb-88d9-98c12d95000b",
           "createdByType": "Application",
-          "createdAt": "2022-06-07T06:38:26.7168635Z",
+          "createdAt": "2022-08-10T03:43:57.9147262Z",
           "lastModifiedBy": "1e5942b3-36f1-43eb-88d9-98c12d95000b",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2022-06-07T06:38:26.7168635Z"
+          "lastModifiedAt": "2022-08-10T03:43:57.9147262Z"
         },
         "properties": {
           "sku": "Standard",
@@ -151,401 +151,366 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-5802df83b6899244ab5e4a54cbb92993-1cbff133fd12254f-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "30c5eddd0fe284a1237eef48f88d1ae4",
+        "traceparent": "00-ad7dea871c13c68b3f158f2ff97ad6fd-9e41638230cda34f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "7748f529266e5aa043e0d3932ec9ed27",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "503",
+        "Content-Length": "502",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:38:28 GMT",
-        "ETag": "\u0022d404aec0-0000-0800-0000-629ef2640000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:43:59 GMT",
+        "ETag": "\u0022e600aa10-0000-0800-0000-62f3297f0000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "fa4d6fce-1453-4d8e-9a66-ae094dbc52a7",
+        "x-ms-correlation-request-id": "a9291f1d-d6f8-43ce-8d1b-731f034f2326",
         "x-ms-ratelimit-remaining-tenant-reads": "11999",
-        "x-ms-request-id": "6b686db0-7131-4717-95b4-8b57d6aa3c24",
-        "x-ms-routing-request-id": "WESTUS:20220607T063828Z:fa4d6fce-1453-4d8e-9a66-ae094dbc52a7"
+        "x-ms-request-id": "0eb7de95-1ae8-4136-98cb-4ed7b8a47948",
+        "x-ms-routing-request-id": "WESTUS:20220810T034359Z:a9291f1d-d6f8-43ce-8d1b-731f034f2326"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "name": "079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "name": "a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251/providers/Microsoft.DeviceUpdate/accounts/Account-7748",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:38:28.1204237Z"
+        "startTime": "2022-08-10T03:43:59.5904588Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-5802df83b6899244ab5e4a54cbb92993-975bd2916ab1e047-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "5bfa6741e62614a10809aab4f109f347",
+        "traceparent": "00-ad7dea871c13c68b3f158f2ff97ad6fd-53fd66dc96eb8117-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "2fd6a42f863e093592481b0dad6da5f5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "503",
+        "Content-Length": "502",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:38:29 GMT",
-        "ETag": "\u0022d404aec0-0000-0800-0000-629ef2640000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:44:00 GMT",
+        "ETag": "\u0022e600aa10-0000-0800-0000-62f3297f0000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d3773c48-2fbe-4b41-b0c2-bf26da4deaad",
+        "x-ms-correlation-request-id": "745322b5-9c7c-4aa8-9fe0-85c166729282",
         "x-ms-ratelimit-remaining-tenant-reads": "11998",
-        "x-ms-request-id": "a5658ebc-8777-4973-ac3b-420f346f61cb",
-        "x-ms-routing-request-id": "WESTUS:20220607T063829Z:d3773c48-2fbe-4b41-b0c2-bf26da4deaad"
+        "x-ms-request-id": "132804ea-415b-4809-9e97-c25565464905",
+        "x-ms-routing-request-id": "WESTUS:20220810T034400Z:745322b5-9c7c-4aa8-9fe0-85c166729282"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "name": "079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "name": "a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251/providers/Microsoft.DeviceUpdate/accounts/Account-7748",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:38:28.1204237Z"
+        "startTime": "2022-08-10T03:43:59.5904588Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-5802df83b6899244ab5e4a54cbb92993-98bc4bcbcf21d846-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "b995f857f5b6ebb5f678ec037aeeb1c0",
+        "traceparent": "00-ad7dea871c13c68b3f158f2ff97ad6fd-ebbd5497259bf63e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "37b247f2a70383b1e0b00431583049bb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "503",
+        "Content-Length": "502",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:38:30 GMT",
-        "ETag": "\u0022d404aec0-0000-0800-0000-629ef2640000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:44:01 GMT",
+        "ETag": "\u0022e600aa10-0000-0800-0000-62f3297f0000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "fd10c9ea-72ee-4355-a612-df3761bdb75b",
+        "x-ms-correlation-request-id": "1722acdc-36c4-48fe-8827-6549f84dc2fb",
         "x-ms-ratelimit-remaining-tenant-reads": "11997",
-        "x-ms-request-id": "a5a61cc1-101f-43f7-a744-7dc1a3135807",
-        "x-ms-routing-request-id": "WESTUS:20220607T063830Z:fd10c9ea-72ee-4355-a612-df3761bdb75b"
+        "x-ms-request-id": "f1fea794-b03d-435d-9d42-508d40f3d202",
+        "x-ms-routing-request-id": "WESTUS:20220810T034401Z:1722acdc-36c4-48fe-8827-6549f84dc2fb"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "name": "079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "name": "a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251/providers/Microsoft.DeviceUpdate/accounts/Account-7748",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:38:28.1204237Z"
+        "startTime": "2022-08-10T03:43:59.5904588Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-5802df83b6899244ab5e4a54cbb92993-d317c96500b45749-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "95d18d0b192ef75a4cb127d864ec931a",
+        "traceparent": "00-ad7dea871c13c68b3f158f2ff97ad6fd-d214ab8dd68a093f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "75e442b3f8d0a39abf3fe4250a93acd5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "503",
+        "Content-Length": "502",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:38:31 GMT",
-        "ETag": "\u0022d404aec0-0000-0800-0000-629ef2640000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:44:02 GMT",
+        "ETag": "\u0022e600aa10-0000-0800-0000-62f3297f0000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "5c1aa0f9-d163-4fcd-8a35-4910ba99fbfc",
+        "x-ms-correlation-request-id": "79228b9f-2174-4982-b779-6a8c6d4636b7",
         "x-ms-ratelimit-remaining-tenant-reads": "11996",
-        "x-ms-request-id": "ab354064-048e-4e8e-8ee7-7752031562ac",
-        "x-ms-routing-request-id": "WESTUS:20220607T063831Z:5c1aa0f9-d163-4fcd-8a35-4910ba99fbfc"
+        "x-ms-request-id": "691e83f8-cb48-45c7-88cb-cc1d59212b0b",
+        "x-ms-routing-request-id": "WESTUS:20220810T034403Z:79228b9f-2174-4982-b779-6a8c6d4636b7"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "name": "079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "name": "a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251/providers/Microsoft.DeviceUpdate/accounts/Account-7748",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:38:28.1204237Z"
+        "startTime": "2022-08-10T03:43:59.5904588Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-5802df83b6899244ab5e4a54cbb92993-8753868bf331d348-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "fff1a78a61f74c2eb10f64adfa9d9919",
+        "traceparent": "00-ad7dea871c13c68b3f158f2ff97ad6fd-f94da8d00b862309-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e6a0de3bb6178823f2524e8d8103b161",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "503",
+        "Content-Length": "502",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:38:33 GMT",
-        "ETag": "\u0022d404aec0-0000-0800-0000-629ef2640000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:44:04 GMT",
+        "ETag": "\u0022e600aa10-0000-0800-0000-62f3297f0000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "fdf4610b-60cf-4f12-a597-1c137c1c44c6",
+        "x-ms-correlation-request-id": "0a1da0a2-1243-435f-bb2c-345afa7f4ec4",
         "x-ms-ratelimit-remaining-tenant-reads": "11995",
-        "x-ms-request-id": "554d7df7-a135-46b9-b36e-193617a7f53b",
-        "x-ms-routing-request-id": "WESTUS:20220607T063833Z:fdf4610b-60cf-4f12-a597-1c137c1c44c6"
+        "x-ms-request-id": "fe430c5e-6644-4bdc-88d1-f588257b0404",
+        "x-ms-routing-request-id": "WESTUS:20220810T034405Z:0a1da0a2-1243-435f-bb2c-345afa7f4ec4"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "name": "079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "name": "a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251/providers/Microsoft.DeviceUpdate/accounts/Account-7748",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:38:28.1204237Z"
+        "startTime": "2022-08-10T03:43:59.5904588Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-5802df83b6899244ab5e4a54cbb92993-ab18ba8f4c89f848-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "63a8ea575d373d199e9e6d04cddd870a",
+        "traceparent": "00-ad7dea871c13c68b3f158f2ff97ad6fd-e07354b1bc1a4ffa-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6b5a5ffe3089f924ad0e77c4c28c784d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "503",
+        "Content-Length": "502",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:38:37 GMT",
-        "ETag": "\u0022d404aec0-0000-0800-0000-629ef2640000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:44:08 GMT",
+        "ETag": "\u0022e600aa10-0000-0800-0000-62f3297f0000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "19c6f1c8-897b-4a22-814f-9736f30b91ec",
+        "x-ms-correlation-request-id": "5766bb3b-c594-4a37-a803-535628192f19",
         "x-ms-ratelimit-remaining-tenant-reads": "11994",
-        "x-ms-request-id": "e4d62bd9-666a-4289-82b0-4564af1e67f6",
-        "x-ms-routing-request-id": "WESTUS:20220607T063837Z:19c6f1c8-897b-4a22-814f-9736f30b91ec"
+        "x-ms-request-id": "c44ae66a-03a7-43a8-8185-ae16a1dbe342",
+        "x-ms-routing-request-id": "WESTUS:20220810T034409Z:5766bb3b-c594-4a37-a803-535628192f19"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "name": "079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "name": "a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251/providers/Microsoft.DeviceUpdate/accounts/Account-7748",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:38:28.1204237Z"
+        "startTime": "2022-08-10T03:43:59.5904588Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-5802df83b6899244ab5e4a54cbb92993-27b7c7990e203a49-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "d278d1e5b2fdaac85f85e41fb5acfdae",
+        "traceparent": "00-ad7dea871c13c68b3f158f2ff97ad6fd-deaa20e6c17c57cb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "79f62e03628ffca41e5c827eaa0c22bc",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "503",
+        "Content-Length": "502",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:38:45 GMT",
-        "ETag": "\u0022d404aec0-0000-0800-0000-629ef2640000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:44:16 GMT",
+        "ETag": "\u0022e600aa10-0000-0800-0000-62f3297f0000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "8b9b0604-4dca-498a-8dcf-39793df01649",
+        "x-ms-correlation-request-id": "228e1f2a-bd7f-4923-9189-c2ecc246ccfa",
         "x-ms-ratelimit-remaining-tenant-reads": "11993",
-        "x-ms-request-id": "45ca53c9-035b-4fa7-bf4f-1095eded7162",
-        "x-ms-routing-request-id": "WESTUS:20220607T063845Z:8b9b0604-4dca-498a-8dcf-39793df01649"
+        "x-ms-request-id": "99eb5a55-5500-4844-b607-ef9278910d6b",
+        "x-ms-routing-request-id": "WESTUS:20220810T034417Z:228e1f2a-bd7f-4923-9189-c2ecc246ccfa"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "name": "079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "name": "a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251/providers/Microsoft.DeviceUpdate/accounts/Account-7748",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:38:28.1204237Z"
+        "startTime": "2022-08-10T03:43:59.5904588Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-5802df83b6899244ab5e4a54cbb92993-8f115a99eaac8349-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "7a810d172f432ce38eb36159f3297ed4",
+        "traceparent": "00-ad7dea871c13c68b3f158f2ff97ad6fd-30593818889a1e65-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ab26828d41390b4cb9a639083e5fc566",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "503",
+        "Content-Length": "502",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:39:01 GMT",
-        "ETag": "\u0022d404aec0-0000-0800-0000-629ef2640000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:44:32 GMT",
+        "ETag": "\u0022e600aa10-0000-0800-0000-62f3297f0000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "4583ecb1-d7f1-4c00-bc11-4e7f438d1307",
+        "x-ms-correlation-request-id": "4687a002-5b09-4090-86c1-a348b50ccd90",
         "x-ms-ratelimit-remaining-tenant-reads": "11992",
-        "x-ms-request-id": "f8d50967-f119-47e9-bcd8-071d626e795b",
-        "x-ms-routing-request-id": "WESTUS:20220607T063901Z:4583ecb1-d7f1-4c00-bc11-4e7f438d1307"
+        "x-ms-request-id": "c7ace448-b455-4043-ae25-1dca09cbe3b0",
+        "x-ms-routing-request-id": "WESTUS:20220810T034433Z:4687a002-5b09-4090-86c1-a348b50ccd90"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "name": "079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "name": "a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251/providers/Microsoft.DeviceUpdate/accounts/Account-7748",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:38:28.1204237Z"
+        "startTime": "2022-08-10T03:43:59.5904588Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-5802df83b6899244ab5e4a54cbb92993-b76448406d39fd43-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "28c75a87c724a51b21fe03b279f988f1",
+        "traceparent": "00-ad7dea871c13c68b3f158f2ff97ad6fd-20249b4ace6f71aa-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "538a00d9370c9cd2bb5d4c2cada64fa1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "503",
+        "Content-Length": "521",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:39:33 GMT",
-        "ETag": "\u0022d404aec0-0000-0800-0000-629ef2640000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:45:05 GMT",
+        "ETag": "\u0022e600c321-0000-0800-0000-62f329c10000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9610d1df-1854-4474-987b-9704b068cf0a",
+        "x-ms-correlation-request-id": "3a2d266d-7686-489a-9f9f-a2271381eac1",
         "x-ms-ratelimit-remaining-tenant-reads": "11991",
-        "x-ms-request-id": "aa900fa8-65f5-4087-b9f1-a1a75b2bebe5",
-        "x-ms-routing-request-id": "WESTUS:20220607T063933Z:9610d1df-1854-4474-987b-9704b068cf0a"
+        "x-ms-request-id": "851667c5-897a-4c19-bf01-61b7f6b04de3",
+        "x-ms-routing-request-id": "WESTUS:20220810T034505Z:3a2d266d-7686-489a-9f9f-a2271381eac1"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "name": "079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589",
-        "status": "Accepted",
-        "startTime": "2022-06-07T06:38:28.1204237Z"
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898?api-version=2022-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-5802df83b6899244ab5e4a54cbb92993-f32fd4d3fecc1444-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "bfecbfa10d5bb6c6ee4c4349506fb735",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "522",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:40:05 GMT",
-        "ETag": "\u0022d404a1c1-0000-0800-0000-629ef2a70000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "4bcd0144-80bf-4b2c-9e96-d4fb43801bb7",
-        "x-ms-ratelimit-remaining-tenant-reads": "11990",
-        "x-ms-request-id": "d59dbdba-8727-49cb-8887-2b4fbf31585b",
-        "x-ms-routing-request-id": "WESTUS:20220607T064005Z:4bcd0144-80bf-4b2c-9e96-d4fb43801bb7"
-      },
-      "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "name": "079e5c64-9902-42f7-8d1d-07a00a52768b*EEE989AA19F4FC08538FB3E6B3D7C5F26DD9C1E25F1B29981E8330AA8C2F2898",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "name": "a7ab5f8f-87c5-43bc-bba3-86149588b707*C7AA52AB0B6D4291644D871A3F86296C42847A111588B8BD1BF67B781AFD3C59",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251/providers/Microsoft.DeviceUpdate/accounts/Account-7748",
         "status": "Succeeded",
-        "startTime": "2022-06-07T06:38:28.1204237Z",
+        "startTime": "2022-08-10T03:43:59.5904588Z",
         "properties": null
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251/providers/Microsoft.DeviceUpdate/accounts/Account-7748?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-5802df83b6899244ab5e4a54cbb92993-26d9ea383481604a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "5a971006d4e55089f1db58452b30b395",
+        "traceparent": "00-ad7dea871c13c68b3f158f2ff97ad6fd-40ed9c66cb574b5a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3f36bbeccd65c114e2ebc0e8299bbebf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "751",
+        "Content-Length": "750",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:40:05 GMT",
-        "ETag": "\u0022f5038e7b-0000-0800-0000-629ef28c0000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:45:05 GMT",
+        "ETag": "\u0022c600d741-0000-0800-0000-62f329a60000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "07a40cf7-d718-471f-92aa-b82cb83d8673",
+        "x-ms-correlation-request-id": "6b2e5fae-4965-43f1-8f97-13864cb6bfb6",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "d26b91c2-b498-4967-a5c4-85954fb26200",
-        "x-ms-routing-request-id": "WESTUS:20220607T064006Z:07a40cf7-d718-471f-92aa-b82cb83d8673"
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "506c6d91-11f3-454f-862b-18d6a108038c",
+        "x-ms-routing-request-id": "WESTUS:20220810T034505Z:6b2e5fae-4965-43f1-8f97-13864cb6bfb6"
       },
       "ResponseBody": {
-        "id": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589",
-        "name": "Account-6589",
+        "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251/providers/Microsoft.DeviceUpdate/accounts/Account-7748",
+        "name": "Account-7748",
         "type": "microsoft.deviceupdate/accounts",
         "location": "westus2",
         "tags": {},
         "systemData": {
           "createdBy": "1e5942b3-36f1-43eb-88d9-98c12d95000b",
           "createdByType": "Application",
-          "createdAt": "2022-06-07T06:38:26.7168635Z",
+          "createdAt": "2022-08-10T03:43:57.9147262Z",
           "lastModifiedBy": "1e5942b3-36f1-43eb-88d9-98c12d95000b",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2022-06-07T06:38:26.7168635Z"
+          "lastModifiedAt": "2022-08-10T03:43:57.9147262Z"
         },
         "properties": {
           "provisioningState": "Succeeded",
-          "hostName": "account-6589.api.adu.microsoft.com",
+          "hostName": "account-7748.api.adu.microsoft.com",
           "locations": [
             {
               "name": "westus2",
@@ -562,57 +527,107 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/providers/Microsoft.DeviceUpdate/accounts?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/providers/Microsoft.DeviceUpdate/accounts?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f98f576494903b4fb82ec748fab84251-6f7e55d685cacc49-00",
-        "User-Agent": "azsdk-net-ResourceManager.DeviceUpdate/1.0.0-alpha.20220606.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "34b76f2bbe3d7a7893113ad883d254b2",
+        "traceparent": "00-7a8679604f634743aa24e2ce84f60d96-27ea481655040e25-00",
+        "User-Agent": "azsdk-net-ResourceManager.DeviceUpdate/1.0.0-alpha.20220809.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a9a41b96cf8256afb08aefdbf51f5d13",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "763",
+        "Content-Length": "32462",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:40:06 GMT",
+        "Date": "Wed, 10 Aug 2022 03:45:06 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "4a42e505-06df-4fc4-8059-54c2a7cbe32e",
+        "x-ms-correlation-request-id": "5ebc60a4-4a48-4a33-8a05-dd8c7c4593b7",
         "x-ms-original-request-ids": [
-          "d9659aca-37fa-4eb8-bbc0-a210f6c191e5",
-          "71626826-b060-4b61-ab0e-8fa5ac4f6cd4",
-          "6cfeec17-7cf0-495e-adeb-eef70788824e",
-          "9c6470a7-90c1-4fea-86d1-0853c6e73a69"
+          "270c8c85-13cb-4e18-acdd-28b075e459ed",
+          "3fcda3ac-572c-4024-a893-6bc924bfc7f1",
+          "7054fe6d-586e-4130-8af1-9e6df8a325dc",
+          "69967c29-0e96-4068-b726-4b3332a1de86",
+          "87df3302-260c-4023-b4a0-5fe1378e03ef",
+          "96663792-f062-4a79-acc1-0c2c58c61693",
+          "b73f807c-eefb-4d9e-9ad9-1dd8733c3510",
+          "7aa40d34-7bc0-40a6-84a7-5ef3fd50726b",
+          "d7f225b2-32f2-4864-92b0-435f7c83dae2",
+          "246fb7ee-7ac1-4c1c-a07c-baa51be2dd50",
+          "ca73610b-740f-4882-b9e1-5d308f9c7214"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "4a42e505-06df-4fc4-8059-54c2a7cbe32e",
-        "x-ms-routing-request-id": "WESTUS:20220607T064006Z:4a42e505-06df-4fc4-8059-54c2a7cbe32e"
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "5ebc60a4-4a48-4a33-8a05-dd8c7c4593b7",
+        "x-ms-routing-request-id": "WESTUS:20220810T034506Z:5ebc60a4-4a48-4a33-8a05-dd8c7c4593b7"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-1500/providers/Microsoft.DeviceUpdate/accounts/Account-6589",
-            "name": "Account-6589",
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/DeviceUpdateDemoAccount1",
+            "name": "DeviceUpdateDemoAccount1",
+            "type": "Microsoft.DeviceUpdate/accounts",
+            "location": "westus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "vimeht@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-01-29T21:21:19.7866985Z",
+              "lastModifiedBy": "vimeht@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-01-29T21:21:19.7866985Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "deviceupdatedemoaccount1.api.adu.microsoft.com"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/scz-int/providers/Microsoft.DeviceUpdate/accounts/ModuleIdTest",
+            "name": "ModuleIdTest",
+            "type": "Microsoft.DeviceUpdate/accounts",
+            "location": "westus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "alexbat@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-03-16T20:46:58.8110485Z",
+              "lastModifiedBy": "alexbat@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-03-16T20:46:58.8110485Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "moduleidtest.api.adu.microsoft.com"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/sdk-testing/providers/Microsoft.DeviceUpdate/accounts/adu-sdk-testing",
+            "name": "adu-sdk-testing",
             "type": "microsoft.deviceupdate/accounts",
             "location": "westus2",
             "tags": {},
             "systemData": {
-              "createdBy": "1e5942b3-36f1-43eb-88d9-98c12d95000b",
-              "createdByType": "Application",
-              "createdAt": "2022-06-07T06:38:26.7168635Z",
-              "lastModifiedBy": "1e5942b3-36f1-43eb-88d9-98c12d95000b",
-              "lastModifiedByType": "Application",
-              "lastModifiedAt": "2022-06-07T06:38:26.7168635Z"
+              "createdBy": "jitiri@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-11-08T23:27:25.748068Z",
+              "lastModifiedBy": "edgarse@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-04-06T21:42:39.8109681Z"
+            },
+            "identity": {
+              "principalId": "c2fc2496-6142-40c4-968b-8a5fd450a216",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "type": "SystemAssigned"
             },
             "properties": {
               "provisioningState": "Succeeded",
-              "hostName": "account-6589.api.adu.microsoft.com",
+              "hostName": "adu-sdk-testing.api.adu.microsoft.com",
               "locations": [
                 {
                   "name": "westus2",
@@ -626,14 +641,1296 @@
               "sku": "Standard",
               "publicNetworkAccess": "Enabled"
             }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/andbrown-test/providers/Microsoft.DeviceUpdate/accounts/andbrownDUacct030222",
+            "name": "andbrownDUacct030222",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "andbrown@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-03-02T23:13:10.0723409Z",
+              "lastModifiedBy": "andbrown@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-03-02T23:13:10.0723409Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "andbrownduacct030222.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/edgarse13",
+            "name": "edgarse13",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "edgarse@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-03-03T02:40:16.665534Z",
+              "lastModifiedBy": "edgarse@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-04-06T05:20:12.7220214Z"
+            },
+            "identity": {
+              "principalId": "641519f5-08b2-46af-a96a-589686563570",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "edgarse13.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/edgars2/providers/Microsoft.DeviceUpdate/accounts/edgarse13",
+            "name": "edgarse13",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "edgarse@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-03-03T02:40:59.0292436Z",
+              "lastModifiedBy": "edgarse@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-03-03T02:40:59.0292436Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "edgarse13.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-preview/providers/Microsoft.DeviceUpdate/accounts/edgarse14",
+            "name": "edgarse14",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "edgarse@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-03-03T19:23:40.5362878Z",
+              "lastModifiedBy": "edgarse@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-03-03T19:23:40.5362878Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "edgarse14.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/wewilair",
+            "name": "wewilair",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "wewilair@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-03-08T09:55:15.0740227Z",
+              "lastModifiedBy": "wewilair@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-03-08T09:55:15.0740227Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "wewilair.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/ryzhan-bugrepro",
+            "name": "ryzhan-bugrepro",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "ryzhan@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-03-18T17:47:40.5853368Z",
+              "lastModifiedBy": "ryzhan@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-03-18T17:47:40.5853368Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "ryzhan-bugrepro.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/vimeht-test/providers/Microsoft.DeviceUpdate/accounts/vimeht-test",
+            "name": "vimeht-test",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "vimeht@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-03-22T16:38:37.7715976Z",
+              "lastModifiedBy": "vimeht@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-03-22T16:38:37.7715976Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "vimeht-test.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/OscarADUMarch2022",
+            "name": "OscarADUMarch2022",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "oscarlee@ntdev.microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-03-28T03:16:12.2197509Z",
+              "lastModifiedBy": "oscarlee@ntdev.microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-03-28T03:16:12.2197509Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "oscaradumarch2022.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/andbrown-test/providers/Microsoft.DeviceUpdate/accounts/andbrowndemoacct",
+            "name": "andbrowndemoacct",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "andbrown@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-03-30T22:11:46.9168244Z",
+              "lastModifiedBy": "andbrown@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-03-30T22:11:46.9168244Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "andbrowndemoacct.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/xiqiu-e2etest/providers/Microsoft.DeviceUpdate/accounts/xiqiu-e2etest-adu",
+            "name": "xiqiu-e2etest-adu",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "xiqiu@ntdev.microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-04-11T18:53:32.7629372Z",
+              "lastModifiedBy": "xiqiu@ntdev.microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-04-11T18:53:32.7629372Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "xiqiu-e2etest-adu.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/alanshi-aduaccount",
+            "name": "alanshi-aduaccount",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "alanshi@winse.microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-04-11T18:57:49.2311515Z",
+              "lastModifiedBy": "alanshi@winse.microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-04-11T18:57:49.2311515Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "alanshi-aduaccount.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/SEDOLs",
+            "name": "SEDOLs",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "edgarse@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-04-15T07:05:17.7406049Z",
+              "lastModifiedBy": "edgarse@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-04-15T07:05:17.7406049Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "sedols.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/andbrown-test/providers/Microsoft.DeviceUpdate/accounts/andbrownCP042522",
+            "name": "andbrownCP042522",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "andbrown@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-04-25T22:13:46.7981524Z",
+              "lastModifiedBy": "andbrown@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-04-25T22:13:46.7981524Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "andbrowncp042522.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/vimeht-test/providers/Microsoft.DeviceUpdate/accounts/TestAcc",
+            "name": "TestAcc",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "vimeht@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-05-12T19:10:14.0767645Z",
+              "lastModifiedBy": "vimeht@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-05-12T19:10:14.0767645Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "testacc.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/claire-TestDU2",
+            "name": "claire-TestDU2",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "lichris@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-05-25T17:58:59.4159746Z",
+              "lastModifiedBy": "lichris@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-05-25T17:58:59.4159746Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "claire-testdu2.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/mftestaccount",
+            "name": "mftestaccount",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "mfrintu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-06-18T07:21:39.4271141Z",
+              "lastModifiedBy": "mfrintu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-06-18T07:21:39.4271141Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "mftestaccount.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/ikuk",
+            "name": "ikuk",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "mfrintu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-06-18T08:14:38.817973Z",
+              "lastModifiedBy": "mfrintu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-06-18T08:14:38.817973Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "ikuk.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/mfaccountrole",
+            "name": "mfaccountrole",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "mfrintu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-06-18T08:26:43.0990734Z",
+              "lastModifiedBy": "mfrintu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-06-18T08:39:33.8814919Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "mfaccountrole.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/testaccountrole",
+            "name": "testaccountrole",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "mfrintu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-06-18T08:46:12.7408338Z",
+              "lastModifiedBy": "mfrintu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-06-18T08:46:12.7408338Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "testaccountrole.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/mfaccountrole1",
+            "name": "mfaccountrole1",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "mfrintu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-06-19T08:02:55.5142528Z",
+              "lastModifiedBy": "mfrintu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-06-19T08:02:55.5142528Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "mfaccountrole1.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/mfaccountrole2",
+            "name": "mfaccountrole2",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "mfrintu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-06-19T08:08:02.8413196Z",
+              "lastModifiedBy": "mfrintu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-06-19T08:08:02.8413196Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "mfaccountrole2.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/mfaccountrole3",
+            "name": "mfaccountrole3",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "mfrintu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-06-19T08:13:58.2027102Z",
+              "lastModifiedBy": "mfrintu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-06-19T08:13:58.2027102Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "mfaccountrole3.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/mfaccountrole4",
+            "name": "mfaccountrole4",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "mfrintu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-06-19T08:33:17.5890871Z",
+              "lastModifiedBy": "mfrintu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-06-19T09:05:10.0319669Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "mfaccountrole4.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/mfaccountrole5",
+            "name": "mfaccountrole5",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "mfrintu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-06-19T09:07:15.1024742Z",
+              "lastModifiedBy": "mfrintu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-06-19T09:07:15.1024742Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "mfaccountrole5.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/mfaccount1",
+            "name": "mfaccount1",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "mfrintu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-06-21T23:10:30.1450169Z",
+              "lastModifiedBy": "mfrintu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-06-21T23:10:30.1450169Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "mfaccount1.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/OscarBugBashJuly2022ADU",
+            "name": "OscarBugBashJuly2022ADU",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "oscarlee@ntdev.microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-07-14T04:07:56.253042Z",
+              "lastModifiedBy": "oscarlee@ntdev.microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-07-14T04:07:56.253042Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "oscarbugbashjuly2022adu.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/OscarJuly2022BugBashNew",
+            "name": "OscarJuly2022BugBashNew",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "oscarlee@ntdev.microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-07-22T04:24:56.5863974Z",
+              "lastModifiedBy": "oscarlee@ntdev.microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-07-22T04:24:56.5863974Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "oscarjuly2022bugbashnew.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/eshashahdugroup/providers/Microsoft.DeviceUpdate/accounts/CustomerDemoDUAcct",
+            "name": "CustomerDemoDUAcct",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "eshashah@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-07-29T12:17:44.3258856Z",
+              "lastModifiedBy": "eshashah@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-07-29T12:17:44.3258856Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "customerdemoduacct.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/t-rsaldana/providers/Microsoft.DeviceUpdate/accounts/rsaldanaWest",
+            "name": "rsaldanaWest",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "systemData": {
+              "createdBy": "t-rsaldana@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-08-03T19:08:38.7401751Z",
+              "lastModifiedBy": "t-rsaldana@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-08-03T19:08:38.7401751Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "rsaldanawest.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-251/providers/Microsoft.DeviceUpdate/accounts/Account-7748",
+            "name": "Account-7748",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "westus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "1e5942b3-36f1-43eb-88d9-98c12d95000b",
+              "createdByType": "Application",
+              "createdAt": "2022-08-10T03:43:57.9147262Z",
+              "lastModifiedBy": "1e5942b3-36f1-43eb-88d9-98c12d95000b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-10T03:43:57.9147262Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "account-7748.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "westus2",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestCentralUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/soverton/providers/Microsoft.DeviceUpdate/accounts/edgarsecna2",
+            "name": "edgarsecna2",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "NorthEurope",
+            "tags": {},
+            "systemData": {
+              "createdBy": "edgarse@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-10-28T22:39:53.7441611Z",
+              "lastModifiedBy": "edgarse@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-10-28T22:39:53.7441611Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "edgarsecna2.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "NorthEurope",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestEurope",
+                  "role": "Failover"
+                }
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/jitiri-mcc-test/providers/Microsoft.DeviceUpdate/accounts/jitiri-bugbash",
+            "name": "jitiri-bugbash",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "eastus2euap",
+            "systemData": {
+              "createdBy": "jitiri@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-01-27T21:45:13.9099443Z",
+              "lastModifiedBy": "jitiri@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-01-27T21:45:13.9099443Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "jitiri-bugbash.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "EastUS2EUAP",
+                  "role": "Primary"
+                },
+                {
+                  "name": "CentralUSEUAP",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/soverton/providers/Microsoft.DeviceUpdate/accounts/edgars-3",
+            "name": "edgars-3",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "eastus2euap",
+            "systemData": {
+              "createdBy": "edgarse@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-05-05T23:39:18.4672413Z",
+              "lastModifiedBy": "edgarse@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-05-06T02:59:03.328124Z"
+            },
+            "identity": {
+              "principalId": "065ea004-c8cb-4552-82d4-b1e710f96e4e",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "edgars-3.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "EastUS2EUAP",
+                  "role": "Primary"
+                },
+                {
+                  "name": "CentralUSEUAP",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/soverton/providers/Microsoft.DeviceUpdate/accounts/edgars-4",
+            "name": "edgars-4",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "eastus2euap",
+            "systemData": {
+              "createdBy": "edgarse@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-05-05T23:48:38.9438648Z",
+              "lastModifiedBy": "edgarse@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-05-05T23:48:38.9438648Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "edgars-4.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "EastUS2EUAP",
+                  "role": "Primary"
+                },
+                {
+                  "name": "CentralUSEUAP",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/edgars2/providers/Microsoft.DeviceUpdate/accounts/eeeee",
+            "name": "eeeee",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "eastus2euap",
+            "systemData": {
+              "createdBy": "edgarse@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-05-18T00:46:37.2795669Z",
+              "lastModifiedBy": "edgarse@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-05-18T01:02:38.7532036Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "eeeee.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "EastUS2EUAP",
+                  "role": "Primary"
+                },
+                {
+                  "name": "CentralUSEUAP",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/gegarcia-bugBash7_22/providers/Microsoft.DeviceUpdate/accounts/GegarciaHub",
+            "name": "GegarciaHub",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "eastus2euap",
+            "systemData": {
+              "createdBy": "gegarcia@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-07-22T18:48:32.8616803Z",
+              "lastModifiedBy": "gegarcia@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-07-22T18:48:32.8616803Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "gegarciahub.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "EastUS2EUAP",
+                  "role": "Primary"
+                },
+                {
+                  "name": "CentralUSEUAP",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/t-rsaldana/providers/Microsoft.DeviceUpdate/accounts/robertasaldana",
+            "name": "robertasaldana",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "eastus2euap",
+            "systemData": {
+              "createdBy": "t-rsaldana@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-07-27T21:23:39.360945Z",
+              "lastModifiedBy": "t-rsaldana@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-07-27T21:23:39.360945Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "robertasaldana.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "EastUS2EUAP",
+                  "role": "Primary"
+                },
+                {
+                  "name": "CentralUSEUAP",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/edsonschmitt-rg/providers/Microsoft.DeviceUpdate/accounts/edsonschmitt-a",
+            "name": "edsonschmitt-a",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "eastus2euap",
+            "systemData": {
+              "createdBy": "edsonschmitt@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-08-02T14:14:07.2899774Z",
+              "lastModifiedBy": "edsonschmitt@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-08-02T14:14:07.2899774Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "edsonschmitt-a.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "EastUS2EUAP",
+                  "role": "Primary"
+                },
+                {
+                  "name": "CentralUSEUAP",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-preview/providers/Microsoft.DeviceUpdate/accounts/mscontoso",
+            "name": "mscontoso",
+            "type": "Microsoft.DeviceUpdate/accounts",
+            "location": "eastus2euap",
+            "tags": {},
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "mscontoso.api.adu.microsoft.com"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-preview/providers/Microsoft.DeviceUpdate/accounts/contosoclientdo",
+            "name": "contosoclientdo",
+            "type": "Microsoft.DeviceUpdate/accounts",
+            "location": "eastus2euap",
+            "tags": {},
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "contosoclientdo.api.adu.microsoft.com"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-preview/providers/Microsoft.DeviceUpdate/accounts/contosoclientadu",
+            "name": "contosoclientadu",
+            "type": "Microsoft.DeviceUpdate/accounts",
+            "location": "eastus2euap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "jitiri@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-02-25T21:53:35.3200834Z",
+              "lastModifiedBy": "jitiri@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-02-25T21:53:35.3200834Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "contosoclientadu.api.adu.microsoft.com"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/StanTestProd",
+            "name": "StanTestProd",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "soverton@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-08-05T16:42:41.3277463Z",
+              "lastModifiedBy": "soverton@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-08-05T16:42:41.3277463Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "stantestprod.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "eastus",
+                  "role": "Primary"
+                },
+                {
+                  "name": "WestUS",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/soverton/providers/Microsoft.DeviceUpdate/accounts/StanTestAdminProd",
+            "name": "StanTestAdminProd",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "swedencentral",
+            "systemData": {
+              "createdBy": "soverton@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-07-29T18:05:37.6360786Z",
+              "lastModifiedBy": "soverton@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-07-29T18:05:37.6360786Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "stantestadminprod.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "swedencentral",
+                  "role": "Primary"
+                },
+                {
+                  "name": "SwedenSouth",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
+          },
+          {
+            "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/adu-bugbash/providers/Microsoft.DeviceUpdate/accounts/StanTest",
+            "name": "StanTest",
+            "type": "microsoft.deviceupdate/accounts",
+            "location": "swedencentral",
+            "systemData": {
+              "createdBy": "soverton@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-08-03T16:52:25.6077583Z",
+              "lastModifiedBy": "soverton@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-08-03T16:52:25.6077583Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "hostName": "stantest.api.adu.microsoft.com",
+              "locations": [
+                {
+                  "name": "swedencentral",
+                  "role": "Primary"
+                },
+                {
+                  "name": "SwedenSouth",
+                  "role": "Failover"
+                }
+              ],
+              "sku": "Standard",
+              "publicNetworkAccess": "Enabled"
+            }
           }
         ]
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1322994287",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "48178171",
     "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "cf65b9a6-fe0f-4011-881c-aba5a5fb8603"
+    "SUBSCRIPTION_ID": "a645d3be-5a4a-40ef-82a1-d5f5358a424c"
   }
 }

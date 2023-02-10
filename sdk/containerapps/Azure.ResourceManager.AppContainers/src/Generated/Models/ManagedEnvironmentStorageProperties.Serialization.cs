@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureFile))
             {
-                writer.WritePropertyName("azureFile");
+                writer.WritePropertyName("azureFile"u8);
                 writer.WriteObjectValue(AzureFile);
             }
             writer.WriteEndObject();
@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ManagedEnvironmentStorageProperties DeserializeManagedEnvironmentStorageProperties(JsonElement element)
         {
-            Optional<AzureFileProperties> azureFile = default;
+            Optional<ContainerAppAzureFileProperties> azureFile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureFile"))
+                if (property.NameEquals("azureFile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureFile = AzureFileProperties.DeserializeAzureFileProperties(property.Value);
+                    azureFile = ContainerAppAzureFileProperties.DeserializeContainerAppAzureFileProperties(property.Value);
                     continue;
                 }
             }

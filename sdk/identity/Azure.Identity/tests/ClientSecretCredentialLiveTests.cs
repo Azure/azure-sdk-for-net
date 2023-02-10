@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Microsoft.Identity.Client;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -98,28 +100,23 @@ namespace Azure.Identity.Tests
             }
         }
 
-        private static IEnumerable<TestCaseData> RegionalAuthorityTestData()
-        {
-            yield return new TestCaseData(null);
-            yield return new TestCaseData(RegionalAuthority.AutoDiscoverRegion);
-            yield return new TestCaseData(RegionalAuthority.USWest);
-        }
-
         [Test]
         public void VerifyMsalClientRegionalAuthority()
         {
-            RegionalAuthority?[] authorities = {null, RegionalAuthority.AutoDiscoverRegion, RegionalAuthority.USWest};
+            string[] authorities = { null, ConfidentialClientApplication.AttemptRegionDiscovery, "westus" };
 
-            foreach (RegionalAuthority? regionalAuthority in authorities)
+            foreach (string regionalAuthority in authorities)
             {
-                var expectedTenantId = Guid.NewGuid().ToString();
-                var expectedClientId = Guid.NewGuid().ToString();
-                var expectedClientSecret = Guid.NewGuid().ToString();
+                using (new TestEnvVar("AZURE_REGIONAL_AUTHORITY_NAME", regionalAuthority))
+                {
+                    var expectedTenantId = Guid.NewGuid().ToString();
+                    var expectedClientId = Guid.NewGuid().ToString();
+                    var expectedClientSecret = Guid.NewGuid().ToString();
 
-                var cred = new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret,
-                    new ClientSecretCredentialOptions {RegionalAuthority = regionalAuthority});
+                    var cred = new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret);
 
-                Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+                    Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+                }
             }
         }
     }

@@ -72,7 +72,7 @@ namespace Azure.Messaging.ServiceBus
             return TrackMessagesAsReceived(messages);
         }
 
-       /// <summary>
+        /// <summary>
         /// Receives a list of deferred <see cref="ServiceBusReceivedMessage"/> identified by <paramref name="sequenceNumbers"/>.
         /// Messages received using this method are subject to the behavior defined in the <see cref="ServiceBusProcessorOptions.AutoCompleteMessages"/>
         /// and <see cref="ServiceBusProcessorOptions.MaxAutoLockRenewalDuration"/> properties.
@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus
         ///   The specified sequence number does not correspond to a message that has been deferred.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageNotFound"/> in this case.
         /// </exception>
-       public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
+        public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
@@ -96,6 +96,21 @@ namespace Azure.Messaging.ServiceBus
             IReadOnlyList<ServiceBusReceivedMessage> messages = await _receiver.ReceiveDeferredMessagesAsync(sequenceNumbers, cancellationToken).ConfigureAwait(false);
             return TrackMessagesAsReceived(messages);
         }
+
+        /// <inheritdoc cref="ServiceBusReceiver.PeekMessagesAsync"/>
+        public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesAsync(
+            int maxMessages,
+            long? fromSequenceNumber = default,
+            CancellationToken cancellationToken = default)
+       {
+            ValidateCallbackInScope();
+
+            // Peeked messages are not locked so we don't need to track them for lock renewal or autocompletion, as these options do not apply.
+            return await _receiver.PeekMessagesAsync(
+                maxMessages: maxMessages,
+                fromSequenceNumber: fromSequenceNumber,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+       }
 
         private IReadOnlyList<ServiceBusReceivedMessage> TrackMessagesAsReceived(IReadOnlyList<ServiceBusReceivedMessage> messages)
         {

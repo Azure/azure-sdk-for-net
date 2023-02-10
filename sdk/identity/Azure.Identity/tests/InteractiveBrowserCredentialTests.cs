@@ -1,25 +1,45 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.Identity.Tests
 {
-    public class InteractiveBrowserCredentialTests : CredentialTestBase
+    public class InteractiveBrowserCredentialTests : CredentialTestBase<InteractiveBrowserCredentialOptions>
     {
         public InteractiveBrowserCredentialTests(bool isAsync) : base(isAsync)
         { }
-
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
             new InteractiveBrowserCredential(TenantId, ClientId, options, null, mockPublicMsalClient));
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            // Configure mock cache to return a token for the expected user
+            string resolvedTenantId = config.RequestContext.TenantId ?? config.TenantId ?? TenantId;
+            var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, resolvedTenantId, "token", "refreshToken");
+            var tokenCacheOptions = new MockTokenCache(
+                () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
+                args => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes));
+
+            var options = new InteractiveBrowserCredentialOptions
+            {
+                Transport = config.Transport,
+                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
+                TokenCachePersistenceOptions = tokenCacheOptions,
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{resolvedTenantId}", resolvedTenantId, ClientId),
+            };
+            var pipeline = CredentialPipeline.GetInstance(options);
+            return InstrumentClient(new InteractiveBrowserCredential(config.TenantId, ClientId, options, pipeline, null));
+        }
 
         [Test]
         public async Task InteractiveBrowserAcquireTokenInteractiveException()
@@ -224,9 +244,9 @@ namespace Azure.Identity.Tests
         public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            var options = new InteractiveBrowserCredentialOptions();
+            var options = new InteractiveBrowserCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint } };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
 
             var credential = InstrumentClient(
                 new InteractiveBrowserCredential(

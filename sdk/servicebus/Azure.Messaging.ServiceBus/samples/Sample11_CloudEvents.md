@@ -1,4 +1,4 @@
-## Integrating with the CloudEvent type
+# Integrating with the CloudEvent type
 
 The Azure.Core library contains the [CloudEvent](https://docs.microsoft.com/dotnet/api/azure.messaging.cloudevent) type which conforms to the [CloudEvent JSON spec](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/formats/json-format.md). This type can be used in conjunction with the Service Bus library as shown below:
 
@@ -17,7 +17,10 @@ var cloudEvent = new CloudEvent(
     "/cloudevents/example/source",
     "Example.Employee",
     new Employee { Name = "Homer", Age = 39 });
-ServiceBusMessage message = new ServiceBusMessage(new BinaryData(cloudEvent));
+ServiceBusMessage message = new ServiceBusMessage(new BinaryData(cloudEvent))
+{
+    ContentType = "application/cloudevents+json"
+};
 
 // send the message
 await sender.SendMessageAsync(message);
@@ -43,9 +46,3 @@ Console.WriteLine(receivedEmployee.Age);
 // complete the message, thereby deleting it from the service
 await receiver.CompleteMessageAsync(receivedMessage);
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample11_CloudEvents.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample11_CloudEvents.cs)

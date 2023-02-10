@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,22 +22,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="marketplaceID"/>, <paramref name="sellerID"/> or <paramref name="accessKeyId"/> is null. </exception>
         public AmazonMWSLinkedService(object endpoint, object marketplaceID, object sellerID, object accessKeyId)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (marketplaceID == null)
-            {
-                throw new ArgumentNullException(nameof(marketplaceID));
-            }
-            if (sellerID == null)
-            {
-                throw new ArgumentNullException(nameof(sellerID));
-            }
-            if (accessKeyId == null)
-            {
-                throw new ArgumentNullException(nameof(accessKeyId));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(marketplaceID, nameof(marketplaceID));
+            Argument.AssertNotNull(sellerID, nameof(sellerID));
+            Argument.AssertNotNull(accessKeyId, nameof(accessKeyId));
 
             Endpoint = endpoint;
             MarketplaceID = marketplaceID;
@@ -55,9 +44,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="endpoint"> The endpoint of the Amazon MWS server, (i.e. mws.amazonservices.com). </param>
         /// <param name="marketplaceID"> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </param>
         /// <param name="sellerID"> The Amazon seller ID. </param>
-        /// <param name="mwsAuthToken"> The Amazon MWS authentication token. </param>
+        /// <param name="mwsAuthToken">
+        /// The Amazon MWS authentication token.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="accessKeyId"> The access key id used to access data. </param>
-        /// <param name="secretKey"> The secret key used to access data. </param>
+        /// <param name="secretKey">
+        /// The secret key used to access data.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
@@ -83,11 +80,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object MarketplaceID { get; set; }
         /// <summary> The Amazon seller ID. </summary>
         public object SellerID { get; set; }
-        /// <summary> The Amazon MWS authentication token. </summary>
+        /// <summary>
+        /// The Amazon MWS authentication token.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase MwsAuthToken { get; set; }
         /// <summary> The access key id used to access data. </summary>
         public object AccessKeyId { get; set; }
-        /// <summary> The secret key used to access data. </summary>
+        /// <summary>
+        /// The secret key used to access data.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase SecretKey { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public object UseEncryptedEndpoints { get; set; }

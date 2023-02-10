@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,9 +20,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> operationId = default;
             Optional<string> productId = default;
             Optional<string> userId = default;
-            Optional<string> method = default;
-            Optional<Uri> url = default;
-            Optional<string> ipAddress = default;
+            Optional<RequestMethod> method = default;
+            Optional<Uri> uri = default;
+            Optional<IPAddress> ipAddress = default;
             Optional<string> backendResponseCode = default;
             Optional<int> responseCode = default;
             Optional<int> responseSize = default;
@@ -30,57 +31,67 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<double> apiTime = default;
             Optional<double> serviceTime = default;
             Optional<string> apiRegion = default;
-            Optional<string> subscriptionId = default;
+            Optional<ResourceIdentifier> subscriptionId = default;
             Optional<string> requestId = default;
             Optional<int> requestSize = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("apiId"))
+                if (property.NameEquals("apiId"u8))
                 {
                     apiId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationId"))
+                if (property.NameEquals("operationId"u8))
                 {
                     operationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("productId"))
+                if (property.NameEquals("productId"u8))
                 {
                     productId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userId"))
+                if (property.NameEquals("userId"u8))
                 {
                     userId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("method"))
-                {
-                    method = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("method"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    url = new Uri(property.Value.GetString());
+                    method = new RequestMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("url"u8))
                 {
-                    ipAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        uri = null;
+                        continue;
+                    }
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("backendResponseCode"))
+                if (property.NameEquals("ipAddress"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("backendResponseCode"u8))
                 {
                     backendResponseCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("responseCode"))
+                if (property.NameEquals("responseCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     responseCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("responseSize"))
+                if (property.NameEquals("responseSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     responseSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,12 +121,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cache"))
+                if (property.NameEquals("cache"u8))
                 {
                     cache = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiTime"))
+                if (property.NameEquals("apiTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     apiTime = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("serviceTime"))
+                if (property.NameEquals("serviceTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -135,22 +146,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     serviceTime = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("apiRegion"))
+                if (property.NameEquals("apiRegion"u8))
                 {
                     apiRegion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    subscriptionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requestId"))
+                if (property.NameEquals("requestId"u8))
                 {
                     requestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestSize"))
+                if (property.NameEquals("requestSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,7 +177,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new RequestReportRecordContract(apiId.Value, operationId.Value, productId.Value, userId.Value, method.Value, url.Value, ipAddress.Value, backendResponseCode.Value, Optional.ToNullable(responseCode), Optional.ToNullable(responseSize), Optional.ToNullable(timestamp), cache.Value, Optional.ToNullable(apiTime), Optional.ToNullable(serviceTime), apiRegion.Value, subscriptionId.Value, requestId.Value, Optional.ToNullable(requestSize));
+            return new RequestReportRecordContract(apiId.Value, operationId.Value, productId.Value, userId.Value, Optional.ToNullable(method), uri.Value, ipAddress.Value, backendResponseCode.Value, Optional.ToNullable(responseCode), Optional.ToNullable(responseSize), Optional.ToNullable(timestamp), cache.Value, Optional.ToNullable(apiTime), Optional.ToNullable(serviceTime), apiRegion.Value, subscriptionId.Value, requestId.Value, Optional.ToNullable(requestSize));
         }
     }
 }

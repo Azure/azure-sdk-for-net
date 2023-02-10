@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         private const string ManagedValue = "Managed";
-        private const string AMLTokenValue = "AMLToken";
+        private const string AmlTokenValue = "AMLToken";
         private const string UserIdentityValue = "UserIdentity";
 
         /// <summary> Managed. </summary>
         public static IdentityConfigurationType Managed { get; } = new IdentityConfigurationType(ManagedValue);
         /// <summary> AMLToken. </summary>
-        public static IdentityConfigurationType AMLToken { get; } = new IdentityConfigurationType(AMLTokenValue);
+        public static IdentityConfigurationType AmlToken { get; } = new IdentityConfigurationType(AmlTokenValue);
         /// <summary> UserIdentity. </summary>
         public static IdentityConfigurationType UserIdentity { get; } = new IdentityConfigurationType(UserIdentityValue);
         /// <summary> Determines if two <see cref="IdentityConfigurationType"/> values are the same. </summary>

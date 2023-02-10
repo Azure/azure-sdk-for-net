@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: WebPubSub
 namespace: Azure.ResourceManager.WebPubSub
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/47b551f58ee1b24f4783c2e927b1673b39d87348/specification/webpubsub/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1be09531e4c6edeafde41d6562371566d39669e8/specification/webpubsub/resource-manager/readme.md
 tag: package-2021-10-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -50,6 +50,10 @@ rename-rules:
 
 override-operation-name:
   WebPubSub_CheckNameAvailability: CheckWebPubSubNameAvailability
+
+rename-mapping:
+  RegenerateKeyParameters: WebPubSubRegenerateKeyContent
+
 directive:
   - rename-model:
       from: PrivateLinkResource
@@ -102,6 +106,9 @@ directive:
   - rename-model:
       from: NetworkACL
       to:  PublicNetworkAcls
+  - rename-model:
+      from: EventHandler
+      to:  WebPubSubEventHandler
   - from: webpubsub.json
     where: $.definitions.ScaleType
     transform: $['x-ms-enum'].name = 'WebPubSubScaleType'
@@ -126,13 +133,8 @@ directive:
     transform: $["x-ms-client-name"] = 'isClientCertEnabled'
   - from: webpubsub.json
     where: $.definitions.WebPubSubProperties.properties.disableAadAuth
-    transform: $["x-ms-client-name"] = 'isDisableAadAuth'
+    transform: $["x-ms-client-name"] = 'isAadAuthDisabled'
   - from: webpubsub.json
     where: $.definitions.WebPubSubProperties.properties.disableLocalAuth
-    transform: $["x-ms-client-name"] = 'isDisableLocalAuth'
-
-  # Change ManagedIdentity to common identity type(ManagedServiceIdentity)
-  - from: swagger-document
-    where: $.definitions.ManagedIdentityType
-    transform: $.enum.push("SystemAssigned, UserAssigned")
+    transform: $["x-ms-client-name"] = 'isLocalAuthDisabled'
 ```

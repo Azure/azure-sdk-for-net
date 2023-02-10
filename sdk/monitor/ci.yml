@@ -9,7 +9,12 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/monitor/
+    - sdk/monitor/ci.yml
+    - sdk/monitor/service.projects
+    - sdk/monitor/Azure.Monitor.OpenTelemetry
+    - sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter
+    - sdk/monitor/Azure.Monitor.Query
+    - sdk/monitor/Azure.Monitor.Ingestion
 
 pr:
   branches:
@@ -20,19 +25,25 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/monitor/
+    - sdk/monitor/ci.yml
+    - sdk/monitor/service.projects
+    - sdk/monitor/Azure.Monitor.OpenTelemetry
+    - sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter
+    - sdk/monitor/Azure.Monitor.Query
+    - sdk/monitor/Azure.Monitor.Ingestion
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: client
     ServiceDirectory: monitor
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Monitor.OpenTelemetry
+      safeName: AzureMonitorOpenTelemetry
     - name: Azure.Monitor.OpenTelemetry.Exporter
-      safeName: MicrosoftOpenTelemetryExporterAzureMonitor
+      safeName: AzureMonitorOpenTelemetryExporter
     - name: Azure.Monitor.Query
       safeName: AzureMonitorQuery
-    - name: Azure.ResourceManager.Monitor
-      safeName: AzureResourceManagerMonitor
     - name: Azure.Monitor.Ingestion
       safeName: AzureMonitorIngestion

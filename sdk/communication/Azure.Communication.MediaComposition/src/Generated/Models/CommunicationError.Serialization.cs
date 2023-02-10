@@ -9,10 +9,20 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.MediaComposition
+namespace Azure.Communication.MediaComposition.Models
 {
-    internal partial class CommunicationError
+    internal partial class CommunicationError : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code);
+            writer.WritePropertyName("message"u8);
+            writer.WriteStringValue(Message);
+            writer.WriteEndObject();
+        }
+
         internal static CommunicationError DeserializeCommunicationError(JsonElement element)
         {
             string code = default;
@@ -22,22 +32,22 @@ namespace Azure.Communication.MediaComposition
             Optional<CommunicationError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +62,7 @@ namespace Azure.Communication.MediaComposition
                     details = array;
                     continue;
                 }
-                if (property.NameEquals("innererror"))
+                if (property.NameEquals("innererror"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

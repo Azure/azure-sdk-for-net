@@ -15,49 +15,49 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("messageContentType");
-            writer.WriteStringValue(MessageContentType);
-            writer.WritePropertyName("transmitFileNameInMimeHeader");
+            writer.WritePropertyName("messageContentType"u8);
+            writer.WriteStringValue(MessageContentType.ToString());
+            writer.WritePropertyName("transmitFileNameInMimeHeader"u8);
             writer.WriteBooleanValue(TransmitFileNameInMimeHeader);
-            writer.WritePropertyName("fileNameTemplate");
+            writer.WritePropertyName("fileNameTemplate"u8);
             writer.WriteStringValue(FileNameTemplate);
-            writer.WritePropertyName("suspendMessageOnFileNameGenerationError");
+            writer.WritePropertyName("suspendMessageOnFileNameGenerationError"u8);
             writer.WriteBooleanValue(SuspendMessageOnFileNameGenerationError);
-            writer.WritePropertyName("autogenerateFileName");
-            writer.WriteBooleanValue(AutogenerateFileName);
+            writer.WritePropertyName("autogenerateFileName"u8);
+            writer.WriteBooleanValue(AutoGenerateFileName);
             writer.WriteEndObject();
         }
 
         internal static AS2EnvelopeSettings DeserializeAS2EnvelopeSettings(JsonElement element)
         {
-            string messageContentType = default;
+            ContentType messageContentType = default;
             bool transmitFileNameInMimeHeader = default;
             string fileNameTemplate = default;
             bool suspendMessageOnFileNameGenerationError = default;
             bool autogenerateFileName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageContentType"))
+                if (property.NameEquals("messageContentType"u8))
                 {
-                    messageContentType = property.Value.GetString();
+                    messageContentType = new ContentType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("transmitFileNameInMimeHeader"))
+                if (property.NameEquals("transmitFileNameInMimeHeader"u8))
                 {
                     transmitFileNameInMimeHeader = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("fileNameTemplate"))
+                if (property.NameEquals("fileNameTemplate"u8))
                 {
                     fileNameTemplate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("suspendMessageOnFileNameGenerationError"))
+                if (property.NameEquals("suspendMessageOnFileNameGenerationError"u8))
                 {
                     suspendMessageOnFileNameGenerationError = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("autogenerateFileName"))
+                if (property.NameEquals("autogenerateFileName"u8))
                 {
                     autogenerateFileName = property.Value.GetBoolean();
                     continue;

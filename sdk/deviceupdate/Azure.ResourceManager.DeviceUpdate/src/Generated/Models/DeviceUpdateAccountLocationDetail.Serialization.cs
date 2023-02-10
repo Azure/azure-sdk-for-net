@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             Optional<DeviceUpdateAccountLocationRole> role = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("role"))
+                if (property.NameEquals("role"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

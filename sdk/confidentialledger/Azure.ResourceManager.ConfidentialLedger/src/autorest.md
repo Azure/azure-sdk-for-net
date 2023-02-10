@@ -9,7 +9,6 @@ csharp: true
 library-name: ConfidentialLedger
 namespace: Azure.ResourceManager.ConfidentialLedger
 require: https://github.com/Azure/azure-rest-api-specs/blob/e7bcafa885ef773c6309d6a8f3a65c5019df413d/specification/confidentialledger/resource-manager/readme.md
-tag: package-2022-05-13
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -17,7 +16,7 @@ modelerfour:
   flatten-payloads: false
 
 override-operation-name:
-  CheckNameAvailability: CheckLedgerNameAvailability
+  CheckNameAvailability: CheckConfidentialLedgerNameAvailability
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -25,6 +24,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'principalId': 'uuid'
 
 rename-rules:
   CPU: Cpu
@@ -49,15 +49,15 @@ rename-rules:
   Etag: ETag|etag
   AAD: Aad
 
-directive:
-  - from: confidentialledger.json
-    where: $.definitions
-    transform: >
-      $.ProvisioningState['x-ms-enum']['name'] = 'LedgerProvisioningState';
-  - from: types.json
-    where: $.definitions
-    transform: >
-      $.CheckNameAvailabilityRequest['x-ms-client-name'] = 'LedgerNameAvailabilityRequest';
-      $.CheckNameAvailabilityResponse['x-ms-client-name'] = 'LedgerNameAvailabilityResult';
+rename-mapping:
+  CheckNameAvailabilityRequest: ConfidentialLedgerNameAvailabilityContent
+  CheckNameAvailabilityRequest.type: -|resource-type
+  CheckNameAvailabilityResponse: ConfidentialLedgerNameAvailabilityResult
+  CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
+  CheckNameAvailabilityReason: ConfidentialLedgerNameUnavailableReason
+  LedgerProperties: ConfidentialLedgerProperties
+  LedgerRoleName: ConfidentialLedgerRoleName
+  LedgerType: ConfidentialLedgerType
+  ProvisioningState: ConfidentialLedgerProvisioningState
 
 ```

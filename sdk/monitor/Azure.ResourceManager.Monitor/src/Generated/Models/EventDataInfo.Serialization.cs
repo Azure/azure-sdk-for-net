@@ -23,26 +23,26 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> id = default;
             Optional<string> eventDataId = default;
             Optional<string> correlationId = default;
-            Optional<LocalizableString> eventName = default;
-            Optional<LocalizableString> category = default;
-            Optional<HttpRequestInfo> httpRequest = default;
-            Optional<EventLevel> level = default;
+            Optional<MonitorLocalizableString> eventName = default;
+            Optional<MonitorLocalizableString> category = default;
+            Optional<EventDataHttpRequestInfo> httpRequest = default;
+            Optional<MonitorEventLevel> level = default;
             Optional<string> resourceGroupName = default;
-            Optional<LocalizableString> resourceProviderName = default;
+            Optional<MonitorLocalizableString> resourceProviderName = default;
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<LocalizableString> resourceType = default;
+            Optional<MonitorLocalizableString> resourceType = default;
             Optional<string> operationId = default;
-            Optional<LocalizableString> operationName = default;
+            Optional<MonitorLocalizableString> operationName = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
-            Optional<LocalizableString> status = default;
-            Optional<LocalizableString> subStatus = default;
+            Optional<MonitorLocalizableString> status = default;
+            Optional<MonitorLocalizableString> subStatus = default;
             Optional<DateTimeOffset> eventTimestamp = default;
             Optional<DateTimeOffset> submissionTimestamp = default;
             Optional<string> subscriptionId = default;
             Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authorization"))
+                if (property.NameEquals("authorization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     authorization = SenderAuthorization.DeserializeSenderAuthorization(property.Value);
                     continue;
                 }
-                if (property.NameEquals("claims"))
+                if (property.NameEquals("claims"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,87 +67,87 @@ namespace Azure.ResourceManager.Monitor.Models
                     claims = dictionary;
                     continue;
                 }
-                if (property.NameEquals("caller"))
+                if (property.NameEquals("caller"u8))
                 {
                     caller = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventDataId"))
+                if (property.NameEquals("eventDataId"u8))
                 {
                     eventDataId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correlationId"))
+                if (property.NameEquals("correlationId"u8))
                 {
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventName"))
+                if (property.NameEquals("eventName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eventName = LocalizableString.DeserializeLocalizableString(property.Value);
+                    eventName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    category = LocalizableString.DeserializeLocalizableString(property.Value);
+                    category = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
                     continue;
                 }
-                if (property.NameEquals("httpRequest"))
+                if (property.NameEquals("httpRequest"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    httpRequest = HttpRequestInfo.DeserializeHttpRequestInfo(property.Value);
+                    httpRequest = EventDataHttpRequestInfo.DeserializeEventDataHttpRequestInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("level"))
+                if (property.NameEquals("level"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = property.Value.GetString().ToEventLevel();
+                    level = property.Value.GetString().ToMonitorEventLevel();
                     continue;
                 }
-                if (property.NameEquals("resourceGroupName"))
+                if (property.NameEquals("resourceGroupName"u8))
                 {
                     resourceGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceProviderName"))
+                if (property.NameEquals("resourceProviderName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceProviderName = LocalizableString.DeserializeLocalizableString(property.Value);
+                    resourceProviderName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,32 +157,32 @@ namespace Azure.ResourceManager.Monitor.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceType = LocalizableString.DeserializeLocalizableString(property.Value);
+                    resourceType = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
                     continue;
                 }
-                if (property.NameEquals("operationId"))
+                if (property.NameEquals("operationId"u8))
                 {
                     operationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationName"))
+                if (property.NameEquals("operationName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    operationName = LocalizableString.DeserializeLocalizableString(property.Value);
+                    operationName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -197,27 +197,27 @@ namespace Azure.ResourceManager.Monitor.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = LocalizableString.DeserializeLocalizableString(property.Value);
+                    status = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
                     continue;
                 }
-                if (property.NameEquals("subStatus"))
+                if (property.NameEquals("subStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    subStatus = LocalizableString.DeserializeLocalizableString(property.Value);
+                    subStatus = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
                     continue;
                 }
-                if (property.NameEquals("eventTimestamp"))
+                if (property.NameEquals("eventTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     eventTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("submissionTimestamp"))
+                if (property.NameEquals("submissionTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.Monitor.Models
                     submissionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,15 +16,22 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("issuer");
+            writer.WritePropertyName("issuer"u8);
             writer.WriteStringValue(Issuer);
-            writer.WritePropertyName("audience");
+            writer.WritePropertyName("audience"u8);
             writer.WriteStringValue(Audience);
-            writer.WritePropertyName("primaryVerificationKey");
-            writer.WriteObjectValue(PrimaryVerificationKey);
+            if (PrimaryVerificationKey != null)
+            {
+                writer.WritePropertyName("primaryVerificationKey"u8);
+                writer.WriteObjectValue(PrimaryVerificationKey);
+            }
+            else
+            {
+                writer.WriteNull("primaryVerificationKey");
+            }
             if (Optional.IsCollectionDefined(AlternateVerificationKeys))
             {
-                writer.WritePropertyName("alternateVerificationKeys");
+                writer.WritePropertyName("alternateVerificationKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in AlternateVerificationKeys)
                 {
@@ -34,7 +41,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsCollectionDefined(RequiredClaims))
             {
-                writer.WritePropertyName("requiredClaims");
+                writer.WritePropertyName("requiredClaims"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequiredClaims)
                 {
@@ -42,14 +49,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("restrictionTokenType");
+            writer.WritePropertyName("restrictionTokenType"u8);
             writer.WriteStringValue(RestrictionTokenType.ToString());
             if (Optional.IsDefined(OpenIdConnectDiscoveryDocument))
             {
-                writer.WritePropertyName("openIdConnectDiscoveryDocument");
+                writer.WritePropertyName("openIdConnectDiscoveryDocument"u8);
                 writer.WriteStringValue(OpenIdConnectDiscoveryDocument);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -66,22 +73,27 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("issuer"))
+                if (property.NameEquals("issuer"u8))
                 {
                     issuer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("audience"))
+                if (property.NameEquals("audience"u8))
                 {
                     audience = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryVerificationKey"))
+                if (property.NameEquals("primaryVerificationKey"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        primaryVerificationKey = null;
+                        continue;
+                    }
                     primaryVerificationKey = ContentKeyPolicyRestrictionTokenKey.DeserializeContentKeyPolicyRestrictionTokenKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("alternateVerificationKeys"))
+                if (property.NameEquals("alternateVerificationKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +108,7 @@ namespace Azure.ResourceManager.Media.Models
                     alternateVerificationKeys = array;
                     continue;
                 }
-                if (property.NameEquals("requiredClaims"))
+                if (property.NameEquals("requiredClaims"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,17 +123,17 @@ namespace Azure.ResourceManager.Media.Models
                     requiredClaims = array;
                     continue;
                 }
-                if (property.NameEquals("restrictionTokenType"))
+                if (property.NameEquals("restrictionTokenType"u8))
                 {
                     restrictionTokenType = new ContentKeyPolicyRestrictionTokenType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("openIdConnectDiscoveryDocument"))
+                if (property.NameEquals("openIdConnectDiscoveryDocument"u8))
                 {
                     openIdConnectDiscoveryDocument = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

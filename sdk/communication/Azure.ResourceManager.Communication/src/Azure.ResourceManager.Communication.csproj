@@ -1,11 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.1.0-beta.5</Version>
+    <Version>1.1.0-beta.6</Version>
     <PackageId>Azure.ResourceManager.Communication</PackageId>
-    <Description>
-      Azure management client SDK for Azure resource provider Microsoft.Communication.
-      For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/CHANGELOG.md.
-    </Description>
+    <Description>Microsoft Azure management client SDK for Azure resource provider Communication.</Description>
     <PackageTags>azure;management;communication</PackageTags>
   </PropertyGroup>
 </Project>

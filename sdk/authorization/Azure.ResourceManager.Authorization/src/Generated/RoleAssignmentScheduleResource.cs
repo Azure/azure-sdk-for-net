@@ -88,14 +88,22 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get the specified role assignment schedule for a resource scope
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
-        /// Operation Id: RoleAssignmentSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RoleAssignmentScheduleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleResource.Get");
-            scope0.Start();
+            using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleResource.Get");
+            scope.Start();
             try
             {
                 var response = await _roleAssignmentScheduleRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -105,21 +113,29 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Get the specified role assignment schedule for a resource scope
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
-        /// Operation Id: RoleAssignmentSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RoleAssignmentScheduleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleResource.Get");
-            scope0.Start();
+            using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleResource.Get");
+            scope.Start();
             try
             {
                 var response = _roleAssignmentScheduleRestClient.Get(Id.Parent, Id.Name, cancellationToken);
@@ -129,7 +145,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }

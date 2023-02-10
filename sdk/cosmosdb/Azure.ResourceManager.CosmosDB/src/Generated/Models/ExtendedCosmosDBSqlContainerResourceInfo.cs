@@ -7,6 +7,7 @@
 
 using System;
 using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,18 +15,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class ExtendedCosmosDBSqlContainerResourceInfo : CosmosDBSqlContainerResourceInfo
     {
         /// <summary> Initializes a new instance of ExtendedCosmosDBSqlContainerResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL container. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ExtendedCosmosDBSqlContainerResourceInfo(string id) : base(id)
+        /// <param name="containerName"> Name of the Cosmos DB SQL container. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        public ExtendedCosmosDBSqlContainerResourceInfo(string containerName) : base(containerName)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(containerName, nameof(containerName));
         }
 
         /// <summary> Initializes a new instance of ExtendedCosmosDBSqlContainerResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL container. </param>
+        /// <param name="containerName"> Name of the Cosmos DB SQL container. </param>
         /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the container. </param>
         /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>
         /// <param name="defaultTtl"> Default time to live. </param>
@@ -35,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedCosmosDBSqlContainerResourceInfo(string id, CosmosDBIndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl, string rid, float? timestamp, ETag? etag) : base(id, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, analyticalStorageTtl)
+        internal ExtendedCosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl, string rid, float? timestamp, ETag? etag) : base(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, analyticalStorageTtl)
         {
             Rid = rid;
             Timestamp = timestamp;

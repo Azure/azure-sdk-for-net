@@ -1,0 +1,68 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OnTokenIssuanceStart",
+    "version": "10-01-2021-preview",
+    "contact": {
+      "name": "Microsoft"
+    },
+    "summary": "OnTokenIssuanceStart 10-01-2021-preview",
+    "description": "API outline for OnTokenIssuanceStart 10-01-2021-preview"
+  },
+  "servers": [
+    {
+      "url": ""
+    }
+  ],
+  "paths": {
+    "/onTokenIssuanceStart/10-01-2021-preview": {
+      "post": {
+        "tags": [
+          "Authentication Events",
+          "OnTokenIssuanceStart",
+          "10-01-2021-preview"
+        ],
+        "summary": "",
+        "operationId": "post-preview_10_01_2021",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./responseSchema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./requestSchema.json"
+              }
+            }
+          },
+          "description": "OnTokenIssuanceStart payload"
+        },
+        "description": "When a new token is issued"
+      },
+      "parameters": []
+    }
+  },
+  "components": {
+    "schemas": {}
+  },
+  "tags": [
+    {
+      "name": "10-01-2021-preview"
+    },
+    {
+      "name": "Authentication Events"
+    },
+    {
+      "name": "OnTokenIssuanceStart"
+    }
+  ]
+}

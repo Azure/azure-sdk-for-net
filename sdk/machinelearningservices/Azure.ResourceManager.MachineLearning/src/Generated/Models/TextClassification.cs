@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,31 +17,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class TextClassification : AutoMLVertical
     {
         /// <summary> Initializes a new instance of TextClassification. </summary>
-        public TextClassification()
+        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
+        public TextClassification(MachineLearningTableJobInput trainingData) : base(trainingData)
         {
+            Argument.AssertNotNull(trainingData, nameof(trainingData));
+
             TaskType = TaskType.TextClassification;
         }
 
         /// <summary> Initializes a new instance of TextClassification. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
+        /// <param name="targetColumnName">
+        /// Target column name: This is prediction values column.
+        /// Also known as label column name in context of classification tasks.
+        /// </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="primaryMetric"> Primary metric for Text-Classification task. </param>
-        /// <param name="dataSettings"> Data inputs for AutoMLJob. </param>
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        internal TextClassification(LogVerbosity? logVerbosity, TaskType taskType, ClassificationPrimaryMetric? primaryMetric, NlpVerticalDataSettings dataSettings, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings) : base(logVerbosity, taskType)
+        /// <param name="validationData"> Validation data inputs. </param>
+        internal TextClassification(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MachineLearningTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData)
         {
             PrimaryMetric = primaryMetric;
-            DataSettings = dataSettings;
             FeaturizationSettings = featurizationSettings;
             LimitSettings = limitSettings;
+            ValidationData = validationData;
             TaskType = taskType;
         }
 
         /// <summary> Primary metric for Text-Classification task. </summary>
         public ClassificationPrimaryMetric? PrimaryMetric { get; set; }
-        /// <summary> Data inputs for AutoMLJob. </summary>
-        public NlpVerticalDataSettings DataSettings { get; set; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>
         internal NlpVerticalFeaturizationSettings FeaturizationSettings { get; set; }
         /// <summary> Dataset language, useful for the text data. </summary>
@@ -55,5 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Execution constraints for AutoMLJob. </summary>
         public NlpVerticalLimitSettings LimitSettings { get; set; }
+        /// <summary> Validation data inputs. </summary>
+        public MachineLearningTableJobInput ValidationData { get; set; }
     }
 }

@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Initializes a new instance of ScopeProperties. </summary>
         /// <param name="scope"></param>
-        /// <param name="valid"></param>
-        internal ScopeProperties(string scope, bool? valid)
+        /// <param name="isValid"></param>
+        internal ScopeProperties(string scope, bool? isValid)
         {
             Scope = scope;
-            Valid = valid;
+            IsValid = isValid;
         }
 
         /// <summary> Gets the scope. </summary>
         public string Scope { get; }
-        /// <summary> Gets the valid. </summary>
-        public bool? Valid { get; }
+        /// <summary> Gets the is valid. </summary>
+        public bool? IsValid { get; }
     }
 }

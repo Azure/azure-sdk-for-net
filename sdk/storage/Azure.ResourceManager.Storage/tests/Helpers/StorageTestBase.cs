@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         public static string DefaultLocationString = "eastus2";
         public static bool IsTestTenant = false;
         // These are used to create default accounts
-        public static StorageSku DefaultSkuNameStandardGRS = new StorageSku(StorageSkuName.StandardGRS);
+        public static StorageSku DefaultSkuNameStandardGRS = new StorageSku(StorageSkuName.StandardGrs);
         public static StorageKind DefaultKindStorage = StorageKind.Storage;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
         {
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             {
                 accountName = Recording.GenerateAssetName(prefix);
                 StorageAccountNameAvailabilityContent parameter = new StorageAccountNameAvailabilityContent(accountName);
-                CheckNameAvailabilityResult result = await DefaultSubscription.CheckStorageAccountNameAvailabilityAsync(parameter);
-                if (result.NameAvailable == true)
+                StorageAccountNameAvailabilityResult result = await DefaultSubscription.CheckStorageAccountNameAvailabilityAsync(parameter);
+                if (result.IsNameAvailable ?? false)
                 {
                     return accountName;
                 }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             Assert.NotNull(account.Id.Name);
             Assert.NotNull(account.Data.Location);
             Assert.NotNull(account.Data);
-            Assert.NotNull(account.Data.CreateOn);
+            Assert.NotNull(account.Data.CreatedOn);
             Assert.NotNull(account.Data.Sku);
             Assert.NotNull(account.Data.Sku.Name);
             Assert.NotNull(account.Data.Sku.Tier);

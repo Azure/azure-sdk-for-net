@@ -34,7 +34,8 @@ namespace Azure.Storage.Test.Shared
                 "Azure.Storage.Blobs",
                 "Azure.Storage.Files.DataLake",
                 "Azure.Storage.Files.Shares",
-                "Azure.Storage.Queues");
+                "Azure.Storage.Queues",
+                "Azure.Storage.Blobs.DataMovmement");
         }
 
         private void SetSasVersionInAssemblies(string version, params string[] assemblyNames)
@@ -47,6 +48,48 @@ namespace Azure.Storage.Test.Shared
                     "DefaultSasVersionInternal", BindingFlags.NonPublic | BindingFlags.Static);
                 defaultSasVersionInternal.SetValue(null, version);
             }
+        }
+
+        /// <summary>
+        /// Gets a custom account SAS where the permissions, services and resourceType
+        /// comes back in the string character order that the user inputs it as.
+        ///
+        /// e.g. If someone has the services (srt) value as "ocs", then in the
+        /// sas token returned by this method will have the srt=osc and the
+        /// string-to-sign will be signed with the services value as osc.
+        ///
+        /// This is custom because using the regular AccountSasBuilder does not accept
+        /// a raw string services or resourceTypes, it accepts services and resourceTypes
+        /// (e.g. see AccountSasPermissions, AccountSasServices, AccountSasResourceType).
+        /// The order is fixed respective to what values is set.
+        /// </summary>
+        /// <param name="permissions"></param>
+        /// <param name="services"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="sharedKeyCredential"></param>
+        /// <returns></returns>
+        public virtual string GetCustomAccountSas(
+            string permissions = default,
+            string services = default,
+            string resourceType = default,
+            StorageSharedKeyCredential sharedKeyCredential = default)
+        {
+            sharedKeyCredential ??= Tenants.GetNewSharedKeyCredentials();
+            // We do not include 'i' in the default permissions due to immutability policy permissions
+            // not being supported by HNS accounts
+            permissions ??= "racwdlxyuptf";
+            services ??= "bqtf";
+            resourceType ??= "sco";
+
+            // Generate a SAS that would set the srt / ResourceTypes in a different order than
+            // the .NET SDK would normally create the SAS
+            TestAccountSasBuilder accountSasBuilder = new TestAccountSasBuilder(
+                permissions: permissions,
+                expiresOn: Recording.UtcNow.AddDays(1),
+                services: services,
+                resourceTypes: resourceType);
+
+            return accountSasBuilder.ToTestSasQueryParameters(sharedKeyCredential).ToString();
         }
     }
 }

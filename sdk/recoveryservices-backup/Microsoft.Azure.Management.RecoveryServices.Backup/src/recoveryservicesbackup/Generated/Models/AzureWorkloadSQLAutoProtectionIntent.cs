@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="workloadItemType">Workload item type of the item for
         /// which intent is to be set. Possible values include: 'Invalid',
         /// 'SQLInstance', 'SQLDataBase', 'SAPHanaSystem', 'SAPHanaDatabase',
-        /// 'SAPAseSystem', 'SAPAseDatabase'</param>
+        /// 'SAPAseSystem', 'SAPAseDatabase', 'SAPHanaDBInstance'</param>
         public AzureWorkloadSQLAutoProtectionIntent(string backupManagementType = default(string), string sourceResourceId = default(string), string itemId = default(string), string policyId = default(string), string protectionState = default(string), string workloadItemType = default(string))
             : base(backupManagementType, sourceResourceId, itemId, policyId, protectionState)
         {
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Gets or sets workload item type of the item for which intent is to
         /// be set. Possible values include: 'Invalid', 'SQLInstance',
         /// 'SQLDataBase', 'SAPHanaSystem', 'SAPHanaDatabase', 'SAPAseSystem',
-        /// 'SAPAseDatabase'
+        /// 'SAPAseDatabase', 'SAPHanaDBInstance'
         /// </summary>
         [JsonProperty(PropertyName = "workloadItemType")]
         public string WorkloadItemType { get; set; }

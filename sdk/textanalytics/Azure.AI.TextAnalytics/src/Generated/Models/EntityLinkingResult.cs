@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.TextAnalytics;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -20,20 +21,11 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="modelVersion"/> or <paramref name="documents"/> is null. </exception>
-        public EntityLinkingResult(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<EntityLinkingResultDocumentsItem> documents) : base(errors, modelVersion)
+        public EntityLinkingResult(IEnumerable<InputError> errors, string modelVersion, IEnumerable<EntityLinkingResultWithDetectedLanguage> documents) : base(errors, modelVersion)
         {
-            if (errors == null)
-            {
-                throw new ArgumentNullException(nameof(errors));
-            }
-            if (modelVersion == null)
-            {
-                throw new ArgumentNullException(nameof(modelVersion));
-            }
-            if (documents == null)
-            {
-                throw new ArgumentNullException(nameof(documents));
-            }
+            Argument.AssertNotNull(errors, nameof(errors));
+            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
+            Argument.AssertNotNull(documents, nameof(documents));
 
             Documents = documents.ToList();
         }
@@ -43,12 +35,12 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
-        internal EntityLinkingResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IList<EntityLinkingResultDocumentsItem> documents) : base(errors, statistics, modelVersion)
+        internal EntityLinkingResult(IList<InputError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IList<EntityLinkingResultWithDetectedLanguage> documents) : base(errors, statistics, modelVersion)
         {
             Documents = documents;
         }
 
         /// <summary> Response by document. </summary>
-        public IList<EntityLinkingResultDocumentsItem> Documents { get; }
+        public IList<EntityLinkingResultWithDetectedLanguage> Documents { get; }
     }
 }

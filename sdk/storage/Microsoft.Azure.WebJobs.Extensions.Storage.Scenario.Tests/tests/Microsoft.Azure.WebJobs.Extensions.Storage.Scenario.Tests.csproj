@@ -9,8 +9,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="2.1.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" VersionOverride="3.0.14" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Logging.ApplicationInsights" VersionOverride="3.0.14" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Moq" />
     <PackageReference Include="System.Memory" VersionOverride="4.5.4" />
   </ItemGroup>
 

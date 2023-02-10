@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FluidRelay
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-02-15";
+            _apiVersion = apiVersion ?? "2022-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.FluidRelay
             }
         }
 
-        internal HttpMessage CreateGetKeysRequest(string subscriptionId, string resourceGroup, string fluidRelayServerName)
+        internal HttpMessage CreateListKeysRequest(string subscriptionId, string resourceGroup, string fluidRelayServerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.FluidRelay
             uri.AppendPath(resourceGroup, true);
             uri.AppendPath("/providers/Microsoft.FluidRelay/fluidRelayServers/", false);
             uri.AppendPath(fluidRelayServerName, true);
-            uri.AppendPath("/getKeys", false);
+            uri.AppendPath("/listKeys", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -476,13 +476,13 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FluidRelayServerKeys>> GetKeysAsync(string subscriptionId, string resourceGroup, string fluidRelayServerName, CancellationToken cancellationToken = default)
+        public async Task<Response<FluidRelayServerKeys>> ListKeysAsync(string subscriptionId, string resourceGroup, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
             Argument.AssertNotNullOrEmpty(fluidRelayServerName, nameof(fluidRelayServerName));
 
-            using var message = CreateGetKeysRequest(subscriptionId, resourceGroup, fluidRelayServerName);
+            using var message = CreateListKeysRequest(subscriptionId, resourceGroup, fluidRelayServerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -505,13 +505,13 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FluidRelayServerKeys> GetKeys(string subscriptionId, string resourceGroup, string fluidRelayServerName, CancellationToken cancellationToken = default)
+        public Response<FluidRelayServerKeys> ListKeys(string subscriptionId, string resourceGroup, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
             Argument.AssertNotNullOrEmpty(fluidRelayServerName, nameof(fluidRelayServerName));
 
-            using var message = CreateGetKeysRequest(subscriptionId, resourceGroup, fluidRelayServerName);
+            using var message = CreateListKeysRequest(subscriptionId, resourceGroup, fluidRelayServerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

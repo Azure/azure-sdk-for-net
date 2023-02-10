@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static ExpressionTraces DeserializeExpressionTraces(JsonElement element)
         {
-            Optional<IReadOnlyList<ExpressionRoot>> inputs = default;
+            Optional<IReadOnlyList<LogicExpressionRoot>> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExpressionRoot> array = new List<ExpressionRoot>();
+                    List<LogicExpressionRoot> array = new List<LogicExpressionRoot>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressionRoot.DeserializeExpressionRoot(item));
+                        array.Add(LogicExpressionRoot.DeserializeLogicExpressionRoot(item));
                     }
                     inputs = array;
                     continue;

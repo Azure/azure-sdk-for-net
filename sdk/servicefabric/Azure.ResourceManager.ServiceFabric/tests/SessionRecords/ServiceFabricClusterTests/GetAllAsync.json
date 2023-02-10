@@ -1,0 +1,406 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricRG-6083?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f75451b52888e94eb7de22671000baa0-33d0901cdffdc945-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "94774b1829e61cd5604d6820b235f2d6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "238",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 22 Aug 2022 02:29:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3ee1d81d-97fb-4f3f-99fc-184ec6892386",
+        "x-ms-ratelimit-remaining-subscription-reads": "11978",
+        "x-ms-request-id": "3ee1d81d-97fb-4f3f-99fc-184ec6892386",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220822T022952Z:3ee1d81d-97fb-4f3f-99fc-184ec6892386"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/ServiceFabricRG-6083",
+        "name": "ServiceFabricRG-6083",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus2",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/ServiceFabricRG-6083/providers/Microsoft.ServiceFabric/clusters/cluster2738?api-version=2021-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "263",
+        "Content-Type": "application/json",
+        "traceparent": "00-a700aa2f666ac747b7d28a1cf3f20089-e4b157a84f1db740-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceFabric/1.0.0-alpha.20220822.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a8675396d422c1a51f0bb69abce93150",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "westus2",
+        "properties": {
+          "managementEndpoint": "https://cluster2738.westus2.cloudapp.azure.com:19080/",
+          "nodeTypes": [
+            {
+              "name": "Type812",
+              "clientConnectionEndpointPort": 19000,
+              "httpGatewayEndpointPort": 19080,
+              "isPrimary": true,
+              "vmInstanceCount": 5
+            }
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1927",
+        "Content-Type": "application/json",
+        "Date": "Mon, 22 Aug 2022 02:29:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a8675396d422c1a51f0bb69abce93150",
+        "x-ms-correlation-request-id": "e8f5ad88-81b4-46e7-9d8e-5a3fb4b46471",
+        "x-ms-ratelimit-remaining-subscription-writes": "1186",
+        "x-ms-request-id": "e8f5ad88-81b4-46e7-9d8e-5a3fb4b46471",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220822T022954Z:e8f5ad88-81b4-46e7-9d8e-5a3fb4b46471"
+      },
+      "ResponseBody": {
+        "type": "Microsoft.ServiceFabric/clusters",
+        "location": "westus2",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricRG-6083/providers/Microsoft.ServiceFabric/clusters/cluster2738",
+        "name": "cluster2738",
+        "tags": {},
+        "etag": "W/\u0022637967321940710902\u0022",
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2022-08-22T02:29:53.9548537\u002B00:00",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-08-22T02:29:53.9548537\u002B00:00"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "clusterId": "be1c9b1f-e168-4386-b8ee-15f398042f22",
+          "clusterCodeVersion": "9.0.1048.9590",
+          "clusterState": "WaitingForNodes",
+          "managementEndpoint": "https://cluster2738.westus2.cloudapp.azure.com:19080/",
+          "clusterEndpoint": "https://westus2.servicefabric.azure.com/runtime/clusters/be1c9b1f-e168-4386-b8ee-15f398042f22",
+          "clientCertificateThumbprints": [],
+          "clientCertificateCommonNames": [],
+          "fabricSettings": [],
+          "reliabilityLevel": "Silver",
+          "nodeTypes": [
+            {
+              "name": "Type812",
+              "clientConnectionEndpointPort": 19000,
+              "httpGatewayEndpointPort": 19080,
+              "applicationPorts": {
+                "startPort": 20000,
+                "endPort": 30000
+              },
+              "ephemeralPorts": {
+                "startPort": 49152,
+                "endPort": 65534
+              },
+              "isPrimary": true,
+              "durabilityLevel": "Bronze",
+              "vmInstanceCount": 5,
+              "isStateless": false
+            }
+          ],
+          "upgradeMode": "Automatic",
+          "availableClusterVersions": [
+            {
+              "codeVersion": "9.0.1048.9590",
+              "supportExpiryUtc": "9999-12-31T23:59:59.9999999",
+              "environment": "Windows"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricRG-6083/providers/Microsoft.ServiceFabric/clusters?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-636c911e66cc4b42ac276dcb08999744-d5aadea2606dec40-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceFabric/1.0.0-alpha.20220822.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "86067247460a44d2a5b574db723a6076",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "8618",
+        "Content-Type": "application/json",
+        "Date": "Mon, 22 Aug 2022 02:29:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "86067247460a44d2a5b574db723a6076",
+        "x-ms-correlation-request-id": "3a496674-222e-4283-b17c-321a54976288",
+        "x-ms-ratelimit-remaining-subscription-reads": "11977",
+        "x-ms-request-id": "3a496674-222e-4283-b17c-321a54976288",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220822T022955Z:3a496674-222e-4283-b17c-321a54976288"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "type": "Microsoft.ServiceFabric/clusters",
+            "location": "westus2",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricRG-6083/providers/Microsoft.ServiceFabric/clusters/cluster1690",
+            "name": "cluster1690",
+            "tags": {},
+            "etag": "W/\u0022637967321905866951\u0022",
+            "systemData": {
+              "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "createdByType": "Application",
+              "createdAt": "2022-08-22T02:29:50.470464\u002B00:00",
+              "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-22T02:29:50.470464\u002B00:00"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "clusterId": "fac87f67-26c2-41e8-ae82-f4efbd5a392f",
+              "clusterCodeVersion": "9.0.1048.9590",
+              "clusterState": "WaitingForNodes",
+              "managementEndpoint": "https://cluster1690.westus2.cloudapp.azure.com:19080/",
+              "clusterEndpoint": "https://westus2.servicefabric.azure.com/runtime/clusters/fac87f67-26c2-41e8-ae82-f4efbd5a392f",
+              "clientCertificateThumbprints": [],
+              "clientCertificateCommonNames": [],
+              "fabricSettings": [],
+              "reliabilityLevel": "Silver",
+              "nodeTypes": [
+                {
+                  "name": "Type812",
+                  "clientConnectionEndpointPort": 19000,
+                  "httpGatewayEndpointPort": 19080,
+                  "applicationPorts": {
+                    "startPort": 20000,
+                    "endPort": 30000
+                  },
+                  "ephemeralPorts": {
+                    "startPort": 49152,
+                    "endPort": 65534
+                  },
+                  "isPrimary": true,
+                  "durabilityLevel": "Bronze",
+                  "vmInstanceCount": 5,
+                  "isStateless": false
+                }
+              ],
+              "upgradeMode": "Automatic",
+              "availableClusterVersions": [
+                {
+                  "codeVersion": "9.0.1048.9590",
+                  "supportExpiryUtc": "9999-12-31T23:59:59.9999999",
+                  "environment": "Windows"
+                }
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.ServiceFabric/clusters",
+            "location": "westus2",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricRG-6083/providers/Microsoft.ServiceFabric/clusters/cluster2738",
+            "name": "cluster2738",
+            "tags": {},
+            "etag": "W/\u0022637967321940710902\u0022",
+            "systemData": {
+              "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "createdByType": "Application",
+              "createdAt": "2022-08-22T02:29:53.9548537\u002B00:00",
+              "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-22T02:29:53.9548537\u002B00:00"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "clusterId": "be1c9b1f-e168-4386-b8ee-15f398042f22",
+              "clusterCodeVersion": "9.0.1048.9590",
+              "clusterState": "WaitingForNodes",
+              "managementEndpoint": "https://cluster2738.westus2.cloudapp.azure.com:19080/",
+              "clusterEndpoint": "https://westus2.servicefabric.azure.com/runtime/clusters/be1c9b1f-e168-4386-b8ee-15f398042f22",
+              "clientCertificateThumbprints": [],
+              "clientCertificateCommonNames": [],
+              "fabricSettings": [],
+              "reliabilityLevel": "Silver",
+              "nodeTypes": [
+                {
+                  "name": "Type812",
+                  "clientConnectionEndpointPort": 19000,
+                  "httpGatewayEndpointPort": 19080,
+                  "applicationPorts": {
+                    "startPort": 20000,
+                    "endPort": 30000
+                  },
+                  "ephemeralPorts": {
+                    "startPort": 49152,
+                    "endPort": 65534
+                  },
+                  "isPrimary": true,
+                  "durabilityLevel": "Bronze",
+                  "vmInstanceCount": 5,
+                  "isStateless": false
+                }
+              ],
+              "upgradeMode": "Automatic",
+              "availableClusterVersions": [
+                {
+                  "codeVersion": "9.0.1048.9590",
+                  "supportExpiryUtc": "9999-12-31T23:59:59.9999999",
+                  "environment": "Windows"
+                }
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.ServiceFabric/clusters",
+            "location": "westus2",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricRG-6083/providers/Microsoft.ServiceFabric/clusters/cluster2798",
+            "name": "cluster2798",
+            "tags": {},
+            "etag": "W/\u0022637967321759147543\u0022",
+            "systemData": {
+              "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "createdByType": "Application",
+              "createdAt": "2022-08-22T02:29:35.814143\u002B00:00",
+              "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-22T02:29:35.814143\u002B00:00"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "clusterId": "a152ac90-cb14-471c-8964-4903bd60613f",
+              "clusterCodeVersion": "9.0.1048.9590",
+              "clusterState": "WaitingForNodes",
+              "managementEndpoint": "https://cluster2798.westus2.cloudapp.azure.com:19080/",
+              "clusterEndpoint": "https://westus2.servicefabric.azure.com/runtime/clusters/a152ac90-cb14-471c-8964-4903bd60613f",
+              "clientCertificateThumbprints": [],
+              "clientCertificateCommonNames": [],
+              "fabricSettings": [],
+              "reliabilityLevel": "Silver",
+              "nodeTypes": [
+                {
+                  "name": "Type812",
+                  "clientConnectionEndpointPort": 19000,
+                  "httpGatewayEndpointPort": 19080,
+                  "applicationPorts": {
+                    "startPort": 20000,
+                    "endPort": 30000
+                  },
+                  "ephemeralPorts": {
+                    "startPort": 49152,
+                    "endPort": 65534
+                  },
+                  "isPrimary": true,
+                  "durabilityLevel": "Bronze",
+                  "vmInstanceCount": 5,
+                  "isStateless": false
+                }
+              ],
+              "upgradeMode": "Automatic",
+              "availableClusterVersions": [
+                {
+                  "codeVersion": "9.0.1048.9590",
+                  "supportExpiryUtc": "9999-12-31T23:59:59.9999999",
+                  "environment": "Windows"
+                }
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.ServiceFabric/clusters",
+            "location": "westus2",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricRG-6083/providers/Microsoft.ServiceFabric/clusters/cluster3227",
+            "name": "cluster3227",
+            "tags": {},
+            "etag": "W/\u0022637967321868210091\u0022",
+            "systemData": {
+              "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "createdByType": "Application",
+              "createdAt": "2022-08-22T02:29:46.7048212\u002B00:00",
+              "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-22T02:29:46.7048212\u002B00:00"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "clusterId": "732cc217-8b87-4ce6-92ba-504c9aaca668",
+              "clusterCodeVersion": "9.0.1048.9590",
+              "clusterState": "WaitingForNodes",
+              "managementEndpoint": "https://cluster3227.westus2.cloudapp.azure.com:19080/",
+              "clusterEndpoint": "https://westus2.servicefabric.azure.com/runtime/clusters/732cc217-8b87-4ce6-92ba-504c9aaca668",
+              "clientCertificateThumbprints": [],
+              "clientCertificateCommonNames": [],
+              "fabricSettings": [],
+              "reliabilityLevel": "Silver",
+              "nodeTypes": [
+                {
+                  "name": "Type812",
+                  "clientConnectionEndpointPort": 19000,
+                  "httpGatewayEndpointPort": 19080,
+                  "applicationPorts": {
+                    "startPort": 20000,
+                    "endPort": 30000
+                  },
+                  "ephemeralPorts": {
+                    "startPort": 49152,
+                    "endPort": 65534
+                  },
+                  "isPrimary": true,
+                  "durabilityLevel": "Bronze",
+                  "vmInstanceCount": 5,
+                  "isStateless": false
+                }
+              ],
+              "upgradeMode": "Automatic",
+              "availableClusterVersions": [
+                {
+                  "codeVersion": "9.0.1048.9590",
+                  "supportExpiryUtc": "9999-12-31T23:59:59.9999999",
+                  "environment": "Windows"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1727825034",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

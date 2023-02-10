@@ -30,96 +30,136 @@ namespace Azure.ResourceManager.PostgreSql
 
         /// <summary>
         /// List all the servers in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/servers
-        /// Operation Id: Servers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/servers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ServerResource> GetServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PostgreSqlServerResource> GetPostgreSqlServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetServersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetPostgreSqlServersAsync(cancellationToken);
         }
 
         /// <summary>
         /// List all the servers in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/servers
-        /// Operation Id: Servers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/servers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ServerResource> GetServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PostgreSqlServerResource> GetPostgreSqlServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetServers(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetPostgreSqlServers(cancellationToken);
         }
 
         /// <summary>
         /// List all the performance tiers at specified location in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/performanceTiers
-        /// Operation Id: LocationBasedPerformanceTier_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/performanceTiers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocationBasedPerformanceTier_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PerformanceTierProperties> GetLocationBasedPerformanceTiersAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiersAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             return GetExtensionClient(subscriptionResource).GetLocationBasedPerformanceTiersAsync(locationName, cancellationToken);
         }
 
         /// <summary>
         /// List all the performance tiers at specified location in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/performanceTiers
-        /// Operation Id: LocationBasedPerformanceTier_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/performanceTiers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocationBasedPerformanceTier_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PerformanceTierProperties> GetLocationBasedPerformanceTiers(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiers(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             return GetExtensionClient(subscriptionResource).GetLocationBasedPerformanceTiers(locationName, cancellationToken);
         }
 
         /// <summary>
         /// Check the availability of name for resource
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability
-        /// Operation Id: CheckNameAvailability_Execute
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NameAvailability>> ExecuteCheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<PostgreSqlNameAvailabilityResult>> CheckPostgreSqlNameAvailabilityAsync(this SubscriptionResource subscriptionResource, PostgreSqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).ExecuteCheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckPostgreSqlNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check the availability of name for resource
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability
-        /// Operation Id: CheckNameAvailability_Execute
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<NameAvailability> ExecuteCheckNameAvailability(this SubscriptionResource subscriptionResource, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<PostgreSqlNameAvailabilityResult> CheckPostgreSqlNameAvailability(this SubscriptionResource subscriptionResource, PostgreSqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).ExecuteCheckNameAvailability(content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckPostgreSqlNameAvailability(content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -131,18 +171,26 @@ namespace Azure.ResourceManager.PostgreSql
             );
         }
 
-        /// <summary> Gets a collection of ServerResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of PostgreSqlServerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ServerResources and their operations over a ServerResource. </returns>
-        public static ServerCollection GetServers(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of PostgreSqlServerResources and their operations over a PostgreSqlServerResource. </returns>
+        public static PostgreSqlServerCollection GetPostgreSqlServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetServers();
+            return GetExtensionClient(resourceGroupResource).GetPostgreSqlServers();
         }
 
         /// <summary>
         /// Gets information about a server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}
-        /// Operation Id: Servers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -150,15 +198,23 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ServerResource>> GetServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
+        public static async Task<Response<PostgreSqlServerResource>> GetPostgreSqlServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetPostgreSqlServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets information about a server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}
-        /// Operation Id: Servers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -166,139 +222,139 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ServerResource> GetServer(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
+        public static Response<PostgreSqlServerResource> GetPostgreSqlServer(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetServers().Get(serverName, cancellationToken);
+            return resourceGroupResource.GetPostgreSqlServers().Get(serverName, cancellationToken);
         }
 
-        #region ServerResource
+        #region PostgreSqlServerResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerResource.CreateResourceIdentifier" /> to create a <see cref="ServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlServerResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlServerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerResource" /> object. </returns>
-        public static ServerResource GetServerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlServerResource" /> object. </returns>
+        public static PostgreSqlServerResource GetPostgreSqlServerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerResource.ValidateResourceId(id);
-                return new ServerResource(client, id);
+                PostgreSqlServerResource.ValidateResourceId(id);
+                return new PostgreSqlServerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FirewallRuleResource
+        #region PostgreSqlFirewallRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="FirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="FirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirewallRuleResource" /> object. </returns>
-        public static FirewallRuleResource GetFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlFirewallRuleResource" /> object. </returns>
+        public static PostgreSqlFirewallRuleResource GetPostgreSqlFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FirewallRuleResource.ValidateResourceId(id);
-                return new FirewallRuleResource(client, id);
+                PostgreSqlFirewallRuleResource.ValidateResourceId(id);
+                return new PostgreSqlFirewallRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualNetworkRuleResource
+        #region PostgreSqlVirtualNetworkRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualNetworkRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlVirtualNetworkRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlVirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlVirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkRuleResource" /> object. </returns>
-        public static VirtualNetworkRuleResource GetVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlVirtualNetworkRuleResource" /> object. </returns>
+        public static PostgreSqlVirtualNetworkRuleResource GetPostgreSqlVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualNetworkRuleResource.ValidateResourceId(id);
-                return new VirtualNetworkRuleResource(client, id);
+                PostgreSqlVirtualNetworkRuleResource.ValidateResourceId(id);
+                return new PostgreSqlVirtualNetworkRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseResource
+        #region PostgreSqlDatabaseResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseResource" /> object. </returns>
-        public static DatabaseResource GetDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlDatabaseResource" /> object. </returns>
+        public static PostgreSqlDatabaseResource GetPostgreSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseResource.ValidateResourceId(id);
-                return new DatabaseResource(client, id);
+                PostgreSqlDatabaseResource.ValidateResourceId(id);
+                return new PostgreSqlDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ConfigurationResource
+        #region PostgreSqlConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationResource" /> object. </returns>
-        public static ConfigurationResource GetConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlConfigurationResource" /> object. </returns>
+        public static PostgreSqlConfigurationResource GetPostgreSqlConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConfigurationResource.ValidateResourceId(id);
-                return new ConfigurationResource(client, id);
+                PostgreSqlConfigurationResource.ValidateResourceId(id);
+                return new PostgreSqlConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerAdministratorResource
+        #region PostgreSqlServerAdministratorResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="ServerAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlServerAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlServerAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlServerAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerAdministratorResource" /> object. </returns>
-        public static ServerAdministratorResource GetServerAdministratorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlServerAdministratorResource" /> object. </returns>
+        public static PostgreSqlServerAdministratorResource GetPostgreSqlServerAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerAdministratorResource.ValidateResourceId(id);
-                return new ServerAdministratorResource(client, id);
+                PostgreSqlServerAdministratorResource.ValidateResourceId(id);
+                return new PostgreSqlServerAdministratorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerSecurityAlertPolicyResource
+        #region PostgreSqlServerSecurityAlertPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ServerSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlServerSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlServerSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerSecurityAlertPolicyResource" /> object. </returns>
-        public static ServerSecurityAlertPolicyResource GetServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlServerSecurityAlertPolicyResource" /> object. </returns>
+        public static PostgreSqlServerSecurityAlertPolicyResource GetPostgreSqlServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerSecurityAlertPolicyResource.ValidateResourceId(id);
-                return new ServerSecurityAlertPolicyResource(client, id);
+                PostgreSqlServerSecurityAlertPolicyResource.ValidateResourceId(id);
+                return new PostgreSqlServerSecurityAlertPolicyResource(client, id);
             }
             );
         }
@@ -342,20 +398,20 @@ namespace Azure.ResourceManager.PostgreSql
         }
         #endregion
 
-        #region ServerKeyResource
+        #region PostgreSqlServerKeyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerKeyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerKeyResource.CreateResourceIdentifier" /> to create a <see cref="ServerKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlServerKeyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlServerKeyResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlServerKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerKeyResource" /> object. </returns>
-        public static ServerKeyResource GetServerKeyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlServerKeyResource" /> object. </returns>
+        public static PostgreSqlServerKeyResource GetPostgreSqlServerKeyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerKeyResource.ValidateResourceId(id);
-                return new ServerKeyResource(client, id);
+                PostgreSqlServerKeyResource.ValidateResourceId(id);
+                return new PostgreSqlServerKeyResource(client, id);
             }
             );
         }

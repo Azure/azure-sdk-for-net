@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Logic
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _workflowClientDiagnostics;
-        private WorkflowsRestOperations _workflowRestClient;
+        private ClientDiagnostics _logicWorkflowWorkflowsClientDiagnostics;
+        private WorkflowsRestOperations _logicWorkflowWorkflowsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Logic
         {
         }
 
-        private ClientDiagnostics WorkflowClientDiagnostics => _workflowClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Logic", WorkflowResource.ResourceType.Namespace, Diagnostics);
-        private WorkflowsRestOperations WorkflowRestClient => _workflowRestClient ??= new WorkflowsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WorkflowResource.ResourceType));
+        private ClientDiagnostics LogicWorkflowWorkflowsClientDiagnostics => _logicWorkflowWorkflowsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Logic", LogicWorkflowResource.ResourceType.Namespace, Diagnostics);
+        private WorkflowsRestOperations LogicWorkflowWorkflowsRestClient => _logicWorkflowWorkflowsRestClient ??= new WorkflowsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LogicWorkflowResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Logic
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of WorkflowResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WorkflowResources and their operations over a WorkflowResource. </returns>
-        public virtual WorkflowCollection GetWorkflows()
+        /// <summary> Gets a collection of LogicWorkflowResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of LogicWorkflowResources and their operations over a LogicWorkflowResource. </returns>
+        public virtual LogicWorkflowCollection GetLogicWorkflows()
         {
-            return GetCachedClient(Client => new WorkflowCollection(Client, Id));
+            return GetCachedClient(Client => new LogicWorkflowCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of IntegrationAccountResources in the ResourceGroupResource. </summary>
@@ -65,20 +65,28 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Validates the workflow definition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/locations/{location}/workflows/{workflowName}/validate
-        /// Operation Id: Workflows_ValidateByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/locations/{location}/workflows/{workflowName}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_ValidateByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The workflow location. </param>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="data"> The workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ValidateByLocationWorkflowAsync(AzureLocation location, string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ValidateByLocationWorkflowAsync(AzureLocation location, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
         {
-            using var scope = WorkflowClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateByLocationWorkflow");
+            using var scope = LogicWorkflowWorkflowsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateByLocationWorkflow");
             scope.Start();
             try
             {
-                var response = await WorkflowRestClient.ValidateByLocationAsync(Id.SubscriptionId, Id.ResourceGroupName, location, workflowName, data, cancellationToken).ConfigureAwait(false);
+                var response = await LogicWorkflowWorkflowsRestClient.ValidateByLocationAsync(Id.SubscriptionId, Id.ResourceGroupName, location, workflowName, data, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -90,20 +98,28 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Validates the workflow definition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/locations/{location}/workflows/{workflowName}/validate
-        /// Operation Id: Workflows_ValidateByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/locations/{location}/workflows/{workflowName}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_ValidateByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The workflow location. </param>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="data"> The workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ValidateByLocationWorkflow(AzureLocation location, string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
+        public virtual Response ValidateByLocationWorkflow(AzureLocation location, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
         {
-            using var scope = WorkflowClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateByLocationWorkflow");
+            using var scope = LogicWorkflowWorkflowsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateByLocationWorkflow");
             scope.Start();
             try
             {
-                var response = WorkflowRestClient.ValidateByLocation(Id.SubscriptionId, Id.ResourceGroupName, location, workflowName, data, cancellationToken);
+                var response = LogicWorkflowWorkflowsRestClient.ValidateByLocation(Id.SubscriptionId, Id.ResourceGroupName, location, workflowName, data, cancellationToken);
                 return response;
             }
             catch (Exception e)

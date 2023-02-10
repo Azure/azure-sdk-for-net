@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -14,26 +15,20 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     {
         /// <summary> Initializes a new instance of MultiSubnetIPConfiguration. </summary>
         /// <param name="privateIPAddress"> Private IP address. </param>
-        /// <param name="sqlVirtualMachineInstance"> SQL virtual machine instance resource id that are enrolled into the availability group listener. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateIPAddress"/> or <paramref name="sqlVirtualMachineInstance"/> is null. </exception>
-        public MultiSubnetIPConfiguration(PrivateIPAddress privateIPAddress, string sqlVirtualMachineInstance)
+        /// <param name="sqlVmInstance"> SQL virtual machine instance resource id that are enrolled into the availability group listener. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateIPAddress"/> or <paramref name="sqlVmInstance"/> is null. </exception>
+        public MultiSubnetIPConfiguration(AvailabilityGroupListenerPrivateIPAddress privateIPAddress, string sqlVmInstance)
         {
-            if (privateIPAddress == null)
-            {
-                throw new ArgumentNullException(nameof(privateIPAddress));
-            }
-            if (sqlVirtualMachineInstance == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVirtualMachineInstance));
-            }
+            Argument.AssertNotNull(privateIPAddress, nameof(privateIPAddress));
+            Argument.AssertNotNull(sqlVmInstance, nameof(sqlVmInstance));
 
             PrivateIPAddress = privateIPAddress;
-            SqlVirtualMachineInstance = sqlVirtualMachineInstance;
+            SqlVmInstance = sqlVmInstance;
         }
 
         /// <summary> Private IP address. </summary>
-        public PrivateIPAddress PrivateIPAddress { get; set; }
+        public AvailabilityGroupListenerPrivateIPAddress PrivateIPAddress { get; set; }
         /// <summary> SQL virtual machine instance resource id that are enrolled into the availability group listener. </summary>
-        public string SqlVirtualMachineInstance { get; set; }
+        public string SqlVmInstance { get; set; }
     }
 }

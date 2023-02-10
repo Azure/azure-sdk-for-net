@@ -316,21 +316,25 @@ namespace Azure.Storage.Cryptography
         {
             if (encryptionData.EncryptionAgent.EncryptionAlgorithm == ClientSideEncryptionAlgorithm.AesCbc256)
             {
-                using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider())
+#if NET6_0_OR_GREATER
+                using (Aes aes = Aes.Create())
+#else
+                using (Aes aes = new AesCryptoServiceProvider())
+#endif
                 {
-                    aesProvider.IV = iv ?? encryptionData.ContentEncryptionIV;
-                    aesProvider.Key = contentEncryptionKey;
+                    aes.IV = iv ?? encryptionData.ContentEncryptionIV;
+                    aes.Key = contentEncryptionKey;
 
                     if (noPadding)
                     {
-                        aesProvider.Padding = PaddingMode.None;
+                        aes.Padding = PaddingMode.None;
                     }
 
                     // Buffer network stream. CryptoStream issues tiny (~16 byte) reads which can lead to resources churn.
                     // By default buffer is 4KB.
                     var bufferedContentStream = new BufferedStream(contentStream);
 
-                    return new CryptoStream(bufferedContentStream, aesProvider.CreateDecryptor(), mode);
+                    return new CryptoStream(bufferedContentStream, aes.CreateDecryptor(), mode);
                 }
             }
 

@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
         public CosmosDBAccountCreateOrUpdateContent(AzureLocation location, IEnumerable<CosmosDBAccountLocation> locations) : base(location)
         {
-            if (locations == null)
-            {
-                throw new ArgumentNullException(nameof(locations));
-            }
+            Argument.AssertNotNull(locations, nameof(locations));
 
             Locations = locations.ToList();
             DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard;
@@ -60,9 +57,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="keyVaultKeyUri"> The URI of the key vault. </param>
         /// <param name="defaultIdentity"> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be &quot;FirstPartyIdentity&quot;, &quot;SystemAssignedIdentity&quot; and more. </param>
         /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
-        /// <param name="enableFreeTier"> Flag to indicate whether Free Tier is enabled. </param>
+        /// <param name="isFreeTierEnabled"> Flag to indicate whether Free Tier is enabled. </param>
         /// <param name="apiProperties"> API specific properties. Currently, supported only for MongoDB API. </param>
-        /// <param name="enableAnalyticalStorage"> Flag to indicate whether to enable storage analytics. </param>
+        /// <param name="isAnalyticalStorageEnabled"> Flag to indicate whether to enable storage analytics. </param>
         /// <param name="analyticalStorageConfiguration"> Analytical storage specific properties. </param>
         /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
         /// <param name="backupPolicy">
@@ -76,7 +73,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="capacity"> The object that represents all properties related to capacity enforcement on an account. </param>
-        internal CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ManagedServiceIdentity identity, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountCapacity capacity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="keysMetadata"> This property is ignored during the update/create operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </param>
+        /// <param name="enablePartitionMerge"> Flag to indicate enabling/disabling of Partition Merge feature on the account. </param>
+        internal CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ManagedServiceIdentity identity, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountCapacity capacity, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Identity = identity;
@@ -95,9 +94,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             KeyVaultKeyUri = keyVaultKeyUri;
             DefaultIdentity = defaultIdentity;
             PublicNetworkAccess = publicNetworkAccess;
-            EnableFreeTier = enableFreeTier;
+            IsFreeTierEnabled = isFreeTierEnabled;
             ApiProperties = apiProperties;
-            EnableAnalyticalStorage = enableAnalyticalStorage;
+            IsAnalyticalStorageEnabled = isAnalyticalStorageEnabled;
             AnalyticalStorageConfiguration = analyticalStorageConfiguration;
             CreateMode = createMode;
             BackupPolicy = backupPolicy;
@@ -107,6 +106,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DisableLocalAuth = disableLocalAuth;
             RestoreParameters = restoreParameters;
             Capacity = capacity;
+            KeysMetadata = keysMetadata;
+            EnablePartitionMerge = enablePartitionMerge;
         }
 
         /// <summary> Indicates the type of database account. This can only be set at database account creation. </summary>
@@ -142,9 +143,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be &quot;FirstPartyIdentity&quot;, &quot;SystemAssignedIdentity&quot; and more. </summary>
         public string DefaultIdentity { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public CosmosDBPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Flag to indicate whether Free Tier is enabled. </summary>
-        public bool? EnableFreeTier { get; set; }
+        public bool? IsFreeTierEnabled { get; set; }
         /// <summary> API specific properties. Currently, supported only for MongoDB API. </summary>
         internal ApiProperties ApiProperties { get; set; }
         /// <summary> Describes the ServerVersion of an a MongoDB account. </summary>
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Flag to indicate whether to enable storage analytics. </summary>
-        public bool? EnableAnalyticalStorage { get; set; }
+        public bool? IsAnalyticalStorageEnabled { get; set; }
         /// <summary> Analytical storage specific properties. </summary>
         internal AnalyticalStorageConfiguration AnalyticalStorageConfiguration { get; set; }
         /// <summary> Describes the types of schema for analytical storage. </summary>
@@ -206,5 +207,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 Capacity.TotalThroughputLimit = value;
             }
         }
+
+        /// <summary> This property is ignored during the update/create operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </summary>
+        public DatabaseAccountKeysMetadata KeysMetadata { get; }
+        /// <summary> Flag to indicate enabling/disabling of Partition Merge feature on the account. </summary>
+        public bool? EnablePartitionMerge { get; set; }
     }
 }

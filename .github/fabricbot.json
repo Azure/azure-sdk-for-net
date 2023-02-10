@@ -885,6 +885,15 @@
           ]
         },
         {
+          "label": "DevCenter",
+          "pathFilter": [
+            "sdk/devcenter/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
           "label": "Digital Twins",
           "pathFilter": [
             "sdk/digitaltwins/"
@@ -933,6 +942,15 @@
           "label": "KeyVault",
           "pathFilter": [
             "sdk/keyvault/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Load Test Service",
+          "pathFilter": [
+            "sdk/loadtestservice/"
           ],
           "exclude": [
             ""
@@ -1065,6 +1083,13 @@
           "label": "Communication - Resource Manager",
           "pathFilter": [
             "/sdk/communication/Azure.ResourceManager.Communication/"
+          ]
+        },
+        {
+          "label": "Mixed Reality",
+          "pathFilter": [
+            "/sdk/mixedreality/",
+            "/sdk/objectanchors/"
           ]
         }
       ],
@@ -1362,7 +1387,8 @@
             "Automation"
           ],
           "mentionees": [
-            "zjalexander"
+            "jaspkaur28",
+            "omairabdullah"
           ]
         },
         {
@@ -1619,9 +1645,12 @@
           ],
           "mentionees": [
             "Drewm3",
-            "avirishuv",
-            "vaibhav-agar",
-            "amjads1"
+            "TravisCragg-MSFT",
+            "nikhilpatel909",
+            "jaylabell",
+            "sandeepraichura",
+            "hilaryw29",
+            "MsGabsta"
           ]
         },
         {
@@ -1882,6 +1911,17 @@
         {
           "labels": [
             "Service Attention",
+            "DevCenter"
+          ],
+          "mentionees": [
+            "sebrenna",
+            "mharlan",
+            "chrissmiller"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
             "DevOps"
           ],
           "mentionees": [
@@ -2021,9 +2061,10 @@
             "drwill-ms",
             "timtay-microsoft",
             "abhipsaMisra",
-            "azabbasi",
             "brycewang-microsoft",
-            "aandykwong-ms"
+            "andyk-ms",
+            "tmahmood-microsoft",
+            "ngastelum-ms"
           ]
         },
         {
@@ -2035,10 +2076,10 @@
             "drwill-ms",
             "timtay-microsoft",
             "abhipsaMisra",
-            "azabbasi",
-            "andyk-ms",
             "brycewang-microsoft",
-            "tmahmood-microsoft"
+            "andyk-ms",
+            "tmahmood-microsoft",
+            "ngastelum-ms"
           ]
         },
         {
@@ -2050,10 +2091,11 @@
             "drwill-ms",
             "timtay-microsoft",
             "abhipsaMisra",
-            "azabbasi",
             "digimaun",
             "brycewang-microsoft",
-            "aandykwong-ms"
+            "andyk-ms",
+            "mahmood-microsoft",
+            "ngastelum-ms"
           ]
         },
         {
@@ -2096,6 +2138,17 @@
           ],
           "mentionees": [
             "Tanmayeekamath"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Load Test Service"
+          ],
+          "mentionees": [
+            "abranj1219",
+            "ninallam",
+            "NiveditJain"
           ]
         },
         {
@@ -2196,6 +2249,16 @@
           ],
           "mentionees": [
             "shijojoy"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Mixed Reality"
+          ],
+          "mentionees": [
+            "crtreasu",
+            "rgarcia"
           ]
         },
         {
@@ -2471,7 +2534,8 @@
             "Recovery Services Backup"
           ],
           "mentionees": [
-            "pvrk"
+            "pvrk",
+            "Daya-Patil"
           ]
         },
         {
@@ -2734,7 +2798,7 @@
           ],
           "mentionees": [
             "wonner",
-            "zesluo"
+            "yanjungao718"
           ]
         },
         {
@@ -2890,6 +2954,19 @@
           "labels": [
             "Service Attention",
             "Monitor - Exporter"
+          ],
+          "mentionees": [
+            "cijothomas",
+            "reyang",
+            "rajkumar-rangaraj",
+            "TimothyMothra",
+            "vishweshbankwar"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Monitor - Distro"
           ],
           "mentionees": [
             "cijothomas",

@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecureInput))
+            if (Optional.IsDefined(EnableSecureInput))
             {
-                writer.WritePropertyName("secureInput");
-                writer.WriteBooleanValue(SecureInput.Value);
+                writer.WritePropertyName("secureInput"u8);
+                writer.WriteBooleanValue(EnableSecureInput.Value);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("secureInput"))
+                if (property.NameEquals("secureInput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

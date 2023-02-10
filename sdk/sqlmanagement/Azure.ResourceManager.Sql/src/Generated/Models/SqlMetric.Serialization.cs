@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<string> timeGrain = default;
-            Optional<UnitType> unit = default;
-            Optional<MetricName> name = default;
-            Optional<IReadOnlyList<MetricValue>> metricValues = default;
+            Optional<SqlMetricUnitType> unit = default;
+            Optional<SqlMetricName> name = default;
+            Optional<IReadOnlyList<SqlMetricValue>> metricValues = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,42 +44,42 @@ namespace Azure.ResourceManager.Sql.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("timeGrain"))
+                if (property.NameEquals("timeGrain"u8))
                 {
                     timeGrain = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = new UnitType(property.Value.GetString());
+                    unit = new SqlMetricUnitType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = MetricName.DeserializeMetricName(property.Value);
+                    name = SqlMetricName.DeserializeSqlMetricName(property.Value);
                     continue;
                 }
-                if (property.NameEquals("metricValues"))
+                if (property.NameEquals("metricValues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MetricValue> array = new List<MetricValue>();
+                    List<SqlMetricValue> array = new List<SqlMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricValue.DeserializeMetricValue(item));
+                        array.Add(SqlMetricValue.DeserializeSqlMetricValue(item));
                     }
                     metricValues = array;
                     continue;

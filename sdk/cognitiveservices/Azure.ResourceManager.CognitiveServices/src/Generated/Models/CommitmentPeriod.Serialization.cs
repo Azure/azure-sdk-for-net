@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,12 +18,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Tier))
             {
-                writer.WritePropertyName("tier");
+                writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
             if (Optional.IsDefined(Count))
             {
-                writer.WritePropertyName("count");
+                writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
             writer.WriteEndObject();
@@ -33,16 +34,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<string> tier = default;
             Optional<int> count = default;
             Optional<CommitmentQuota> quota = default;
-            Optional<string> startDate = default;
-            Optional<string> endDate = default;
+            Optional<DateTimeOffset> startDate = default;
+            Optional<DateTimeOffset> endDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("quota"))
+                if (property.NameEquals("quota"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,18 +63,28 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     quota = CommitmentQuota.DeserializeCommitmentQuota(property.Value);
                     continue;
                 }
-                if (property.NameEquals("startDate"))
+                if (property.NameEquals("startDate"u8))
                 {
-                    startDate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    startDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endDate"))
+                if (property.NameEquals("endDate"u8))
                 {
-                    endDate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    endDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new CommitmentPeriod(tier.Value, Optional.ToNullable(count), quota.Value, startDate.Value, endDate.Value);
+            return new CommitmentPeriod(tier.Value, Optional.ToNullable(count), quota.Value, Optional.ToNullable(startDate), Optional.ToNullable(endDate));
         }
     }
 }

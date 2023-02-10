@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Management.Security
     public partial interface ISecureScoresOperations
     {
         /// <summary>
-        /// List secure scores for all your Security Center initiatives within
-        /// your current scope.
+        /// List secure scores for all your Microsoft Defender for Cloud
+        /// initiatives within your current scope.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -44,8 +44,9 @@ namespace Microsoft.Azure.Management.Security
         /// </exception>
         Task<AzureOperationResponse<IPage<SecureScoreItem>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get secure score for a specific Security Center initiative within
-        /// your current scope. For the ASC Default initiative, use 'ascScore'.
+        /// Get secure score for a specific Microsoft Defender for Cloud
+        /// initiative within your current scope. For the ASC Default
+        /// initiative, use 'ascScore'.
         /// </summary>
         /// <param name='secureScoreName'>
         /// The initiative name. For the ASC Default initiative, use 'ascScore'
@@ -68,8 +69,8 @@ namespace Microsoft.Azure.Management.Security
         /// </exception>
         Task<AzureOperationResponse<SecureScoreItem>> GetWithHttpMessagesAsync(string secureScoreName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List secure scores for all your Security Center initiatives within
-        /// your current scope.
+        /// List secure scores for all your Microsoft Defender for Cloud
+        /// initiatives within your current scope.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

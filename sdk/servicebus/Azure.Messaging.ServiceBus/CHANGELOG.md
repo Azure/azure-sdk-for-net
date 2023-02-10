@@ -1,6 +1,6 @@
 # Release History
 
-## 7.10.0-beta.1 (Unreleased)
+## 7.13.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,90 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 7.12.0 (2023-01-12)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- Added `UpdatePrefetchCount` methods to `ServiceBusProcessor` and `ServiceBusSessionProcessor` to allow updating the prefetch count of a running processor. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+### Other Changes
+
+- Update AMQP library dependency to leverage new `DrainAsync` method.
+
+### Bugs Fixed
+
+- Fixed issue with `MaxConcurrentCallsPerSession` setting which resulted in the setting not always being respected.
+
+## 7.11.1 (2022-11-08)
+
+### Bugs Fixed
+
+- Telemetry will now use a parent activity instead of links when using the `ServiceBusProcessor` or `ServiceBusSessionProcessor`.
+- Attempt to drain the receiver when closing if there are outstanding credits.
+
+## 7.11.0 (2022-10-11)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Bugs Fixed
+
+- Fixed issue where shared AMQP session was incorrectly closed when `AcceptNextSessionAsync` call timed out and `EnableCrossEntityTransaction` is set to `true`.
+- Dispose semaphores in `ServiceBusProcessor` to avoid memory leak. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+### Other Changes
+
+- Optimized message body copying when accessing the `Body` property of a received message. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+- Removed locking from the `ServiceBusRetryPolicy` to improve performance and prevent deadlocks. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+- Added link to [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/TROUBLESHOOTING.md) in exception messages.
+
+## 7.11.0-beta.1 (2022-09-06)
+
+### Features Added
+
+- Added `DeadletterMessageAsync` overload that allows passing the properties dictionary in addition to the deadletter error reason and description.
+- Added `PeekMessagesAsync` method to `ProcessorReceiveActions`.
+
+### Breaking Changes
+
+- Improved performance of sending messages by using the `ServiceBusMessageBatch` type, by caching the underlying AMQP message as opposed to recalculating it when sending. Because of this change, any changes to a `ServiceBusMessage` after it has already been added to the batch will no longer be reflected in the batch and what is ultimately sent to the service. To avoid any issues from this change, ensure that yo are not modifying the `ServiceBusMessage` after adding it to a batch.
+
+### Bugs Fixed
+
+- Fixed performance issues in the `ServiceBusSessionProcessor` that could lead to thread starvation when using a high number of concurrent sessions.
+- Fixed diagnostic tracing of the `ServiceBusReceiver.Receive` operation to correctly include links to the `Message` operation for the received messages.
+- Fixed issue where the TryTimeout was not respected for times over 1 minute and 5 seconds when attempting to accept the next available session.
+
+### Other Changes
+
+- Improved performance of sending messages by using the `ServiceBusMessageBatch` type, by caching the underlying AMQP message as opposed to recalculating it when sending.
+
+## 7.10.0 (2022-08-11)
+
+### Features Added
+
+- Added the ability to set the a custom Identifier on the various client options types.
+- The processor Identifier will now be included in the underlying receiver logs when using the `ServiceBusProcessor` or `ServiceBusSessionProcessor`.
+- Added the ability to set a custom endpoint that will be used when connecting to the service, via the `ServiceBusClientOptions.CustomEndpointAddress` property.
+- Added the `ReleaseSession` and `RenewSessionLockAsync` methods to the `ProcessSessionEventArgs` class to allow the user to manage the session in the `SessionInitializingAsync` and the `SessionClosingAsync` event handlers.
+
+### Bugs Fixed
+
+- Fixed issue where the AMQP footer would not be populated on received messages.
+- Fixed issue where the client timeout was not respected when establishing the AMQP connection and the AMQP session.
+- Fixed issue where closing the rule manager link could result in the AMQP session being closed even when `EnableCrossEntityTransactions` is set to `true` in the `ServiceBusClientOptions`.
+
+### Other Changes
+
+- Reduced memory allocations when converting messages into the underlying AMQP primitives. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 ## 7.9.0 (2022-07-11)
 

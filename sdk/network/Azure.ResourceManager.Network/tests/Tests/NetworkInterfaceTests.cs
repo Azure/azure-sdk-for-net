@@ -14,10 +14,12 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2018-11-01")]
     public class NetworkInterfaceTests : NetworkServiceClientTestBase
     {
         private SubscriptionResource _subscription;
-        public NetworkInterfaceTests(bool isAsync) : base(isAsync)
+        public NetworkInterfaceTests(bool isAsync, string apiVersion)
+        : base(isAsync, NetworkInterfaceResource.ResourceType, apiVersion)
         {
         }
 
@@ -1216,6 +1218,39 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Delete VirtualNetwork
             await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [RecordedTest]
+        public async Task ExpandResourceTest()
+        {
+            string resourceGroupName = Recording.GenerateAssetName("csmrg");
+
+            string location = TestEnvironment.Location;
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
+
+            // Create Vnet
+            string vnetName = Recording.GenerateAssetName("azsmnet");
+            string subnetName = Recording.GenerateAssetName("azsmnet");
+            VirtualNetworkResource vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
+
+            // Create Nics
+            string nicName = Recording.GenerateAssetName("azsmnet");
+
+            NetworkInterfaceResource nic = await CreateNetworkInterface(
+                nicName,
+                null,
+                vnet.Data.Subnets[0].Id,
+                location,
+                "ipconfig",
+                resourceGroup.GetNetworkInterfaces());
+
+            // Get NIC with expanded subnet
+            nic = await nic.GetAsync("IPConfigurations/Subnet");
+            await foreach (NetworkInterfaceIPConfigurationResource ipconfig in nic.GetNetworkInterfaceIPConfigurations())
+            {
+                Assert.NotNull(ipconfig.Data.Subnet);
+                Assert.NotNull(ipconfig.Data.Subnet.Id);
+            }
         }
     }
 }

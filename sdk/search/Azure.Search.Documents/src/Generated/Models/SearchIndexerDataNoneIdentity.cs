@@ -13,14 +13,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of SearchIndexerDataNoneIdentity. </summary>
         public SearchIndexerDataNoneIdentity()
         {
-            ODataType = "#Microsoft.Azure.Search.SearchIndexerDataNoneIdentity";
+            ODataType = "#Microsoft.Azure.Search.DataNoneIdentity";
         }
 
         /// <summary> Initializes a new instance of SearchIndexerDataNoneIdentity. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the identity. </param>
         internal SearchIndexerDataNoneIdentity(string oDataType) : base(oDataType)
         {
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.SearchIndexerDataNoneIdentity";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.DataNoneIdentity";
         }
     }
 }

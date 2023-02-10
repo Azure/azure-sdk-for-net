@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _actionGroupClientDiagnostics;
+        private ActionGroupsRestOperations _actionGroupRestClient;
         private ClientDiagnostics _privateLinkScopeOperationStatusClientDiagnostics;
         private PrivateLinkScopeOperationStatusRestOperations _privateLinkScopeOperationStatusRestClient;
 
@@ -34,6 +36,8 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
+        private ClientDiagnostics ActionGroupClientDiagnostics => _actionGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ActionGroupResource.ResourceType.Namespace, Diagnostics);
+        private ActionGroupsRestOperations ActionGroupRestClient => _actionGroupRestClient ??= new ActionGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ActionGroupResource.ResourceType));
         private ClientDiagnostics PrivateLinkScopeOperationStatusClientDiagnostics => _privateLinkScopeOperationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private PrivateLinkScopeOperationStatusRestOperations PrivateLinkScopeOperationStatusRestClient => _privateLinkScopeOperationStatusRestClient ??= new PrivateLinkScopeOperationStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -71,18 +75,18 @@ namespace Azure.ResourceManager.Monitor
             return GetCachedClient(Client => new MetricAlertCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of LogSearchRuleResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of LogSearchRuleResources and their operations over a LogSearchRuleResource. </returns>
-        public virtual LogSearchRuleCollection GetLogSearchRules()
+        /// <summary> Gets a collection of ScheduledQueryRuleResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ScheduledQueryRuleResources and their operations over a ScheduledQueryRuleResource. </returns>
+        public virtual ScheduledQueryRuleCollection GetScheduledQueryRules()
         {
-            return GetCachedClient(Client => new LogSearchRuleCollection(Client, Id));
+            return GetCachedClient(Client => new ScheduledQueryRuleCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of PrivateLinkScopeResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PrivateLinkScopeResources and their operations over a PrivateLinkScopeResource. </returns>
-        public virtual PrivateLinkScopeCollection GetPrivateLinkScopes()
+        /// <summary> Gets a collection of MonitorPrivateLinkScopeResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MonitorPrivateLinkScopeResources and their operations over a MonitorPrivateLinkScopeResource. </returns>
+        public virtual MonitorPrivateLinkScopeCollection GetMonitorPrivateLinkScopes()
         {
-            return GetCachedClient(Client => new PrivateLinkScopeCollection(Client, Id));
+            return GetCachedClient(Client => new MonitorPrivateLinkScopeCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ActivityLogAlertResources in the ResourceGroupResource. </summary>
@@ -107,15 +111,155 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
+        /// Send test notifications to a set of provided receivers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/createNotifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_CreateNotificationsAtResourceGroupLevel</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateNotifications");
+            scope.Start();
+            try
+            {
+                var response = await ActionGroupRestClient.CreateNotificationsAtResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreateCreateNotificationsAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Send test notifications to a set of provided receivers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/createNotifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_CreateNotificationsAtResourceGroupLevel</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<NotificationStatus> CreateNotifications(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateNotifications");
+            scope.Start();
+            try
+            {
+                var response = ActionGroupRestClient.CreateNotificationsAtResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
+                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreateCreateNotificationsAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the test notifications by the notification id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/notificationStatus/{notificationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_GetTestNotificationsAtResourceGroupLevel</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="notificationId"> The notification id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<NotificationStatus>> GetNotificationStatusAsync(string notificationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNotificationStatus");
+            scope.Start();
+            try
+            {
+                var response = await ActionGroupRestClient.GetTestNotificationsAtResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, notificationId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the test notifications by the notification id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/notificationStatus/{notificationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_GetTestNotificationsAtResourceGroupLevel</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="notificationId"> The notification id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<NotificationStatus> GetNotificationStatus(string notificationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNotificationStatus");
+            scope.Start();
+            try
+            {
+                var response = ActionGroupRestClient.GetTestNotificationsAtResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, notificationId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Get the status of an azure asynchronous operation associated with a private link scope operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
-        /// Operation Id: PrivateLinkScopeOperationStatus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkScopeOperationStatus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationStatus>> GetPrivateLinkScopeOperationStatuAsync(string asyncOperationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorPrivateLinkScopeOperationStatus>> GetPrivateLinkScopeOperationStatusAsync(string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetPrivateLinkScopeOperationStatu");
+            using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetPrivateLinkScopeOperationStatus");
             scope.Start();
             try
             {
@@ -131,14 +275,22 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Get the status of an azure asynchronous operation associated with a private link scope operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
-        /// Operation Id: PrivateLinkScopeOperationStatus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkScopeOperationStatus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationStatus> GetPrivateLinkScopeOperationStatu(string asyncOperationId, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorPrivateLinkScopeOperationStatus> GetPrivateLinkScopeOperationStatus(string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetPrivateLinkScopeOperationStatu");
+            using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetPrivateLinkScopeOperationStatus");
             scope.Start();
             try
             {

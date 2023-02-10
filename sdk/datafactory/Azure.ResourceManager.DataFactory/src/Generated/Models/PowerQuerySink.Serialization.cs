@@ -17,39 +17,39 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Script))
             {
-                writer.WritePropertyName("script");
+                writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
             if (Optional.IsDefined(SchemaLinkedService))
             {
-                writer.WritePropertyName("schemaLinkedService");
+                writer.WritePropertyName("schemaLinkedService"u8);
                 writer.WriteObjectValue(SchemaLinkedService);
             }
             if (Optional.IsDefined(RejectedDataLinkedService))
             {
-                writer.WritePropertyName("rejectedDataLinkedService");
+                writer.WritePropertyName("rejectedDataLinkedService"u8);
                 writer.WriteObjectValue(RejectedDataLinkedService);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Dataset))
             {
-                writer.WritePropertyName("dataset");
+                writer.WritePropertyName("dataset"u8);
                 writer.WriteObjectValue(Dataset);
             }
             if (Optional.IsDefined(LinkedService))
             {
-                writer.WritePropertyName("linkedService");
+                writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
             if (Optional.IsDefined(Flowlet))
             {
-                writer.WritePropertyName("flowlet");
+                writer.WritePropertyName("flowlet"u8);
                 writer.WriteObjectValue(Flowlet);
             }
             writer.WriteEndObject();
@@ -58,51 +58,51 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static PowerQuerySink DeserializePowerQuerySink(JsonElement element)
         {
             Optional<string> script = default;
-            Optional<LinkedServiceReference> schemaLinkedService = default;
-            Optional<LinkedServiceReference> rejectedDataLinkedService = default;
+            Optional<FactoryLinkedServiceReference> schemaLinkedService = default;
+            Optional<FactoryLinkedServiceReference> rejectedDataLinkedService = default;
             string name = default;
             Optional<string> description = default;
             Optional<DatasetReference> dataset = default;
-            Optional<LinkedServiceReference> linkedService = default;
+            Optional<FactoryLinkedServiceReference> linkedService = default;
             Optional<DataFlowReference> flowlet = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("script"))
+                if (property.NameEquals("script"u8))
                 {
                     script = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaLinkedService"))
+                if (property.NameEquals("schemaLinkedService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schemaLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    schemaLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("rejectedDataLinkedService"))
+                if (property.NameEquals("rejectedDataLinkedService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rejectedDataLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    rejectedDataLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataset"))
+                if (property.NameEquals("dataset"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     dataset = DatasetReference.DeserializeDatasetReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("linkedService"))
+                if (property.NameEquals("linkedService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("flowlet"))
+                if (property.NameEquals("flowlet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -31,7 +31,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeSetUp]
         protected async Task CommonGlobalSetup()
         {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName($"dbaccount-"),
+            SubscriptionResource sr = await GlobalClient.GetDefaultSubscriptionAsync();
+            var rgLro = await sr.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName($"dbaccount-"),
                 new ResourceGroupData(AzureLocation.WestUS2));
             _resourceGroupIdentifier = rgLro.Value.Id;
         }
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return await CreateDatabaseAccount(name, kind, null);
         }
 
-        protected async Task<CosmosDBAccountResource> CreateDatabaseAccount(string name, CosmosDBAccountKind kind, CosmosDBAccountCapability capability)
+        protected async Task<CosmosDBAccountResource> CreateDatabaseAccount(string name, CosmosDBAccountKind kind, List<CosmosDBAccountCapability> capabilities)
         {
             var locations = new List<CosmosDBAccountLocation>()
             {
@@ -71,12 +72,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 IsVirtualNetworkFilterEnabled = true,
                 EnableAutomaticFailover = false,
                 ConnectorOffer = ConnectorOffer.Small,
-                DisableKeyBasedMetadataWriteAccess = false,
+                DisableKeyBasedMetadataWriteAccess = false
             };
-            if (capability != null)
+
+            if (capabilities != null)
             {
-                createParameters.Capabilities.Add(capability);
+                capabilities.ForEach(x => createParameters.Capabilities.Add(x));
             }
+
             createParameters.Tags.Add("key1", "value1");
             createParameters.Tags.Add("key2", "value2");
             _databaseAccountName = name;
@@ -93,13 +96,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
         }
 
-        protected static void AssertAutoscale(ThroughputSettingsData throughput)
+        protected static void AssertAutoscale(ThroughputSettingData throughput)
         {
             Assert.NotNull(throughput.Resource.AutoscaleSettings);
             Assert.That(throughput.Resource.AutoscaleSettings.MaxThroughput, Is.GreaterThan(0));
         }
 
-        protected static void AssertManualThroughput(ThroughputSettingsData throughput)
+        protected static void AssertManualThroughput(ThroughputSettingData throughput)
         {
             Assert.That(throughput.Resource.Throughput, Is.GreaterThan(0));
             Assert.IsNull(throughput.Resource.AutoscaleSettings);

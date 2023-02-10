@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Storage
@@ -24,7 +25,12 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2021-08-06";
+        public const string DefaultSasVersion = "2021-12-02";
+
+        /// <summary>
+        /// Max download range size while requesting a transactional hash.
+        /// </summary>
+        public const int MaxHashRequestDownloadRange = 4 * Constants.MB;
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -58,6 +64,11 @@ namespace Azure.Storage
         /// download operation.
         /// </summary>
         public const int DefaultDownloadCopyBufferSize = 16384;
+
+        /// <summary>
+        /// Backwards compatible default value for trimming slashes on object name.
+        /// </summary>
+        public const bool DefaultTrimBlobNameSlashes = true;
 
         public const string CloseAllHandles = "*";
         public const string Wildcard = "*";
@@ -221,6 +232,7 @@ namespace Azure.Storage
             internal static class Page
             {
                 public const int PageSizeBytes = 512;
+                public const int MaxPageBlockBytes = 4 * Constants.MB; // 4MB
             }
 
             internal static class Container

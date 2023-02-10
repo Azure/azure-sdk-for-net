@@ -42,16 +42,19 @@ namespace Azure.Storage.Blobs
         /// </summary>
         private readonly long _rangeSize;
 
-        // TODO #27253
-        //private readonly DownloadTransactionalHashingOptions _hashingOptions;
+        /// <summary>
+        /// Validation options to specify on transactions for this download operation.
+        /// This downloader may alter the options it sends to individual download requests,
+        /// but will on obey the user-specified options on the overall download.
+        /// </summary>
+        private readonly DownloadTransferValidationOptions _validationOptions;
 
         private readonly IProgress<long> _progress;
 
         public PartitionedDownloader(
             BlobBaseClient client,
             StorageTransferOptions transferOptions = default,
-            // TODO #27253
-            //DownloadTransactionalHashingOptions hashingOptions = default,
+            DownloadTransferValidationOptions transferValidation = default,
             IProgress<long> progress = default)
         {
             _client = client;
@@ -75,7 +78,9 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _rangeSize = Constants.DefaultBufferSize;
+                _rangeSize = (transferValidation?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
+                    ? Constants.MaxHashRequestDownloadRange
+                    : Constants.DefaultBufferSize;
             }
 
             // Set _initialRangeSize
@@ -86,17 +91,18 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _initialRangeSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
+                _initialRangeSize = (transferValidation?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
+                    ? Constants.MaxHashRequestDownloadRange
+                    : Constants.Blob.Block.DefaultInitalDownloadRangeSize;
             }
 
-            // TODO #27253
             // the caller to this stream cannot defer validation, as they cannot access a returned hash
-            //if (!(hashingOptions?.Validate ?? true))
-            //{
-            //    throw Errors.CannotDeferTransactionalHashVerification();
-            //}
+            if (!(transferValidation?.AutoValidateChecksum ?? true))
+            {
+                throw Errors.CannotDeferTransactionalHashVerification();
+            }
 
-            //_hashingOptions = hashingOptions;
+            _validationOptions = transferValidation;
             _progress = progress;
 
             /* Unlike partitioned upload, download cannot tell ahead of time if it will split and/or parallelize
@@ -129,7 +135,7 @@ namespace Azure.Storage.Blobs
                     _client.DownloadStreamingInternal(
                         initialRange,
                         conditions,
-                        rangeGetContentHash: default,
+                        _validationOptions,
                         _progress,
                         _innerOperationName,
                         async: true,
@@ -145,7 +151,7 @@ namespace Azure.Storage.Blobs
                     initialResponse = await _client.DownloadStreamingInternal(
                         range: default,
                         conditions,
-                        rangeGetContentHash: default,
+                        _validationOptions,
                         _progress,
                         _innerOperationName,
                         async: true,
@@ -218,7 +224,7 @@ namespace Azure.Storage.Blobs
                     runningTasks.Enqueue(_client.DownloadStreamingInternal(
                         httpRange,
                         conditionsWithEtag,
-                        rangeGetContentHash: default,
+                        _validationOptions,
                         _progress,
                         _innerOperationName,
                         async: true,
@@ -301,7 +307,7 @@ namespace Azure.Storage.Blobs
                     initialResponse = _client.DownloadStreamingInternal(
                         initialRange,
                         conditions,
-                        rangeGetContentHash: default,
+                        _validationOptions,
                         _progress,
                         _innerOperationName,
                         async: false,
@@ -312,7 +318,7 @@ namespace Azure.Storage.Blobs
                     initialResponse = _client.DownloadStreamingInternal(
                         range: default,
                         conditions,
-                        rangeGetContentHash: default,
+                        _validationOptions,
                         _progress,
                         _innerOperationName,
                         async: false,
@@ -368,7 +374,7 @@ namespace Azure.Storage.Blobs
                     Response<BlobDownloadStreamingResult> result = _client.DownloadStreamingInternal(
                         httpRange,
                         conditionsWithEtag,
-                        rangeGetContentHash: default,
+                        _validationOptions,
                         _progress,
                         _innerOperationName,
                         async: false,

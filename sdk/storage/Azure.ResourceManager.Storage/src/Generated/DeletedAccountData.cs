@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.Storage
         /// <param name="storageAccountResourceId"> Full resource id of the original storage account. </param>
         /// <param name="location"> Location of the deleted account. </param>
         /// <param name="restoreReference"> Can be used to attempt recovering this deleted account via PutStorageAccount API. </param>
-        /// <param name="createOn"> Creation time of the deleted account. </param>
-        /// <param name="deleteOn"> Deletion time of the deleted account. </param>
-        internal DeletedAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountResourceId, AzureLocation? location, string restoreReference, DateTimeOffset? createOn, DateTimeOffset? deleteOn) : base(id, name, resourceType, systemData)
+        /// <param name="createdOn"> Creation time of the deleted account. </param>
+        /// <param name="deletedOn"> Deletion time of the deleted account. </param>
+        internal DeletedAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountResourceId, AzureLocation? location, string restoreReference, DateTimeOffset? createdOn, DateTimeOffset? deletedOn) : base(id, name, resourceType, systemData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             Location = location;
             RestoreReference = restoreReference;
-            CreateOn = createOn;
-            DeleteOn = deleteOn;
+            CreatedOn = createdOn;
+            DeletedOn = deletedOn;
         }
 
         /// <summary> Full resource id of the original storage account. </summary>
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Can be used to attempt recovering this deleted account via PutStorageAccount API. </summary>
         public string RestoreReference { get; }
         /// <summary> Creation time of the deleted account. </summary>
-        public DateTimeOffset? CreateOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Deletion time of the deleted account. </summary>
-        public DateTimeOffset? DeleteOn { get; }
+        public DateTimeOffset? DeletedOn { get; }
     }
 }

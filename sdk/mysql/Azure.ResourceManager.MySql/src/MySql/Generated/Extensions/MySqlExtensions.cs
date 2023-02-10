@@ -30,174 +30,136 @@ namespace Azure.ResourceManager.MySql
 
         /// <summary>
         /// List all the servers in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/servers
-        /// Operation Id: Servers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/servers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ServerResource> GetServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MySqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MySqlServerResource> GetMySqlServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetServersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMySqlServersAsync(cancellationToken);
         }
 
         /// <summary>
         /// List all the servers in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/servers
-        /// Operation Id: Servers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/servers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ServerResource> GetServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MySqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MySqlServerResource> GetMySqlServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetServers(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMySqlServers(cancellationToken);
         }
 
         /// <summary>
         /// List all the performance tiers at specified location in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/performanceTiers
-        /// Operation Id: LocationBasedPerformanceTier_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/performanceTiers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocationBasedPerformanceTier_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PerformanceTierProperties> GetLocationBasedPerformanceTiersAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiersAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             return GetExtensionClient(subscriptionResource).GetLocationBasedPerformanceTiersAsync(locationName, cancellationToken);
         }
 
         /// <summary>
         /// List all the performance tiers at specified location in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/performanceTiers
-        /// Operation Id: LocationBasedPerformanceTier_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/performanceTiers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocationBasedPerformanceTier_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PerformanceTierProperties> GetLocationBasedPerformanceTiers(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiers(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             return GetExtensionClient(subscriptionResource).GetLocationBasedPerformanceTiers(locationName, cancellationToken);
         }
 
         /// <summary>
         /// Check the availability of name for resource
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/checkNameAvailability
-        /// Operation Id: CheckNameAvailability_Execute
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NameAvailability>> ExecuteCheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<MySqlNameAvailabilityResult>> CheckMySqlNameAvailabilityAsync(this SubscriptionResource subscriptionResource, MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).ExecuteCheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckMySqlNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check the availability of name for resource
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/checkNameAvailability
-        /// Operation Id: CheckNameAvailability_Execute
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<NameAvailability> ExecuteCheckNameAvailability(this SubscriptionResource subscriptionResource, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<MySqlNameAvailabilityResult> CheckMySqlNameAvailability(this SubscriptionResource subscriptionResource, MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).ExecuteCheckNameAvailability(content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Recommendation action session operation status.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/recommendedActionSessionsAzureAsyncOperation/{operationId}
-        /// Operation Id: LocationBasedRecommendedActionSessionsOperationStatus_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The name of the location. </param>
-        /// <param name="operationId"> The operation identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        public static async Task<Response<RecommendedActionSessionsOperationStatus>> GetLocationBasedRecommendedActionSessionsOperationStatuAsync(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetExtensionClient(subscriptionResource).GetLocationBasedRecommendedActionSessionsOperationStatuAsync(locationName, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Recommendation action session operation status.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/recommendedActionSessionsAzureAsyncOperation/{operationId}
-        /// Operation Id: LocationBasedRecommendedActionSessionsOperationStatus_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The name of the location. </param>
-        /// <param name="operationId"> The operation identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        public static Response<RecommendedActionSessionsOperationStatus> GetLocationBasedRecommendedActionSessionsOperationStatu(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetExtensionClient(subscriptionResource).GetLocationBasedRecommendedActionSessionsOperationStatu(locationName, operationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Recommendation action session operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/recommendedActionSessionsOperationResults/{operationId}
-        /// Operation Id: LocationBasedRecommendedActionSessionsResult_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The name of the location. </param>
-        /// <param name="operationId"> The operation identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="RecommendationActionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RecommendationActionResource> GetRecommendationActionsByLocationRecommendedActionSessionsOperationResultAsync(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetExtensionClient(subscriptionResource).GetRecommendationActionsByLocationRecommendedActionSessionsOperationResultAsync(locationName, operationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Recommendation action session operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/recommendedActionSessionsOperationResults/{operationId}
-        /// Operation Id: LocationBasedRecommendedActionSessionsResult_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The name of the location. </param>
-        /// <param name="operationId"> The operation identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <returns> A collection of <see cref="RecommendationActionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RecommendationActionResource> GetRecommendationActionsByLocationRecommendedActionSessionsOperationResult(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetExtensionClient(subscriptionResource).GetRecommendationActionsByLocationRecommendedActionSessionsOperationResult(locationName, operationId, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckMySqlNameAvailability(content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -209,18 +171,26 @@ namespace Azure.ResourceManager.MySql
             );
         }
 
-        /// <summary> Gets a collection of ServerResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of MySqlServerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ServerResources and their operations over a ServerResource. </returns>
-        public static ServerCollection GetServers(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of MySqlServerResources and their operations over a MySqlServerResource. </returns>
+        public static MySqlServerCollection GetMySqlServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetServers();
+            return GetExtensionClient(resourceGroupResource).GetMySqlServers();
         }
 
         /// <summary>
         /// Gets information about a server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}
-        /// Operation Id: Servers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -228,15 +198,23 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ServerResource>> GetServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MySqlServerResource>> GetMySqlServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetMySqlServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets information about a server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}
-        /// Operation Id: Servers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -244,234 +222,234 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ServerResource> GetServer(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
+        public static Response<MySqlServerResource> GetMySqlServer(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetServers().Get(serverName, cancellationToken);
+            return resourceGroupResource.GetMySqlServers().Get(serverName, cancellationToken);
         }
 
-        #region ServerResource
+        #region MySqlServerResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerResource.CreateResourceIdentifier" /> to create a <see cref="ServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlServerResource.CreateResourceIdentifier" /> to create a <see cref="MySqlServerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerResource" /> object. </returns>
-        public static ServerResource GetServerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlServerResource" /> object. </returns>
+        public static MySqlServerResource GetMySqlServerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerResource.ValidateResourceId(id);
-                return new ServerResource(client, id);
+                MySqlServerResource.ValidateResourceId(id);
+                return new MySqlServerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FirewallRuleResource
+        #region MySqlFirewallRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="FirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="FirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirewallRuleResource" /> object. </returns>
-        public static FirewallRuleResource GetFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlFirewallRuleResource" /> object. </returns>
+        public static MySqlFirewallRuleResource GetMySqlFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FirewallRuleResource.ValidateResourceId(id);
-                return new FirewallRuleResource(client, id);
+                MySqlFirewallRuleResource.ValidateResourceId(id);
+                return new MySqlFirewallRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualNetworkRuleResource
+        #region MySqlVirtualNetworkRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualNetworkRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlVirtualNetworkRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlVirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="MySqlVirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkRuleResource" /> object. </returns>
-        public static VirtualNetworkRuleResource GetVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlVirtualNetworkRuleResource" /> object. </returns>
+        public static MySqlVirtualNetworkRuleResource GetMySqlVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualNetworkRuleResource.ValidateResourceId(id);
-                return new VirtualNetworkRuleResource(client, id);
+                MySqlVirtualNetworkRuleResource.ValidateResourceId(id);
+                return new MySqlVirtualNetworkRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseResource
+        #region MySqlDatabaseResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="MySqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseResource" /> object. </returns>
-        public static DatabaseResource GetDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlDatabaseResource" /> object. </returns>
+        public static MySqlDatabaseResource GetMySqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseResource.ValidateResourceId(id);
-                return new DatabaseResource(client, id);
+                MySqlDatabaseResource.ValidateResourceId(id);
+                return new MySqlDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ConfigurationResource
+        #region MySqlConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MySqlConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationResource" /> object. </returns>
-        public static ConfigurationResource GetConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlConfigurationResource" /> object. </returns>
+        public static MySqlConfigurationResource GetMySqlConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConfigurationResource.ValidateResourceId(id);
-                return new ConfigurationResource(client, id);
+                MySqlConfigurationResource.ValidateResourceId(id);
+                return new MySqlConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerAdministratorResource
+        #region MySqlServerAdministratorResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="ServerAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlServerAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlServerAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="MySqlServerAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerAdministratorResource" /> object. </returns>
-        public static ServerAdministratorResource GetServerAdministratorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlServerAdministratorResource" /> object. </returns>
+        public static MySqlServerAdministratorResource GetMySqlServerAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerAdministratorResource.ValidateResourceId(id);
-                return new ServerAdministratorResource(client, id);
+                MySqlServerAdministratorResource.ValidateResourceId(id);
+                return new MySqlServerAdministratorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerSecurityAlertPolicyResource
+        #region MySqlServerSecurityAlertPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ServerSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlServerSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="MySqlServerSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerSecurityAlertPolicyResource" /> object. </returns>
-        public static ServerSecurityAlertPolicyResource GetServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlServerSecurityAlertPolicyResource" /> object. </returns>
+        public static MySqlServerSecurityAlertPolicyResource GetMySqlServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerSecurityAlertPolicyResource.ValidateResourceId(id);
-                return new ServerSecurityAlertPolicyResource(client, id);
+                MySqlServerSecurityAlertPolicyResource.ValidateResourceId(id);
+                return new MySqlServerSecurityAlertPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region QueryTextResource
+        #region MySqlQueryTextResource
         /// <summary>
-        /// Gets an object representing a <see cref="QueryTextResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QueryTextResource.CreateResourceIdentifier" /> to create a <see cref="QueryTextResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlQueryTextResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlQueryTextResource.CreateResourceIdentifier" /> to create a <see cref="MySqlQueryTextResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QueryTextResource" /> object. </returns>
-        public static QueryTextResource GetQueryTextResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlQueryTextResource" /> object. </returns>
+        public static MySqlQueryTextResource GetMySqlQueryTextResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                QueryTextResource.ValidateResourceId(id);
-                return new QueryTextResource(client, id);
+                MySqlQueryTextResource.ValidateResourceId(id);
+                return new MySqlQueryTextResource(client, id);
             }
             );
         }
         #endregion
 
-        #region QueryStatisticResource
+        #region MySqlQueryStatisticResource
         /// <summary>
-        /// Gets an object representing a <see cref="QueryStatisticResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QueryStatisticResource.CreateResourceIdentifier" /> to create a <see cref="QueryStatisticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlQueryStatisticResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlQueryStatisticResource.CreateResourceIdentifier" /> to create a <see cref="MySqlQueryStatisticResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QueryStatisticResource" /> object. </returns>
-        public static QueryStatisticResource GetQueryStatisticResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlQueryStatisticResource" /> object. </returns>
+        public static MySqlQueryStatisticResource GetMySqlQueryStatisticResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                QueryStatisticResource.ValidateResourceId(id);
-                return new QueryStatisticResource(client, id);
+                MySqlQueryStatisticResource.ValidateResourceId(id);
+                return new MySqlQueryStatisticResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WaitStatisticResource
+        #region MySqlWaitStatisticResource
         /// <summary>
-        /// Gets an object representing a <see cref="WaitStatisticResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WaitStatisticResource.CreateResourceIdentifier" /> to create a <see cref="WaitStatisticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlWaitStatisticResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlWaitStatisticResource.CreateResourceIdentifier" /> to create a <see cref="MySqlWaitStatisticResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WaitStatisticResource" /> object. </returns>
-        public static WaitStatisticResource GetWaitStatisticResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlWaitStatisticResource" /> object. </returns>
+        public static MySqlWaitStatisticResource GetMySqlWaitStatisticResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WaitStatisticResource.ValidateResourceId(id);
-                return new WaitStatisticResource(client, id);
+                MySqlWaitStatisticResource.ValidateResourceId(id);
+                return new MySqlWaitStatisticResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AdvisorResource
+        #region MySqlAdvisorResource
         /// <summary>
-        /// Gets an object representing an <see cref="AdvisorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AdvisorResource.CreateResourceIdentifier" /> to create an <see cref="AdvisorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlAdvisorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlAdvisorResource.CreateResourceIdentifier" /> to create a <see cref="MySqlAdvisorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdvisorResource" /> object. </returns>
-        public static AdvisorResource GetAdvisorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlAdvisorResource" /> object. </returns>
+        public static MySqlAdvisorResource GetMySqlAdvisorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AdvisorResource.ValidateResourceId(id);
-                return new AdvisorResource(client, id);
+                MySqlAdvisorResource.ValidateResourceId(id);
+                return new MySqlAdvisorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RecommendationActionResource
+        #region MySqlRecommendationActionResource
         /// <summary>
-        /// Gets an object representing a <see cref="RecommendationActionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecommendationActionResource.CreateResourceIdentifier" /> to create a <see cref="RecommendationActionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlRecommendationActionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlRecommendationActionResource.CreateResourceIdentifier" /> to create a <see cref="MySqlRecommendationActionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecommendationActionResource" /> object. </returns>
-        public static RecommendationActionResource GetRecommendationActionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlRecommendationActionResource" /> object. </returns>
+        public static MySqlRecommendationActionResource GetMySqlRecommendationActionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RecommendationActionResource.ValidateResourceId(id);
-                return new RecommendationActionResource(client, id);
+                MySqlRecommendationActionResource.ValidateResourceId(id);
+                return new MySqlRecommendationActionResource(client, id);
             }
             );
         }
@@ -515,20 +493,20 @@ namespace Azure.ResourceManager.MySql
         }
         #endregion
 
-        #region ServerKeyResource
+        #region MySqlServerKeyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerKeyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerKeyResource.CreateResourceIdentifier" /> to create a <see cref="ServerKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlServerKeyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlServerKeyResource.CreateResourceIdentifier" /> to create a <see cref="MySqlServerKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerKeyResource" /> object. </returns>
-        public static ServerKeyResource GetServerKeyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlServerKeyResource" /> object. </returns>
+        public static MySqlServerKeyResource GetMySqlServerKeyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerKeyResource.ValidateResourceId(id);
-                return new ServerKeyResource(client, id);
+                MySqlServerKeyResource.ValidateResourceId(id);
+                return new MySqlServerKeyResource(client, id);
             }
             );
         }

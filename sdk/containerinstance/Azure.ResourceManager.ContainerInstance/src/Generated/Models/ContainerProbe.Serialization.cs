@@ -17,38 +17,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Exec))
             {
-                writer.WritePropertyName("exec");
+                writer.WritePropertyName("exec"u8);
                 writer.WriteObjectValue(Exec);
             }
             if (Optional.IsDefined(HttpGet))
             {
-                writer.WritePropertyName("httpGet");
+                writer.WritePropertyName("httpGet"u8);
                 writer.WriteObjectValue(HttpGet);
             }
-            if (Optional.IsDefined(InitialDelaySeconds))
+            if (Optional.IsDefined(InitialDelayInSeconds))
             {
-                writer.WritePropertyName("initialDelaySeconds");
-                writer.WriteNumberValue(InitialDelaySeconds.Value);
+                writer.WritePropertyName("initialDelaySeconds"u8);
+                writer.WriteNumberValue(InitialDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(PeriodSeconds))
+            if (Optional.IsDefined(PeriodInSeconds))
             {
-                writer.WritePropertyName("periodSeconds");
-                writer.WriteNumberValue(PeriodSeconds.Value);
+                writer.WritePropertyName("periodSeconds"u8);
+                writer.WriteNumberValue(PeriodInSeconds.Value);
             }
             if (Optional.IsDefined(FailureThreshold))
             {
-                writer.WritePropertyName("failureThreshold");
+                writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
             if (Optional.IsDefined(SuccessThreshold))
             {
-                writer.WritePropertyName("successThreshold");
+                writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (Optional.IsDefined(TimeoutSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
-                writer.WritePropertyName("timeoutSeconds");
-                writer.WriteNumberValue(TimeoutSeconds.Value);
+                writer.WritePropertyName("timeoutSeconds"u8);
+                writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             writer.WriteEndObject();
         }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<int> timeoutSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("exec"))
+                if (property.NameEquals("exec"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     exec = ContainerExec.DeserializeContainerExec(property.Value);
                     continue;
                 }
-                if (property.NameEquals("httpGet"))
+                if (property.NameEquals("httpGet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     httpGet = ContainerHttpGet.DeserializeContainerHttpGet(property.Value);
                     continue;
                 }
-                if (property.NameEquals("initialDelaySeconds"))
+                if (property.NameEquals("initialDelaySeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     initialDelaySeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("periodSeconds"))
+                if (property.NameEquals("periodSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     periodSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failureThreshold"))
+                if (property.NameEquals("failureThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     failureThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("successThreshold"))
+                if (property.NameEquals("successThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     successThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeoutSeconds"))
+                if (property.NameEquals("timeoutSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

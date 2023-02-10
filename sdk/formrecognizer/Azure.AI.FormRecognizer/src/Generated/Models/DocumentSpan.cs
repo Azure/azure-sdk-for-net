@@ -11,17 +11,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public readonly partial struct DocumentSpan
     {
         /// <summary> Initializes a new instance of DocumentSpan. </summary>
-        /// <param name="offset"> Zero-based index of the content represented by the span. </param>
+        /// <param name="index"> Zero-based index of the content represented by the span. </param>
         /// <param name="length"> Number of characters in the content represented by the span. </param>
-        internal DocumentSpan(int offset, int length)
+        internal DocumentSpan(int index, int length)
         {
-            Offset = offset;
+            Index = index;
             Length = length;
         }
-
-        /// <summary> Zero-based index of the content represented by the span. </summary>
-        public int Offset { get; }
-        /// <summary> Number of characters in the content represented by the span. </summary>
-        public int Length { get; }
     }
 }

@@ -89,7 +89,7 @@ namespace Microsoft.Extensions.Hosting
                 });
 
             builder.Services.AddAzureClientsCore();
-            builder.Services.AddSingleton<MessagingProvider>();
+            builder.Services.TryAddSingleton<MessagingProvider>();
             builder.Services.AddSingleton<ServiceBusClientFactory>();
             return builder;
         }

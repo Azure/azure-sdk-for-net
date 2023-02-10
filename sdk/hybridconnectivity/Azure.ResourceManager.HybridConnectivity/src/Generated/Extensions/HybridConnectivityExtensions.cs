@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.HybridConnectivity
     /// <summary> A class to add extension methods to Azure.ResourceManager.HybridConnectivity. </summary>
     public static partial class HybridConnectivityExtensions
     {
+        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ArmResourceExtensionClient(client, scope);
+            }
+            );
+        }
+
         private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
         {
             return armResource.GetCachedClient((client) =>
@@ -27,41 +36,60 @@ namespace Azure.ResourceManager.HybridConnectivity
         }
 
         /// <summary> Gets a collection of EndpointResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of EndpointResources and their operations over a EndpointResource. </returns>
-        public static EndpointResourceCollection GetEndpointResources(this ArmResource armResource)
+        public static EndpointResourceCollection GetEndpointResources(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetEndpointResources();
+            return GetExtensionClient(client, scope).GetEndpointResources();
         }
 
         /// <summary>
         /// Gets the endpoint to the resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<EndpointResource>> GetEndpointResourceAsync(this ArmResource armResource, string endpointName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EndpointResource>> GetEndpointResourceAsync(this ArmClient client, ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetEndpointResources().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+            return await client.GetEndpointResources(scope).GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the endpoint to the resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<EndpointResource> GetEndpointResource(this ArmResource armResource, string endpointName, CancellationToken cancellationToken = default)
+        public static Response<EndpointResource> GetEndpointResource(this ArmClient client, ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
         {
-            return armResource.GetEndpointResources().Get(endpointName, cancellationToken);
+            return client.GetEndpointResources(scope).Get(endpointName, cancellationToken);
         }
 
         #region EndpointResource

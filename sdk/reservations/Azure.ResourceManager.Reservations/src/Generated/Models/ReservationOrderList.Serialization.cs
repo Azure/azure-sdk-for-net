@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationOrderList DeserializeReservationOrderList(JsonElement element)
         {
-            Optional<IReadOnlyList<ReservationOrderResponseData>> value = default;
+            Optional<IReadOnlyList<ReservationOrderData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ReservationOrderResponseData> array = new List<ReservationOrderResponseData>();
+                    List<ReservationOrderData> array = new List<ReservationOrderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationOrderResponseData.DeserializeReservationOrderResponseData(item));
+                        array.Add(ReservationOrderData.DeserializeReservationOrderData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

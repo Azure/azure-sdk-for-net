@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppConfiguration
     /// A Class representing an AppConfigurationPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppConfigurationPrivateLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetAppConfigurationPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ConfigurationStoreResource" /> using the GetAppConfigurationPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppConfigurationStoreResource" /> using the GetAppConfigurationPrivateLinkResource method.
     /// </summary>
     public partial class AppConfigurationPrivateLinkResource : ArmResource
     {
@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary>
         /// Gets a private link resource that need to be created for a configuration store.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources/{groupName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppConfigurationPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary>
         /// Gets a private link resource that need to be created for a configuration store.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources/{groupName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppConfigurationPrivateLinkResource> Get(CancellationToken cancellationToken = default)

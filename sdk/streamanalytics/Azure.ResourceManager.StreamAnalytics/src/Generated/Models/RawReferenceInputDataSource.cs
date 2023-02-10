@@ -22,15 +22,44 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="referenceInputDataSourceType"> Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="payload"> The JSON serialized content of the input data. Either payload or payloadUri must be set, but not both. </param>
         /// <param name="payloadUri"> The SAS URL to a blob containing the JSON serialized content of the input data. Either payload or payloadUri must be set, but not both. </param>
-        internal RawReferenceInputDataSource(string referenceInputDataSourceType, string payload, Uri payloadUri) : base(referenceInputDataSourceType)
+        internal RawReferenceInputDataSource(string referenceInputDataSourceType, BinaryData payload, Uri payloadUri) : base(referenceInputDataSourceType)
         {
             Payload = payload;
             PayloadUri = payloadUri;
             ReferenceInputDataSourceType = referenceInputDataSourceType ?? "Raw";
         }
 
-        /// <summary> The JSON serialized content of the input data. Either payload or payloadUri must be set, but not both. </summary>
-        public string Payload { get; set; }
+        /// <summary>
+        /// The JSON serialized content of the input data. Either payload or payloadUri must be set, but not both. 
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Payload { get; set; }
         /// <summary> The SAS URL to a blob containing the JSON serialized content of the input data. Either payload or payloadUri must be set, but not both. </summary>
         public Uri PayloadUri { get; set; }
     }

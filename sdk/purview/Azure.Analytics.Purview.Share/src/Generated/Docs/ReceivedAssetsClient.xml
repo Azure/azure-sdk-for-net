@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetReceivedAssetsAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetReceivedAssetsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedAssetsClient("<https://my-service.azure.com>", credential);
+
+await foreach (var data in client.GetReceivedAssetsAsync("<receivedShareName>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetReceivedAssetsAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedAssetsClient("<https://my-service.azure.com>", credential);
+
+await foreach (var data in client.GetReceivedAssetsAsync("<receivedShareName>", "<skipToken>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+</example>
+<remarks>
+List received assets for a received share
+
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>ReceivedAssetListValue</c>:
+<code>{
+  kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetReceivedAssets(String,String,RequestContext)">
+<example>
+This sample shows how to call GetReceivedAssets with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedAssetsClient("<https://my-service.azure.com>", credential);
+
+foreach (var data in client.GetReceivedAssets("<receivedShareName>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetReceivedAssets with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedAssetsClient("<https://my-service.azure.com>", credential);
+
+foreach (var data in client.GetReceivedAssets("<receivedShareName>", "<skipToken>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+</example>
+<remarks>
+List received assets for a received share
+
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>ReceivedAssetListValue</c>:
+<code>{
+  kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary> Gets a collection of AppPlatformServiceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of AppPlatformServiceResources and their operations over a AppPlatformServiceResource. </returns>
-        public virtual AppPlatformServiceResourceCollection GetAppPlatformServiceResources()
+        public virtual AppPlatformServiceCollection GetAppPlatformServices()
         {
-            return GetCachedClient(Client => new AppPlatformServiceResourceCollection(Client, Id));
+            return GetCachedClient(Client => new AppPlatformServiceCollection(Client, Id));
         }
     }
 }

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Trigger that schedules pipeline runs for all fixed time interval windows from a start time without gaps and also supports backfill scenarios (when start time is in the past). </summary>
-    public partial class TumblingWindowTrigger : DataFactoryTriggerProperties
+    public partial class TumblingWindowTrigger : FactoryTriggerDefinition
     {
         /// <summary> Initializes a new instance of TumblingWindowTrigger. </summary>
         /// <param name="pipeline"> Pipeline for which runs are created when an event is fired for trigger window that is ready. </param>
@@ -23,10 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
         public TumblingWindowTrigger(TriggerPipelineReference pipeline, TumblingWindowFrequency frequency, int interval, DateTimeOffset startOn, int maxConcurrency)
         {
-            if (pipeline == null)
-            {
-                throw new ArgumentNullException(nameof(pipeline));
-            }
+            Argument.AssertNotNull(pipeline, nameof(pipeline));
 
             Pipeline = pipeline;
             Frequency = frequency;
@@ -56,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="DependencyReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SelfDependencyTumblingWindowTriggerReference"/>, <see cref="TriggerDependencyReference"/> and <see cref="TumblingWindowTriggerDependencyReference"/>.
         /// </param>
-        internal TumblingWindowTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, TriggerPipelineReference pipeline, TumblingWindowFrequency frequency, int interval, DateTimeOffset startOn, DateTimeOffset? endOn, BinaryData delay, int maxConcurrency, RetryPolicy retryPolicy, IList<DependencyReference> dependsOn) : base(triggerType, description, runtimeState, annotations, additionalProperties)
+        internal TumblingWindowTrigger(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, TriggerPipelineReference pipeline, TumblingWindowFrequency frequency, int interval, DateTimeOffset startOn, DateTimeOffset? endOn, BinaryData delay, int maxConcurrency, RetryPolicy retryPolicy, IList<DependencyReference> dependsOn) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             Pipeline = pipeline;
             Frequency = frequency;
@@ -80,7 +77,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DateTimeOffset StartOn { get; set; }
         /// <summary> The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> Specifies how long the trigger waits past due time before triggering new run. It doesn&apos;t alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        /// <summary>
+        /// Specifies how long the trigger waits past due time before triggering new run. It doesn&apos;t alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Delay { get; set; }
         /// <summary> The max number of parallel time windows (ready for execution) for which a new run is triggered. </summary>
         public int MaxConcurrency { get; set; }

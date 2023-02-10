@@ -20,10 +20,7 @@ namespace Azure.Communication.Email.Models
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
         public EmailRecipients(IEnumerable<EmailAddress> to)
         {
-            if (to == null)
-            {
-                throw new ArgumentNullException(nameof(to));
-            }
+            Argument.AssertNotNull(to, nameof(to));
 
             To = to.ToList();
             CC = new ChangeTrackingList<EmailAddress>();

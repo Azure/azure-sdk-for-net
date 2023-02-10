@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -263,816 +262,662 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the application gateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways
-        /// Operation Id: ApplicationGateways_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayResource> GetApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApplicationGatewayResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGateways");
-                scope.Start();
-                try
-                {
-                    var response = await ApplicationGatewayRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApplicationGatewayResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGateways");
-                scope.Start();
-                try
-                {
-                    var response = await ApplicationGatewayRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewayRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayResource(Client, ApplicationGatewayData.DeserializeApplicationGatewayData(e)), ApplicationGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApplicationGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the application gateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways
-        /// Operation Id: ApplicationGateways_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayResource> GetApplicationGateways(CancellationToken cancellationToken = default)
         {
-            Page<ApplicationGatewayResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGateways");
-                scope.Start();
-                try
-                {
-                    var response = ApplicationGatewayRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApplicationGatewayResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGateways");
-                scope.Start();
-                try
-                {
-                    var response = ApplicationGatewayRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewayRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayResource(Client, ApplicationGatewayData.DeserializeApplicationGatewayData(e)), ApplicationGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApplicationGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all available server variables.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables
-        /// Operation Id: ApplicationGateways_ListAvailableServerVariables
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableServerVariables</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAvailableServerVariablesApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableServerVariablesApplicationGateways");
-                scope.Start();
-                try
-                {
-                    var response = await ApplicationGatewayRestClient.ListAvailableServerVariablesAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableServerVariablesRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableServerVariablesApplicationGateways", "", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists all available server variables.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables
-        /// Operation Id: ApplicationGateways_ListAvailableServerVariables
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableServerVariables</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAvailableServerVariablesApplicationGateways(CancellationToken cancellationToken = default)
         {
-            Page<string> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableServerVariablesApplicationGateways");
-                scope.Start();
-                try
-                {
-                    var response = ApplicationGatewayRestClient.ListAvailableServerVariables(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableServerVariablesRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableServerVariablesApplicationGateways", "", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists all available request headers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders
-        /// Operation Id: ApplicationGateways_ListAvailableRequestHeaders
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableRequestHeaders</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAvailableRequestHeadersApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableRequestHeadersApplicationGateways");
-                scope.Start();
-                try
-                {
-                    var response = await ApplicationGatewayRestClient.ListAvailableRequestHeadersAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableRequestHeadersRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableRequestHeadersApplicationGateways", "", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists all available request headers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders
-        /// Operation Id: ApplicationGateways_ListAvailableRequestHeaders
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableRequestHeaders</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAvailableRequestHeadersApplicationGateways(CancellationToken cancellationToken = default)
         {
-            Page<string> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableRequestHeadersApplicationGateways");
-                scope.Start();
-                try
-                {
-                    var response = ApplicationGatewayRestClient.ListAvailableRequestHeaders(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableRequestHeadersRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableRequestHeadersApplicationGateways", "", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists all available response headers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders
-        /// Operation Id: ApplicationGateways_ListAvailableResponseHeaders
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableResponseHeaders</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAvailableResponseHeadersApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableResponseHeadersApplicationGateways");
-                scope.Start();
-                try
-                {
-                    var response = await ApplicationGatewayRestClient.ListAvailableResponseHeadersAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableResponseHeadersRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableResponseHeadersApplicationGateways", "", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists all available response headers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders
-        /// Operation Id: ApplicationGateways_ListAvailableResponseHeaders
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableResponseHeaders</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAvailableResponseHeadersApplicationGateways(CancellationToken cancellationToken = default)
         {
-            Page<string> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableResponseHeadersApplicationGateways");
-                scope.Start();
-                try
-                {
-                    var response = ApplicationGatewayRestClient.ListAvailableResponseHeaders(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableResponseHeadersRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableResponseHeadersApplicationGateways", "", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists all available web application firewall rule sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets
-        /// Operation Id: ApplicationGateways_ListAvailableWafRuleSets
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableWafRuleSets</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationGatewayFirewallRuleSet" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsyncAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApplicationGatewayFirewallRuleSet>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGatewayAvailableWafRuleSetsAsync");
-                scope.Start();
-                try
-                {
-                    var response = await ApplicationGatewayRestClient.ListAvailableWafRuleSetsAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableWafRuleSetsRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet, ApplicationGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApplicationGatewayAvailableWafRuleSetsAsync", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists all available web application firewall rule sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets
-        /// Operation Id: ApplicationGateways_ListAvailableWafRuleSets
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableWafRuleSets</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewayFirewallRuleSet" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(CancellationToken cancellationToken = default)
         {
-            Page<ApplicationGatewayFirewallRuleSet> FirstPageFunc(int? pageSizeHint)
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableWafRuleSetsRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet, ApplicationGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApplicationGatewayAvailableWafRuleSetsAsync", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists available Ssl options for configuring Ssl policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableSslOptions</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGatewayAvailableSslOptions");
+            scope.Start();
+            try
             {
-                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGatewayAvailableWafRuleSetsAsync");
-                scope.Start();
-                try
-                {
-                    var response = ApplicationGatewayRestClient.ListAvailableWafRuleSets(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await ApplicationGatewayRestClient.ListAvailableSslOptionsAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return response;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists available Ssl options for configuring Ssl policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableSslOptions</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(CancellationToken cancellationToken = default)
+        {
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGatewayAvailableSslOptions");
+            scope.Start();
+            try
+            {
+                var response = ApplicationGatewayRestClient.ListAvailableSslOptions(Id.SubscriptionId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists all SSL predefined policies for configuring Ssl policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableSslPredefinedPolicies</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableSslPredefinedPoliciesRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewayRestClient.CreateListAvailableSslPredefinedPoliciesNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy, ApplicationGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApplicationGatewayAvailableSslPredefinedPolicies", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all SSL predefined policies for configuring Ssl policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableSslPredefinedPolicies</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableSslPredefinedPoliciesRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewayRestClient.CreateListAvailableSslPredefinedPoliciesNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy, ApplicationGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApplicationGatewayAvailableSslPredefinedPolicies", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets Ssl predefined policy with the specified policy name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_GetSslPredefinedPolicy</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetApplicationGatewaySslPredefinedPolicyAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGatewaySslPredefinedPolicy");
+            scope.Start();
+            try
+            {
+                var response = await ApplicationGatewayRestClient.GetSslPredefinedPolicyAsync(Id.SubscriptionId, predefinedPolicyName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Ssl predefined policy with the specified policy name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_GetSslPredefinedPolicy</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewaySslPredefinedPolicy(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationGatewaySslPredefinedPolicy");
+            scope.Start();
+            try
+            {
+                var response = ApplicationGatewayRestClient.GetSslPredefinedPolicy(Id.SubscriptionId, predefinedPolicyName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Gets all application security groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups
-        /// Operation Id: ApplicationSecurityGroups_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationSecurityGroups_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationSecurityGroupResource> GetApplicationSecurityGroupsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApplicationSecurityGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplicationSecurityGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationSecurityGroups");
-                scope.Start();
-                try
-                {
-                    var response = await ApplicationSecurityGroupRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApplicationSecurityGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ApplicationSecurityGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationSecurityGroups");
-                scope.Start();
-                try
-                {
-                    var response = await ApplicationSecurityGroupRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationSecurityGroupRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationSecurityGroupRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationSecurityGroupResource(Client, ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(e)), ApplicationSecurityGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApplicationSecurityGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all application security groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups
-        /// Operation Id: ApplicationSecurityGroups_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationSecurityGroups_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationSecurityGroupResource> GetApplicationSecurityGroups(CancellationToken cancellationToken = default)
         {
-            Page<ApplicationSecurityGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplicationSecurityGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationSecurityGroups");
-                scope.Start();
-                try
-                {
-                    var response = ApplicationSecurityGroupRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApplicationSecurityGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ApplicationSecurityGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplicationSecurityGroups");
-                scope.Start();
-                try
-                {
-                    var response = ApplicationSecurityGroupRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationSecurityGroupRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationSecurityGroupRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationSecurityGroupResource(Client, ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(e)), ApplicationSecurityGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApplicationSecurityGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all of the available subnet delegations for this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations
-        /// Operation Id: AvailableDelegations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableDelegations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableDelegation> GetAvailableDelegationsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvailableDelegation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableDelegationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableDelegations");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableDelegationsRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvailableDelegation>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableDelegationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableDelegations");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableDelegationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableDelegationsRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableDelegationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableDelegation.DeserializeAvailableDelegation, AvailableDelegationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableDelegations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all of the available subnet delegations for this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations
-        /// Operation Id: AvailableDelegations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableDelegations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableDelegation> GetAvailableDelegations(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<AvailableDelegation> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableDelegationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableDelegations");
-                scope.Start();
-                try
-                {
-                    var response = AvailableDelegationsRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvailableDelegation> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableDelegationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableDelegations");
-                scope.Start();
-                try
-                {
-                    var response = AvailableDelegationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableDelegationsRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableDelegationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableDelegation.DeserializeAvailableDelegation, AvailableDelegationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableDelegations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all available service aliases for this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
-        /// Operation Id: AvailableServiceAliases_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableServiceAliases_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvailableServiceAlias>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableServiceAliasesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableServiceAliases");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableServiceAliasesRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvailableServiceAlias>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableServiceAliasesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableServiceAliases");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableServiceAliasesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableServiceAliasesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableServiceAliasesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableServiceAlias.DeserializeAvailableServiceAlias, AvailableServiceAliasesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableServiceAliases", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all available service aliases for this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
-        /// Operation Id: AvailableServiceAliases_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableServiceAliases_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableServiceAlias> GetAvailableServiceAliases(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<AvailableServiceAlias> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableServiceAliasesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableServiceAliases");
-                scope.Start();
-                try
-                {
-                    var response = AvailableServiceAliasesRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvailableServiceAlias> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableServiceAliasesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableServiceAliases");
-                scope.Start();
-                try
-                {
-                    var response = AvailableServiceAliasesRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableServiceAliasesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableServiceAliasesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableServiceAlias.DeserializeAvailableServiceAlias, AvailableServiceAliasesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableServiceAliases", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the Azure Firewalls in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls
-        /// Operation Id: AzureFirewalls_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureFirewalls_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AzureFirewallResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureFirewallResource> GetAzureFirewallsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AzureFirewallResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AzureFirewallClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureFirewalls");
-                scope.Start();
-                try
-                {
-                    var response = await AzureFirewallRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureFirewallResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AzureFirewallResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AzureFirewallClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureFirewalls");
-                scope.Start();
-                try
-                {
-                    var response = await AzureFirewallRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureFirewallResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureFirewallRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureFirewallRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureFirewallResource(Client, AzureFirewallData.DeserializeAzureFirewallData(e)), AzureFirewallClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureFirewalls", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the Azure Firewalls in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls
-        /// Operation Id: AzureFirewalls_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureFirewalls_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AzureFirewallResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureFirewallResource> GetAzureFirewalls(CancellationToken cancellationToken = default)
         {
-            Page<AzureFirewallResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AzureFirewallClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureFirewalls");
-                scope.Start();
-                try
-                {
-                    var response = AzureFirewallRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureFirewallResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AzureFirewallResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AzureFirewallClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureFirewalls");
-                scope.Start();
-                try
-                {
-                    var response = AzureFirewallRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureFirewallResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureFirewallRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureFirewallRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureFirewallResource(Client, AzureFirewallData.DeserializeAzureFirewallData(e)), AzureFirewallClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureFirewalls", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the Azure Firewall FQDN Tags in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags
-        /// Operation Id: AzureFirewallFqdnTags_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureFirewallFqdnTags_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AzureFirewallFqdnTag" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureFirewallFqdnTag> GetAzureFirewallFqdnTagsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AzureFirewallFqdnTag>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AzureFirewallFqdnTagsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureFirewallFqdnTags");
-                scope.Start();
-                try
-                {
-                    var response = await AzureFirewallFqdnTagsRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AzureFirewallFqdnTag>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AzureFirewallFqdnTagsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureFirewallFqdnTags");
-                scope.Start();
-                try
-                {
-                    var response = await AzureFirewallFqdnTagsRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureFirewallFqdnTagsRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureFirewallFqdnTagsRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AzureFirewallFqdnTag.DeserializeAzureFirewallFqdnTag, AzureFirewallFqdnTagsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureFirewallFqdnTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the Azure Firewall FQDN Tags in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags
-        /// Operation Id: AzureFirewallFqdnTags_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureFirewallFqdnTags_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AzureFirewallFqdnTag" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureFirewallFqdnTag> GetAzureFirewallFqdnTags(CancellationToken cancellationToken = default)
         {
-            Page<AzureFirewallFqdnTag> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AzureFirewallFqdnTagsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureFirewallFqdnTags");
-                scope.Start();
-                try
-                {
-                    var response = AzureFirewallFqdnTagsRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AzureFirewallFqdnTag> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AzureFirewallFqdnTagsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureFirewallFqdnTags");
-                scope.Start();
-                try
-                {
-                    var response = AzureFirewallFqdnTagsRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureFirewallFqdnTagsRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureFirewallFqdnTagsRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AzureFirewallFqdnTag.DeserializeAzureFirewallFqdnTag, AzureFirewallFqdnTagsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureFirewallFqdnTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all Bastion Hosts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts
-        /// Operation Id: BastionHosts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BastionHosts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BastionHostResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BastionHostResource> GetBastionHostsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BastionHostResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BastionHostClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBastionHosts");
-                scope.Start();
-                try
-                {
-                    var response = await BastionHostRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BastionHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BastionHostResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BastionHostClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBastionHosts");
-                scope.Start();
-                try
-                {
-                    var response = await BastionHostRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BastionHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BastionHostRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BastionHostRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BastionHostResource(Client, BastionHostData.DeserializeBastionHostData(e)), BastionHostClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBastionHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all Bastion Hosts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts
-        /// Operation Id: BastionHosts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BastionHosts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BastionHostResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BastionHostResource> GetBastionHosts(CancellationToken cancellationToken = default)
         {
-            Page<BastionHostResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BastionHostClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBastionHosts");
-                scope.Start();
-                try
-                {
-                    var response = BastionHostRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BastionHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BastionHostResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BastionHostClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBastionHosts");
-                scope.Start();
-                try
-                {
-                    var response = BastionHostRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BastionHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BastionHostRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BastionHostRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BastionHostResource(Client, BastionHostData.DeserializeBastionHostData(e)), BastionHostClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBastionHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks whether a domain name in the cloudapp.azure.com zone is available for use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability
-        /// Operation Id: CheckDnsNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckDnsNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
@@ -1095,8 +940,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks whether a domain name in the cloudapp.azure.com zone is available for use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability
-        /// Operation Id: CheckDnsNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckDnsNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
@@ -1119,1018 +972,546 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the custom IP prefixes in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes
-        /// Operation Id: CustomIPPrefixes_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomIPPrefixes_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomIPPrefixResource> GetCustomIPPrefixesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CustomIPPrefixResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = CustomIPPrefixClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCustomIPPrefixes");
-                scope.Start();
-                try
-                {
-                    var response = await CustomIPPrefixRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIPPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CustomIPPrefixResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = CustomIPPrefixClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCustomIPPrefixes");
-                scope.Start();
-                try
-                {
-                    var response = await CustomIPPrefixRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIPPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CustomIPPrefixRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomIPPrefixRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomIPPrefixResource(Client, CustomIPPrefixData.DeserializeCustomIPPrefixData(e)), CustomIPPrefixClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomIPPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the custom IP prefixes in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes
-        /// Operation Id: CustomIPPrefixes_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomIPPrefixes_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomIPPrefixResource> GetCustomIPPrefixes(CancellationToken cancellationToken = default)
         {
-            Page<CustomIPPrefixResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = CustomIPPrefixClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCustomIPPrefixes");
-                scope.Start();
-                try
-                {
-                    var response = CustomIPPrefixRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIPPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CustomIPPrefixResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = CustomIPPrefixClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCustomIPPrefixes");
-                scope.Start();
-                try
-                {
-                    var response = CustomIPPrefixRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIPPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CustomIPPrefixRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomIPPrefixRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomIPPrefixResource(Client, CustomIPPrefixData.DeserializeCustomIPPrefixData(e)), CustomIPPrefixClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomIPPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all DDoS protection plans in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans
-        /// Operation Id: DdosProtectionPlans_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DdosProtectionPlans_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DdosProtectionPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DdosProtectionPlanResource> GetDdosProtectionPlansAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DdosProtectionPlanResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DdosProtectionPlanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDdosProtectionPlans");
-                scope.Start();
-                try
-                {
-                    var response = await DdosProtectionPlanRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DdosProtectionPlanResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DdosProtectionPlanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDdosProtectionPlans");
-                scope.Start();
-                try
-                {
-                    var response = await DdosProtectionPlanRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DdosProtectionPlanRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DdosProtectionPlanRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DdosProtectionPlanResource(Client, DdosProtectionPlanData.DeserializeDdosProtectionPlanData(e)), DdosProtectionPlanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDdosProtectionPlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all DDoS protection plans in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans
-        /// Operation Id: DdosProtectionPlans_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DdosProtectionPlans_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DdosProtectionPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DdosProtectionPlanResource> GetDdosProtectionPlans(CancellationToken cancellationToken = default)
         {
-            Page<DdosProtectionPlanResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DdosProtectionPlanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDdosProtectionPlans");
-                scope.Start();
-                try
-                {
-                    var response = DdosProtectionPlanRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DdosProtectionPlanResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DdosProtectionPlanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDdosProtectionPlans");
-                scope.Start();
-                try
-                {
-                    var response = DdosProtectionPlanRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DdosProtectionPlanRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DdosProtectionPlanRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DdosProtectionPlanResource(Client, DdosProtectionPlanData.DeserializeDdosProtectionPlanData(e)), DdosProtectionPlanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDdosProtectionPlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all dscp configurations in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations
-        /// Operation Id: DscpConfiguration_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscpConfiguration_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DscpConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DscpConfigurationResource> GetDscpConfigurationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DscpConfigurationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DscpConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDscpConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await DscpConfigurationRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DscpConfigurationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DscpConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDscpConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await DscpConfigurationRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DscpConfigurationRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DscpConfigurationRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DscpConfigurationResource(Client, DscpConfigurationData.DeserializeDscpConfigurationData(e)), DscpConfigurationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDscpConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all dscp configurations in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations
-        /// Operation Id: DscpConfiguration_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscpConfiguration_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DscpConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DscpConfigurationResource> GetDscpConfigurations(CancellationToken cancellationToken = default)
         {
-            Page<DscpConfigurationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DscpConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDscpConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = DscpConfigurationRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DscpConfigurationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DscpConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDscpConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = DscpConfigurationRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DscpConfigurationRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DscpConfigurationRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DscpConfigurationResource(Client, DscpConfigurationData.DeserializeDscpConfigurationData(e)), DscpConfigurationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDscpConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List what values of endpoint services are available for use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices
-        /// Operation Id: AvailableEndpointServices_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableEndpointServices_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location to check available endpoint services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EndpointServiceResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EndpointServiceResult> GetAvailableEndpointServicesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EndpointServiceResult>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableEndpointServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableEndpointServices");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableEndpointServicesRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EndpointServiceResult>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableEndpointServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableEndpointServices");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableEndpointServicesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableEndpointServicesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableEndpointServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EndpointServiceResult.DeserializeEndpointServiceResult, AvailableEndpointServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableEndpointServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List what values of endpoint services are available for use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices
-        /// Operation Id: AvailableEndpointServices_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableEndpointServices_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location to check available endpoint services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EndpointServiceResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EndpointServiceResult> GetAvailableEndpointServices(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<EndpointServiceResult> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableEndpointServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableEndpointServices");
-                scope.Start();
-                try
-                {
-                    var response = AvailableEndpointServicesRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EndpointServiceResult> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableEndpointServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableEndpointServices");
-                scope.Start();
-                try
-                {
-                    var response = AvailableEndpointServicesRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableEndpointServicesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableEndpointServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EndpointServiceResult.DeserializeEndpointServiceResult, AvailableEndpointServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableEndpointServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the express route circuits in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits
-        /// Operation Id: ExpressRouteCircuits_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCircuits_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCircuitResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteCircuitResource> GetExpressRouteCircuitsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExpressRouteCircuitResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ExpressRouteCircuitClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRouteCircuits");
-                scope.Start();
-                try
-                {
-                    var response = await ExpressRouteCircuitRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExpressRouteCircuitResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ExpressRouteCircuitClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRouteCircuits");
-                scope.Start();
-                try
-                {
-                    var response = await ExpressRouteCircuitRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteCircuitRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRouteCircuitRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCircuitResource(Client, ExpressRouteCircuitData.DeserializeExpressRouteCircuitData(e)), ExpressRouteCircuitClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExpressRouteCircuits", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the express route circuits in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits
-        /// Operation Id: ExpressRouteCircuits_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCircuits_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCircuitResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteCircuitResource> GetExpressRouteCircuits(CancellationToken cancellationToken = default)
         {
-            Page<ExpressRouteCircuitResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ExpressRouteCircuitClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRouteCircuits");
-                scope.Start();
-                try
-                {
-                    var response = ExpressRouteCircuitRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ExpressRouteCircuitResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ExpressRouteCircuitClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRouteCircuits");
-                scope.Start();
-                try
-                {
-                    var response = ExpressRouteCircuitRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteCircuitRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRouteCircuitRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCircuitResource(Client, ExpressRouteCircuitData.DeserializeExpressRouteCircuitData(e)), ExpressRouteCircuitClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExpressRouteCircuits", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the available express route service providers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders
-        /// Operation Id: ExpressRouteServiceProviders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteServiceProviders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteServiceProvider> GetExpressRouteServiceProvidersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExpressRouteServiceProvider>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ExpressRouteServiceProvidersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRouteServiceProviders");
-                scope.Start();
-                try
-                {
-                    var response = await ExpressRouteServiceProvidersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExpressRouteServiceProvider>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ExpressRouteServiceProvidersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRouteServiceProviders");
-                scope.Start();
-                try
-                {
-                    var response = await ExpressRouteServiceProvidersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteServiceProvidersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRouteServiceProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ExpressRouteServiceProvider.DeserializeExpressRouteServiceProvider, ExpressRouteServiceProvidersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExpressRouteServiceProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the available express route service providers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders
-        /// Operation Id: ExpressRouteServiceProviders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteServiceProviders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteServiceProvider> GetExpressRouteServiceProviders(CancellationToken cancellationToken = default)
         {
-            Page<ExpressRouteServiceProvider> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ExpressRouteServiceProvidersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRouteServiceProviders");
-                scope.Start();
-                try
-                {
-                    var response = ExpressRouteServiceProvidersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ExpressRouteServiceProvider> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ExpressRouteServiceProvidersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRouteServiceProviders");
-                scope.Start();
-                try
-                {
-                    var response = ExpressRouteServiceProvidersRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteServiceProvidersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRouteServiceProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ExpressRouteServiceProvider.DeserializeExpressRouteServiceProvider, ExpressRouteServiceProvidersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExpressRouteServiceProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Retrieves all the ExpressRouteCrossConnections in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections
-        /// Operation Id: ExpressRouteCrossConnections_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCrossConnections_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCrossConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnectionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExpressRouteCrossConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ExpressRouteCrossConnectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRouteCrossConnections");
-                scope.Start();
-                try
-                {
-                    var response = await ExpressRouteCrossConnectionRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExpressRouteCrossConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ExpressRouteCrossConnectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRouteCrossConnections");
-                scope.Start();
-                try
-                {
-                    var response = await ExpressRouteCrossConnectionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteCrossConnectionRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRouteCrossConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCrossConnectionResource(Client, ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(e)), ExpressRouteCrossConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExpressRouteCrossConnections", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Retrieves all the ExpressRouteCrossConnections in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections
-        /// Operation Id: ExpressRouteCrossConnections_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCrossConnections_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCrossConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(CancellationToken cancellationToken = default)
         {
-            Page<ExpressRouteCrossConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ExpressRouteCrossConnectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRouteCrossConnections");
-                scope.Start();
-                try
-                {
-                    var response = ExpressRouteCrossConnectionRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ExpressRouteCrossConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ExpressRouteCrossConnectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRouteCrossConnections");
-                scope.Start();
-                try
-                {
-                    var response = ExpressRouteCrossConnectionRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteCrossConnectionRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRouteCrossConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCrossConnectionResource(Client, ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(e)), ExpressRouteCrossConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExpressRouteCrossConnections", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all the ExpressRoutePort resources in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts
-        /// Operation Id: ExpressRoutePorts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRoutePorts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRoutePortResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRoutePortResource> GetExpressRoutePortsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExpressRoutePortResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ExpressRoutePortClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRoutePorts");
-                scope.Start();
-                try
-                {
-                    var response = await ExpressRoutePortRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExpressRoutePortResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ExpressRoutePortClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRoutePorts");
-                scope.Start();
-                try
-                {
-                    var response = await ExpressRoutePortRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRoutePortRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRoutePortRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRoutePortResource(Client, ExpressRoutePortData.DeserializeExpressRoutePortData(e)), ExpressRoutePortClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExpressRoutePorts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all the ExpressRoutePort resources in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts
-        /// Operation Id: ExpressRoutePorts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRoutePorts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRoutePortResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRoutePortResource> GetExpressRoutePorts(CancellationToken cancellationToken = default)
         {
-            Page<ExpressRoutePortResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ExpressRoutePortClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRoutePorts");
-                scope.Start();
-                try
-                {
-                    var response = ExpressRoutePortRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ExpressRoutePortResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ExpressRoutePortClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRoutePorts");
-                scope.Start();
-                try
-                {
-                    var response = ExpressRoutePortRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRoutePortRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRoutePortRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRoutePortResource(Client, ExpressRoutePortData.DeserializeExpressRoutePortData(e)), ExpressRoutePortClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExpressRoutePorts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the Firewall Policies in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies
-        /// Operation Id: FirewallPolicies_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FirewallPolicies_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FirewallPolicyResource> GetFirewallPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FirewallPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = FirewallPolicyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFirewallPolicies");
-                scope.Start();
-                try
-                {
-                    var response = await FirewallPolicyRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FirewallPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = FirewallPolicyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFirewallPolicies");
-                scope.Start();
-                try
-                {
-                    var response = await FirewallPolicyRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FirewallPolicyRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FirewallPolicyRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FirewallPolicyResource(Client, FirewallPolicyData.DeserializeFirewallPolicyData(e)), FirewallPolicyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFirewallPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the Firewall Policies in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies
-        /// Operation Id: FirewallPolicies_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FirewallPolicies_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FirewallPolicyResource> GetFirewallPolicies(CancellationToken cancellationToken = default)
         {
-            Page<FirewallPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = FirewallPolicyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFirewallPolicies");
-                scope.Start();
-                try
-                {
-                    var response = FirewallPolicyRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FirewallPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = FirewallPolicyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFirewallPolicies");
-                scope.Start();
-                try
-                {
-                    var response = FirewallPolicyRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FirewallPolicyRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FirewallPolicyRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FirewallPolicyResource(Client, FirewallPolicyData.DeserializeFirewallPolicyData(e)), FirewallPolicyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFirewallPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all IpAllocations in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations
-        /// Operation Id: IpAllocations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpAllocations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IPAllocationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IPAllocationResource> GetIPAllocationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IPAllocationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IPAllocationIpAllocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIPAllocations");
-                scope.Start();
-                try
-                {
-                    var response = await IPAllocationIpAllocationsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPAllocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IPAllocationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IPAllocationIpAllocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIPAllocations");
-                scope.Start();
-                try
-                {
-                    var response = await IPAllocationIpAllocationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPAllocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IPAllocationIpAllocationsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPAllocationIpAllocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPAllocationResource(Client, IPAllocationData.DeserializeIPAllocationData(e)), IPAllocationIpAllocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIPAllocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all IpAllocations in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations
-        /// Operation Id: IpAllocations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpAllocations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IPAllocationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IPAllocationResource> GetIPAllocations(CancellationToken cancellationToken = default)
         {
-            Page<IPAllocationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IPAllocationIpAllocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIPAllocations");
-                scope.Start();
-                try
-                {
-                    var response = IPAllocationIpAllocationsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPAllocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IPAllocationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IPAllocationIpAllocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIPAllocations");
-                scope.Start();
-                try
-                {
-                    var response = IPAllocationIpAllocationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPAllocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IPAllocationIpAllocationsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPAllocationIpAllocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPAllocationResource(Client, IPAllocationData.DeserializeIPAllocationData(e)), IPAllocationIpAllocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIPAllocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all IpGroups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups
-        /// Operation Id: IpGroups_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpGroups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IPGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IPGroupResource> GetIPGroupsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IPGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IPGroupIpGroupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIPGroups");
-                scope.Start();
-                try
-                {
-                    var response = await IPGroupIpGroupsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IPGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IPGroupIpGroupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIPGroups");
-                scope.Start();
-                try
-                {
-                    var response = await IPGroupIpGroupsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IPGroupIpGroupsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPGroupIpGroupsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPGroupResource(Client, IPGroupData.DeserializeIPGroupData(e)), IPGroupIpGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIPGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all IpGroups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups
-        /// Operation Id: IpGroups_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpGroups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IPGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IPGroupResource> GetIPGroups(CancellationToken cancellationToken = default)
         {
-            Page<IPGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IPGroupIpGroupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIPGroups");
-                scope.Start();
-                try
-                {
-                    var response = IPGroupIpGroupsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IPGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IPGroupIpGroupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIPGroups");
-                scope.Start();
-                try
-                {
-                    var response = IPGroupIpGroupsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IPGroupIpGroupsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPGroupIpGroupsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPGroupResource(Client, IPGroupData.DeserializeIPGroupData(e)), IPGroupIpGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIPGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the load balancers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers
-        /// Operation Id: LoadBalancers_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadBalancers_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LoadBalancerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LoadBalancerResource> GetLoadBalancersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LoadBalancerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadBalancers");
-                scope.Start();
-                try
-                {
-                    var response = await LoadBalancerRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LoadBalancerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadBalancers");
-                scope.Start();
-                try
-                {
-                    var response = await LoadBalancerRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LoadBalancerRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LoadBalancerRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), LoadBalancerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLoadBalancers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the load balancers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers
-        /// Operation Id: LoadBalancers_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadBalancers_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadBalancerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LoadBalancerResource> GetLoadBalancers(CancellationToken cancellationToken = default)
         {
-            Page<LoadBalancerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadBalancers");
-                scope.Start();
-                try
-                {
-                    var response = LoadBalancerRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LoadBalancerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadBalancers");
-                scope.Start();
-                try
-                {
-                    var response = LoadBalancerRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LoadBalancerRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LoadBalancerRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), LoadBalancerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLoadBalancers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Swaps VIPs between two load balancers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses
-        /// Operation Id: LoadBalancers_SwapPublicIpAddresses
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadBalancers_SwapPublicIpAddresses</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
@@ -2157,8 +1538,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Swaps VIPs between two load balancers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses
-        /// Operation Id: LoadBalancers_SwapPublicIpAddresses
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadBalancers_SwapPublicIpAddresses</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
@@ -2185,736 +1574,412 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Nat Gateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways
-        /// Operation Id: NatGateways_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NatGateways_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NatGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NatGatewayResource> GetNatGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NatGatewayResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NatGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNatGateways");
-                scope.Start();
-                try
-                {
-                    var response = await NatGatewayRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NatGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NatGatewayResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NatGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNatGateways");
-                scope.Start();
-                try
-                {
-                    var response = await NatGatewayRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NatGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NatGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NatGatewayRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NatGatewayResource(Client, NatGatewayData.DeserializeNatGatewayData(e)), NatGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNatGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the Nat Gateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways
-        /// Operation Id: NatGateways_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NatGateways_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NatGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NatGatewayResource> GetNatGateways(CancellationToken cancellationToken = default)
         {
-            Page<NatGatewayResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NatGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNatGateways");
-                scope.Start();
-                try
-                {
-                    var response = NatGatewayRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NatGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NatGatewayResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NatGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNatGateways");
-                scope.Start();
-                try
-                {
-                    var response = NatGatewayRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NatGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NatGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NatGatewayRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NatGatewayResource(Client, NatGatewayData.DeserializeNatGatewayData(e)), NatGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNatGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all network interfaces in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces
-        /// Operation Id: NetworkInterfaces_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkInterfaceResource> GetNetworkInterfacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkInterfaceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkInterfaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkInterfaces");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkInterfaceRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NetworkInterfaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetworkInterfaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkInterfaces");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkInterfaceRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkInterfaceRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkInterfaceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), NetworkInterfaceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkInterfaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all network interfaces in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces
-        /// Operation Id: NetworkInterfaces_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkInterfaceResource> GetNetworkInterfaces(CancellationToken cancellationToken = default)
         {
-            Page<NetworkInterfaceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkInterfaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkInterfaces");
-                scope.Start();
-                try
-                {
-                    var response = NetworkInterfaceRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NetworkInterfaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetworkInterfaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkInterfaces");
-                scope.Start();
-                try
-                {
-                    var response = NetworkInterfaceRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkInterfaceRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkInterfaceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), NetworkInterfaceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkInterfaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the network profiles in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles
-        /// Operation Id: NetworkProfiles_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkProfiles_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkProfileResource> GetNetworkProfilesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkProfileResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkProfileRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NetworkProfileResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetworkProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkProfileRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkProfileRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkProfileRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkProfileResource(Client, NetworkProfileData.DeserializeNetworkProfileData(e)), NetworkProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the network profiles in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles
-        /// Operation Id: NetworkProfiles_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkProfiles_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkProfileResource> GetNetworkProfiles(CancellationToken cancellationToken = default)
         {
-            Page<NetworkProfileResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkProfiles");
-                scope.Start();
-                try
-                {
-                    var response = NetworkProfileRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NetworkProfileResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetworkProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkProfiles");
-                scope.Start();
-                try
-                {
-                    var response = NetworkProfileRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkProfileRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkProfileRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkProfileResource(Client, NetworkProfileData.DeserializeNetworkProfileData(e)), NetworkProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all network security groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups
-        /// Operation Id: NetworkSecurityGroups_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityGroups_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkSecurityGroupResource> GetNetworkSecurityGroupsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkSecurityGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkSecurityGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkSecurityGroups");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkSecurityGroupRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NetworkSecurityGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetworkSecurityGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkSecurityGroups");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkSecurityGroupRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityGroupRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityGroupRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityGroupResource(Client, NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(e)), NetworkSecurityGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkSecurityGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all network security groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups
-        /// Operation Id: NetworkSecurityGroups_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityGroups_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkSecurityGroupResource> GetNetworkSecurityGroups(CancellationToken cancellationToken = default)
         {
-            Page<NetworkSecurityGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkSecurityGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkSecurityGroups");
-                scope.Start();
-                try
-                {
-                    var response = NetworkSecurityGroupRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NetworkSecurityGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetworkSecurityGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkSecurityGroups");
-                scope.Start();
-                try
-                {
-                    var response = NetworkSecurityGroupRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityGroupRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityGroupRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityGroupResource(Client, NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(e)), NetworkSecurityGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkSecurityGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all Network Virtual Appliances in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances
-        /// Operation Id: NetworkVirtualAppliances_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkVirtualAppliances_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkVirtualApplianceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkVirtualApplianceResource> GetNetworkVirtualAppliancesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkVirtualApplianceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkVirtualApplianceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkVirtualAppliances");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkVirtualApplianceRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NetworkVirtualApplianceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetworkVirtualApplianceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkVirtualAppliances");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkVirtualApplianceRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkVirtualApplianceRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkVirtualApplianceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkVirtualApplianceResource(Client, NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(e)), NetworkVirtualApplianceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkVirtualAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all Network Virtual Appliances in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances
-        /// Operation Id: NetworkVirtualAppliances_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkVirtualAppliances_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkVirtualApplianceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkVirtualApplianceResource> GetNetworkVirtualAppliances(CancellationToken cancellationToken = default)
         {
-            Page<NetworkVirtualApplianceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkVirtualApplianceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkVirtualAppliances");
-                scope.Start();
-                try
-                {
-                    var response = NetworkVirtualApplianceRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NetworkVirtualApplianceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetworkVirtualApplianceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkVirtualAppliances");
-                scope.Start();
-                try
-                {
-                    var response = NetworkVirtualApplianceRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkVirtualApplianceRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkVirtualApplianceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkVirtualApplianceResource(Client, NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(e)), NetworkVirtualApplianceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkVirtualAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all network watchers by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers
-        /// Operation Id: NetworkWatchers_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkWatchers_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkWatcherResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkWatcherResource> GetNetworkWatchersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkWatcherResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkWatcherClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkWatchers");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkWatcherRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkWatcherResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkWatcherRestClient.CreateListAllRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetworkWatcherResource(Client, NetworkWatcherData.DeserializeNetworkWatcherData(e)), NetworkWatcherClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkWatchers", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Gets all network watchers by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers
-        /// Operation Id: NetworkWatchers_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkWatchers_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkWatcherResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkWatcherResource> GetNetworkWatchers(CancellationToken cancellationToken = default)
         {
-            Page<NetworkWatcherResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkWatcherClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkWatchers");
-                scope.Start();
-                try
-                {
-                    var response = NetworkWatcherRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkWatcherResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkWatcherRestClient.CreateListAllRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetworkWatcherResource(Client, NetworkWatcherData.DeserializeNetworkWatcherData(e)), NetworkWatcherClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkWatchers", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Gets all private endpoints in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints
-        /// Operation Id: PrivateEndpoints_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpoints_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateEndpointResource> GetPrivateEndpointsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateEndpointResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PrivateEndpointClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = await PrivateEndpointRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PrivateEndpointResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PrivateEndpointClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = await PrivateEndpointRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateEndpointRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateEndpointRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateEndpointResource(Client, PrivateEndpointData.DeserializePrivateEndpointData(e)), PrivateEndpointClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPrivateEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all private endpoints in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints
-        /// Operation Id: PrivateEndpoints_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpoints_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateEndpointResource> GetPrivateEndpoints(CancellationToken cancellationToken = default)
         {
-            Page<PrivateEndpointResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PrivateEndpointClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = PrivateEndpointRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PrivateEndpointResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PrivateEndpointClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = PrivateEndpointRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateEndpointRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateEndpointRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateEndpointResource(Client, PrivateEndpointData.DeserializePrivateEndpointData(e)), PrivateEndpointClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPrivateEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
-        /// Operation Id: AvailablePrivateEndpointTypes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailablePrivateEndpointTypes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvailablePrivateEndpointType>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailablePrivateEndpointTypesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailablePrivateEndpointTypes");
-                scope.Start();
-                try
-                {
-                    var response = await AvailablePrivateEndpointTypesRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvailablePrivateEndpointType>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailablePrivateEndpointTypesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailablePrivateEndpointTypes");
-                scope.Start();
-                try
-                {
-                    var response = await AvailablePrivateEndpointTypesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailablePrivateEndpointTypesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailablePrivateEndpointTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType, AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailablePrivateEndpointTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
-        /// Operation Id: AvailablePrivateEndpointTypes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailablePrivateEndpointTypes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<AvailablePrivateEndpointType> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailablePrivateEndpointTypesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailablePrivateEndpointTypes");
-                scope.Start();
-                try
-                {
-                    var response = AvailablePrivateEndpointTypesRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvailablePrivateEndpointType> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailablePrivateEndpointTypesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailablePrivateEndpointTypes");
-                scope.Start();
-                try
-                {
-                    var response = AvailablePrivateEndpointTypesRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailablePrivateEndpointTypesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailablePrivateEndpointTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType, AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailablePrivateEndpointTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all private link service in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices
-        /// Operation Id: PrivateLinkServices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkServices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateLinkServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateLinkServiceResource> GetPrivateLinkServicesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateLinkServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PrivateLinkServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateLinkServices");
-                scope.Start();
-                try
-                {
-                    var response = await PrivateLinkServiceRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PrivateLinkServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PrivateLinkServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateLinkServices");
-                scope.Start();
-                try
-                {
-                    var response = await PrivateLinkServiceRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateLinkServiceResource(Client, PrivateLinkServiceData.DeserializePrivateLinkServiceData(e)), PrivateLinkServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPrivateLinkServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all private link service in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices
-        /// Operation Id: PrivateLinkServices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkServices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateLinkServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateLinkServiceResource> GetPrivateLinkServices(CancellationToken cancellationToken = default)
         {
-            Page<PrivateLinkServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PrivateLinkServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateLinkServices");
-                scope.Start();
-                try
-                {
-                    var response = PrivateLinkServiceRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PrivateLinkServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PrivateLinkServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateLinkServices");
-                scope.Start();
-                try
-                {
-                    var response = PrivateLinkServiceRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateLinkServiceResource(Client, PrivateLinkServiceData.DeserializePrivateLinkServiceData(e)), PrivateLinkServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPrivateLinkServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks whether the subscription is visible to private link service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
-        /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibility
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkServices_CheckPrivateLinkServiceVisibility</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The location of the domain name. </param>
@@ -2941,8 +2006,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks whether the subscription is visible to private link service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
-        /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibility
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkServices_CheckPrivateLinkServiceVisibility</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The location of the domain name. </param>
@@ -2969,682 +2042,370 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
-        /// Operation Id: PrivateLinkServices_ListAutoApprovedPrivateLinkServices
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkServices_ListAutoApprovedPrivateLinkServices</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutoApprovedPrivateLinkService>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
-                scope.Start();
-                try
-                {
-                    var response = await PrivateLinkServicesRestClient.ListAutoApprovedPrivateLinkServicesAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutoApprovedPrivateLinkService>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
-                scope.Start();
-                try
-                {
-                    var response = await PrivateLinkServicesRestClient.ListAutoApprovedPrivateLinkServicesNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService, PrivateLinkServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoApprovedPrivateLinkServicesPrivateLinkServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
-        /// Operation Id: PrivateLinkServices_ListAutoApprovedPrivateLinkServices
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkServices_ListAutoApprovedPrivateLinkServices</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<AutoApprovedPrivateLinkService> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
-                scope.Start();
-                try
-                {
-                    var response = PrivateLinkServicesRestClient.ListAutoApprovedPrivateLinkServices(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutoApprovedPrivateLinkService> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
-                scope.Start();
-                try
-                {
-                    var response = PrivateLinkServicesRestClient.ListAutoApprovedPrivateLinkServicesNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService, PrivateLinkServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoApprovedPrivateLinkServicesPrivateLinkServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the public IP addresses in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses
-        /// Operation Id: PublicIPAddresses_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicIPAddresses_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PublicIPAddressResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublicIPAddressResource> GetPublicIPAddressesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PublicIPAddressResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PublicIPAddressClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPublicIPAddresses");
-                scope.Start();
-                try
-                {
-                    var response = await PublicIPAddressRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PublicIPAddressResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PublicIPAddressClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPublicIPAddresses");
-                scope.Start();
-                try
-                {
-                    var response = await PublicIPAddressRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PublicIPAddressRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PublicIPAddressRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PublicIPAddressResource(Client, PublicIPAddressData.DeserializePublicIPAddressData(e)), PublicIPAddressClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPublicIPAddresses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the public IP addresses in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses
-        /// Operation Id: PublicIPAddresses_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicIPAddresses_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PublicIPAddressResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublicIPAddressResource> GetPublicIPAddresses(CancellationToken cancellationToken = default)
         {
-            Page<PublicIPAddressResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PublicIPAddressClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPublicIPAddresses");
-                scope.Start();
-                try
-                {
-                    var response = PublicIPAddressRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PublicIPAddressResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PublicIPAddressClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPublicIPAddresses");
-                scope.Start();
-                try
-                {
-                    var response = PublicIPAddressRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PublicIPAddressRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PublicIPAddressRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PublicIPAddressResource(Client, PublicIPAddressData.DeserializePublicIPAddressData(e)), PublicIPAddressClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPublicIPAddresses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the public IP prefixes in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes
-        /// Operation Id: PublicIPPrefixes_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicIPPrefixes_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PublicIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublicIPPrefixResource> GetPublicIPPrefixesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PublicIPPrefixResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PublicIPPrefixClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPublicIPPrefixes");
-                scope.Start();
-                try
-                {
-                    var response = await PublicIPPrefixRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PublicIPPrefixResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PublicIPPrefixClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPublicIPPrefixes");
-                scope.Start();
-                try
-                {
-                    var response = await PublicIPPrefixRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PublicIPPrefixRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PublicIPPrefixRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PublicIPPrefixResource(Client, PublicIPPrefixData.DeserializePublicIPPrefixData(e)), PublicIPPrefixClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPublicIPPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the public IP prefixes in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes
-        /// Operation Id: PublicIPPrefixes_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicIPPrefixes_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PublicIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublicIPPrefixResource> GetPublicIPPrefixes(CancellationToken cancellationToken = default)
         {
-            Page<PublicIPPrefixResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PublicIPPrefixClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPublicIPPrefixes");
-                scope.Start();
-                try
-                {
-                    var response = PublicIPPrefixRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PublicIPPrefixResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PublicIPPrefixClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPublicIPPrefixes");
-                scope.Start();
-                try
-                {
-                    var response = PublicIPPrefixRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PublicIPPrefixRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PublicIPPrefixRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PublicIPPrefixResource(Client, PublicIPPrefixData.DeserializePublicIPPrefixData(e)), PublicIPPrefixClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPublicIPPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all route filters in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters
-        /// Operation Id: RouteFilters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RouteFilters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RouteFilterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RouteFilterResource> GetRouteFiltersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RouteFilterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RouteFilterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRouteFilters");
-                scope.Start();
-                try
-                {
-                    var response = await RouteFilterRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RouteFilterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RouteFilterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRouteFilters");
-                scope.Start();
-                try
-                {
-                    var response = await RouteFilterRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RouteFilterRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RouteFilterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RouteFilterResource(Client, RouteFilterData.DeserializeRouteFilterData(e)), RouteFilterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRouteFilters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all route filters in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters
-        /// Operation Id: RouteFilters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RouteFilters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RouteFilterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RouteFilterResource> GetRouteFilters(CancellationToken cancellationToken = default)
         {
-            Page<RouteFilterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RouteFilterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRouteFilters");
-                scope.Start();
-                try
-                {
-                    var response = RouteFilterRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RouteFilterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RouteFilterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRouteFilters");
-                scope.Start();
-                try
-                {
-                    var response = RouteFilterRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RouteFilterRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RouteFilterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RouteFilterResource(Client, RouteFilterData.DeserializeRouteFilterData(e)), RouteFilterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRouteFilters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all route tables in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables
-        /// Operation Id: RouteTables_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RouteTables_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RouteTableResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RouteTableResource> GetRouteTablesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RouteTableResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RouteTableClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRouteTables");
-                scope.Start();
-                try
-                {
-                    var response = await RouteTableRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RouteTableResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RouteTableClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRouteTables");
-                scope.Start();
-                try
-                {
-                    var response = await RouteTableRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RouteTableRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RouteTableRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RouteTableResource(Client, RouteTableData.DeserializeRouteTableData(e)), RouteTableClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRouteTables", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all route tables in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables
-        /// Operation Id: RouteTables_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RouteTables_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RouteTableResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RouteTableResource> GetRouteTables(CancellationToken cancellationToken = default)
         {
-            Page<RouteTableResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RouteTableClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRouteTables");
-                scope.Start();
-                try
-                {
-                    var response = RouteTableRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RouteTableResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RouteTableClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRouteTables");
-                scope.Start();
-                try
-                {
-                    var response = RouteTableRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RouteTableRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RouteTableRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RouteTableResource(Client, RouteTableData.DeserializeRouteTableData(e)), RouteTableClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRouteTables", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the Security Partner Providers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders
-        /// Operation Id: SecurityPartnerProviders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPartnerProviders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityPartnerProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityPartnerProviderResource> GetSecurityPartnerProvidersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityPartnerProviderResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SecurityPartnerProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityPartnerProviders");
-                scope.Start();
-                try
-                {
-                    var response = await SecurityPartnerProviderRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityPartnerProviderResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SecurityPartnerProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityPartnerProviders");
-                scope.Start();
-                try
-                {
-                    var response = await SecurityPartnerProviderRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityPartnerProviderRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityPartnerProviderRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityPartnerProviderResource(Client, SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(e)), SecurityPartnerProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSecurityPartnerProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the Security Partner Providers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders
-        /// Operation Id: SecurityPartnerProviders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPartnerProviders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityPartnerProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityPartnerProviderResource> GetSecurityPartnerProviders(CancellationToken cancellationToken = default)
         {
-            Page<SecurityPartnerProviderResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SecurityPartnerProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityPartnerProviders");
-                scope.Start();
-                try
-                {
-                    var response = SecurityPartnerProviderRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityPartnerProviderResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SecurityPartnerProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSecurityPartnerProviders");
-                scope.Start();
-                try
-                {
-                    var response = SecurityPartnerProviderRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityPartnerProviderRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityPartnerProviderRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityPartnerProviderResource(Client, SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(e)), SecurityPartnerProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSecurityPartnerProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the available bgp service communities.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities
-        /// Operation Id: BgpServiceCommunities_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BgpServiceCommunities_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BgpServiceCommunity" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BgpServiceCommunity> GetBgpServiceCommunitiesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BgpServiceCommunity>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BgpServiceCommunitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBgpServiceCommunities");
-                scope.Start();
-                try
-                {
-                    var response = await BgpServiceCommunitiesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BgpServiceCommunity>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BgpServiceCommunitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBgpServiceCommunities");
-                scope.Start();
-                try
-                {
-                    var response = await BgpServiceCommunitiesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BgpServiceCommunitiesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BgpServiceCommunitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BgpServiceCommunity.DeserializeBgpServiceCommunity, BgpServiceCommunitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBgpServiceCommunities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the available bgp service communities.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities
-        /// Operation Id: BgpServiceCommunities_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BgpServiceCommunities_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BgpServiceCommunity" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BgpServiceCommunity> GetBgpServiceCommunities(CancellationToken cancellationToken = default)
         {
-            Page<BgpServiceCommunity> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BgpServiceCommunitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBgpServiceCommunities");
-                scope.Start();
-                try
-                {
-                    var response = BgpServiceCommunitiesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BgpServiceCommunity> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BgpServiceCommunitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBgpServiceCommunities");
-                scope.Start();
-                try
-                {
-                    var response = BgpServiceCommunitiesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BgpServiceCommunitiesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BgpServiceCommunitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BgpServiceCommunity.DeserializeBgpServiceCommunity, BgpServiceCommunitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBgpServiceCommunities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the service endpoint policies in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies
-        /// Operation Id: ServiceEndpointPolicies_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceEndpointPolicies_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceEndpointPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceEndpointPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ServiceEndpointPolicyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceEndpointPoliciesByServiceEndpointPolicy");
-                scope.Start();
-                try
-                {
-                    var response = await ServiceEndpointPolicyRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServiceEndpointPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ServiceEndpointPolicyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceEndpointPoliciesByServiceEndpointPolicy");
-                scope.Start();
-                try
-                {
-                    var response = await ServiceEndpointPolicyRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceEndpointPolicyRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceEndpointPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceEndpointPolicyResource(Client, ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(e)), ServiceEndpointPolicyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceEndpointPoliciesByServiceEndpointPolicy", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the service endpoint policies in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies
-        /// Operation Id: ServiceEndpointPolicies_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceEndpointPolicies_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceEndpointPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicy(CancellationToken cancellationToken = default)
         {
-            Page<ServiceEndpointPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ServiceEndpointPolicyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceEndpointPoliciesByServiceEndpointPolicy");
-                scope.Start();
-                try
-                {
-                    var response = ServiceEndpointPolicyRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServiceEndpointPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ServiceEndpointPolicyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceEndpointPoliciesByServiceEndpointPolicy");
-                scope.Start();
-                try
-                {
-                    var response = ServiceEndpointPolicyRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceEndpointPolicyRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceEndpointPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceEndpointPolicyResource(Client, ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(e)), ServiceEndpointPolicyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceEndpointPoliciesByServiceEndpointPolicy", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of service tag information resources.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags
-        /// Operation Id: ServiceTags_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceTags_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3666,8 +2427,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets a list of service tag information resources.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags
-        /// Operation Id: ServiceTags_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceTags_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3689,982 +2458,530 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// List network usages for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = await UsagesRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NetworkUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = await UsagesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NetworkUsage.DeserializeNetworkUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List network usages for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<NetworkUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = UsagesRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NetworkUsage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = UsagesRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NetworkUsage.DeserializeNetworkUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all virtual networks in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks
-        /// Operation Id: VirtualNetworks_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworks_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkResource> GetVirtualNetworksAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualNetworkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualNetworkRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualNetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualNetworkRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkResource(Client, VirtualNetworkData.DeserializeVirtualNetworkData(e)), VirtualNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all virtual networks in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks
-        /// Operation Id: VirtualNetworks_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworks_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkResource> GetVirtualNetworks(CancellationToken cancellationToken = default)
         {
-            Page<VirtualNetworkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = VirtualNetworkRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualNetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = VirtualNetworkRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkResource(Client, VirtualNetworkData.DeserializeVirtualNetworkData(e)), VirtualNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the VirtualNetworkTaps in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps
-        /// Operation Id: VirtualNetworkTaps_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkTaps_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkTapResource> GetVirtualNetworkTapsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualNetworkTapResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualNetworkTapClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworkTaps");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualNetworkTapRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTapResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualNetworkTapResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualNetworkTapClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworkTaps");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualNetworkTapRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTapResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkTapRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkTapRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkTapResource(Client, VirtualNetworkTapData.DeserializeVirtualNetworkTapData(e)), VirtualNetworkTapClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualNetworkTaps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the VirtualNetworkTaps in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps
-        /// Operation Id: VirtualNetworkTaps_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkTaps_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkTapResource> GetVirtualNetworkTaps(CancellationToken cancellationToken = default)
         {
-            Page<VirtualNetworkTapResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualNetworkTapClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworkTaps");
-                scope.Start();
-                try
-                {
-                    var response = VirtualNetworkTapRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTapResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualNetworkTapResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualNetworkTapClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworkTaps");
-                scope.Start();
-                try
-                {
-                    var response = VirtualNetworkTapRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTapResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkTapRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkTapRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkTapResource(Client, VirtualNetworkTapData.DeserializeVirtualNetworkTapData(e)), VirtualNetworkTapClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualNetworkTaps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the Virtual Routers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters
-        /// Operation Id: VirtualRouters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualRouters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualRouterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualRouterResource> GetVirtualRoutersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualRouterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualRouterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualRouters");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualRouterRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualRouterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualRouterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualRouters");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualRouterRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualRouterRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualRouterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualRouterResource(Client, VirtualRouterData.DeserializeVirtualRouterData(e)), VirtualRouterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualRouters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the Virtual Routers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters
-        /// Operation Id: VirtualRouters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualRouters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualRouterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualRouterResource> GetVirtualRouters(CancellationToken cancellationToken = default)
         {
-            Page<VirtualRouterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualRouterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualRouters");
-                scope.Start();
-                try
-                {
-                    var response = VirtualRouterRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualRouterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualRouterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualRouters");
-                scope.Start();
-                try
-                {
-                    var response = VirtualRouterRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualRouterRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualRouterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualRouterResource(Client, VirtualRouterData.DeserializeVirtualRouterData(e)), VirtualRouterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualRouters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the VirtualWANs in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans
-        /// Operation Id: VirtualWans_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualWans_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualWanResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualWanResource> GetVirtualWansAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualWanResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualWanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualWans");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualWanRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualWanResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualWanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualWans");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualWanRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualWanRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualWanRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualWanResource(Client, VirtualWanData.DeserializeVirtualWanData(e)), VirtualWanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualWans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the VirtualWANs in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans
-        /// Operation Id: VirtualWans_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualWans_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualWanResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualWanResource> GetVirtualWans(CancellationToken cancellationToken = default)
         {
-            Page<VirtualWanResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualWanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualWans");
-                scope.Start();
-                try
-                {
-                    var response = VirtualWanRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualWanResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualWanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualWans");
-                scope.Start();
-                try
-                {
-                    var response = VirtualWanRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualWanRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualWanRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualWanResource(Client, VirtualWanData.DeserializeVirtualWanData(e)), VirtualWanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualWans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the VpnSites in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites
-        /// Operation Id: VpnSites_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VpnSites_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnSiteResource> GetVpnSitesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VpnSiteResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VpnSiteClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVpnSites");
-                scope.Start();
-                try
-                {
-                    var response = await VpnSiteRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VpnSiteResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VpnSiteClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVpnSites");
-                scope.Start();
-                try
-                {
-                    var response = await VpnSiteRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VpnSiteRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VpnSiteRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnSiteResource(Client, VpnSiteData.DeserializeVpnSiteData(e)), VpnSiteClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVpnSites", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the VpnSites in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites
-        /// Operation Id: VpnSites_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VpnSites_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnSiteResource> GetVpnSites(CancellationToken cancellationToken = default)
         {
-            Page<VpnSiteResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VpnSiteClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVpnSites");
-                scope.Start();
-                try
-                {
-                    var response = VpnSiteRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VpnSiteResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VpnSiteClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVpnSites");
-                scope.Start();
-                try
-                {
-                    var response = VpnSiteRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VpnSiteRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VpnSiteRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnSiteResource(Client, VpnSiteData.DeserializeVpnSiteData(e)), VpnSiteClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVpnSites", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the VpnServerConfigurations in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations
-        /// Operation Id: VpnServerConfigurations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VpnServerConfigurations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnServerConfigurationResource> GetVpnServerConfigurationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VpnServerConfigurationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VpnServerConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVpnServerConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await VpnServerConfigurationRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VpnServerConfigurationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VpnServerConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVpnServerConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await VpnServerConfigurationRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VpnServerConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VpnServerConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnServerConfigurationResource(Client, VpnServerConfigurationData.DeserializeVpnServerConfigurationData(e)), VpnServerConfigurationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVpnServerConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the VpnServerConfigurations in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations
-        /// Operation Id: VpnServerConfigurations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VpnServerConfigurations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnServerConfigurationResource> GetVpnServerConfigurations(CancellationToken cancellationToken = default)
         {
-            Page<VpnServerConfigurationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VpnServerConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVpnServerConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = VpnServerConfigurationRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VpnServerConfigurationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VpnServerConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVpnServerConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = VpnServerConfigurationRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VpnServerConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VpnServerConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnServerConfigurationResource(Client, VpnServerConfigurationData.DeserializeVpnServerConfigurationData(e)), VpnServerConfigurationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVpnServerConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the VirtualHubs in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs
-        /// Operation Id: VirtualHubs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHubs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualHubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualHubResource> GetVirtualHubsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualHubResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualHubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualHubs");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualHubRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualHubResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualHubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualHubs");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualHubRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualHubRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualHubRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualHubResource(Client, VirtualHubData.DeserializeVirtualHubData(e)), VirtualHubClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualHubs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the VirtualHubs in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs
-        /// Operation Id: VirtualHubs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHubs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualHubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualHubResource> GetVirtualHubs(CancellationToken cancellationToken = default)
         {
-            Page<VirtualHubResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualHubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualHubs");
-                scope.Start();
-                try
-                {
-                    var response = VirtualHubRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualHubResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualHubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualHubs");
-                scope.Start();
-                try
-                {
-                    var response = VirtualHubRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualHubRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualHubRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualHubResource(Client, VirtualHubData.DeserializeVirtualHubData(e)), VirtualHubClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualHubs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the VpnGateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways
-        /// Operation Id: VpnGateways_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VpnGateways_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnGatewayResource> GetVpnGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VpnGatewayResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VpnGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVpnGateways");
-                scope.Start();
-                try
-                {
-                    var response = await VpnGatewayRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VpnGatewayResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VpnGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVpnGateways");
-                scope.Start();
-                try
-                {
-                    var response = await VpnGatewayRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VpnGatewayRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VpnGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnGatewayResource(Client, VpnGatewayData.DeserializeVpnGatewayData(e)), VpnGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVpnGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the VpnGateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways
-        /// Operation Id: VpnGateways_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VpnGateways_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnGatewayResource> GetVpnGateways(CancellationToken cancellationToken = default)
         {
-            Page<VpnGatewayResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VpnGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVpnGateways");
-                scope.Start();
-                try
-                {
-                    var response = VpnGatewayRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VpnGatewayResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VpnGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVpnGateways");
-                scope.Start();
-                try
-                {
-                    var response = VpnGatewayRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VpnGatewayRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VpnGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnGatewayResource(Client, VpnGatewayData.DeserializeVpnGatewayData(e)), VpnGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVpnGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the P2SVpnGateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways
-        /// Operation Id: P2sVpnGateways_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>P2sVpnGateways_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<P2SVpnGatewayResource> GetP2SVpnGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<P2SVpnGatewayResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = P2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetP2SVpnGateways");
-                scope.Start();
-                try
-                {
-                    var response = await P2SVpnGatewayP2sVpnGatewaysRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<P2SVpnGatewayResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = P2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetP2SVpnGateways");
-                scope.Start();
-                try
-                {
-                    var response = await P2SVpnGatewayP2sVpnGatewaysRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => P2SVpnGatewayP2sVpnGatewaysRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => P2SVpnGatewayP2sVpnGatewaysRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new P2SVpnGatewayResource(Client, P2SVpnGatewayData.DeserializeP2SVpnGatewayData(e)), P2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetP2SVpnGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the P2SVpnGateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways
-        /// Operation Id: P2sVpnGateways_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>P2sVpnGateways_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<P2SVpnGatewayResource> GetP2SVpnGateways(CancellationToken cancellationToken = default)
         {
-            Page<P2SVpnGatewayResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = P2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetP2SVpnGateways");
-                scope.Start();
-                try
-                {
-                    var response = P2SVpnGatewayP2sVpnGatewaysRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<P2SVpnGatewayResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = P2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetP2SVpnGateways");
-                scope.Start();
-                try
-                {
-                    var response = P2SVpnGatewayP2sVpnGatewaysRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => P2SVpnGatewayP2sVpnGatewaysRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => P2SVpnGatewayP2sVpnGatewaysRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new P2SVpnGatewayResource(Client, P2SVpnGatewayData.DeserializeP2SVpnGatewayData(e)), P2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetP2SVpnGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists ExpressRoute gateways under a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways
-        /// Operation Id: ExpressRouteGateways_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteGatewayResource> GetExpressRouteGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExpressRouteGatewayResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ExpressRouteGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRouteGateways");
-                scope.Start();
-                try
-                {
-                    var response = await ExpressRouteGatewayRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteGatewayResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteGatewayRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ExpressRouteGatewayResource(Client, ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(e)), ExpressRouteGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExpressRouteGateways", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists ExpressRoute gateways under a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways
-        /// Operation Id: ExpressRouteGateways_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteGatewayResource> GetExpressRouteGateways(CancellationToken cancellationToken = default)
         {
-            Page<ExpressRouteGatewayResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ExpressRouteGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExpressRouteGateways");
-                scope.Start();
-                try
-                {
-                    var response = ExpressRouteGatewayRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteGatewayResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteGatewayRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ExpressRouteGatewayResource(Client, ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(e)), ExpressRouteGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExpressRouteGateways", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Gets all the WAF policies in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies
-        /// Operation Id: WebApplicationFirewallPolicies_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApplicationFirewallPolicies_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebApplicationFirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebApplicationFirewallPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = WebApplicationFirewallPolicyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWebApplicationFirewallPolicies");
-                scope.Start();
-                try
-                {
-                    var response = await WebApplicationFirewallPolicyRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WebApplicationFirewallPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = WebApplicationFirewallPolicyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWebApplicationFirewallPolicies");
-                scope.Start();
-                try
-                {
-                    var response = await WebApplicationFirewallPolicyRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => WebApplicationFirewallPolicyRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WebApplicationFirewallPolicyRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebApplicationFirewallPolicyResource(Client, WebApplicationFirewallPolicyData.DeserializeWebApplicationFirewallPolicyData(e)), WebApplicationFirewallPolicyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetWebApplicationFirewallPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the WAF policies in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies
-        /// Operation Id: WebApplicationFirewallPolicies_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApplicationFirewallPolicies_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebApplicationFirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicies(CancellationToken cancellationToken = default)
         {
-            Page<WebApplicationFirewallPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = WebApplicationFirewallPolicyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWebApplicationFirewallPolicies");
-                scope.Start();
-                try
-                {
-                    var response = WebApplicationFirewallPolicyRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WebApplicationFirewallPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = WebApplicationFirewallPolicyClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWebApplicationFirewallPolicies");
-                scope.Start();
-                try
-                {
-                    var response = WebApplicationFirewallPolicyRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => WebApplicationFirewallPolicyRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WebApplicationFirewallPolicyRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebApplicationFirewallPolicyResource(Client, WebApplicationFirewallPolicyData.DeserializeWebApplicationFirewallPolicyData(e)), WebApplicationFirewallPolicyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetWebApplicationFirewallPolicies", "value", "nextLink", cancellationToken);
         }
     }
 }

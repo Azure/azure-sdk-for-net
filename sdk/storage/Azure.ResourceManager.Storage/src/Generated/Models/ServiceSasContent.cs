@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="canonicalizedResource"/> is null. </exception>
         public ServiceSasContent(string canonicalizedResource)
         {
-            if (canonicalizedResource == null)
-            {
-                throw new ArgumentNullException(nameof(canonicalizedResource));
-            }
+            Argument.AssertNotNull(canonicalizedResource, nameof(canonicalizedResource));
 
             CanonicalizedResource = canonicalizedResource;
         }
@@ -30,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The signed services accessible with the service SAS. Possible values include: Blob (b), Container (c), File (f), Share (s). </summary>
         public ServiceSasSignedResourceType? Resource { get; set; }
         /// <summary> The signed permissions for the service SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p). </summary>
-        public AccountSasPermission? Permissions { get; set; }
+        public StorageAccountSasPermission? Permissions { get; set; }
         /// <summary> An IP address or a range of IP addresses from which to accept requests. </summary>
         public string IPAddressOrRange { get; set; }
         /// <summary> The protocol permitted for a request made with the account SAS. </summary>

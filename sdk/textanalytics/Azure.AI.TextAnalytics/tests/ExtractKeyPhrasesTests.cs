@@ -197,7 +197,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         [RecordedTest]
         [Ignore("LRO not implemented")]
         public async Task ExtractKeyPhrasesWithMultipleActions()
@@ -235,13 +235,65 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(expected, ExtractKeyPhrasesActionsResults.Select(result => result.ActionName));
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public async Task ExtractKeyPhrasesBatchDisableServiceLogs()
+        {
+            TextAnalyticsClient client = GetClient();
+            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true });
+
+            ValidateBatchDocumentsResult(results, 3);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
+        public void ExtractKeyPhrasesBatchDisableServiceLogsThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.ExtractKeyPhrasesBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
+            Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeOperationExtractKeyPhrasesWithAutoDetectedLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            List<string> documents = batchConvenienceDocuments;
+            AnalyzeActionsOptions options = new()
+            {
+                AutoDetectionDefaultLanguage = "en"
+            };
+            TextAnalyticsActions actions = new()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() }
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto", options);
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> actionResults = resultCollection.ExtractKeyPhrasesResults;
+            Assert.IsNotNull(actionResults);
+
+            ExtractKeyPhrasesResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
+            ValidateBatchDocumentsResult(results, isLanguageAutoDetected: true);
+        }
+
         private void ValidateInDocumenResult(KeyPhraseCollection keyPhrases, int minKeyPhrasesCount = default)
         {
             Assert.IsNotNull(keyPhrases.Warnings);
             Assert.GreaterOrEqual(keyPhrases.Count, minKeyPhrasesCount);
         }
 
-        private void ValidateBatchDocumentsResult(ExtractKeyPhrasesResultCollection results, int minKeyPhrasesCount = default, bool includeStatistics = default)
+        private void ValidateBatchDocumentsResult(
+            ExtractKeyPhrasesResultCollection results,
+            int minKeyPhrasesCount = default,
+            bool includeStatistics = default,
+            bool isLanguageAutoDetected = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
@@ -256,27 +308,41 @@ namespace Azure.AI.TextAnalytics.Tests
             else
                 Assert.IsNull(results.Statistics);
 
-            foreach (ExtractKeyPhrasesResult keyPhrasesInDocument in results)
+            foreach (ExtractKeyPhrasesResult result in results)
             {
-                Assert.That(keyPhrasesInDocument.Id, Is.Not.Null.And.Not.Empty);
-
-                Assert.False(keyPhrasesInDocument.HasError);
+                Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
+                Assert.False(result.HasError);
 
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(keyPhrasesInDocument.Statistics);
+                Assert.IsNotNull(result.Statistics);
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(keyPhrasesInDocument.Statistics.CharacterCount, 0);
-                    Assert.Greater(keyPhrasesInDocument.Statistics.TransactionCount, 0);
+                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
+                    Assert.Greater(result.Statistics.TransactionCount, 0);
                 }
                 else
                 {
-                    Assert.AreEqual(0, keyPhrasesInDocument.Statistics.CharacterCount);
-                    Assert.AreEqual(0, keyPhrasesInDocument.Statistics.TransactionCount);
+                    Assert.AreEqual(0, result.Statistics.CharacterCount);
+                    Assert.AreEqual(0, result.Statistics.TransactionCount);
                 }
 
-                ValidateInDocumenResult(keyPhrasesInDocument.KeyPhrases, minKeyPhrasesCount);
+                if (isLanguageAutoDetected)
+                {
+                    Assert.IsNotNull(result.DetectedLanguage);
+                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
+                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
+                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
+                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
+                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
+                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
+                }
+                else
+                {
+                    Assert.IsNull(result.DetectedLanguage);
+                }
+
+                ValidateInDocumenResult(result.KeyPhrases, minKeyPhrasesCount);
             }
         }
     }

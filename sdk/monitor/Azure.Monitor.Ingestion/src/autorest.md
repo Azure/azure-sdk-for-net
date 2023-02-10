@@ -13,7 +13,7 @@ security: AADToken
 security-scopes: https://monitor.azure.com//.default
 ```
 
-### Renames paramter in Upload methods to streamName
+### Renames parameter in Upload methods to streamName
 ``` yaml
 directive:
 - from: swagger-document
@@ -26,4 +26,11 @@ directive:
 - from: swagger-document
   where: $.parameters.Endpoint
   transform: $.format = "url";
+```
+### Updates parameter description in DPG Upload/UploadAsync methods
+``` yaml
+directive:
+- from: swagger-document
+  where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post.parameters[3]
+  transform: $["description"] = "If content is already gzipped, put \"gzip\". Default behavior is to gzip all input";
 ```

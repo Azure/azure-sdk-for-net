@@ -20,6 +20,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string tableName = "OfficeSupplies" + _random.Next();
 
+#region Snippet:TablesSample7ModelProperties
             // Construct a new TableClient using a TokenCredential.
             var client = new TableClient(
                 new Uri(storageUri),
@@ -59,7 +60,22 @@ namespace Azure.Data.Tables.Samples
             {
                 Console.WriteLine(propertyName);
             }
+            /*
+            Console output:
+
+            odata.etag
+            PartitionKey
+            RowKey
+            Timestamp
+            Product
+            Price
+            Quantity
+            rename_me
+            */
         }
+#endregion
+
+#region Snippet:TablesSample7ModelPropertiesClass
 
         // Define a strongly typed entity by implementing the ITableEntity interface.
         public class CustomSerializationEntity : ITableEntity
@@ -76,5 +92,6 @@ namespace Azure.Data.Tables.Samples
 
             [DataMember(Name = "rename_me")] public string RenameMe { get; set; }
         }
+#endregion
     }
 }

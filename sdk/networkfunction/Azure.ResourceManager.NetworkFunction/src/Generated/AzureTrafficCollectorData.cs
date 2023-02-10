@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="location"> The location. </param>
         public AzureTrafficCollectorData(AzureLocation location) : base(location)
         {
-            CollectorPolicies = new ChangeTrackingList<CollectorPolicyData>();
+            CollectorPolicies = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of AzureTrafficCollectorData. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="collectorPolicies"> Collector Policies for Azure Traffic Collector. </param>
         /// <param name="virtualHub"> The virtualHub to which the Azure Traffic Collector belongs. </param>
         /// <param name="provisioningState"> The provisioning state of the application rule collection resource. </param>
-        internal AzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<CollectorPolicyData> collectorPolicies, SubResource virtualHub, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal AzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IReadOnlyList<SubResource> collectorPolicies, SubResource virtualHub, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             CollectorPolicies = collectorPolicies;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
         /// <summary> Collector Policies for Azure Traffic Collector. </summary>
-        public IList<CollectorPolicyData> CollectorPolicies { get; }
+        public IReadOnlyList<SubResource> CollectorPolicies { get; }
         /// <summary> The virtualHub to which the Azure Traffic Collector belongs. </summary>
         internal SubResource VirtualHub { get; set; }
         /// <summary> Gets Id. </summary>

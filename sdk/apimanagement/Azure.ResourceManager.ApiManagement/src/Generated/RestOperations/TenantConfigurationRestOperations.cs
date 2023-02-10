@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateDeployRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationIdName configurationName, DeployConfigurationParameters deployConfigurationParameters)
+        internal HttpMessage CreateDeployRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationDeployContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.ApiManagement
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deployConfigurationParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -69,18 +69,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
-        /// <param name="deployConfigurationParameters"> Deploy Configuration parameters. </param>
+        /// <param name="content"> Deploy Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="deployConfigurationParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeployAsync(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationIdName configurationName, DeployConfigurationParameters deployConfigurationParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> DeployAsync(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(deployConfigurationParameters, nameof(deployConfigurationParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateDeployRequest(subscriptionId, resourceGroupName, serviceName, configurationName, deployConfigurationParameters);
+            using var message = CreateDeployRequest(subscriptionId, resourceGroupName, serviceName, configurationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -97,18 +97,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
-        /// <param name="deployConfigurationParameters"> Deploy Configuration parameters. </param>
+        /// <param name="content"> Deploy Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="deployConfigurationParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Deploy(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationIdName configurationName, DeployConfigurationParameters deployConfigurationParameters, CancellationToken cancellationToken = default)
+        public Response Deploy(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(deployConfigurationParameters, nameof(deployConfigurationParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateDeployRequest(subscriptionId, resourceGroupName, serviceName, configurationName, deployConfigurationParameters);
+            using var message = CreateDeployRequest(subscriptionId, resourceGroupName, serviceName, configurationName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateSaveRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationIdName configurationName, SaveConfigurationParameter saveConfigurationParameter)
+        internal HttpMessage CreateSaveRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationSaveContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.ApiManagement
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(saveConfigurationParameter);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -152,18 +152,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
-        /// <param name="saveConfigurationParameter"> Save Configuration parameters. </param>
+        /// <param name="content"> Save Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="saveConfigurationParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SaveAsync(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationIdName configurationName, SaveConfigurationParameter saveConfigurationParameter, CancellationToken cancellationToken = default)
+        public async Task<Response> SaveAsync(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationSaveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(saveConfigurationParameter, nameof(saveConfigurationParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSaveRequest(subscriptionId, resourceGroupName, serviceName, configurationName, saveConfigurationParameter);
+            using var message = CreateSaveRequest(subscriptionId, resourceGroupName, serviceName, configurationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -180,18 +180,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
-        /// <param name="saveConfigurationParameter"> Save Configuration parameters. </param>
+        /// <param name="content"> Save Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="saveConfigurationParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Save(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationIdName configurationName, SaveConfigurationParameter saveConfigurationParameter, CancellationToken cancellationToken = default)
+        public Response Save(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationSaveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(saveConfigurationParameter, nameof(saveConfigurationParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSaveRequest(subscriptionId, resourceGroupName, serviceName, configurationName, saveConfigurationParameter);
+            using var message = CreateSaveRequest(subscriptionId, resourceGroupName, serviceName, configurationName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationIdName configurationName, DeployConfigurationParameters deployConfigurationParameters)
+        internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationDeployContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.ApiManagement
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deployConfigurationParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -235,18 +235,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
-        /// <param name="deployConfigurationParameters"> Validate Configuration parameters. </param>
+        /// <param name="content"> Validate Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="deployConfigurationParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateAsync(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationIdName configurationName, DeployConfigurationParameters deployConfigurationParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateAsync(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(deployConfigurationParameters, nameof(deployConfigurationParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, serviceName, configurationName, deployConfigurationParameters);
+            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, serviceName, configurationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -263,18 +263,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
-        /// <param name="deployConfigurationParameters"> Validate Configuration parameters. </param>
+        /// <param name="content"> Validate Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="deployConfigurationParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Validate(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationIdName configurationName, DeployConfigurationParameters deployConfigurationParameters, CancellationToken cancellationToken = default)
+        public Response Validate(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(deployConfigurationParameters, nameof(deployConfigurationParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, serviceName, configurationName, deployConfigurationParameters);
+            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, serviceName, configurationName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateGetSyncStateRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationIdName configurationName)
+        internal HttpMessage CreateGetSyncStateRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TenantConfigurationSyncStateContract>> GetSyncStateAsync(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationIdName configurationName, CancellationToken cancellationToken = default)
+        public async Task<Response<TenantConfigurationSyncStateContract>> GetSyncStateAsync(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TenantConfigurationSyncStateContract> GetSyncState(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationIdName configurationName, CancellationToken cancellationToken = default)
+        public Response<TenantConfigurationSyncStateContract> GetSyncState(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

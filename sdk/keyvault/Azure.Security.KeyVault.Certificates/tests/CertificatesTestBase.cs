@@ -13,10 +13,11 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
     [ClientTestFixture(
-        CertificateClientOptions.ServiceVersion.V7_0,
-        CertificateClientOptions.ServiceVersion.V7_1,
+        CertificateClientOptions.ServiceVersion.V7_4_Preview_1,
+        CertificateClientOptions.ServiceVersion.V7_3,
         CertificateClientOptions.ServiceVersion.V7_2,
-        CertificateClientOptions.ServiceVersion.V7_3)]
+        CertificateClientOptions.ServiceVersion.V7_1,
+        CertificateClientOptions.ServiceVersion.V7_0)]
     public abstract class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback

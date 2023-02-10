@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,18 +20,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="uri"/> or <paramref name="roles"/> is null. </exception>
         public ScriptAction(string name, Uri uri, BinaryData roles)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-            if (roles == null)
-            {
-                throw new ArgumentNullException(nameof(roles));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(roles, nameof(roles));
 
             Name = name;
             Uri = uri;
@@ -54,7 +46,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string Name { get; set; }
         /// <summary> The URI for the script action. </summary>
         public Uri Uri { get; set; }
-        /// <summary> The node types on which the script action should be executed. </summary>
+        /// <summary>
+        /// The node types on which the script action should be executed.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Roles { get; set; }
         /// <summary> The parameters for the script action. </summary>
         public string Parameters { get; set; }

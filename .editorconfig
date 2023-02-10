@@ -3,6 +3,9 @@
 # top-most EditorConfig file
 root = true
 
+[*]
+trim_trailing_whitespace = true
+
 # Default settings:
 # A newline ending every file
 # Use 4 spaces as indentation

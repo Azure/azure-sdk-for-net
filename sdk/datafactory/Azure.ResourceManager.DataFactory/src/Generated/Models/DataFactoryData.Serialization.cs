@@ -22,12 +22,13 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                writer.WritePropertyName("identity"u8);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -36,23 +37,23 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PurviewConfiguration))
             {
-                writer.WritePropertyName("purviewConfiguration");
+                writer.WritePropertyName("purviewConfiguration"u8);
                 writer.WriteObjectValue(PurviewConfiguration);
             }
             if (Optional.IsDefined(RepoConfiguration))
             {
-                writer.WritePropertyName("repoConfiguration");
+                writer.WritePropertyName("repoConfiguration"u8);
                 writer.WriteObjectValue(RepoConfiguration);
             }
             if (Optional.IsCollectionDefined(GlobalParameters))
             {
-                writer.WritePropertyName("globalParameters");
+                writer.WritePropertyName("globalParameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in GlobalParameters)
                 {
@@ -63,12 +64,12 @@ namespace Azure.ResourceManager.DataFactory
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
+                writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static DataFactoryData DeserializeDataFactoryData(JsonElement element)
         {
-            Optional<FactoryIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -97,26 +98,27 @@ namespace Azure.ResourceManager.DataFactory
             Optional<string> provisioningState = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<string> version = default;
-            Optional<PurviewConfiguration> purviewConfiguration = default;
+            Optional<FactoryPurviewConfiguration> purviewConfiguration = default;
             Optional<FactoryRepoConfiguration> repoConfiguration = default;
-            Optional<IDictionary<string, GlobalParameterSpecification>> globalParameters = default;
-            Optional<EncryptionConfiguration> encryption = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IDictionary<string, FactoryGlobalParameterSpecification>> globalParameters = default;
+            Optional<FactoryEncryptionConfiguration> encryption = default;
+            Optional<FactoryPublicNetworkAccess> publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = FactoryIdentity.DeserializeFactoryIdentity(property.Value);
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,37 +143,37 @@ namespace Azure.ResourceManager.DataFactory
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -180,12 +182,12 @@ namespace Azure.ResourceManager.DataFactory
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createTime"))
+                        if (property0.NameEquals("createTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -195,22 +197,22 @@ namespace Azure.ResourceManager.DataFactory
                             createTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("purviewConfiguration"))
+                        if (property0.NameEquals("purviewConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value);
+                            purviewConfiguration = FactoryPurviewConfiguration.DeserializeFactoryPurviewConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("repoConfiguration"))
+                        if (property0.NameEquals("repoConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -220,39 +222,39 @@ namespace Azure.ResourceManager.DataFactory
                             repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("globalParameters"))
+                        if (property0.NameEquals("globalParameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, GlobalParameterSpecification> dictionary = new Dictionary<string, GlobalParameterSpecification>();
+                            Dictionary<string, FactoryGlobalParameterSpecification> dictionary = new Dictionary<string, FactoryGlobalParameterSpecification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, GlobalParameterSpecification.DeserializeGlobalParameterSpecification(property1.Value));
+                                dictionary.Add(property1.Name, FactoryGlobalParameterSpecification.DeserializeFactoryGlobalParameterSpecification(property1.Value));
                             }
                             globalParameters = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("encryption"))
+                        if (property0.NameEquals("encryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = EncryptionConfiguration.DeserializeEncryptionConfiguration(property0.Value);
+                            encryption = FactoryEncryptionConfiguration.DeserializeFactoryEncryptionConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new FactoryPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -261,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, provisioningState.Value, Optional.ToNullable(createTime), version.Value, purviewConfiguration.Value, repoConfiguration.Value, Optional.ToDictionary(globalParameters), encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eTag), additionalProperties);
+            return new DataFactoryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, Optional.ToNullable(createTime), version.Value, purviewConfiguration.Value, repoConfiguration.Value, Optional.ToDictionary(globalParameters), encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eTag), additionalProperties);
         }
     }
 }

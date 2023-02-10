@@ -16,138 +16,40 @@ namespace Azure.Communication.MediaComposition.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind.Value.ToString());
-            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Resolution))
             {
-                writer.WritePropertyName("resolution");
+                writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
-            }
-            if (Optional.IsDefined(Grid))
-            {
-                writer.WritePropertyName("grid");
-                writer.WriteObjectValue(Grid);
-            }
-            if (Optional.IsDefined(AutoGrid))
-            {
-                writer.WritePropertyName("autoGrid");
-                writer.WriteObjectValue(AutoGrid);
-            }
-            if (Optional.IsDefined(Presenter))
-            {
-                writer.WritePropertyName("presenter");
-                writer.WriteObjectValue(Presenter);
-            }
-            if (Optional.IsDefined(Presentation))
-            {
-                writer.WritePropertyName("presentation");
-                writer.WriteObjectValue(Presentation);
-            }
-            if (Optional.IsDefined(Custom))
-            {
-                writer.WritePropertyName("custom");
-                writer.WriteObjectValue(Custom);
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
-                writer.WritePropertyName("placeholderImageUri");
+                writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
+            }
+            if (Optional.IsDefined(ScalingMode))
+            {
+                writer.WritePropertyName("scalingMode"u8);
+                writer.WriteStringValue(ScalingMode.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static MediaCompositionLayout DeserializeMediaCompositionLayout(JsonElement element)
         {
-            Optional<LayoutType> kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<GridLayoutOptions> grid = default;
-            Optional<AutoGridLayoutOptions> autoGrid = default;
-            Optional<PresenterLayoutOptions> presenter = default;
-            Optional<PresentationLayoutOptions> presentation = default;
-            Optional<CustomLayoutOptions> custom = default;
-            Optional<string> placeholderImageUri = default;
-            foreach (var property in element.EnumerateObject())
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
-                if (property.NameEquals("kind"))
+                switch (discriminator.GetString())
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    kind = new LayoutType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("resolution"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("grid"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    grid = GridLayoutOptions.DeserializeGridLayoutOptions(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("autoGrid"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    autoGrid = AutoGridLayoutOptions.DeserializeAutoGridLayoutOptions(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("presenter"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    presenter = PresenterLayoutOptions.DeserializePresenterLayoutOptions(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("presentation"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    presentation = PresentationLayoutOptions.DeserializePresentationLayoutOptions(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("custom"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    custom = CustomLayoutOptions.DeserializeCustomLayoutOptions(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("placeholderImageUri"))
-                {
-                    placeholderImageUri = property.Value.GetString();
-                    continue;
+                    case "autoGrid": return AutoGridLayout.DeserializeAutoGridLayout(element);
+                    case "custom": return CustomLayout.DeserializeCustomLayout(element);
+                    case "grid": return GridLayout.DeserializeGridLayout(element);
+                    case "presentation": return PresentationLayout.DeserializePresentationLayout(element);
+                    case "presenter": return PresenterLayout.DeserializePresenterLayout(element);
                 }
             }
-            return new MediaCompositionLayout(Optional.ToNullable(kind), resolution.Value, grid.Value, autoGrid.Value, presenter.Value, presentation.Value, custom.Value, placeholderImageUri.Value);
+            return UnknownLayout.DeserializeUnknownLayout(element);
         }
     }
 }

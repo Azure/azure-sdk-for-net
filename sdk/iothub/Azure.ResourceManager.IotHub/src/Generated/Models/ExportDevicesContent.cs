@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="exportBlobContainerUri"/> is null. </exception>
         public ExportDevicesContent(Uri exportBlobContainerUri, bool excludeKeys)
         {
-            if (exportBlobContainerUri == null)
-            {
-                throw new ArgumentNullException(nameof(exportBlobContainerUri));
-            }
+            Argument.AssertNotNull(exportBlobContainerUri, nameof(exportBlobContainerUri));
 
             ExportBlobContainerUri = exportBlobContainerUri;
             ExcludeKeys = excludeKeys;
@@ -34,11 +32,11 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub. </summary>
         public string ExportBlobName { get; set; }
         /// <summary> Specifies authentication type being used for connecting to the storage account. </summary>
-        public AuthenticationType? AuthenticationType { get; set; }
+        public IotHubAuthenticationType? AuthenticationType { get; set; }
         /// <summary> Managed identity properties of storage endpoint for export devices. </summary>
         internal ManagedIdentity Identity { get; set; }
         /// <summary> The user assigned identity. </summary>
-        public string UserAssignedIdentity
+        public ResourceIdentifier UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;
             set

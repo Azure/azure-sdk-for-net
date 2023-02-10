@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Plan))
             {
-                writer.WritePropertyName("plan");
+                writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Compute
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
-                writer.WritePropertyName("extendedLocation");
+                writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -61,79 +61,84 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(UpgradePolicy))
             {
-                writer.WritePropertyName("upgradePolicy");
+                writer.WritePropertyName("upgradePolicy"u8);
                 writer.WriteObjectValue(UpgradePolicy);
             }
             if (Optional.IsDefined(AutomaticRepairsPolicy))
             {
-                writer.WritePropertyName("automaticRepairsPolicy");
+                writer.WritePropertyName("automaticRepairsPolicy"u8);
                 writer.WriteObjectValue(AutomaticRepairsPolicy);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
-                writer.WritePropertyName("virtualMachineProfile");
+                writer.WritePropertyName("virtualMachineProfile"u8);
                 writer.WriteObjectValue(VirtualMachineProfile);
             }
             if (Optional.IsDefined(Overprovision))
             {
-                writer.WritePropertyName("overprovision");
+                writer.WritePropertyName("overprovision"u8);
                 writer.WriteBooleanValue(Overprovision.Value);
             }
             if (Optional.IsDefined(DoNotRunExtensionsOnOverprovisionedVms))
             {
-                writer.WritePropertyName("doNotRunExtensionsOnOverprovisionedVMs");
+                writer.WritePropertyName("doNotRunExtensionsOnOverprovisionedVMs"u8);
                 writer.WriteBooleanValue(DoNotRunExtensionsOnOverprovisionedVms.Value);
             }
             if (Optional.IsDefined(SinglePlacementGroup))
             {
-                writer.WritePropertyName("singlePlacementGroup");
+                writer.WritePropertyName("singlePlacementGroup"u8);
                 writer.WriteBooleanValue(SinglePlacementGroup.Value);
             }
             if (Optional.IsDefined(ZoneBalance))
             {
-                writer.WritePropertyName("zoneBalance");
+                writer.WritePropertyName("zoneBalance"u8);
                 writer.WriteBooleanValue(ZoneBalance.Value);
             }
             if (Optional.IsDefined(PlatformFaultDomainCount))
             {
-                writer.WritePropertyName("platformFaultDomainCount");
+                writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
-                writer.WritePropertyName("proximityPlacementGroup");
+                writer.WritePropertyName("proximityPlacementGroup"u8);
                 JsonSerializer.Serialize(writer, ProximityPlacementGroup);
             }
             if (Optional.IsDefined(HostGroup))
             {
-                writer.WritePropertyName("hostGroup");
+                writer.WritePropertyName("hostGroup"u8);
                 JsonSerializer.Serialize(writer, HostGroup);
             }
             if (Optional.IsDefined(AdditionalCapabilities))
             {
-                writer.WritePropertyName("additionalCapabilities");
+                writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
             if (Optional.IsDefined(ScaleInPolicy))
             {
-                writer.WritePropertyName("scaleInPolicy");
+                writer.WritePropertyName("scaleInPolicy"u8);
                 writer.WriteObjectValue(ScaleInPolicy);
             }
             if (Optional.IsDefined(OrchestrationMode))
             {
-                writer.WritePropertyName("orchestrationMode");
+                writer.WritePropertyName("orchestrationMode"u8);
                 writer.WriteStringValue(OrchestrationMode.Value.ToString());
             }
             if (Optional.IsDefined(SpotRestorePolicy))
             {
-                writer.WritePropertyName("spotRestorePolicy");
+                writer.WritePropertyName("spotRestorePolicy"u8);
                 writer.WriteObjectValue(SpotRestorePolicy);
+            }
+            if (Optional.IsDefined(PriorityMixPolicy))
+            {
+                writer.WritePropertyName("priorityMixPolicy"u8);
+                writer.WriteObjectValue(PriorityMixPolicy);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -168,10 +173,11 @@ namespace Azure.ResourceManager.Compute
             Optional<ScaleInPolicy> scaleInPolicy = default;
             Optional<OrchestrationMode> orchestrationMode = default;
             Optional<SpotRestorePolicy> spotRestorePolicy = default;
+            Optional<VirtualMachineScaleSetPriorityMixPolicy> priorityMixPolicy = default;
             Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -181,7 +187,7 @@ namespace Azure.ResourceManager.Compute
                     sku = ComputeSku.DeserializeComputeSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("plan"))
+                if (property.NameEquals("plan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -191,17 +197,17 @@ namespace Azure.ResourceManager.Compute
                     plan = ComputePlan.DeserializeComputePlan(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -216,17 +222,17 @@ namespace Azure.ResourceManager.Compute
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("extendedLocation"))
+                if (property.NameEquals("extendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -241,37 +247,37 @@ namespace Azure.ResourceManager.Compute
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -280,7 +286,7 @@ namespace Azure.ResourceManager.Compute
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("upgradePolicy"))
+                        if (property0.NameEquals("upgradePolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -290,7 +296,7 @@ namespace Azure.ResourceManager.Compute
                             upgradePolicy = VirtualMachineScaleSetUpgradePolicy.DeserializeVirtualMachineScaleSetUpgradePolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("automaticRepairsPolicy"))
+                        if (property0.NameEquals("automaticRepairsPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -300,7 +306,7 @@ namespace Azure.ResourceManager.Compute
                             automaticRepairsPolicy = AutomaticRepairsPolicy.DeserializeAutomaticRepairsPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("virtualMachineProfile"))
+                        if (property0.NameEquals("virtualMachineProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -310,12 +316,12 @@ namespace Azure.ResourceManager.Compute
                             virtualMachineProfile = VirtualMachineScaleSetVmProfile.DeserializeVirtualMachineScaleSetVmProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("overprovision"))
+                        if (property0.NameEquals("overprovision"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -325,7 +331,7 @@ namespace Azure.ResourceManager.Compute
                             overprovision = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("doNotRunExtensionsOnOverprovisionedVMs"))
+                        if (property0.NameEquals("doNotRunExtensionsOnOverprovisionedVMs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -335,12 +341,12 @@ namespace Azure.ResourceManager.Compute
                             doNotRunExtensionsOnOverprovisionedVms = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("uniqueId"))
+                        if (property0.NameEquals("uniqueId"u8))
                         {
                             uniqueId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("singlePlacementGroup"))
+                        if (property0.NameEquals("singlePlacementGroup"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -350,7 +356,7 @@ namespace Azure.ResourceManager.Compute
                             singlePlacementGroup = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("zoneBalance"))
+                        if (property0.NameEquals("zoneBalance"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -360,7 +366,7 @@ namespace Azure.ResourceManager.Compute
                             zoneBalance = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("platformFaultDomainCount"))
+                        if (property0.NameEquals("platformFaultDomainCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -370,27 +376,27 @@ namespace Azure.ResourceManager.Compute
                             platformFaultDomainCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("proximityPlacementGroup"))
+                        if (property0.NameEquals("proximityPlacementGroup"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            proximityPlacementGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            proximityPlacementGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("hostGroup"))
+                        if (property0.NameEquals("hostGroup"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            hostGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("additionalCapabilities"))
+                        if (property0.NameEquals("additionalCapabilities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -400,7 +406,7 @@ namespace Azure.ResourceManager.Compute
                             additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("scaleInPolicy"))
+                        if (property0.NameEquals("scaleInPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -410,7 +416,7 @@ namespace Azure.ResourceManager.Compute
                             scaleInPolicy = ScaleInPolicy.DeserializeScaleInPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("orchestrationMode"))
+                        if (property0.NameEquals("orchestrationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -420,7 +426,7 @@ namespace Azure.ResourceManager.Compute
                             orchestrationMode = new OrchestrationMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("spotRestorePolicy"))
+                        if (property0.NameEquals("spotRestorePolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -430,7 +436,17 @@ namespace Azure.ResourceManager.Compute
                             spotRestorePolicy = SpotRestorePolicy.DeserializeSpotRestorePolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("timeCreated"))
+                        if (property0.NameEquals("priorityMixPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            priorityMixPolicy = VirtualMachineScaleSetPriorityMixPolicy.DeserializeVirtualMachineScaleSetPriorityMixPolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("timeCreated"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -444,7 +460,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value, Optional.ToNullable(timeCreated));
+            return new VirtualMachineScaleSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value, priorityMixPolicy.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

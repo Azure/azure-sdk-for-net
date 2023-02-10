@@ -8,7 +8,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class PatternAnalyzer
     {
-        [CodeGenMember("flags")]
+        [CodeGenMember("Flags")]
         private string FlagsInternal
         {
             get => string.Join("|", Flags);

@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<IotCentralAppListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -375,9 +375,9 @@ namespace Azure.ResourceManager.IotCentral
             {
                 case 200:
                     {
-                        AppListResult value = default;
+                        IotCentralAppListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppListResult.DeserializeAppListResult(document.RootElement);
+                        value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<IotCentralAppListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -400,9 +400,9 @@ namespace Azure.ResourceManager.IotCentral
             {
                 case 200:
                     {
-                        AppListResult value = default;
+                        IotCentralAppListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppListResult.DeserializeAppListResult(document.RootElement);
+                        value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotCentralAppListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -446,9 +446,9 @@ namespace Azure.ResourceManager.IotCentral
             {
                 case 200:
                     {
-                        AppListResult value = default;
+                        IotCentralAppListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppListResult.DeserializeAppListResult(document.RootElement);
+                        value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<IotCentralAppListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -473,9 +473,9 @@ namespace Azure.ResourceManager.IotCentral
             {
                 case 200:
                     {
-                        AppListResult value = default;
+                        IotCentralAppListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppListResult.DeserializeAppListResult(document.RootElement);
+                        value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.IotCentral
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, OperationInputs operationInputs)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, IotCentralAppNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -497,33 +497,33 @@ namespace Azure.ResourceManager.IotCentral
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(operationInputs);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check if an IoT Central application name is available. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationInputs"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppAvailabilityInfo>> CheckNameAvailabilityAsync(string subscriptionId, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        public async Task<Response<IotCentralAppNameAvailabilityResponse>> CheckNameAvailabilityAsync(string subscriptionId, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, operationInputs);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AppAvailabilityInfo value = default;
+                        IotCentralAppNameAvailabilityResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppAvailabilityInfo.DeserializeAppAvailabilityInfo(document.RootElement);
+                        value = IotCentralAppNameAvailabilityResponse.DeserializeIotCentralAppNameAvailabilityResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -533,24 +533,24 @@ namespace Azure.ResourceManager.IotCentral
 
         /// <summary> Check if an IoT Central application name is available. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationInputs"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppAvailabilityInfo> CheckNameAvailability(string subscriptionId, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        public Response<IotCentralAppNameAvailabilityResponse> CheckNameAvailability(string subscriptionId, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, operationInputs);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AppAvailabilityInfo value = default;
+                        IotCentralAppNameAvailabilityResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppAvailabilityInfo.DeserializeAppAvailabilityInfo(document.RootElement);
+                        value = IotCentralAppNameAvailabilityResponse.DeserializeIotCentralAppNameAvailabilityResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.IotCentral
             }
         }
 
-        internal HttpMessage CreateCheckSubdomainAvailabilityRequest(string subscriptionId, OperationInputs operationInputs)
+        internal HttpMessage CreateCheckSubdomainAvailabilityRequest(string subscriptionId, IotCentralAppNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -572,33 +572,33 @@ namespace Azure.ResourceManager.IotCentral
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(operationInputs);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check if an IoT Central application subdomain is available. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationInputs"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppAvailabilityInfo>> CheckSubdomainAvailabilityAsync(string subscriptionId, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        public async Task<Response<IotCentralAppNameAvailabilityResponse>> CheckSubdomainAvailabilityAsync(string subscriptionId, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckSubdomainAvailabilityRequest(subscriptionId, operationInputs);
+            using var message = CreateCheckSubdomainAvailabilityRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AppAvailabilityInfo value = default;
+                        IotCentralAppNameAvailabilityResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppAvailabilityInfo.DeserializeAppAvailabilityInfo(document.RootElement);
+                        value = IotCentralAppNameAvailabilityResponse.DeserializeIotCentralAppNameAvailabilityResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -608,24 +608,24 @@ namespace Azure.ResourceManager.IotCentral
 
         /// <summary> Check if an IoT Central application subdomain is available. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationInputs"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppAvailabilityInfo> CheckSubdomainAvailability(string subscriptionId, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        public Response<IotCentralAppNameAvailabilityResponse> CheckSubdomainAvailability(string subscriptionId, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckSubdomainAvailabilityRequest(subscriptionId, operationInputs);
+            using var message = CreateCheckSubdomainAvailabilityRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AppAvailabilityInfo value = default;
+                        IotCentralAppNameAvailabilityResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppAvailabilityInfo.DeserializeAppAvailabilityInfo(document.RootElement);
+                        value = IotCentralAppNameAvailabilityResponse.DeserializeIotCentralAppNameAvailabilityResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppTemplatesResult>> ListTemplatesAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<IotCentralAppTemplatesResult>> ListTemplatesAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -665,9 +665,9 @@ namespace Azure.ResourceManager.IotCentral
             {
                 case 200:
                     {
-                        AppTemplatesResult value = default;
+                        IotCentralAppTemplatesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppTemplatesResult.DeserializeAppTemplatesResult(document.RootElement);
+                        value = IotCentralAppTemplatesResult.DeserializeIotCentralAppTemplatesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppTemplatesResult> ListTemplates(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<IotCentralAppTemplatesResult> ListTemplates(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -690,9 +690,9 @@ namespace Azure.ResourceManager.IotCentral
             {
                 case 200:
                     {
-                        AppTemplatesResult value = default;
+                        IotCentralAppTemplatesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppTemplatesResult.DeserializeAppTemplatesResult(document.RootElement);
+                        value = IotCentralAppTemplatesResult.DeserializeIotCentralAppTemplatesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<IotCentralAppListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -731,9 +731,9 @@ namespace Azure.ResourceManager.IotCentral
             {
                 case 200:
                     {
-                        AppListResult value = default;
+                        IotCentralAppListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppListResult.DeserializeAppListResult(document.RootElement);
+                        value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<IotCentralAppListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -758,9 +758,9 @@ namespace Azure.ResourceManager.IotCentral
             {
                 case 200:
                     {
-                        AppListResult value = default;
+                        IotCentralAppListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppListResult.DeserializeAppListResult(document.RootElement);
+                        value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotCentralAppListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -801,9 +801,9 @@ namespace Azure.ResourceManager.IotCentral
             {
                 case 200:
                     {
-                        AppListResult value = default;
+                        IotCentralAppListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppListResult.DeserializeAppListResult(document.RootElement);
+                        value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<IotCentralAppListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -830,9 +830,9 @@ namespace Azure.ResourceManager.IotCentral
             {
                 case 200:
                     {
-                        AppListResult value = default;
+                        IotCentralAppListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppListResult.DeserializeAppListResult(document.RootElement);
+                        value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppTemplatesResult>> ListTemplatesNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<IotCentralAppTemplatesResult>> ListTemplatesNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -871,9 +871,9 @@ namespace Azure.ResourceManager.IotCentral
             {
                 case 200:
                     {
-                        AppTemplatesResult value = default;
+                        IotCentralAppTemplatesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppTemplatesResult.DeserializeAppTemplatesResult(document.RootElement);
+                        value = IotCentralAppTemplatesResult.DeserializeIotCentralAppTemplatesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppTemplatesResult> ListTemplatesNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<IotCentralAppTemplatesResult> ListTemplatesNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -898,9 +898,9 @@ namespace Azure.ResourceManager.IotCentral
             {
                 case 200:
                     {
-                        AppTemplatesResult value = default;
+                        IotCentralAppTemplatesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppTemplatesResult.DeserializeAppTemplatesResult(document.RootElement);
+                        value = IotCentralAppTemplatesResult.DeserializeIotCentralAppTemplatesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

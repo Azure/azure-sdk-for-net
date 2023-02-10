@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal static StartMenuItemList DeserializeStartMenuItemList(JsonElement element)
         {
-            Optional<IReadOnlyList<StartMenuItem>> value = default;
+            Optional<IReadOnlyList<DesktopVirtualizationStartMenuItem>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<StartMenuItem> array = new List<StartMenuItem>();
+                    List<DesktopVirtualizationStartMenuItem> array = new List<DesktopVirtualizationStartMenuItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StartMenuItem.DeserializeStartMenuItem(item));
+                        array.Add(DesktopVirtualizationStartMenuItem.DeserializeDesktopVirtualizationStartMenuItem(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

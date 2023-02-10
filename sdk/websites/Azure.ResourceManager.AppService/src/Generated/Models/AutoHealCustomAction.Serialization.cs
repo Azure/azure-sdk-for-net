@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Exe))
             {
-                writer.WritePropertyName("exe");
+                writer.WritePropertyName("exe"u8);
                 writer.WriteStringValue(Exe);
             }
             if (Optional.IsDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("exe"))
+                if (property.NameEquals("exe"u8))
                 {
                     exe = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     parameters = property.Value.GetString();
                     continue;

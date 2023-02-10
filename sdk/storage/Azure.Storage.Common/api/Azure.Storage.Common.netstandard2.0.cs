@@ -14,6 +14,19 @@ namespace Azure.Storage
         V1_0 = 1,
         V2_0 = 2,
     }
+    public partial class DownloadTransferValidationOptions
+    {
+        public DownloadTransferValidationOptions() { }
+        public bool AutoValidateChecksum { get { throw null; } set { } }
+        public Azure.Storage.StorageChecksumAlgorithm ChecksumAlgorithm { get { throw null; } set { } }
+    }
+    public enum StorageChecksumAlgorithm
+    {
+        Auto = 0,
+        None = 1,
+        MD5 = 2,
+        StorageCrc64 = 3,
+    }
     public partial class StorageCrc64HashAlgorithm : System.IO.Hashing.NonCryptographicHashAlgorithm
     {
         internal StorageCrc64HashAlgorithm() : base (default(int)) { }
@@ -53,6 +66,18 @@ namespace Azure.Storage
         public static bool operator ==(Azure.Storage.StorageTransferOptions left, Azure.Storage.StorageTransferOptions right) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator !=(Azure.Storage.StorageTransferOptions left, Azure.Storage.StorageTransferOptions right) { throw null; }
+    }
+    public partial class TransferValidationOptions
+    {
+        public TransferValidationOptions() { }
+        public Azure.Storage.DownloadTransferValidationOptions Download { get { throw null; } }
+        public Azure.Storage.UploadTransferValidationOptions Upload { get { throw null; } }
+    }
+    public partial class UploadTransferValidationOptions
+    {
+        public UploadTransferValidationOptions() { }
+        public Azure.Storage.StorageChecksumAlgorithm ChecksumAlgorithm { get { throw null; } set { } }
+        public System.ReadOnlyMemory<byte> PrecalculatedChecksum { get { throw null; } set { } }
     }
 }
 namespace Azure.Storage.Sas
@@ -143,7 +168,7 @@ namespace Azure.Storage.Sas
     }
     public partial class SasQueryParameters
     {
-        public const string DefaultSasVersion = "2021-08-06";
+        public const string DefaultSasVersion = "2021-12-02";
         protected SasQueryParameters() { }
         protected SasQueryParameters(System.Collections.Generic.IDictionary<string, string> values) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

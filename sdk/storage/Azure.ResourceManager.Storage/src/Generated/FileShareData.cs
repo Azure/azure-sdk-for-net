@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage
         public FileShareData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            SignedIdentifiers = new ChangeTrackingList<SignedIdentifier>();
+            SignedIdentifiers = new ChangeTrackingList<StorageSignedIdentifier>();
         }
 
         /// <summary> Initializes a new instance of FileShareData. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="enabledProtocol"> The authentication protocol that is used for the file share. Can only be specified when creating a share. </param>
         /// <param name="rootSquash"> The property is for NFS share only. The default is NoRootSquash. </param>
         /// <param name="version"> The version of the share. </param>
-        /// <param name="deleted"> Indicates whether the share was deleted. </param>
+        /// <param name="isDeleted"> Indicates whether the share was deleted. </param>
         /// <param name="deletedOn"> The deleted time if the share was deleted. </param>
         /// <param name="remainingRetentionDays"> Remaining retention days for share that was soft deleted. </param>
         /// <param name="accessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="signedIdentifiers"> List of stored access policies specified on the share. </param>
         /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param &quot;snapshots&quot;. </param>
         /// <param name="etag"> Resource Etag. </param>
-        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IList<SignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, ETag? etag) : base(id, name, resourceType, systemData)
+        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IList<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, ETag? etag) : base(id, name, resourceType, systemData)
         {
             LastModifiedOn = lastModifiedOn;
             Metadata = metadata;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Storage
             EnabledProtocol = enabledProtocol;
             RootSquash = rootSquash;
             Version = version;
-            Deleted = deleted;
+            IsDeleted = isDeleted;
             DeletedOn = deletedOn;
             RemainingRetentionDays = remainingRetentionDays;
             AccessTier = accessTier;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> The version of the share. </summary>
         public string Version { get; }
         /// <summary> Indicates whether the share was deleted. </summary>
-        public bool? Deleted { get; }
+        public bool? IsDeleted { get; }
         /// <summary> The deleted time if the share was deleted. </summary>
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> Remaining retention days for share that was soft deleted. </summary>
@@ -98,13 +98,13 @@ namespace Azure.ResourceManager.Storage
         /// <summary> The approximate size of the data stored on the share. Note that this value may not include all recently created or recently resized files. </summary>
         public long? ShareUsageBytes { get; }
         /// <summary> The lease status of the share. </summary>
-        public LeaseStatus? LeaseStatus { get; }
+        public StorageLeaseStatus? LeaseStatus { get; }
         /// <summary> Lease state of the share. </summary>
-        public LeaseState? LeaseState { get; }
+        public StorageLeaseState? LeaseState { get; }
         /// <summary> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </summary>
-        public LeaseDuration? LeaseDuration { get; }
+        public StorageLeaseDurationType? LeaseDuration { get; }
         /// <summary> List of stored access policies specified on the share. </summary>
-        public IList<SignedIdentifier> SignedIdentifiers { get; }
+        public IList<StorageSignedIdentifier> SignedIdentifiers { get; }
         /// <summary> Creation time of share snapshot returned in the response of list shares with expand param &quot;snapshots&quot;. </summary>
         public DateTimeOffset? SnapshotOn { get; }
         /// <summary> Resource Etag. </summary>

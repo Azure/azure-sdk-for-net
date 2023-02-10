@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var appsCollection = rg.GetIotCentralApps();
 
             // Create IoT Central application.
-            var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new AppSkuInfo(AppSku.ST0))
+            var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new IotCentralAppSkuInfo(IotCentralAppSku.ST0))
             {
                 DisplayName = appName,
                 Subdomain = appName,
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var appNames = new List<string>() { GetRandomTestName(), GetRandomTestName(), GetRandomTestName() };
             foreach (var appName in appNames)
             {
-                var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new AppSkuInfo(AppSku.ST0))
+                var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new IotCentralAppSkuInfo(IotCentralAppSku.ST0))
                 {
                     DisplayName = appName,
                     Subdomain = appName,
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var appNames = new List<string>() { GetRandomTestName(), GetRandomTestName(), GetRandomTestName() };
             foreach (var appName in appNames)
             {
-                var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new AppSkuInfo(AppSku.ST0))
+                var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new IotCentralAppSkuInfo(IotCentralAppSku.ST0))
                 {
                     DisplayName = appName,
                     Subdomain = appName,
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.IotCentral.Tests
         public async Task IotCentralCheckNameTest()
         {
             var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
-            var appAvailabilityInfoResponse = await subscription.CheckNameAvailabilityAppAsync(new OperationInputs(GetRandomTestName()), CancellationToken.None);
+            var appAvailabilityInfoResponse = await subscription.CheckIotCentralAppNameAvailabilityAsync(new IotCentralAppNameAvailabilityContent(GetRandomTestName()), CancellationToken.None);
             var appAvailabilityInfo = appAvailabilityInfoResponse.Value;
 
-            Assert.IsTrue(appAvailabilityInfo.NameAvailable);
+            Assert.IsTrue(appAvailabilityInfo.IsNameAvailable);
         }
 
         [TestCase]
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.IotCentral.Tests
         public async Task IotCentralCheckSubdomainTest()
         {
             var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
-            var appAvailabilityInfoResponse = await subscription.CheckSubdomainAvailabilityAppAsync(new OperationInputs(GetRandomTestName()), CancellationToken.None);
+            var appAvailabilityInfoResponse = await subscription.CheckIotCentralAppSubdomainAvailabilityAsync(new IotCentralAppNameAvailabilityContent(GetRandomTestName()), CancellationToken.None);
             var appAvailabilityInfo = appAvailabilityInfoResponse.Value;
 
-            Assert.IsTrue(appAvailabilityInfo.NameAvailable);
+            Assert.IsTrue(appAvailabilityInfo.IsNameAvailable);
         }
 
         [TestCase]

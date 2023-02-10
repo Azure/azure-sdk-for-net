@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.ContainerService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-04-01";
+            _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreatePostRequest(string subscriptionId, string resourceGroupName, string resourceName, ContainerServicePrivateLinkResource containerServicePrivateLinkResource)
+        internal HttpMessage CreatePostRequest(string subscriptionId, string resourceGroupName, string resourceName, ContainerServicePrivateLinkResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(containerServicePrivateLinkResource);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -66,26 +66,26 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="containerServicePrivateLinkResource"> Parameters required in order to resolve a private link service ID. </param>
+        /// <param name="data"> Parameters required in order to resolve a private link service ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="containerServicePrivateLinkResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContainerServicePrivateLinkResource>> PostAsync(string subscriptionId, string resourceGroupName, string resourceName, ContainerServicePrivateLinkResource containerServicePrivateLinkResource, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerServicePrivateLinkResourceData>> PostAsync(string subscriptionId, string resourceGroupName, string resourceName, ContainerServicePrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(containerServicePrivateLinkResource, nameof(containerServicePrivateLinkResource));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreatePostRequest(subscriptionId, resourceGroupName, resourceName, containerServicePrivateLinkResource);
+            using var message = CreatePostRequest(subscriptionId, resourceGroupName, resourceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ContainerServicePrivateLinkResource value = default;
+                        ContainerServicePrivateLinkResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ContainerServicePrivateLinkResource.DeserializeContainerServicePrivateLinkResource(document.RootElement);
+                        value = ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,26 +97,26 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="containerServicePrivateLinkResource"> Parameters required in order to resolve a private link service ID. </param>
+        /// <param name="data"> Parameters required in order to resolve a private link service ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="containerServicePrivateLinkResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContainerServicePrivateLinkResource> Post(string subscriptionId, string resourceGroupName, string resourceName, ContainerServicePrivateLinkResource containerServicePrivateLinkResource, CancellationToken cancellationToken = default)
+        public Response<ContainerServicePrivateLinkResourceData> Post(string subscriptionId, string resourceGroupName, string resourceName, ContainerServicePrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(containerServicePrivateLinkResource, nameof(containerServicePrivateLinkResource));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreatePostRequest(subscriptionId, resourceGroupName, resourceName, containerServicePrivateLinkResource);
+            using var message = CreatePostRequest(subscriptionId, resourceGroupName, resourceName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ContainerServicePrivateLinkResource value = default;
+                        ContainerServicePrivateLinkResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ContainerServicePrivateLinkResource.DeserializeContainerServicePrivateLinkResource(document.RootElement);
+                        value = ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

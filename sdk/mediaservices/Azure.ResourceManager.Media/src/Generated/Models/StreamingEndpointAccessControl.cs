@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of StreamingEndpointAccessControl. </summary>
         /// <param name="akamai"> The access control of Akamai. </param>
-        /// <param name="ip"> The IP access control of the streaming endpoint. </param>
-        internal StreamingEndpointAccessControl(AkamaiAccessControl akamai, IPAccessControl ip)
+        /// <param name="iPs"> The IP access control of the streaming endpoint. </param>
+        internal StreamingEndpointAccessControl(AkamaiAccessControl akamai, IPAccessControl iPs)
         {
             Akamai = akamai;
-            IP = ip;
+            IPs = iPs;
         }
 
         /// <summary> The access control of Akamai. </summary>
@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> The IP access control of the streaming endpoint. </summary>
-        internal IPAccessControl IP { get; set; }
+        internal IPAccessControl IPs { get; set; }
         /// <summary> The IP allow list. </summary>
-        public IList<IPRange> IPAllow
+        public IList<IPRange> AllowedIPs
         {
             get
             {
-                if (IP is null)
-                    IP = new IPAccessControl();
-                return IP.Allow;
+                if (IPs is null)
+                    IPs = new IPAccessControl();
+                return IPs.AllowedIPs;
             }
         }
     }

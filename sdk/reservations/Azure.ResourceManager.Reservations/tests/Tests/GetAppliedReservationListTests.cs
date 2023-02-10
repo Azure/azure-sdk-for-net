@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestAppliedReservationList()
         {
-            var response = await Subscription.GetAppliedReservationListAsync();
+            var response = await Subscription.GetAppliedReservationsAsync();
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value.ReservationOrderIds);

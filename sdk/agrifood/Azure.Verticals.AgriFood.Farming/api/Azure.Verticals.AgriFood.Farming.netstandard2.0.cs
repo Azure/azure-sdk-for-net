@@ -95,10 +95,10 @@ namespace Azure.Verticals.AgriFood.Farming
     }
     public partial class FarmBeatsClientOptions : Azure.Core.ClientOptions
     {
-        public FarmBeatsClientOptions(Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions.ServiceVersion version = Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions.ServiceVersion.V2021_03_31_preview) { }
+        public FarmBeatsClientOptions(Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions.ServiceVersion version = Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions.ServiceVersion.V2021_03_31_Preview) { }
         public enum ServiceVersion
         {
-            V2021_03_31_preview = 1,
+            V2021_03_31_Preview = 1,
         }
     }
     public partial class FarmClient

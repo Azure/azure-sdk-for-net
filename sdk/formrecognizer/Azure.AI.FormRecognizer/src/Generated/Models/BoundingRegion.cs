@@ -8,37 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Bounding polygon on a specific page of the input. </summary>
-    public partial class BoundingRegion
+    public readonly partial struct BoundingRegion
     {
-        /// <summary> Initializes a new instance of BoundingRegion. </summary>
-        /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
-        /// <param name="polygon"> Bounding polygon on the page, or the entire page if not specified. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="polygon"/> is null. </exception>
-        internal BoundingRegion(int pageNumber, IEnumerable<float> polygon)
-        {
-            if (polygon == null)
-            {
-                throw new ArgumentNullException(nameof(polygon));
-            }
-
-            PageNumber = pageNumber;
-            Polygon = polygon.ToList();
-        }
-
-        /// <summary> Initializes a new instance of BoundingRegion. </summary>
-        /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
-        /// <param name="polygon"> Bounding polygon on the page, or the entire page if not specified. </param>
-        internal BoundingRegion(int pageNumber, IReadOnlyList<float> polygon)
-        {
-            PageNumber = pageNumber;
-            Polygon = polygon;
-        }
-
-        /// <summary> 1-based page number of page containing the bounding region. </summary>
-        public int PageNumber { get; }
     }
 }

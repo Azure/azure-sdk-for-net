@@ -38,43 +38,43 @@ namespace Azure.ResourceManager.EdgeOrder.Tests
             return await Subscription.GetResourceGroups().GetAsync(name);
         }
 
-        protected async Task<AddressResourceCollection> GetAddressResourceCollectionAsync(string resourceGroupName)
+        protected async Task<EdgeOrderAddressCollection> GetAddressResourceCollectionAsync(string resourceGroupName)
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
-            return rg.GetAddressResources();
+            return rg.GetEdgeOrderAddresses();
         }
 
-        protected async Task<OrderItemResourceCollection> GetOrderItemResourceCollectionAsync(string resourceGroupName)
+        protected async Task<EdgeOrderItemCollection> GetOrderItemResourceCollectionAsync(string resourceGroupName)
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
-            return rg.GetOrderItemResources();
+            return rg.GetEdgeOrderItems();
         }
 
-        protected async Task<OrderResourceCollection> GetOrderResourceCollectionAsync(string resourceGroupName)
+        protected async Task<EdgeOrderCollection> GetOrderResourceCollectionAsync(string resourceGroupName)
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
-            return rg.GetOrderResources();
+            return rg.GetEdgeOrders();
         }
 
-        protected static ContactDetails GetDefaultContactDetails()
+        protected static EdgeOrderAddressContactDetails GetDefaultContactDetails()
         {
-            return new ContactDetails("Public SDK Test", "1234567890",
+            return new EdgeOrderAddressContactDetails("Public SDK Test", "1234567890",
                 new List<string> { "testing@microsoft.com" })
             {
                 PhoneExtension = "1234",
             };
         }
 
-        protected static ShippingAddress GetDefaultShippingAddress()
+        protected static EdgeOrderShippingAddress GetDefaultShippingAddress()
         {
-            return new ShippingAddress("16 TOWNSEND ST", "US")
+            return new EdgeOrderShippingAddress("16 TOWNSEND ST", "US")
             {
                 StreetAddress2 = "Unit 1",
                 City = "San Francisco",
                 StateOrProvince = "CA",
                 PostalCode = "94107",
                 CompanyName = "Microsoft",
-                AddressType = AddressType.Commercial
+                AddressType = EdgeOrderAddressType.Commercial
             };
         }
 
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.EdgeOrder.Tests
             };
         }
 
-        protected static OrderItemDetails GetDefaultOrderItemDetails()
+        protected static EdgeOrderItemDetails GetDefaultOrderItemDetails()
         {
-            return new OrderItemDetails(new ProductDetails(GetHierarchyInformation()), OrderItemType.Purchase)
+            return new EdgeOrderItemDetails(new ProductDetails(GetHierarchyInformation()), OrderItemType.Purchase)
             {
                 Preferences = new OrderItemPreferences
                 {

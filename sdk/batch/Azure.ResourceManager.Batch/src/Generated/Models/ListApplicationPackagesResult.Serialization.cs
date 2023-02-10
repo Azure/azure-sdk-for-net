@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static ListApplicationPackagesResult DeserializeListApplicationPackagesResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ApplicationPackageData>> value = default;
+            Optional<IReadOnlyList<BatchApplicationPackageData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApplicationPackageData> array = new List<ApplicationPackageData>();
+                    List<BatchApplicationPackageData> array = new List<BatchApplicationPackageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationPackageData.DeserializeApplicationPackageData(item));
+                        array.Add(BatchApplicationPackageData.DeserializeBatchApplicationPackageData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

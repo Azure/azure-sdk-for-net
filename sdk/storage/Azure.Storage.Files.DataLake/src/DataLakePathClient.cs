@@ -292,7 +292,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: sharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
 
@@ -537,7 +537,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
 
@@ -592,7 +592,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sasCredential: sasCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
 
@@ -708,13 +708,15 @@ namespace Azure.Storage.Files.DataLake
                 Uri uri,
                 DataLakeClientConfiguration clientConfiguration)
             {
+                var options = new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
+                {
+                    Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
+                    CustomerProvidedKey = clientConfiguration.CustomerProvidedKey.ToBlobCustomerProvidedKey(),
+                };
+                clientConfiguration.TransferValidation.CopyTo(options.TransferValidation);
                 return BlockBlobClient.CreateClient(
                     uri,
-                    new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
-                    {
-                        Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
-                        CustomerProvidedKey = clientConfiguration.CustomerProvidedKey.ToBlobCustomerProvidedKey()
-                    },
+                    options,
                     clientConfiguration.Pipeline);
             }
         }

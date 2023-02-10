@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="localAddressRanges"/> or <paramref name="remoteAddressRanges"/> is null. </exception>
         public TrafficSelectorPolicy(IEnumerable<string> localAddressRanges, IEnumerable<string> remoteAddressRanges)
         {
-            if (localAddressRanges == null)
-            {
-                throw new ArgumentNullException(nameof(localAddressRanges));
-            }
-            if (remoteAddressRanges == null)
-            {
-                throw new ArgumentNullException(nameof(remoteAddressRanges));
-            }
+            Argument.AssertNotNull(localAddressRanges, nameof(localAddressRanges));
+            Argument.AssertNotNull(remoteAddressRanges, nameof(remoteAddressRanges));
 
             LocalAddressRanges = localAddressRanges.ToList();
             RemoteAddressRanges = remoteAddressRanges.ToList();

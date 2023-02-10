@@ -29,8 +29,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         /// <summary>
         /// Lists all the userAssignedIdentities available under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities
-        /// Operation Id: UserAssignedIdentities_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -42,8 +50,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         /// <summary>
         /// Lists all the userAssignedIdentities available under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities
-        /// Operation Id: UserAssignedIdentities_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -72,8 +88,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         /// <summary>
         /// Gets the identity.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}
-        /// Operation Id: UserAssignedIdentities_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the identity resource. </param>
@@ -88,8 +112,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         /// <summary>
         /// Gets the identity.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}
-        /// Operation Id: UserAssignedIdentities_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the identity resource. </param>
@@ -100,6 +132,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         public static Response<UserAssignedIdentityResource> GetUserAssignedIdentity(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetUserAssignedIdentities().Get(resourceName, cancellationToken);
+        }
+
+        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ArmResourceExtensionClient(client, scope);
+            }
+            );
         }
 
         private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
@@ -117,6 +158,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmResource armResource)
         {
             return GetExtensionClient(armResource).GetSystemAssignedIdentity();
+        }
+
+        /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
+        public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetExtensionClient(client, scope).GetSystemAssignedIdentity();
         }
 
         #region SystemAssignedIdentityResource
@@ -152,6 +202,25 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             {
                 UserAssignedIdentityResource.ValidateResourceId(id);
                 return new UserAssignedIdentityResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FederatedIdentityCredentialResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FederatedIdentityCredentialResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FederatedIdentityCredentialResource.CreateResourceIdentifier" /> to create a <see cref="FederatedIdentityCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FederatedIdentityCredentialResource" /> object. </returns>
+        public static FederatedIdentityCredentialResource GetFederatedIdentityCredentialResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FederatedIdentityCredentialResource.ValidateResourceId(id);
+                return new FederatedIdentityCredentialResource(client, id);
             }
             );
         }

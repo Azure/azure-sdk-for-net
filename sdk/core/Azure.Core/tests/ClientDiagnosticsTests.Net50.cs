@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -75,6 +76,10 @@ namespace Azure.Core.Tests
                 Assert.IsTrue(scope.IsEnabled);
 
                 scope.Start();
+
+                // Validate that the default activity kind is used
+                Assert.AreEqual(ActivityKind.Internal, Activity.Current.Kind);
+
                 scope.Dispose();
 
                 Assert.AreEqual(1, activityListener.Activities.Count);
@@ -91,6 +96,41 @@ namespace Azure.Core.Tests
                 Assert.AreEqual(ActivityContext.Parse("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null), links[1].Context);
 
                 Assert.AreEqual(ActivityIdFormat.W3C, activity.IdFormat);
+            }
+            finally
+            {
+                Activity.DefaultIdFormat = oldDefault;
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void StartsActivityShortNameSourceActivity()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            // Bug: there is no way to set activity type to W3C
+            // https://github.com/dotnet/runtime/issues/43853
+            var oldDefault = Activity.DefaultIdFormat;
+
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+
+            try
+            {
+                using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+
+                DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients.ClientName", "Microsoft.Azure.Core.Cool.Tests", true, false);
+
+                DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+                Assert.IsTrue(scope.IsEnabled);
+
+                scope.Start();
+                scope.Dispose();
+
+                Assert.AreEqual(1, activityListener.Activities.Count);
+                var activity = activityListener.Activities.Dequeue();
+
+                Assert.AreEqual("ActivityName", activity.DisplayName);
             }
             finally
             {
@@ -329,6 +369,49 @@ namespace Azure.Core.Tests
             scope.Dispose();
 
             Assert.AreEqual(0, activityListener.Activities.Single().Links.Count());
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void ParentIdCanBeSetActivitySource()
+        {
+            using var _ = SetAppConfigSwitch();
+            string parentId = "00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00";
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
+                "Azure.Clients.ClientName",
+                "Microsoft.Azure.Core.Cool.Tests",
+                true,
+                false);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            scope.SetTraceparent(parentId);
+            scope.Start();
+            scope.Dispose();
+
+            Assert.AreEqual(1, activityListener.Activities.Count);
+            var activity = activityListener.Activities.Dequeue();
+            Assert.AreEqual(parentId, activity.ParentId);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void ParentIdCannotBeSetOnStartedScopeActivitySource()
+        {
+            using var _ = SetAppConfigSwitch();
+            string parentId = "00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00";
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
+                "Azure.Clients.ClientName",
+                "Microsoft.Azure.Core.Cool.Tests",
+                true,
+                false);
+
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            scope.Start();
+            Assert.Throws<InvalidOperationException>(() => scope.SetTraceparent(parentId));
         }
     }
 #endif

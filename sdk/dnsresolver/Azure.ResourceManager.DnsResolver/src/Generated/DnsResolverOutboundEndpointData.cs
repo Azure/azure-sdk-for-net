@@ -24,10 +24,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="subnet"/> is null. </exception>
         public DnsResolverOutboundEndpointData(AzureLocation location, WritableSubResource subnet) : base(location)
         {
-            if (subnet == null)
-            {
-                throw new ArgumentNullException(nameof(subnet));
-            }
+            Argument.AssertNotNull(subnet, nameof(subnet));
 
             Subnet = subnet;
         }
@@ -43,7 +40,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="subnet"> The reference to the subnet used for the outbound endpoint. </param>
         /// <param name="provisioningState"> The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the outbound endpoint resource. </param>
-        internal DnsResolverOutboundEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource subnet, DnsResolverProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, systemData, tags, location)
+        internal DnsResolverOutboundEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource subnet, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Subnet = subnet;
@@ -70,6 +67,6 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public DnsResolverProvisioningState? ProvisioningState { get; }
         /// <summary> The resourceGuid property of the outbound endpoint resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
     }
 }

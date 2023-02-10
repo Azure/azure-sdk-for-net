@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PerformanceCounters))
             {
-                writer.WritePropertyName("performanceCounters");
+                writer.WritePropertyName("performanceCounters"u8);
                 writer.WriteStartArray();
                 foreach (var item in PerformanceCounters)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(WindowsEventLogs))
             {
-                writer.WritePropertyName("windowsEventLogs");
+                writer.WritePropertyName("windowsEventLogs"u8);
                 writer.WriteStartArray();
                 foreach (var item in WindowsEventLogs)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(Syslog))
             {
-                writer.WritePropertyName("syslog");
+                writer.WritePropertyName("syslog"u8);
                 writer.WriteStartArray();
                 foreach (var item in Syslog)
                 {
@@ -48,9 +48,29 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
-                writer.WritePropertyName("extensions");
+                writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(LogFiles))
+            {
+                writer.WritePropertyName("logFiles"u8);
+                writer.WriteStartArray();
+                foreach (var item in LogFiles)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IisLogs))
+            {
+                writer.WritePropertyName("iisLogs"u8);
+                writer.WriteStartArray();
+                foreach (var item in IisLogs)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -65,9 +85,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<WindowsEventLogDataSource>> windowsEventLogs = default;
             Optional<IList<SyslogDataSource>> syslog = default;
             Optional<IList<ExtensionDataSource>> extensions = default;
+            Optional<IList<LogFilesDataSource>> logFiles = default;
+            Optional<IList<IisLogsDataSource>> iisLogs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("performanceCounters"))
+                if (property.NameEquals("performanceCounters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +104,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     performanceCounters = array;
                     continue;
                 }
-                if (property.NameEquals("windowsEventLogs"))
+                if (property.NameEquals("windowsEventLogs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +119,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     windowsEventLogs = array;
                     continue;
                 }
-                if (property.NameEquals("syslog"))
+                if (property.NameEquals("syslog"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +134,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     syslog = array;
                     continue;
                 }
-                if (property.NameEquals("extensions"))
+                if (property.NameEquals("extensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,8 +149,38 @@ namespace Azure.ResourceManager.Monitor.Models
                     extensions = array;
                     continue;
                 }
+                if (property.NameEquals("logFiles"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<LogFilesDataSource> array = new List<LogFilesDataSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LogFilesDataSource.DeserializeLogFilesDataSource(item));
+                    }
+                    logFiles = array;
+                    continue;
+                }
+                if (property.NameEquals("iisLogs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<IisLogsDataSource> array = new List<IisLogsDataSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(IisLogsDataSource.DeserializeIisLogsDataSource(item));
+                    }
+                    iisLogs = array;
+                    continue;
+                }
             }
-            return new DataSourcesSpec(Optional.ToList(performanceCounters), Optional.ToList(windowsEventLogs), Optional.ToList(syslog), Optional.ToList(extensions));
+            return new DataSourcesSpec(Optional.ToList(performanceCounters), Optional.ToList(windowsEventLogs), Optional.ToList(syslog), Optional.ToList(extensions), Optional.ToList(logFiles), Optional.ToList(iisLogs));
         }
     }
 }

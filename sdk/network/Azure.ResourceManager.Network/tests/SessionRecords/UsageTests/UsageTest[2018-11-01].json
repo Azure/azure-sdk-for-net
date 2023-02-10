@@ -1,0 +1,1225 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9ec8de191073f48f2c8da1690706d3ee-7b24152990aba17c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "c29522098407b32df393862b9300fdb2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 23:15:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "79123ac8-da75-4a8f-8276-d3bd5a1750ee",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "79123ac8-da75-4a8f-8276-d3bd5a1750ee",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20220802T231554Z:79123ac8-da75-4a8f-8276-d3bd5a1750ee"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/csmrg6926?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-f7a077a3643c5ba5b999a3a207f9cd58-b8e59ac87cbbf7cb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "c08964144ea5c20af95633b721cba082",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "215",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 23:15:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "02c439a5-2e3b-4f14-b562-aaa3cf137ade",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "02c439a5-2e3b-4f14-b562-aaa3cf137ade",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20220802T231555Z:02c439a5-2e3b-4f14-b562-aaa3cf137ade"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926",
+        "name": "csmrg6926",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046?api-version=2021-02-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "37",
+        "Content-Type": "application/json",
+        "traceparent": "00-93b69e15f72f052c2438dd382a3e4f26-b2473ff4f4dffe47-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "e41f4d00ac52e2e2485856de53fc535f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus",
+        "properties": {}
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncNotification": "Enabled",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/operations/78b13201-b333-4ae0-afa9-3fd3124946b4?api-version=2021-02-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "6519",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 23:15:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "3",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "d94508a3-79f1-466d-9ab5-4970b47c270d",
+        "x-ms-client-request-id": "e41f4d00ac52e2e2485856de53fc535f",
+        "x-ms-correlation-request-id": "8fc9018b-455b-4037-bd7f-cee9993dfded",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "78b13201-b333-4ae0-afa9-3fd3124946b4",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20220802T231557Z:8fc9018b-455b-4037-bd7f-cee9993dfded"
+      },
+      "ResponseBody": {
+        "name": "azsmnet7046",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046",
+        "etag": "W/\u00229ced1c88-a241-4cd2-90d9-c36d0856cbf7\u0022",
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "beb6a41b-ce8d-4ca2-8e42-bbe7d352006e",
+          "securityRules": [],
+          "defaultSecurityRules": [
+            {
+              "name": "AllowVnetInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/AllowVnetInBound",
+              "etag": "W/\u00229ced1c88-a241-4cd2-90d9-c36d0856cbf7\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Updating",
+                "description": "Allow inbound traffic from all VMs in VNET",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "VirtualNetwork",
+                "destinationAddressPrefix": "VirtualNetwork",
+                "access": "Allow",
+                "priority": 65000,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowAzureLoadBalancerInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/AllowAzureLoadBalancerInBound",
+              "etag": "W/\u00229ced1c88-a241-4cd2-90d9-c36d0856cbf7\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Updating",
+                "description": "Allow inbound traffic from azure load balancer",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "AzureLoadBalancer",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 65001,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "DenyAllInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/DenyAllInBound",
+              "etag": "W/\u00229ced1c88-a241-4cd2-90d9-c36d0856cbf7\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Updating",
+                "description": "Deny all inbound traffic",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Deny",
+                "priority": 65500,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowVnetOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/AllowVnetOutBound",
+              "etag": "W/\u00229ced1c88-a241-4cd2-90d9-c36d0856cbf7\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Updating",
+                "description": "Allow outbound traffic from all VMs to all VMs in VNET",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "VirtualNetwork",
+                "destinationAddressPrefix": "VirtualNetwork",
+                "access": "Allow",
+                "priority": 65000,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowInternetOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/AllowInternetOutBound",
+              "etag": "W/\u00229ced1c88-a241-4cd2-90d9-c36d0856cbf7\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Updating",
+                "description": "Allow outbound traffic from all VMs to Internet",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "Internet",
+                "access": "Allow",
+                "priority": 65001,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "DenyAllOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/DenyAllOutBound",
+              "etag": "W/\u00229ced1c88-a241-4cd2-90d9-c36d0856cbf7\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Updating",
+                "description": "Deny all outbound traffic",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Deny",
+                "priority": 65500,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/operations/78b13201-b333-4ae0-afa9-3fd3124946b4?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-93b69e15f72f052c2438dd382a3e4f26-c8c93efe42b4e09f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "af0069a91592b7c1a7dd5cf6b3e4a65a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "29",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 23:15:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "fb9b207a-f90c-406c-ba7f-3ab47b98dd91",
+        "x-ms-client-request-id": "af0069a91592b7c1a7dd5cf6b3e4a65a",
+        "x-ms-correlation-request-id": "e2f23006-a658-4317-b21a-d16a89301765",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "c8142652-f186-4cd5-a2b8-0538fa23790f",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20220802T231557Z:e2f23006-a658-4317-b21a-d16a89301765"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-93b69e15f72f052c2438dd382a3e4f26-3779d808c7b0b99d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "064957e09a749c3c7994e4447ee8e677",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "6526",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 23:15:57 GMT",
+        "ETag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "c47531c5-1710-4d27-9604-3127a310476d",
+        "x-ms-client-request-id": "064957e09a749c3c7994e4447ee8e677",
+        "x-ms-correlation-request-id": "3754cab4-4e62-44cc-b24f-3aa586a96f60",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "75354844-32e8-4630-bdbf-66bb91385294",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20220802T231557Z:3754cab4-4e62-44cc-b24f-3aa586a96f60"
+      },
+      "ResponseBody": {
+        "name": "azsmnet7046",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046",
+        "etag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "beb6a41b-ce8d-4ca2-8e42-bbe7d352006e",
+          "securityRules": [],
+          "defaultSecurityRules": [
+            {
+              "name": "AllowVnetInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/AllowVnetInBound",
+              "etag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Allow inbound traffic from all VMs in VNET",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "VirtualNetwork",
+                "destinationAddressPrefix": "VirtualNetwork",
+                "access": "Allow",
+                "priority": 65000,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowAzureLoadBalancerInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/AllowAzureLoadBalancerInBound",
+              "etag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Allow inbound traffic from azure load balancer",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "AzureLoadBalancer",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 65001,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "DenyAllInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/DenyAllInBound",
+              "etag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Deny all inbound traffic",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Deny",
+                "priority": 65500,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowVnetOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/AllowVnetOutBound",
+              "etag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Allow outbound traffic from all VMs to all VMs in VNET",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "VirtualNetwork",
+                "destinationAddressPrefix": "VirtualNetwork",
+                "access": "Allow",
+                "priority": 65000,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowInternetOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/AllowInternetOutBound",
+              "etag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Allow outbound traffic from all VMs to Internet",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "Internet",
+                "access": "Allow",
+                "priority": 65001,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "DenyAllOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/DenyAllOutBound",
+              "etag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Deny all outbound traffic",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Deny",
+                "priority": 65500,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-82483e0e55a2c9db50e9da3733b55d2e-3f625f9beb611188-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "e934708fa3fcc2cd0373400f07ddd71c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "6526",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 23:15:57 GMT",
+        "ETag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "33b72cf6-449f-43dd-ba42-4e76bbf75a50",
+        "x-ms-client-request-id": "e934708fa3fcc2cd0373400f07ddd71c",
+        "x-ms-correlation-request-id": "1e60683d-f315-4a52-a318-a07107b83667",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "63711587-0c54-4453-96ae-e73029d5cd11",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20220802T231557Z:1e60683d-f315-4a52-a318-a07107b83667"
+      },
+      "ResponseBody": {
+        "name": "azsmnet7046",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046",
+        "etag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "beb6a41b-ce8d-4ca2-8e42-bbe7d352006e",
+          "securityRules": [],
+          "defaultSecurityRules": [
+            {
+              "name": "AllowVnetInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/AllowVnetInBound",
+              "etag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Allow inbound traffic from all VMs in VNET",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "VirtualNetwork",
+                "destinationAddressPrefix": "VirtualNetwork",
+                "access": "Allow",
+                "priority": 65000,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowAzureLoadBalancerInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/AllowAzureLoadBalancerInBound",
+              "etag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Allow inbound traffic from azure load balancer",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "AzureLoadBalancer",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 65001,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "DenyAllInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/DenyAllInBound",
+              "etag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Deny all inbound traffic",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Deny",
+                "priority": 65500,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowVnetOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/AllowVnetOutBound",
+              "etag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Allow outbound traffic from all VMs to all VMs in VNET",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "VirtualNetwork",
+                "destinationAddressPrefix": "VirtualNetwork",
+                "access": "Allow",
+                "priority": 65000,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowInternetOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/AllowInternetOutBound",
+              "etag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Allow outbound traffic from all VMs to Internet",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "Internet",
+                "access": "Allow",
+                "priority": 65001,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "DenyAllOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg6926/providers/Microsoft.Network/networkSecurityGroups/azsmnet7046/defaultSecurityRules/DenyAllOutBound",
+              "etag": "W/\u00224c253a93-c36c-4ba2-8600-eb2e9c038e1d\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Deny all outbound traffic",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Deny",
+                "priority": 65500,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0561d4fe3129db7eb5e7ff147e4621b4-08a46f9a837bd47f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "a519d467c1880e712d6336fd317c39be",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "17762",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 23:15:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "78302bf6-831b-4771-a8f2-ae7f0373fb6b",
+        "x-ms-client-request-id": "a519d467c1880e712d6336fd317c39be",
+        "x-ms-correlation-request-id": "64b477d6-04f3-483a-a5fe-a977fadbdc70",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "53241a94-4368-48ae-9d8f-abab1897e360",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20220802T231558Z:64b477d6-04f3-483a-a5fe-a977fadbdc70"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "currentValue": 1,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/VirtualNetworks",
+            "limit": 1000,
+            "name": {
+              "localizedValue": "Virtual Networks",
+              "value": "VirtualNetworks"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/StaticPublicIPAddresses",
+            "limit": 1000,
+            "name": {
+              "localizedValue": "Static Public IP Addresses",
+              "value": "StaticPublicIPAddresses"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 4,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/NetworkSecurityGroups",
+            "limit": 5000,
+            "name": {
+              "localizedValue": "Network Security Groups",
+              "value": "NetworkSecurityGroups"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 1,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/PublicIPAddresses",
+            "limit": 1000,
+            "name": {
+              "localizedValue": "Public IP Addresses",
+              "value": "PublicIPAddresses"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/CustomIpPrefixes",
+            "limit": 5,
+            "name": {
+              "localizedValue": "Custom Ip Prefixes",
+              "value": "CustomIpPrefixes"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/PublicIpPrefixes",
+            "limit": 2147483647,
+            "name": {
+              "localizedValue": "Public Ip Prefixes",
+              "value": "PublicIpPrefixes"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/NatGateways",
+            "limit": 1000,
+            "name": {
+              "localizedValue": "Nat Gateways",
+              "value": "NatGateways"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 1,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/NetworkInterfaces",
+            "limit": 65536,
+            "name": {
+              "localizedValue": "Network Interfaces",
+              "value": "NetworkInterfaces"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/PrivateEndpoints",
+            "limit": 65536,
+            "name": {
+              "localizedValue": "Private Endpoints",
+              "value": "PrivateEndpoints"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/PrivateEndpointRedirectMaps",
+            "limit": 2147483647,
+            "name": {
+              "localizedValue": "Private Endpoint Redirect Maps",
+              "value": "PrivateEndpointRedirectMaps"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/LoadBalancers",
+            "limit": 1000,
+            "name": {
+              "localizedValue": "Load Balancers",
+              "value": "LoadBalancers"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/PrivateLinkServices",
+            "limit": 800,
+            "name": {
+              "localizedValue": "Private Link Services",
+              "value": "PrivateLinkServices"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/ApplicationGateways",
+            "limit": 1000,
+            "name": {
+              "localizedValue": "Application Gateways",
+              "value": "ApplicationGateways"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/RouteTables",
+            "limit": 200,
+            "name": {
+              "localizedValue": "Route Tables",
+              "value": "RouteTables"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/RouteFilters",
+            "limit": 1000,
+            "name": {
+              "localizedValue": "Route Filters",
+              "value": "RouteFilters"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 1,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/NetworkWatchers",
+            "limit": 1,
+            "name": {
+              "localizedValue": "Network Watchers",
+              "value": "NetworkWatchers"
+            },
+            "unit": "Count",
+            "isAdjustable": false
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/PacketCaptures",
+            "limit": 10000,
+            "name": {
+              "localizedValue": "Packet Captures",
+              "value": "PacketCaptures"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/ApplicationSecurityGroups",
+            "limit": 3000,
+            "name": {
+              "localizedValue": "Application Security Groups.",
+              "value": "ApplicationSecurityGroups"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/DdosProtectionPlans",
+            "limit": 1,
+            "name": {
+              "localizedValue": "DDoS Protection Plans.",
+              "value": "DdosProtectionPlans"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/DdosCustomPolicies",
+            "limit": 200,
+            "name": {
+              "localizedValue": "DDoS customized policies",
+              "value": "DdosCustomPolicies"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/ServiceEndpointPolicies",
+            "limit": 500,
+            "name": {
+              "localizedValue": "Service Endpoint Policies",
+              "value": "ServiceEndpointPolicies"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/NetworkIntentPolicies",
+            "limit": 200,
+            "name": {
+              "localizedValue": "Network Intent Policies",
+              "value": "NetworkIntentPolicies"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/StandardSkuLoadBalancers",
+            "limit": 1000,
+            "name": {
+              "localizedValue": "Standard Sku Load Balancers",
+              "value": "StandardSkuLoadBalancers"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/StandardSkuPublicIpAddresses",
+            "limit": 1000,
+            "name": {
+              "localizedValue": "Public IP Addresses - Standard",
+              "value": "StandardSkuPublicIpAddresses"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/AuxiliaryModeEnabledNetworkInterfaces",
+            "limit": 2,
+            "name": {
+              "localizedValue": "Auxiliary Mode Enabled Network Interfaces",
+              "value": "AuxiliaryModeEnabledNetworkInterfaces"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/DnsServersPerVirtualNetwork",
+            "limit": 20,
+            "name": {
+              "localizedValue": "DNS servers per Virtual Network",
+              "value": "DnsServersPerVirtualNetwork"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/CustomDnsServersPerP2SVpnGateway",
+            "limit": 5,
+            "name": {
+              "localizedValue": "Custom DNS servers per P2SVpnGateway",
+              "value": "CustomDnsServersPerP2SVpnGateway"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/SubnetsPerVirtualNetwork",
+            "limit": 3000,
+            "name": {
+              "localizedValue": "Subnets per Virtual Network",
+              "value": "SubnetsPerVirtualNetwork"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/IPConfigurationsPerVirtualNetwork",
+            "limit": 65536,
+            "name": {
+              "localizedValue": "IP Configurations per Virtual Network",
+              "value": "IPConfigurationsPerVirtualNetwork"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/PeeringsPerVirtualNetwork",
+            "limit": 500,
+            "name": {
+              "localizedValue": "Peerings per Virtual Network",
+              "value": "PeeringsPerVirtualNetwork"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/SecurityRulesPerNetworkSecurityGroup",
+            "limit": 1000,
+            "name": {
+              "localizedValue": "Security rules per Network Security Group",
+              "value": "SecurityRulesPerNetworkSecurityGroup"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/SecurityRulesPerNetworkIntentPolicy",
+            "limit": 100,
+            "name": {
+              "localizedValue": "Security rules per Network Intent Policy",
+              "value": "SecurityRulesPerNetworkIntentPolicy"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/RoutesPerNetworkIntentPolicy",
+            "limit": 200,
+            "name": {
+              "localizedValue": "Routes per Network Intent Policy",
+              "value": "RoutesPerNetworkIntentPolicy"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/SecurityRuleAddressesOrPortsPerNetworkSecurityGroup",
+            "limit": 4000,
+            "name": {
+              "localizedValue": "Security rules addresses or ports per Network Security Group",
+              "value": "SecurityRuleAddressesOrPortsPerNetworkSecurityGroup"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/InboundRulesPerLoadBalancer",
+            "limit": 250,
+            "name": {
+              "localizedValue": "Inbound Rules per Load Balancer",
+              "value": "InboundRulesPerLoadBalancer"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/FrontendIPConfigurationPerLoadBalancer",
+            "limit": 200,
+            "name": {
+              "localizedValue": "Frontend IP Configurations per Load Balancer",
+              "value": "FrontendIPConfigurationPerLoadBalancer"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/OutboundRulesPerLoadBalancer",
+            "limit": 5,
+            "name": {
+              "localizedValue": "Outbound Rules per Load Balancer",
+              "value": "OutboundRulesPerLoadBalancer"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/RoutesPerRouteTable",
+            "limit": 400,
+            "name": {
+              "localizedValue": "Routes per Route Table",
+              "value": "RoutesPerRouteTable"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/RoutesWithServiceTagPerRouteTable",
+            "limit": 25,
+            "name": {
+              "localizedValue": "Routes with service tag per Route Table",
+              "value": "RoutesWithServiceTagPerRouteTable"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/SecondaryIPConfigurationsPerNetworkInterface",
+            "limit": 256,
+            "name": {
+              "localizedValue": "Secondary IP Configurations per Network Interface",
+              "value": "SecondaryIPConfigurationsPerNetworkInterface"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/SecondaryIPConfigurationsPerPrivateEndpointNetworkInterface",
+            "limit": 500,
+            "name": {
+              "localizedValue": "Secondary IP Configurations per PrivateEndpoint Network Interface",
+              "value": "SecondaryIPConfigurationsPerPrivateEndpointNetworkInterface"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/InboundNatOrLbRulesPerNetworkInterface",
+            "limit": 300,
+            "name": {
+              "localizedValue": "Inbound rules per Network Interface",
+              "value": "InboundNatOrLbRulesPerNetworkInterface"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/RouteFilterRulesPerRouteFilter",
+            "limit": 1,
+            "name": {
+              "localizedValue": "Route filter rules per Route Filter",
+              "value": "RouteFilterRulesPerRouteFilter"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/RouteFiltersPerExpressRouteBgpPeering",
+            "limit": 1,
+            "name": {
+              "localizedValue": "Route filters per Express route BGP Peering",
+              "value": "RouteFiltersPerExpressRouteBgpPeering"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          },
+          {
+            "currentValue": 0,
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/usages/MinPublicIpInterNetworkPrefixLength",
+            "limit": 28,
+            "name": {
+              "localizedValue": "Public IPv4 Prefix Length",
+              "value": "MinPublicIpInterNetworkPrefixLength"
+            },
+            "unit": "Count",
+            "isAdjustable": true
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "LOCATION": "westus",
+    "RandomSeed": "522554643",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

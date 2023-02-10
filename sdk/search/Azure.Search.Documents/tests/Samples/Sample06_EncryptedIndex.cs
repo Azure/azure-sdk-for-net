@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Tests.Samples
             Environment.SetEnvironmentVariable("APPLICATION_SECRET", TestEnvironment.RecordedClientSecret);
 
             // Create the blob container and persist connection information.
-            await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this, populate: true);
+            await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this, populate: true, true);
             Environment.SetEnvironmentVariable("STORAGE_CONNECTION_STRING", resources.StorageAccountConnectionString);
             Environment.SetEnvironmentVariable("STORAGE_CONTAINER_NAME", resources.BlobContainerName);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
@@ -101,11 +101,11 @@ namespace Azure.Search.Documents.Tests.Samples
                     // Map the fields in our documents we want to index.
                     FieldMappings =
                     {
-                        new FieldMapping("hotelId"),
-                        new FieldMapping("hotelName"),
-                        new FieldMapping("description"),
-                        new FieldMapping("tags"),
-                        new FieldMapping("address")
+                        new FieldMapping("HotelId"),
+                        new FieldMapping("HotelName"),
+                        new FieldMapping("Description"),
+                        new FieldMapping("Tags"),
+                        new FieldMapping("Address")
                     },
                     Parameters = new IndexingParameters
                     {
@@ -158,8 +158,9 @@ namespace Azure.Search.Documents.Tests.Samples
                     Console.WriteLine($"  Description: {hotel.Description}");
                 }
                 #endregion Snippet:Azure_Search_Tests_Sample06_EncryptedIndex_CreateDoubleEncryptedIndex_Query
-
+#if !SNIPPET
                 Assert.IsTrue(found, "No luxury hotels were found in index");
+#endif
             }
             finally
             {

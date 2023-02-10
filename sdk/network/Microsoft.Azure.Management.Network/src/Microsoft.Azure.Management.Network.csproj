@@ -10,19 +10,13 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>22.0.0</Version>
+		<Version>25.0.0</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Added new api version 2021-08-01
-			- Made AppGw swagger changes for L4 proxy 
-			- Implemented HubRoutingPreference in VirtualHub
-			- MultipleApipa feature VpnSiteLinkConnection and VirtualNetworkGateway
-			- Virtual Wan P2S MultiPool feature swagger fixes
-			- Added nic auxiliary mode
-			- Connection Draining: added new properties
-			- Azure Firewall Support of Private IP Ranges in IDPS
-			- Added flush conn to nsg			
+			- Adds a SaaS NVA swagger changes
+			- Custom Block Response support for AppGW WAF 
+			- Fixing Documentation +Bugs on PublicIPAddress & DdosProtectionPlan
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

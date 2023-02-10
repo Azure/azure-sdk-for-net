@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FD6F52B7-03AC-4EBB-A79A-3F02F8782E5C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FAB04E28-402B-4039-8F7A-027CE8E0E343}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents", "src\Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.csproj", "{BB38310C-9B9A-436E-B100-7739ABDBB75A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{40B476A8-C30C-46BB-97DC-1AD8F405B529}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\eng\images\azureicon.png = ..\..\..\eng\images\azureicon.png
+		CHANGELOG.md = CHANGELOG.md
+		..\ci.yml = ..\ci.yml
+		Directory.Build.props = Directory.Build.props
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests", "tests\Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.csproj", "{0373F757-E998-4C45-9118-C264231E2944}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		TriggerRelease|Any CPU = TriggerRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB38310C-9B9A-436E-B100-7739ABDBB75A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB38310C-9B9A-436E-B100-7739ABDBB75A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB38310C-9B9A-436E-B100-7739ABDBB75A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB38310C-9B9A-436E-B100-7739ABDBB75A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB38310C-9B9A-436E-B100-7739ABDBB75A}.TriggerRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{BB38310C-9B9A-436E-B100-7739ABDBB75A}.TriggerRelease|Any CPU.Build.0 = Release|Any CPU
+		{0373F757-E998-4C45-9118-C264231E2944}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0373F757-E998-4C45-9118-C264231E2944}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0373F757-E998-4C45-9118-C264231E2944}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0373F757-E998-4C45-9118-C264231E2944}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0373F757-E998-4C45-9118-C264231E2944}.TriggerRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{0373F757-E998-4C45-9118-C264231E2944}.TriggerRelease|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BB38310C-9B9A-436E-B100-7739ABDBB75A} = {FD6F52B7-03AC-4EBB-A79A-3F02F8782E5C}
+		{0373F757-E998-4C45-9118-C264231E2944} = {FAB04E28-402B-4039-8F7A-027CE8E0E343}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {21348D28-E450-49EE-AEA4-ADD8168DD20B}
+	EndGlobalSection
+EndGlobal

@@ -8,6 +8,8 @@ using Microsoft.Identity.Client;
 using System.Security;
 using System.Threading;
 using Azure.Core.TestFramework.Models;
+using System;
+using Azure.Communication.Tests;
 
 namespace Azure.Communication.Identity.Tests
 {
@@ -32,20 +34,20 @@ namespace Azure.Communication.Identity.Tests
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="CommunicationIdentityClient" />.</returns>
-        protected CommunicationIdentityClient CreateClientWithConnectionString()
+        private CommunicationIdentityClient CreateClientWithConnectionString()
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicConnectionString,
                     CreateIdentityClientOptionsWithCorrelationVectorLogs()));
 
-        protected CommunicationIdentityClient CreateClientWithAzureKeyCredential()
+        private CommunicationIdentityClient CreateClientWithAzureKeyCredential()
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicEndpoint,
                     new AzureKeyCredential(TestEnvironment.LiveTestDynamicAccessKey),
                     CreateIdentityClientOptionsWithCorrelationVectorLogs()));
 
-        protected CommunicationIdentityClient CreateClientWithTokenCredential()
+        private CommunicationIdentityClient CreateClientWithTokenCredential()
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicEndpoint,
@@ -59,6 +61,15 @@ namespace Azure.Communication.Identity.Tests
             return InstrumentClientOptions(communicationIdentityClientOptions);
         }
 
+        protected CommunicationIdentityClient CreateClient(AuthMethod authMethod = AuthMethod.ConnectionString)
+            => authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
+
         protected async Task<GetTokenForTeamsUserOptions> CreateTeamsUserParams()
         {
             GetTokenForTeamsUserOptions options = new GetTokenForTeamsUserOptions("Sanitized", "Sanitized", "Sanitized");
@@ -68,16 +79,15 @@ namespace Azure.Communication.Identity.Tests
                                                     .WithAuthority(TestEnvironment.CommunicationM365AadAuthority + "/" + TestEnvironment.CommunicationM365AadTenant)
                                                     .WithRedirectUri(TestEnvironment.CommunicationM365RedirectUri)
                                                     .Build();
-                string[] scopes = { TestEnvironment.CommunicationM365Scope };
-                SecureString communicationMsalPassword = new SecureString();
-                foreach (char c in TestEnvironment.CommunicationMsalPassword)
-                {
-                    communicationMsalPassword.AppendChar(c);
-                }
+                string[] scopes = {
+                    "https://auth.msft.communication.azure.com/Teams.ManageCalls",
+                    "https://auth.msft.communication.azure.com/Teams.ManageChats"
+                };
+
                 AuthenticationResult result = await publicClientApplication.AcquireTokenByUsernamePassword(
                     scopes,
                     TestEnvironment.CommunicationMsalUsername,
-                    communicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
+                    TestEnvironment.CommunicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
                 options = new GetTokenForTeamsUserOptions(result.AccessToken, TestEnvironment.CommunicationM365AppId, result.UniqueId);
             }
             return options;

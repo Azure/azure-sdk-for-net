@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.Authorization.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Setting))
+            if (Optional.IsDefined(Settings))
             {
-                writer.WritePropertyName("setting");
-                writer.WriteObjectValue(Setting);
+                writer.WritePropertyName("setting"u8);
+                writer.WriteObjectValue(Settings);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("ruleType");
+            writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
             }
             writer.WriteEndObject();
@@ -37,38 +37,33 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyApprovalRule DeserializeRoleManagementPolicyApprovalRule(JsonElement element)
         {
-            Optional<ApprovalSettings> setting = default;
-            Optional<ResourceIdentifier> id = default;
+            Optional<RoleManagementApprovalSettings> setting = default;
+            Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("setting"))
+                if (property.NameEquals("setting"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    setting = ApprovalSettings.DeserializeApprovalSettings(property.Value);
+                    setting = RoleManagementApprovalSettings.DeserializeRoleManagementApprovalSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleType"))
+                if (property.NameEquals("ruleType"u8))
                 {
                     ruleType = new RoleManagementPolicyRuleType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

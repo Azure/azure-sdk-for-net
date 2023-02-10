@@ -5,10 +5,10 @@
 
 #nullable disable
 
-namespace Azure.Communication.MediaComposition
+namespace Azure.Communication
 {
-    /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. </summary>
-    public partial class CommunicationIdentifierModel
+    /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
+    internal partial class CommunicationIdentifierModel
     {
         /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
         public CommunicationIdentifierModel()
@@ -16,17 +16,29 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
-        /// <param name="communicationUser"> A user that got created with an Azure Communication Services resource. </param>
-        /// <param name="microsoftTeamsUser"> &quot;A Microsoft Teams user. </param>
-        internal CommunicationIdentifierModel(CommunicationUserIdentifierModel communicationUser, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
+        /// <param name="kind"> The identifier kind. Only required in responses. </param>
+        /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
+        /// <param name="communicationUser"> The communication user. </param>
+        /// <param name="phoneNumber"> The phone number. </param>
+        /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
+        internal CommunicationIdentifierModel(CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
         {
+            Kind = kind;
+            RawId = rawId;
             CommunicationUser = communicationUser;
+            PhoneNumber = phoneNumber;
             MicrosoftTeamsUser = microsoftTeamsUser;
         }
 
-        /// <summary> A user that got created with an Azure Communication Services resource. </summary>
+        /// <summary> The identifier kind. Only required in responses. </summary>
+        public CommunicationIdentifierModelKind? Kind { get; set; }
+        /// <summary> Raw Id of the identifier. Optional in requests, required in responses. </summary>
+        public string RawId { get; set; }
+        /// <summary> The communication user. </summary>
         public CommunicationUserIdentifierModel CommunicationUser { get; set; }
-        /// <summary> &quot;A Microsoft Teams user. </summary>
+        /// <summary> The phone number. </summary>
+        public PhoneNumberIdentifierModel PhoneNumber { get; set; }
+        /// <summary> The Microsoft Teams user. </summary>
         public MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUser { get; set; }
     }
 }

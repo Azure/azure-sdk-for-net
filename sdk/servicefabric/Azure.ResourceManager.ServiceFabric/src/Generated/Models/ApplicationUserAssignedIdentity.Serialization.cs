@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,9 +16,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("principalId");
+            writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
             writer.WriteEndObject();
         }
@@ -25,17 +26,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         internal static ApplicationUserAssignedIdentity DeserializeApplicationUserAssignedIdentity(JsonElement element)
         {
             string name = default;
-            string principalId = default;
+            Guid principalId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("principalId"))
+                if (property.NameEquals("principalId"u8))
                 {
-                    principalId = property.Value.GetString();
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
             }

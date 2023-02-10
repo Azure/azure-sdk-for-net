@@ -16,56 +16,28 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of ManagedClusterStorageProfile. </summary>
-        /// <param name="diskCSIDriver"> AzureDisk CSI Driver settings for the storage profile. </param>
-        /// <param name="fileCSIDriver"> AzureFile CSI Driver settings for the storage profile. </param>
+        /// <param name="diskCsiDriver"> AzureDisk CSI Driver settings for the storage profile. </param>
+        /// <param name="fileCsiDriver"> AzureFile CSI Driver settings for the storage profile. </param>
         /// <param name="snapshotController"> Snapshot Controller settings for the storage profile. </param>
-        internal ManagedClusterStorageProfile(ManagedClusterStorageProfileDiskCSIDriver diskCSIDriver, ManagedClusterStorageProfileFileCSIDriver fileCSIDriver, ManagedClusterStorageProfileSnapshotController snapshotController)
+        /// <param name="blobCsiDriver"> AzureBlob CSI Driver settings for the storage profile. </param>
+        internal ManagedClusterStorageProfile(ManagedClusterStorageProfileDiskCsiDriver diskCsiDriver, ManagedClusterStorageProfileFileCsiDriver fileCsiDriver, ManagedClusterStorageProfileSnapshotController snapshotController, ManagedClusterStorageProfileBlobCsiDriver blobCsiDriver)
         {
-            DiskCSIDriver = diskCSIDriver;
-            FileCSIDriver = fileCSIDriver;
+            DiskCsiDriver = diskCsiDriver;
+            FileCsiDriver = fileCsiDriver;
             SnapshotController = snapshotController;
+            BlobCsiDriver = blobCsiDriver;
         }
 
         /// <summary> AzureDisk CSI Driver settings for the storage profile. </summary>
-        internal ManagedClusterStorageProfileDiskCSIDriver DiskCSIDriver { get; set; }
-        /// <summary> Whether to enable AzureDisk CSI Driver. The default value is true. </summary>
-        public bool? DiskCSIDriverEnabled
-        {
-            get => DiskCSIDriver is null ? default : DiskCSIDriver.Enabled;
-            set
-            {
-                if (DiskCSIDriver is null)
-                    DiskCSIDriver = new ManagedClusterStorageProfileDiskCSIDriver();
-                DiskCSIDriver.Enabled = value;
-            }
-        }
+        internal ManagedClusterStorageProfileDiskCsiDriver DiskCsiDriver { get; set; }
 
         /// <summary> AzureFile CSI Driver settings for the storage profile. </summary>
-        internal ManagedClusterStorageProfileFileCSIDriver FileCSIDriver { get; set; }
-        /// <summary> Whether to enable AzureFile CSI Driver. The default value is true. </summary>
-        public bool? FileCSIDriverEnabled
-        {
-            get => FileCSIDriver is null ? default : FileCSIDriver.Enabled;
-            set
-            {
-                if (FileCSIDriver is null)
-                    FileCSIDriver = new ManagedClusterStorageProfileFileCSIDriver();
-                FileCSIDriver.Enabled = value;
-            }
-        }
+        internal ManagedClusterStorageProfileFileCsiDriver FileCsiDriver { get; set; }
 
         /// <summary> Snapshot Controller settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileSnapshotController SnapshotController { get; set; }
-        /// <summary> Whether to enable Snapshot Controller. The default value is true. </summary>
-        public bool? SnapshotControllerEnabled
-        {
-            get => SnapshotController is null ? default : SnapshotController.Enabled;
-            set
-            {
-                if (SnapshotController is null)
-                    SnapshotController = new ManagedClusterStorageProfileSnapshotController();
-                SnapshotController.Enabled = value;
-            }
-        }
+
+        /// <summary> AzureBlob CSI Driver settings for the storage profile. </summary>
+        internal ManagedClusterStorageProfileBlobCsiDriver BlobCsiDriver { get; set; }
     }
 }

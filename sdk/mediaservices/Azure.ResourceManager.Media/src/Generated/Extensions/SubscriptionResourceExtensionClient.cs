@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,12 +19,10 @@ namespace Azure.ResourceManager.Media
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _mediaserviceClientDiagnostics;
-        private MediaservicesRestOperations _mediaserviceRestClient;
+        private ClientDiagnostics _mediaServicesAccountMediaservicesClientDiagnostics;
+        private MediaservicesRestOperations _mediaServicesAccountMediaservicesRestClient;
         private ClientDiagnostics _locationsClientDiagnostics;
         private LocationsRestOperations _locationsRestClient;
-        private ClientDiagnostics _mediaServicesOperationStatusesClientDiagnostics;
-        private MediaServicesOperationStatusesRestOperations _mediaServicesOperationStatusesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -39,12 +36,10 @@ namespace Azure.ResourceManager.Media
         {
         }
 
-        private ClientDiagnostics MediaserviceClientDiagnostics => _mediaserviceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Media", MediaserviceResource.ResourceType.Namespace, Diagnostics);
-        private MediaservicesRestOperations MediaserviceRestClient => _mediaserviceRestClient ??= new MediaservicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MediaserviceResource.ResourceType));
+        private ClientDiagnostics MediaServicesAccountMediaservicesClientDiagnostics => _mediaServicesAccountMediaservicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Media", MediaServicesAccountResource.ResourceType.Namespace, Diagnostics);
+        private MediaservicesRestOperations MediaServicesAccountMediaservicesRestClient => _mediaServicesAccountMediaservicesRestClient ??= new MediaservicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MediaServicesAccountResource.ResourceType));
         private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Media", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationsRestOperations LocationsRestClient => _locationsRestClient ??= new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics MediaServicesOperationStatusesClientDiagnostics => _mediaServicesOperationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Media", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private MediaServicesOperationStatusesRestOperations MediaServicesOperationStatusesRestClient => _mediaServicesOperationStatusesRestClient ??= new MediaServicesOperationStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -52,108 +47,69 @@ namespace Azure.ResourceManager.Media
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of LocationMediaServicesOperationResultResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of LocationMediaServicesOperationResultResources and their operations over a LocationMediaServicesOperationResultResource. </returns>
-        public virtual LocationMediaServicesOperationResultCollection GetLocationMediaServicesOperationResults()
+        /// <summary>
+        /// List Media Services accounts in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Media/mediaservices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MediaServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MediaServicesAccountResource> GetMediaServicesAccountsAsync(CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new LocationMediaServicesOperationResultCollection(Client, Id));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MediaServicesAccountMediaservicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MediaServicesAccountMediaservicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaServicesAccountResource(Client, MediaServicesAccountData.DeserializeMediaServicesAccountData(e)), MediaServicesAccountMediaservicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMediaServicesAccounts", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List Media Services accounts in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/mediaservices
-        /// Operation Id: Mediaservices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Media/mediaservices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MediaserviceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MediaserviceResource> GetMediaservicesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MediaServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MediaServicesAccountResource> GetMediaServicesAccounts(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MediaserviceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MediaserviceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaservices");
-                scope.Start();
-                try
-                {
-                    var response = await MediaserviceRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaserviceResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MediaserviceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MediaserviceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaservices");
-                scope.Start();
-                try
-                {
-                    var response = await MediaserviceRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaserviceResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// List Media Services accounts in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/mediaservices
-        /// Operation Id: Mediaservices_ListBySubscription
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MediaserviceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MediaserviceResource> GetMediaservices(CancellationToken cancellationToken = default)
-        {
-            Page<MediaserviceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MediaserviceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaservices");
-                scope.Start();
-                try
-                {
-                    var response = MediaserviceRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaserviceResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MediaserviceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MediaserviceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaservices");
-                scope.Start();
-                try
-                {
-                    var response = MediaserviceRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaserviceResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MediaServicesAccountMediaservicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MediaServicesAccountMediaservicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaServicesAccountResource(Client, MediaServicesAccountData.DeserializeMediaServicesAccountData(e)), MediaServicesAccountMediaservicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMediaServicesAccounts", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks whether the Media Service resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/checkNameAvailability
-        /// Operation Id: Locations_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="locationName"> Location name. </param>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EntityNameAvailabilityCheckOutput>> CheckNameAvailabilityLocationAsync(string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaServicesNameAvailabilityResult>> CheckMediaServicesNameAvailabilityAsync(AzureLocation locationName, MediaServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMediaServicesNameAvailability");
             scope.Start();
             try
             {
@@ -169,67 +125,27 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Checks whether the Media Service resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/checkNameAvailability
-        /// Operation Id: Locations_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="locationName"> Location name. </param>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EntityNameAvailabilityCheckOutput> CheckNameAvailabilityLocation(string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MediaServicesNameAvailabilityResult> CheckMediaServicesNameAvailability(AzureLocation locationName, MediaServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMediaServicesNameAvailability");
             scope.Start();
             try
             {
                 var response = LocationsRestClient.CheckNameAvailability(Id.SubscriptionId, locationName, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get media service operation status.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationStatuses/{operationId}
-        /// Operation Id: MediaServicesOperationStatuses_Get
-        /// </summary>
-        /// <param name="locationName"> Location name. </param>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MediaServiceOperationStatus>> GetMediaServicesOperationStatusAsync(string locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = MediaServicesOperationStatusesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaServicesOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = await MediaServicesOperationStatusesRestClient.GetAsync(Id.SubscriptionId, locationName, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get media service operation status.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationStatuses/{operationId}
-        /// Operation Id: MediaServicesOperationStatuses_Get
-        /// </summary>
-        /// <param name="locationName"> Location name. </param>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MediaServiceOperationStatus> GetMediaServicesOperationStatus(string locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = MediaServicesOperationStatusesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaServicesOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = MediaServicesOperationStatusesRestClient.Get(Id.SubscriptionId, locationName, operationId, cancellationToken);
                 return response;
             }
             catch (Exception e)

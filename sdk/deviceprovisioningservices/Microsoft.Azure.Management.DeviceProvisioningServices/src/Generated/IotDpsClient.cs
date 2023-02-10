@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             DpsCertificate = new DpsCertificateOperations(this);
             IotDpsResource = new IotDpsResourceOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-10-15";
+            ApiVersion = "2022-02-05";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

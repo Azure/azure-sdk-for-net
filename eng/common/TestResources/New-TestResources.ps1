@@ -22,6 +22,9 @@ param (
     [string] $ServiceDirectory,
 
     [Parameter()]
+    [string] $TestResourcesDirectory,
+
+    [Parameter()]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $TestApplicationId,
 
@@ -136,7 +139,7 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5)
                 Write-Warning "Attempt $attempt failed: $_. Trying again in $sleep seconds..."
                 Start-Sleep -Seconds $sleep
             } else {
-                Write-Error -ErrorRecord $_
+                throw
             }
         }
     }
@@ -155,9 +158,26 @@ function NewServicePrincipalWrapper([string]$subscription, [string]$resourceGrou
         Write-Warning "Update-Module Az.Resources -RequiredVersion 5.3.1"
         exit 1
     }
-    $servicePrincipal = Retry {
-        New-AzADServicePrincipal -Role "Owner" -Scope "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName" -DisplayName $displayName
+
+    try {
+        $servicePrincipal = Retry {
+            New-AzADServicePrincipal -Role "Owner" -Scope "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName" -DisplayName $displayName
+        }
+    } catch {
+        # The underlying error "The directory object quota limit for the Principal has been exceeded" gets overwritten by the module trying
+        # to call New-AzADApplication with a null object instead of stopping execution, which makes this case hard to diagnose because it prints the following:
+        #      "Cannot bind argument to parameter 'ObjectId' because it is an empty string."
+        # Provide a more helpful diagnostic prompt to the user if appropriate:
+        $totalApps = (Get-AzADApplication -OwnedApplication).Length
+        $msg = "App Registrations owned by you total $totalApps and may exceed the max quota (likely around 135)." + `
+               "`nTry removing some at https://ms.portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps" + `
+               " or by running the following command to remove apps created by this script:" + `
+               "`n    Get-AzADApplication -DisplayNameStartsWith '$baseName' | Remove-AzADApplication" + `
+               "`nNOTE: You may need to wait for the quota number to be updated after removing unused applications."
+        Write-Warning $msg
+        throw
     }
+
     $spPassword = ""
     $appId = ""
     if (Get-Member -Name "Secret" -InputObject $servicePrincipal -MemberType property) {
@@ -240,7 +260,7 @@ function BuildBicepFile([System.IO.FileSystemInfo] $file)
     return $templateFilePath
 }
 
-function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [object]$deployment) {
+function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [object]$deployment, [hashtable]$environmentVariables) {
     $serviceDirectoryPrefix = BuildServiceDirectoryPrefix $serviceName
     # Add default values
     $deploymentOutputs = [Ordered]@{
@@ -257,7 +277,7 @@ function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [objec
         "AZURE_SERVICE_DIRECTORY" = $serviceName.ToUpperInvariant();
     }
 
-    MergeHashes $EnvironmentVariables $(Get-Variable deploymentOutputs)
+    MergeHashes $environmentVariables $(Get-Variable deploymentOutputs)
 
     foreach ($key in $deployment.Outputs.Keys) {
         $variable = $deployment.Outputs[$key]
@@ -273,8 +293,15 @@ function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [objec
     return $deploymentOutputs
 }
 
-function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]$deployment, [object]$templateFile) {
-    $deploymentOutputs = BuildDeploymentOutputs $serviceName $azContext $deployment
+function SetDeploymentOutputs(
+    [string]$serviceName,
+    [object]$azContext,
+    [object]$deployment,
+    [object]$templateFile,
+    [hashtable]$environmentVariables = @{}
+) {
+    $deploymentEnvironmentVariables = $environmentVariables.Clone()
+    $deploymentOutputs = BuildDeploymentOutputs $serviceName $azContext $deployment $deploymentEnvironmentVariables
 
     if ($OutFile) {
         if (!$IsWindows) {
@@ -296,13 +323,20 @@ function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]
             Log "Persist the following environment variables based on your detected shell ($shell):`n"
         }
 
+        # Write overwrite warnings first, since local execution prints a runnable command to export variables
+        foreach ($key in $deploymentOutputs.Keys) {
+            if ([Environment]::GetEnvironmentVariable($key)) {
+                Write-Warning "Deployment outputs will overwrite pre-existing environment variable '$key'"
+            }
+        }
+
         # Marking values as secret by allowed keys below is not sufficient, as there may be outputs set in the ARM/bicep
         # file that re-mark those values as secret (since all user-provided deployment outputs are treated as secret by default).
         # This variable supports a second check on not marking previously allowed keys/values as secret.
         $notSecretValues = @()
         foreach ($key in $deploymentOutputs.Keys) {
             $value = $deploymentOutputs[$key]
-            $EnvironmentVariables[$key] = $value
+            $deploymentEnvironmentVariables[$key] = $value
 
             if ($CI) {
                 if (ShouldMarkValueAsSecret $serviceName $key $value $notSecretValues) {
@@ -327,7 +361,7 @@ function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]
         }
     }
 
-    return $deploymentOutputs
+    return $deploymentEnvironmentVariables, $deploymentOutputs
 }
 
 # Support actions to invoke on exit.
@@ -351,6 +385,14 @@ try {
     # Enumerate test resources to deploy. Fail if none found.
     $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
     $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
+    if ($TestResourcesDirectory) {
+        $root = $TestResourcesDirectory | Resolve-Path
+        # Add an explicit check below in case ErrorActionPreference is overridden and Resolve-Path doesn't stop execution
+        if (!$root) {
+            throw "TestResourcesDirectory '$TestResourcesDirectory' does not exist."
+        }
+        Write-Verbose "Overriding test resources search directory to '$root'"
+    }
     $templateFiles = @()
 
     "$ResourceType-resources.json", "$ResourceType-resources.bicep" | ForEach-Object {
@@ -372,17 +414,13 @@ try {
         exit
     }
 
-    $UserName = GetUserName
-
-    if (!$BaseName) {
-        if ($CI) {
-            $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
-            Log "Generated base name '$BaseName' for CI build"
-        } else {
-            $BaseName = GetBaseName $UserName (GetServiceLeafDirectoryName $ServiceDirectory)
-            Log "BaseName was not set. Using default base name '$BaseName'"
-        }
-    }
+    $serviceName = GetServiceLeafDirectoryName $ServiceDirectory
+    $BaseName, $ResourceGroupName = GetBaseAndResourceGroupNames `
+        -baseNameDefault $BaseName `
+        -resourceGroupNameDefault $ResourceGroupName `
+        -user (GetUserName) `
+        -serviceDirectoryName $serviceName `
+        -CI $CI
 
     # Make sure pre- and post-scripts are passed formerly required arguments.
     $PSBoundParameters['BaseName'] = $BaseName
@@ -518,19 +556,8 @@ try {
         $ProvisionerApplicationOid = $sp.Id
     }
 
-    $serviceName = GetServiceLeafDirectoryName $ServiceDirectory
-
-    $ResourceGroupName = if ($ResourceGroupName) {
-        $ResourceGroupName
-    } elseif ($CI) {
-        # Format the resource group name based on resource group naming recommendations and limitations.
-        "rg-{0}-$BaseName" -f ($serviceName -replace '[\.\\\/:]', '-').ToLowerInvariant().Substring(0, [Math]::Min($serviceName.Length, 90 - $BaseName.Length - 4)).Trim('-')
-    } else {
-        "rg-$BaseName"
-    }
-
     $tags = @{
-        Owners = $UserName
+        Owners = (GetUserName)
         ServiceDirectory = $ServiceDirectory
     }
 
@@ -553,7 +580,6 @@ try {
         # to determine whether resources should be removed.
         Write-Host "Setting variable 'CI_HAS_DEPLOYED_RESOURCES': 'true'"
         LogVsoCommand "##vso[task.setvariable variable=CI_HAS_DEPLOYED_RESOURCES;]true"
-        $EnvironmentVariables['CI_HAS_DEPLOYED_RESOURCES'] = $true
     }
 
     Log "Creating resource group '$ResourceGroupName' in location '$Location'"
@@ -564,8 +590,7 @@ try {
     if ($resourceGroup.ProvisioningState -eq 'Succeeded') {
         # New-AzResourceGroup would've written an error and stopped the pipeline by default anyway.
         Write-Verbose "Successfully created resource group '$($resourceGroup.ResourceGroupName)'"
-    }
-    elseif (!$resourceGroup) {
+    } elseif (!$resourceGroup) {
         if (!$PSCmdlet.ShouldProcess($resourceGroupName)) {
             # If the -WhatIf flag was passed, there will be no resource group created. Fake it.
             $resourceGroup = [PSCustomObject]@{
@@ -573,7 +598,9 @@ try {
                 Location = $Location
             }
         } else {
-            Write-Error "Resource group '$ResourceGroupName' already exists." -Category ResourceExists -RecommendedAction "Delete resource group '$ResourceGroupName', or overwrite it when redeploying."
+            Write-Error "Resource group '$ResourceGroupName' already exists." `
+                            -Category ResourceExists `
+                            -RecommendedAction "Delete resource group '$ResourceGroupName', or overwrite it when redeploying."
         }
     }
 
@@ -595,7 +622,10 @@ try {
                 $displayName = "$($baseName)$suffix.$ResourceType-resources.azure.sdk"
             }
 
-            $servicePrincipalWrapper = NewServicePrincipalWrapper -subscription $SubscriptionId -resourceGroup $ResourceGroupName -displayName $DisplayName
+            $servicePrincipalWrapper = NewServicePrincipalWrapper `
+                                        -subscription $SubscriptionId `
+                                        -resourceGroup $ResourceGroupName `
+                                        -displayName $DisplayName
 
             $global:AzureTestPrincipal = $servicePrincipalWrapper
             $global:AzureTestSubscription = $SubscriptionId
@@ -622,7 +652,8 @@ try {
             }
         }
         catch {
-            Write-Warning "The Object ID of the test application was unable to be queried. You may want to consider passing it explicitly with the 'TestApplicationOid` parameter."
+            Write-Warning ("The Object ID of the test application was unable to be queried. " +
+                          "You may want to consider passing it explicitly with the 'TestApplicationOid` parameter.")
             throw $_.Exception
         }
 
@@ -639,7 +670,11 @@ try {
     # If the role hasn't been explicitly assigned to the resource group and a cached service principal is in use,
     # query to see if the grant is needed.
     if (!$resourceGroupRoleAssigned -and $AzureTestPrincipal) {
-        $roleAssignment = Get-AzRoleAssignment -ObjectId $AzureTestPrincipal.Id -RoleDefinitionName 'Owner' -ResourceGroupName "$ResourceGroupName" -ErrorAction SilentlyContinue
+        $roleAssignment = Get-AzRoleAssignment `
+                            -ObjectId $AzureTestPrincipal.Id `
+                            -RoleDefinitionName 'Owner' `
+                            -ResourceGroupName "$ResourceGroupName" `
+                            -ErrorAction SilentlyContinue
         $resourceGroupRoleAssigned = ($roleAssignment.RoleDefinitionName -eq 'Owner')
     }
 
@@ -649,12 +684,18 @@ try {
    # the explicit grant.
    if (!$resourceGroupRoleAssigned) {
         Log "Attempting to assigning the 'Owner' role for '$ResourceGroupName' to the Test Application '$TestApplicationId'"
-        $principalOwnerAssignment = New-AzRoleAssignment -RoleDefinitionName "Owner" -ApplicationId "$TestApplicationId" -ResourceGroupName "$ResourceGroupName" -ErrorAction SilentlyContinue
+        $principalOwnerAssignment = New-AzRoleAssignment `
+                                        -RoleDefinitionName "Owner" `
+                                        -ApplicationId "$TestApplicationId" `
+                                        -ResourceGroupName "$ResourceGroupName" `
+                                        -ErrorAction SilentlyContinue
 
         if ($principalOwnerAssignment.RoleDefinitionName -eq 'Owner') {
             Write-Verbose "Successfully assigned ownership of '$ResourceGroupName' to the Test Application '$TestApplicationId'"
         } else {
-            Write-Warning "The 'Owner' role for '$ResourceGroupName' could not be assigned. You may need to manually grant 'Owner' for the resource group to the Test Application '$TestApplicationId' if it does not have subscription-level permissions."
+            Write-Warning ("The 'Owner' role for '$ResourceGroupName' could not be assigned. " +
+                          "You may need to manually grant 'Owner' for the resource group to the " +
+                          "Test Application '$TestApplicationId' if it does not have subscription-level permissions.")
         }
     }
 
@@ -723,31 +764,34 @@ try {
         Log $msg
 
         $deployment = Retry {
-            $lastDebugPreference = $DebugPreference
-            try {
-                if ($CI) {
-                    $DebugPreference = 'Continue'
-                }
-                New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile.jsonFilePath -TemplateParameterObject $templateFileParameters -Force:$Force
-            } catch {
-                Write-Output @'
+            New-AzResourceGroupDeployment `
+                    -Name $BaseName `
+                    -ResourceGroupName $resourceGroup.ResourceGroupName `
+                    -TemplateFile $templateFile.jsonFilePath `
+                    -TemplateParameterObject $templateFileParameters `
+                    -Force:$Force
+        }
+
+        if ($deployment.ProvisioningState -ne 'Succeeded') {
+            Write-Host "Deployment '$($deployment.DeploymentName)' has state '$($deployment.ProvisioningState)' with CorrelationId '$($deployment.CorrelationId)'. Exiting..."
+            Write-Host @'
 #####################################################
 # For help debugging live test provisioning issues, #
-# see http://aka.ms/azsdk/engsys/live-test-help,    #
+# see http://aka.ms/azsdk/engsys/live-test-help     #
 #####################################################
 '@
-                throw
-            } finally {
-                $DebugPreference = $lastDebugPreference
-            }
+            exit 1
         }
 
-        if ($deployment.ProvisioningState -eq 'Succeeded') {
-            # New-AzResourceGroupDeployment would've written an error and stopped the pipeline by default anyway.
-            Write-Verbose "Successfully deployed template '$($templateFile.jsonFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
-        }
+        Write-Host "Deployment '$($deployment.DeploymentName)' has CorrelationId '$($deployment.CorrelationId)'"
+        Write-Host "Successfully deployed template '$($templateFile.jsonFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
 
-        $deploymentOutputs = SetDeploymentOutputs $serviceName $context $deployment $templateFile
+        $deploymentEnvironmentVariables, $deploymentOutputs = SetDeploymentOutputs `
+                                                                -serviceName $serviceName `
+                                                                -azContext $context `
+                                                                -deployment $deployment `
+                                                                -templateFile $templateFile `
+                                                                -environmentVariables $EnvironmentVariables
 
         $postDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath "$ResourceType-resources-post.ps1"
         if (Test-Path $postDeploymentScript) {
@@ -767,7 +811,7 @@ try {
 
 # Suppress output locally
 if ($CI) {
-    return $EnvironmentVariables
+    return $deploymentEnvironmentVariables
 }
 
 <#
@@ -811,7 +855,13 @@ group that will be created.
 .PARAMETER ServiceDirectory
 A directory under 'sdk' in the repository root - optionally with subdirectories
 specified - in which to discover ARM templates named 'test-resources.json' and
-Bicep templates named 'test-resources.bicep'. This can also be an absolute path
+Bicep templates named 'test-resources.bicep'. This can be an absolute path
+or specify parent directories. ServiceDirectory is also used for resource and
+environment variable naming.
+
+.PARAMETER TestResourcesDirectory
+An override directory in which to discover ARM templates named 'test-resources.json' and
+Bicep templates named 'test-resources.bicep'. This can be an absolute path
 or specify parent directories.
 
 .PARAMETER TestApplicationId

@@ -13,11 +13,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2018-11-01")]
     public class SubnetTests : NetworkServiceClientTestBase
     {
         private SubscriptionResource _subscription;
 
-        public SubnetTests(bool isAsync) : base(isAsync)
+        public SubnetTests(bool isAsync, string apiVersion)
+        : base(isAsync, SubnetResource.ResourceType, apiVersion)
         {
         }
 
@@ -170,6 +172,33 @@ namespace Azure.ResourceManager.Network.Tests
             var subnetCollection = subnets1.Zip(subnets2, (s1, s2) => new { subnet1 = s1, subnet2 = s2.Data });
 
             return subnetCollection.All(subnets => AreSubnetsEqual(subnets.subnet1, subnets.subnet2));
+        }
+
+        [RecordedTest]
+        public async Task ExpandResourceTest()
+        {
+            string resourceGroupName = Recording.GenerateAssetName("csmrg");
+
+            string location = TestEnvironment.Location;
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
+
+            // Create Vnet
+            string vnetName = Recording.GenerateAssetName("azsmnet");
+            string subnetName = Recording.GenerateAssetName("azsmnet");
+            VirtualNetworkResource vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
+
+            // Get subnet with expanded ipconfigurations
+            Response<SubnetResource> subnet = await (await resourceGroup.GetVirtualNetworks().GetAsync(vnetName)).Value.GetSubnets().GetAsync(
+                subnetName,
+                "IPConfigurations");
+
+            foreach (NetworkIPConfiguration ipconfig in subnet.Value.Data.IPConfigurations)
+            {
+                Assert.NotNull(ipconfig.Id);
+                //Assert.NotNull(ipconfig.Name);
+                //Assert.NotNull(ipconfig.Etag);
+                Assert.NotNull(ipconfig.PrivateIPAddress);
+            }
         }
     }
 }

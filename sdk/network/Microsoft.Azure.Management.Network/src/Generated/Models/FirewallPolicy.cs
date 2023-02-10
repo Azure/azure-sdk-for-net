@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// traffic will not be SNAT.</param>
         /// <param name="sql">SQL Settings definition.</param>
         /// <param name="dnsSettings">DNS Proxy Settings definition.</param>
-        /// <param name="explicitProxySettings">Explicit Proxy Settings
+        /// <param name="explicitProxy">Explicit Proxy Settings
         /// definition.</param>
         /// <param name="intrusionDetection">The configuration for Intrusion
         /// detection.</param>
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="identity">The identity of the firewall policy.</param>
-        public FirewallPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SubResource> ruleCollectionGroups = default(IList<SubResource>), string provisioningState = default(string), SubResource basePolicy = default(SubResource), IList<SubResource> firewalls = default(IList<SubResource>), IList<SubResource> childPolicies = default(IList<SubResource>), string threatIntelMode = default(string), FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = default(FirewallPolicyThreatIntelWhitelist), FirewallPolicyInsights insights = default(FirewallPolicyInsights), FirewallPolicySNAT snat = default(FirewallPolicySNAT), FirewallPolicySQL sql = default(FirewallPolicySQL), DnsSettings dnsSettings = default(DnsSettings), ExplicitProxySettings explicitProxySettings = default(ExplicitProxySettings), FirewallPolicyIntrusionDetection intrusionDetection = default(FirewallPolicyIntrusionDetection), FirewallPolicyTransportSecurity transportSecurity = default(FirewallPolicyTransportSecurity), FirewallPolicySku sku = default(FirewallPolicySku), string etag = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
+        public FirewallPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SubResource> ruleCollectionGroups = default(IList<SubResource>), string provisioningState = default(string), SubResource basePolicy = default(SubResource), IList<SubResource> firewalls = default(IList<SubResource>), IList<SubResource> childPolicies = default(IList<SubResource>), string threatIntelMode = default(string), FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = default(FirewallPolicyThreatIntelWhitelist), FirewallPolicyInsights insights = default(FirewallPolicyInsights), FirewallPolicySNAT snat = default(FirewallPolicySNAT), FirewallPolicySQL sql = default(FirewallPolicySQL), DnsSettings dnsSettings = default(DnsSettings), ExplicitProxy explicitProxy = default(ExplicitProxy), FirewallPolicyIntrusionDetection intrusionDetection = default(FirewallPolicyIntrusionDetection), FirewallPolicyTransportSecurity transportSecurity = default(FirewallPolicyTransportSecurity), FirewallPolicySku sku = default(FirewallPolicySku), string etag = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
             : base(id, name, type, location, tags)
         {
             RuleCollectionGroups = ruleCollectionGroups;
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Network.Models
             Snat = snat;
             Sql = sql;
             DnsSettings = dnsSettings;
-            ExplicitProxySettings = explicitProxySettings;
+            ExplicitProxy = explicitProxy;
             IntrusionDetection = intrusionDetection;
             TransportSecurity = transportSecurity;
             Sku = sku;
@@ -173,8 +173,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets explicit Proxy Settings definition.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.explicitProxySettings")]
-        public ExplicitProxySettings ExplicitProxySettings { get; set; }
+        [JsonProperty(PropertyName = "properties.explicitProxy")]
+        public ExplicitProxy ExplicitProxy { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration for Intrusion detection.
@@ -215,9 +215,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ExplicitProxySettings != null)
+            if (ExplicitProxy != null)
             {
-                ExplicitProxySettings.Validate();
+                ExplicitProxy.Validate();
             }
         }
     }

@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static BatchConfigurationCollection DeserializeBatchConfigurationCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<BatchConfigurationData>> value = default;
+            Optional<IReadOnlyList<IntegrationAccountBatchConfigurationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BatchConfigurationData> array = new List<BatchConfigurationData>();
+                    List<IntegrationAccountBatchConfigurationData> array = new List<IntegrationAccountBatchConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchConfigurationData.DeserializeBatchConfigurationData(item));
+                        array.Add(IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(item));
                     }
                     value = array;
                     continue;

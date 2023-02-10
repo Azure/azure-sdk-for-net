@@ -1,0 +1,65 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://identity.confidential-ledger.core.azure.com/ledgerIdentity/chrissconfidentialledger?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220808.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "abb7a6836fe989ca1719a374e0325584",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 08 Aug 2022 17:16:15 GMT",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "abb7a6836fe989ca1719a374e0325584",
+        "x-ms-correlation-request-id": "cb831406-f0ed-41b6-a696-3e4db43899bf",
+        "x-ms-image-digest": "sha256:9b8d3952372e585a3b21995d9be0c8702fb7ba2ef54ca65392b2562dd2adcc73",
+        "x-ms-image-tag": "1.0.02031.28-b60f6adbe3f21e46216336ba378cc34dd0ab86ca",
+        "x-ms-machineName": "identityservice-6f96b84df8-wbxmj"
+      },
+      "ResponseBody": {
+        "ledgerTlsCertificate": "-----BEGIN CERTIFICATE-----\nMIIBfDCCASGgAwIBAgIRAJ2/vZkZ8ioQA1JdUVr2pqMwCgYIKoZIzj0EAwIwFjEU\nMBIGA1UEAwwLQ0NGIE5ldHdvcmswHhcNMjIwODA4MTcwMTU0WhcNMjIxMTA2MTcw\nMTUzWjAWMRQwEgYDVQQDDAtDQ0YgTmV0d29yazBZMBMGByqGSM49AgEGCCqGSM49\nAwEHA0IABFpANBl06p7tkizO8jhe4rZI6eSME8InEnnSLmNETYPYDvzdf1MnRa9o\n/XQqyMcWamkp\u002BQG0OduR2D4qMmqEvd\u002BjUDBOMAwGA1UdEwQFMAMBAf8wHQYDVR0O\nBBYEFJK3c\u002BQFMqaSIj6QSiSuWmxUnUKCMB8GA1UdIwQYMBaAFJK3c\u002BQFMqaSIj6Q\nSiSuWmxUnUKCMAoGCCqGSM49BAMCA0kAMEYCIQDkUaMHs5pch3vBLdU1o0rYhgG4\nYhHAK/MuRkKIIefUwgIhAIllvWx7pw\u002BXlIzB3c69vUX8JsJiWYyd/n3uCNwaprPY\n-----END CERTIFICATE-----\n",
+        "ledgerId": "chrissconfidentialledger"
+      }
+    },
+    {
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/governance/members?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220808.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3403e61cba32a9fb68e19d04a9530a98",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "856",
+        "Content-Type": "application/json",
+        "x-ms-ccf-transaction-id": "2.30",
+        "x-ms-client-request-id": "3403e61cba32a9fb68e19d04a9530a98",
+        "x-ms-request-id": "933229834"
+      },
+      "ResponseBody": {
+        "members": [
+          {
+            "certificate": "-----BEGIN CERTIFICATE-----\nMIIB9jCCAX2gAwIBAgIQUmxaAl2oSVOtg/F9ahtitzAKBggqhkjOPQQDAzAgMR4w\nHAYDVQQDExVDQ0YgR292ZXJub3IgSWRlbnRpdHkwHhcNMjIwODA4MTY1MTE0WhcN\nMjIxMTA4MTcwMTE0WjAgMR4wHAYDVQQDExVDQ0YgR292ZXJub3IgSWRlbnRpdHkw\ndjAQBgcqhkjOPQIBBgUrgQQAIgNiAAQal2HlgDeFEctvV6MTJB/TBMx4ytIdquOr\ndhBxMLGQc/LyK93qqMFxFaJtrbkCwHNGN247aV6piBlrYhrL4yJSbYFtGPx\u002BF/t9\nvE8FDOHtUK3fFrS3YtBzhNtNdAwFyhOjfDB6MA4GA1UdDwEB/wQEAwIHgDAJBgNV\nHRMEAjAAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAfBgNVHSMEGDAW\ngBSMHyxSkXnKWDzkC/GwPjoyG3XL3TAdBgNVHQ4EFgQUjB8sUpF5ylg85AvxsD46\nMht1y90wCgYIKoZIzj0EAwMDZwAwZAIwCNh7xcxZ3OMNUorzf\u002BuJ7pHH1E9vyCxE\nmiwVn1SzbCb6LcHy\u002BCg6fdIvLSKUDPRqAjBFv1NaW/tGuOE1bc28kuWpK/VdyWcn\nH30iu\u002BjFH6U5OzOcpKtVt/8Ks2exwNVh2RY=\n-----END CERTIFICATE-----",
+            "id": "bf63e509beaf6d331a0584494c670701e406afb0549603b3a3040d74b437b8b0"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "CONFIDENTIALLEDGER_IDENTITY_URL": "https://identity.confidential-ledger.core.azure.com",
+    "CONFIDENTIALLEDGER_URL": "https://chrissconfidentialledger.confidential-ledger.azure.com",
+    "RandomSeed": "1478601543"
+  }
+}

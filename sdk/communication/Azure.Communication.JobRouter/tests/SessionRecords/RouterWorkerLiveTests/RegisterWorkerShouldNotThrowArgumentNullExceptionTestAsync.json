@@ -1,0 +1,59 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/workers/sdk-AAvvdPduikWR6-io-6kYcQ--WorkerIDRegisterWorker?api-version=2022-07-18-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "96",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-2da8316526f0524c9b76b598fa1718ac-11a851b8c781414d-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220722.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "769ac07a0c93e4209104704805addcb5",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Sat, 23 Jul 2022 04:17:50 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "queueAssignments": {},
+        "totalCapacity": 100,
+        "channelConfigurations": {},
+        "availableForOffers": true
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2, 2022-07-18-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 23 Jul 2022 04:17:52 GMT",
+        "ETag": "\u002200000001-0000-0000-c69e-104f626cda08\u0022",
+        "Last-Modified": "Sat, 23 Jul 2022 04:17:51 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "2da8316526f0524c9b76b598fa1718ac",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0bnbbYgAAAABdK6/XCQr5TJ9RllmFpaETWVZSMzExMDAwMTE1MDA5AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-AAvvdPduikWR6-io-6kYcQ--WorkerIDRegisterWorker",
+        "state": "active",
+        "queueAssignments": {},
+        "totalCapacity": 100,
+        "labels": {
+          "Id": "sdk-AAvvdPduikWR6-io-6kYcQ--WorkerIDRegisterWorker"
+        },
+        "tags": {},
+        "channelConfigurations": {},
+        "offers": [],
+        "assignedJobs": [],
+        "loadRatio": 0,
+        "availableForOffers": true
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rsarkar-sdktest.int.communication.azure.net/;accesskey=Kg==",
+    "id-prefix": "sdk-AAvvdPduikWR6-io-6kYcQ-",
+    "RandomSeed": "1489648086"
+  }
+}

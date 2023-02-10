@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Identifier))
             {
-                writer.WritePropertyName("identifier");
+                writer.WritePropertyName("identifier"u8);
                 writer.WriteStringValue(Identifier);
             }
             if (Optional.IsDefined(Base64Key))
             {
-                writer.WritePropertyName("base64Key");
+                writer.WritePropertyName("base64Key"u8);
                 writer.WriteStringValue(Base64Key);
             }
-            if (Optional.IsDefined(Expiration))
+            if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expiration");
-                writer.WriteStringValue(Expiration.Value, "O");
+                writer.WritePropertyName("expiration"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WriteEndObject();
         }
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.Media.Models
             Optional<DateTimeOffset> expiration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identifier"))
+                if (property.NameEquals("identifier"u8))
                 {
                     identifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("base64Key"))
+                if (property.NameEquals("base64Key"u8))
                 {
                     base64Key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expiration"))
+                if (property.NameEquals("expiration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

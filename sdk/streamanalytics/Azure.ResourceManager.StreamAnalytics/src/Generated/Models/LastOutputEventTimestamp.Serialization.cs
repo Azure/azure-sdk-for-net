@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,22 +15,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static LastOutputEventTimestamp DeserializeLastOutputEventTimestamp(JsonElement element)
         {
-            Optional<string> lastOutputEventTime = default;
-            Optional<string> lastUpdateTime = default;
+            Optional<DateTimeOffset> lastOutputEventTime = default;
+            Optional<DateTimeOffset> lastUpdateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastOutputEventTime"))
+                if (property.NameEquals("lastOutputEventTime"u8))
                 {
-                    lastOutputEventTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastOutputEventTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdateTime"))
+                if (property.NameEquals("lastUpdateTime"u8))
                 {
-                    lastUpdateTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new LastOutputEventTimestamp(lastOutputEventTime.Value, lastUpdateTime.Value);
+            return new LastOutputEventTimestamp(Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(lastUpdateTime));
         }
     }
 }

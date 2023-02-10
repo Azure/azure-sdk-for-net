@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("senderBusinessIdentity");
+            writer.WritePropertyName("senderBusinessIdentity"u8);
             writer.WriteObjectValue(SenderBusinessIdentity);
-            writer.WritePropertyName("receiverBusinessIdentity");
+            writer.WritePropertyName("receiverBusinessIdentity"u8);
             writer.WriteObjectValue(ReceiverBusinessIdentity);
-            writer.WritePropertyName("protocolSettings");
+            writer.WritePropertyName("protocolSettings"u8);
             writer.WriteObjectValue(ProtocolSettings);
             writer.WriteEndObject();
         }
 
         internal static EdifactOneWayAgreement DeserializeEdifactOneWayAgreement(JsonElement element)
         {
-            BusinessIdentity senderBusinessIdentity = default;
-            BusinessIdentity receiverBusinessIdentity = default;
+            IntegrationAccountBusinessIdentity senderBusinessIdentity = default;
+            IntegrationAccountBusinessIdentity receiverBusinessIdentity = default;
             EdifactProtocolSettings protocolSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("senderBusinessIdentity"))
+                if (property.NameEquals("senderBusinessIdentity"u8))
                 {
-                    senderBusinessIdentity = BusinessIdentity.DeserializeBusinessIdentity(property.Value);
+                    senderBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("receiverBusinessIdentity"))
+                if (property.NameEquals("receiverBusinessIdentity"u8))
                 {
-                    receiverBusinessIdentity = BusinessIdentity.DeserializeBusinessIdentity(property.Value);
+                    receiverBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("protocolSettings"))
+                if (property.NameEquals("protocolSettings"u8))
                 {
                     protocolSettings = EdifactProtocolSettings.DeserializeEdifactProtocolSettings(property.Value);
                     continue;

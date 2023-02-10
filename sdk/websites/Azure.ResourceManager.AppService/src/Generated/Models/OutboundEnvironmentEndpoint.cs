@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
         internal OutboundEnvironmentEndpoint()
         {
-            Endpoints = new ChangeTrackingList<EndpointDependency>();
+            Endpoints = new ChangeTrackingList<AppServiceEndpointDependency>();
         }
 
         /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
         /// <param name="category"> The type of service accessed by the App Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </param>
         /// <param name="endpoints"> The endpoints that the App Service Environment reaches the service at. </param>
-        internal OutboundEnvironmentEndpoint(string category, IReadOnlyList<EndpointDependency> endpoints)
+        internal OutboundEnvironmentEndpoint(string category, IReadOnlyList<AppServiceEndpointDependency> endpoints)
         {
             Category = category;
             Endpoints = endpoints;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The type of service accessed by the App Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </summary>
         public string Category { get; }
         /// <summary> The endpoints that the App Service Environment reaches the service at. </summary>
-        public IReadOnlyList<EndpointDependency> Endpoints { get; }
+        public IReadOnlyList<AppServiceEndpointDependency> Endpoints { get; }
     }
 }

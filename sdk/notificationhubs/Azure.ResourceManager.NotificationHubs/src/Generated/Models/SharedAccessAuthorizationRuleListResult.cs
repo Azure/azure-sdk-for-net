@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleListResult. </summary>
         internal SharedAccessAuthorizationRuleListResult()
         {
-            Value = new ChangeTrackingList<SharedAccessAuthorizationRuleResourceData>();
+            Value = new ChangeTrackingList<NotificationHubAuthorizationRuleData>();
         }
 
         /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleListResult. </summary>
         /// <param name="value"> Result of the List AuthorizationRules operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of AuthorizationRules. </param>
-        internal SharedAccessAuthorizationRuleListResult(IReadOnlyList<SharedAccessAuthorizationRuleResourceData> value, string nextLink)
+        internal SharedAccessAuthorizationRuleListResult(IReadOnlyList<NotificationHubAuthorizationRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Result of the List AuthorizationRules operation. </summary>
-        public IReadOnlyList<SharedAccessAuthorizationRuleResourceData> Value { get; }
+        public IReadOnlyList<NotificationHubAuthorizationRuleData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of AuthorizationRules. </summary>
         public string NextLink { get; }
     }

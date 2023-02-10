@@ -30,40 +30,64 @@ namespace Azure.ResourceManager.Relay
 
         /// <summary>
         /// Check the specified namespace name availability.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Relay/checkNameAvailability
-        /// Operation Id: Namespaces_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Relay/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailability"> Parameters to check availability of the specified namespace name. </param>
+        /// <param name="content"> Parameters to check availability of the specified namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailability"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityNamespaceAsync(this SubscriptionResource subscriptionResource, CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<RelayNameAvailabilityResult>> CheckRelayNamespaceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, RelayNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailability, nameof(checkNameAvailability));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityNamespaceAsync(checkNameAvailability, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckRelayNamespaceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check the specified namespace name availability.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Relay/checkNameAvailability
-        /// Operation Id: Namespaces_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Relay/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailability"> Parameters to check availability of the specified namespace name. </param>
+        /// <param name="content"> Parameters to check availability of the specified namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailability"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityNamespace(this SubscriptionResource subscriptionResource, CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<RelayNameAvailabilityResult> CheckRelayNamespaceNameAvailability(this SubscriptionResource subscriptionResource, RelayNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailability, nameof(checkNameAvailability));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityNamespace(checkNameAvailability, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckRelayNamespaceNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
         /// Lists all the available namespaces within the subscription regardless of the resourceGroups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Relay/namespaces
-        /// Operation Id: Namespaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Relay/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -75,8 +99,16 @@ namespace Azure.ResourceManager.Relay
 
         /// <summary>
         /// Lists all the available namespaces within the subscription regardless of the resourceGroups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Relay/namespaces
-        /// Operation Id: Namespaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Relay/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -105,8 +137,16 @@ namespace Azure.ResourceManager.Relay
 
         /// <summary>
         /// Returns the description for the specified namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -121,8 +161,16 @@ namespace Azure.ResourceManager.Relay
 
         /// <summary>
         /// Returns the description for the specified namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -135,58 +183,58 @@ namespace Azure.ResourceManager.Relay
             return resourceGroupResource.GetRelayNamespaces().Get(namespaceName, cancellationToken);
         }
 
-        #region NamespaceAuthorizationRuleResource
+        #region RelayNamespaceAuthorizationRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RelayNamespaceAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RelayNamespaceAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="RelayNamespaceAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceAuthorizationRuleResource" /> object. </returns>
-        public static NamespaceAuthorizationRuleResource GetNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RelayNamespaceAuthorizationRuleResource" /> object. </returns>
+        public static RelayNamespaceAuthorizationRuleResource GetRelayNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NamespaceAuthorizationRuleResource.ValidateResourceId(id);
-                return new NamespaceAuthorizationRuleResource(client, id);
+                RelayNamespaceAuthorizationRuleResource.ValidateResourceId(id);
+                return new RelayNamespaceAuthorizationRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NamespaceHybridConnectionAuthorizationRuleResource
+        #region RelayHybridConnectionAuthorizationRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceHybridConnectionAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceHybridConnectionAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceHybridConnectionAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RelayHybridConnectionAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RelayHybridConnectionAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="RelayHybridConnectionAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceHybridConnectionAuthorizationRuleResource" /> object. </returns>
-        public static NamespaceHybridConnectionAuthorizationRuleResource GetNamespaceHybridConnectionAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RelayHybridConnectionAuthorizationRuleResource" /> object. </returns>
+        public static RelayHybridConnectionAuthorizationRuleResource GetRelayHybridConnectionAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NamespaceHybridConnectionAuthorizationRuleResource.ValidateResourceId(id);
-                return new NamespaceHybridConnectionAuthorizationRuleResource(client, id);
+                RelayHybridConnectionAuthorizationRuleResource.ValidateResourceId(id);
+                return new RelayHybridConnectionAuthorizationRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NamespaceWcfRelayAuthorizationRuleResource
+        #region WcfRelayAuthorizationRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceWcfRelayAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceWcfRelayAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceWcfRelayAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WcfRelayAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WcfRelayAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="WcfRelayAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceWcfRelayAuthorizationRuleResource" /> object. </returns>
-        public static NamespaceWcfRelayAuthorizationRuleResource GetNamespaceWcfRelayAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WcfRelayAuthorizationRuleResource" /> object. </returns>
+        public static WcfRelayAuthorizationRuleResource GetWcfRelayAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NamespaceWcfRelayAuthorizationRuleResource.ValidateResourceId(id);
-                return new NamespaceWcfRelayAuthorizationRuleResource(client, id);
+                WcfRelayAuthorizationRuleResource.ValidateResourceId(id);
+                return new WcfRelayAuthorizationRuleResource(client, id);
             }
             );
         }
@@ -211,39 +259,39 @@ namespace Azure.ResourceManager.Relay
         }
         #endregion
 
-        #region NetworkRuleSetResource
+        #region RelayNetworkRuleSetResource
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkRuleSetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkRuleSetResource.CreateResourceIdentifier" /> to create a <see cref="NetworkRuleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RelayNetworkRuleSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RelayNetworkRuleSetResource.CreateResourceIdentifier" /> to create a <see cref="RelayNetworkRuleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkRuleSetResource" /> object. </returns>
-        public static NetworkRuleSetResource GetNetworkRuleSetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RelayNetworkRuleSetResource" /> object. </returns>
+        public static RelayNetworkRuleSetResource GetRelayNetworkRuleSetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NetworkRuleSetResource.ValidateResourceId(id);
-                return new NetworkRuleSetResource(client, id);
+                RelayNetworkRuleSetResource.ValidateResourceId(id);
+                return new RelayNetworkRuleSetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region HybridConnectionResource
+        #region RelayHybridConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="HybridConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RelayHybridConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RelayHybridConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RelayHybridConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridConnectionResource" /> object. </returns>
-        public static HybridConnectionResource GetHybridConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RelayHybridConnectionResource" /> object. </returns>
+        public static RelayHybridConnectionResource GetRelayHybridConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                HybridConnectionResource.ValidateResourceId(id);
-                return new HybridConnectionResource(client, id);
+                RelayHybridConnectionResource.ValidateResourceId(id);
+                return new RelayHybridConnectionResource(client, id);
             }
             );
         }

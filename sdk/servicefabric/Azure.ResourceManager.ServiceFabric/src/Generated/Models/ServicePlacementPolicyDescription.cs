@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Describes the policy to be used for placement of a Service Fabric service. </summary>
-    public partial class ServicePlacementPolicyDescription
+    public abstract partial class ServicePlacementPolicyDescription
     {
         /// <summary> Initializes a new instance of ServicePlacementPolicyDescription. </summary>
-        public ServicePlacementPolicyDescription()
+        protected ServicePlacementPolicyDescription()
         {
         }
 

@@ -30,35 +30,31 @@ In our case, we will be writing an application that collects the expenses a comp
 // https://aka.ms/azsdk/formrecognizer/buildtrainingset
 
 Uri officeSuppliesUri = new Uri("<purchaseOrderOfficeSuppliesUri>");
-var officeSupplieOptions = new BuildModelOptions() { Description = "Purchase order - Office supplies" };
+var officeSupplieOptions = new BuildDocumentModelOptions() { Description = "Purchase order - Office supplies" };
 
-BuildModelOperation suppliesOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: officeSupplieOptions);
-Response<DocumentModel> suppliesOperationResponse = await suppliesOperation.WaitForCompletionAsync();
-DocumentModel officeSuppliesModel = suppliesOperationResponse.Value;
+BuildDocumentModelOperation suppliesOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: officeSupplieOptions);
+DocumentModelDetails officeSuppliesModel = suppliesOperation.Value;
 
 Uri officeEquipmentUri = new Uri("<purchaseOrderOfficeEquipmentUri>");
-var equipmentOptions = new BuildModelOptions() { Description = "Purchase order - Office Equipment" };
+var equipmentOptions = new BuildDocumentModelOptions() { Description = "Purchase order - Office Equipment" };
 
-BuildModelOperation equipmentOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
-Response<DocumentModel> equipmentOperationResponse = await equipmentOperation.WaitForCompletionAsync();
-DocumentModel officeEquipmentModel = equipmentOperationResponse.Value;
+BuildDocumentModelOperation equipmentOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
+DocumentModelDetails officeEquipmentModel = equipmentOperation.Value;
 
 Uri furnitureUri = new Uri("<purchaseOrderFurnitureUri>");
-var furnitureOptions = new BuildModelOptions() { Description = "Purchase order - Furniture" };
+var furnitureOptions = new BuildDocumentModelOptions() { Description = "Purchase order - Furniture" };
 
-BuildModelOperation furnitureOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
-Response<DocumentModel> furnitureOperationResponse = await furnitureOperation.WaitForCompletionAsync();
-DocumentModel furnitureModel = furnitureOperationResponse.Value;
+BuildDocumentModelOperation furnitureOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
+DocumentModelDetails furnitureModel = furnitureOperation.Value;
 
 Uri cleaningSuppliesUri = new Uri("<purchaseOrderCleaningSuppliesUri>");
-var cleaningOptions = new BuildModelOptions() { Description = "Purchase order - Cleaning Supplies" };
+var cleaningOptions = new BuildDocumentModelOptions() { Description = "Purchase order - Cleaning Supplies" };
 
-BuildModelOperation cleaningOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
-Response<DocumentModel> cleaningOperationResponse = await cleaningOperation.WaitForCompletionAsync();
-DocumentModel cleaningSuppliesModel = cleaningOperationResponse.Value;
+BuildDocumentModelOperation cleaningOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
+DocumentModelDetails cleaningSuppliesModel = cleaningOperation.Value;
 ```
 
-When a purchase order happens, the employee in charge uploads the document to our application. The application then needs to analyze the document to extract the total value of the purchase order. Instead of asking the user to look for the specific `modelId` according to the nature of the document, you can compose a model that aggregates the previous models, and use that model in `StartAnalyzeDocument` and let the service decide which model fits best according to the document provided.
+When a purchase order happens, the employee in charge uploads the document to our application. The application then needs to analyze the document to extract the total value of the purchase order. Instead of asking the user to look for the specific `modelId` according to the nature of the document, you can compose a model that aggregates the previous models, and use that model in `AnalyzeDocument` and let the service decide which model fits best according to the document provided.
 
 ```C# Snippet:FormRecognizerSampleComposeModel
 List<string> modelIds = new List<string>()
@@ -69,18 +65,14 @@ List<string> modelIds = new List<string>()
     cleaningSuppliesModel.ModelId
 };
 
-BuildModelOperation operation = await client.StartComposeModelAsync(modelIds, description: "Composed Purchase order");
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel purchaseOrderModel = operationResponse.Value;
+ComposeDocumentModelOperation operation = await client.ComposeDocumentModelAsync(WaitUntil.Completed, modelIds, description: "Composed Purchase order");
+DocumentModelDetails purchaseOrderModel = operation.Value;
 
 Console.WriteLine($"  Model Id: {purchaseOrderModel.ModelId}");
 if (string.IsNullOrEmpty(purchaseOrderModel.Description))
     Console.WriteLine($"  Model description: {purchaseOrderModel.Description}");
 Console.WriteLine($"  Created on: {purchaseOrderModel.CreatedOn}");
 ```
-
-To see the full example source files, see:
-* [Compose a model](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_ComposeModelAsync.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [labeling_tool]: https://aka.ms/azsdk/formrecognizer/labelingtool

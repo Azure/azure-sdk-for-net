@@ -18,38 +18,38 @@ namespace Azure.ResourceManager.Cdn
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Origin))
             {
-                writer.WritePropertyName("azureOrigin");
+                writer.WritePropertyName("azureOrigin"u8);
                 JsonSerializer.Serialize(writer, Origin);
             }
             if (Optional.IsDefined(HostName))
             {
-                writer.WritePropertyName("hostName");
+                writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
             if (Optional.IsDefined(HttpPort))
             {
-                writer.WritePropertyName("httpPort");
+                writer.WritePropertyName("httpPort"u8);
                 writer.WriteNumberValue(HttpPort.Value);
             }
             if (Optional.IsDefined(HttpsPort))
             {
-                writer.WritePropertyName("httpsPort");
+                writer.WritePropertyName("httpsPort"u8);
                 writer.WriteNumberValue(HttpsPort.Value);
             }
             if (Optional.IsDefined(OriginHostHeader))
             {
-                writer.WritePropertyName("originHostHeader");
+                writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
             if (Optional.IsDefined(Priority))
             {
                 if (Priority != null)
                 {
-                    writer.WritePropertyName("priority");
+                    writer.WritePropertyName("priority"u8);
                     writer.WriteNumberValue(Priority.Value);
                 }
                 else
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Weight != null)
                 {
-                    writer.WritePropertyName("weight");
+                    writer.WritePropertyName("weight"u8);
                     writer.WriteNumberValue(Weight.Value);
                 }
                 else
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (SharedPrivateLinkResource != null)
                 {
-                    writer.WritePropertyName("sharedPrivateLinkResource");
+                    writer.WritePropertyName("sharedPrivateLinkResource"u8);
                     writer.WriteObjectValue(SharedPrivateLinkResource);
                 }
                 else
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             if (Optional.IsDefined(EnforceCertificateNameCheck))
             {
-                writer.WritePropertyName("enforceCertificateNameCheck");
+                writer.WritePropertyName("enforceCertificateNameCheck"u8);
                 writer.WriteBooleanValue(EnforceCertificateNameCheck.Value);
             }
             writer.WriteEndObject();
@@ -116,32 +116,32 @@ namespace Azure.ResourceManager.Cdn
             Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,27 +150,27 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("originGroupName"))
+                        if (property0.NameEquals("originGroupName"u8))
                         {
                             originGroupName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("azureOrigin"))
+                        if (property0.NameEquals("azureOrigin"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            azureOrigin = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            azureOrigin = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("hostName"))
+                        if (property0.NameEquals("hostName"u8))
                         {
                             hostName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("httpPort"))
+                        if (property0.NameEquals("httpPort"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Cdn
                             httpPort = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("httpsPort"))
+                        if (property0.NameEquals("httpsPort"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -190,12 +190,12 @@ namespace Azure.ResourceManager.Cdn
                             httpsPort = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("originHostHeader"))
+                        if (property0.NameEquals("originHostHeader"u8))
                         {
                             originHostHeader = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("priority"))
+                        if (property0.NameEquals("priority"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Cdn
                             priority = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("weight"))
+                        if (property0.NameEquals("weight"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Cdn
                             weight = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("sharedPrivateLinkResource"))
+                        if (property0.NameEquals("sharedPrivateLinkResource"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Cdn
                             sharedPrivateLinkResource = SharedPrivateLinkResourceProperties.DeserializeSharedPrivateLinkResourceProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("enabledState"))
+                        if (property0.NameEquals("enabledState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Cdn
                             enabledState = new EnabledState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("enforceCertificateNameCheck"))
+                        if (property0.NameEquals("enforceCertificateNameCheck"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Cdn
                             enforceCertificateNameCheck = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Cdn
                             provisioningState = new FrontDoorProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("deploymentStatus"))
+                        if (property0.NameEquals("deploymentStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

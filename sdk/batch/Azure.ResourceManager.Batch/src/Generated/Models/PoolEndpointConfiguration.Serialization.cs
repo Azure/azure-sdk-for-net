@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("inboundNatPools");
+            writer.WritePropertyName("inboundNatPools"u8);
             writer.WriteStartArray();
             foreach (var item in InboundNatPools)
             {
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static PoolEndpointConfiguration DeserializePoolEndpointConfiguration(JsonElement element)
         {
-            IList<InboundNatPool> inboundNatPools = default;
+            IList<BatchInboundNatPool> inboundNatPools = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inboundNatPools"))
+                if (property.NameEquals("inboundNatPools"u8))
                 {
-                    List<InboundNatPool> array = new List<InboundNatPool>();
+                    List<BatchInboundNatPool> array = new List<BatchInboundNatPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InboundNatPool.DeserializeInboundNatPool(item));
+                        array.Add(BatchInboundNatPool.DeserializeBatchInboundNatPool(item));
                     }
                     inboundNatPools = array;
                     continue;

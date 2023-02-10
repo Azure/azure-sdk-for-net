@@ -103,6 +103,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             Uri serviceEndpoint = options.ServiceEndpoint ?? ConstructObjectAnchorsEndpointUrl(accountDomain);
 
             AccountId = accountId;
+            AccountDomain = accountDomain;
             SupportedAssetFileTypesSet = options.SupportedAssetFileTypes;
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(mrTokenCredential, GetDefaultScope(serviceEndpoint)));

@@ -16,38 +16,38 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceBusNamespace))
             {
-                writer.WritePropertyName("serviceBusNamespace");
+                writer.WritePropertyName("serviceBusNamespace"u8);
                 writer.WriteStringValue(ServiceBusNamespace);
             }
             if (Optional.IsDefined(SharedAccessPolicyName))
             {
-                writer.WritePropertyName("sharedAccessPolicyName");
+                writer.WritePropertyName("sharedAccessPolicyName"u8);
                 writer.WriteStringValue(SharedAccessPolicyName);
             }
             if (Optional.IsDefined(SharedAccessPolicyKey))
             {
-                writer.WritePropertyName("sharedAccessPolicyKey");
+                writer.WritePropertyName("sharedAccessPolicyKey"u8);
                 writer.WriteStringValue(SharedAccessPolicyKey);
             }
             if (Optional.IsDefined(AuthenticationMode))
             {
-                writer.WritePropertyName("authenticationMode");
+                writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
             if (Optional.IsDefined(TopicName))
             {
-                writer.WritePropertyName("topicName");
+                writer.WritePropertyName("topicName"u8);
                 writer.WriteStringValue(TopicName);
             }
             if (Optional.IsCollectionDefined(PropertyColumns))
             {
-                writer.WritePropertyName("propertyColumns");
+                writer.WritePropertyName("propertyColumns"u8);
                 writer.WriteStartArray();
                 foreach (var item in PropertyColumns)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             if (Optional.IsCollectionDefined(SystemPropertyColumns))
             {
-                writer.WritePropertyName("systemPropertyColumns");
+                writer.WritePropertyName("systemPropertyColumns"u8);
                 writer.WriteStartObject();
                 foreach (var item in SystemPropertyColumns)
                 {
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> serviceBusNamespace = default;
             Optional<string> sharedAccessPolicyName = default;
             Optional<string> sharedAccessPolicyKey = default;
-            Optional<AuthenticationMode> authenticationMode = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             Optional<string> topicName = default;
             Optional<IList<string>> propertyColumns = default;
             Optional<IDictionary<string, string>> systemPropertyColumns = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,37 +96,37 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("serviceBusNamespace"))
+                        if (property0.NameEquals("serviceBusNamespace"u8))
                         {
                             serviceBusNamespace = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sharedAccessPolicyName"))
+                        if (property0.NameEquals("sharedAccessPolicyName"u8))
                         {
                             sharedAccessPolicyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sharedAccessPolicyKey"))
+                        if (property0.NameEquals("sharedAccessPolicyKey"u8))
                         {
                             sharedAccessPolicyKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authenticationMode"))
+                        if (property0.NameEquals("authenticationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authenticationMode = new AuthenticationMode(property0.Value.GetString());
+                            authenticationMode = new StreamAnalyticsAuthenticationMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("topicName"))
+                        if (property0.NameEquals("topicName"u8))
                         {
                             topicName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("propertyColumns"))
+                        if (property0.NameEquals("propertyColumns"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             propertyColumns = array;
                             continue;
                         }
-                        if (property0.NameEquals("systemPropertyColumns"))
+                        if (property0.NameEquals("systemPropertyColumns"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

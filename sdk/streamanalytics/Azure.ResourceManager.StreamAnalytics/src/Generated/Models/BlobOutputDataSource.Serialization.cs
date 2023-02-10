@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(StorageAccounts))
             {
-                writer.WritePropertyName("storageAccounts");
+                writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
@@ -32,37 +32,37 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             if (Optional.IsDefined(Container))
             {
-                writer.WritePropertyName("container");
+                writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
             if (Optional.IsDefined(PathPattern))
             {
-                writer.WritePropertyName("pathPattern");
+                writer.WritePropertyName("pathPattern"u8);
                 writer.WriteStringValue(PathPattern);
             }
             if (Optional.IsDefined(DateFormat))
             {
-                writer.WritePropertyName("dateFormat");
+                writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
             if (Optional.IsDefined(TimeFormat))
             {
-                writer.WritePropertyName("timeFormat");
+                writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
             if (Optional.IsDefined(AuthenticationMode))
             {
-                writer.WritePropertyName("authenticationMode");
+                writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
             if (Optional.IsDefined(BlobPathPrefix))
             {
-                writer.WritePropertyName("blobPathPrefix");
+                writer.WritePropertyName("blobPathPrefix"u8);
                 writer.WriteStringValue(BlobPathPrefix);
             }
             if (Optional.IsDefined(BlobWriteMode))
             {
-                writer.WritePropertyName("blobWriteMode");
+                writer.WritePropertyName("blobWriteMode"u8);
                 writer.WriteStringValue(BlobWriteMode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         internal static BlobOutputDataSource DeserializeBlobOutputDataSource(JsonElement element)
         {
             string type = default;
-            Optional<IList<StorageAccount>> storageAccounts = default;
+            Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
             Optional<string> container = default;
             Optional<string> pathPattern = default;
             Optional<string> dateFormat = default;
             Optional<string> timeFormat = default;
-            Optional<AuthenticationMode> authenticationMode = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             Optional<string> blobPathPrefix = default;
-            Optional<BlobWriteMode> blobWriteMode = default;
+            Optional<BlobOutputWriteMode> blobWriteMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,64 +96,64 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("storageAccounts"))
+                        if (property0.NameEquals("storageAccounts"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<StorageAccount> array = new List<StorageAccount>();
+                            List<StreamAnalyticsStorageAccount> array = new List<StreamAnalyticsStorageAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageAccount.DeserializeStorageAccount(item));
+                                array.Add(StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(item));
                             }
                             storageAccounts = array;
                             continue;
                         }
-                        if (property0.NameEquals("container"))
+                        if (property0.NameEquals("container"u8))
                         {
                             container = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("pathPattern"))
+                        if (property0.NameEquals("pathPattern"u8))
                         {
                             pathPattern = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dateFormat"))
+                        if (property0.NameEquals("dateFormat"u8))
                         {
                             dateFormat = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("timeFormat"))
+                        if (property0.NameEquals("timeFormat"u8))
                         {
                             timeFormat = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authenticationMode"))
+                        if (property0.NameEquals("authenticationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authenticationMode = new AuthenticationMode(property0.Value.GetString());
+                            authenticationMode = new StreamAnalyticsAuthenticationMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("blobPathPrefix"))
+                        if (property0.NameEquals("blobPathPrefix"u8))
                         {
                             blobPathPrefix = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("blobWriteMode"))
+                        if (property0.NameEquals("blobWriteMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            blobWriteMode = new BlobWriteMode(property0.Value.GetString());
+                            blobWriteMode = new BlobOutputWriteMode(property0.Value.GetString());
                             continue;
                         }
                     }

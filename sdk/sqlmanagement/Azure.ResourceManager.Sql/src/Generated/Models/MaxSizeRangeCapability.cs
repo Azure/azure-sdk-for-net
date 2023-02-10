@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="logSize"> Size of transaction log. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal MaxSizeRangeCapability(MaxSizeCapability minValue, MaxSizeCapability maxValue, MaxSizeCapability scaleSize, LogSizeCapability logSize, CapabilityStatus? status, string reason)
+        internal MaxSizeRangeCapability(MaxSizeCapability minValue, MaxSizeCapability maxValue, MaxSizeCapability scaleSize, LogSizeCapability logSize, SqlCapabilityStatus? status, string reason)
         {
             MinValue = minValue;
             MaxValue = maxValue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Size of transaction log. </summary>
         public LogSizeCapability LogSize { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

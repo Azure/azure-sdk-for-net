@@ -1,0 +1,841 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/:import?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "644",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8a9266aee27e18cb6e386baddaf59909",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "projectFileVersion": "2022-05-01",
+        "metadata": {
+          "projectName": "net-conv-425869093",
+          "projectKind": "Conversation",
+          "multilingual": true,
+          "language": "en"
+        },
+        "assets": {
+          "projectKind": "Conversation",
+          "entities": [
+            {
+              "category": "Contact",
+              "compositionSetting": "combineComponents",
+              "prebuilts": [
+                {
+                  "category": "Person.Name"
+                }
+              ]
+            }
+          ],
+          "intents": [
+            {
+              "category": "Send"
+            }
+          ],
+          "utterances": [
+            {
+              "text": "Send an email to Johnson",
+              "language": "en",
+              "intent": "Send",
+              "entities": [
+                {
+                  "category": "Contact",
+                  "offset": 17,
+                  "length": 7
+                }
+              ]
+            },
+            {
+              "text": "Send Kathy a calendar invite",
+              "language": "en",
+              "intent": "Send",
+              "entities": [
+                {
+                  "category": "Contact",
+                  "offset": 5,
+                  "length": 5
+                }
+              ]
+            }
+          ]
+        },
+        "stringIndexType": "Utf16CodeUnit"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "9aebe4a5-39ea-41e5-b940-25311d62ffe1",
+        "Content-Length": "0",
+        "Date": "Fri, 21 Oct 2022 17:09:12 GMT",
+        "operation-location": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/import/jobs/662ac6bf-a392-423c-90e4-5abd63d87e88_638019072000000000?api-version=2022-10-01-preview",
+        "request-id": "9aebe4a5-39ea-41e5-b940-25311d62ffe1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "357",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/import/jobs/662ac6bf-a392-423c-90e4-5abd63d87e88_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "64faa956f99bb6d8270826d951676f3a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "1b62594c-a231-4dcd-b3d3-76689252110f",
+        "Content-Length": "216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:12 GMT",
+        "request-id": "1b62594c-a231-4dcd-b3d3-76689252110f",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "19",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "662ac6bf-a392-423c-90e4-5abd63d87e88_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:12Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:12Z",
+        "expirationDateTime": "2022-10-28T17:09:12Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/import/jobs/662ac6bf-a392-423c-90e4-5abd63d87e88_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "dd9c7c5772bd6a1ed5254f6d98a20092",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "8108ecb8-5db6-492f-baa8-3fcbd35617ef",
+        "Content-Length": "218",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:13 GMT",
+        "request-id": "8108ecb8-5db6-492f-baa8-3fcbd35617ef",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "26",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "662ac6bf-a392-423c-90e4-5abd63d87e88_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:12Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:12Z",
+        "expirationDateTime": "2022-10-28T17:09:12Z",
+        "status": "succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/:train?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "50",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "21c250f8a8ebb4898ddc6375bcf2c606",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "modelLabel": "Sample5",
+        "trainingMode": "standard"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "5772df3e-81a0-45e6-8c67-346fbbff4f0d",
+        "Content-Length": "0",
+        "Date": "Fri, 21 Oct 2022 17:09:13 GMT",
+        "operation-location": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/train/jobs/68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000?api-version=2022-10-01-preview",
+        "request-id": "5772df3e-81a0-45e6-8c67-346fbbff4f0d",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "249",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/train/jobs/68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5d5631c9bc58e34b8a908f76aa6b1d84",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "509d189c-96fc-42a3-9726-ca11b0bb84a8",
+        "Content-Length": "440",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:14 GMT",
+        "request-id": "509d189c-96fc-42a3-9726-ca11b0bb84a8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "20",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "result": {
+          "modelLabel": "Sample5",
+          "trainingConfigVersion": "2022-09-01",
+          "trainingMode": "standard",
+          "trainingStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "evaluationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          }
+        },
+        "jobId": "68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:14Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:14Z",
+        "expirationDateTime": "2022-10-28T17:09:14Z",
+        "status": "notStarted"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/train/jobs/68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "01e193074da5ae4ef2e74fe10fa8ade3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "be208ec5-ee12-4491-b23e-1ce25ec7f9ac",
+        "Content-Length": "755",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:15 GMT",
+        "request-id": "be208ec5-ee12-4491-b23e-1ce25ec7f9ac",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "25",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "result": {
+          "modelLabel": "Sample5",
+          "trainingConfigVersion": "2022-09-01",
+          "trainingMode": "standard",
+          "trainingStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "evaluationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          }
+        },
+        "jobId": "68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:14Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:15Z",
+        "expirationDateTime": "2022-10-28T17:09:14Z",
+        "status": "running",
+        "warnings": [
+          {
+            "code": "Warning",
+            "message": "Intent \u0060Send\u0060 is tagged in \u00602\u0060 training dataset examples, it is recommended to have \u006010\u0060 tags for better model quality."
+          },
+          {
+            "code": "Warning",
+            "message": "Entity \u0060Contact\u0060 is tagged in \u00602\u0060 training dataset examples, it is recommended to have \u006010\u0060 tags for better model quality."
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/train/jobs/68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "67a3485ea24c3b3904de975b19130a22",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "d124c7ac-16b3-4adf-a418-9647e7d2973a",
+        "Content-Length": "755",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:17 GMT",
+        "request-id": "d124c7ac-16b3-4adf-a418-9647e7d2973a",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "30",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "result": {
+          "modelLabel": "Sample5",
+          "trainingConfigVersion": "2022-09-01",
+          "trainingMode": "standard",
+          "trainingStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "evaluationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          }
+        },
+        "jobId": "68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:14Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:15Z",
+        "expirationDateTime": "2022-10-28T17:09:14Z",
+        "status": "running",
+        "warnings": [
+          {
+            "code": "Warning",
+            "message": "Intent \u0060Send\u0060 is tagged in \u00602\u0060 training dataset examples, it is recommended to have \u006010\u0060 tags for better model quality."
+          },
+          {
+            "code": "Warning",
+            "message": "Entity \u0060Contact\u0060 is tagged in \u00602\u0060 training dataset examples, it is recommended to have \u006010\u0060 tags for better model quality."
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/train/jobs/68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "286ddebec4117b61e2a76a716c69d4e1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "72896f51-3b36-4e70-90e7-84d13efc53c7",
+        "Content-Length": "755",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:18 GMT",
+        "request-id": "72896f51-3b36-4e70-90e7-84d13efc53c7",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "21",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "result": {
+          "modelLabel": "Sample5",
+          "trainingConfigVersion": "2022-09-01",
+          "trainingMode": "standard",
+          "trainingStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "evaluationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          }
+        },
+        "jobId": "68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:14Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:15Z",
+        "expirationDateTime": "2022-10-28T17:09:14Z",
+        "status": "running",
+        "warnings": [
+          {
+            "code": "Warning",
+            "message": "Intent \u0060Send\u0060 is tagged in \u00602\u0060 training dataset examples, it is recommended to have \u006010\u0060 tags for better model quality."
+          },
+          {
+            "code": "Warning",
+            "message": "Entity \u0060Contact\u0060 is tagged in \u00602\u0060 training dataset examples, it is recommended to have \u006010\u0060 tags for better model quality."
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/train/jobs/68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6117abe2b6c7653859a5fdc6b6f395df",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "51809161-92e5-4ab9-9249-8ac6f9dfc85a",
+        "Content-Length": "902",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:19 GMT",
+        "request-id": "51809161-92e5-4ab9-9249-8ac6f9dfc85a",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "25",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "result": {
+          "modelLabel": "Sample5",
+          "trainingConfigVersion": "2022-09-01",
+          "trainingMode": "standard",
+          "trainingStatus": {
+            "percentComplete": 100,
+            "startDateTime": "2022-10-21T17:09:15.4888971Z",
+            "endDateTime": "2022-10-21T17:09:18.3299724Z",
+            "status": "succeeded"
+          },
+          "evaluationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "estimatedEndDateTime": "2022-10-21T17:09:17.4888971Z"
+        },
+        "jobId": "68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:14Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:18Z",
+        "expirationDateTime": "2022-10-28T17:09:14Z",
+        "status": "running",
+        "warnings": [
+          {
+            "code": "Warning",
+            "message": "Intent \u0060Send\u0060 is tagged in \u00602\u0060 training dataset examples, it is recommended to have \u006010\u0060 tags for better model quality."
+          },
+          {
+            "code": "Warning",
+            "message": "Entity \u0060Contact\u0060 is tagged in \u00602\u0060 training dataset examples, it is recommended to have \u006010\u0060 tags for better model quality."
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/train/jobs/68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "30222cdc853a99d2e62885a438c8cf9a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "82447371-9013-4dfc-8d7e-6170f47863a3",
+        "Content-Length": "902",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:20 GMT",
+        "request-id": "82447371-9013-4dfc-8d7e-6170f47863a3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "31",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "result": {
+          "modelLabel": "Sample5",
+          "trainingConfigVersion": "2022-09-01",
+          "trainingMode": "standard",
+          "trainingStatus": {
+            "percentComplete": 100,
+            "startDateTime": "2022-10-21T17:09:15.4888971Z",
+            "endDateTime": "2022-10-21T17:09:18.3299724Z",
+            "status": "succeeded"
+          },
+          "evaluationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "estimatedEndDateTime": "2022-10-21T17:09:17.4888971Z"
+        },
+        "jobId": "68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:14Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:18Z",
+        "expirationDateTime": "2022-10-28T17:09:14Z",
+        "status": "running",
+        "warnings": [
+          {
+            "code": "Warning",
+            "message": "Intent \u0060Send\u0060 is tagged in \u00602\u0060 training dataset examples, it is recommended to have \u006010\u0060 tags for better model quality."
+          },
+          {
+            "code": "Warning",
+            "message": "Entity \u0060Contact\u0060 is tagged in \u00602\u0060 training dataset examples, it is recommended to have \u006010\u0060 tags for better model quality."
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/train/jobs/68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6d79b509a8fb085ba608ce6bc79bc5ef",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "c8e39b86-d8f7-4339-95b8-0f996d25be0b",
+        "Content-Length": "943",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:21 GMT",
+        "request-id": "c8e39b86-d8f7-4339-95b8-0f996d25be0b",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "22",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "result": {
+          "modelLabel": "Sample5",
+          "trainingConfigVersion": "2022-09-01",
+          "trainingMode": "standard",
+          "trainingStatus": {
+            "percentComplete": 100,
+            "startDateTime": "2022-10-21T17:09:15.4888971Z",
+            "endDateTime": "2022-10-21T17:09:18.3299724Z",
+            "status": "succeeded"
+          },
+          "evaluationStatus": {
+            "percentComplete": 100,
+            "startDateTime": "2022-10-21T17:09:18.3781843Z",
+            "endDateTime": "2022-10-21T17:09:19.4328803Z",
+            "status": "succeeded"
+          }
+        },
+        "jobId": "68532f33-ab91-450c-b06d-43b8634f8725_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:14Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:21Z",
+        "expirationDateTime": "2022-10-28T17:09:14Z",
+        "status": "succeeded",
+        "warnings": [
+          {
+            "code": "Warning",
+            "message": "Intent \u0060Send\u0060 is tagged in \u00602\u0060 training dataset examples, it is recommended to have \u006010\u0060 tags for better model quality."
+          },
+          {
+            "code": "Warning",
+            "message": "Entity \u0060Contact\u0060 is tagged in \u00602\u0060 training dataset examples, it is recommended to have \u006010\u0060 tags for better model quality."
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/deployments/production?api-version=2022-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "31",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3f948a12a4465ca6d97d7b9f31932c91",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "trainedModelLabel": "Sample5"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "ab67b3eb-5b8b-4369-8057-37fa28169cba",
+        "Content-Length": "0",
+        "Date": "Fri, 21 Oct 2022 17:09:21 GMT",
+        "operation-location": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/deployments/production/jobs/58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000?api-version=2022-10-01-preview",
+        "request-id": "ab67b3eb-5b8b-4369-8057-37fa28169cba",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "125",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/deployments/production/jobs/58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "00bc62d6287934e4d11a8a31b666d24b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "78ba84be-9689-4382-a38a-afbfdf70391d",
+        "Content-Length": "216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:21 GMT",
+        "request-id": "78ba84be-9689-4382-a38a-afbfdf70391d",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "32",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:22Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:22Z",
+        "expirationDateTime": "2022-10-28T17:09:22Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/deployments/production/jobs/58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ad9296638f3365530f1c937d2dbcd712",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "ff976e31-0360-4fda-b63d-7120bf16b61a",
+        "Content-Length": "216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:23 GMT",
+        "request-id": "ff976e31-0360-4fda-b63d-7120bf16b61a",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "23",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:22Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:22Z",
+        "expirationDateTime": "2022-10-28T17:09:22Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/deployments/production/jobs/58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "65953cdcc4dee975a6606e2c1a74a573",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "1f972e7c-c632-4160-bf97-9e4c9fc3c0cd",
+        "Content-Length": "216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:24 GMT",
+        "request-id": "1f972e7c-c632-4160-bf97-9e4c9fc3c0cd",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:22Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:22Z",
+        "expirationDateTime": "2022-10-28T17:09:22Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/deployments/production/jobs/58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9b3b30ab7e01475d0e57f15c94670615",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "50f89df5-2bf7-4601-bca5-fe674e715b99",
+        "Content-Length": "216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:25 GMT",
+        "request-id": "50f89df5-2bf7-4601-bca5-fe674e715b99",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "29",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:22Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:22Z",
+        "expirationDateTime": "2022-10-28T17:09:22Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/deployments/production/jobs/58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "795577436dd09e6c20a807d320274a9a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "77bc3335-5df9-4faf-8eab-11691e047f33",
+        "Content-Length": "216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:26 GMT",
+        "request-id": "77bc3335-5df9-4faf-8eab-11691e047f33",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "23",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:22Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:22Z",
+        "expirationDateTime": "2022-10-28T17:09:22Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/deployments/production/jobs/58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fdd11f763c805d11df4e5687d219553e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "82e61039-3083-4221-afa7-c10f5f49246f",
+        "Content-Length": "216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:27 GMT",
+        "request-id": "82e61039-3083-4221-afa7-c10f5f49246f",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "25",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:22Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:22Z",
+        "expirationDateTime": "2022-10-28T17:09:22Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/deployments/production/jobs/58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a2e858592c1f3da2c39c7a58768926e6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "afa348fd-410b-4d20-bf9e-ff7530b10e4f",
+        "Content-Length": "218",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:29 GMT",
+        "request-id": "afa348fd-410b-4d20-bf9e-ff7530b10e4f",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "27",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "58f873ea-5099-487e-bb07-8ebd0248d1b8_638019072000000000",
+        "createdDateTime": "2022-10-21T17:09:22Z",
+        "lastUpdatedDateTime": "2022-10-21T17:09:28Z",
+        "expirationDateTime": "2022-10-28T17:09:22Z",
+        "status": "succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/net-conv-425869093/deployments/production?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "75e5560c0995079566f79a8216e5cc07",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "01b1b57d-ae69-41bb-83b3-5660385285e7",
+        "Content-Length": "281",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 17:09:29 GMT",
+        "request-id": "01b1b57d-ae69-41bb-83b3-5660385285e7",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "22",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "deploymentName": "production",
+        "modelId": "Sample5-20221021T050921-0866bb990ca943d6bffc894d8b4fa9b3",
+        "lastTrainedDateTime": "2022-10-21T17:09:21.6920658Z",
+        "lastDeployedDateTime": "2022-10-21T17:09:28Z",
+        "deploymentExpirationDate": "2024-02-28",
+        "modelTrainingConfigVersion": "2022-09-01"
+      }
+    }
+  ],
+  "Variables": {
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "RandomSeed": "1020153019"
+  }
+}

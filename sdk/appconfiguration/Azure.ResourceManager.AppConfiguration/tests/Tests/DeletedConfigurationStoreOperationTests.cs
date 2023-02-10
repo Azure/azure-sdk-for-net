@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
     {
         private SubscriptionResource subscription { get; set; }
         private string configurationStoreName { get; set; }
-        private DeletedConfigurationStoreResource deletedConfigurationStore { get; set; }
+        private DeletedAppConfigurationStoreResource deletedConfigurationStore { get; set; }
 
         public DeletedConfigurationStoreOperationTests(bool isAsync)
             : base(isAsync)
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 var resGroup = (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, groupName, new ResourceGroupData(Location))).Value;
 
                 configurationStoreName = Recording.GenerateAssetName("testapp-");
-                ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
+                AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
                 {
-                    PublicNetworkAccess = PublicNetworkAccess.Disabled
+                    PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
                 };
-                var configStore = (await resGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
+                var configStore = (await resGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
                 await configStore.DeleteAsync(WaitUntil.Completed);
-                deletedConfigurationStore = ArmClient.GetDeletedConfigurationStoreResource(DeletedConfigurationStoreResource.CreateResourceIdentifier(subscription.Data.SubscriptionId, Location, configurationStoreName));
+                deletedConfigurationStore = ArmClient.GetDeletedAppConfigurationStoreResource(DeletedAppConfigurationStoreResource.CreateResourceIdentifier(subscription.Data.SubscriptionId, Location, configurationStoreName));
             }
         }
 

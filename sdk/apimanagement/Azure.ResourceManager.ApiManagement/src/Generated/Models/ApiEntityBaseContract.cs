@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -29,11 +30,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
         /// <param name="apiVersionDescription"> Description of the API Version. </param>
         /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
-        /// <param name="subscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
+        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
         /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
-        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, string apiVersionSetId, bool? subscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license)
+        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiRevisionDescription = apiRevisionDescription;
             ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
-            SubscriptionRequired = subscriptionRequired;
+            IsSubscriptionRequired = isSubscriptionRequired;
             TermsOfServiceUri = termsOfServiceUri;
             Contact = contact;
             License = license;
@@ -73,9 +74,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Description of the API Version. </summary>
         public string ApiVersionDescription { get; }
         /// <summary> A resource identifier for the related ApiVersionSet. </summary>
-        public string ApiVersionSetId { get; }
+        public ResourceIdentifier ApiVersionSetId { get; }
         /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
-        public bool? SubscriptionRequired { get; }
+        public bool? IsSubscriptionRequired { get; }
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
         public Uri TermsOfServiceUri { get; }
         /// <summary> Contact information for the API. </summary>

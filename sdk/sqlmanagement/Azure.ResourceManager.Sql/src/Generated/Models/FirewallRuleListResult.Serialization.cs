@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static FirewallRuleListResult DeserializeFirewallRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<FirewallRuleData>> value = default;
+            Optional<IReadOnlyList<SqlFirewallRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FirewallRuleData> array = new List<FirewallRuleData>();
+                    List<SqlFirewallRuleData> array = new List<SqlFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallRuleData.DeserializeFirewallRuleData(item));
+                        array.Add(SqlFirewallRuleData.DeserializeSqlFirewallRuleData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

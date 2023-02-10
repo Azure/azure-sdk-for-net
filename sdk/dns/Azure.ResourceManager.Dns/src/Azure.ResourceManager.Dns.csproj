@@ -1,12 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Dns</PackageId>
-    <Description>
-      Azure management client SDK for Azure resource provider Microsoft.Dns.
-      This is a beta preview vesion. This version uses a next-generation code generator that introduces important breaking changes, but also new features (such as intuitive authentication, custom HTTP pipeline, distributed tracing and much more).
-    </Description>
-    <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.Dns</Description>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Network Dns.</Description>
     <PackageTags>azure;management;arm;resource manager;dns</PackageTags>
   </PropertyGroup>
 </Project>

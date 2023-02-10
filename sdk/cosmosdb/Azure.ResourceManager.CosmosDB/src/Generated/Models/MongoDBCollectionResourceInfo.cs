@@ -15,39 +15,36 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class MongoDBCollectionResourceInfo
     {
         /// <summary> Initializes a new instance of MongoDBCollectionResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB MongoDB collection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public MongoDBCollectionResourceInfo(string id)
+        /// <param name="collectionName"> Name of the Cosmos DB MongoDB collection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
+        public MongoDBCollectionResourceInfo(string collectionName)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(collectionName, nameof(collectionName));
 
-            Id = id;
+            CollectionName = collectionName;
             ShardKey = new ChangeTrackingDictionary<string, string>();
-            Indexes = new ChangeTrackingList<MongoIndex>();
+            Indexes = new ChangeTrackingList<MongoDBIndex>();
         }
 
         /// <summary> Initializes a new instance of MongoDBCollectionResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB MongoDB collection. </param>
+        /// <param name="collectionName"> Name of the Cosmos DB MongoDB collection. </param>
         /// <param name="shardKey"> A key-value pair of shard keys to be applied for the request. </param>
         /// <param name="indexes"> List of index keys. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
-        internal MongoDBCollectionResourceInfo(string id, IDictionary<string, string> shardKey, IList<MongoIndex> indexes, int? analyticalStorageTtl)
+        internal MongoDBCollectionResourceInfo(string collectionName, IDictionary<string, string> shardKey, IList<MongoDBIndex> indexes, int? analyticalStorageTtl)
         {
-            Id = id;
+            CollectionName = collectionName;
             ShardKey = shardKey;
             Indexes = indexes;
             AnalyticalStorageTtl = analyticalStorageTtl;
         }
 
         /// <summary> Name of the Cosmos DB MongoDB collection. </summary>
-        public string Id { get; set; }
+        public string CollectionName { get; set; }
         /// <summary> A key-value pair of shard keys to be applied for the request. </summary>
         public IDictionary<string, string> ShardKey { get; }
         /// <summary> List of index keys. </summary>
-        public IList<MongoIndex> Indexes { get; }
+        public IList<MongoDBIndex> Indexes { get; }
         /// <summary> Analytical TTL. </summary>
         public int? AnalyticalStorageTtl { get; set; }
     }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The properties of the Managed identity. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Initializes a new instance of ManagedIdentity. </summary>
         /// <param name="userAssignedIdentity"> The user assigned identity. </param>
-        internal ManagedIdentity(string userAssignedIdentity)
+        internal ManagedIdentity(ResourceIdentifier userAssignedIdentity)
         {
             UserAssignedIdentity = userAssignedIdentity;
         }
 
         /// <summary> The user assigned identity. </summary>
-        public string UserAssignedIdentity { get; set; }
+        public ResourceIdentifier UserAssignedIdentity { get; set; }
     }
 }

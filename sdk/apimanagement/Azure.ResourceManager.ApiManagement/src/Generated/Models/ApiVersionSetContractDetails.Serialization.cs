@@ -17,32 +17,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(VersioningScheme))
             {
-                writer.WritePropertyName("versioningScheme");
+                writer.WritePropertyName("versioningScheme"u8);
                 writer.WriteStringValue(VersioningScheme.Value.ToString());
             }
             if (Optional.IsDefined(VersionQueryName))
             {
-                writer.WritePropertyName("versionQueryName");
+                writer.WritePropertyName("versionQueryName"u8);
                 writer.WriteStringValue(VersionQueryName);
             }
             if (Optional.IsDefined(VersionHeaderName))
             {
-                writer.WritePropertyName("versionHeaderName");
+                writer.WritePropertyName("versionHeaderName"u8);
                 writer.WriteStringValue(VersionHeaderName);
             }
             writer.WriteEndObject();
@@ -53,42 +53,42 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> description = default;
-            Optional<ApiVersionSetContractDetailsVersioningScheme> versioningScheme = default;
+            Optional<VersioningScheme> versioningScheme = default;
             Optional<string> versionQueryName = default;
             Optional<string> versionHeaderName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("versioningScheme"))
+                if (property.NameEquals("versioningScheme"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    versioningScheme = new ApiVersionSetContractDetailsVersioningScheme(property.Value.GetString());
+                    versioningScheme = new VersioningScheme(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("versionQueryName"))
+                if (property.NameEquals("versionQueryName"u8))
                 {
                     versionQueryName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("versionHeaderName"))
+                if (property.NameEquals("versionHeaderName"u8))
                 {
                     versionHeaderName = property.Value.GetString();
                     continue;

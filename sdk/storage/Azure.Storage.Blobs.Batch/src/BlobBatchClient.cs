@@ -141,7 +141,7 @@ namespace Azure.Storage.Blobs.Specialized
             _pipeline = BlobServiceClientInternals.GetHttpPipeline(client);
             BlobClientOptions options = BlobServiceClientInternals.GetClientOptions(client);
             _version = options.Version;
-            _clientDiagnostics = new StorageClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
 
             // Construct a dummy pipeline for processing batch sub-operations
             // if we don't have one cached on the service
@@ -171,7 +171,7 @@ namespace Azure.Storage.Blobs.Specialized
             _pipeline = BlobServiceClientInternals.GetHttpPipeline(blobServiceClient);
             BlobClientOptions options = BlobServiceClientInternals.GetClientOptions(blobServiceClient);
             _version = options.Version;
-            _clientDiagnostics = new StorageClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
 
             // Construct a dummy pipeline for processing batch sub-operations
             // if we don't have one cached on the service
@@ -218,10 +218,11 @@ namespace Azure.Storage.Blobs.Specialized
             options.Transport = new BatchPipelineTransport(pipeline);
 
             // Use the same authentication mechanism
-            return HttpPipelineBuilder.Build(
-                options,
-                RemoveVersionHeaderPolicy.Shared,
-                authenticationPolicy);
+            return HttpPipelineBuilder.Build(new HttpPipelineOptions(options)
+            {
+                PerRetryPolicies = { RemoveVersionHeaderPolicy.Shared, authenticationPolicy },
+                RequestFailedDetailsParser = new StorageRequestFailedDetailsParser()
+            });
         }
 
         private (ServiceRestClient ServiceClient, ContainerRestClient ContainerClient) BuildRestClients(Uri serviceUri)
@@ -422,18 +423,18 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken)
                         .ConfigureAwait(false);
 
+                Response response;
+
                 if (IsContainerScoped)
                 {
-                    ResponseWithHeaders<Stream, ContainerSubmitBatchHeaders> response;
-
                     if (async)
                     {
                         response = await _containerRestClient.SubmitBatchAsync(
                             containerName: ContainerName,
                             contentLength: content.Length,
                             multipartContentType: contentType,
-                            body: content,
-                            cancellationToken: cancellationToken)
+                            content: RequestContent.Create(content),
+                            context: new RequestContext{ CancellationToken = cancellationToken })
                             .ConfigureAwait(false);
                     }
                     else
@@ -442,33 +443,19 @@ namespace Azure.Storage.Blobs.Specialized
                             containerName: ContainerName,
                             contentLength: content.Length,
                             multipartContentType: contentType,
-                            body: content,
-                            cancellationToken: cancellationToken);
+                            content: RequestContent.Create(content),
+                            context: new RequestContext{ CancellationToken = cancellationToken });
                     }
-
-                    await UpdateOperationResponses(
-                        messages,
-                        response.GetRawResponse(),
-                        response.Value,
-                        response.Headers.ContentType,
-                        throwOnAnyFailure,
-                        async,
-                        cancellationToken)
-                        .ConfigureAwait(false);
-
-                    return response.GetRawResponse();
                 }
                 else
                 {
-                    ResponseWithHeaders<Stream, ServiceSubmitBatchHeaders> response;
-
                     if (async)
                     {
                         response = await _serviceRestClient.SubmitBatchAsync(
                             contentLength: content.Length,
                             multipartContentType: contentType,
-                            body: content,
-                            cancellationToken: cancellationToken)
+                            content: RequestContent.Create(content),
+                            context: new RequestContext{ CancellationToken = cancellationToken })
                             .ConfigureAwait(false);
                     }
                     else
@@ -476,22 +463,13 @@ namespace Azure.Storage.Blobs.Specialized
                         response = _serviceRestClient.SubmitBatch(
                             contentLength: content.Length,
                             multipartContentType: contentType,
-                            body: content,
-                            cancellationToken: cancellationToken);
+                            content: RequestContent.Create(content),
+                            context: new RequestContext{ CancellationToken = cancellationToken });
                     }
-
-                    await UpdateOperationResponses(
-                        messages,
-                        response.GetRawResponse(),
-                        response.Value,
-                        response.Headers.ContentType,
-                        throwOnAnyFailure,
-                        async,
-                        cancellationToken)
-                        .ConfigureAwait(false);
-
-                    return response.GetRawResponse();
                 }
+
+                await UpdateOperationResponses(messages, response, throwOnAnyFailure, async, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception ex)
             {
@@ -561,12 +539,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="rawResponse">
         /// The raw batch response.
         /// </param>
-        /// <param name="responseContent">
-        /// The raw multipart response content.
-        /// </param>
-        /// <param name="responseContentType">
-        /// The raw multipart response content type (containing the boundary).
-        /// </param>
         /// <param name="throwOnAnyFailure">
         /// A value indicating whether or not to throw exceptions for
         /// sub-operation failures.
@@ -578,12 +550,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="CancellationToken"/> to propagate notifications
         /// that the operation should be cancelled.
         /// </param>
-        /// <returns>A Task representing the update operation.</returns>
-        private async Task UpdateOperationResponses(
+        /// <returns>A ValueTask representing the update operation.</returns>
+        private async ValueTask UpdateOperationResponses(
             IList<HttpMessage> messages,
             Response rawResponse,
-            Stream responseContent,
-            string responseContentType,
             bool throwOnAnyFailure,
             bool async,
             CancellationToken cancellationToken)
@@ -592,12 +562,9 @@ namespace Azure.Storage.Blobs.Specialized
             Response[] responses;
             try
             {
-                responses = await Multipart.ParseAsync(
-                    responseContent,
-                    responseContentType,
-                    async,
-                    cancellationToken)
-                    .ConfigureAwait(false);
+                responses = async
+                    ? await MultipartResponse.ParseAsync(rawResponse, true, cancellationToken).ConfigureAwait(false)
+                    : MultipartResponse.Parse(rawResponse, true, cancellationToken);
 
                 // Ensure we have the right number of responses
                 if (messages.Count != responses.Length)

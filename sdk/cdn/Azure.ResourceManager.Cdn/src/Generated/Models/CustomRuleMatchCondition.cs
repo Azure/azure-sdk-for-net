@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="matchValue"/> is null. </exception>
         public CustomRuleMatchCondition(WafMatchVariable matchVariable, MatchOperator matchOperator, IEnumerable<string> matchValue)
         {
-            if (matchValue == null)
-            {
-                throw new ArgumentNullException(nameof(matchValue));
-            }
+            Argument.AssertNotNull(matchValue, nameof(matchValue));
 
             MatchVariable = matchVariable;
             MatchOperator = matchOperator;

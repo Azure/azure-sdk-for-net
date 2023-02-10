@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -13,19 +14,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class MongoDBDatabaseResourceInfo
     {
         /// <summary> Initializes a new instance of MongoDBDatabaseResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB MongoDB database. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public MongoDBDatabaseResourceInfo(string id)
+        /// <param name="databaseName"> Name of the Cosmos DB MongoDB database. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public MongoDBDatabaseResourceInfo(string databaseName)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
 
-            Id = id;
+            DatabaseName = databaseName;
         }
 
         /// <summary> Name of the Cosmos DB MongoDB database. </summary>
-        public string Id { get; set; }
+        public string DatabaseName { get; set; }
     }
 }

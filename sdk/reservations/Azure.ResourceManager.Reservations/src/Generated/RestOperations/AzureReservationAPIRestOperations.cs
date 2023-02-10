@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppliedReservations>> GetAppliedReservationListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<AppliedReservationData>> GetAppliedReservationListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -177,9 +177,9 @@ namespace Azure.ResourceManager.Reservations
             {
                 case 200:
                     {
-                        AppliedReservations value = default;
+                        AppliedReservationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppliedReservations.DeserializeAppliedReservations(document.RootElement);
+                        value = AppliedReservationData.DeserializeAppliedReservationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppliedReservations> GetAppliedReservationList(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<AppliedReservationData> GetAppliedReservationList(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -202,9 +202,9 @@ namespace Azure.ResourceManager.Reservations
             {
                 case 200:
                     {
-                        AppliedReservations value = default;
+                        AppliedReservationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppliedReservations.DeserializeAppliedReservations(document.RootElement);
+                        value = AppliedReservationData.DeserializeAppliedReservationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

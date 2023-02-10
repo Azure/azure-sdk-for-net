@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
@@ -16,50 +17,153 @@ namespace Azure.ResourceManager.Authorization
     {
         internal static RoleAssignmentData DeserializeRoleAssignmentData(JsonElement element)
         {
-            Optional<RoleAssignmentPropertiesWithScope> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<string> scope = default;
+            Optional<ResourceIdentifier> roleDefinitionId = default;
+            Optional<Guid> principalId = default;
+            Optional<RoleManagementPrincipalType> principalType = default;
+            Optional<string> description = default;
+            Optional<string> condition = default;
+            Optional<string> conditionVersion = default;
+            Optional<DateTimeOffset> createdOn = default;
+            Optional<DateTimeOffset> updatedOn = default;
+            Optional<string> createdBy = default;
+            Optional<string> updatedBy = default;
+            Optional<ResourceIdentifier> delegatedManagedIdentityResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    properties = RoleAssignmentPropertiesWithScope.DeserializeRoleAssignmentPropertiesWithScope(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("scope"u8))
+                        {
+                            scope = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("roleDefinitionId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("principalId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            principalId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("principalType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            principalType = new RoleManagementPrincipalType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("condition"u8))
+                        {
+                            condition = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("conditionVersion"u8))
+                        {
+                            conditionVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("createdOn"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            createdOn = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("updatedOn"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            updatedOn = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("createdBy"u8))
+                        {
+                            createdBy = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("updatedBy"u8))
+                        {
+                            updatedBy = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("delegatedManagedIdentityResourceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                delegatedManagedIdentityResourceId = null;
+                                continue;
+                            }
+                            delegatedManagedIdentityResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                    }
                     continue;
                 }
             }
-            return new RoleAssignmentData(id, name, type, systemData.Value, properties.Value);
+            return new RoleAssignmentData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), description.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), createdBy.Value, updatedBy.Value, delegatedManagedIdentityResourceId.Value);
         }
     }
 }

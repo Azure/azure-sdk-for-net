@@ -82,5 +82,5 @@ The sample will get information about the specified certificate, download the ke
 - [About Azure Key Vault secrets][azure-keyvault-secrets]
 - [Azure Key Vault samples](https://aka.ms/azsdk/net/keyvault/samples)
 
-[azure-keyvault-certificates]: https://docs.microsoft.com/azure/key-vault/certificates/about-certificates
-[azure-keyvault-secrets]: https://docs.microsoft.com/azure/key-vault/secrets/about-secrets
+[azure-keyvault-certificates]: https://learn.microsoft.com/azure/key-vault/certificates/about-certificates
+[azure-keyvault-secrets]: https://learn.microsoft.com/azure/key-vault/secrets/about-secrets

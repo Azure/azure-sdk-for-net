@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkflowListResult>> ListBySubscriptionAsync(string subscriptionId, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogicWorkflowListResult>> ListBySubscriptionAsync(string subscriptionId, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        WorkflowListResult value = default;
+                        LogicWorkflowListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkflowListResult.DeserializeWorkflowListResult(document.RootElement);
+                        value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkflowListResult> ListBySubscription(string subscriptionId, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<LogicWorkflowListResult> ListBySubscription(string subscriptionId, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        WorkflowListResult value = default;
+                        LogicWorkflowListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkflowListResult.DeserializeWorkflowListResult(document.RootElement);
+                        value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkflowListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogicWorkflowListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        WorkflowListResult value = default;
+                        LogicWorkflowListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkflowListResult.DeserializeWorkflowListResult(document.RootElement);
+                        value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkflowListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<LogicWorkflowListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        WorkflowListResult value = default;
+                        LogicWorkflowListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkflowListResult.DeserializeWorkflowListResult(document.RootElement);
+                        value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkflowData>> GetAsync(string subscriptionId, string resourceGroupName, string workflowName, CancellationToken cancellationToken = default)
+        public async Task<Response<LogicWorkflowData>> GetAsync(string subscriptionId, string resourceGroupName, string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -240,13 +240,13 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        WorkflowData value = default;
+                        LogicWorkflowData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkflowData.DeserializeWorkflowData(document.RootElement);
+                        value = LogicWorkflowData.DeserializeLogicWorkflowData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WorkflowData)null, message.Response);
+                    return Response.FromValue((LogicWorkflowData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkflowData> Get(string subscriptionId, string resourceGroupName, string workflowName, CancellationToken cancellationToken = default)
+        public Response<LogicWorkflowData> Get(string subscriptionId, string resourceGroupName, string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -271,19 +271,19 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        WorkflowData value = default;
+                        LogicWorkflowData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkflowData.DeserializeWorkflowData(document.RootElement);
+                        value = LogicWorkflowData.DeserializeLogicWorkflowData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WorkflowData)null, message.Response);
+                    return Response.FromValue((LogicWorkflowData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workflowName, WorkflowData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkflowData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
+        public async Task<Response<LogicWorkflowData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -329,9 +329,9 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                 case 201:
                     {
-                        WorkflowData value = default;
+                        LogicWorkflowData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkflowData.DeserializeWorkflowData(document.RootElement);
+                        value = LogicWorkflowData.DeserializeLogicWorkflowData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkflowData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
+        public Response<LogicWorkflowData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -361,87 +361,9 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                 case 201:
                     {
-                        WorkflowData value = default;
+                        LogicWorkflowData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkflowData.DeserializeWorkflowData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workflowName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Logic/workflows/", false);
-            uri.AppendPath(workflowName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Updates a workflow. </summary>
-        /// <param name="subscriptionId"> The subscription id. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkflowData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workflowName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workflowName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        WorkflowData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkflowData.DeserializeWorkflowData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Updates a workflow. </summary>
-        /// <param name="subscriptionId"> The subscription id. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkflowData> Update(string subscriptionId, string resourceGroupName, string workflowName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workflowName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        WorkflowData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkflowData.DeserializeWorkflowData(document.RootElement);
+                        value = LogicWorkflowData.DeserializeLogicWorkflowData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -742,7 +664,7 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        internal HttpMessage CreateListCallbackUrlRequest(string subscriptionId, string resourceGroupName, string workflowName, GetCallbackUrlParameters listCallbackUrl)
+        internal HttpMessage CreateListCallbackUrlRequest(string subscriptionId, string resourceGroupName, string workflowName, ListOperationCallbackUrlParameterInfo info)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -760,9 +682,9 @@ namespace Azure.ResourceManager.Logic
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(listCallbackUrl);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -771,26 +693,26 @@ namespace Azure.ResourceManager.Logic
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="listCallbackUrl"> Which callback url to list. </param>
+        /// <param name="info"> Which callback url to list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="listCallbackUrl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkflowTriggerCallbackUri>> ListCallbackUrlAsync(string subscriptionId, string resourceGroupName, string workflowName, GetCallbackUrlParameters listCallbackUrl, CancellationToken cancellationToken = default)
+        public async Task<Response<LogicWorkflowTriggerCallbackUri>> ListCallbackUrlAsync(string subscriptionId, string resourceGroupName, string workflowName, ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-            Argument.AssertNotNull(listCallbackUrl, nameof(listCallbackUrl));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateListCallbackUrlRequest(subscriptionId, resourceGroupName, workflowName, listCallbackUrl);
+            using var message = CreateListCallbackUrlRequest(subscriptionId, resourceGroupName, workflowName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        WorkflowTriggerCallbackUri value = default;
+                        LogicWorkflowTriggerCallbackUri value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkflowTriggerCallbackUri.DeserializeWorkflowTriggerCallbackUri(document.RootElement);
+                        value = LogicWorkflowTriggerCallbackUri.DeserializeLogicWorkflowTriggerCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -802,26 +724,26 @@ namespace Azure.ResourceManager.Logic
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="listCallbackUrl"> Which callback url to list. </param>
+        /// <param name="info"> Which callback url to list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="listCallbackUrl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkflowTriggerCallbackUri> ListCallbackUrl(string subscriptionId, string resourceGroupName, string workflowName, GetCallbackUrlParameters listCallbackUrl, CancellationToken cancellationToken = default)
+        public Response<LogicWorkflowTriggerCallbackUri> ListCallbackUrl(string subscriptionId, string resourceGroupName, string workflowName, ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-            Argument.AssertNotNull(listCallbackUrl, nameof(listCallbackUrl));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateListCallbackUrlRequest(subscriptionId, resourceGroupName, workflowName, listCallbackUrl);
+            using var message = CreateListCallbackUrlRequest(subscriptionId, resourceGroupName, workflowName, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        WorkflowTriggerCallbackUri value = default;
+                        LogicWorkflowTriggerCallbackUri value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkflowTriggerCallbackUri.DeserializeWorkflowTriggerCallbackUri(document.RootElement);
+                        value = LogicWorkflowTriggerCallbackUri.DeserializeLogicWorkflowTriggerCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -906,7 +828,7 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        internal HttpMessage CreateMoveRequest(string subscriptionId, string resourceGroupName, string workflowName, WorkflowReference move)
+        internal HttpMessage CreateMoveRequest(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowReference move)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -924,9 +846,9 @@ namespace Azure.ResourceManager.Logic
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(move);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(move);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -939,7 +861,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="move"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> MoveAsync(string subscriptionId, string resourceGroupName, string workflowName, WorkflowReference move, CancellationToken cancellationToken = default)
+        public async Task<Response> MoveAsync(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowReference move, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -966,7 +888,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="move"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Move(string subscriptionId, string resourceGroupName, string workflowName, WorkflowReference move, CancellationToken cancellationToken = default)
+        public Response Move(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowReference move, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -985,7 +907,7 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        internal HttpMessage CreateRegenerateAccessKeyRequest(string subscriptionId, string resourceGroupName, string workflowName, RegenerateActionParameter keyType)
+        internal HttpMessage CreateRegenerateAccessKeyRequest(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowRegenerateActionContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1004,7 +926,7 @@ namespace Azure.ResourceManager.Logic
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(keyType);
+            content0.JsonWriter.WriteObjectValue(content);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1014,18 +936,18 @@ namespace Azure.ResourceManager.Logic
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="keyType"> The access key type. </param>
+        /// <param name="content"> The access key type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="keyType"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RegenerateAccessKeyAsync(string subscriptionId, string resourceGroupName, string workflowName, RegenerateActionParameter keyType, CancellationToken cancellationToken = default)
+        public async Task<Response> RegenerateAccessKeyAsync(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowRegenerateActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-            Argument.AssertNotNull(keyType, nameof(keyType));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateAccessKeyRequest(subscriptionId, resourceGroupName, workflowName, keyType);
+            using var message = CreateRegenerateAccessKeyRequest(subscriptionId, resourceGroupName, workflowName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1040,18 +962,18 @@ namespace Azure.ResourceManager.Logic
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="keyType"> The access key type. </param>
+        /// <param name="content"> The access key type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="keyType"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RegenerateAccessKey(string subscriptionId, string resourceGroupName, string workflowName, RegenerateActionParameter keyType, CancellationToken cancellationToken = default)
+        public Response RegenerateAccessKey(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowRegenerateActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-            Argument.AssertNotNull(keyType, nameof(keyType));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateAccessKeyRequest(subscriptionId, resourceGroupName, workflowName, keyType);
+            using var message = CreateRegenerateAccessKeyRequest(subscriptionId, resourceGroupName, workflowName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1062,7 +984,7 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        internal HttpMessage CreateValidateByResourceGroupRequest(string subscriptionId, string resourceGroupName, string workflowName, WorkflowData data)
+        internal HttpMessage CreateValidateByResourceGroupRequest(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1080,9 +1002,9 @@ namespace Azure.ResourceManager.Logic
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1095,7 +1017,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateByResourceGroupAsync(string subscriptionId, string resourceGroupName, string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateByResourceGroupAsync(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1121,7 +1043,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateByResourceGroup(string subscriptionId, string resourceGroupName, string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
+        public Response ValidateByResourceGroup(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1139,7 +1061,7 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        internal HttpMessage CreateValidateByLocationRequest(string subscriptionId, string resourceGroupName, AzureLocation location, string workflowName, WorkflowData data)
+        internal HttpMessage CreateValidateByLocationRequest(string subscriptionId, string resourceGroupName, AzureLocation location, string workflowName, LogicWorkflowData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1159,9 +1081,9 @@ namespace Azure.ResourceManager.Logic
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1175,7 +1097,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateByLocationAsync(string subscriptionId, string resourceGroupName, AzureLocation location, string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateByLocationAsync(string subscriptionId, string resourceGroupName, AzureLocation location, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1202,7 +1124,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateByLocation(string subscriptionId, string resourceGroupName, AzureLocation location, string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
+        public Response ValidateByLocation(string subscriptionId, string resourceGroupName, AzureLocation location, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1242,7 +1164,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkflowListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogicWorkflowListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1253,9 +1175,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        WorkflowListResult value = default;
+                        LogicWorkflowListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkflowListResult.DeserializeWorkflowListResult(document.RootElement);
+                        value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1271,7 +1193,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkflowListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<LogicWorkflowListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1282,9 +1204,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        WorkflowListResult value = default;
+                        LogicWorkflowListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkflowListResult.DeserializeWorkflowListResult(document.RootElement);
+                        value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1315,7 +1237,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkflowListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogicWorkflowListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1327,9 +1249,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        WorkflowListResult value = default;
+                        LogicWorkflowListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkflowListResult.DeserializeWorkflowListResult(document.RootElement);
+                        value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1346,7 +1268,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkflowListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<LogicWorkflowListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1358,9 +1280,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        WorkflowListResult value = default;
+                        LogicWorkflowListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkflowListResult.DeserializeWorkflowListResult(document.RootElement);
+                        value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

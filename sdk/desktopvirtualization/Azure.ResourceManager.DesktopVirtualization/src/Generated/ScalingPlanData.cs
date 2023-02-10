@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
         /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"></param>
-        /// <param name="sku"></param>
-        /// <param name="plan"></param>
-        internal ScalingPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, string timeZone, HostPoolType? hostPoolType, string exclusionTag, IList<ScalingSchedule> schedules, IList<ScalingHostPoolReference> hostPoolReferences, string managedBy, string kind, ETag? etag, ResourceModelWithAllowedPropertySetIdentity identity, ResourceModelWithAllowedPropertySetSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <param name="plan"> Gets or sets the plan. </param>
+        internal ScalingPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, string timeZone, HostPoolType? hostPoolType, string exclusionTag, IList<ScalingSchedule> schedules, IList<ScalingHostPoolReference> hostPoolReferences, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
         {
             ObjectId = objectId;
             Description = description;
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> List of ScalingHostPoolReference definitions. </summary>
         public IList<ScalingHostPoolReference> HostPoolReferences { get; }
         /// <summary> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </summary>
-        public string ManagedBy { get; set; }
+        public ResourceIdentifier ManagedBy { get; set; }
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
         public string Kind { get; set; }
         /// <summary> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
         public ETag? ETag { get; }
-        /// <summary> Gets or sets the identity. </summary>
-        public ResourceModelWithAllowedPropertySetIdentity Identity { get; set; }
-        /// <summary> Gets or sets the sku. </summary>
-        public ResourceModelWithAllowedPropertySetSku Sku { get; set; }
+        /// <summary> Gets or sets the identity. Current supported identity types: SystemAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> The resource model definition representing SKU. </summary>
+        public DesktopVirtualizationSku Sku { get; set; }
         /// <summary> Gets or sets the plan. </summary>
         public ArmPlan Plan { get; set; }
     }

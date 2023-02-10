@@ -15,27 +15,27 @@ namespace Azure.ResourceManager.HDInsight.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinuxOperatingSystemProfile))
+            if (Optional.IsDefined(LinuxProfile))
             {
-                writer.WritePropertyName("linuxOperatingSystemProfile");
-                writer.WriteObjectValue(LinuxOperatingSystemProfile);
+                writer.WritePropertyName("linuxOperatingSystemProfile"u8);
+                writer.WriteObjectValue(LinuxProfile);
             }
             writer.WriteEndObject();
         }
 
         internal static OSProfile DeserializeOSProfile(JsonElement element)
         {
-            Optional<LinuxOperatingSystemProfile> linuxOperatingSystemProfile = default;
+            Optional<HDInsightLinuxOSProfile> linuxOperatingSystemProfile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linuxOperatingSystemProfile"))
+                if (property.NameEquals("linuxOperatingSystemProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linuxOperatingSystemProfile = LinuxOperatingSystemProfile.DeserializeLinuxOperatingSystemProfile(property.Value);
+                    linuxOperatingSystemProfile = HDInsightLinuxOSProfile.DeserializeHDInsightLinuxOSProfile(property.Value);
                     continue;
                 }
             }

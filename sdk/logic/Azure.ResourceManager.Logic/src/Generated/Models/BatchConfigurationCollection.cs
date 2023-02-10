@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of BatchConfigurationCollection. </summary>
         internal BatchConfigurationCollection()
         {
-            Value = new ChangeTrackingList<BatchConfigurationData>();
+            Value = new ChangeTrackingList<IntegrationAccountBatchConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of BatchConfigurationCollection. </summary>
         /// <param name="value"></param>
-        internal BatchConfigurationCollection(IReadOnlyList<BatchConfigurationData> value)
+        internal BatchConfigurationCollection(IReadOnlyList<IntegrationAccountBatchConfigurationData> value)
         {
             Value = value;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<BatchConfigurationData> Value { get; }
+        public IReadOnlyList<IntegrationAccountBatchConfigurationData> Value { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Policy))
             {
-                writer.WritePropertyName("policy");
+                writer.WritePropertyName("policy"u8);
                 writer.WriteStringValue(Policy.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static NodePlacementConfiguration DeserializeNodePlacementConfiguration(JsonElement element)
         {
-            Optional<NodePlacementPolicyType> policy = default;
+            Optional<BatchNodePlacementPolicyType> policy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    policy = property.Value.GetString().ToNodePlacementPolicyType();
+                    policy = property.Value.GetString().ToBatchNodePlacementPolicyType();
                     continue;
                 }
             }

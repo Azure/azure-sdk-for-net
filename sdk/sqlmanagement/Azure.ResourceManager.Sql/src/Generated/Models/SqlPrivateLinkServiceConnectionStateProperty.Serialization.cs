@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("status");
+            writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            writer.WritePropertyName("description");
+            writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WriteEndObject();
         }
 
         internal static SqlPrivateLinkServiceConnectionStateProperty DeserializeSqlPrivateLinkServiceConnectionStateProperty(JsonElement element)
         {
-            PrivateLinkServiceConnectionStateStatus status = default;
+            SqlPrivateLinkServiceConnectionStatus status = default;
             string description = default;
-            Optional<PrivateLinkServiceConnectionStateActionsRequire> actionsRequired = default;
+            Optional<SqlPrivateLinkServiceConnectionActionsRequired> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
-                    status = new PrivateLinkServiceConnectionStateStatus(property.Value.GetString());
+                    status = new SqlPrivateLinkServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionsRequired"))
+                if (property.NameEquals("actionsRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionsRequired = new PrivateLinkServiceConnectionStateActionsRequire(property.Value.GetString());
+                    actionsRequired = new SqlPrivateLinkServiceConnectionActionsRequired(property.Value.GetString());
                     continue;
                 }
             }

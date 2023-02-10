@@ -30,212 +30,272 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Lists all the HDInsight clusters under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/clusters
-        /// Operation Id: Clusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClusterResource> GetClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HDInsightClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HDInsightClusterResource> GetHDInsightClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetClustersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHDInsightClustersAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all the HDInsight clusters under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/clusters
-        /// Operation Id: Clusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClusterResource> GetClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HDInsightClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HDInsightClusterResource> GetHDInsightClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetClusters(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHDInsightClusters(cancellationToken);
         }
 
         /// <summary>
         /// Gets the capabilities for the specified location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/capabilities
-        /// Operation Id: Locations_GetCapabilities
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_GetCapabilities</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<CapabilitiesResult>> GetCapabilitiesLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<HDInsightCapabilitiesResult>> GetHDInsightCapabilitiesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(subscriptionResource).GetCapabilitiesLocationAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetHDInsightCapabilitiesAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the capabilities for the specified location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/capabilities
-        /// Operation Id: Locations_GetCapabilities
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_GetCapabilities</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<CapabilitiesResult> GetCapabilitiesLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<HDInsightCapabilitiesResult> GetHDInsightCapabilities(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetCapabilitiesLocation(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHDInsightCapabilities(location, cancellationToken);
         }
 
         /// <summary>
         /// Lists the usages for the specified location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/usages
-        /// Operation Id: Locations_ListUsages
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ListUsages</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HDInsightUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<HDInsightUsage> GetUsagesLocationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<HDInsightUsage> GetHDInsightUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetUsagesLocationsAsync(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHDInsightUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
         /// Lists the usages for the specified location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/usages
-        /// Operation Id: Locations_ListUsages
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ListUsages</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HDInsightUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<HDInsightUsage> GetUsagesLocations(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Pageable<HDInsightUsage> GetHDInsightUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetUsagesLocations(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHDInsightUsages(location, cancellationToken);
         }
 
         /// <summary>
         /// Lists the billingSpecs for the specified subscription and location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/billingSpecs
-        /// Operation Id: Locations_ListBillingSpecs
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/billingSpecs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ListBillingSpecs</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<BillingResponseListResult>> GetBillingSpecsLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<HDInsightBillingSpecsListResult>> GetHDInsightBillingSpecsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(subscriptionResource).GetBillingSpecsLocationAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetHDInsightBillingSpecsAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Lists the billingSpecs for the specified subscription and location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/billingSpecs
-        /// Operation Id: Locations_ListBillingSpecs
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/billingSpecs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ListBillingSpecs</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<BillingResponseListResult> GetBillingSpecsLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<HDInsightBillingSpecsListResult> GetHDInsightBillingSpecs(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetBillingSpecsLocation(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the async operation status.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/azureasyncoperations/{operationId}
-        /// Operation Id: Locations_GetAzureAsyncOperationStatus
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="operationId"> The long running operation id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public static async Task<Response<AsyncOperationResult>> GetAzureAsyncOperationStatusLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetExtensionClient(subscriptionResource).GetAzureAsyncOperationStatusLocationAsync(location, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the async operation status.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/azureasyncoperations/{operationId}
-        /// Operation Id: Locations_GetAzureAsyncOperationStatus
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="operationId"> The long running operation id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public static Response<AsyncOperationResult> GetAzureAsyncOperationStatusLocation(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetExtensionClient(subscriptionResource).GetAzureAsyncOperationStatusLocation(location, operationId, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHDInsightBillingSpecs(location, cancellationToken);
         }
 
         /// <summary>
         /// Check the cluster name is available or not.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/checkNameAvailability
-        /// Operation Id: Locations_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="content"> The NameAvailabilityCheckRequestContent to use. </param>
+        /// <param name="content"> The HDInsightNameAvailabilityContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NameAvailabilityCheckResult>> CheckNameAvailabilityLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NameAvailabilityCheckRequestContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<HDInsightNameAvailabilityResult>> CheckHDInsightNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityLocationAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckHDInsightNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check the cluster name is available or not.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/checkNameAvailability
-        /// Operation Id: Locations_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="content"> The NameAvailabilityCheckRequestContent to use. </param>
+        /// <param name="content"> The HDInsightNameAvailabilityContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<NameAvailabilityCheckResult> CheckNameAvailabilityLocation(this SubscriptionResource subscriptionResource, AzureLocation location, NameAvailabilityCheckRequestContent content, CancellationToken cancellationToken = default)
+        public static Response<HDInsightNameAvailabilityResult> CheckHDInsightNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityLocation(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckHDInsightNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
         /// Validate the cluster create request spec is valid or not.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/validateCreateRequest
-        /// Operation Id: Locations_ValidateClusterCreateRequest
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/validateCreateRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ValidateClusterCreateRequest</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="content"> The ClusterCreateRequestValidationContent to use. </param>
+        /// <param name="content"> The HDInsightClusterCreationValidateContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<ClusterCreateValidationResult>> ValidateClusterCreateRequestLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ClusterCreateRequestValidationContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<HDInsightClusterCreationValidateResult>> ValidateHDInsightClusterCreationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).ValidateClusterCreateRequestLocationAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).ValidateHDInsightClusterCreationAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Validate the cluster create request spec is valid or not.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/validateCreateRequest
-        /// Operation Id: Locations_ValidateClusterCreateRequest
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/validateCreateRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ValidateClusterCreateRequest</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="content"> The ClusterCreateRequestValidationContent to use. </param>
+        /// <param name="content"> The HDInsightClusterCreationValidateContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<ClusterCreateValidationResult> ValidateClusterCreateRequestLocation(this SubscriptionResource subscriptionResource, AzureLocation location, ClusterCreateRequestValidationContent content, CancellationToken cancellationToken = default)
+        public static Response<HDInsightClusterCreationValidateResult> ValidateHDInsightClusterCreation(this SubscriptionResource subscriptionResource, AzureLocation location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).ValidateClusterCreateRequestLocation(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).ValidateHDInsightClusterCreation(location, content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -247,18 +307,26 @@ namespace Azure.ResourceManager.HDInsight
             );
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of HDInsightClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public static ClusterCollection GetClusters(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HDInsightClusterResources and their operations over a HDInsightClusterResource. </returns>
+        public static HDInsightClusterCollection GetHDInsightClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetClusters();
+            return GetExtensionClient(resourceGroupResource).GetHDInsightClusters();
         }
 
         /// <summary>
         /// Gets the specified cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -266,15 +334,23 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ClusterResource>> GetClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HDInsightClusterResource>> GetHDInsightClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetHDInsightClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the specified cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -282,44 +358,44 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ClusterResource> GetCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static Response<HDInsightClusterResource> GetHDInsightCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetClusters().Get(clusterName, cancellationToken);
+            return resourceGroupResource.GetHDInsightClusters().Get(clusterName, cancellationToken);
         }
 
-        #region ClusterResource
+        #region HDInsightClusterResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterResource.CreateResourceIdentifier" /> to create a <see cref="ClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HDInsightClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HDInsightClusterResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterResource" /> object. </returns>
-        public static ClusterResource GetClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HDInsightClusterResource" /> object. </returns>
+        public static HDInsightClusterResource GetHDInsightClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterResource.ValidateResourceId(id);
-                return new ClusterResource(client, id);
+                HDInsightClusterResource.ValidateResourceId(id);
+                return new HDInsightClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ApplicationResource
+        #region HDInsightApplicationResource
         /// <summary>
-        /// Gets an object representing an <see cref="ApplicationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HDInsightApplicationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HDInsightApplicationResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationResource" /> object. </returns>
-        public static ApplicationResource GetApplicationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HDInsightApplicationResource" /> object. </returns>
+        public static HDInsightApplicationResource GetHDInsightApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ApplicationResource.ValidateResourceId(id);
-                return new ApplicationResource(client, id);
+                HDInsightApplicationResource.ValidateResourceId(id);
+                return new HDInsightApplicationResource(client, id);
             }
             );
         }

@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
         }
 
-        private async Task<CertificateCollection> GetCertificatesCollectionAsync()
+        private async Task<AppCertificateCollection> GetCertificatesCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetCertificates();
+            return resourceGroup.GetAppCertificates();
         }
 
         [TestCase]
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var certificateName = Recording.GenerateAssetName("testCertificate-");
             var input = ResourceDataHelper.GetBasicCertificateData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, input);
-            CertificateResource certificate1 = lro.Value;
-            CertificateResource certificate2 = await container.GetAsync(certificateName);
+            AppCertificateResource certificate1 = lro.Value;
+            AppCertificateResource certificate2 = await container.GetAsync(certificateName);
             ResourceDataHelper.AssertCertificate(certificate1.Data, certificate2.Data);
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var certificateName = Recording.GenerateAssetName("testCertificate-");
             var input = ResourceDataHelper.GetBasicCertificateData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, input);
-            CertificateResource certificate = lro.Value;
+            AppCertificateResource certificate = lro.Value;
             Assert.IsTrue(await container.ExistsAsync(certificateName));
             Assert.IsFalse(await container.ExistsAsync(certificateName + "1"));
 

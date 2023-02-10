@@ -23,10 +23,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="profiles"/> is null. </exception>
         public AutoscaleSettingData(AzureLocation location, IEnumerable<AutoscaleProfile> profiles) : base(location)
         {
-            if (profiles == null)
-            {
-                throw new ArgumentNullException(nameof(profiles));
-            }
+            Argument.AssertNotNull(profiles, nameof(profiles));
 
             Profiles = profiles.ToList();
             Notifications = new ChangeTrackingList<AutoscaleNotification>();
@@ -41,15 +38,17 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
         /// <param name="notifications"> the collection of notifications. </param>
-        /// <param name="isEnabled"> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;true&apos;. </param>
+        /// <param name="isEnabled"> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;false&apos;. </param>
+        /// <param name="predictiveAutoscalePolicy"> the predictive autoscale policy mode. </param>
         /// <param name="autoscaleSettingName"> the name of the autoscale setting. </param>
         /// <param name="targetResourceId"> the resource identifier of the resource that the autoscale setting should be added to. </param>
         /// <param name="targetResourceLocation"> the location of the resource that the autoscale setting should be added to. </param>
-        internal AutoscaleSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AutoscaleProfile> profiles, IList<AutoscaleNotification> notifications, bool? isEnabled, string autoscaleSettingName, ResourceIdentifier targetResourceId, AzureLocation? targetResourceLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal AutoscaleSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AutoscaleProfile> profiles, IList<AutoscaleNotification> notifications, bool? isEnabled, PredictiveAutoscalePolicy predictiveAutoscalePolicy, string autoscaleSettingName, ResourceIdentifier targetResourceId, AzureLocation? targetResourceLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             Profiles = profiles;
             Notifications = notifications;
             IsEnabled = isEnabled;
+            PredictiveAutoscalePolicy = predictiveAutoscalePolicy;
             AutoscaleSettingName = autoscaleSettingName;
             TargetResourceId = targetResourceId;
             TargetResourceLocation = targetResourceLocation;
@@ -59,8 +58,10 @@ namespace Azure.ResourceManager.Monitor
         public IList<AutoscaleProfile> Profiles { get; }
         /// <summary> the collection of notifications. </summary>
         public IList<AutoscaleNotification> Notifications { get; set; }
-        /// <summary> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;true&apos;. </summary>
+        /// <summary> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;false&apos;. </summary>
         public bool? IsEnabled { get; set; }
+        /// <summary> the predictive autoscale policy mode. </summary>
+        public PredictiveAutoscalePolicy PredictiveAutoscalePolicy { get; set; }
         /// <summary> the name of the autoscale setting. </summary>
         public string AutoscaleSettingName { get; set; }
         /// <summary> the resource identifier of the resource that the autoscale setting should be added to. </summary>

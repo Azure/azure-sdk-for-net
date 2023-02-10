@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CONTRIBUTING.md = CONTRIBUTING.md
 		MigrationGuide.md = MigrationGuide.md
 		README.md = README.md
+		TROUBLESHOOTING.md = TROUBLESHOOTING.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{4A864BCB-6AD7-4F89-8778-C2953379EAAC}"
@@ -20,7 +21,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8B8C7CA6-452C-4041-A66D-78DC6F762C62}"
 	ProjectSection(SolutionItems) = preProject
 		samples\README.md = samples\README.md
-		samples\Sample01_HelloWorld.md = samples\Sample01_HelloWorld.md
 		samples\Sample02_MessageSettlement.md = samples\Sample02_MessageSettlement.md
 		samples\Sample03_SendReceiveSessions.md = samples\Sample03_SendReceiveSessions.md
 		samples\Sample04_Processor.md = samples\Sample04_Processor.md
@@ -32,6 +32,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8B8C
 		samples\Sample10_ClaimCheck.md = samples\Sample10_ClaimCheck.md
 		samples\Sample11_CloudEvents.md = samples\Sample11_CloudEvents.md
 		samples\Sample12_ManagingRules.md = samples\Sample12_ManagingRules.md
+		samples\Sample13_AdvancedConfiguration.md = samples\Sample13_AdvancedConfiguration.md
+		samples\Sample14_AMQPMessage.md = samples\Sample14_AMQPMessage.md
+		samples\Sample01_SendReceive.md = samples\Sample01_SendReceive.md
+		samples\Sample00_AuthenticateClient.md = samples\Sample00_AuthenticateClient.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Amqp", "..\..\core\Azure.Core.Amqp\src\Azure.Core.Amqp.csproj", "{2ADA26CA-77E5-4793-927A-A6185FD8AA29}"

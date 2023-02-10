@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should be a generic Event Hubs exception");
-            Assert.That(exception.Message, Is.EqualTo(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
+            Assert.That(exception.Message, Does.StartWith(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
             Assert.That(((EventHubsException)exception).IsTransient, Is.True, "The exception should be considered transient");
         }
 
@@ -326,7 +326,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should be a generic Event Hubs exception");
-            Assert.That(exception.Message, Is.EqualTo(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
+            Assert.That(exception.Message, Does.StartWith(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
             Assert.That(((EventHubsException)exception).IsTransient, Is.True, "The exception should be considered transient");
         }
 

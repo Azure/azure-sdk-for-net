@@ -3,12 +3,14 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Resources;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
@@ -24,6 +26,8 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ManagementGroupCleanupPolicy OneTimeManagementGroupCleanupPolicy = new ManagementGroupCleanupPolicy();
 
+        protected ResponseNullFilterPolicy NullFilterPolicy = new ResponseNullFilterPolicy();
+
         protected ArmClient GlobalClient { get; private set; }
 
         public TestEnvironment SessionEnvironment { get; private set; }
@@ -33,9 +37,9 @@ namespace Azure.ResourceManager.TestFramework
         private ArmClient _cleanupClient;
         private WaitUntil _waitForCleanup;
         private ResourceType _resourceType;
-        private string _apiVersion;
+        protected string ApiVersion { get; }
 
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default, bool ignoreArmCoreDependencyVersions = true)
             : base(isAsync, mode)
         {
             AdditionalInterceptors = new[] { new ManagementInterceptor(this) };
@@ -43,18 +47,60 @@ namespace Azure.ResourceManager.TestFramework
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
             Initialize();
+            if (ignoreArmCoreDependencyVersions)
+            {
+                IgnoreArmCoreDependencyVersions();
+            }
         }
 
-        protected ManagementRecordedTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = default)
-            : this(isAsync, mode)
+        protected ManagementRecordedTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = default, bool ignoreArmCoreDependencyVersions = true)
+            : this(isAsync, mode, ignoreArmCoreDependencyVersions)
         {
             _resourceType = resourceType;
-            _apiVersion = apiVersion;
+            ApiVersion = apiVersion;
+        }
+
+        protected void SetTagResourceUsage(ArmClient client, bool? useTagResource)
+        {
+            var target = client.GetType().GetField("__target", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(client);
+            target.GetType().GetField("_canUseTagResource", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(target, useTagResource);
         }
 
         private void Initialize()
         {
             _waitForCleanup = Mode == RecordedTestMode.Live ? WaitUntil.Completed : WaitUntil.Started;
+        }
+
+        private void IgnoreArmCoreDependencyVersions()
+        {
+            // Ignore the api-version of resource group operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/resourcegroups/[^/]+api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+            // Ignore the api-version of LRO query status operation for resource group deletion
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/subscriptions/[^/]+/operationresults/[^/]+api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+            // Ignore the api-version of TagResource operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers/Microsoft.Resources/tags/default\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+            // Ignore the api-version of the operation to query resource providers
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers/([^/]+)api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
         }
 
         private ArmClient GetCleanupClient()
@@ -64,21 +110,27 @@ namespace Azure.ResourceManager.TestFramework
                 return new ArmClient(
                     TestEnvironment.Credential,
                     TestEnvironment.SubscriptionId,
-                    new ArmClientOptions() { Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl)});
+                    new ArmClientOptions() { Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl) });
             }
             return null;
         }
 
         protected TClient InstrumentClientExtension<TClient>(TClient client) => (TClient)InstrumentClient(typeof(TClient), client, new IInterceptor[] { new ManagementInterceptor(this) });
 
-        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default)
+        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default, bool enableDeleteAfter = false)
         {
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
             options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
-            if (_apiVersion is not null)
-                options.SetApiVersion(_resourceType, _apiVersion);
+            options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerRetry);
+            if (enableDeleteAfter)
+            {
+                AddDeleteAfterTagPolicy deleteAfterTagPolicy = new AddDeleteAfterTagPolicy(Recording.UtcNow);
+                options.AddPolicy(deleteAfterTagPolicy, HttpPipelinePosition.PerCall);
+            }
+            if (ApiVersion is not null)
+                options.SetApiVersion(_resourceType, ApiVersion);
 
             return InstrumentClient(new ArmClient(
                 TestEnvironment.Credential,

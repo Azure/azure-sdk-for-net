@@ -1,0 +1,899 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Road\u0026lat=25.04\u0026lon=121.56\u0026language=en-US",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-adfa50d728706a43bd0a0d8185da855a-467b7fdb10bd1442-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20221011.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "1674ce64d8a8afef85370601d198b400",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "6470",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 11 Oct 2022 15:03:17 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 4F4A63BE8F8D486E906E2F335AAE2D2F Ref B: TPE30EDGE0922 Ref C: 2022-10-11T15:03:17Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "road",
+          "queryType": "NON_NEAR",
+          "queryTime": 8,
+          "numResults": 10,
+          "offset": 0,
+          "totalResults": 678390,
+          "fuzzyLevel": 1,
+          "geoBias": {
+            "lat": 25.04,
+            "lon": 121.56
+          }
+        },
+        "results": [
+          {
+            "type": "Street",
+            "id": "TW/STR/p0/183000",
+            "score": 2.5942528248,
+            "dist": 169.182626493177,
+            "matchConfidence": {
+              "score": 0.7699805236269982
+            },
+            "address": {
+              "streetName": "Yixian Road",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11071",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Yixian Road, Xinyi District, Taipei City 11071",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.03946,
+              "lon": 121.56157
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04132,
+                "lon": 121.56146
+              },
+              "btmRightPoint": {
+                "lat": 25.03752,
+                "lon": 121.56162
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "TW/STR/p0/156665",
+            "score": 2.5942020416,
+            "dist": 228.95988254790896,
+            "matchConfidence": {
+              "score": 0.7702501926060797
+            },
+            "address": {
+              "streetName": "Songgao Road",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11073",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Songgao Road, Xinyi District, Taipei City 11073",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.03915,
+              "lon": 121.56207
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.03916,
+                "lon": 121.56156
+              },
+              "btmRightPoint": {
+                "lat": 25.03915,
+                "lon": 121.56254
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "TW/STR/p0/386713",
+            "score": 2.5940184593,
+            "dist": 372.49534015816783,
+            "matchConfidence": {
+              "score": 0.7715585214613336
+            },
+            "address": {
+              "streetName": "Shifu Road",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Shifu Road, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.03892,
+              "lon": 121.5635
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.03912,
+                "lon": 121.56349
+              },
+              "btmRightPoint": {
+                "lat": 25.03883,
+                "lon": 121.56365
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "TW/STR/p0/106681",
+            "score": 2.5939936638,
+            "dist": 387.73710235882567,
+            "matchConfidence": {
+              "score": 0.7715585214613336
+            },
+            "address": {
+              "streetName": "Shifu Road",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Shifu Road, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.03853,
+              "lon": 121.56349
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.03892,
+                "lon": 121.56347
+              },
+              "btmRightPoint": {
+                "lat": 25.03768,
+                "lon": 121.56364
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "TW/STR/p0/370137",
+            "score": 2.5938193798,
+            "dist": 482.1201354232015,
+            "matchConfidence": {
+              "score": 0.7699805236269982
+            },
+            "address": {
+              "streetName": "Songshou Road",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11051",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Songshou Road, Xinyi District, Taipei City 11051",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.03599,
+              "lon": 121.56182
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.03599,
+                "lon": 121.56153
+              },
+              "btmRightPoint": {
+                "lat": 25.03598,
+                "lon": 121.56193
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "TW/STR/p0/370139",
+            "score": 2.5936274529,
+            "dist": 568.0173581187723,
+            "matchConfidence": {
+              "score": 0.772604461367722
+            },
+            "address": {
+              "streetName": "Songzhi Road",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11047",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Songzhi Road, Xinyi District, Taipei City 11047",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.0391,
+              "lon": 121.56555
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.03917,
+                "lon": 121.56545
+              },
+              "btmRightPoint": {
+                "lat": 25.03793,
+                "lon": 121.56555
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "TW/STR/p0/13026",
+            "score": 2.5935268402,
+            "dist": 608.2445994931428,
+            "matchConfidence": {
+              "score": 0.7699805236269982
+            },
+            "address": {
+              "streetName": "Yanchang Road",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Yanchang Road, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04547,
+              "lon": 121.56003
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04581,
+                "lon": 121.55967
+              },
+              "btmRightPoint": {
+                "lat": 25.04502,
+                "lon": 121.56052
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "TW/STR/p0/305574",
+            "score": 2.5935094357,
+            "dist": 614.9213632369967,
+            "matchConfidence": {
+              "score": 0.772604461367722
+            },
+            "address": {
+              "streetName": "Songzhi Road",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11047",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Songzhi Road, Xinyi District, Taipei City 11047",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.03751,
+              "lon": 121.56545
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.03909,
+                "lon": 121.5654
+              },
+              "btmRightPoint": {
+                "lat": 25.03592,
+                "lon": 121.56555
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "TW/STR/p0/192559",
+            "score": 2.5934972763,
+            "dist": 619.696874137873,
+            "matchConfidence": {
+              "score": 0.7682485761883903
+            },
+            "address": {
+              "streetName": "Xingya Road",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Xingya Road, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04011,
+              "lon": 121.56615
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04013,
+                "lon": 121.56404
+              },
+              "btmRightPoint": {
+                "lat": 25.04008,
+                "lon": 121.56838
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "TW/STR/p0/258672",
+            "score": 2.5934743881,
+            "dist": 628.2521976039321,
+            "matchConfidence": {
+              "score": 0.7699805236269982
+            },
+            "address": {
+              "streetName": "Yanchang Road",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11072",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Yanchang Road, Xinyi District, Taipei City 11072",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04565,
+              "lon": 121.56
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04587,
+                "lon": 121.55776
+              },
+              "btmRightPoint": {
+                "lat": 25.04492,
+                "lon": 121.56215
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Road\u0026lat=47.6773\u0026lon=-122.091",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-518b725dc3b87045b007c9b0745dc2d2-c002e9bb1453bf42-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20221011.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "95bddea69a79f02d6b1c0565f473dd29",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "7241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 11 Oct 2022 15:03:17 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: CDA381213BBB41BA85729A5B42C2DA79 Ref B: TPE30EDGE0922 Ref C: 2022-10-11T15:03:17Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "road",
+          "queryType": "NON_NEAR",
+          "queryTime": 8,
+          "numResults": 10,
+          "offset": 0,
+          "totalResults": 678390,
+          "fuzzyLevel": 1,
+          "geoBias": {
+            "lat": 47.6773,
+            "lon": -122.091
+          }
+        },
+        "results": [
+          {
+            "type": "Street",
+            "id": "US/STR/p0/1335300",
+            "score": 2.5916588306,
+            "dist": 1118.3589711278755,
+            "matchConfidence": {
+              "score": 0.8799925891822442
+            },
+            "address": {
+              "streetName": "East Road",
+              "municipality": "Redmond",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98052",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "East Road, Redmond, WA 98052",
+              "localName": "Redmond"
+            },
+            "position": {
+              "lat": 47.68616,
+              "lon": -122.09807
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.6871,
+                "lon": -122.09822
+              },
+              "btmRightPoint": {
+                "lat": 47.68534,
+                "lon": -122.098
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p2/1353620",
+            "score": 2.5913741589,
+            "dist": 1176.948488180816,
+            "matchConfidence": {
+              "score": 0.8754136466880192
+            },
+            "address": {
+              "streetName": "West Road",
+              "municipality": "Redmond",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98052",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "West Road, Redmond, WA 98052",
+              "localName": "Redmond"
+            },
+            "position": {
+              "lat": 47.68623,
+              "lon": -122.09944
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.68726,
+                "lon": -122.09983
+              },
+              "btmRightPoint": {
+                "lat": 47.68535,
+                "lon": -122.09813
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p3/1628857",
+            "score": 2.4038908482,
+            "dist": 10559.034560275872,
+            "matchConfidence": {
+              "score": 0.8626200434597815
+            },
+            "address": {
+              "streetName": "Northeast Ring Street",
+              "municipality": "Duvall",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98019",
+              "extendedPostalCode": "98019-6466",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Northeast Ring Street, Duvall, WA 98019",
+              "localName": "Duvall"
+            },
+            "position": {
+              "lat": 47.73933,
+              "lon": -121.98415
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.73934,
+                "lon": -121.98572
+              },
+              "btmRightPoint": {
+                "lat": 47.73932,
+                "lon": -121.98325
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/13853",
+            "score": 2.3845028877,
+            "dist": 88714.96755376291,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 0.8911601985977937
+            },
+            "address": {
+              "municipality": "River Road",
+              "countrySecondarySubdivision": "Clallam",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "River Road, WA"
+            },
+            "position": {
+              "lat": 48.06876,
+              "lon": -123.12742
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 48.07253,
+                "lon": -123.13497
+              },
+              "btmRightPoint": {
+                "lat": 48.06149,
+                "lon": -123.11855
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 48.07253,
+                "lon": -123.13497
+              },
+              "btmRightPoint": {
+                "lat": 48.06149,
+                "lon": -123.11855
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005557-4100-3c00-0000-0000596865de"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "IE/GEO/p0/33376",
+            "score": 2.3817019463,
+            "dist": 7307589.1736022495,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 0.8762705475950595
+            },
+            "address": {
+              "municipality": "Ring",
+              "countrySubdivision": "Waterford",
+              "countryCode": "IE",
+              "country": "Ireland",
+              "countryCodeISO3": "IRL",
+              "freeformAddress": "Ring, Waterford"
+            },
+            "position": {
+              "lat": 52.04778,
+              "lon": -7.58034
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 52.06763,
+                "lon": -7.68234
+              },
+              "btmRightPoint": {
+                "lat": 52.00739,
+                "lon": -7.53624
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 52.06763,
+                "lon": -7.68234
+              },
+              "btmRightPoint": {
+                "lat": 52.00739,
+                "lon": -7.53624
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00004952-4c00-3c00-0000-000023c4ea4b"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/102558",
+            "score": 2.3628718853,
+            "dist": 407622.80313440715,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 0.8911601985977937
+            },
+            "address": {
+              "municipality": "River Road",
+              "countrySecondarySubdivision": "Lane",
+              "countrySubdivision": "OR",
+              "countrySubdivisionName": "Oregon",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "River Road, OR"
+            },
+            "position": {
+              "lat": 44.08412,
+              "lon": -123.13492
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 44.09783,
+                "lon": -123.15627
+              },
+              "btmRightPoint": {
+                "lat": 44.06385,
+                "lon": -123.1104
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 44.09783,
+                "lon": -123.15627
+              },
+              "btmRightPoint": {
+                "lat": 44.06385,
+                "lon": -123.1104
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "8f59af09-de34-4230-a7c5-6c736f843509"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/107595",
+            "score": 2.3583564758,
+            "dist": 888890.685940672,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 0.8648711685462058
+            },
+            "address": {
+              "municipality": "C-Road",
+              "countrySecondarySubdivision": "Plumas",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "C-Road, CA"
+            },
+            "position": {
+              "lat": 39.75723,
+              "lon": -120.58599
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 39.78496,
+                "lon": -120.59544
+              },
+              "btmRightPoint": {
+                "lat": 39.74595,
+                "lon": -120.54922
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 39.78496,
+                "lon": -120.59544
+              },
+              "btmRightPoint": {
+                "lat": 39.74595,
+                "lon": -120.54922
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005543-3400-3c00-0000-000059f2a251"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "AU/GEO/p0/2336",
+            "score": 2.3583519459,
+            "dist": 12324370.147034068,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 0.8656147438795118
+            },
+            "address": {
+              "municipality": "Stroud Road",
+              "countrySecondarySubdivision": "Hunter",
+              "countrySubdivision": "New South Wales",
+              "countryCode": "AU",
+              "country": "Australia",
+              "countryCodeISO3": "AUS",
+              "freeformAddress": "Stroud Road, New South Wales"
+            },
+            "position": {
+              "lat": -32.34541,
+              "lon": 151.93012
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -32.26472,
+                "lon": 151.89712
+              },
+              "btmRightPoint": {
+                "lat": -32.37885,
+                "lon": 151.97041
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -32.26472,
+                "lon": 151.89712
+              },
+              "btmRightPoint": {
+                "lat": -32.37885,
+                "lon": 151.97041
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d321d60"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "AU/GEO/p0/2708",
+            "score": 2.3583519459,
+            "dist": 13172261.451287039,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 0.858200005361228
+            },
+            "address": {
+              "municipality": "Tetoora Road",
+              "countrySecondarySubdivision": "West Gippsland",
+              "countrySubdivision": "Victoria",
+              "countryCode": "AU",
+              "country": "Australia",
+              "countryCodeISO3": "AUS",
+              "freeformAddress": "Tetoora Road, Victoria"
+            },
+            "position": {
+              "lat": -38.27184,
+              "lon": 145.89244
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -38.25535,
+                "lon": 145.8604
+              },
+              "btmRightPoint": {
+                "lat": -38.30461,
+                "lon": 145.90578
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -38.25535,
+                "lon": 145.8604
+              },
+              "btmRightPoint": {
+                "lat": -38.30461,
+                "lon": 145.90578
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d320cb5"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "AU/GEO/p0/12885",
+            "score": 2.3583519459,
+            "dist": 14753479.815599957,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 0.858200005361228
+            },
+            "address": {
+              "municipality": "Burma Road",
+              "countrySecondarySubdivision": "North Coast",
+              "countrySubdivision": "Western Australia",
+              "countryCode": "AU",
+              "country": "Australia",
+              "countryCodeISO3": "AUS",
+              "freeformAddress": "Burma Road, Western Australia"
+            },
+            "position": {
+              "lat": -28.96667,
+              "lon": 115.02397
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -28.90148,
+                "lon": 114.93362
+              },
+              "btmRightPoint": {
+                "lat": -29.01916,
+                "lon": 115.14079
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -28.90148,
+                "lon": 114.93362
+              },
+              "btmRightPoint": {
+                "lat": -29.01916,
+                "lon": 115.14079
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d322598"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "1977066587"
+  }
+}

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="databaseName"/> is null. </exception>
         public MongoDbLinkedService(object server, object databaseName)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNull(server, nameof(server));
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
 
             Server = server;
             DatabaseName = databaseName;
@@ -44,7 +39,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="authenticationType"> The authentication type to be used to connect to the MongoDB database. </param>
         /// <param name="databaseName"> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </param>
         /// <param name="username"> Username for authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password for authentication. </param>
+        /// <param name="password">
+        /// Password for authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="authSource"> Database to verify the username and password. Type: string (or Expression with resultType string). </param>
         /// <param name="port"> The TCP port number that the MongoDB server uses to listen for client connections. The default value is 27017. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
@@ -73,7 +72,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object DatabaseName { get; set; }
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
         public object Username { get; set; }
-        /// <summary> Password for authentication. </summary>
+        /// <summary>
+        /// Password for authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> Database to verify the username and password. Type: string (or Expression with resultType string). </summary>
         public object AuthSource { get; set; }

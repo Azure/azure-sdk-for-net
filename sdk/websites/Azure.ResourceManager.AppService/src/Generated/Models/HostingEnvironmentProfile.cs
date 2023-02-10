@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Specification for an App Service Environment to use for this resource. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> Resource ID of the App Service Environment. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="resourceType"> Resource type of the App Service Environment. </param>
-        internal HostingEnvironmentProfile(string id, string name, string resourceType)
+        internal HostingEnvironmentProfile(ResourceIdentifier id, string name, ResourceType? resourceType)
         {
             Id = id;
             Name = name;
@@ -27,10 +29,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Resource ID of the App Service Environment. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> Name of the App Service Environment. </summary>
         public string Name { get; }
         /// <summary> Resource type of the App Service Environment. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
     }
 }

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomLicenseAcquisitionUrlTemplate))
+            if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
             {
-                writer.WritePropertyName("customLicenseAcquisitionUrlTemplate");
-                writer.WriteStringValue(CustomLicenseAcquisitionUrlTemplate);
+                writer.WritePropertyName("customLicenseAcquisitionUrlTemplate"u8);
+                writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate);
             }
             if (Optional.IsDefined(PlayReadyCustomAttributes))
             {
-                writer.WritePropertyName("playReadyCustomAttributes");
+                writer.WritePropertyName("playReadyCustomAttributes"u8);
                 writer.WriteStringValue(PlayReadyCustomAttributes);
             }
             writer.WriteEndObject();
@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingPolicyPlayReadyConfiguration DeserializeStreamingPolicyPlayReadyConfiguration(JsonElement element)
         {
-            Optional<string> customLicenseAcquisitionUrlTemplate = default;
+            Optional<string> customLicenseAcquisitionUriTemplate = default;
             Optional<string> playReadyCustomAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customLicenseAcquisitionUrlTemplate"))
+                if (property.NameEquals("customLicenseAcquisitionUrlTemplate"u8))
                 {
-                    customLicenseAcquisitionUrlTemplate = property.Value.GetString();
+                    customLicenseAcquisitionUriTemplate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("playReadyCustomAttributes"))
+                if (property.NameEquals("playReadyCustomAttributes"u8))
                 {
                     playReadyCustomAttributes = property.Value.GetString();
                     continue;
                 }
             }
-            return new StreamingPolicyPlayReadyConfiguration(customLicenseAcquisitionUrlTemplate.Value, playReadyCustomAttributes.Value);
+            return new StreamingPolicyPlayReadyConfiguration(customLicenseAcquisitionUriTemplate.Value, playReadyCustomAttributes.Value);
         }
     }
 }

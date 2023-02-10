@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Image))
             {
-                writer.WritePropertyName("image");
+                writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
             if (Optional.IsCollectionDefined(Command))
             {
-                writer.WritePropertyName("command");
+                writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
                 foreach (var item in Command)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
-                writer.WritePropertyName("environmentVariables");
+                writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentVariables)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             if (Optional.IsCollectionDefined(VolumeMounts))
             {
-                writer.WritePropertyName("volumeMounts");
+                writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in VolumeMounts)
                 {
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string name = default;
             Optional<string> image = default;
             Optional<IList<string>> command = default;
-            Optional<IList<EnvironmentVariable>> environmentVariables = default;
+            Optional<IList<ContainerEnvironmentVariable>> environmentVariables = default;
             Optional<InitContainerPropertiesDefinitionInstanceView> instanceView = default;
-            Optional<IList<VolumeMount>> volumeMounts = default;
+            Optional<IList<ContainerVolumeMount>> volumeMounts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("image"))
+                        if (property0.NameEquals("image"u8))
                         {
                             image = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("command"))
+                        if (property0.NameEquals("command"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -103,22 +103,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             command = array;
                             continue;
                         }
-                        if (property0.NameEquals("environmentVariables"))
+                        if (property0.NameEquals("environmentVariables"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<EnvironmentVariable> array = new List<EnvironmentVariable>();
+                            List<ContainerEnvironmentVariable> array = new List<ContainerEnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item));
+                                array.Add(ContainerEnvironmentVariable.DeserializeContainerEnvironmentVariable(item));
                             }
                             environmentVariables = array;
                             continue;
                         }
-                        if (property0.NameEquals("instanceView"))
+                        if (property0.NameEquals("instanceView"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             instanceView = InitContainerPropertiesDefinitionInstanceView.DeserializeInitContainerPropertiesDefinitionInstanceView(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("volumeMounts"))
+                        if (property0.NameEquals("volumeMounts"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VolumeMount> array = new List<VolumeMount>();
+                            List<ContainerVolumeMount> array = new List<ContainerVolumeMount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VolumeMount.DeserializeVolumeMount(item));
+                                array.Add(ContainerVolumeMount.DeserializeContainerVolumeMount(item));
                             }
                             volumeMounts = array;
                             continue;

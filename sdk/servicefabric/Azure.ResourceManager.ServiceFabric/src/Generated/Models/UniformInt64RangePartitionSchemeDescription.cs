@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -27,19 +28,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="lowKey"/> or <paramref name="highKey"/> is null. </exception>
         public UniformInt64RangePartitionSchemeDescription(int count, string lowKey, string highKey)
         {
-            if (lowKey == null)
-            {
-                throw new ArgumentNullException(nameof(lowKey));
-            }
-            if (highKey == null)
-            {
-                throw new ArgumentNullException(nameof(highKey));
-            }
+            Argument.AssertNotNull(lowKey, nameof(lowKey));
+            Argument.AssertNotNull(highKey, nameof(highKey));
 
             Count = count;
             LowKey = lowKey;
             HighKey = highKey;
-            PartitionScheme = PartitionScheme.UniformInt64Range;
+            PartitionScheme = ApplicationPartitionScheme.UniformInt64Range;
         }
 
         /// <summary> Initializes a new instance of UniformInt64RangePartitionSchemeDescription. </summary>
@@ -55,7 +50,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// should be split between the partition ‘count’
         /// 
         /// </param>
-        internal UniformInt64RangePartitionSchemeDescription(PartitionScheme partitionScheme, int count, string lowKey, string highKey) : base(partitionScheme)
+        internal UniformInt64RangePartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, int count, string lowKey, string highKey) : base(partitionScheme)
         {
             Count = count;
             LowKey = lowKey;

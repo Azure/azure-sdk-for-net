@@ -15,31 +15,31 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("suspendDuplicateMessage");
+            writer.WritePropertyName("suspendDuplicateMessage"u8);
             writer.WriteBooleanValue(SuspendDuplicateMessage);
-            writer.WritePropertyName("resendIfMDNNotReceived");
-            writer.WriteBooleanValue(ResendIfMDNNotReceived);
+            writer.WritePropertyName("resendIfMDNNotReceived"u8);
+            writer.WriteBooleanValue(ResendIfMdnNotReceived);
             writer.WriteEndObject();
         }
 
         internal static AS2ErrorSettings DeserializeAS2ErrorSettings(JsonElement element)
         {
             bool suspendDuplicateMessage = default;
-            bool resendIfMDNNotReceived = default;
+            bool resendIfMdnNotReceived = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("suspendDuplicateMessage"))
+                if (property.NameEquals("suspendDuplicateMessage"u8))
                 {
                     suspendDuplicateMessage = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("resendIfMDNNotReceived"))
+                if (property.NameEquals("resendIfMDNNotReceived"u8))
                 {
-                    resendIfMDNNotReceived = property.Value.GetBoolean();
+                    resendIfMdnNotReceived = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new AS2ErrorSettings(suspendDuplicateMessage, resendIfMDNNotReceived);
+            return new AS2ErrorSettings(suspendDuplicateMessage, resendIfMdnNotReceived);
         }
     }
 }

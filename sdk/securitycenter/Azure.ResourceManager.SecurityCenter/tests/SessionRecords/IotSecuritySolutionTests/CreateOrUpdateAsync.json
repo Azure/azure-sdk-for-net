@@ -1,0 +1,1400 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-74480ad4ccc9bf42bb4aa3d1d4a355ea-75265abb55282d46-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b9fbcb5341cdd3b33288258e4a789fc5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:26:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a8bece6a-1d5b-40cf-b15a-403c2620fb0f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "a8bece6a-1d5b-40cf-b15a-403c2620fb0f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062651Z:a8bece6a-1d5b-40cf-b15a-403c2620fb0f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/SecurityCenterRG4536?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-4de5d64e97991d46b57e2159a86deab8-d4f64ba9ad6aa04f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8713017aff29f89ad263eebb1c1e7e8a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "237",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:26:53 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c9a35164-2a74-4fcd-b857-2f9143898c31",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "c9a35164-2a74-4fcd-b857-2f9143898c31",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062653Z:c9a35164-2a74-4fcd-b857-2f9143898c31"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG4536",
+        "name": "SecurityCenterRG4536",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG4536/providers/Microsoft.Devices/IotHubs/iothub1869?api-version=2021-07-02",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "64",
+        "Content-Type": "application/json",
+        "traceparent": "00-031d2372f0437d40ac6c98d21ebb95a4-a136705437044140-00",
+        "User-Agent": "azsdk-net-ResourceManager.IotHub/1.0.0 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e7bc2334d44064d7020c4b5036784540",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "S1",
+          "capacity": 1
+        },
+        "tags": {},
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Devices/locations/eastus/operationResults/aWQ9b3NfaWhfYWMzNDk0MGUtYjY1Zi00YzZmLWJiZWUtNGFiYTQ1MzdjMDRhO3JlZ2lvbj1lYXN0dXM=?api-version=2021-07-02\u0026operationSource=other\u0026asyncinfo",
+        "Cache-Control": "no-cache",
+        "Content-Length": "675",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:27:00 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "dba9e11f-7f3d-4c1a-b0c4-6c9dd76b19ff",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "4999",
+        "x-ms-request-id": "dba9e11f-7f3d-4c1a-b0c4-6c9dd76b19ff",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062700Z:dba9e11f-7f3d-4c1a-b0c4-6c9dd76b19ff"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG4536/providers/Microsoft.Devices/IotHubs/iothub1869",
+        "name": "iothub1869",
+        "type": "Microsoft.Devices/IotHubs",
+        "location": "eastus",
+        "tags": {},
+        "subscriptionid": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "resourcegroup": "SecurityCenterRG4536",
+        "properties": {
+          "state": "Activating",
+          "provisioningState": "Accepted",
+          "enableFileUploadNotifications": false,
+          "cloudToDevice": {
+            "maxDeliveryCount": 10,
+            "defaultTtlAsIso8601": "PT1H",
+            "feedback": {
+              "lockDurationAsIso8601": "PT1M",
+              "ttlAsIso8601": "PT1H",
+              "maxDeliveryCount": 10
+            }
+          },
+          "features": "None",
+          "allowedFqdnList": []
+        },
+        "sku": {
+          "name": "S1",
+          "tier": "Standard",
+          "capacity": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Devices/locations/eastus/operationResults/aWQ9b3NfaWhfYWMzNDk0MGUtYjY1Zi00YzZmLWJiZWUtNGFiYTQ1MzdjMDRhO3JlZ2lvbj1lYXN0dXM=?api-version=2021-07-02\u0026operationSource=other\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-031d2372f0437d40ac6c98d21ebb95a4-9b15bc7805d4d542-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7c43eb0361092c3a3c2327f34fa79ceb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "20",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:27:00 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0ef2c9d9-8f1c-4606-b93c-43fb72e61e7f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "0ef2c9d9-8f1c-4606-b93c-43fb72e61e7f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062701Z:0ef2c9d9-8f1c-4606-b93c-43fb72e61e7f"
+      },
+      "ResponseBody": {
+        "status": "Running"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Devices/locations/eastus/operationResults/aWQ9b3NfaWhfYWMzNDk0MGUtYjY1Zi00YzZmLWJiZWUtNGFiYTQ1MzdjMDRhO3JlZ2lvbj1lYXN0dXM=?api-version=2021-07-02\u0026operationSource=other\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-031d2372f0437d40ac6c98d21ebb95a4-2c8ed2a9b119c745-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b98c7aa9b5bc0a56575b2545f7124cec",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "20",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:27:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "94658253-bc40-4f5b-b291-f62a87f0914a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "94658253-bc40-4f5b-b291-f62a87f0914a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062702Z:94658253-bc40-4f5b-b291-f62a87f0914a"
+      },
+      "ResponseBody": {
+        "status": "Running"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Devices/locations/eastus/operationResults/aWQ9b3NfaWhfYWMzNDk0MGUtYjY1Zi00YzZmLWJiZWUtNGFiYTQ1MzdjMDRhO3JlZ2lvbj1lYXN0dXM=?api-version=2021-07-02\u0026operationSource=other\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-031d2372f0437d40ac6c98d21ebb95a4-ddaa8079d7749049-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4a4ca3a2c9352e372b9498e502d81019",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "20",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:27:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "601078fc-a230-4cf4-8e6a-9706d5baee90",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "601078fc-a230-4cf4-8e6a-9706d5baee90",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062703Z:601078fc-a230-4cf4-8e6a-9706d5baee90"
+      },
+      "ResponseBody": {
+        "status": "Running"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Devices/locations/eastus/operationResults/aWQ9b3NfaWhfYWMzNDk0MGUtYjY1Zi00YzZmLWJiZWUtNGFiYTQ1MzdjMDRhO3JlZ2lvbj1lYXN0dXM=?api-version=2021-07-02\u0026operationSource=other\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-031d2372f0437d40ac6c98d21ebb95a4-e0da3224adce5248-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9d1bf25eb0884eea953824ad3bf43529",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "20",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:27:04 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8eafabf1-d1be-43a4-be10-5f7af5815874",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "8eafabf1-d1be-43a4-be10-5f7af5815874",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062705Z:8eafabf1-d1be-43a4-be10-5f7af5815874"
+      },
+      "ResponseBody": {
+        "status": "Running"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Devices/locations/eastus/operationResults/aWQ9b3NfaWhfYWMzNDk0MGUtYjY1Zi00YzZmLWJiZWUtNGFiYTQ1MzdjMDRhO3JlZ2lvbj1lYXN0dXM=?api-version=2021-07-02\u0026operationSource=other\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-031d2372f0437d40ac6c98d21ebb95a4-e453a0e47bafd349-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ab503ad7515adfb5435e8d271d70087e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "20",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:27:06 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "bbf0541b-243d-492f-8d9f-0e8f68935530",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "bbf0541b-243d-492f-8d9f-0e8f68935530",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062707Z:bbf0541b-243d-492f-8d9f-0e8f68935530"
+      },
+      "ResponseBody": {
+        "status": "Running"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Devices/locations/eastus/operationResults/aWQ9b3NfaWhfYWMzNDk0MGUtYjY1Zi00YzZmLWJiZWUtNGFiYTQ1MzdjMDRhO3JlZ2lvbj1lYXN0dXM=?api-version=2021-07-02\u0026operationSource=other\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-031d2372f0437d40ac6c98d21ebb95a4-34211e66fb757f42-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "04e70c4aaef6f263b9feb5fca489f236",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "20",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:27:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cb38685f-9a4d-4c6c-bdb8-52ab9051572b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "cb38685f-9a4d-4c6c-bdb8-52ab9051572b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062711Z:cb38685f-9a4d-4c6c-bdb8-52ab9051572b"
+      },
+      "ResponseBody": {
+        "status": "Running"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Devices/locations/eastus/operationResults/aWQ9b3NfaWhfYWMzNDk0MGUtYjY1Zi00YzZmLWJiZWUtNGFiYTQ1MzdjMDRhO3JlZ2lvbj1lYXN0dXM=?api-version=2021-07-02\u0026operationSource=other\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-031d2372f0437d40ac6c98d21ebb95a4-2165fdfde560134b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c80e6e5f64870cbe3c3b592a22c23024",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "20",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:27:19 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e1c38dff-56c1-4a80-9b71-b26dff245248",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "e1c38dff-56c1-4a80-9b71-b26dff245248",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062720Z:e1c38dff-56c1-4a80-9b71-b26dff245248"
+      },
+      "ResponseBody": {
+        "status": "Running"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Devices/locations/eastus/operationResults/aWQ9b3NfaWhfYWMzNDk0MGUtYjY1Zi00YzZmLWJiZWUtNGFiYTQ1MzdjMDRhO3JlZ2lvbj1lYXN0dXM=?api-version=2021-07-02\u0026operationSource=other\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-031d2372f0437d40ac6c98d21ebb95a4-d9a61045a5052144-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2f63a530300d2833d65ef25c9bb93bb9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "20",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:27:35 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c9bea034-ae3d-459d-91d4-5ec8c34ae6d9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "c9bea034-ae3d-459d-91d4-5ec8c34ae6d9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062736Z:c9bea034-ae3d-459d-91d4-5ec8c34ae6d9"
+      },
+      "ResponseBody": {
+        "status": "Running"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Devices/locations/eastus/operationResults/aWQ9b3NfaWhfYWMzNDk0MGUtYjY1Zi00YzZmLWJiZWUtNGFiYTQ1MzdjMDRhO3JlZ2lvbj1lYXN0dXM=?api-version=2021-07-02\u0026operationSource=other\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-031d2372f0437d40ac6c98d21ebb95a4-559e3364edde954c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "afc8576b4062e5f74ddac7ba5439cff6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "20",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:28:07 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5a185e9c-f60e-4c38-93a3-2af4d44a6d58",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "5a185e9c-f60e-4c38-93a3-2af4d44a6d58",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062808Z:5a185e9c-f60e-4c38-93a3-2af4d44a6d58"
+      },
+      "ResponseBody": {
+        "status": "Running"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Devices/locations/eastus/operationResults/aWQ9b3NfaWhfYWMzNDk0MGUtYjY1Zi00YzZmLWJiZWUtNGFiYTQ1MzdjMDRhO3JlZ2lvbj1lYXN0dXM=?api-version=2021-07-02\u0026operationSource=other\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-031d2372f0437d40ac6c98d21ebb95a4-3c08104c8a7f0842-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fecc91cec3262e293be6f12872627183",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "20",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:28:40 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3423d306-a2df-4099-8cfe-f1703a1f4eff",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "3423d306-a2df-4099-8cfe-f1703a1f4eff",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062841Z:3423d306-a2df-4099-8cfe-f1703a1f4eff"
+      },
+      "ResponseBody": {
+        "status": "Running"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Devices/locations/eastus/operationResults/aWQ9b3NfaWhfYWMzNDk0MGUtYjY1Zi00YzZmLWJiZWUtNGFiYTQ1MzdjMDRhO3JlZ2lvbj1lYXN0dXM=?api-version=2021-07-02\u0026operationSource=other\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-031d2372f0437d40ac6c98d21ebb95a4-601a6ef26305ce4f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cabfa00081faf0c2ae7de1326878d39d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "22",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:29:12 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d951f01a-f51e-460b-be29-4f9c5a1145e4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "d951f01a-f51e-460b-be29-4f9c5a1145e4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062913Z:d951f01a-f51e-460b-be29-4f9c5a1145e4"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG4536/providers/Microsoft.Devices/IotHubs/iothub1869?api-version=2021-07-02",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-031d2372f0437d40ac6c98d21ebb95a4-7e31e26b1ff8cb41-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "098efc8f3ceca7932e9a747b4ece73eb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1609",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:29:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5afa1090-e80b-4315-9e44-972540955085",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "5afa1090-e80b-4315-9e44-972540955085",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062914Z:5afa1090-e80b-4315-9e44-972540955085"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG4536/providers/Microsoft.Devices/IotHubs/iothub1869",
+        "name": "iothub1869",
+        "type": "Microsoft.Devices/IotHubs",
+        "location": "eastus",
+        "tags": {},
+        "subscriptionid": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "resourcegroup": "SecurityCenterRG4536",
+        "etag": "AAAADHOxaA0=",
+        "properties": {
+          "locations": [
+            {
+              "location": "East US",
+              "role": "primary"
+            },
+            {
+              "location": "West US",
+              "role": "secondary"
+            }
+          ],
+          "state": "Active",
+          "provisioningState": "Succeeded",
+          "ipFilterRules": [],
+          "hostName": "iothub1869.azure-devices.net",
+          "eventHubEndpoints": {
+            "events": {
+              "retentionTimeInDays": 1,
+              "partitionCount": 4,
+              "partitionIds": [
+                "0",
+                "1",
+                "2",
+                "3"
+              ],
+              "path": "iothub1869",
+              "endpoint": "sb://iothub-ns-iothub1869-22314618-820f587261.servicebus.windows.net/"
+            }
+          },
+          "routing": {
+            "endpoints": {
+              "serviceBusQueues": [],
+              "serviceBusTopics": [],
+              "eventHubs": [],
+              "storageContainers": []
+            },
+            "routes": [],
+            "fallbackRoute": {
+              "name": "$fallback",
+              "source": "DeviceMessages",
+              "condition": "true",
+              "endpointNames": [
+                "events"
+              ],
+              "isEnabled": true
+            }
+          },
+          "storageEndpoints": {
+            "$default": {
+              "sasTtlAsIso8601": "PT1H",
+              "connectionString": "",
+              "containerName": ""
+            }
+          },
+          "messagingEndpoints": {
+            "fileNotifications": {
+              "lockDurationAsIso8601": "PT1M",
+              "ttlAsIso8601": "PT1H",
+              "maxDeliveryCount": 10
+            }
+          },
+          "enableFileUploadNotifications": false,
+          "cloudToDevice": {
+            "maxDeliveryCount": 10,
+            "defaultTtlAsIso8601": "PT1H",
+            "feedback": {
+              "lockDurationAsIso8601": "PT1M",
+              "ttlAsIso8601": "PT1H",
+              "maxDeliveryCount": 10
+            }
+          },
+          "features": "None",
+          "allowedFqdnList": []
+        },
+        "sku": {
+          "name": "S1",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "identity": {
+          "type": "None"
+        },
+        "systemData": {
+          "createdAt": "2022-10-18T06:26:59.22Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG4536/providers/Microsoft.Security/iotSecuritySolutions/solution804?api-version=2019-08-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "437",
+        "Content-Type": "application/json",
+        "traceparent": "00-7402535cc050a244bfadf6588139ca71-19f0fb317b370841-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221013.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "79b4b944fb04cf4cdc4fa9e1f6c5c212",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus",
+        "properties": {
+          "displayName": "solution804",
+          "status": "Enabled",
+          "iotHubs": [
+            "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG4536/providers/Microsoft.Devices/IotHubs/iothub1869"
+          ],
+          "recommendationsConfiguration": [
+            {
+              "recommendationType": "IoT_OpenPorts",
+              "status": "Disabled"
+            },
+            {
+              "recommendationType": "IoT_SharedCredentials",
+              "status": "Disabled"
+            }
+          ],
+          "unmaskedIpLoggingStatus": "Enabled"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "19280",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Oct 2022 06:29:21 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e5f85bf3-5db8-4a49-9ae9-53035e02084b",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "249",
+        "x-ms-request-id": "e5f85bf3-5db8-4a49-9ae9-53035e02084b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221018T062921Z:e5f85bf3-5db8-4a49-9ae9-53035e02084b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG4536/providers/Microsoft.Security/iotSecuritySolutions/solution804",
+        "type": "Microsoft.Security/iotSecuritySolutions",
+        "name": "solution804",
+        "location": "eastus",
+        "properties": {
+          "displayName": "solution804",
+          "status": "Enabled",
+          "export": [],
+          "disabledDataSources": [],
+          "workspace": null,
+          "additionalWorkspaces": [],
+          "iotHubs": [
+            "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG4536/providers/Microsoft.Devices/IotHubs/iothub1869"
+          ],
+          "userDefinedResources": {
+            "query": null,
+            "querySubscriptions": null
+          },
+          "recommendationsConfiguration": [
+            {
+              "recommendationType": "IoT_ACRAuthentication",
+              "name": "Service prinicpal not used with ACR repository",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_AgentSendsUnutilizedMessages",
+              "name": "Agent sending underutilized messages",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_AuditdNotReceived",
+              "name": "Auditd process stopped sending events",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_Baseline",
+              "name": "Operating system (OS) baseline validation failure",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_EdgeHubMemOptimize",
+              "name": "IoT Edge Hub memory can be optimized",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_EdgeLoggingOptions",
+              "name": "No logging configured for IoT Edge module",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_InconsistentModuleSettings",
+              "name": "SecurityGroup has inconsistent module settings",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_InstallAgent",
+              "name": "Install the Azure IoT Security agent",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_IPFilter_DenyAll",
+              "name": "Default IP filter policy should be deny",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_IPFilter_PermissiveRule",
+              "name": "IP filter rule includes a large IP range",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_OpenPorts",
+              "name": "Device has open ports",
+              "status": "Disabled"
+            },
+            {
+              "recommendationType": "IoT_PermissiveFirewallPolicy",
+              "name": "Permissive firewall policy in one of the chains",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_PermissiveInputFirewallRules",
+              "name": "Permissive firewall rule in the input chain",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_PermissiveOutputFirewallRules",
+              "name": "Permissive firewall rule in the output chain",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_PrivilegedDockerOptions",
+              "name": "High level permissions configured in IoT Edge model twin for IoT Edge module",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_RecommendedIpRulesByBaseLine",
+              "name": "Recommended Rules for ip filter",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_SharedCredentials",
+              "name": "Same authentication credentials used by multiple devices",
+              "status": "Disabled"
+            },
+            {
+              "recommendationType": "IoT_VulnerableTLSCipherSuite",
+              "name": "TLS cipher suite upgrade needed",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_EOL_OSversion",
+              "name": "Operating System (OS) on this device should be updated from current end-of-life version",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_AllUsersHomeDirsExist",
+              "name": "Ensure all users\u0027 home directories exist",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_AuditConfigurationImmutable",
+              "name": "Ensure the audit configuration is immutable",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_AuditdServiceEnabled",
+              "name": "Ensure auditd service is enabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_AuditLogStorageSizeConfigured",
+              "name": "Ensure audit log storage size is configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_CoreDumpsRestricted",
+              "name": "Ensure core dumps are restricted",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_DefaultDenyFirewallPolicy",
+              "name": "Ensure default deny firewall policy",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_DefaultGroupForRootAccount",
+              "name": "Ensure default group for the root account is GID 0",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_DefaultUserShellTimeout",
+              "name": "Ensure default user shell timeout is 900 seconds or less",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_DHCPNotEnabled",
+              "name": "Ensure DHCP Server is not enabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_DIoTTest",
+              "name": "Defender for IoT Test Check",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_DisableAutomounting",
+              "name": "Disable Automounting",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_DisableIpv6",
+              "name": "Disable IPv6",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EnabledASLR",
+              "name": "Ensure address space layout randomization (ASLR) is enabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcGroupDashPermissionsConfigured",
+              "name": "Ensure permissions on /etc/group- are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcGroupPermissionsConfigured",
+              "name": "Ensure permissions on /etc/group are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcGshadowDashPermissionsConfigured",
+              "name": "Ensure permissions on /etc/gshadow- are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcGshadowPermissionsConfigured",
+              "name": "Ensure permissions on /etc/gshadow are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcPasswdDashPermissionsConfigured",
+              "name": "Ensure permissions on /etc/passwd- are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcPasswordPermissionsConfigured",
+              "name": "Ensure permissions on /etc/passwd are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcShadowDashPermissionsConfigured",
+              "name": "Ensure permissions on /etc/shadow- are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcShadowPermissionsConfigured",
+              "name": "Ensure permissions on /etc/shadow are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_HTTPNotEnabled",
+              "name": "Ensure HTTP server is not enabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_IcmpRedirectsNotAccepted",
+              "name": "Ensure ICMP redirects are not accepted",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_IgnoreBogusIcmp",
+              "name": "Ensure bogus ICMP responses are ignored",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_IgnoreBroadcastIcmp",
+              "name": "Ensure broadcast ICMP requests are ignored",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_ImapPop3NotEnabled",
+              "name": "Ensure IMAP and POP3 server is not enabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_IpForwardingDisabled",
+              "name": "Ensure IP forwarding is disabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_IpTablesInstalled",
+              "name": "Ensure iptables is installed",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_LastPasswordChangeDateIsPast",
+              "name": "Ensure all users last password change date is in the past",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_LDAPNotEnabled",
+              "name": "Ensure LDAP server is not enabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_LockoutForFailedPasswordAttempts",
+              "name": "Ensure lockout for failed password attempts is configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_LoopbackTrafficConfigured",
+              "name": "Ensure loopback traffic is configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_MTAConfiguredLocalOnly",
+              "name": "Ensure mail transfer agent is configured for local-only mode",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NodevOptionOnTmpPartition",
+              "name": "Ensure nodev option set on /tmp partition",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NoexecOptionForVarTmp",
+              "name": "Ensure noexec option set on /var/tmp partition",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NoexecOptionOnTmpPartition",
+              "name": "Ensure noexec option set on /tmp partition",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NoLegacyPlusEntriesInEtcGroup",
+              "name": "Ensure no legacy \u0027\u002B\u0027 entries exist in /etc/group",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NoLegacyPlusEntriesInEtcPasswd",
+              "name": "Ensure no legacy \u0027\u002B\u0027 entries exist in /etc/passwd",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NoLegacyPlusEntriesInEtcShadow",
+              "name": "Ensure no legacy \u0027\u002B\u0027 entries exist in /etc/shadow",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NosuidOptionOnTmpPartition",
+              "name": "Ensure nosuid option set on /tmp partition",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NtpConfigured",
+              "name": "Ensure ntp is configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_PacketRedirectDisabled",
+              "name": "Ensure packet redirect sending is disabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_PasswordCreationRequirementsConfigured",
+              "name": "Ensure password creation requirements are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_PasswordFieldsNotEmpty",
+              "name": "Ensure password fields are not empty",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_PasswordHashingAlgorithm",
+              "name": "Ensure password hashing algorithm is SHA-512",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_PermissionsConfiguredEtcSshSshdConfig",
+              "name": "Ensure permissions on /etc/ssh/sshd_config are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_PermissionsConfiguredSshPrivateHostKeyFiles",
+              "name": "Ensure permissions on SSH private host key files are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_PermissionsConfiguredSshPublicHostKeyFiles",
+              "name": "Ensure permissions on SSH public host key files are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_PermissionsOnEtcHostsAllow",
+              "name": "Ensure permissions on /etc/hosts.allow are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_PermissionsOnEtcHostsDeny",
+              "name": "Ensure permissions on /etc/hosts.deny are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_ReversePathFilteringEnabled",
+              "name": "Ensure Reverse Path Filtering is enabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_RootIsOnlyUidZero",
+              "name": "Ensure root is the only UID 0 account",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SecureIcmpRedirectsNotAccepted",
+              "name": "Ensure secure ICMP redirects are not accepted",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SeparateParitionForVar",
+              "name": "Ensure separate partition exists for /var",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SeparatePartitionForHome",
+              "name": "Ensure separate partition exists for /home",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SeparatePartitionForVarLog",
+              "name": "Ensure separate partition exists for /var/log",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_ShadowGroupIsEmpty",
+              "name": "Ensure shadow group is empty",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SrcRoutedPacketsNotAccepted",
+              "name": "Ensure source routed packets are not accepted",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SshAccessLimited",
+              "name": "Ensure SSH access is limited",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SshHostBasedAuthDisabled",
+              "name": "Ensure SSH HostbasedAuthentication is disabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SshIdleTimeoutIntervalConfigured",
+              "name": "Ensure SSH Idle Timeout Interval is configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SshIgnoreRHostsEnabled",
+              "name": "Ensure SSH IgnoreRhosts is enabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SshLoginGraceTimeSet",
+              "name": "Ensure SSH LoginGraceTime is set to one minute or less",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SshLogLevelSet",
+              "name": "Ensure SSH LogLevel is appropriate",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SshMaxAuthTriesSet",
+              "name": "Ensure SSH MaxAuthTries is set to 4 or less",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SshPermitEmptyPasswordsDisabled",
+              "name": "Ensure SSH PermitEmptyPasswords is disabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SshProtocolSet",
+              "name": "Ensure SSH Protocol is set to 2",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SshRootLoginDisabled",
+              "name": "Ensure SSH root login is disabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_StickyBitSetWWDirs",
+              "name": "Ensure sticky bit is set on all world-writable directories",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SuCommandRestricted",
+              "name": "Ensure access to the su command is restricted",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SuspiciousPacketsLogged",
+              "name": "Ensure suspicious packets are logged",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SystemAccountsSecure",
+              "name": "Ensure system accounts are secured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_TcpSynCookiesEnabled",
+              "name": "Ensure TCP SYN Cookies is enabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_TimeSyncInUse",
+              "name": "Ensure time synchronization is in use",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_TmpConfigured",
+              "name": "Ensure /tmp is configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_UsersHomeDirsPermissions",
+              "name": "Ensure users\u0027 home directories permissions are 750 or more restrictive",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_UsersOwnTheirHomeDirs",
+              "name": "Ensure users own their home directories",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_OTRecommendation_Authorization",
+              "name": "Review unauthorized devices",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_OTRecommendation_SecuredStatePLC",
+              "name": "Review PLC operating mode",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_OTRecommendation_MissingAuthentication",
+              "name": "Set a secure password for devices with missing authentication",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_OTRecommendation_WeakPassword",
+              "name": "Set a stronger password with minimum length and complexity",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_BootloaderConfig",
+              "name": "Ensure permissions on bootloader config are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_BootloaderPassword",
+              "name": "Ensure bootloader password is set",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcCronDailyPermissions",
+              "name": "Ensure permissions on /etc/cron.daily are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcCronDPermissions",
+              "name": "Ensure permissions on /etc/cron.d are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcCronHourlyPermissions",
+              "name": "Ensure permissions on /etc/cron.hourly are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcCronMonthlyPermissions",
+              "name": "Ensure permissions on /etc/cron.monthly are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcCrontabPermissions",
+              "name": "Ensure permissions on /etc/crontab are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcCronWeeklyPermissions",
+              "name": "Ensure permissions on /etc/cron.weekly are configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_EtcPasswdGroupsInEtcGroup",
+              "name": "Ensure all groups in /etc/passwd exist in /etc/group",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_InteractiveBootDisabled",
+              "name": "Ensure interactive boot is not enabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_IPv6RouterAdvertisementsBlocked",
+              "name": "Ensure IPv6 router advertisements are not accepted",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NodevPartitionForHome",
+              "name": "Ensure nodev option set on /home partition",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NodevSetOnDevShm",
+              "name": "Ensure nodev option set on /dev/shm partition",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NodevSetOnVar",
+              "name": "Ensure nodev option set on /var/tmp partition",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NoDuplicateGroupNames",
+              "name": "Ensure no duplicate group names exist",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NoDuplicateUserNames",
+              "name": "Ensure no duplicate user names exist",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NoexecSetOnDevShm",
+              "name": "Ensure noexec option set on /dev/shm partition",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NoGIDsDuplicates",
+              "name": "Ensure no duplicate GIDs exist",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NosuidSetOnDevShm",
+              "name": "Ensure nosuid option set on /dev/shm partition",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NosuidSetOnVar",
+              "name": "Ensure nosuid option set on /var/tmp partition",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_NoUIDsDuplicates",
+              "name": "Ensure no duplicate UIDs exist",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_PrelinkDisabled",
+              "name": "Ensure prelink is disabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_RestrictedDumps",
+              "name": "Ensure core dumps are restricted",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SecuredSystemAccounts",
+              "name": "Ensure system accounts are secured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SELinuxAppArmorInstalled",
+              "name": "Ensure SELinux or AppArmor are installed",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SELinuxPolicy",
+              "name": "Ensure SELinux policy is configured",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SELinuxStateEnforcing",
+              "name": "Ensure the SELinux state is enforcing",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SeparatePartitionForVarLogAudit",
+              "name": "Ensure separate partition exists for /var/log/audit",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SETroubleshootNotInstalled",
+              "name": "Ensure SETroubleshoot is not installed",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SingleUserAuthentication",
+              "name": "Ensure authentication required for single user mode",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SshPermitUserEnviromentDisabled",
+              "name": "Ensure SSH PermitUserEnvironment is disabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_SshX11ForwardingDisabled",
+              "name": "Ensure SSH X11 forwarding is disabled",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_StrongCiphers",
+              "name": "Ensure only strong Ciphers are used",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_TCPWrappersInstalled",
+              "name": "Ensure TCP Wrappers is installed",
+              "status": "Enabled"
+            },
+            {
+              "recommendationType": "IoT_CISBenchmarks_XDNXSupport",
+              "name": "Ensure XD/NX support is enabled",
+              "status": "Enabled"
+            }
+          ],
+          "autoDiscoveredResources": [],
+          "unmaskedIpLoggingStatus": "Enabled"
+        },
+        "tags": {},
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2022-10-18T06:29:16.877Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-10-18T06:29:16.877Z"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1225479701",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

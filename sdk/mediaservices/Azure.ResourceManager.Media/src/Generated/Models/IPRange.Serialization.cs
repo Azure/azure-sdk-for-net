@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,17 +18,17 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Address))
             {
-                writer.WritePropertyName("address");
-                writer.WriteStringValue(Address);
+                writer.WritePropertyName("address"u8);
+                writer.WriteStringValue(Address.ToString());
             }
             if (Optional.IsDefined(SubnetPrefixLength))
             {
-                writer.WritePropertyName("subnetPrefixLength");
+                writer.WritePropertyName("subnetPrefixLength"u8);
                 writer.WriteNumberValue(SubnetPrefixLength.Value);
             }
             writer.WriteEndObject();
@@ -36,21 +37,26 @@ namespace Azure.ResourceManager.Media.Models
         internal static IPRange DeserializeIPRange(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> address = default;
+            Optional<IPAddress> address = default;
             Optional<int> subnetPrefixLength = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
-                    address = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subnetPrefixLength"))
+                if (property.NameEquals("subnetPrefixLength"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

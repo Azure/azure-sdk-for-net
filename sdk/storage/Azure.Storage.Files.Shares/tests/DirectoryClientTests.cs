@@ -12,6 +12,8 @@ using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Azure.Storage.Tests.Shared;
+using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 
@@ -915,6 +917,87 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task ListFilesAndDirectories_Encoded()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = await test.Share.CreateDirectoryAsync(GetNewDirectoryName());
+            string specialCharDirectoryName = "directory\uFFFE";
+            string specialCharFileName = "file\uFFFE";
+            await directoryClient.CreateSubdirectoryAsync(specialCharDirectoryName);
+            await directoryClient.CreateFileAsync(specialCharFileName, maxSize: 1024);
+
+            // Act
+            List<ShareFileItem> shareFileItems = new List<ShareFileItem>();
+
+            await foreach (ShareFileItem item in directoryClient.GetFilesAndDirectoriesAsync())
+            {
+                shareFileItems.Add(item);
+            }
+
+            // Assert
+            Assert.AreEqual(2, shareFileItems.Count);
+            Assert.True(shareFileItems[0].IsDirectory);
+            Assert.AreEqual(specialCharDirectoryName, shareFileItems[0].Name);
+            Assert.False(shareFileItems[1].IsDirectory);
+            Assert.AreEqual(specialCharFileName, shareFileItems[1].Name);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task ListFilesAndDirectories_Encoded_ContinutationToken()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = await test.Share.CreateDirectoryAsync(GetNewDirectoryName());
+            string specialCharFileName0 = "file0\uFFFE";
+            string specialCharFileName1 = "file1\uFFFE";
+            await directoryClient.CreateFileAsync(specialCharFileName0, maxSize: 1024);
+            await directoryClient.CreateFileAsync(specialCharFileName1, maxSize: 1024);
+
+            // Act
+            List<ShareFileItem> shareFileItems = new List<ShareFileItem>();
+
+            await foreach (Page<ShareFileItem> page in directoryClient.GetFilesAndDirectoriesAsync().AsPages(pageSizeHint: 1))
+            {
+                shareFileItems.AddRange(page.Values);
+            }
+
+            // Assert
+            Assert.AreEqual(2, shareFileItems.Count);
+            Assert.AreEqual(specialCharFileName0, shareFileItems[0].Name);
+            Assert.AreEqual(specialCharFileName1, shareFileItems[1].Name);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task ListFilesAndDirectories_Encoded_Prefix()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = await test.Share.CreateDirectoryAsync(GetNewDirectoryName());
+            string specialCharDirectoryName = "directory\uFFFE";
+            ShareDirectoryClient specialCharDirectoryClient =  await directoryClient.CreateSubdirectoryAsync(specialCharDirectoryName);
+
+            // Act
+            List<ShareFileItem> shareFileItems = new List<ShareFileItem>();
+            ShareDirectoryGetFilesAndDirectoriesOptions options = new ShareDirectoryGetFilesAndDirectoriesOptions
+            {
+                Prefix = specialCharDirectoryName
+            };
+
+            await foreach (ShareFileItem item in directoryClient.GetFilesAndDirectoriesAsync(options))
+            {
+                shareFileItems.Add(item);
+            }
+
+            // Assert
+            Assert.AreEqual(1, shareFileItems.Count);
+            Assert.AreEqual(specialCharDirectoryName, shareFileItems[0].Name);
+        }
+
+        [RecordedTest]
         [AsyncOnly]
         public async Task ListHandles()
         {
@@ -1163,6 +1246,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase("%21%27%28%29%3B%5B%5D", "%2B%24%2C%23äÄöÖüÜß%3B")]
         [TestCase("directory", "my cool file")]
         [TestCase("directory", "file")]
+        [RetryOnException(5, typeof(RequestFailedException))]
         public async Task GetFileClient_SpecialCharacters(string directoryName, string fileName)
         {
             await using DisposingShare test = await GetTestShareAsync();

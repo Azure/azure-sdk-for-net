@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
             IReadOnlyList<ElasticPoolDatabaseActivity> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<ElasticPoolDatabaseActivity> array = new List<ElasticPoolDatabaseActivity>();
                     foreach (var item in property.Value.EnumerateArray())

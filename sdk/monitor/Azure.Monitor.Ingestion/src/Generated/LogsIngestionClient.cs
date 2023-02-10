@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Monitor.Ingestion
 {
+    // Data plane generated client.
     /// <summary> The LogsIngestion service client. </summary>
     public partial class LogsIngestionClient
     {
@@ -54,16 +55,17 @@ namespace Azure.Monitor.Ingestion
             _apiVersion = options.Version;
         }
 
-        /// <summary> See error response code and error response message for more detail. </summary>
+        /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
         /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
         /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="contentEncoding"> gzip. </param>
+        /// <param name="contentEncoding"> If content is already gzipped, put &quot;gzip&quot;. Default behavior is to gzip all input. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/LogsIngestionClient.xml" path="doc/members/member[@name='UploadAsync(String,String,RequestContent,String,RequestContext)']/*" />
         public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, string contentEncoding = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
@@ -84,16 +86,17 @@ namespace Azure.Monitor.Ingestion
             }
         }
 
-        /// <summary> See error response code and error response message for more detail. </summary>
+        /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
         /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
         /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="contentEncoding"> gzip. </param>
+        /// <param name="contentEncoding"> If content is already gzipped, put &quot;gzip&quot;. Default behavior is to gzip all input. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/LogsIngestionClient.xml" path="doc/members/member[@name='Upload(String,String,RequestContent,String,RequestContext)']/*" />
         public virtual Response Upload(string ruleId, string streamName, RequestContent content, string contentEncoding = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
@@ -112,29 +115,6 @@ namespace Azure.Monitor.Ingestion
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/dataCollectionRules/", false);
-            uri.AppendPath(ruleId, true);
-            uri.AppendPath("/streams/", false);
-            uri.AppendPath(streamName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            if (contentEncoding != null)
-            {
-                request.Headers.Add("Content-Encoding", contentEncoding);
-            }
-            request.Content = content;
-            return message;
         }
 
         private static ResponseClassifier _responseClassifier204;

@@ -18,18 +18,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("packagePath");
+            writer.WritePropertyName("packagePath"u8);
             writer.WriteObjectValue(PackagePath);
             if (Optional.IsDefined(PackageName))
             {
-                writer.WritePropertyName("packageName");
+                writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
-            writer.WritePropertyName("packageContent");
+            writer.WritePropertyName("packageContent"u8);
             writer.WriteObjectValue(PackageContent);
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
-                writer.WritePropertyName("packageLastModifiedDate");
+                writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);
             }
             writer.WriteEndObject();
@@ -43,22 +43,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> packageLastModifiedDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("packagePath"))
+                if (property.NameEquals("packagePath"u8))
                 {
                     packagePath = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("packageName"))
+                if (property.NameEquals("packageName"u8))
                 {
                     packageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("packageContent"))
+                if (property.NameEquals("packageContent"u8))
                 {
                     packageContent = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("packageLastModifiedDate"))
+                if (property.NameEquals("packageLastModifiedDate"u8))
                 {
                     packageLastModifiedDate = property.Value.GetString();
                     continue;

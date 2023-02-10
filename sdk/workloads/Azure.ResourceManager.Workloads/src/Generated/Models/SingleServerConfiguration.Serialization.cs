@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkConfiguration))
             {
-                writer.WritePropertyName("networkConfiguration");
+                writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
             if (Optional.IsDefined(DatabaseType))
             {
-                writer.WritePropertyName("databaseType");
+                writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
             }
-            writer.WritePropertyName("subnetId");
+            writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            writer.WritePropertyName("virtualMachineConfiguration");
+            writer.WritePropertyName("virtualMachineConfiguration"u8);
             writer.WriteObjectValue(VirtualMachineConfiguration);
-            writer.WritePropertyName("deploymentType");
+            writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
-            writer.WritePropertyName("appResourceGroup");
+            writer.WritePropertyName("appResourceGroup"u8);
             writer.WriteStringValue(AppResourceGroup);
             writer.WriteEndObject();
         }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Workloads.Models
             string appResourceGroup = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkConfiguration"))
+                if (property.NameEquals("networkConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("databaseType"))
+                if (property.NameEquals("databaseType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.Workloads.Models
                     databaseType = new SapDatabaseType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subnetId"))
+                if (property.NameEquals("subnetId"u8))
                 {
                     subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("virtualMachineConfiguration"))
+                if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
                     virtualMachineConfiguration = VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("deploymentType"))
+                if (property.NameEquals("deploymentType"u8))
                 {
                     deploymentType = new SapDeploymentType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("appResourceGroup"))
+                if (property.NameEquals("appResourceGroup"u8))
                 {
                     appResourceGroup = property.Value.GetString();
                     continue;

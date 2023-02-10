@@ -31,10 +31,12 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// </summary>
         /// <param name="name">Name of the operation</param>
         /// <param name="display">Properties of the operation</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        /// <param name="origin">Origin of the operation</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string))
         {
             Name = name;
             Display = display;
+            Origin = origin;
             CustomInit();
         }
 
@@ -54,6 +56,12 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
+
+        /// <summary>
+        /// Gets or sets origin of the operation
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; set; }
 
     }
 }

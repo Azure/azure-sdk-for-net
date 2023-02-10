@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.FluidRelay.Models
         }
 
         /// <summary> Initializes a new instance of FluidRelayServerKeys. </summary>
-        /// <param name="key1"> The primary key for this server. </param>
-        /// <param name="key2"> The secondary key for this server. </param>
-        internal FluidRelayServerKeys(string key1, string key2)
+        /// <param name="primaryKey"> The primary key for this server. </param>
+        /// <param name="secondaryKey"> The secondary key for this server. </param>
+        internal FluidRelayServerKeys(string primaryKey, string secondaryKey)
         {
-            Key1 = key1;
-            Key2 = key2;
+            PrimaryKey = primaryKey;
+            SecondaryKey = secondaryKey;
         }
 
         /// <summary> The primary key for this server. </summary>
-        public string Key1 { get; }
+        public string PrimaryKey { get; }
         /// <summary> The secondary key for this server. </summary>
-        public string Key2 { get; }
+        public string SecondaryKey { get; }
     }
 }

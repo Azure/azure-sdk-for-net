@@ -9,6 +9,8 @@ using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Microsoft.Azure.Amqp;
+using System.Globalization;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -129,7 +131,7 @@ namespace Azure.Messaging.ServiceBus
             amqpMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = deadLetterSource;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueueSequenceNumberName] = enqueuedSequenceNumber;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueuedTimeUtcName] = enqueuedTime.UtcDateTime;
-            amqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = serviceBusMessageState;
+            amqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = (int)serviceBusMessageState;
 
             return new ServiceBusReceivedMessage(amqpMessage)
             {
@@ -276,7 +278,7 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="SubscriptionProperties"/> instance for mocking.
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.SubscriptionProperties"/> instance for mocking.
         /// </summary>
         public static SubscriptionProperties SubscriptionProperties(
             string topicName,
@@ -308,7 +310,7 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="RuleProperties"/> instance for mocking.
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.RuleProperties"/> instance for mocking.
         /// </summary>
         public static RuleProperties RuleProperties(
             string name,
@@ -408,10 +410,15 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>The <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch" /> instance that was created.</returns>
         ///
+        /// <remarks>
+        ///  The batch instance keeps an internal copy of events successfully added to the batch through <see cref="ServiceBusMessageBatch.TryAddMessage(ServiceBusMessage)"/>, meaning that any
+        ///  changes made to <paramref name="batchMessageStore"/> after adding the messages to the batch will not be reflected.
+        /// </remarks>
+        ///
         public static ServiceBusMessageBatch ServiceBusMessageBatch(long batchSizeBytes,
-                                                    IList<ServiceBusMessage> batchMessageStore,
-                                                    CreateMessageBatchOptions batchOptions = default,
-                                                    Func<ServiceBusMessage, bool> tryAddCallback = default)
+                                                                    IList<ServiceBusMessage> batchMessageStore,
+                                                                    CreateMessageBatchOptions batchOptions = default,
+                                                                    Func<ServiceBusMessage, bool> tryAddCallback = default)
         {
             tryAddCallback ??= _ => true;
             batchOptions ??= new CreateMessageBatchOptions();
@@ -422,24 +429,6 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Creates a new <see cref="ServiceBusTransportMetrics"/> instance for mocking.
-        /// </summary>
-        /// <param name="lastHeartbeat">The last time that a heartbeat was received from the service.</param>
-        /// <param name="lastConnectionOpen">The last time that a connection was opened.</param>
-        /// <param name="lastConnectionClose">The last time that a connection was closed.</param>
-        /// <returns></returns>
-        internal static ServiceBusTransportMetrics ServiceBusTransportMetrics(
-            DateTimeOffset? lastHeartbeat = default,
-            DateTimeOffset? lastConnectionOpen = default,
-            DateTimeOffset? lastConnectionClose = default)
-            => new()
-            {
-                LastHeartBeat = lastHeartbeat,
-                LastConnectionOpen = lastConnectionOpen,
-                LastConnectionClose = lastConnectionClose
-            };
-
-        /// <summary>
         ///   Allows for the transport event batch created by the factory to be injected for testing purposes.
         /// </summary>
         ///
@@ -448,8 +437,14 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>The backing store for storing events in the batch.</summary>
             private readonly IList<ServiceBusMessage> _backingStore;
 
-            /// <summary>A callback to be invoked when an adding an event via <see cref="TryAddMessage"/></summary>
+            /// <summary>The set of messages that have been added to the batch, in their <see cref="AmqpMessage" /> serialized format.</summary>
+            private List<AmqpMessage> _batchMessages;
+
+            /// <summary>A callback to be invoked when an adding a message via <see cref="TryAddMessage"/></summary>
             private readonly Func<ServiceBusMessage, bool> _tryAddCallback;
+
+            /// <summary>The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.</summary>
+            private readonly AmqpMessageConverter _messageConverter;
 
             /// <summary>
             ///   The maximum size allowed for the batch, in bytes.  This includes the events in the batch as
@@ -483,8 +478,19 @@ namespace Azure.Messaging.ServiceBus
             internal ListTransportBatch(long maxSizeInBytes,
                                         long sizeInBytes,
                                         IList<ServiceBusMessage> backingStore,
-                                        Func<ServiceBusMessage, bool> tryAddCallback) =>
-                (MaxSizeInBytes, SizeInBytes, _backingStore, _tryAddCallback) = (maxSizeInBytes, sizeInBytes, backingStore, tryAddCallback);
+                                        Func<ServiceBusMessage, bool> tryAddCallback)
+            {
+                MaxSizeInBytes = maxSizeInBytes;
+                SizeInBytes = sizeInBytes;
+                _backingStore = backingStore;
+                _batchMessages = new List<AmqpMessage>();
+                _messageConverter = new AmqpMessageConverter();
+                foreach (var message in _backingStore)
+                {
+                    _batchMessages.Add(_messageConverter.SBMessageToAmqpMessage(message));
+                }
+                _tryAddCallback = tryAddCallback;
+            }
 
             /// <summary>
             ///   Attempts to add an event to the batch, ensuring that the size
@@ -500,6 +506,7 @@ namespace Azure.Messaging.ServiceBus
                 if (_tryAddCallback(message))
                 {
                     _backingStore.Add(message);
+                    _batchMessages.Add(_messageConverter.SBMessageToAmqpMessage(message));
                     return true;
                 }
 
@@ -511,7 +518,15 @@ namespace Azure.Messaging.ServiceBus
             ///   available size.
             /// </summary>
             ///
-            public override void Clear() => _backingStore.Clear();
+            public override void Clear()
+            {
+                foreach (var message in _batchMessages)
+                {
+                    message.Dispose();
+                }
+                _batchMessages.Clear();
+                _backingStore.Clear();
+            }
 
             /// <summary>
             ///   Represents the batch as an enumerable set of transport-specific
@@ -522,11 +537,21 @@ namespace Azure.Messaging.ServiceBus
             ///
             /// <returns>The set of events as an enumerable of the requested type.</returns>
             ///
-            public override IReadOnlyCollection<T> AsReadOnly<T>() => _backingStore switch
+            public override IReadOnlyCollection<T> AsReadOnly<T>()
             {
-                IReadOnlyCollection<T> readOnlyCollection => readOnlyCollection,
-                _ => new List<T>((IEnumerable<T>) _backingStore)
-            };
+                if (typeof(T) == typeof(AmqpMessage))
+                {
+                    return (IReadOnlyCollection<T>)_batchMessages;
+                }
+                else if (typeof(T) == typeof(ServiceBusMessage))
+                {
+                    return (IReadOnlyCollection<T>)_backingStore;
+                }
+                else
+                {
+                    throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
+                }
+            }
 
             /// <summary>
             ///   Performs the task needed to clean up resources used by the <see cref="TransportMessageBatch" />.

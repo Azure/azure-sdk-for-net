@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
@@ -11,8 +12,9 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
-        KeyClientOptions.ServiceVersion.V7_2,
-        KeyClientOptions.ServiceVersion.V7_3)]
+        KeyClientOptions.ServiceVersion.V7_4_Preview_1,
+        KeyClientOptions.ServiceVersion.V7_3,
+        KeyClientOptions.ServiceVersion.V7_2)]
     public class ManagedHsmCryptographyClientLiveTests : CryptographyClientLiveTests
     {
         private static readonly IEnumerable<KeyOperation> s_aesKeyOps = new[]

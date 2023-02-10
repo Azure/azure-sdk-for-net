@@ -182,6 +182,51 @@
           }
         }
       }
+    },
+    "/admin/setrecordingoptions": {
+      "post": {
+        "summary": "Set the proxy recording options.",
+        "description": "Set the proxy recording options.",
+        "operationId": "TestProxy_SetRecordingTransportOptions",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "proxyOptions",
+            "in": "body",
+            "description": "File location of the recording.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProxyOptions"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
     }
   },
   "x-ms-paths": {
@@ -736,11 +781,46 @@
       "properties": {
         "x-recording-file": {
           "type": "string"
+        },
+        "x-recording-assets-file": {
+          "type": "string"
         }
       },
       "required": [
         "x-recording-file"
       ]
+    },
+    "ProxyOptions": {
+      "description": "The proxy options",
+      "type": "object",
+      "properties": {
+        "Transport": {
+          "type": "object",
+          "properties": {
+            "AllowAutoRedirect": {
+              "type": "boolean",
+              "default" : true
+            },
+            "TLSValidationCert": {
+              "type": "string"
+            },
+            "Certificates": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "PemValue": {
+                    "type": "string"
+                  },
+                  "PemKey": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

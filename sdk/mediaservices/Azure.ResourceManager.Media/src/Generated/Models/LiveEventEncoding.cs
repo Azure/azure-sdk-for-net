@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="presetName"> The optional encoding preset name, used when encodingType is not None. This value is specified at creation time and cannot be updated. If the encodingType is set to Standard, then the default preset name is ‘Default720p’. Else if the encodingType is set to Premium1080p, the default preset is ‘Default1080p’. </param>
         /// <param name="stretchMode"> Specifies how the input video will be resized to fit the desired output resolution(s). Default is None. </param>
         /// <param name="keyFrameInterval"> Use an ISO 8601 time value between 0.5 to 20 seconds to specify the output fragment length for the video and audio tracks of an encoding live event. For example, use PT2S to indicate 2 seconds. For the video track it also defines the key frame interval, or the length of a GoP (group of pictures).   If this value is not set for an encoding live event, the fragment duration defaults to 2 seconds. The value cannot be set for pass-through live events. </param>
-        internal LiveEventEncoding(LiveEventEncodingType? encodingType, string presetName, StretchMode? stretchMode, TimeSpan? keyFrameInterval)
+        internal LiveEventEncoding(LiveEventEncodingType? encodingType, string presetName, InputVideoStretchMode? stretchMode, TimeSpan? keyFrameInterval)
         {
             EncodingType = encodingType;
             PresetName = presetName;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The optional encoding preset name, used when encodingType is not None. This value is specified at creation time and cannot be updated. If the encodingType is set to Standard, then the default preset name is ‘Default720p’. Else if the encodingType is set to Premium1080p, the default preset is ‘Default1080p’. </summary>
         public string PresetName { get; set; }
         /// <summary> Specifies how the input video will be resized to fit the desired output resolution(s). Default is None. </summary>
-        public StretchMode? StretchMode { get; set; }
+        public InputVideoStretchMode? StretchMode { get; set; }
         /// <summary> Use an ISO 8601 time value between 0.5 to 20 seconds to specify the output fragment length for the video and audio tracks of an encoding live event. For example, use PT2S to indicate 2 seconds. For the video track it also defines the key frame interval, or the length of a GoP (group of pictures).   If this value is not set for an encoding live event, the fragment duration defaults to 2 seconds. The value cannot be set for pass-through live events. </summary>
         public TimeSpan? KeyFrameInterval { get; set; }
     }

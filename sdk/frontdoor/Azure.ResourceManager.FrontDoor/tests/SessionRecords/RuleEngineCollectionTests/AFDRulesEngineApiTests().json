@@ -1,0 +1,1640 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-297fc473ac77974d85b1d0a34c6d5690-628eee4cd9e8f14a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "2184f9b714512fac813f857f31ac1a4e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:52:43 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "062f136d-15f4-4f8f-a77a-b62b51fe4fe3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "062f136d-15f4-4f8f-a77a-b62b51fe4fe3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025244Z:062f136d-15f4-4f8f-a77a-b62b51fe4fe3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "traceparent": "00-0cd32f8015bc134792c1b0c8c13e4e5b-3c083a3bdf683d48-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "4a360a4969251cd65b05d05e133baa9f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "test": "env"
+        },
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "239",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:52:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "10db4b8c-977a-4236-899c-f8792f441d55",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "10db4b8c-977a-4236-899c-f8792f441d55",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025247Z:10db4b8c-977a-4236-899c-f8792f441d55"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965",
+        "name": "testRG7965",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {
+          "test": "env"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908?api-version=2021-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "1882",
+        "Content-Type": "application/json",
+        "traceparent": "00-bbda13515687114d85089f6e0bb1c7eb-64ecbb53244d6243-00",
+        "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220929.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "22204a1bec57ea3bc9362da85a4f2609",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "global",
+        "properties": {
+          "routingRules": [
+            {
+              "name": "routingrule1",
+              "properties": {
+                "frontendEndpoints": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/frontendEndpoints/frontendEndpoint1"
+                  }
+                ],
+                "acceptedProtocols": [
+                  "Https"
+                ],
+                "patternsToMatch": [
+                  "/*"
+                ],
+                "enabledState": "Enabled",
+                "routeConfiguration": {
+                  "forwardingProtocol": "MatchRequest",
+                  "backendPool": {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/Frontdoors/testfrontdoor7908/BackendPools/backendPool1"
+                  },
+                  "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
+                }
+              }
+            }
+          ],
+          "loadBalancingSettings": [
+            {
+              "name": "loadBalancingSettings1",
+              "properties": {
+                "sampleSize": 4,
+                "successfulSamplesRequired": 2,
+                "additionalLatencyMilliseconds": 0
+              }
+            }
+          ],
+          "healthProbeSettings": [
+            {
+              "name": "healthProbeSettings1",
+              "properties": {
+                "path": "/",
+                "protocol": "Http",
+                "intervalInSeconds": 120,
+                "healthProbeMethod": "GET",
+                "enabledState": "Enabled"
+              }
+            }
+          ],
+          "backendPools": [
+            {
+              "name": "backendPool1",
+              "properties": {
+                "backends": [
+                  {
+                    "address": "contoso1.azurewebsites.net",
+                    "httpPort": 80,
+                    "httpsPort": 443,
+                    "enabledState": "Enabled",
+                    "priority": 2,
+                    "weight": 1
+                  }
+                ],
+                "loadBalancingSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/loadBalancingSettings/loadBalancingSettings1"
+                },
+                "healthProbeSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/healthProbeSettings/healthProbeSettings1"
+                }
+              }
+            }
+          ],
+          "frontendEndpoints": [
+            {
+              "name": "frontendEndpoint1",
+              "properties": {
+                "hostName": "testfrontdoor7908.azurefd.net",
+                "sessionAffinityEnabledState": "Disabled",
+                "sessionAffinityTtlSeconds": 0
+              }
+            }
+          ],
+          "backendPoolsSettings": {
+            "sendRecvTimeoutSeconds": 123
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdooroperationresults/b07b75d4-0245-448d-b716-636a1a54d1cf?api-version=2021-06-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4090",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:52:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "22204a1bec57ea3bc9362da85a4f2609",
+        "x-ms-correlation-request-id": "9b08dd1f-6123-426c-b624-42996dbd2a54",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "c3359365-a283-4970-b93b-70ee7afd077b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025257Z:9b08dd1f-6123-426c-b624-42996dbd2a54"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdoors/testfrontdoor7908",
+        "type": "Microsoft.Network/frontdoors",
+        "name": "testfrontdoor7908",
+        "location": "Global",
+        "tags": {},
+        "properties": {
+          "routingRules": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/Frontdoors/testfrontdoor7908/RoutingRules/routingrule1",
+              "name": "routingrule1",
+              "type": "Microsoft.Network/Frontdoors/RoutingRules",
+              "properties": {
+                "routeConfiguration": {
+                  "customForwardingPath": null,
+                  "forwardingProtocol": "MatchRequest",
+                  "cacheConfiguration": null,
+                  "backendPool": {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/Frontdoors/testfrontdoor7908/BackendPools/backendPool1"
+                  },
+                  "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
+                },
+                "rulesEngine": null,
+                "resourceState": "Creating",
+                "frontendEndpoints": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/frontendEndpoints/frontendEndpoint1"
+                  }
+                ],
+                "acceptedProtocols": [
+                  "Https"
+                ],
+                "patternsToMatch": [
+                  "/*"
+                ],
+                "enabledState": "Enabled",
+                "webApplicationFirewallPolicyLink": null
+              }
+            }
+          ],
+          "rulesEngines": [],
+          "frontdoorId": "a10328ba-bc9c-4b10-aa58-337b3a0a02cc",
+          "extendedProperties": {},
+          "resourceState": "Creating",
+          "loadBalancingSettings": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/Frontdoors/testfrontdoor7908/LoadBalancingSettings/loadBalancingSettings1",
+              "name": "loadBalancingSettings1",
+              "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
+              "properties": {
+                "resourceState": "Creating",
+                "sampleSize": 4,
+                "successfulSamplesRequired": 2,
+                "additionalLatencyMilliseconds": 0
+              }
+            }
+          ],
+          "healthProbeSettings": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/Frontdoors/testfrontdoor7908/HealthProbeSettings/healthProbeSettings1",
+              "name": "healthProbeSettings1",
+              "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
+              "properties": {
+                "resourceState": "Creating",
+                "path": "/",
+                "protocol": "Http",
+                "intervalInSeconds": 120,
+                "enabledState": "Enabled",
+                "healthProbeMethod": "Get"
+              }
+            }
+          ],
+          "backendPools": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/Frontdoors/testfrontdoor7908/BackendPools/backendPool1",
+              "name": "backendPool1",
+              "type": "Microsoft.Network/Frontdoors/BackendPools",
+              "properties": {
+                "backends": [
+                  {
+                    "address": "contoso1.azurewebsites.net",
+                    "httpPort": 80,
+                    "httpsPort": 443,
+                    "priority": 2,
+                    "weight": 1,
+                    "backendHostHeader": null,
+                    "enabledState": "Enabled",
+                    "privateLinkAlias": null,
+                    "privateLinkResourceId": null,
+                    "privateLinkLocation": null,
+                    "privateEndpointStatus": null,
+                    "privateLinkApprovalMessage": null
+                  }
+                ],
+                "resourceState": "Creating",
+                "loadBalancingSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/loadBalancingSettings/loadBalancingSettings1"
+                },
+                "healthProbeSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/healthProbeSettings/healthProbeSettings1"
+                }
+              }
+            }
+          ],
+          "frontendEndpoints": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/Frontdoors/testfrontdoor7908/FrontendEndpoints/frontendEndpoint1",
+              "name": "frontendEndpoint1",
+              "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
+              "properties": {
+                "resourceState": "Creating",
+                "hostName": "testfrontdoor7908.azurefd.net",
+                "sessionAffinityEnabledState": "Disabled",
+                "sessionAffinityTtlSeconds": 0,
+                "webApplicationFirewallPolicyLink": null,
+                "customHttpsProvisioningState": null,
+                "customHttpsProvisioningSubstate": null,
+                "customHttpsConfiguration": null
+              }
+            }
+          ],
+          "backendPoolsSettings": {
+            "enforceCertificateNameCheck": "Enabled",
+            "sendRecvTimeoutSeconds": 123
+          },
+          "enabledState": "Enabled",
+          "cName": "testfrontdoor7908.azurefd.net",
+          "friendlyName": null,
+          "provisioningState": "Creating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdooroperationresults/b07b75d4-0245-448d-b716-636a1a54d1cf?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-bbda13515687114d85089f6e0bb1c7eb-3d55e4cbace50248-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d09185df782e1df2fb605b32a97401b5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:52:58 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d09185df782e1df2fb605b32a97401b5",
+        "x-ms-correlation-request-id": "7c399f62-ef9f-4e45-a1c3-d3f2905291fd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "b47e3ce6-51a0-46c6-856e-5b8d0cf67199",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025258Z:7c399f62-ef9f-4e45-a1c3-d3f2905291fd"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdooroperationresults/b07b75d4-0245-448d-b716-636a1a54d1cf?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-bbda13515687114d85089f6e0bb1c7eb-35c31f018acd6245-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "b24d54aa2d258841ba711e61de5f185b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:52:59 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b24d54aa2d258841ba711e61de5f185b",
+        "x-ms-correlation-request-id": "f3377970-5b1b-4ac4-81a2-92075e7b9c54",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "f8e89d88-fe05-4313-b274-6dabf51c2924",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025259Z:f3377970-5b1b-4ac4-81a2-92075e7b9c54"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdooroperationresults/b07b75d4-0245-448d-b716-636a1a54d1cf?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-bbda13515687114d85089f6e0bb1c7eb-f106547d675c3449-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d5c8513156bd4cdb97677609365d048f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:53:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d5c8513156bd4cdb97677609365d048f",
+        "x-ms-correlation-request-id": "9d229d32-f6b2-4b8f-8fa2-aa0f42aad894",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "98d2093a-3b02-4d25-ae44-8e97c3f8ef4a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025301Z:9d229d32-f6b2-4b8f-8fa2-aa0f42aad894"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdooroperationresults/b07b75d4-0245-448d-b716-636a1a54d1cf?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-bbda13515687114d85089f6e0bb1c7eb-3f6c97628c21c643-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "7d3158f45220b2b5430815bc5a903f9b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:53:02 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7d3158f45220b2b5430815bc5a903f9b",
+        "x-ms-correlation-request-id": "e6fcdfdd-23aa-4039-acc7-b8653fa3c0d9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "3ecece22-94b2-4763-ad96-aa920c379cf9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025302Z:e6fcdfdd-23aa-4039-acc7-b8653fa3c0d9"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdooroperationresults/b07b75d4-0245-448d-b716-636a1a54d1cf?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-bbda13515687114d85089f6e0bb1c7eb-c31fd5dc0b442048-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "570000472bab54f879011bbeb637525c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:53:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "570000472bab54f879011bbeb637525c",
+        "x-ms-correlation-request-id": "e0f6d590-56d4-47c6-a8c6-6a345d645e14",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "8670975d-3c9e-4550-a3d5-a9e2e9e659d7",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025305Z:e0f6d590-56d4-47c6-a8c6-6a345d645e14"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdooroperationresults/b07b75d4-0245-448d-b716-636a1a54d1cf?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-bbda13515687114d85089f6e0bb1c7eb-7fad7ae7d05b974a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "856d8e6d9b2ede3a9b1691b4401ef206",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:53:09 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "856d8e6d9b2ede3a9b1691b4401ef206",
+        "x-ms-correlation-request-id": "f65138fd-1321-4e5a-84a0-1f43345ca9ad",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "9b954bba-7867-4c7c-9bf6-a07fac7e4a9f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025309Z:f65138fd-1321-4e5a-84a0-1f43345ca9ad"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdooroperationresults/b07b75d4-0245-448d-b716-636a1a54d1cf?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-bbda13515687114d85089f6e0bb1c7eb-52696262c87f4b4f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "35c2da27ad5dc8e360dd031f37f7fb0b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "61",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:53:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "35c2da27ad5dc8e360dd031f37f7fb0b",
+        "x-ms-correlation-request-id": "a978fd1c-a9ea-4160-8885-5bf14565ae46",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "4798d918-4125-4dd5-86b6-3e0e08f61822",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025318Z:a978fd1c-a9ea-4160-8885-5bf14565ae46"
+      },
+      "ResponseBody": {
+        "status": "Succeeded",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-bbda13515687114d85089f6e0bb1c7eb-4f5774a4a6230f4f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "cb4fb8b6b922ac6dc521bb959943135a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "4085",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:53:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "cb4fb8b6b922ac6dc521bb959943135a",
+        "x-ms-correlation-request-id": "3c7b2c76-7d5f-43d6-84bc-2066463639bd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "cded8a46-da84-424c-94df-b6f507ba83de",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025319Z:3c7b2c76-7d5f-43d6-84bc-2066463639bd"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdoors/testfrontdoor7908",
+        "type": "Microsoft.Network/frontdoors",
+        "name": "testfrontdoor7908",
+        "location": "Global",
+        "tags": {},
+        "properties": {
+          "routingRules": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/Frontdoors/testfrontdoor7908/RoutingRules/routingrule1",
+              "name": "routingrule1",
+              "type": "Microsoft.Network/Frontdoors/RoutingRules",
+              "properties": {
+                "routeConfiguration": {
+                  "customForwardingPath": null,
+                  "forwardingProtocol": "MatchRequest",
+                  "cacheConfiguration": null,
+                  "backendPool": {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/Frontdoors/testfrontdoor7908/BackendPools/backendPool1"
+                  },
+                  "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
+                },
+                "rulesEngine": null,
+                "resourceState": "Enabled",
+                "frontendEndpoints": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/frontendEndpoints/frontendEndpoint1"
+                  }
+                ],
+                "acceptedProtocols": [
+                  "Https"
+                ],
+                "patternsToMatch": [
+                  "/*"
+                ],
+                "enabledState": "Enabled",
+                "webApplicationFirewallPolicyLink": null
+              }
+            }
+          ],
+          "rulesEngines": [],
+          "frontdoorId": "a10328ba-bc9c-4b10-aa58-337b3a0a02cc",
+          "extendedProperties": {},
+          "resourceState": "Enabled",
+          "loadBalancingSettings": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/Frontdoors/testfrontdoor7908/LoadBalancingSettings/loadBalancingSettings1",
+              "name": "loadBalancingSettings1",
+              "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
+              "properties": {
+                "resourceState": "Enabled",
+                "sampleSize": 4,
+                "successfulSamplesRequired": 2,
+                "additionalLatencyMilliseconds": 0
+              }
+            }
+          ],
+          "healthProbeSettings": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/Frontdoors/testfrontdoor7908/HealthProbeSettings/healthProbeSettings1",
+              "name": "healthProbeSettings1",
+              "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
+              "properties": {
+                "resourceState": "Enabled",
+                "path": "/",
+                "protocol": "Http",
+                "intervalInSeconds": 120,
+                "enabledState": "Enabled",
+                "healthProbeMethod": "Get"
+              }
+            }
+          ],
+          "backendPools": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/Frontdoors/testfrontdoor7908/BackendPools/backendPool1",
+              "name": "backendPool1",
+              "type": "Microsoft.Network/Frontdoors/BackendPools",
+              "properties": {
+                "backends": [
+                  {
+                    "address": "contoso1.azurewebsites.net",
+                    "httpPort": 80,
+                    "httpsPort": 443,
+                    "priority": 2,
+                    "weight": 1,
+                    "backendHostHeader": null,
+                    "enabledState": "Enabled",
+                    "privateLinkAlias": null,
+                    "privateLinkResourceId": null,
+                    "privateLinkLocation": null,
+                    "privateEndpointStatus": null,
+                    "privateLinkApprovalMessage": null
+                  }
+                ],
+                "resourceState": "Enabled",
+                "loadBalancingSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/loadBalancingSettings/loadBalancingSettings1"
+                },
+                "healthProbeSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/healthProbeSettings/healthProbeSettings1"
+                }
+              }
+            }
+          ],
+          "frontendEndpoints": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/Frontdoors/testfrontdoor7908/FrontendEndpoints/frontendEndpoint1",
+              "name": "frontendEndpoint1",
+              "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
+              "properties": {
+                "resourceState": "Enabled",
+                "hostName": "testfrontdoor7908.azurefd.net",
+                "sessionAffinityEnabledState": "Disabled",
+                "sessionAffinityTtlSeconds": 0,
+                "webApplicationFirewallPolicyLink": null,
+                "customHttpsProvisioningState": null,
+                "customHttpsProvisioningSubstate": null,
+                "customHttpsConfiguration": null
+              }
+            }
+          ],
+          "backendPoolsSettings": {
+            "enforceCertificateNameCheck": "Enabled",
+            "sendRecvTimeoutSeconds": 123
+          },
+          "enabledState": "Enabled",
+          "cName": "testfrontdoor7908.azurefd.net",
+          "friendlyName": null,
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/rulesEngines/TestRulesEngine-8814?api-version=2021-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "452",
+        "Content-Type": "application/json",
+        "traceparent": "00-c057c337d4c8214d88fbb1b5c30d5291-66659e6dcd1a1f4b-00",
+        "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220929.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ff1c75dbaabf24a451971ba7a41a86fe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "rules": [
+            {
+              "name": "debuggingoutput",
+              "priority": 1,
+              "action": {
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Append",
+                    "headerName": "X-TEST-HEADER",
+                    "value": "Append Header Rule"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "overwriteorigin",
+              "priority": 2,
+              "action": {
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Origin",
+                    "value": "*"
+                  },
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Credentials",
+                    "value": "true"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "987",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:53:21 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ff1c75dbaabf24a451971ba7a41a86fe",
+        "x-ms-correlation-request-id": "27f73d2f-2041-48c2-9b35-075245ff32d2",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "0efa5b6d-8715-4ac6-b158-f95275b8bce9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025321Z:27f73d2f-2041-48c2-9b35-075245ff32d2"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdoors/testfrontdoor7908/rulesengines/TestRulesEngine-8814",
+        "type": "Microsoft.Network/frontdoors/rulesengines",
+        "name": "TestRulesEngine-8814",
+        "properties": {
+          "resourceState": "Enabled",
+          "rules": [
+            {
+              "name": "debuggingoutput",
+              "priority": 1,
+              "action": {
+                "name": null,
+                "routeConfigurationOverride": null,
+                "requestHeaderActions": [],
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Append",
+                    "headerName": "X-TEST-HEADER",
+                    "value": "Append Header Rule"
+                  }
+                ]
+              },
+              "matchConditions": null,
+              "matchProcessingBehavior": null
+            },
+            {
+              "name": "overwriteorigin",
+              "priority": 2,
+              "action": {
+                "name": null,
+                "routeConfigurationOverride": null,
+                "requestHeaderActions": [],
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Origin",
+                    "value": "*"
+                  },
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Credentials",
+                    "value": "true"
+                  }
+                ]
+              },
+              "matchConditions": null,
+              "matchProcessingBehavior": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/rulesEngines/TestRulesEngine-8814?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a2993be2343fa044aa1e518f1fa35bc7-26dada55c6a51a47-00",
+        "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220929.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "951f6023b999208f7e951c14aa7a177a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "987",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:53:22 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "951f6023b999208f7e951c14aa7a177a",
+        "x-ms-correlation-request-id": "9aaaf478-553f-4c9d-9a1d-fd7b8a934f97",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "7c153845-7ac9-427d-9226-bb326718c23f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025323Z:9aaaf478-553f-4c9d-9a1d-fd7b8a934f97"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdoors/testfrontdoor7908/rulesengines/TestRulesEngine-8814",
+        "type": "Microsoft.Network/frontdoors/rulesengines",
+        "name": "TestRulesEngine-8814",
+        "properties": {
+          "resourceState": "Enabled",
+          "rules": [
+            {
+              "name": "debuggingoutput",
+              "priority": 1,
+              "action": {
+                "name": null,
+                "routeConfigurationOverride": null,
+                "requestHeaderActions": [],
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Append",
+                    "headerName": "X-TEST-HEADER",
+                    "value": "Append Header Rule"
+                  }
+                ]
+              },
+              "matchConditions": null,
+              "matchProcessingBehavior": null
+            },
+            {
+              "name": "overwriteorigin",
+              "priority": 2,
+              "action": {
+                "name": null,
+                "routeConfigurationOverride": null,
+                "requestHeaderActions": [],
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Origin",
+                    "value": "*"
+                  },
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Credentials",
+                    "value": "true"
+                  }
+                ]
+              },
+              "matchConditions": null,
+              "matchProcessingBehavior": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/rulesEngines/TestRulesEngine-8814?api-version=2021-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "452",
+        "Content-Type": "application/json",
+        "traceparent": "00-eae7134dee586a4e9918498a2313ede7-bb0fabd3fab8b344-00",
+        "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220929.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "8b8b441330e86e295facc3ce5c750786",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "rules": [
+            {
+              "name": "debuggingoutput",
+              "priority": 1,
+              "action": {
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Append",
+                    "headerName": "X-TEST-HEADER",
+                    "value": "Append Header Rule"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "overwriteorigin",
+              "priority": 2,
+              "action": {
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Origin",
+                    "value": "*"
+                  },
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Credentials",
+                    "value": "true"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "987",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:53:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8b8b441330e86e295facc3ce5c750786",
+        "x-ms-correlation-request-id": "ed3a201d-35f6-4ec2-a7ea-8c15df66bfb5",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "14893aac-5cf8-45a7-a276-e024126b25f0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025325Z:ed3a201d-35f6-4ec2-a7ea-8c15df66bfb5"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdoors/testfrontdoor7908/rulesengines/TestRulesEngine-8814",
+        "type": "Microsoft.Network/frontdoors/rulesengines",
+        "name": "TestRulesEngine-8814",
+        "properties": {
+          "resourceState": "Enabled",
+          "rules": [
+            {
+              "name": "debuggingoutput",
+              "priority": 1,
+              "action": {
+                "name": null,
+                "routeConfigurationOverride": null,
+                "requestHeaderActions": [],
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Append",
+                    "headerName": "X-TEST-HEADER",
+                    "value": "Append Header Rule"
+                  }
+                ]
+              },
+              "matchConditions": null,
+              "matchProcessingBehavior": null
+            },
+            {
+              "name": "overwriteorigin",
+              "priority": 2,
+              "action": {
+                "name": null,
+                "routeConfigurationOverride": null,
+                "requestHeaderActions": [],
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Origin",
+                    "value": "*"
+                  },
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Credentials",
+                    "value": "true"
+                  }
+                ]
+              },
+              "matchConditions": null,
+              "matchProcessingBehavior": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/rulesEngines/TestRulesEngine-1861?api-version=2021-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "452",
+        "Content-Type": "application/json",
+        "traceparent": "00-ccd43e9483ca7f448ec8ef92068bd806-f5c820c3190d2340-00",
+        "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220929.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d81bd3da1d3ef32836b136edf6c0c408",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "rules": [
+            {
+              "name": "debuggingoutput",
+              "priority": 1,
+              "action": {
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Append",
+                    "headerName": "X-TEST-HEADER",
+                    "value": "Append Header Rule"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "overwriteorigin",
+              "priority": 2,
+              "action": {
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Origin",
+                    "value": "*"
+                  },
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Credentials",
+                    "value": "true"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "987",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:53:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d81bd3da1d3ef32836b136edf6c0c408",
+        "x-ms-correlation-request-id": "ff9a11c9-7ffa-41fa-b906-7b27698929fb",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "eafa717d-a321-440f-bcc0-054725a95b82",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025328Z:ff9a11c9-7ffa-41fa-b906-7b27698929fb"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdoors/testfrontdoor7908/rulesengines/TestRulesEngine-1861",
+        "type": "Microsoft.Network/frontdoors/rulesengines",
+        "name": "TestRulesEngine-1861",
+        "properties": {
+          "resourceState": "Enabled",
+          "rules": [
+            {
+              "name": "debuggingoutput",
+              "priority": 1,
+              "action": {
+                "name": null,
+                "routeConfigurationOverride": null,
+                "requestHeaderActions": [],
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Append",
+                    "headerName": "X-TEST-HEADER",
+                    "value": "Append Header Rule"
+                  }
+                ]
+              },
+              "matchConditions": null,
+              "matchProcessingBehavior": null
+            },
+            {
+              "name": "overwriteorigin",
+              "priority": 2,
+              "action": {
+                "name": null,
+                "routeConfigurationOverride": null,
+                "requestHeaderActions": [],
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Origin",
+                    "value": "*"
+                  },
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Credentials",
+                    "value": "true"
+                  }
+                ]
+              },
+              "matchConditions": null,
+              "matchProcessingBehavior": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/rulesEngines/TestRulesEngine-9411?api-version=2021-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "452",
+        "Content-Type": "application/json",
+        "traceparent": "00-75c6985fab98da45a0ec0e067edfefbf-da36f1ce1d3e2441-00",
+        "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220929.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "88f402e52e5ad048e28f0d49b976d77f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "rules": [
+            {
+              "name": "debuggingoutput",
+              "priority": 1,
+              "action": {
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Append",
+                    "headerName": "X-TEST-HEADER",
+                    "value": "Append Header Rule"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "overwriteorigin",
+              "priority": 2,
+              "action": {
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Origin",
+                    "value": "*"
+                  },
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Credentials",
+                    "value": "true"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "987",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:53:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "88f402e52e5ad048e28f0d49b976d77f",
+        "x-ms-correlation-request-id": "98e94377-db22-4fbe-95af-3a4e585bd647",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "4c9fbac7-1eab-47cf-9fc7-fbac57092cd8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025330Z:98e94377-db22-4fbe-95af-3a4e585bd647"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdoors/testfrontdoor7908/rulesengines/TestRulesEngine-9411",
+        "type": "Microsoft.Network/frontdoors/rulesengines",
+        "name": "TestRulesEngine-9411",
+        "properties": {
+          "resourceState": "Enabled",
+          "rules": [
+            {
+              "name": "debuggingoutput",
+              "priority": 1,
+              "action": {
+                "name": null,
+                "routeConfigurationOverride": null,
+                "requestHeaderActions": [],
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Append",
+                    "headerName": "X-TEST-HEADER",
+                    "value": "Append Header Rule"
+                  }
+                ]
+              },
+              "matchConditions": null,
+              "matchProcessingBehavior": null
+            },
+            {
+              "name": "overwriteorigin",
+              "priority": 2,
+              "action": {
+                "name": null,
+                "routeConfigurationOverride": null,
+                "requestHeaderActions": [],
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Origin",
+                    "value": "*"
+                  },
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Credentials",
+                    "value": "true"
+                  }
+                ]
+              },
+              "matchConditions": null,
+              "matchProcessingBehavior": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/rulesEngines?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1fc30bca57c7a04eb0bde076bf57f5ee-493afcea6aa4674e-00",
+        "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220929.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "f308d8943bcc5fae4d55bc67c4366969",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2975",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:53:30 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f308d8943bcc5fae4d55bc67c4366969",
+        "x-ms-correlation-request-id": "513339c6-5fd0-4e0b-8fbe-fe3ff4f0b2d7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "928f4fcb-fc99-40f2-bd69-9530815c3409",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025331Z:513339c6-5fd0-4e0b-8fbe-fe3ff4f0b2d7"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdoors/testfrontdoor7908/rulesengines/TestRulesEngine-8814",
+            "type": "Microsoft.Network/frontdoors/rulesengines",
+            "name": "TestRulesEngine-8814",
+            "properties": {
+              "resourceState": "Enabled",
+              "rules": [
+                {
+                  "name": "debuggingoutput",
+                  "priority": 1,
+                  "action": {
+                    "name": null,
+                    "routeConfigurationOverride": null,
+                    "requestHeaderActions": [],
+                    "responseHeaderActions": [
+                      {
+                        "headerActionType": "Append",
+                        "headerName": "X-TEST-HEADER",
+                        "value": "Append Header Rule"
+                      }
+                    ]
+                  },
+                  "matchConditions": null,
+                  "matchProcessingBehavior": null
+                },
+                {
+                  "name": "overwriteorigin",
+                  "priority": 2,
+                  "action": {
+                    "name": null,
+                    "routeConfigurationOverride": null,
+                    "requestHeaderActions": [],
+                    "responseHeaderActions": [
+                      {
+                        "headerActionType": "Overwrite",
+                        "headerName": "Access-Control-Allow-Origin",
+                        "value": "*"
+                      },
+                      {
+                        "headerActionType": "Overwrite",
+                        "headerName": "Access-Control-Allow-Credentials",
+                        "value": "true"
+                      }
+                    ]
+                  },
+                  "matchConditions": null,
+                  "matchProcessingBehavior": null
+                }
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdoors/testfrontdoor7908/rulesengines/TestRulesEngine-1861",
+            "type": "Microsoft.Network/frontdoors/rulesengines",
+            "name": "TestRulesEngine-1861",
+            "properties": {
+              "resourceState": "Enabled",
+              "rules": [
+                {
+                  "name": "debuggingoutput",
+                  "priority": 1,
+                  "action": {
+                    "name": null,
+                    "routeConfigurationOverride": null,
+                    "requestHeaderActions": [],
+                    "responseHeaderActions": [
+                      {
+                        "headerActionType": "Append",
+                        "headerName": "X-TEST-HEADER",
+                        "value": "Append Header Rule"
+                      }
+                    ]
+                  },
+                  "matchConditions": null,
+                  "matchProcessingBehavior": null
+                },
+                {
+                  "name": "overwriteorigin",
+                  "priority": 2,
+                  "action": {
+                    "name": null,
+                    "routeConfigurationOverride": null,
+                    "requestHeaderActions": [],
+                    "responseHeaderActions": [
+                      {
+                        "headerActionType": "Overwrite",
+                        "headerName": "Access-Control-Allow-Origin",
+                        "value": "*"
+                      },
+                      {
+                        "headerActionType": "Overwrite",
+                        "headerName": "Access-Control-Allow-Credentials",
+                        "value": "true"
+                      }
+                    ]
+                  },
+                  "matchConditions": null,
+                  "matchProcessingBehavior": null
+                }
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdoors/testfrontdoor7908/rulesengines/TestRulesEngine-9411",
+            "type": "Microsoft.Network/frontdoors/rulesengines",
+            "name": "TestRulesEngine-9411",
+            "properties": {
+              "resourceState": "Enabled",
+              "rules": [
+                {
+                  "name": "debuggingoutput",
+                  "priority": 1,
+                  "action": {
+                    "name": null,
+                    "routeConfigurationOverride": null,
+                    "requestHeaderActions": [],
+                    "responseHeaderActions": [
+                      {
+                        "headerActionType": "Append",
+                        "headerName": "X-TEST-HEADER",
+                        "value": "Append Header Rule"
+                      }
+                    ]
+                  },
+                  "matchConditions": null,
+                  "matchProcessingBehavior": null
+                },
+                {
+                  "name": "overwriteorigin",
+                  "priority": 2,
+                  "action": {
+                    "name": null,
+                    "routeConfigurationOverride": null,
+                    "requestHeaderActions": [],
+                    "responseHeaderActions": [
+                      {
+                        "headerActionType": "Overwrite",
+                        "headerName": "Access-Control-Allow-Origin",
+                        "value": "*"
+                      },
+                      {
+                        "headerActionType": "Overwrite",
+                        "headerName": "Access-Control-Allow-Credentials",
+                        "value": "true"
+                      }
+                    ]
+                  },
+                  "matchConditions": null,
+                  "matchProcessingBehavior": null
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/rulesEngines/TestRulesEngine-8814?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e165495047ac6d41baf9450848b4721f-380157756542c54b-00",
+        "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220929.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "6da1cce56105be8238ec356235c7fe9d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "987",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:53:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6da1cce56105be8238ec356235c7fe9d",
+        "x-ms-correlation-request-id": "19f2aaf6-d199-43a4-95cc-d1bce90bb443",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "f1cbf993-41f1-412c-9f0d-17d7e3bf4942",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025332Z:19f2aaf6-d199-43a4-95cc-d1bce90bb443"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7965/providers/Microsoft.Network/frontdoors/testfrontdoor7908/rulesengines/TestRulesEngine-8814",
+        "type": "Microsoft.Network/frontdoors/rulesengines",
+        "name": "TestRulesEngine-8814",
+        "properties": {
+          "resourceState": "Enabled",
+          "rules": [
+            {
+              "name": "debuggingoutput",
+              "priority": 1,
+              "action": {
+                "name": null,
+                "routeConfigurationOverride": null,
+                "requestHeaderActions": [],
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Append",
+                    "headerName": "X-TEST-HEADER",
+                    "value": "Append Header Rule"
+                  }
+                ]
+              },
+              "matchConditions": null,
+              "matchProcessingBehavior": null
+            },
+            {
+              "name": "overwriteorigin",
+              "priority": 2,
+              "action": {
+                "name": null,
+                "routeConfigurationOverride": null,
+                "requestHeaderActions": [],
+                "responseHeaderActions": [
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Origin",
+                    "value": "*"
+                  },
+                  {
+                    "headerActionType": "Overwrite",
+                    "headerName": "Access-Control-Allow-Credentials",
+                    "value": "true"
+                  }
+                ]
+              },
+              "matchConditions": null,
+              "matchProcessingBehavior": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7965/providers/Microsoft.Network/frontDoors/testfrontdoor7908/rulesEngines/TestRulesEngine-88141?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-813c5c073aa42c44bbe883d43bc17123-d422dddc0dc5f648-00",
+        "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220929.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e1b42766e36e05b2aeea6e856a62431c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "79",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Sep 2022 02:53:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e1b42766e36e05b2aeea6e856a62431c",
+        "x-ms-correlation-request-id": "ff040968-8780-41fa-8fee-2f5a82747543",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "49725f02-96d0-46c8-8fe1-7545a9f5f9d8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220929T025333Z:ff040968-8780-41fa-8fee-2f5a82747543"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "NotFound",
+          "message": "The requested resource was not found."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "70944897",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

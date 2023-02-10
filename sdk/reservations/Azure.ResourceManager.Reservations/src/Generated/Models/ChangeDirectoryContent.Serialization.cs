@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DestinationTenantId))
             {
-                writer.WritePropertyName("destinationTenantId");
-                writer.WriteStringValue(DestinationTenantId);
+                writer.WritePropertyName("destinationTenantId"u8);
+                writer.WriteStringValue(DestinationTenantId.Value);
             }
             writer.WriteEndObject();
         }

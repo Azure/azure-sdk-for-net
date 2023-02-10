@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static ManagedEnvironmentStoragesCollection DeserializeManagedEnvironmentStoragesCollection(JsonElement element)
         {
-            IReadOnlyList<ManagedEnvironmentStorageData> value = default;
+            IReadOnlyList<ContainerAppManagedEnvironmentStorageData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<ManagedEnvironmentStorageData> array = new List<ManagedEnvironmentStorageData>();
+                    List<ContainerAppManagedEnvironmentStorageData> array = new List<ContainerAppManagedEnvironmentStorageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedEnvironmentStorageData.DeserializeManagedEnvironmentStorageData(item));
+                        array.Add(ContainerAppManagedEnvironmentStorageData.DeserializeContainerAppManagedEnvironmentStorageData(item));
                     }
                     value = array;
                     continue;

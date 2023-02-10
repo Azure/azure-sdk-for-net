@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<MaxSizeCapability> maxValue = default;
             Optional<MaxSizeCapability> scaleSize = default;
             Optional<LogSizeCapability> logSize = default;
-            Optional<CapabilityStatus> status = default;
+            Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minValue"))
+                if (property.NameEquals("minValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql.Models
                     minValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
                     continue;
                 }
-                if (property.NameEquals("maxValue"))
+                if (property.NameEquals("maxValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
                     maxValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
                     continue;
                 }
-                if (property.NameEquals("scaleSize"))
+                if (property.NameEquals("scaleSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
                     scaleSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
                     continue;
                 }
-                if (property.NameEquals("logSize"))
+                if (property.NameEquals("logSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.Sql.Models
                     logSize = LogSizeCapability.DeserializeLogSizeCapability(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = property.Value.GetString().ToCapabilityStatus();
+                    status = property.Value.GetString().ToSqlCapabilityStatus();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;

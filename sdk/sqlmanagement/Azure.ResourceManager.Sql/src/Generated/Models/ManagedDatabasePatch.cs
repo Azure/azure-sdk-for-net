@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.Sql.Models
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Earliest restore point in time for point in time restore. </summary>
         public DateTimeOffset? EarliestRestorePoint { get; }
+        /// <summary> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
+        public DateTimeOffset? RestorePointInTime { get; set; }
         /// <summary> Geo paired region. </summary>
         public AzureLocation? DefaultSecondaryLocation { get; }
         /// <summary> Collation of the metadata catalog. </summary>
@@ -42,16 +44,18 @@ namespace Azure.ResourceManager.Sql.Models
         public ResourceIdentifier SourceDatabaseId { get; set; }
         /// <summary> The restorable dropped database resource id to restore when creating this database. </summary>
         public ResourceIdentifier RestorableDroppedDatabaseId { get; set; }
-        /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the storage container sas token. </summary>
+        /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be &apos;SharedAccessSignature&apos; or &apos;ManagedIdentity&apos;; if not specified &apos;SharedAccessSignature&apos; is assumed. </summary>
+        public string StorageContainerIdentity { get; set; }
+        /// <summary> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </summary>
         public string StorageContainerSasToken { get; set; }
         /// <summary> Instance Failover Group resource identifier that this managed database belongs to. </summary>
-        public string FailoverGroupId { get; }
+        public ResourceIdentifier FailoverGroupId { get; }
         /// <summary> The resource identifier of the recoverable database associated with create operation of this database. </summary>
         public ResourceIdentifier RecoverableDatabaseId { get; set; }
         /// <summary> The name of the Long Term Retention backup to be used for restore of this managed database. </summary>
         public ResourceIdentifier LongTermRetentionBackupResourceId { get; set; }
         /// <summary> Whether to auto complete restore of this managed database. </summary>
-        public bool? AutoCompleteRestore { get; set; }
+        public bool? AllowAutoCompleteRestore { get; set; }
         /// <summary> Last backup file name for restore of this managed database. </summary>
         public string LastBackupName { get; set; }
     }

@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.Kusto.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SessionRecords" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Async" />
+  </ItemGroup>
+</Project>

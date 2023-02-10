@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppConfiguration. </summary>
         public ContainerAppConfiguration()
         {
-            Secrets = new ChangeTrackingList<AppSecret>();
-            Registries = new ChangeTrackingList<RegistryCredentials>();
+            Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
+            Registries = new ChangeTrackingList<ContainerAppRegistryCredentials>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppConfiguration. </summary>
@@ -29,27 +29,31 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="ingress"> Ingress configurations. </param>
         /// <param name="registries"> Collection of private container registry credentials for containers used by the Container app. </param>
         /// <param name="dapr"> Dapr configuration for the Container App. </param>
-        internal ContainerAppConfiguration(IList<AppSecret> secrets, ActiveRevisionsMode? activeRevisionsMode, IngressProvider ingress, IList<RegistryCredentials> registries, DaprProvider dapr)
+        /// <param name="maxInactiveRevisions"> Optional. Max inactive revisions a Container App can have. </param>
+        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, int? maxInactiveRevisions)
         {
             Secrets = secrets;
             ActiveRevisionsMode = activeRevisionsMode;
             Ingress = ingress;
             Registries = registries;
             Dapr = dapr;
+            MaxInactiveRevisions = maxInactiveRevisions;
         }
 
         /// <summary> Collection of secrets used by a Container app. </summary>
-        public IList<AppSecret> Secrets { get; }
+        public IList<ContainerAppWritableSecret> Secrets { get; }
         /// <summary>
         /// ActiveRevisionsMode controls how active revisions are handled for the Container app:
         /// &lt;list&gt;&lt;item&gt;Multiple: multiple revisions can be active.&lt;/item&gt;&lt;item&gt;Single: Only one revision can be active at a time. Revision weights can not be used in this mode. If no value if provided, this is the default.&lt;/item&gt;&lt;/list&gt;
         /// </summary>
-        public ActiveRevisionsMode? ActiveRevisionsMode { get; set; }
+        public ContainerAppActiveRevisionsMode? ActiveRevisionsMode { get; set; }
         /// <summary> Ingress configurations. </summary>
-        public IngressProvider Ingress { get; set; }
+        public ContainerAppIngressConfiguration Ingress { get; set; }
         /// <summary> Collection of private container registry credentials for containers used by the Container app. </summary>
-        public IList<RegistryCredentials> Registries { get; }
+        public IList<ContainerAppRegistryCredentials> Registries { get; }
         /// <summary> Dapr configuration for the Container App. </summary>
-        public DaprProvider Dapr { get; set; }
+        public ContainerAppDaprConfiguration Dapr { get; set; }
+        /// <summary> Optional. Max inactive revisions a Container App can have. </summary>
+        public int? MaxInactiveRevisions { get; set; }
     }
 }

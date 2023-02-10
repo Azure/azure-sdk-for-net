@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Routes))
             {
-                writer.WritePropertyName("routes");
+                writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes);
             }
             if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
             {
-                writer.WritePropertyName("preserveUrlFragmentsForLogins");
+                writer.WritePropertyName("preserveUrlFragmentsForLogins"u8);
                 writer.WriteBooleanValue(PreserveUrlFragmentsForLogins.Value);
             }
             if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
             {
-                writer.WritePropertyName("allowedExternalRedirectUrls");
+                writer.WritePropertyName("allowedExternalRedirectUrls"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedExternalRedirectUrls)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsDefined(CookieExpiration))
             {
-                writer.WritePropertyName("cookieExpiration");
+                writer.WritePropertyName("cookieExpiration"u8);
                 writer.WriteObjectValue(CookieExpiration);
             }
             if (Optional.IsDefined(Nonce))
             {
-                writer.WritePropertyName("nonce");
+                writer.WritePropertyName("nonce"u8);
                 writer.WriteObjectValue(Nonce);
             }
             writer.WriteEndObject();
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<LoginRoutes> routes = default;
             Optional<bool> preserveUrlFragmentsForLogins = default;
             Optional<IList<string>> allowedExternalRedirectUrls = default;
-            Optional<CookieExpiration> cookieExpiration = default;
-            Optional<LoginNonce> nonce = default;
+            Optional<ContainerAppCookieExpiration> cookieExpiration = default;
+            Optional<ContainerAppLoginNonce> nonce = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("routes"))
+                if (property.NameEquals("routes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     routes = LoginRoutes.DeserializeLoginRoutes(property.Value);
                     continue;
                 }
-                if (property.NameEquals("preserveUrlFragmentsForLogins"))
+                if (property.NameEquals("preserveUrlFragmentsForLogins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     preserveUrlFragmentsForLogins = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("allowedExternalRedirectUrls"))
+                if (property.NameEquals("allowedExternalRedirectUrls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,24 +93,24 @@ namespace Azure.ResourceManager.AppContainers.Models
                     allowedExternalRedirectUrls = array;
                     continue;
                 }
-                if (property.NameEquals("cookieExpiration"))
+                if (property.NameEquals("cookieExpiration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    cookieExpiration = CookieExpiration.DeserializeCookieExpiration(property.Value);
+                    cookieExpiration = ContainerAppCookieExpiration.DeserializeContainerAppCookieExpiration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("nonce"))
+                if (property.NameEquals("nonce"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nonce = LoginNonce.DeserializeLoginNonce(property.Value);
+                    nonce = ContainerAppLoginNonce.DeserializeContainerAppLoginNonce(property.Value);
                     continue;
                 }
             }

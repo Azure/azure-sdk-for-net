@@ -10,7 +10,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
-    public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
+    public partial class DocumentAnalysisSamples
     {
         [RecordedTest]
         public async Task AnalyzeWithPrebuiltModelFromFileAsync()
@@ -29,10 +29,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             using var stream = new FileStream(filePath, FileMode.Open);
 
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream);
-
-            await operation.WaitForCompletionAsync();
-
+            AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", stream);
             AnalyzeResult result = operation.Value;
 
             // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -47,39 +44,39 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                 if (document.Fields.TryGetValue("VendorName", out DocumentField vendorNameField))
                 {
-                    if (vendorNameField.ValueType == DocumentFieldType.String)
+                    if (vendorNameField.FieldType == DocumentFieldType.String)
                     {
-                        string vendorName = vendorNameField.AsString();
+                        string vendorName = vendorNameField.Value.AsString();
                         Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
                     }
                 }
 
                 if (document.Fields.TryGetValue("CustomerName", out DocumentField customerNameField))
                 {
-                    if (customerNameField.ValueType == DocumentFieldType.String)
+                    if (customerNameField.FieldType == DocumentFieldType.String)
                     {
-                        string customerName = customerNameField.AsString();
+                        string customerName = customerNameField.Value.AsString();
                         Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
                     }
                 }
 
                 if (document.Fields.TryGetValue("Items", out DocumentField itemsField))
                 {
-                    if (itemsField.ValueType == DocumentFieldType.List)
+                    if (itemsField.FieldType == DocumentFieldType.List)
                     {
-                        foreach (DocumentField itemField in itemsField.AsList())
+                        foreach (DocumentField itemField in itemsField.Value.AsList())
                         {
                             Console.WriteLine("Item:");
 
-                            if (itemField.ValueType == DocumentFieldType.Dictionary)
+                            if (itemField.FieldType == DocumentFieldType.Dictionary)
                             {
-                                IReadOnlyDictionary<string, DocumentField> itemFields = itemField.AsDictionary();
+                                IReadOnlyDictionary<string, DocumentField> itemFields = itemField.Value.AsDictionary();
 
                                 if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField))
                                 {
-                                    if (itemDescriptionField.ValueType == DocumentFieldType.String)
+                                    if (itemDescriptionField.FieldType == DocumentFieldType.String)
                                     {
-                                        string itemDescription = itemDescriptionField.AsString();
+                                        string itemDescription = itemDescriptionField.Value.AsString();
 
                                         Console.WriteLine($"  Description: '{itemDescription}', with confidence {itemDescriptionField.Confidence}");
                                     }
@@ -87,9 +84,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                                 if (itemFields.TryGetValue("Amount", out DocumentField itemAmountField))
                                 {
-                                    if (itemAmountField.ValueType == DocumentFieldType.Currency)
+                                    if (itemAmountField.FieldType == DocumentFieldType.Currency)
                                     {
-                                        CurrencyValue itemAmount = itemAmountField.AsCurrency();
+                                        CurrencyValue itemAmount = itemAmountField.Value.AsCurrency();
 
                                         Console.WriteLine($"  Amount: '{itemAmount.Symbol}{itemAmount.Amount}', with confidence {itemAmountField.Confidence}");
                                     }
@@ -101,27 +98,27 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                 if (document.Fields.TryGetValue("SubTotal", out DocumentField subTotalField))
                 {
-                    if (subTotalField.ValueType == DocumentFieldType.Currency)
+                    if (subTotalField.FieldType == DocumentFieldType.Currency)
                     {
-                        CurrencyValue subTotal = subTotalField.AsCurrency();
+                        CurrencyValue subTotal = subTotalField.Value.AsCurrency();
                         Console.WriteLine($"Sub Total: '{subTotal.Symbol}{subTotal.Amount}', with confidence {subTotalField.Confidence}");
                     }
                 }
 
                 if (document.Fields.TryGetValue("TotalTax", out DocumentField totalTaxField))
                 {
-                    if (totalTaxField.ValueType == DocumentFieldType.Currency)
+                    if (totalTaxField.FieldType == DocumentFieldType.Currency)
                     {
-                        CurrencyValue totalTax = totalTaxField.AsCurrency();
+                        CurrencyValue totalTax = totalTaxField.Value.AsCurrency();
                         Console.WriteLine($"Total Tax: '{totalTax.Symbol}{totalTax.Amount}', with confidence {totalTaxField.Confidence}");
                     }
                 }
 
                 if (document.Fields.TryGetValue("InvoiceTotal", out DocumentField invoiceTotalField))
                 {
-                    if (invoiceTotalField.ValueType == DocumentFieldType.Currency)
+                    if (invoiceTotalField.FieldType == DocumentFieldType.Currency)
                     {
-                        CurrencyValue invoiceTotal = invoiceTotalField.AsCurrency();
+                        CurrencyValue invoiceTotal = invoiceTotalField.Value.AsCurrency();
                         Console.WriteLine($"Invoice Total: '{invoiceTotal.Symbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
                     }
                 }

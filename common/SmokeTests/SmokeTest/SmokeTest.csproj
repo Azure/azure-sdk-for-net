@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp3.1;net461;net6.0</TargetFrameworks>
-    <LangVersion>latest</LangVersion>
+    <TargetFrameworks>net7.0;net6.0;net461</TargetFrameworks>
+    <LangVersion>11.0</LangVersion>
     <NoWarn>$(NoWarn);NU1605</NoWarn>
   </PropertyGroup>
 
@@ -28,7 +28,7 @@
     <PackageReference Include="Azure.Messaging.EventHubs" Version="5.6.2" />
     <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.6.2" />
     <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.3.0-beta.1" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.9.1" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
     <PackageReference Include="Microsoft.Azure.Amqp" Version="2.5.10" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.36.0" />
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.16.2" />
@@ -38,7 +38,7 @@
     <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.1'">
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'netcoreapp3.1'))">
     <!-- This package supports netcoreapp3.1 -->
     <PackageReference Remove="Microsoft.Azure.WebPubSub.AspNetCore" />
   </ItemGroup>

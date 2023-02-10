@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WebActivityAuthenticationType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WebActivityAuthenticationType);
             }
             if (Optional.IsDefined(Pfx))
             {
-                writer.WritePropertyName("pfx");
+                writer.WritePropertyName("pfx"u8);
                 writer.WriteObjectValue(Pfx);
             }
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
+                writer.WritePropertyName("username"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Username);
 #else
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
             if (Optional.IsDefined(Resource))
             {
-                writer.WritePropertyName("resource");
+                writer.WritePropertyName("resource"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Resource);
 #else
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(UserTenant))
             {
-                writer.WritePropertyName("userTenant");
+                writer.WritePropertyName("userTenant"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UserTenant);
 #else
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Credential))
             {
-                writer.WritePropertyName("credential");
+                writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
             }
             writer.WriteEndObject();
@@ -69,30 +69,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static WebActivityAuthentication DeserializeWebActivityAuthentication(JsonElement element)
         {
             Optional<string> type = default;
-            Optional<SecretBase> pfx = default;
+            Optional<FactorySecretBaseDefinition> pfx = default;
             Optional<BinaryData> username = default;
-            Optional<SecretBase> password = default;
+            Optional<FactorySecretBaseDefinition> password = default;
             Optional<BinaryData> resource = default;
             Optional<BinaryData> userTenant = default;
-            Optional<CredentialReference> credential = default;
+            Optional<FactoryCredentialReference> credential = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pfx"))
+                if (property.NameEquals("pfx"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    pfx = SecretBase.DeserializeSecretBase(property.Value);
+                    pfx = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,17 +102,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     username = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    password = SecretBase.DeserializeSecretBase(property.Value);
+                    password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resource"))
+                if (property.NameEquals("resource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     resource = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("userTenant"))
+                if (property.NameEquals("userTenant"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     userTenant = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("credential"))
+                if (property.NameEquals("credential"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    credential = CredentialReference.DeserializeCredentialReference(property.Value);
+                    credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property.Value);
                     continue;
                 }
             }

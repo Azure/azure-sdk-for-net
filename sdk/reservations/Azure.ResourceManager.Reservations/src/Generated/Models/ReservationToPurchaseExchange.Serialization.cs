@@ -14,34 +14,44 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationToPurchaseExchange DeserializeReservationToPurchaseExchange(JsonElement element)
         {
-            Optional<string> reservationOrderId = default;
-            Optional<string> reservationId = default;
-            Optional<PurchaseRequestContent> properties = default;
+            Optional<ResourceIdentifier> reservationOrderId = default;
+            Optional<ResourceIdentifier> reservationId = default;
+            Optional<ReservationPurchaseContent> properties = default;
             Optional<PurchasePrice> billingCurrencyTotal = default;
-            Optional<OperationStatus> status = default;
+            Optional<ReservationOperationStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("reservationOrderId"))
-                {
-                    reservationOrderId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("reservationId"))
-                {
-                    reservationId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("reservationOrderId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = PurchaseRequestContent.DeserializePurchaseRequestContent(property.Value);
+                    reservationOrderId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("billingCurrencyTotal"))
+                if (property.NameEquals("reservationId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    reservationId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("billingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,14 +61,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new OperationStatus(property.Value.GetString());
+                    status = new ReservationOperationStatus(property.Value.GetString());
                     continue;
                 }
             }

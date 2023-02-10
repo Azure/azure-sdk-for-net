@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A management event rule condition. </summary>
-    public partial class ManagementEventRuleCondition : RuleCondition
+    public partial class ManagementEventRuleCondition : AlertRuleCondition
     {
         /// <summary> Initializes a new instance of ManagementEventRuleCondition. </summary>
         public ManagementEventRuleCondition()

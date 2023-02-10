@@ -872,5 +872,45 @@ namespace Azure.ResourceManager.Network.Tests
             // Delete AppGw
             await getGateway.Value.DeleteAsync(WaitUntil.Completed);
         }
+
+        [Test]
+        [RecordedTest]
+        public async Task ApplicationGatewayAvailableSslOptionsInfoTest()
+        {
+            SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            ApplicationGatewayAvailableSslOptionsInfo sslOptionsInfo = await subscription.GetApplicationGatewayAvailableSslOptionsAsync();
+            Assert.NotNull(sslOptionsInfo);
+            Assert.AreEqual(sslOptionsInfo.Name, "default");
+            Assert.AreEqual(sslOptionsInfo.Id.ResourceType, sslOptionsInfo.ResourceType);
+            Assert.AreEqual(sslOptionsInfo.DefaultPolicy, ApplicationGatewaySslPolicyName.AppGwSslPolicy20150501);
+            Assert.AreEqual(sslOptionsInfo.PredefinedPolicies.Count, 5);
+            foreach (var predefinedPolicy in sslOptionsInfo.PredefinedPolicies)
+            {
+                Assert.AreEqual(predefinedPolicy.Id.ResourceType, "Microsoft.Network/ApplicationGatewayAvailableSslOptions/ApplicationGatewaySslPredefinedPolicy");
+            }
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task ApplicationGatewayAvailableSslPredefinedPoliciesTest()
+        {
+            SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
+
+            IList<ApplicationGatewaySslPredefinedPolicy> predefinedPolicies = await subscription.GetApplicationGatewayAvailableSslPredefinedPoliciesAsync().ToEnumerableAsync();
+
+            int cnt = 0;
+            foreach (var policy in predefinedPolicies)
+            {
+                ++cnt;
+                Assert.NotNull(policy);
+                Assert.AreEqual(policy.Id.ResourceType, policy.ResourceType);
+            }
+            Assert.AreEqual(cnt, 5);
+
+            string predefinedPolicyName = predefinedPolicies[0].Name;
+            ApplicationGatewaySslPredefinedPolicy predefinedPolicy = await subscription.GetApplicationGatewaySslPredefinedPolicyAsync(predefinedPolicyName);
+            Assert.AreEqual(predefinedPolicy.Name, predefinedPolicyName);
+            Assert.AreEqual(predefinedPolicy.Id.ResourceType, predefinedPolicy.ResourceType);
+        }
     }
 }

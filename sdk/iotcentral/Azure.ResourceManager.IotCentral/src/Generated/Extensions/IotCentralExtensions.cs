@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.IotCentral
 
         /// <summary>
         /// Get all IoT Central Applications in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/iotApps
-        /// Operation Id: Apps_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/iotApps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -43,8 +51,16 @@ namespace Azure.ResourceManager.IotCentral
 
         /// <summary>
         /// Get all IoT Central Applications in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/iotApps
-        /// Operation Id: Apps_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/iotApps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -56,90 +72,138 @@ namespace Azure.ResourceManager.IotCentral
 
         /// <summary>
         /// Check if an IoT Central application name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkNameAvailability
-        /// Operation Id: Apps_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationInputs"/> is null. </exception>
-        public static async Task<Response<AppAvailabilityInfo>> CheckNameAvailabilityAppAsync(this SubscriptionResource subscriptionResource, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<IotCentralAppNameAvailabilityResponse>> CheckIotCentralAppNameAvailabilityAsync(this SubscriptionResource subscriptionResource, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityAppAsync(operationInputs, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckIotCentralAppNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check if an IoT Central application name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkNameAvailability
-        /// Operation Id: Apps_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationInputs"/> is null. </exception>
-        public static Response<AppAvailabilityInfo> CheckNameAvailabilityApp(this SubscriptionResource subscriptionResource, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<IotCentralAppNameAvailabilityResponse> CheckIotCentralAppNameAvailability(this SubscriptionResource subscriptionResource, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityApp(operationInputs, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckIotCentralAppNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
         /// Check if an IoT Central application subdomain is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkSubdomainAvailability
-        /// Operation Id: Apps_CheckSubdomainAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkSubdomainAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_CheckSubdomainAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationInputs"/> is null. </exception>
-        public static async Task<Response<AppAvailabilityInfo>> CheckSubdomainAvailabilityAppAsync(this SubscriptionResource subscriptionResource, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<IotCentralAppNameAvailabilityResponse>> CheckIotCentralAppSubdomainAvailabilityAsync(this SubscriptionResource subscriptionResource, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckSubdomainAvailabilityAppAsync(operationInputs, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckIotCentralAppSubdomainAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check if an IoT Central application subdomain is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkSubdomainAvailability
-        /// Operation Id: Apps_CheckSubdomainAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkSubdomainAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_CheckSubdomainAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationInputs"/> is null. </exception>
-        public static Response<AppAvailabilityInfo> CheckSubdomainAvailabilityApp(this SubscriptionResource subscriptionResource, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<IotCentralAppNameAvailabilityResponse> CheckIotCentralAppSubdomainAvailability(this SubscriptionResource subscriptionResource, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckSubdomainAvailabilityApp(operationInputs, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckIotCentralAppSubdomainAvailability(content, cancellationToken);
         }
 
         /// <summary>
         /// Get all available application templates.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/appTemplates
-        /// Operation Id: Apps_ListTemplates
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/appTemplates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_ListTemplates</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppTemplate" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AppTemplate> GetTemplatesAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IotCentralAppTemplate> GetTemplatesAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetTemplatesAppsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Get all available application templates.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/appTemplates
-        /// Operation Id: Apps_ListTemplates
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/appTemplates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_ListTemplates</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppTemplate" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AppTemplate> GetTemplatesApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IotCentralAppTemplate> GetTemplatesApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetTemplatesApps(cancellationToken);
         }
@@ -163,8 +227,16 @@ namespace Azure.ResourceManager.IotCentral
 
         /// <summary>
         /// Get the metadata of an IoT Central application.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTCentral/iotApps/{resourceName}
-        /// Operation Id: Apps_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTCentral/iotApps/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The ARM resource name of the IoT Central application. </param>
@@ -179,8 +251,16 @@ namespace Azure.ResourceManager.IotCentral
 
         /// <summary>
         /// Get the metadata of an IoT Central application.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTCentral/iotApps/{resourceName}
-        /// Operation Id: Apps_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTCentral/iotApps/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The ARM resource name of the IoT Central application. </param>

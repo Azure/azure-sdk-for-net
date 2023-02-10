@@ -178,12 +178,16 @@ namespace Azure.Storage.Cryptography
         /// <returns>The generated key bytes.</returns>
         private static byte[] CreateKey(int numBits)
         {
+#if NET6_0_OR_GREATER
+            return RandomNumberGenerator.GetBytes(numBits / 8);
+#else
             using (var secureRng = new RNGCryptoServiceProvider())
             {
                 var buff = new byte[numBits / 8];
                 secureRng.GetBytes(buff);
                 return buff;
             }
+#endif
         }
     }
 }

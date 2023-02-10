@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,6 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+    // Data plane generated client.
     /// <summary> The HarvestData service client. </summary>
     public partial class HarvestDataClient
     {
@@ -70,58 +69,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>HarvestData</c>:
-        /// <code>{
-        ///   totalYield: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   harvestProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Harvest product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/HarvestDataClient.xml" path="doc/members/member[@name='GetHarvestDataAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetHarvestDataAsync(string farmerId, string harvestDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -149,58 +97,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>HarvestData</c>:
-        /// <code>{
-        ///   totalYield: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   harvestProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Harvest product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/HarvestDataClient.xml" path="doc/members/member[@name='GetHarvestData(String,String,RequestContext)']/*" />
         public virtual Response GetHarvestData(string farmerId, string harvestDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -229,106 +126,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>HarvestData</c>:
-        /// <code>{
-        ///   totalYield: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   harvestProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Harvest product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>HarvestData</c>:
-        /// <code>{
-        ///   totalYield: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   harvestProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Harvest product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/HarvestDataClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string harvestDataId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -357,106 +155,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>HarvestData</c>:
-        /// <code>{
-        ///   totalYield: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   harvestProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Harvest product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>HarvestData</c>:
-        /// <code>{
-        ///   totalYield: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   harvestProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Harvest product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/HarvestDataClient.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string farmerId, string harvestDataId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -484,6 +183,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/HarvestDataClient.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string farmerId, string harvestDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -511,6 +211,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/HarvestDataClient.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
         public virtual Response Delete(string farmerId, string harvestDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -576,80 +277,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>HarvestDataListResponseValue</c>:
-        /// <code>{
-        ///   totalYield: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   harvestProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Harvest product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/HarvestDataClient.xml" path="doc/members/member[@name='GetAllHarvestDataByFarmerIdAsync(String,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllHarvestDataByFarmerIdAsync(string farmerId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return GetAllHarvestDataByFarmerIdImplementationAsync("HarvestDataClient.GetAllHarvestDataByFarmerId", farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAllHarvestDataByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllHarvestDataByFarmerIdRequest(farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllHarvestDataByFarmerIdNextPageRequest(nextLink, farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllHarvestDataByFarmerIdRequest(farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllHarvestDataByFarmerIdNextPageRequest(nextLink, farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "HarvestDataClient.GetAllHarvestDataByFarmerId", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of harvest data resources under a particular farm. </summary>
@@ -698,80 +333,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>HarvestDataListResponseValue</c>:
-        /// <code>{
-        ///   totalYield: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   harvestProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Harvest product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/HarvestDataClient.xml" path="doc/members/member[@name='GetAllHarvestDataByFarmerId(String,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllHarvestDataByFarmerId(string farmerId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return GetAllHarvestDataByFarmerIdImplementation("HarvestDataClient.GetAllHarvestDataByFarmerId", farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetAllHarvestDataByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllHarvestDataByFarmerIdRequest(farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllHarvestDataByFarmerIdNextPageRequest(nextLink, farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllHarvestDataByFarmerIdRequest(farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllHarvestDataByFarmerIdNextPageRequest(nextLink, farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "HarvestDataClient.GetAllHarvestDataByFarmerId", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of harvest data resources across all farmers. </summary>
@@ -817,78 +386,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>HarvestDataListResponseValue</c>:
-        /// <code>{
-        ///   totalYield: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   harvestProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Harvest product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/HarvestDataClient.xml" path="doc/members/member[@name='GetAllHarvestDataAsync(Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllHarvestDataAsync(double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetAllHarvestDataImplementationAsync("HarvestDataClient.GetAllHarvestData", minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAllHarvestDataImplementationAsync(string diagnosticsScopeName, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllHarvestDataRequest(minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllHarvestDataNextPageRequest(nextLink, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllHarvestDataRequest(minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllHarvestDataNextPageRequest(nextLink, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "HarvestDataClient.GetAllHarvestData", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of harvest data resources across all farmers. </summary>
@@ -934,78 +437,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>HarvestDataListResponseValue</c>:
-        /// <code>{
-        ///   totalYield: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   avgSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   harvestProductDetails: [
-        ///     {
-        ///       productName: string, # Optional. Name of the product.
-        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgYield: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       totalWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       avgWetMass: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///     }
-        ///   ], # Optional. Harvest product details.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/HarvestDataClient.xml" path="doc/members/member[@name='GetAllHarvestData(Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllHarvestData(double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetAllHarvestDataImplementation("HarvestDataClient.GetAllHarvestData", minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetAllHarvestDataImplementation(string diagnosticsScopeName, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllHarvestDataRequest(minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllHarvestDataNextPageRequest(nextLink, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllHarvestDataRequest(minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllHarvestDataNextPageRequest(nextLink, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "HarvestDataClient.GetAllHarvestData", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetAllHarvestDataByFarmerIdRequest(string farmerId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)

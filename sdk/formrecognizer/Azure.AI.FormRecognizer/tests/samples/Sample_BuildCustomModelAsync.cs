@@ -4,12 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
-    public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
+    public partial class DocumentAnalysisSamples
     {
         [RecordedTest]
         public async Task BuildCustomModelAsync()
@@ -27,9 +26,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
 #if SNIPPET
-            Uri trainingFileUri = new Uri("<trainingFileUri>");
+            Uri blobContainerUri = new Uri("<blobContainerUri>");
 #else
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
             var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
@@ -37,27 +36,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // build modes and their differences, please see:
             // https://aka.ms/azsdk/formrecognizer/buildmode
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-            Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-            DocumentModel model = operationResponse.Value;
+            BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+            DocumentModelDetails model = operation.Value;
 
             Console.WriteLine($"  Model Id: {model.ModelId}");
             if (string.IsNullOrEmpty(model.Description))
                 Console.WriteLine($"  Model description: {model.Description}");
             Console.WriteLine($"  Created on: {model.CreatedOn}");
             Console.WriteLine("  Doc types the model can recognize:");
-            foreach (KeyValuePair<string, DocTypeInfo> docType in model.DocTypes)
+            foreach (KeyValuePair<string, DocumentTypeDetails> documentType in model.DocumentTypes)
             {
-                Console.WriteLine($"    Doc type: {docType.Key} which has the following fields:");
-                foreach (KeyValuePair<string, DocumentFieldSchema> schema in docType.Value.FieldSchema)
+                Console.WriteLine($"    Doc type: {documentType.Key} which has the following fields:");
+                foreach (KeyValuePair<string, DocumentFieldSchema> schema in documentType.Value.FieldSchema)
                 {
-                    Console.WriteLine($"    Field: {schema.Key} with confidence {docType.Value.FieldConfidence[schema.Key]}");
+                    Console.WriteLine($"    Field: {schema.Key} with confidence {documentType.Value.FieldConfidence[schema.Key]}");
                 }
             }
             #endregion
 
             // Delete the model on completion to clean environment.
-            await client.DeleteModelAsync(model.ModelId);
+            await client.DeleteDocumentModelAsync(model.ModelId);
         }
     }
 }

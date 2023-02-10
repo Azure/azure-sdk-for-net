@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// Please note <see cref="FrontDoorSecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
     /// </summary>
-    public partial class FrontDoorSecretProperties
+    public abstract partial class FrontDoorSecretProperties
     {
         /// <summary> Initializes a new instance of FrontDoorSecretProperties. </summary>
-        public FrontDoorSecretProperties()
+        protected FrontDoorSecretProperties()
         {
         }
 

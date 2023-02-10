@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="3" />
+    <ProjectReference Include="4" />
+  </ItemGroup>
+</Project>

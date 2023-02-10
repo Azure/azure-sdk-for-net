@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2022-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, AccountData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, CognitiveServicesAccountData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, AccountData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, CognitiveServicesAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string accountName, AccountData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string accountName, CognitiveServicesAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, AccountData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, CognitiveServicesAccountData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, AccountData data, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, CognitiveServicesAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string accountName, AccountData data, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string accountName, CognitiveServicesAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesAccountData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -306,13 +306,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountData value = default;
+                        CognitiveServicesAccountData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountData.DeserializeAccountData(document.RootElement);
+                        value = CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AccountData)null, message.Response);
+                    return Response.FromValue((CognitiveServicesAccountData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountData> Get(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesAccountData> Get(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -337,13 +337,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountData value = default;
+                        CognitiveServicesAccountData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountData.DeserializeAccountData(document.RootElement);
+                        value = CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AccountData)null, message.Response);
+                    return Response.FromValue((CognitiveServicesAccountData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesAccountListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -385,9 +385,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountListResult value = default;
+                        CognitiveServicesAccountListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountListResult.DeserializeAccountListResult(document.RootElement);
+                        value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesAccountListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -412,9 +412,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountListResult value = default;
+                        CognitiveServicesAccountListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountListResult.DeserializeAccountListResult(document.RootElement);
+                        value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesAccountListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -454,9 +454,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountListResult value = default;
+                        CognitiveServicesAccountListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountListResult.DeserializeAccountListResult(document.RootElement);
+                        value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesAccountListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -479,9 +479,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountListResult value = default;
+                        CognitiveServicesAccountListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountListResult.DeserializeAccountListResult(document.RootElement);
+                        value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceAccountApiKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -529,9 +529,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ApiKeys value = default;
+                        ServiceAccountApiKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiKeys.DeserializeApiKeys(document.RootElement);
+                        value = ServiceAccountApiKeys.DeserializeServiceAccountApiKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiKeys> ListKeys(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<ServiceAccountApiKeys> ListKeys(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -558,9 +558,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ApiKeys value = default;
+                        ServiceAccountApiKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiKeys.DeserializeApiKeys(document.RootElement);
+                        value = ServiceAccountApiKeys.DeserializeServiceAccountApiKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string accountName, RegenerateKeyContent content)
+        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string accountName, RegenerateServiceAccountKeyContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiKeys>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string accountName, RegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceAccountApiKeys>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string accountName, RegenerateServiceAccountKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -614,9 +614,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ApiKeys value = default;
+                        ServiceAccountApiKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiKeys.DeserializeApiKeys(document.RootElement);
+                        value = ServiceAccountApiKeys.DeserializeServiceAccountApiKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiKeys> RegenerateKey(string subscriptionId, string resourceGroupName, string accountName, RegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public Response<ServiceAccountApiKeys> RegenerateKey(string subscriptionId, string resourceGroupName, string accountName, RegenerateServiceAccountKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -645,9 +645,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ApiKeys value = default;
+                        ServiceAccountApiKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiKeys.DeserializeApiKeys(document.RootElement);
+                        value = ServiceAccountApiKeys.DeserializeServiceAccountApiKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountSkuListResult>> ListSkusAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesAccountSkuListResult>> ListSkusAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -695,9 +695,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountSkuListResult value = default;
+                        CognitiveServicesAccountSkuListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountSkuListResult.DeserializeAccountSkuListResult(document.RootElement);
+                        value = CognitiveServicesAccountSkuListResult.DeserializeCognitiveServicesAccountSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountSkuListResult> ListSkus(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesAccountSkuListResult> ListSkus(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -724,9 +724,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountSkuListResult value = default;
+                        CognitiveServicesAccountSkuListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountSkuListResult.DeserializeAccountSkuListResult(document.RootElement);
+                        value = CognitiveServicesAccountSkuListResult.DeserializeCognitiveServicesAccountSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UsageListResult>> ListUsagesAsync(string subscriptionId, string resourceGroupName, string accountName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceAccountUsageListResult>> ListUsagesAsync(string subscriptionId, string resourceGroupName, string accountName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -779,9 +779,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        UsageListResult value = default;
+                        ServiceAccountUsageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UsageListResult.DeserializeUsageListResult(document.RootElement);
+                        value = ServiceAccountUsageListResult.DeserializeServiceAccountUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UsageListResult> ListUsages(string subscriptionId, string resourceGroupName, string accountName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ServiceAccountUsageListResult> ListUsages(string subscriptionId, string resourceGroupName, string accountName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -809,9 +809,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        UsageListResult value = default;
+                        ServiceAccountUsageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UsageListResult.DeserializeUsageListResult(document.RootElement);
+                        value = ServiceAccountUsageListResult.DeserializeServiceAccountUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountModelListResult>> ListModelsAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesAccountModelListResult>> ListModelsAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -859,9 +859,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountModelListResult value = default;
+                        CognitiveServicesAccountModelListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountModelListResult.DeserializeAccountModelListResult(document.RootElement);
+                        value = CognitiveServicesAccountModelListResult.DeserializeCognitiveServicesAccountModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountModelListResult> ListModels(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesAccountModelListResult> ListModels(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -888,9 +888,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountModelListResult value = default;
+                        CognitiveServicesAccountModelListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountModelListResult.DeserializeAccountModelListResult(document.RootElement);
+                        value = CognitiveServicesAccountModelListResult.DeserializeCognitiveServicesAccountModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesAccountListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -931,9 +931,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountListResult value = default;
+                        CognitiveServicesAccountListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountListResult.DeserializeAccountListResult(document.RootElement);
+                        value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesAccountListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -960,9 +960,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountListResult value = default;
+                        CognitiveServicesAccountListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountListResult.DeserializeAccountListResult(document.RootElement);
+                        value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -990,7 +990,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesAccountListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1001,9 +1001,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountListResult value = default;
+                        CognitiveServicesAccountListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountListResult.DeserializeAccountListResult(document.RootElement);
+                        value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesAccountListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1028,9 +1028,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountListResult value = default;
+                        CognitiveServicesAccountListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountListResult.DeserializeAccountListResult(document.RootElement);
+                        value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountModelListResult>> ListModelsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesAccountModelListResult>> ListModelsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1073,9 +1073,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountModelListResult value = default;
+                        CognitiveServicesAccountModelListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountModelListResult.DeserializeAccountModelListResult(document.RootElement);
+                        value = CognitiveServicesAccountModelListResult.DeserializeCognitiveServicesAccountModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountModelListResult> ListModelsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesAccountModelListResult> ListModelsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1104,9 +1104,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        AccountModelListResult value = default;
+                        CognitiveServicesAccountModelListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountModelListResult.DeserializeAccountModelListResult(document.RootElement);
+                        value = CognitiveServicesAccountModelListResult.DeserializeCognitiveServicesAccountModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -7,21 +7,21 @@
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> Represents the confidence scores across all sentiment classes: positive, neutral, negative. </summary>
+    /// <summary> Represents the confidence scores across all sentiment classes: positive and negative. </summary>
     internal partial class TargetConfidenceScoreLabel
     {
         /// <summary> Initializes a new instance of TargetConfidenceScoreLabel. </summary>
-        /// <param name="positive"></param>
-        /// <param name="negative"></param>
+        /// <param name="positive"> Confidence score for positive sentiment. </param>
+        /// <param name="negative"> Confidence score for negative sentiment. </param>
         public TargetConfidenceScoreLabel(double positive, double negative)
         {
             Positive = positive;
             Negative = negative;
         }
 
-        /// <summary> Gets or sets the positive. </summary>
+        /// <summary> Confidence score for positive sentiment. </summary>
         public double Positive { get; set; }
-        /// <summary> Gets or sets the negative. </summary>
+        /// <summary> Confidence score for negative sentiment. </summary>
         public double Negative { get; set; }
     }
 }

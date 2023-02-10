@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.Relay.Models
     {
         internal static AuthorizationRuleListResult DeserializeAuthorizationRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AuthorizationRuleData>> value = default;
+            Optional<IReadOnlyList<RelayAuthorizationRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AuthorizationRuleData> array = new List<AuthorizationRuleData>();
+                    List<RelayAuthorizationRuleData> array = new List<RelayAuthorizationRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationRuleData.DeserializeAuthorizationRuleData(item));
+                        array.Add(RelayAuthorizationRuleData.DeserializeRelayAuthorizationRuleData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

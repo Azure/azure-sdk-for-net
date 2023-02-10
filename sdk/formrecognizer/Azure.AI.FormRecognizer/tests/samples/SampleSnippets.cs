@@ -3,16 +3,15 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    [LiveOnly]
-    public partial class Snippets : SamplesBase<DocumentAnalysisTestEnvironment>
+    public partial class DocumentAnalysisSamples
     {
         [RecordedTest]
         public void CreateDocumentAnalysisClient()
@@ -71,8 +70,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             #region Snippet:DocumentAnalysisBadRequest
             try
             {
-                AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-receipt", new Uri("http://invalid.uri"));
-                await operation.WaitForCompletionAsync();
+                AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-receipt", new Uri("http://invalid.uri"));
             }
             catch (RequestFailedException e)
             {
@@ -96,6 +94,27 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             var documentAnalysisClient = new DocumentAnalysisClient(new Uri(endpoint), credential);
             var documentModelAdministrationClient = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
+            #endregion
+        }
+
+        [RecordedTest]
+        public async Task StartLongRunningOperation()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+            var credential = new AzureKeyCredential(apiKey);
+            var client = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
+
+            Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            BuildDocumentModelOperation buildOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+            Response<DocumentModelDetails> operationResponse = await buildOperation.WaitForCompletionAsync();
+            DocumentModelDetails model = operationResponse.Value;
+
+            string modelId = model.ModelId;
+            DocumentModelCopyAuthorization authorization = await client.GetCopyAuthorizationAsync();
+
+            #region Snippet:WaitForLongRunningOperationV3
+            CopyDocumentModelToOperation operation = await client.CopyDocumentModelToAsync(WaitUntil.Completed, modelId, authorization);
             #endregion
         }
     }

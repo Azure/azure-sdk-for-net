@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("pipeline");
+            writer.WritePropertyName("pipeline"u8);
             writer.WriteObjectValue(Pipeline);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("dependsOn");
+            writer.WritePropertyName("dependsOn"u8);
             writer.WriteStartArray();
             foreach (var item in DependsOn)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("runDimension");
+            writer.WritePropertyName("runDimension"u8);
             writer.WriteStringValue(RunDimension);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -69,40 +69,40 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerPipelineReference pipeline = default;
             string type = default;
             Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
+            Optional<FactoryTriggerRuntimeState> runtimeState = default;
             Optional<IList<BinaryData>> annotations = default;
-            IList<PipelineReference> dependsOn = default;
+            IList<FactoryPipelineReference> dependsOn = default;
             string runDimension = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pipeline"))
+                if (property.NameEquals("pipeline"u8))
                 {
                     pipeline = TriggerPipelineReference.DeserializeTriggerPipelineReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runtimeState"))
+                if (property.NameEquals("runtimeState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    runtimeState = new TriggerRuntimeState(property.Value.GetString());
+                    runtimeState = new FactoryTriggerRuntimeState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,17 +126,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("dependsOn"))
+                        if (property0.NameEquals("dependsOn"u8))
                         {
-                            List<PipelineReference> array = new List<PipelineReference>();
+                            List<FactoryPipelineReference> array = new List<FactoryPipelineReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PipelineReference.DeserializePipelineReference(item));
+                                array.Add(FactoryPipelineReference.DeserializeFactoryPipelineReference(item));
                             }
                             dependsOn = array;
                             continue;
                         }
-                        if (property0.NameEquals("runDimension"))
+                        if (property0.NameEquals("runDimension"u8))
                         {
                             runDimension = property0.Value.GetString();
                             continue;

@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Cdn
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(HostName))
             {
-                writer.WritePropertyName("hostName");
+                writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
             if (Optional.IsDefined(CustomDomainHttpsContent))
             {
                 if (CustomDomainHttpsContent != null)
                 {
-                    writer.WritePropertyName("customHttpsParameters");
+                    writer.WritePropertyName("customHttpsParameters"u8);
                     writer.WriteObjectValue(CustomDomainHttpsContent);
                 }
                 else
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(ValidationData))
             {
-                writer.WritePropertyName("validationData");
+                writer.WritePropertyName("validationData"u8);
                 writer.WriteStringValue(ValidationData);
             }
             writer.WriteEndObject();
@@ -60,32 +60,32 @@ namespace Azure.ResourceManager.Cdn
             Optional<CustomHttpsProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("hostName"))
+                        if (property0.NameEquals("hostName"u8))
                         {
                             hostName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceState"))
+                        if (property0.NameEquals("resourceState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
                             resourceState = new CustomDomainResourceState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("customHttpsProvisioningState"))
+                        if (property0.NameEquals("customHttpsProvisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Cdn
                             customHttpsProvisioningState = new CustomHttpsProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("customHttpsProvisioningSubstate"))
+                        if (property0.NameEquals("customHttpsProvisioningSubstate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn
                             customHttpsProvisioningSubstate = new CustomHttpsAvailabilityState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("customHttpsParameters"))
+                        if (property0.NameEquals("customHttpsParameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.Cdn
                             customHttpsParameters = CustomDomainHttpsContent.DeserializeCustomDomainHttpsContent(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("validationData"))
+                        if (property0.NameEquals("validationData"u8))
                         {
                             validationData = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

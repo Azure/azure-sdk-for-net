@@ -45,6 +45,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// description</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
+        /// <param name="minimumTlsVersion">The minimum TLS version for the
+        /// cluster to support, e.g. '1.2'. Possible values include: '1.0',
+        /// '1.1', '1.2'</param>
         /// <param name="provisioningState">Provisioning state of the
         /// namespace.</param>
         /// <param name="status">Status of the namespace.</param>
@@ -64,12 +67,16 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="disableLocalAuth">This property disables SAS
         /// authentication for the Service Bus namespace.</param>
         /// <param name="alternateName">Alternate name for namespace</param>
-        public SBNamespace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SBSku sku = default(SBSku), Identity identity = default(Identity), SystemData systemData = default(SystemData), string provisioningState = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string), bool? zoneRedundant = default(bool?), Encryption encryption = default(Encryption), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? disableLocalAuth = default(bool?), string alternateName = default(string))
+        /// <param name="publicNetworkAccess">This determines if traffic is
+        /// allowed over public network. By default it is enabled. Possible
+        /// values include: 'Enabled', 'Disabled', 'SecuredByPerimeter'</param>
+        public SBNamespace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SBSku sku = default(SBSku), Identity identity = default(Identity), SystemData systemData = default(SystemData), string minimumTlsVersion = default(string), string provisioningState = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string), bool? zoneRedundant = default(bool?), Encryption encryption = default(Encryption), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? disableLocalAuth = default(bool?), string alternateName = default(string), string publicNetworkAccess = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
             Identity = identity;
             SystemData = systemData;
+            MinimumTlsVersion = minimumTlsVersion;
             ProvisioningState = provisioningState;
             Status = status;
             CreatedAt = createdAt;
@@ -81,6 +88,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             PrivateEndpointConnections = privateEndpointConnections;
             DisableLocalAuth = disableLocalAuth;
             AlternateName = alternateName;
+            PublicNetworkAccess = publicNetworkAccess;
             CustomInit();
         }
 
@@ -106,6 +114,13 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the minimum TLS version for the cluster to support,
+        /// e.g. '1.2'. Possible values include: '1.0', '1.1', '1.2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimumTlsVersion")]
+        public string MinimumTlsVersion { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the namespace.
@@ -174,6 +189,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.alternateName")]
         public string AlternateName { get; set; }
+
+        /// <summary>
+        /// Gets or sets this determines if traffic is allowed over public
+        /// network. By default it is enabled. Possible values include:
+        /// 'Enabled', 'Disabled', 'SecuredByPerimeter'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Validate the object.

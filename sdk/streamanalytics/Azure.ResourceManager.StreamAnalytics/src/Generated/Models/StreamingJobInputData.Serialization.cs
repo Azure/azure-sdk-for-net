@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.StreamAnalytics
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();
@@ -31,39 +31,49 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         internal static StreamingJobInputData DeserializeStreamingJobInputData(JsonElement element)
         {
-            Optional<InputProperties> properties = default;
-            Optional<string> id = default;
+            Optional<StreamingJobInputProperties> properties = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = InputProperties.DeserializeInputProperties(property.Value);
+                    properties = StreamingJobInputProperties.DeserializeStreamingJobInputProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
             }
-            return new StreamingJobInputData(id.Value, name.Value, type.Value, properties.Value);
+            return new StreamingJobInputData(id.Value, name.Value, Optional.ToNullable(type), properties.Value);
         }
     }
 }

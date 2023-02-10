@@ -29,8 +29,16 @@ namespace Azure.ResourceManager.Grafana
 
         /// <summary>
         /// List all resources of workspaces for Grafana under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana
-        /// Operation Id: Grafana_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Grafana_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -42,8 +50,16 @@ namespace Azure.ResourceManager.Grafana
 
         /// <summary>
         /// List all resources of workspaces for Grafana under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana
-        /// Operation Id: Grafana_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Grafana_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -72,8 +88,16 @@ namespace Azure.ResourceManager.Grafana
 
         /// <summary>
         /// Get the properties of a specific workspace for Grafana resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
-        /// Operation Id: Grafana_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Grafana_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
@@ -88,8 +112,16 @@ namespace Azure.ResourceManager.Grafana
 
         /// <summary>
         /// Get the properties of a specific workspace for Grafana resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
-        /// Operation Id: Grafana_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Grafana_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
@@ -116,6 +148,44 @@ namespace Azure.ResourceManager.Grafana
             {
                 ManagedGrafanaResource.ValidateResourceId(id);
                 return new ManagedGrafanaResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region GrafanaPrivateEndpointConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="GrafanaPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GrafanaPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="GrafanaPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GrafanaPrivateEndpointConnectionResource" /> object. </returns>
+        public static GrafanaPrivateEndpointConnectionResource GetGrafanaPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                GrafanaPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new GrafanaPrivateEndpointConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region GrafanaPrivateLinkResource
+        /// <summary>
+        /// Gets an object representing a <see cref="GrafanaPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GrafanaPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="GrafanaPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GrafanaPrivateLinkResource" /> object. </returns>
+        public static GrafanaPrivateLinkResource GetGrafanaPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                GrafanaPrivateLinkResource.ValidateResourceId(id);
+                return new GrafanaPrivateLinkResource(client, id);
             }
             );
         }

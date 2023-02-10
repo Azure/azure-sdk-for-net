@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.ServiceBus
-require: https://github.com/Azure/azure-rest-api-specs/blob/c2d2b523575031790b8672640ea762bdf9ad4964/specification/servicebus/resource-manager/readme.md
-tag: package-2021-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/f69c52dd603c79a8b29ba51483e3aa7fe1b56212/specification/servicebus/resource-manager/readme.md
+tag: package-2022-10-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -62,6 +62,11 @@ rename-mapping:
   CorrelationFilter.label: Subject
   CorrelationFilter.properties: ApplicationProperties
   FilterAction: ServiceBusFilterAction
+  ServiceBusNamespace.properties.zoneRedundant: IsZoneRedundant
+  ServiceBusNetworkRuleSet.properties.trustedServiceAccessEnabled: IsTrustedServiceAccessEnabled
+  ServiceBusNameAvailabilityResult.nameAvailable: IsNameAvailable
+  PublicNetworkAccess: ServiceBusPublicNetworkAccess
+  TlsVersion: ServiceBusMinimumTlsVersion
 
 directive:
     - from: swagger-document
@@ -188,6 +193,7 @@ directive:
         $.Rule['x-ms-client-name'] = 'ServiceBusRule';
         $.Action['x-ms-client-name'] = 'FilterAction';
         $.CorrelationFilter.properties.to['x-ms-client-name'] = 'sendTo';
+        $.CorrelationFilter.properties.properties.additionalProperties['x-ms-format'] = 'object';
     - from: topics.json
       where: $.definitions
       transform: >

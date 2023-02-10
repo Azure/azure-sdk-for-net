@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="clientId"/> is null. </exception>
         public PaypalLinkedService(object host, object clientId)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
-            if (clientId == null)
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
+            Argument.AssertNotNull(host, nameof(host));
+            Argument.AssertNotNull(clientId, nameof(clientId));
 
             Host = host;
             ClientId = clientId;
@@ -42,7 +37,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="host"> The URL of the PayPal instance. (i.e. api.sandbox.paypal.com). </param>
         /// <param name="clientId"> The client ID associated with your PayPal application. </param>
-        /// <param name="clientSecret"> The client secret associated with your PayPal application. </param>
+        /// <param name="clientSecret">
+        /// The client secret associated with your PayPal application.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
@@ -63,7 +62,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Host { get; set; }
         /// <summary> The client ID associated with your PayPal application. </summary>
         public object ClientId { get; set; }
-        /// <summary> The client secret associated with your PayPal application. </summary>
+        /// <summary>
+        /// The client secret associated with your PayPal application.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase ClientSecret { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public object UseEncryptedEndpoints { get; set; }

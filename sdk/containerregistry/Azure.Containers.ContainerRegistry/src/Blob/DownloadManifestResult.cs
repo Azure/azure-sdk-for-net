@@ -3,19 +3,20 @@
 
 using System;
 using System.IO;
+using System.Text.Json;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
     /// The result from downloading an OCI manifest from the registry.
     /// </summary>
-    public class DownloadManifestResult : IDisposable
+    public class DownloadManifestResult
     {
-        internal DownloadManifestResult(string digest, OciManifest manifest, Stream manifestStream)
+        internal DownloadManifestResult(string digest, ManifestMediaType mediaType, BinaryData content)
         {
             Digest = digest;
-            Manifest = manifest;
-            ManifestStream = manifestStream;
+            MediaType = mediaType;
+            Content = content;
         }
 
         /// <summary>
@@ -24,22 +25,23 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public string Digest { get; }
 
         /// <summary>
-        /// The OCI manifest that was downloaded.
+        /// Gets the media type of the downloaded manifest, as indicated by the
+        /// Content-Type response header.
         /// </summary>
-        public OciManifest Manifest { get; }
+        public ManifestMediaType MediaType { get; }
 
         /// <summary>
-        /// The manifest stream that was downloaded.
+        /// The serialized content that was downloaded.
         /// </summary>
-        public Stream ManifestStream { get; }
+        public BinaryData Content { get; }
 
         /// <summary>
-        /// Disposes the <see cref="DownloadManifestResult"/> by calling <c>Dispose()</c> on the underlying <see cref="ManifestStream"/> stream.
+        /// Gets the downloaded manifest as an OciManifest.
         /// </summary>
-        public void Dispose()
+        /// <returns></returns>
+        public OciManifest AsOciManifest()
         {
-            ManifestStream?.Dispose();
-            GC.SuppressFinalize(this);
+            return OciManifest.DeserializeOciManifest(JsonDocument.Parse(Content).RootElement);
         }
     }
 }

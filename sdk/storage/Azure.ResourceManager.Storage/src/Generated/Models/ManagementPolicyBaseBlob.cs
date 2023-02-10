@@ -16,22 +16,30 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of ManagementPolicyBaseBlob. </summary>
-        /// <param name="tierToCool"> The function to tier blobs to cool storage. Support blobs currently at Hot tier. </param>
-        /// <param name="tierToArchive"> The function to tier blobs to archive storage. Support blobs currently at Hot or Cool tier. </param>
+        /// <param name="tierToCool"> The function to tier blobs to cool storage. </param>
+        /// <param name="tierToArchive"> The function to tier blobs to archive storage. </param>
+        /// <param name="tierToCold"> The function to tier blobs to cold storage. </param>
+        /// <param name="tierToHot"> The function to tier blobs to hot storage. This action can only be used with Premium Block Blob Storage Accounts. </param>
         /// <param name="delete"> The function to delete the blob. </param>
         /// <param name="enableAutoTierToHotFromCool"> This property enables auto tiering of a blob from cool to hot on a blob access. This property requires tierToCool.daysAfterLastAccessTimeGreaterThan. </param>
-        internal ManagementPolicyBaseBlob(DateAfterModification tierToCool, DateAfterModification tierToArchive, DateAfterModification delete, bool? enableAutoTierToHotFromCool)
+        internal ManagementPolicyBaseBlob(DateAfterModification tierToCool, DateAfterModification tierToArchive, DateAfterModification tierToCold, DateAfterModification tierToHot, DateAfterModification delete, bool? enableAutoTierToHotFromCool)
         {
             TierToCool = tierToCool;
             TierToArchive = tierToArchive;
+            TierToCold = tierToCold;
+            TierToHot = tierToHot;
             Delete = delete;
             EnableAutoTierToHotFromCool = enableAutoTierToHotFromCool;
         }
 
-        /// <summary> The function to tier blobs to cool storage. Support blobs currently at Hot tier. </summary>
+        /// <summary> The function to tier blobs to cool storage. </summary>
         public DateAfterModification TierToCool { get; set; }
-        /// <summary> The function to tier blobs to archive storage. Support blobs currently at Hot or Cool tier. </summary>
+        /// <summary> The function to tier blobs to archive storage. </summary>
         public DateAfterModification TierToArchive { get; set; }
+        /// <summary> The function to tier blobs to cold storage. </summary>
+        public DateAfterModification TierToCold { get; set; }
+        /// <summary> The function to tier blobs to hot storage. This action can only be used with Premium Block Blob Storage Accounts. </summary>
+        public DateAfterModification TierToHot { get; set; }
         /// <summary> The function to delete the blob. </summary>
         public DateAfterModification Delete { get; set; }
         /// <summary> This property enables auto tiering of a blob from cool to hot on a blob access. This property requires tierToCool.daysAfterLastAccessTimeGreaterThan. </summary>

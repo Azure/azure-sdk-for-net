@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DataProviderMetadata. </summary>
         public DataProviderMetadata()
         {
-            PropertyBag = new ChangeTrackingList<KeyValuePairStringObject>();
+            PropertyBag = new ChangeTrackingList<DataProviderKeyValuePair>();
         }
 
         /// <summary> Initializes a new instance of DataProviderMetadata. </summary>
         /// <param name="providerName"></param>
         /// <param name="propertyBag"> Settings for the data provider. </param>
-        internal DataProviderMetadata(string providerName, IReadOnlyList<KeyValuePairStringObject> propertyBag)
+        internal DataProviderMetadata(string providerName, IReadOnlyList<DataProviderKeyValuePair> propertyBag)
         {
             ProviderName = providerName;
             PropertyBag = propertyBag;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets or sets the provider name. </summary>
         public string ProviderName { get; set; }
         /// <summary> Settings for the data provider. </summary>
-        public IReadOnlyList<KeyValuePairStringObject> PropertyBag { get; }
+        public IReadOnlyList<DataProviderKeyValuePair> PropertyBag { get; }
     }
 }

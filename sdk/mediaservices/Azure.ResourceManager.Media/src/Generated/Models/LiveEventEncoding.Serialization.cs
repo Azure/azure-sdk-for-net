@@ -18,23 +18,37 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EncodingType))
             {
-                writer.WritePropertyName("encodingType");
+                writer.WritePropertyName("encodingType"u8);
                 writer.WriteStringValue(EncodingType.Value.ToString());
             }
             if (Optional.IsDefined(PresetName))
             {
-                writer.WritePropertyName("presetName");
+                writer.WritePropertyName("presetName"u8);
                 writer.WriteStringValue(PresetName);
             }
             if (Optional.IsDefined(StretchMode))
             {
-                writer.WritePropertyName("stretchMode");
-                writer.WriteStringValue(StretchMode.Value.ToString());
+                if (StretchMode != null)
+                {
+                    writer.WritePropertyName("stretchMode"u8);
+                    writer.WriteStringValue(StretchMode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("stretchMode");
+                }
             }
             if (Optional.IsDefined(KeyFrameInterval))
             {
-                writer.WritePropertyName("keyFrameInterval");
-                writer.WriteStringValue(KeyFrameInterval.Value, "P");
+                if (KeyFrameInterval != null)
+                {
+                    writer.WritePropertyName("keyFrameInterval"u8);
+                    writer.WriteStringValue(KeyFrameInterval.Value, "P");
+                }
+                else
+                {
+                    writer.WriteNull("keyFrameInterval");
+                }
             }
             writer.WriteEndObject();
         }
@@ -43,11 +57,11 @@ namespace Azure.ResourceManager.Media.Models
         {
             Optional<LiveEventEncodingType> encodingType = default;
             Optional<string> presetName = default;
-            Optional<StretchMode> stretchMode = default;
-            Optional<TimeSpan> keyFrameInterval = default;
+            Optional<InputVideoStretchMode?> stretchMode = default;
+            Optional<TimeSpan?> keyFrameInterval = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("encodingType"))
+                if (property.NameEquals("encodingType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,26 +71,26 @@ namespace Azure.ResourceManager.Media.Models
                     encodingType = new LiveEventEncodingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("presetName"))
+                if (property.NameEquals("presetName"u8))
                 {
                     presetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stretchMode"))
+                if (property.NameEquals("stretchMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        stretchMode = null;
                         continue;
                     }
-                    stretchMode = new StretchMode(property.Value.GetString());
+                    stretchMode = new InputVideoStretchMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyFrameInterval"))
+                if (property.NameEquals("keyFrameInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        keyFrameInterval = null;
                         continue;
                     }
                     keyFrameInterval = property.Value.GetTimeSpan("P");

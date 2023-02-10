@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
@@ -21,12 +22,12 @@ namespace Azure.ResourceManager.Dns
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(ETag);
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,18 +36,18 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ZoneType))
             {
-                writer.WritePropertyName("zoneType");
+                writer.WritePropertyName("zoneType"u8);
                 writer.WriteStringValue(ZoneType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(RegistrationVirtualNetworks))
             {
-                writer.WritePropertyName("registrationVirtualNetworks");
+                writer.WritePropertyName("registrationVirtualNetworks"u8);
                 writer.WriteStartArray();
                 foreach (var item in RegistrationVirtualNetworks)
                 {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Dns
             }
             if (Optional.IsCollectionDefined(ResolutionVirtualNetworks))
             {
-                writer.WritePropertyName("resolutionVirtualNetworks");
+                writer.WritePropertyName("resolutionVirtualNetworks"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResolutionVirtualNetworks)
                 {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Dns
 
         internal static DnsZoneData DeserializeDnsZoneData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -81,17 +82,22 @@ namespace Azure.ResourceManager.Dns
             Optional<long?> maxNumberOfRecordsPerRecordSet = default;
             Optional<long> numberOfRecordSets = default;
             Optional<IReadOnlyList<string>> nameServers = default;
-            Optional<ZoneType> zoneType = default;
+            Optional<DnsZoneType> zoneType = default;
             Optional<IList<WritableSubResource>> registrationVirtualNetworks = default;
             Optional<IList<WritableSubResource>> resolutionVirtualNetworks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,37 +112,37 @@ namespace Azure.ResourceManager.Dns
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.Dns
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("maxNumberOfRecordSets"))
+                        if (property0.NameEquals("maxNumberOfRecordSets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -155,7 +161,7 @@ namespace Azure.ResourceManager.Dns
                             maxNumberOfRecordSets = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("maxNumberOfRecordsPerRecordSet"))
+                        if (property0.NameEquals("maxNumberOfRecordsPerRecordSet"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.Dns
                             maxNumberOfRecordsPerRecordSet = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("numberOfRecordSets"))
+                        if (property0.NameEquals("numberOfRecordSets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -175,7 +181,7 @@ namespace Azure.ResourceManager.Dns
                             numberOfRecordSets = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("nameServers"))
+                        if (property0.NameEquals("nameServers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -190,17 +196,17 @@ namespace Azure.ResourceManager.Dns
                             nameServers = array;
                             continue;
                         }
-                        if (property0.NameEquals("zoneType"))
+                        if (property0.NameEquals("zoneType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            zoneType = property0.Value.GetString().ToZoneType();
+                            zoneType = property0.Value.GetString().ToDnsZoneType();
                             continue;
                         }
-                        if (property0.NameEquals("registrationVirtualNetworks"))
+                        if (property0.NameEquals("registrationVirtualNetworks"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -210,12 +216,12 @@ namespace Azure.ResourceManager.Dns
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             registrationVirtualNetworks = array;
                             continue;
                         }
-                        if (property0.NameEquals("resolutionVirtualNetworks"))
+                        if (property0.NameEquals("resolutionVirtualNetworks"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -225,7 +231,7 @@ namespace Azure.ResourceManager.Dns
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             resolutionVirtualNetworks = array;
                             continue;
@@ -234,7 +240,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new DnsZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, etag.Value, Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(maxNumberOfRecordsPerRecordSet), Optional.ToNullable(numberOfRecordSets), Optional.ToList(nameServers), Optional.ToNullable(zoneType), Optional.ToList(registrationVirtualNetworks), Optional.ToList(resolutionVirtualNetworks));
+            return new DnsZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(maxNumberOfRecordsPerRecordSet), Optional.ToNullable(numberOfRecordSets), Optional.ToList(nameServers), Optional.ToNullable(zoneType), Optional.ToList(registrationVirtualNetworks), Optional.ToList(resolutionVirtualNetworks));
         }
     }
 }

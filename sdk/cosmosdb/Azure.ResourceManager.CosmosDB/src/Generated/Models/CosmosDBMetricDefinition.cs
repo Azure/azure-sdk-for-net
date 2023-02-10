@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="resourceId"> The resource uri of the database. </param>
         /// <param name="name"> The name information for the metric. </param>
-        internal CosmosDBMetricDefinition(IReadOnlyList<CosmosDBMetricAvailability> metricAvailabilities, PrimaryAggregationType? primaryAggregationType, CosmosDBMetricUnitType? unit, ResourceIdentifier resourceId, CosmosDBMetricName name)
+        internal CosmosDBMetricDefinition(IReadOnlyList<CosmosDBMetricAvailability> metricAvailabilities, CosmosDBMetricPrimaryAggregationType? primaryAggregationType, CosmosDBMetricUnitType? unit, ResourceIdentifier resourceId, CosmosDBMetricName name)
         {
             MetricAvailabilities = metricAvailabilities;
             PrimaryAggregationType = primaryAggregationType;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The list of metric availabilities for the account. </summary>
         public IReadOnlyList<CosmosDBMetricAvailability> MetricAvailabilities { get; }
         /// <summary> The primary aggregation type of the metric. </summary>
-        public PrimaryAggregationType? PrimaryAggregationType { get; }
+        public CosmosDBMetricPrimaryAggregationType? PrimaryAggregationType { get; }
         /// <summary> The unit of the metric. </summary>
         public CosmosDBMetricUnitType? Unit { get; }
         /// <summary> The resource uri of the database. </summary>

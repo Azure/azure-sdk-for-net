@@ -5,66 +5,30 @@
 
 #nullable disable
 
-using Azure.Communication.MediaComposition.Models;
+using Azure.Communication.MediaComposition;
 
-namespace Azure.Communication.MediaComposition
+namespace Azure.Communication.MediaComposition.Models
 {
-    /// <summary> Media input to be used in the composition. </summary>
-    public partial class MediaInput
+    /// <summary>
+    /// Media input to be used in the composition
+    /// Please note <see cref="MediaInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ActivePresenter"/>, <see cref="DominantSpeaker"/>, <see cref="GroupCallInput"/>, <see cref="ImageInput"/>, <see cref="ParticipantInput"/>, <see cref="RoomInput"/>, <see cref="RtmpInput"/>, <see cref="ScreenShare"/>, <see cref="SrtInput"/> and <see cref="TeamsMeetingInput"/>.
+    /// </summary>
+    public abstract partial class MediaInput
     {
-        /// <summary> Initializes a new instance of MediaInput. </summary>
-        public MediaInput()
-        {
-        }
 
         /// <summary> Initializes a new instance of MediaInput. </summary>
         /// <param name="kind"> Kind of media input. </param>
-        /// <param name="groupCall"> Group call to be used as an input or output. </param>
-        /// <param name="room"> Group call to be used as an input or output. </param>
-        /// <param name="teamsMeeting"> A Teams meeting to be used as an input or output. </param>
-        /// <param name="rtmp"> Rtmp stream to be used as an input or output. </param>
-        /// <param name="srt"> Srt stream to be used as an input or output. </param>
-        /// <param name="participant"></param>
-        /// <param name="activePresenter"> Identifies a teams meeting or group call defined in inputs. </param>
-        /// <param name="dominantSpeaker"> Identifies a teams meeting or group call defined in inputs. </param>
-        /// <param name="screenShare"> Identifies a teams meeting or group call defined in inputs. </param>
-        /// <param name="image"> An image input. </param>
-        internal MediaInput(MediaInputType? kind, GroupCall groupCall, GroupCall room, TeamsMeeting teamsMeeting, RtmpStream rtmp, SrtStream srt, ParticipantInput participant, CommunicationCallIdentifierModel activePresenter, CommunicationCallIdentifierModel dominantSpeaker, CommunicationCallIdentifierModel screenShare, ImageInput image)
+        /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
+        internal MediaInput(MediaInputType kind, string placeholderImageUri)
         {
             Kind = kind;
-            GroupCall = groupCall;
-            Room = room;
-            TeamsMeeting = teamsMeeting;
-            Rtmp = rtmp;
-            Srt = srt;
-            Participant = participant;
-            ActivePresenter = activePresenter;
-            DominantSpeaker = dominantSpeaker;
-            ScreenShare = screenShare;
-            Image = image;
+            PlaceholderImageUri = placeholderImageUri;
         }
 
         /// <summary> Kind of media input. </summary>
-        public MediaInputType? Kind { get; set; }
-        /// <summary> Group call to be used as an input or output. </summary>
-        public GroupCall GroupCall { get; set; }
-        /// <summary> Group call to be used as an input or output. </summary>
-        public GroupCall Room { get; set; }
-        /// <summary> A Teams meeting to be used as an input or output. </summary>
-        public TeamsMeeting TeamsMeeting { get; set; }
-        /// <summary> Rtmp stream to be used as an input or output. </summary>
-        public RtmpStream Rtmp { get; set; }
-        /// <summary> Srt stream to be used as an input or output. </summary>
-        public SrtStream Srt { get; set; }
-        /// <summary> Gets or sets the participant. </summary>
-        public ParticipantInput Participant { get; set; }
-        /// <summary> Identifies a teams meeting or group call defined in inputs. </summary>
-        public CommunicationCallIdentifierModel ActivePresenter { get; set; }
-        /// <summary> Identifies a teams meeting or group call defined in inputs. </summary>
-        public CommunicationCallIdentifierModel DominantSpeaker { get; set; }
-        /// <summary> Identifies a teams meeting or group call defined in inputs. </summary>
-        public CommunicationCallIdentifierModel ScreenShare { get; set; }
-        /// <summary> An image input. </summary>
-        public ImageInput Image { get; set; }
+        internal MediaInputType Kind { get; set; }
+        /// <summary> Image url to be used if participant has no video stream. </summary>
+        public string PlaceholderImageUri { get; set; }
     }
 }

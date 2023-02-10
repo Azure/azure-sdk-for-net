@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationTypeVersionResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceFabricApplicationTypeVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 case 200:
                     {
-                        ApplicationTypeVersionResourceData value = default;
+                        ServiceFabricApplicationTypeVersionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationTypeVersionResourceData.DeserializeApplicationTypeVersionResourceData(document.RootElement);
+                        value = ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApplicationTypeVersionResourceData)null, message.Response);
+                    return Response.FromValue((ServiceFabricApplicationTypeVersionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationTypeVersionResourceData> Get(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, CancellationToken cancellationToken = default)
+        public Response<ServiceFabricApplicationTypeVersionData> Get(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -119,19 +119,19 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 case 200:
                     {
-                        ApplicationTypeVersionResourceData value = default;
+                        ServiceFabricApplicationTypeVersionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationTypeVersionResourceData.DeserializeApplicationTypeVersionResourceData(document.RootElement);
+                        value = ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApplicationTypeVersionResourceData)null, message.Response);
+                    return Response.FromValue((ServiceFabricApplicationTypeVersionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, ApplicationTypeVersionResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, ServiceFabricApplicationTypeVersionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/>, <paramref name="version"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, ApplicationTypeVersionResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, ServiceFabricApplicationTypeVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/>, <paramref name="version"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, ApplicationTypeVersionResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, ServiceFabricApplicationTypeVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationTypeVersionResourceList>> ListAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceFabricApplicationTypeVersionList>> ListAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -345,9 +345,9 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 case 200:
                     {
-                        ApplicationTypeVersionResourceList value = default;
+                        ServiceFabricApplicationTypeVersionList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationTypeVersionResourceList.DeserializeApplicationTypeVersionResourceList(document.RootElement);
+                        value = ServiceFabricApplicationTypeVersionList.DeserializeServiceFabricApplicationTypeVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationTypeVersionResourceList> List(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, CancellationToken cancellationToken = default)
+        public Response<ServiceFabricApplicationTypeVersionList> List(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -376,9 +376,9 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 case 200:
                     {
-                        ApplicationTypeVersionResourceList value = default;
+                        ServiceFabricApplicationTypeVersionList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationTypeVersionResourceList.DeserializeApplicationTypeVersionResourceList(document.RootElement);
+                        value = ServiceFabricApplicationTypeVersionList.DeserializeServiceFabricApplicationTypeVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

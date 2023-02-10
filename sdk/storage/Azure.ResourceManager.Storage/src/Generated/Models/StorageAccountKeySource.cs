@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string MicrosoftStorageValue = "Microsoft.Storage";
-        private const string MicrosoftKeyvaultValue = "Microsoft.Keyvault";
+        private const string StorageValue = "Microsoft.Storage";
+        private const string KeyVaultValue = "Microsoft.Keyvault";
 
         /// <summary> Microsoft.Storage. </summary>
-        public static StorageAccountKeySource MicrosoftStorage { get; } = new StorageAccountKeySource(MicrosoftStorageValue);
+        public static StorageAccountKeySource Storage { get; } = new StorageAccountKeySource(StorageValue);
         /// <summary> Microsoft.Keyvault. </summary>
-        public static StorageAccountKeySource MicrosoftKeyvault { get; } = new StorageAccountKeySource(MicrosoftKeyvaultValue);
+        public static StorageAccountKeySource KeyVault { get; } = new StorageAccountKeySource(KeyVaultValue);
         /// <summary> Determines if two <see cref="StorageAccountKeySource"/> values are the same. </summary>
         public static bool operator ==(StorageAccountKeySource left, StorageAccountKeySource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountKeySource"/> values are not the same. </summary>

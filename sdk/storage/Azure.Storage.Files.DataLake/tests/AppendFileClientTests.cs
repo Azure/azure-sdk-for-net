@@ -564,7 +564,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             Stream stream = new MemoryStream(data);
-            await file.AppendAsync(stream, 0, contentHash: contentHash);
+            await file.AppendAsync(stream, contentHash: contentHash);
         }
 
         [Test]
@@ -574,14 +574,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
 
             // Arrange
-            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            DataLakeAppendFileClient file = InstrumentClient(test.FileSystem.GetAppendFileClient(GetNewFileName()));
             await file.CreateAsync();
             var data = GetRandomBuffer(Constants.KB);
             TestProgress progress = new TestProgress();
             using Stream stream = new MemoryStream(data);
 
             // Act
-            await file.AppendAsync(stream, 0, progressHandler: progress);
+            await file.AppendAsync(stream, progressHandler: progress);
 
             // Assert
             Assert.IsFalse(progress.List.Count == 0);

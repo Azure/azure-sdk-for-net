@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> family = default;
             Optional<string> kind = default;
             Optional<ApiManagementSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<ApiManagementSkuLocationInfo>> locationInfo = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
             Optional<IReadOnlyList<ApiManagementSkuCosts>> costs = default;
@@ -30,37 +30,37 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IReadOnlyList<ApiManagementSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,22 +70,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     capacity = ApiManagementSkuCapacity.DeserializeApiManagementSkuCapacity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("locationInfo"))
+                if (property.NameEquals("locationInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     locationInfo = array;
                     continue;
                 }
-                if (property.NameEquals("apiVersions"))
+                if (property.NameEquals("apiVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     apiVersions = array;
                     continue;
                 }
-                if (property.NameEquals("costs"))
+                if (property.NameEquals("costs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     costs = array;
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     capabilities = array;
                     continue;
                 }
-                if (property.NameEquals("restrictions"))
+                if (property.NameEquals("restrictions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

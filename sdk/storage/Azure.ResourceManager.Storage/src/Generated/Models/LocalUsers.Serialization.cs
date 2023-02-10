@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static LocalUsers DeserializeLocalUsers(JsonElement element)
         {
-            Optional<IReadOnlyList<LocalUserData>> value = default;
+            Optional<IReadOnlyList<StorageAccountLocalUserData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LocalUserData> array = new List<LocalUserData>();
+                    List<StorageAccountLocalUserData> array = new List<StorageAccountLocalUserData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LocalUserData.DeserializeLocalUserData(item));
+                        array.Add(StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(item));
                     }
                     value = array;
                     continue;

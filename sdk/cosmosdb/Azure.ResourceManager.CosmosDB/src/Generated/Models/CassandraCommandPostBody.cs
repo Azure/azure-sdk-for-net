@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="host"/> is null. </exception>
         public CassandraCommandPostBody(string command, string host)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
+            Argument.AssertNotNull(command, nameof(command));
+            Argument.AssertNotNull(host, nameof(host));
 
             Command = command;
             Arguments = new ChangeTrackingDictionary<string, string>();
@@ -43,6 +37,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> If true, stops cassandra before executing the command and then start it again. </summary>
         public bool? CassandraStopStart { get; set; }
         /// <summary> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </summary>
-        public bool? Readwrite { get; set; }
+        public bool? AllowWrite { get; set; }
     }
 }

@@ -15,8 +15,45 @@ namespace Azure.ResourceManager.Authorization.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteObjectValue(Properties);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WritePropertyName("roleDefinitionId"u8);
+            writer.WriteStringValue(RoleDefinitionId);
+            writer.WritePropertyName("principalId"u8);
+            writer.WriteStringValue(PrincipalId);
+            if (Optional.IsDefined(PrincipalType))
+            {
+                writer.WritePropertyName("principalType"u8);
+                writer.WriteStringValue(PrincipalType.Value.ToString());
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Condition))
+            {
+                writer.WritePropertyName("condition"u8);
+                writer.WriteStringValue(Condition);
+            }
+            if (Optional.IsDefined(ConditionVersion))
+            {
+                writer.WritePropertyName("conditionVersion"u8);
+                writer.WriteStringValue(ConditionVersion);
+            }
+            if (Optional.IsDefined(DelegatedManagedIdentityResourceId))
+            {
+                if (DelegatedManagedIdentityResourceId != null)
+                {
+                    writer.WritePropertyName("delegatedManagedIdentityResourceId"u8);
+                    writer.WriteStringValue(DelegatedManagedIdentityResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("delegatedManagedIdentityResourceId");
+                }
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }

@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,10 +17,10 @@ namespace Azure.ResourceManager.ContainerService
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _managedClusterClientDiagnostics;
-        private ManagedClustersRestOperations _managedClusterRestClient;
-        private ClientDiagnostics _snapshotClientDiagnostics;
-        private SnapshotsRestOperations _snapshotRestClient;
+        private ClientDiagnostics _containerServiceManagedClusterManagedClustersClientDiagnostics;
+        private ManagedClustersRestOperations _containerServiceManagedClusterManagedClustersRestClient;
+        private ClientDiagnostics _agentPoolSnapshotSnapshotsClientDiagnostics;
+        private SnapshotsRestOperations _agentPoolSnapshotSnapshotsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -36,10 +34,10 @@ namespace Azure.ResourceManager.ContainerService
         {
         }
 
-        private ClientDiagnostics ManagedClusterClientDiagnostics => _managedClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService", ManagedClusterResource.ResourceType.Namespace, Diagnostics);
-        private ManagedClustersRestOperations ManagedClusterRestClient => _managedClusterRestClient ??= new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedClusterResource.ResourceType));
-        private ClientDiagnostics SnapshotClientDiagnostics => _snapshotClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService", SnapshotResource.ResourceType.Namespace, Diagnostics);
-        private SnapshotsRestOperations SnapshotRestClient => _snapshotRestClient ??= new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SnapshotResource.ResourceType));
+        private ClientDiagnostics ContainerServiceManagedClusterManagedClustersClientDiagnostics => _containerServiceManagedClusterManagedClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceManagedClusterResource.ResourceType.Namespace, Diagnostics);
+        private ManagedClustersRestOperations ContainerServiceManagedClusterManagedClustersRestClient => _containerServiceManagedClusterManagedClustersRestClient ??= new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerServiceManagedClusterResource.ResourceType));
+        private ClientDiagnostics AgentPoolSnapshotSnapshotsClientDiagnostics => _agentPoolSnapshotSnapshotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService", AgentPoolSnapshotResource.ResourceType.Namespace, Diagnostics);
+        private SnapshotsRestOperations AgentPoolSnapshotSnapshotsRestClient => _agentPoolSnapshotSnapshotsRestClient ??= new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AgentPoolSnapshotResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -47,179 +45,92 @@ namespace Azure.ResourceManager.ContainerService
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of OSOptionProfileResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of OSOptionProfileResources and their operations over a OSOptionProfileResource. </returns>
-        public virtual OSOptionProfileCollection GetOSOptionProfiles()
+        /// <summary>
+        /// Gets a list of managed clusters in the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClustersAsync(CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new OSOptionProfileCollection(Client, Id));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceManagedClusterManagedClustersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerServiceManagedClusterManagedClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceManagedClusterResource(Client, ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(e)), ContainerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerServiceManagedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of managed clusters in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedClusters
-        /// Operation Id: ManagedClusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedClusterResource> GetManagedClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClusters(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ManagedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusters");
-                scope.Start();
-                try
-                {
-                    var response = await ManagedClusterRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ManagedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusters");
-                scope.Start();
-                try
-                {
-                    var response = await ManagedClusterRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Gets a list of managed clusters in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedClusters
-        /// Operation Id: ManagedClusters_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedClusterResource> GetManagedClusters(CancellationToken cancellationToken = default)
-        {
-            Page<ManagedClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ManagedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusters");
-                scope.Start();
-                try
-                {
-                    var response = ManagedClusterRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ManagedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusters");
-                scope.Start();
-                try
-                {
-                    var response = ManagedClusterRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceManagedClusterManagedClustersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerServiceManagedClusterManagedClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceManagedClusterResource(Client, ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(e)), ContainerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerServiceManagedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of snapshots in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/snapshots
-        /// Operation Id: Snapshots_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/snapshots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SnapshotResource> GetSnapshotsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AgentPoolSnapshotResource> GetAgentPoolSnapshotsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SnapshotResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SnapshotClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSnapshots");
-                scope.Start();
-                try
-                {
-                    var response = await SnapshotRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SnapshotResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SnapshotClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSnapshots");
-                scope.Start();
-                try
-                {
-                    var response = await SnapshotRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AgentPoolSnapshotSnapshotsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AgentPoolSnapshotSnapshotsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), AgentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAgentPoolSnapshots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of snapshots in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/snapshots
-        /// Operation Id: Snapshots_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/snapshots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SnapshotResource> GetSnapshots(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AgentPoolSnapshotResource> GetAgentPoolSnapshots(CancellationToken cancellationToken = default)
         {
-            Page<SnapshotResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SnapshotClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSnapshots");
-                scope.Start();
-                try
-                {
-                    var response = SnapshotRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SnapshotResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SnapshotClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSnapshots");
-                scope.Start();
-                try
-                {
-                    var response = SnapshotRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AgentPoolSnapshotSnapshotsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AgentPoolSnapshotSnapshotsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), AgentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAgentPoolSnapshots", "value", "nextLink", cancellationToken);
         }
     }
 }

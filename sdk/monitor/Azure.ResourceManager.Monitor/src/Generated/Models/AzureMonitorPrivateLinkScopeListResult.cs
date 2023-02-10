@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -18,12 +19,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of AzureMonitorPrivateLinkScopeListResult. </summary>
         /// <param name="value"> List of Azure Monitor PrivateLinkScope definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AzureMonitorPrivateLinkScopeListResult(IEnumerable<PrivateLinkScopeData> value)
+        internal AzureMonitorPrivateLinkScopeListResult(IEnumerable<MonitorPrivateLinkScopeData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -31,14 +29,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of AzureMonitorPrivateLinkScopeListResult. </summary>
         /// <param name="value"> List of Azure Monitor PrivateLinkScope definitions. </param>
         /// <param name="nextLink"> The URI to get the next set of Azure Monitor PrivateLinkScope definitions if too many PrivateLinkScopes where returned in the result set. </param>
-        internal AzureMonitorPrivateLinkScopeListResult(IReadOnlyList<PrivateLinkScopeData> value, string nextLink)
+        internal AzureMonitorPrivateLinkScopeListResult(IReadOnlyList<MonitorPrivateLinkScopeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Azure Monitor PrivateLinkScope definitions. </summary>
-        public IReadOnlyList<PrivateLinkScopeData> Value { get; }
+        public IReadOnlyList<MonitorPrivateLinkScopeData> Value { get; }
         /// <summary> The URI to get the next set of Azure Monitor PrivateLinkScope definitions if too many PrivateLinkScopes where returned in the result set. </summary>
         public string NextLink { get; }
     }

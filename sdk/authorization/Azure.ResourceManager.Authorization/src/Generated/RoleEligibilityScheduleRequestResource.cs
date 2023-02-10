@@ -88,14 +88,22 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get the specified role eligibility schedule request.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
-        /// Operation Id: RoleEligibilityScheduleRequests_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RoleEligibilityScheduleRequestResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Get");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Get");
+            scope.Start();
             try
             {
                 var response = await _roleEligibilityScheduleRequestRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -105,21 +113,29 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Get the specified role eligibility schedule request.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
-        /// Operation Id: RoleEligibilityScheduleRequests_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RoleEligibilityScheduleRequestResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Get");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Get");
+            scope.Start();
             try
             {
                 var response = _roleEligibilityScheduleRequestRestClient.Get(Id.Parent, Id.Name, cancellationToken);
@@ -129,15 +145,23 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Creates a role eligibility schedule request.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
-        /// Operation Id: RoleEligibilityScheduleRequests_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Parameters for the role eligibility schedule request. </param>
@@ -147,8 +171,8 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Update");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Update");
+            scope.Start();
             try
             {
                 var response = await _roleEligibilityScheduleRequestRestClient.CreateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
@@ -159,15 +183,23 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Creates a role eligibility schedule request.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
-        /// Operation Id: RoleEligibilityScheduleRequests_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Parameters for the role eligibility schedule request. </param>
@@ -177,8 +209,8 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Update");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Update");
+            scope.Start();
             try
             {
                 var response = _roleEligibilityScheduleRequestRestClient.Create(Id.Parent, Id.Name, data, cancellationToken);
@@ -189,21 +221,29 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Cancels a pending role eligibility schedule request.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}/cancel
-        /// Operation Id: RoleEligibilityScheduleRequests_Cancel
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}/cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Cancel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CancelAsync(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Cancel");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Cancel");
+            scope.Start();
             try
             {
                 var response = await _roleEligibilityScheduleRequestRestClient.CancelAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -211,21 +251,29 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Cancels a pending role eligibility schedule request.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}/cancel
-        /// Operation Id: RoleEligibilityScheduleRequests_Cancel
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}/cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Cancel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Cancel(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Cancel");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Cancel");
+            scope.Start();
             try
             {
                 var response = _roleEligibilityScheduleRequestRestClient.Cancel(Id.Parent, Id.Name, cancellationToken);
@@ -233,15 +281,23 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Validates a new role eligibility schedule request.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}/validate
-        /// Operation Id: RoleEligibilityScheduleRequests_Validate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Validate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Parameters for the role eligibility schedule request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -250,8 +306,8 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Validate");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Validate");
+            scope.Start();
             try
             {
                 var response = await _roleEligibilityScheduleRequestRestClient.ValidateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
@@ -259,15 +315,23 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Validates a new role eligibility schedule request.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}/validate
-        /// Operation Id: RoleEligibilityScheduleRequests_Validate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Validate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Parameters for the role eligibility schedule request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -276,8 +340,8 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope0 = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Validate");
-            scope0.Start();
+            using var scope = _roleEligibilityScheduleRequestClientDiagnostics.CreateScope("RoleEligibilityScheduleRequestResource.Validate");
+            scope.Start();
             try
             {
                 var response = _roleEligibilityScheduleRequestRestClient.Validate(Id.Parent, Id.Name, data, cancellationToken);
@@ -285,7 +349,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }

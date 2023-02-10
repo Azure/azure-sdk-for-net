@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Communication.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ValidSenderUsernames))
             {
-                writer.WritePropertyName("validSenderUsernames");
+                writer.WritePropertyName("validSenderUsernames"u8);
                 writer.WriteStartObject();
                 foreach (var item in ValidSenderUsernames)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Communication.Models
             }
             if (Optional.IsDefined(UserEngagementTracking))
             {
-                writer.WritePropertyName("userEngagementTracking");
+                writer.WritePropertyName("userEngagementTracking"u8);
                 writer.WriteStringValue(UserEngagementTracking.Value.ToString());
             }
             writer.WriteEndObject();

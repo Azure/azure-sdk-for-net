@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Authorization.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(EnabledRules))
+            if (Optional.IsCollectionDefined(EnablementRules))
             {
-                writer.WritePropertyName("enabledRules");
+                writer.WritePropertyName("enabledRules"u8);
                 writer.WriteStartArray();
-                foreach (var item in EnabledRules)
+                foreach (var item in EnablementRules)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("ruleType");
+            writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
             }
             writer.WriteEndObject();
@@ -43,43 +43,38 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyEnablementRule DeserializeRoleManagementPolicyEnablementRule(JsonElement element)
         {
-            Optional<IList<EnablementRule>> enabledRules = default;
-            Optional<ResourceIdentifier> id = default;
+            Optional<IList<RoleAssignmentEnablementRuleType>> enabledRules = default;
+            Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabledRules"))
+                if (property.NameEquals("enabledRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EnablementRule> array = new List<EnablementRule>();
+                    List<RoleAssignmentEnablementRuleType> array = new List<RoleAssignmentEnablementRuleType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new EnablementRule(item.GetString()));
+                        array.Add(new RoleAssignmentEnablementRuleType(item.GetString()));
                     }
                     enabledRules = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleType"))
+                if (property.NameEquals("ruleType"u8))
                 {
                     ruleType = new RoleManagementPolicyRuleType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

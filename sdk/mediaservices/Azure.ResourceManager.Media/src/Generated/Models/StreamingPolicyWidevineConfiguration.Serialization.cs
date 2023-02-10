@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomLicenseAcquisitionUrlTemplate))
+            if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
             {
-                writer.WritePropertyName("customLicenseAcquisitionUrlTemplate");
-                writer.WriteStringValue(CustomLicenseAcquisitionUrlTemplate);
+                writer.WritePropertyName("customLicenseAcquisitionUrlTemplate"u8);
+                writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate);
             }
             writer.WriteEndObject();
         }
 
         internal static StreamingPolicyWidevineConfiguration DeserializeStreamingPolicyWidevineConfiguration(JsonElement element)
         {
-            Optional<string> customLicenseAcquisitionUrlTemplate = default;
+            Optional<string> customLicenseAcquisitionUriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customLicenseAcquisitionUrlTemplate"))
+                if (property.NameEquals("customLicenseAcquisitionUrlTemplate"u8))
                 {
-                    customLicenseAcquisitionUrlTemplate = property.Value.GetString();
+                    customLicenseAcquisitionUriTemplate = property.Value.GetString();
                     continue;
                 }
             }
-            return new StreamingPolicyWidevineConfiguration(customLicenseAcquisitionUrlTemplate.Value);
+            return new StreamingPolicyWidevineConfiguration(customLicenseAcquisitionUriTemplate.Value);
         }
     }
 }

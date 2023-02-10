@@ -3,10 +3,13 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20211215.1
+      ref: refs/tags/azure-sdk-build-tools_20230206.1
 
 parameters: 
-- name: ShouldPublish
+- name: ShouldPublishToNuget
+  type: boolean
+  default: false
+- name: ShouldPublishToDevOps
   type: boolean
   default: false
 - name: Scope
@@ -201,10 +204,12 @@ stages:
       - template: /eng/pipelines/templates/jobs/ci.mgmt.yml
         parameters:
           Scope: ${{ parameters.Scope }}
-          ShouldPublish: ${{ parameters.ShouldPublish }}
+          ${{ if or(eq(parameters.ShouldPublishToNuget, 'true'), eq(parameters.ShouldPublishToDevOps, 'true')) }}:
+            ShouldPublish: true
 
-      - ${{ if and(eq(parameters.ShouldPublish, 'true'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net')) }}:
-        - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal')) }}:
-          - template: /eng/pipelines/templates/jobs/mgmt-release.yml
-            parameters:
-              DependsOn: Build
+      - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal')) }}:
+        - template: /eng/pipelines/templates/jobs/mgmt-release.yml
+          parameters:
+            DependsOn: Build
+            ShouldPublishToNuget: ${{ parameters.ShouldPublishToNuget }}
+            ShouldPublishToDevOps: ${{ parameters.ShouldPublishToDevOps }}

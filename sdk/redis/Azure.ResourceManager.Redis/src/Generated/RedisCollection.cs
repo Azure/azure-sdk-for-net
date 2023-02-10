@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -28,8 +27,8 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     public partial class RedisCollection : ArmCollection, IEnumerable<RedisResource>, IAsyncEnumerable<RedisResource>
     {
-        private readonly ClientDiagnostics _redisRedisClientDiagnostics;
-        private readonly RedisRestOperations _redisRedisRestClient;
+        private readonly ClientDiagnostics _redisClientDiagnostics;
+        private readonly RedisRestOperations _redisRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="RedisCollection"/> class for mocking. </summary>
         protected RedisCollection()
@@ -41,9 +40,9 @@ namespace Azure.ResourceManager.Redis
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RedisCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _redisRedisClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RedisResource.ResourceType, out string redisRedisApiVersion);
-            _redisRedisRestClient = new RedisRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, redisRedisApiVersion);
+            _redisClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RedisResource.ResourceType, out string redisApiVersion);
+            _redisRestClient = new RedisRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, redisApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,8 +56,16 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary>
         /// Create or replace (overwrite/recreate, with potential downtime) an existing Redis cache.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}
-        /// Operation Id: Redis_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Redis_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the Redis cache. </param>
@@ -71,12 +78,12 @@ namespace Azure.ResourceManager.Redis
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _redisRedisClientDiagnostics.CreateScope("RedisCollection.CreateOrUpdate");
+            using var scope = _redisClientDiagnostics.CreateScope("RedisCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _redisRedisRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisArmOperation<RedisResource>(new RedisOperationSource(Client), _redisRedisClientDiagnostics, Pipeline, _redisRedisRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _redisRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RedisArmOperation<RedisResource>(new RedisOperationSource(Client), _redisClientDiagnostics, Pipeline, _redisRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,8 +97,16 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary>
         /// Create or replace (overwrite/recreate, with potential downtime) an existing Redis cache.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}
-        /// Operation Id: Redis_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Redis_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the Redis cache. </param>
@@ -104,12 +119,12 @@ namespace Azure.ResourceManager.Redis
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _redisRedisClientDiagnostics.CreateScope("RedisCollection.CreateOrUpdate");
+            using var scope = _redisClientDiagnostics.CreateScope("RedisCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _redisRedisRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, name, content, cancellationToken);
-                var operation = new RedisArmOperation<RedisResource>(new RedisOperationSource(Client), _redisRedisClientDiagnostics, Pipeline, _redisRedisRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _redisRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, name, content, cancellationToken);
+                var operation = new RedisArmOperation<RedisResource>(new RedisOperationSource(Client), _redisClientDiagnostics, Pipeline, _redisRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -123,8 +138,16 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary>
         /// Gets a Redis cache (resource description).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}
-        /// Operation Id: Redis_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Redis_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,11 +157,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _redisRedisClientDiagnostics.CreateScope("RedisCollection.Get");
+            using var scope = _redisClientDiagnostics.CreateScope("RedisCollection.Get");
             scope.Start();
             try
             {
-                var response = await _redisRedisRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                var response = await _redisRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RedisResource(Client, response.Value), response.GetRawResponse());
@@ -152,8 +175,16 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary>
         /// Gets a Redis cache (resource description).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}
-        /// Operation Id: Redis_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Redis_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,11 +194,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _redisRedisClientDiagnostics.CreateScope("RedisCollection.Get");
+            using var scope = _redisClientDiagnostics.CreateScope("RedisCollection.Get");
             scope.Start();
             try
             {
-                var response = _redisRedisRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
+                var response = _redisRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RedisResource(Client, response.Value), response.GetRawResponse());
@@ -181,92 +212,60 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary>
         /// Lists all Redis caches in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis
-        /// Operation Id: Redis_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Redis_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RedisResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _redisRedisClientDiagnostics.CreateScope("RedisCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _redisRedisRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RedisResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _redisRedisClientDiagnostics.CreateScope("RedisCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _redisRedisRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), _redisClientDiagnostics, Pipeline, "RedisCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all Redis caches in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis
-        /// Operation Id: Redis_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Redis_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RedisResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _redisRedisClientDiagnostics.CreateScope("RedisCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _redisRedisRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RedisResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _redisRedisClientDiagnostics.CreateScope("RedisCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _redisRedisRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), _redisClientDiagnostics, Pipeline, "RedisCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}
-        /// Operation Id: Redis_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Redis_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -276,11 +275,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _redisRedisClientDiagnostics.CreateScope("RedisCollection.Exists");
+            using var scope = _redisClientDiagnostics.CreateScope("RedisCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _redisRedisRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _redisRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -292,8 +291,16 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}
-        /// Operation Id: Redis_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Redis_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -303,11 +310,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _redisRedisClientDiagnostics.CreateScope("RedisCollection.Exists");
+            using var scope = _redisClientDiagnostics.CreateScope("RedisCollection.Exists");
             scope.Start();
             try
             {
-                var response = _redisRedisRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                var response = _redisRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

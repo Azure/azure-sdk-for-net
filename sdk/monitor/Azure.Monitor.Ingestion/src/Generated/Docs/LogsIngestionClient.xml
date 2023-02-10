@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="UploadAsync(String,String,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call UploadAsync with required parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LogsIngestionClient(endpoint, credential);
+
+var data = new[] {
+    new {}
+};
+
+Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call UploadAsync with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LogsIngestionClient(endpoint, credential);
+
+var data = new[] {
+    new {}
+};
+
+Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+See error response code and error response message for more detail.
+</remarks>
+    </member>
+    <member name="Upload(String,String,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call Upload with required parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LogsIngestionClient(endpoint, credential);
+
+var data = new[] {
+    new {}
+};
+
+Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Upload with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LogsIngestionClient(endpoint, credential);
+
+var data = new[] {
+    new {}
+};
+
+Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+See error response code and error response message for more detail.
+</remarks>
+    </member>
+  </members>
+</doc>

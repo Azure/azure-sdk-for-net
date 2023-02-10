@@ -25,9 +25,14 @@ namespace AzureRedisCache.Tests
                 var resourceGroupName = TestUtilities.GenerateName("RedisBegin");
                 var redisCacheName = TestUtilities.GenerateName("RedisBegin");
 
+
+
+                // ARM resource id of *EXISTING* user assigned identity in the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}
+                // TODO: Create user assigned identity at runtime instead of hard coding the ID
+                string userAssignedIdentityId = "/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourceGroups/tolani-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-uami";
+
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
                 RedisResource response;
-                
                 _redisCacheManagementHelper.TryCreateResourceGroup(resourceGroupName, RedisCacheManagementHelper.Location);
                 response = _client.Redis.BeginCreate(resourceGroupName, redisCacheName,
                                         parameters: new RedisCreateParameters
@@ -42,7 +47,7 @@ namespace AzureRedisCache.Tests
                                             Identity = new ManagedServiceIdentity(type: ManagedServiceIdentityType.SystemAssignedUserAssigned
                                             , userAssignedIdentities: new Dictionary<String, UserAssignedIdentity>
                                             {
-                                                {"/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/prn-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test", new UserAssignedIdentity() },
+                                                {userAssignedIdentityId, new UserAssignedIdentity() },
                                             }
                                             )
                                         });
@@ -86,7 +91,7 @@ namespace AzureRedisCache.Tests
                                     Identity = new ManagedServiceIdentity(type: ManagedServiceIdentityType.UserAssigned
                                     , userAssignedIdentities: new Dictionary<String, UserAssignedIdentity>
                                     {
-                                                {"/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/prn-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test", new UserAssignedIdentity() },
+                                                {userAssignedIdentityId, new UserAssignedIdentity() },
                                     }
                                     )
                                 });

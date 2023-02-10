@@ -2,7 +2,4 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.DeviceUpdate.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
 </Project>

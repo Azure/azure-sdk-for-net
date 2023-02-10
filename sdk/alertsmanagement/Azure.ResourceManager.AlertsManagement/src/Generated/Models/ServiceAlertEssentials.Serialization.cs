@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetResource))
             {
-                writer.WritePropertyName("targetResource");
+                writer.WritePropertyName("targetResource"u8);
                 writer.WriteStringValue(TargetResource);
             }
             if (Optional.IsDefined(TargetResourceName))
             {
-                writer.WritePropertyName("targetResourceName");
+                writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
             if (Optional.IsDefined(TargetResourceGroup))
             {
-                writer.WritePropertyName("targetResourceGroup");
+                writer.WritePropertyName("targetResourceGroup"u8);
                 writer.WriteStringValue(TargetResourceGroup);
             }
             if (Optional.IsDefined(TargetResourceType))
             {
-                writer.WritePropertyName("targetResourceType");
+                writer.WritePropertyName("targetResourceType"u8);
                 writer.WriteStringValue(TargetResourceType);
             }
             if (Optional.IsDefined(ActionStatus))
             {
-                writer.WritePropertyName("actionStatus");
+                writer.WritePropertyName("actionStatus"u8);
                 writer.WriteObjectValue(ActionStatus);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -53,16 +53,16 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             Optional<ServiceAlertSeverity> severity = default;
             Optional<ServiceAlertSignalType> signalType = default;
-            Optional<AlertState> alertState = default;
+            Optional<ServiceAlertState> alertState = default;
             Optional<MonitorCondition> monitorCondition = default;
             Optional<string> targetResource = default;
             Optional<string> targetResourceName = default;
             Optional<string> targetResourceGroup = default;
             Optional<string> targetResourceType = default;
-            Optional<MonitorService> monitorService = default;
+            Optional<MonitorServiceSourceForAlert> monitorService = default;
             Optional<string> alertRule = default;
             Optional<string> sourceCreatedId = default;
-            Optional<string> smartGroupId = default;
+            Optional<Guid> smartGroupId = default;
             Optional<string> smartGroupingReason = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> lastModifiedDateTime = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     severity = new ServiceAlertSeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("signalType"))
+                if (property.NameEquals("signalType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     signalType = new ServiceAlertSignalType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("alertState"))
+                if (property.NameEquals("alertState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    alertState = new AlertState(property.Value.GetString());
+                    alertState = new ServiceAlertState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("monitorCondition"))
+                if (property.NameEquals("monitorCondition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,57 +112,62 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     monitorCondition = new MonitorCondition(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetResource"))
+                if (property.NameEquals("targetResource"u8))
                 {
                     targetResource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceName"))
+                if (property.NameEquals("targetResourceName"u8))
                 {
                     targetResourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceGroup"))
+                if (property.NameEquals("targetResourceGroup"u8))
                 {
                     targetResourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceType"))
+                if (property.NameEquals("targetResourceType"u8))
                 {
                     targetResourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("monitorService"))
+                if (property.NameEquals("monitorService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    monitorService = new MonitorService(property.Value.GetString());
+                    monitorService = new MonitorServiceSourceForAlert(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("alertRule"))
+                if (property.NameEquals("alertRule"u8))
                 {
                     alertRule = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceCreatedId"))
+                if (property.NameEquals("sourceCreatedId"u8))
                 {
                     sourceCreatedId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("smartGroupId"))
+                if (property.NameEquals("smartGroupId"u8))
                 {
-                    smartGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    smartGroupId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("smartGroupingReason"))
+                if (property.NameEquals("smartGroupingReason"u8))
                 {
                     smartGroupingReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startDateTime"))
+                if (property.NameEquals("startDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -172,7 +177,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedDateTime"))
+                if (property.NameEquals("lastModifiedDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -182,7 +187,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     lastModifiedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("monitorConditionResolvedDateTime"))
+                if (property.NameEquals("monitorConditionResolvedDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -192,12 +197,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     monitorConditionResolvedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedUserName"))
+                if (property.NameEquals("lastModifiedUserName"u8))
                 {
                     lastModifiedUserName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionStatus"))
+                if (property.NameEquals("actionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -207,13 +212,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     actionStatus = ServiceAlertActionStatus.DeserializeServiceAlertActionStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
             }
-            return new ServiceAlertEssentials(Optional.ToNullable(severity), Optional.ToNullable(signalType), Optional.ToNullable(alertState), Optional.ToNullable(monitorCondition), targetResource.Value, targetResourceName.Value, targetResourceGroup.Value, targetResourceType.Value, Optional.ToNullable(monitorService), alertRule.Value, sourceCreatedId.Value, smartGroupId.Value, smartGroupingReason.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(monitorConditionResolvedDateTime), lastModifiedUserName.Value, actionStatus.Value, description.Value);
+            return new ServiceAlertEssentials(Optional.ToNullable(severity), Optional.ToNullable(signalType), Optional.ToNullable(alertState), Optional.ToNullable(monitorCondition), targetResource.Value, targetResourceName.Value, targetResourceGroup.Value, targetResourceType.Value, Optional.ToNullable(monitorService), alertRule.Value, sourceCreatedId.Value, Optional.ToNullable(smartGroupId), smartGroupingReason.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(monitorConditionResolvedDateTime), lastModifiedUserName.Value, actionStatus.Value, description.Value);
         }
     }
 }

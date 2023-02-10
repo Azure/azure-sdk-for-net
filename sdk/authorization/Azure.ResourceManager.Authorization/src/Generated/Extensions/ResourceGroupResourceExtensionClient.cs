@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -49,178 +48,98 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets all permissions the caller has for a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions
-        /// Operation Id: AzurePermissionsForResourceGroup_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzurePermissionsForResourceGroup_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzurePermission" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AzurePermission> GetAzurePermissionsForResourceGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourceGroupsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AzurePermission>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AzurePermissionsForResourceGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAzurePermissionsForResourceGroups");
-                scope.Start();
-                try
-                {
-                    var response = await AzurePermissionsForResourceGroupRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AzurePermission>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AzurePermissionsForResourceGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAzurePermissionsForResourceGroups");
-                scope.Start();
-                try
-                {
-                    var response = await AzurePermissionsForResourceGroupRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RoleDefinitionPermission.DeserializeRoleDefinitionPermission, AzurePermissionsForResourceGroupClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAzurePermissionsForResourceGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all permissions the caller has for a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions
-        /// Operation Id: AzurePermissionsForResourceGroup_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzurePermissionsForResourceGroup_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzurePermission" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AzurePermission> GetAzurePermissionsForResourceGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RoleDefinitionPermission> GetAzurePermissionsForResourceGroups(CancellationToken cancellationToken = default)
         {
-            Page<AzurePermission> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AzurePermissionsForResourceGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAzurePermissionsForResourceGroups");
-                scope.Start();
-                try
-                {
-                    var response = AzurePermissionsForResourceGroupRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AzurePermission> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AzurePermissionsForResourceGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAzurePermissionsForResourceGroups");
-                scope.Start();
-                try
-                {
-                    var response = AzurePermissionsForResourceGroupRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RoleDefinitionPermission.DeserializeRoleDefinitionPermission, AzurePermissionsForResourceGroupClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAzurePermissionsForResourceGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all permissions the caller has for a resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions
-        /// Operation Id: AzurePermissionsForResource_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzurePermissionsForResource_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="parentResourcePath"> The parent resource identity. </param>
         /// <param name="resourceType"> The resource type of the resource. </param>
         /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzurePermission" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AzurePermission> GetAzurePermissionsForResourcesAsync(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourcesAsync(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AzurePermission>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AzurePermissionsForResourceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAzurePermissionsForResources");
-                scope.Start();
-                try
-                {
-                    var response = await AzurePermissionsForResourceRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AzurePermission>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AzurePermissionsForResourceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAzurePermissionsForResources");
-                scope.Start();
-                try
-                {
-                    var response = await AzurePermissionsForResourceRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RoleDefinitionPermission.DeserializeRoleDefinitionPermission, AzurePermissionsForResourceClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAzurePermissionsForResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all permissions the caller has for a resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions
-        /// Operation Id: AzurePermissionsForResource_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzurePermissionsForResource_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="parentResourcePath"> The parent resource identity. </param>
         /// <param name="resourceType"> The resource type of the resource. </param>
         /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzurePermission" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AzurePermission> GetAzurePermissionsForResources(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RoleDefinitionPermission> GetAzurePermissionsForResources(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<AzurePermission> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AzurePermissionsForResourceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAzurePermissionsForResources");
-                scope.Start();
-                try
-                {
-                    var response = AzurePermissionsForResourceRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AzurePermission> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AzurePermissionsForResourceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAzurePermissionsForResources");
-                scope.Start();
-                try
-                {
-                    var response = AzurePermissionsForResourceRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RoleDefinitionPermission.DeserializeRoleDefinitionPermission, AzurePermissionsForResourceClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAzurePermissionsForResources", "value", "nextLink", cancellationToken);
         }
     }
 }

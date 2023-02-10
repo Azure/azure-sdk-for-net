@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of MediaPrivateLinkResourceListResult. </summary>
         internal MediaPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<MediaPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<MediaServicesPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of MediaPrivateLinkResourceListResult. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal MediaPrivateLinkResourceListResult(IReadOnlyList<MediaPrivateLinkResourceData> value)
+        internal MediaPrivateLinkResourceListResult(IReadOnlyList<MediaServicesPrivateLinkResourceData> value)
         {
             Value = value;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<MediaPrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<MediaServicesPrivateLinkResourceData> Value { get; }
     }
 }

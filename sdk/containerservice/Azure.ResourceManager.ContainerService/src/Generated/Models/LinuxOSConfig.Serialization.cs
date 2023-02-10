@@ -17,23 +17,23 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Sysctls))
             {
-                writer.WritePropertyName("sysctls");
+                writer.WritePropertyName("sysctls"u8);
                 writer.WriteObjectValue(Sysctls);
             }
             if (Optional.IsDefined(TransparentHugePageEnabled))
             {
-                writer.WritePropertyName("transparentHugePageEnabled");
+                writer.WritePropertyName("transparentHugePageEnabled"u8);
                 writer.WriteStringValue(TransparentHugePageEnabled);
             }
             if (Optional.IsDefined(TransparentHugePageDefrag))
             {
-                writer.WritePropertyName("transparentHugePageDefrag");
+                writer.WritePropertyName("transparentHugePageDefrag"u8);
                 writer.WriteStringValue(TransparentHugePageDefrag);
             }
-            if (Optional.IsDefined(SwapFileSizeMB))
+            if (Optional.IsDefined(SwapFileSizeInMB))
             {
-                writer.WritePropertyName("swapFileSizeMB");
-                writer.WriteNumberValue(SwapFileSizeMB.Value);
+                writer.WritePropertyName("swapFileSizeMB"u8);
+                writer.WriteNumberValue(SwapFileSizeInMB.Value);
             }
             writer.WriteEndObject();
         }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<int> swapFileSizeMB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sysctls"))
+                if (property.NameEquals("sysctls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.ContainerService.Models
                     sysctls = SysctlConfig.DeserializeSysctlConfig(property.Value);
                     continue;
                 }
-                if (property.NameEquals("transparentHugePageEnabled"))
+                if (property.NameEquals("transparentHugePageEnabled"u8))
                 {
                     transparentHugePageEnabled = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transparentHugePageDefrag"))
+                if (property.NameEquals("transparentHugePageDefrag"u8))
                 {
                     transparentHugePageDefrag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("swapFileSizeMB"))
+                if (property.NameEquals("swapFileSizeMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -226,7 +226,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: sharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
 
@@ -397,7 +397,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
 
@@ -447,7 +447,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sasCredential: sasCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
 
@@ -522,12 +522,14 @@ namespace Azure.Storage.Files.DataLake
                 Uri uri,
                 DataLakeClientConfiguration clientConfiguration)
             {
+                var options = new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
+                {
+                    Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
+                };
+                clientConfiguration.TransferValidation.CopyTo(options.TransferValidation);
                 return BlobContainerClient.CreateClient(
                     uri,
-                    new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
-                    {
-                        Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled }
-                    },
+                    options,
                     clientConfiguration.Pipeline);
             }
         }
@@ -611,8 +613,128 @@ namespace Azure.Storage.Files.DataLake
 
         #region Create
         /// <summary>
-        /// The <see cref="Create"/> operation creates a new file system
+        /// The <see cref="Create(DataLakeFileSystemCreateOptions, CancellationToken)"/>
+        /// operation creates a new file system under the specified account. If the file system with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemInfo}"/> describing the newly
+        /// created file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<FileSystemInfo> Create(
+            DataLakeFileSystemCreateOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Create)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerInfo> containerResponse = _containerClient.Create(
+                    publicAccessType: (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
+                    metadata: options?.Metadata,
+                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    cancellationToken: cancellationToken);
+
+                return Response.FromValue(
+                    new FileSystemInfo()
+                    {
+                        ETag = containerResponse.Value.ETag,
+                        LastModified = containerResponse.Value.LastModified
+                    },
+                    containerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateAsync(DataLakeFileSystemCreateOptions, CancellationToken)"/>
+        /// operation creates a new file system
         /// under the specified account. If the file system with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemInfo}"/> describing the newly
+        /// created file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<FileSystemInfo>> CreateAsync(
+            DataLakeFileSystemCreateOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Create)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerInfo> containerResponse = await _containerClient.CreateAsync(
+                    publicAccessType: (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
+                    metadata: options?.Metadata,
+                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    new FileSystemInfo()
+                    {
+                        ETag = containerResponse.Value.ETag,
+                        LastModified = containerResponse.Value.LastModified
+                    },
+                    containerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="Create(Models.PublicAccessType, Metadata, CancellationToken)"/>
+        /// operation creates a new file system under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
         /// For more information, see
@@ -647,10 +769,13 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<FileSystemInfo> Create(
-            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
-            Metadata metadata = default,
-            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Models.PublicAccessType publicAccessType,
+            Metadata metadata,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Create)}");
 
@@ -683,8 +808,8 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="CreateAsync"/> operation creates a new file system
-        /// under the specified account. If the file system with the same name
+        /// The <see cref="CreateAsync(Models.PublicAccessType, Metadata, CancellationToken)"/>
+        /// operation creates a new file system under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
         /// For more information, see
@@ -719,10 +844,13 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<FileSystemInfo>> CreateAsync(
-            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
-            Metadata metadata = default,
-            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Models.PublicAccessType publicAccessType,
+            Metadata metadata,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Create)}");
 
@@ -758,8 +886,134 @@ namespace Azure.Storage.Files.DataLake
 
         #region Create If Not Exists
         /// <summary>
-        /// The <see cref="CreateIfNotExists"/> operation creates a new file system
+        /// The <see cref="CreateIfNotExistsAsync(DataLakeFileSystemCreateOptions, CancellationToken)"/>
+        /// operation creates a new file system
         /// under the specified account. If the file system with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the container does not already exist, a <see cref="Response{ContainerInfo}"/>
+        /// describing the newly created container. If the container already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<FileSystemInfo> CreateIfNotExists(
+            DataLakeFileSystemCreateOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(CreateIfNotExists)}");
+            try
+            {
+                scope.Start();
+                Response<BlobContainerInfo> containerResponse = _containerClient.CreateIfNotExists(
+                    publicAccessType: (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
+                    metadata: options?.Metadata,
+                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    cancellationToken: cancellationToken);
+
+                if (containerResponse == default)
+                {
+                    return default;
+                }
+
+                return Response.FromValue(
+                    new FileSystemInfo()
+                    {
+                        ETag = containerResponse.Value.ETag,
+                        LastModified = containerResponse.Value.LastModified
+                    },
+                    containerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync(DataLakeFileSystemCreateOptions, CancellationToken)"/>
+        /// operation creates a new file system
+        /// under the specified account. If the file system with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ContainerInfo}"/> describing the newly
+        /// created container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<FileSystemInfo>> CreateIfNotExistsAsync(
+            DataLakeFileSystemCreateOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(CreateIfNotExists)}");
+            try
+            {
+                scope.Start();
+                Response<BlobContainerInfo> containerResponse = await _containerClient.CreateIfNotExistsAsync(
+                    publicAccessType: (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
+                    metadata: options?.Metadata,
+                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                if (containerResponse == default)
+                {
+                    return default;
+                }
+
+                return Response.FromValue(
+                    new FileSystemInfo()
+                    {
+                        ETag = containerResponse.Value.ETag,
+                        LastModified = containerResponse.Value.LastModified
+                    },
+                    containerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExists(Models.PublicAccessType, Metadata, CancellationToken)"/>
+        /// operation creates a new file system under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
         /// For more information, see
@@ -794,10 +1048,13 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<FileSystemInfo> CreateIfNotExists(
-            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
-            Metadata metadata = default,
-            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Models.PublicAccessType publicAccessType,
+            Metadata metadata,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(CreateIfNotExists)}");
             try
@@ -833,8 +1090,8 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsAsync"/> operation creates a new file system
-        /// under the specified account. If the file system with the same name
+        /// The <see cref="CreateIfNotExistsAsync(Models.PublicAccessType, Metadata, CancellationToken)"/>
+        /// operation creates a new file system under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
         /// For more information, see
@@ -869,10 +1126,13 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<FileSystemInfo>> CreateIfNotExistsAsync(
-            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
-            Metadata metadata = default,
-            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Models.PublicAccessType publicAccessType,
+            Metadata metadata,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(CreateIfNotExists)}");
             try
@@ -1155,7 +1415,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs. If you want to create the file system if
         /// it doesn't exist, use
-        /// <see cref="CreateIfNotExists"/>
+        /// <see cref="CreateIfNotExists(DataLakeFileSystemCreateOptions, CancellationToken)"/>
         /// instead.
         /// </remarks>
         public virtual Response<bool> Exists(
@@ -1197,7 +1457,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs. If you want to create the file system if
         /// it doesn't exist, use
-        /// <see cref="CreateIfNotExistsAsync"/>
+        /// <see cref="CreateIfNotExistsAsync(DataLakeFileSystemCreateOptions, CancellationToken)"/>
         /// instead.
         /// </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(
@@ -3286,7 +3546,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 DataLakeUriBuilder datalakeUriBuilder = new DataLakeUriBuilder(Uri)
                 {
-                    // erase parameters unrelated to container
+                    // erase parameters unrelated to the endpoint
+                    FileSystemName = null,
                     DirectoryOrFilePath = null,
                     Snapshot = null,
                 };

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(ImmutabilityPolicy))
             {
-                writer.WritePropertyName("immutabilityPolicy");
+                writer.WritePropertyName("immutabilityPolicy"u8);
                 writer.WriteObjectValue(ImmutabilityPolicy);
             }
             writer.WriteEndObject();
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Storage.Models
         internal static ImmutableStorageAccount DeserializeImmutableStorageAccount(JsonElement element)
         {
             Optional<bool> enabled = default;
-            Optional<AccountImmutabilityPolicyProperties> immutabilityPolicy = default;
+            Optional<AccountImmutabilityPolicy> immutabilityPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Storage.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("immutabilityPolicy"))
+                if (property.NameEquals("immutabilityPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    immutabilityPolicy = AccountImmutabilityPolicyProperties.DeserializeAccountImmutabilityPolicyProperties(property.Value);
+                    immutabilityPolicy = AccountImmutabilityPolicy.DeserializeAccountImmutabilityPolicy(property.Value);
                     continue;
                 }
             }

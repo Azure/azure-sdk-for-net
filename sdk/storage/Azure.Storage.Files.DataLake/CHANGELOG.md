@@ -1,6 +1,6 @@
 # Release History
 
-## 12.12.0-beta.1 (Unreleased)
+## 12.13.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,26 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.13.0-beta.1 (2023-02-07)
+- Added support for service version 2021-12-02.
+- Added support for leasing operations on DataLakeFileClient.Append(), .AppendAsync(), .Flush(), and .FlushAsync().
+- Added support for sticky bit and execution bit to both be set on permissions of a path.
+
+## 12.12.1 (2022-10-13)
+- Fixed bug where DataLakeQueryCsvTextOptions was not properly sending the RecordSeparator when calling DataLakeFileClient.Query()
+
+## 12.12.0 (2022-10-12)
+- Includes all features from 12.12.0-beta.1.
+
+## 12.12.0-beta.1 (2022-08-23)
+- Added support for service version 2021-10-04.
+- Added support for SDK-calculated transactional checksums on data transfer.
+- Added support for flush parameter to DataLakeFileClient.Append() and .AppendAsync().
+- Added support for encryption scopes.
+- Added support for encryption scope SAS.
+- Fixed bug where DataLakeFileSystemClient.GetParentServiceClient() persisted the filesystem name in the URL of the returned DataLakeServiceClient
+- Fixed bug where PathItem.ETag was not being deserialized correctly.
 
 ## 12.11.0 (2022-07-07)
 - Includes all features from 12.11.0-beta.1.

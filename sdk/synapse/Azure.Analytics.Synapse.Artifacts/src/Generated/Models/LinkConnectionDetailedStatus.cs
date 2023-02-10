@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The LinkConnectionDetailedStatus. </summary>
@@ -22,10 +24,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="isPartiallyFailed"> Is link connection partially failed. </param>
         /// <param name="startTime"> Link connection start time. </param>
         /// <param name="stopTime"> Link connection stop time. </param>
-        /// <param name="status"> Link connection status. </param>
+        /// <param name="status"> Link connection status, please refer to this [articles](https://learn.microsoft.com/azure/synapse-analytics/synapse-link/sql-database-synapse-link#monitoring) for details. </param>
         /// <param name="continuousRunId"> Link connection&apos;s corresponding continuous run id. </param>
         /// <param name="error"> Link connection error. </param>
-        internal LinkConnectionDetailedStatus(string id, string name, bool? isApplyingChanges, bool? isPartiallyFailed, object startTime, object stopTime, string status, string continuousRunId, object error)
+        /// <param name="refreshStatus"> Link connection refresh status. </param>
+        /// <param name="landingZoneCredentialExpireTime"> Link connection landing zone credential expire time. </param>
+        internal LinkConnectionDetailedStatus(string id, string name, bool? isApplyingChanges, bool? isPartiallyFailed, object startTime, object stopTime, string status, string continuousRunId, object error, LinkConnectionRefreshStatus refreshStatus, DateTimeOffset? landingZoneCredentialExpireTime)
         {
             Id = id;
             Name = name;
@@ -36,6 +40,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Status = status;
             ContinuousRunId = continuousRunId;
             Error = error;
+            RefreshStatus = refreshStatus;
+            LandingZoneCredentialExpireTime = landingZoneCredentialExpireTime;
         }
 
         /// <summary> Link connection id. </summary>
@@ -50,11 +56,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object StartTime { get; }
         /// <summary> Link connection stop time. </summary>
         public object StopTime { get; }
-        /// <summary> Link connection status. </summary>
+        /// <summary> Link connection status, please refer to this [articles](https://learn.microsoft.com/azure/synapse-analytics/synapse-link/sql-database-synapse-link#monitoring) for details. </summary>
         public string Status { get; }
         /// <summary> Link connection&apos;s corresponding continuous run id. </summary>
         public string ContinuousRunId { get; }
         /// <summary> Link connection error. </summary>
         public object Error { get; }
+        /// <summary> Link connection refresh status. </summary>
+        public LinkConnectionRefreshStatus RefreshStatus { get; }
+        /// <summary> Link connection landing zone credential expire time. </summary>
+        public DateTimeOffset? LandingZoneCredentialExpireTime { get; }
     }
 }

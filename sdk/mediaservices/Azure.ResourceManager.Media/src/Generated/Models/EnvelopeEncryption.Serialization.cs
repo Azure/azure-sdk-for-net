@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledProtocols))
             {
-                writer.WritePropertyName("enabledProtocols");
+                writer.WritePropertyName("enabledProtocols"u8);
                 writer.WriteObjectValue(EnabledProtocols);
             }
             if (Optional.IsCollectionDefined(ClearTracks))
             {
-                writer.WritePropertyName("clearTracks");
+                writer.WritePropertyName("clearTracks"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClearTracks)
                 {
@@ -33,51 +33,51 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsDefined(ContentKeys))
             {
-                writer.WritePropertyName("contentKeys");
+                writer.WritePropertyName("contentKeys"u8);
                 writer.WriteObjectValue(ContentKeys);
             }
-            if (Optional.IsDefined(CustomKeyAcquisitionUrlTemplate))
+            if (Optional.IsDefined(CustomKeyAcquisitionUriTemplate))
             {
-                writer.WritePropertyName("customKeyAcquisitionUrlTemplate");
-                writer.WriteStringValue(CustomKeyAcquisitionUrlTemplate);
+                writer.WritePropertyName("customKeyAcquisitionUrlTemplate"u8);
+                writer.WriteStringValue(CustomKeyAcquisitionUriTemplate);
             }
             writer.WriteEndObject();
         }
 
         internal static EnvelopeEncryption DeserializeEnvelopeEncryption(JsonElement element)
         {
-            Optional<EnabledProtocols> enabledProtocols = default;
-            Optional<IList<TrackSelection>> clearTracks = default;
+            Optional<MediaEnabledProtocols> enabledProtocols = default;
+            Optional<IList<MediaTrackSelection>> clearTracks = default;
             Optional<StreamingPolicyContentKeys> contentKeys = default;
-            Optional<string> customKeyAcquisitionUrlTemplate = default;
+            Optional<string> customKeyAcquisitionUriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabledProtocols"))
+                if (property.NameEquals("enabledProtocols"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enabledProtocols = EnabledProtocols.DeserializeEnabledProtocols(property.Value);
+                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
                     continue;
                 }
-                if (property.NameEquals("clearTracks"))
+                if (property.NameEquals("clearTracks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TrackSelection> array = new List<TrackSelection>();
+                    List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrackSelection.DeserializeTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
                     }
                     clearTracks = array;
                     continue;
                 }
-                if (property.NameEquals("contentKeys"))
+                if (property.NameEquals("contentKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,13 +87,13 @@ namespace Azure.ResourceManager.Media.Models
                     contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value);
                     continue;
                 }
-                if (property.NameEquals("customKeyAcquisitionUrlTemplate"))
+                if (property.NameEquals("customKeyAcquisitionUrlTemplate"u8))
                 {
-                    customKeyAcquisitionUrlTemplate = property.Value.GetString();
+                    customKeyAcquisitionUriTemplate = property.Value.GetString();
                     continue;
                 }
             }
-            return new EnvelopeEncryption(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, customKeyAcquisitionUrlTemplate.Value);
+            return new EnvelopeEncryption(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, customKeyAcquisitionUriTemplate.Value);
         }
     }
 }

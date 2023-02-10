@@ -88,18 +88,12 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 rolePermissions |= RolePermissions.Execute;
             }
-            else if (allowStickyBit)
+            else if (allowStickyBit && (s[2] == 'T'))
             {
-                if (s[2] == 't')
-                {
-                    rolePermissions |= RolePermissions.Execute;
-                }
-                else if (s[2] != 'T' && s[2] != '-')
-                {
-                    throw argumentException;
-                }
+                // This means both sticky bit and execute is enabled.
+                rolePermissions |= RolePermissions.Execute;
             }
-            else if (s[2] != '-')
+            else if ((s[2] != '-') && (s[2] != 't'))
             {
                 throw argumentException;
             }
@@ -144,6 +138,37 @@ namespace Azure.Storage.Files.DataLake.Models
             stringBuilder.Append(rolePermissions.HasFlag(RolePermissions.Read) ? "r" : "-");
             stringBuilder.Append(rolePermissions.HasFlag(RolePermissions.Write) ? "w" : "-");
             stringBuilder.Append(rolePermissions.HasFlag(RolePermissions.Execute) ? "x" : "-");
+
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Returns the octal string respentation of this RolePermissions.
+        /// </summary>
+        /// <returns>String.</returns>
+        public static string ToSymbolicRolePermissions(this RolePermissions rolePermissions, bool stickyBit)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.Append(rolePermissions.HasFlag(RolePermissions.Read) ? "r" : "-");
+            stringBuilder.Append(rolePermissions.HasFlag(RolePermissions.Write) ? "w" : "-");
+            bool executeFlag = rolePermissions.HasFlag(RolePermissions.Execute);
+            if (!stickyBit && executeFlag)
+            {
+                stringBuilder.Append('x');
+            }
+            else if (stickyBit && !executeFlag)
+            {
+                stringBuilder.Append('t');
+            }
+            else if (stickyBit && executeFlag)
+            {
+                stringBuilder.Append('T');
+            }
+            else
+            {
+                stringBuilder.Append('-');
+            }
 
             return stringBuilder.ToString();
         }

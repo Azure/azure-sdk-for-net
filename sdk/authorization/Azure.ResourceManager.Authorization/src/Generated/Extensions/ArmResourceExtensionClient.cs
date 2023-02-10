@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Authorization
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of RoleDefinitionResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of RoleDefinitionResources and their operations over a RoleDefinitionResource. </returns>
-        public virtual RoleDefinitionCollection GetRoleDefinitions()
+        /// <summary> Gets a collection of DenyAssignmentResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of DenyAssignmentResources and their operations over a DenyAssignmentResource. </returns>
+        public virtual DenyAssignmentCollection GetDenyAssignments()
         {
-            return GetCachedClient(Client => new RoleDefinitionCollection(Client, Id));
+            return GetCachedClient(Client => new DenyAssignmentCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of RoleAssignmentResources in the ArmResource. </summary>
@@ -43,6 +43,13 @@ namespace Azure.ResourceManager.Authorization
         public virtual RoleAssignmentCollection GetRoleAssignments()
         {
             return GetCachedClient(Client => new RoleAssignmentCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of AuthorizationRoleDefinitionResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of AuthorizationRoleDefinitionResources and their operations over a AuthorizationRoleDefinitionResource. </returns>
+        public virtual AuthorizationRoleDefinitionCollection GetAuthorizationRoleDefinitions()
+        {
+            return GetCachedClient(Client => new AuthorizationRoleDefinitionCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of RoleAssignmentScheduleResources in the ArmResource. </summary>

@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Management;
@@ -51,25 +49,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         private IInternalServiceHubContextStore CreateHubContextStore(string connectionStringKey)
         {
-            var services = new ServiceCollection()
-                .Configure<ServiceManagerOptions>(o =>
-                {
-                    o.ServiceTransportType = _options.ServiceTransportType;
-                    o.ServiceEndpoints = _options.ServiceEndpoints?.ToArray();
-                    o.UseJsonObjectSerializer(_options.JsonObjectSerializer);
-                })
-                .SetupOptions<ServiceManagerOptions, OptionsSetup>(new OptionsSetup(_configuration, _azureComponentFactory, connectionStringKey))
-                .AddSignalRServiceManager()
-                .AddSingleton(sp => (ServiceManager)sp.GetService<IServiceManager>())
-                .AddSingleton(_loggerFactory)
-                .AddSingleton<IInternalServiceHubContextStore, ServiceHubContextStore>();
+            var serviceManagerOptionsSetup = new OptionsSetup(_configuration, _azureComponentFactory, connectionStringKey, _options);
+            var serviceManagerBuilder = new ServiceManagerBuilder()
+                // Does the actual configuration
+                .WithOptions(serviceManagerOptionsSetup.Configure)
+                .WithLoggerFactory(_loggerFactory)
+                // Serves as a reload token provider only
+                .WithConfiguration(new EmptyConfiguration(_configuration))
+                .WithCallingAssembly();
+            AddWorkingInfo(serviceManagerBuilder, _configuration);
             if (_router != null)
             {
-                services.AddSingleton(_router);
+                serviceManagerBuilder.WithRouter(_router);
             }
-            services.AddSingleton(services.ToList() as IReadOnlyCollection<ServiceDescriptor>);
-            return services.BuildServiceProvider()
-               .GetRequiredService<IInternalServiceHubContextStore>();
+            var serviceManager = serviceManagerBuilder.BuildServiceManager();
+            return new ServiceCollection()
+                .AddSingleton(serviceManager)
+                .AddOptions()
+                .AddSingleton<IConfigureOptions<SignatureValidationOptions>>(new SignatureValidationOptionsSetup(serviceManagerOptionsSetup.Configure))
+                .AddSingleton<IOptionsChangeTokenSource<SignatureValidationOptions>>(new ConfigurationChangeTokenSource<SignatureValidationOptions>(_configuration))
+                .AddSingleton<ServiceHubContextStore>()
+                .BuildServiceProvider()
+                .GetRequiredService<ServiceHubContextStore>();
         }
 
         public async ValueTask DisposeAsync()
@@ -85,6 +86,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
             DisposeAsync().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+        }
+
+        private static void AddWorkingInfo(ServiceManagerBuilder builder, IConfiguration configuration)
+        {
+            var workerRuntime = configuration[Constants.FunctionsWorkerRuntime];
+            if (workerRuntime != null)
+            {
+                builder.AddUserAgent($" [{Constants.FunctionsWorkerProductInfoKey}={workerRuntime}]");
+            }
         }
     }
 }

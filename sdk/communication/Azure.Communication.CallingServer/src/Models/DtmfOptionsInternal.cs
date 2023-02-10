@@ -1,0 +1,18 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Collections.Generic;
+using Azure.Core;
+
+namespace Azure.Communication.CallingServer
+{
+    [CodeGenModel("DtmfOptions")]
+    public partial class DtmfOptionsInternal
+    {
+        /// <summary>
+        /// List of tones that will stop the recognition once detected.
+        /// </summary>
+        [CodeGenMember("StopTones")]
+        public IReadOnlyList<DtmfTone> StopTones { get; set; }
+    }
+}

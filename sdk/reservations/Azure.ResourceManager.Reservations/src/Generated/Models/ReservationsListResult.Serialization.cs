@@ -16,32 +16,32 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationsListResult DeserializeReservationsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ReservationResponseData>> value = default;
+            Optional<IReadOnlyList<ReservationDetailData>> value = default;
             Optional<string> nextLink = default;
             Optional<ReservationSummary> summary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ReservationResponseData> array = new List<ReservationResponseData>();
+                    List<ReservationDetailData> array = new List<ReservationDetailData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationResponseData.DeserializeReservationResponseData(item));
+                        array.Add(ReservationDetailData.DeserializeReservationDetailData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -23,16 +23,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeAggregation"> the criteria time aggregation types. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="metricName"/> is null. </exception>
-        public MultiMetricCriteria(string name, string metricName, AggregationTypeEnum timeAggregation)
+        public MultiMetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (metricName == null)
-            {
-                throw new ArgumentNullException(nameof(metricName));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(metricName, nameof(metricName));
 
             Name = name;
             MetricName = metricName;
@@ -50,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="dimensions"> List of dimension conditions. </param>
         /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn&apos;t yet emitted, by causing the metric validation to be skipped. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal MultiMetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, AggregationTypeEnum timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties)
+        internal MultiMetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties)
         {
             CriterionType = criterionType;
             Name = name;
@@ -71,12 +65,41 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Namespace of the metric. </summary>
         public string MetricNamespace { get; set; }
         /// <summary> the criteria time aggregation types. </summary>
-        public AggregationTypeEnum TimeAggregation { get; set; }
+        public MetricCriteriaTimeAggregationType TimeAggregation { get; set; }
         /// <summary> List of dimension conditions. </summary>
         public IList<MetricDimension> Dimensions { get; }
         /// <summary> Allows creating an alert rule on a custom metric that isn&apos;t yet emitted, by causing the metric validation to be skipped. </summary>
         public bool? SkipMetricValidation { get; set; }
-        /// <summary> Additional Properties. </summary>
+        /// <summary>
+        /// Additional Properties
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

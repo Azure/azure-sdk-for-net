@@ -1,0 +1,203 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/5a57980f-c6bb-4cd7-8b26-6d258bae1d71?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c0dd8aad3564c34c8862189cdc26dd8e-9ecd152643ada24e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22622)",
+        "x-ms-client-request-id": "154a2885bfe0c533645911c4daf2bd93",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "441",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 22 Jul 2022 07:52:56 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "fbe920df-54ed-4736-b211-c9c2b40743dd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "fbe920df-54ed-4736-b211-c9c2b40743dd",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20220722T075256Z:fbe920df-54ed-4736-b211-c9c2b40743dd"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/5a57980f-c6bb-4cd7-8b26-6d258bae1d71",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "Env": "NonProd",
+          "IsHostedOnBehalfOf": "False"
+        },
+        "subscriptionId": "5a57980f-c6bb-4cd7-8b26-6d258bae1d71",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "FRS.DEV",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/5a57980f-c6bb-4cd7-8b26-6d258bae1d71/resourcegroups/lin-demo?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fd37d8d1a5a1b947b33abb947da7ef85-d1e96cf61e66a841-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22622)",
+        "x-ms-client-request-id": "dd95acc8074cf7dd479de7bdf7239ae3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "256",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 22 Jul 2022 07:52:56 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5bbb379d-c4ba-4e25-b136-dd6234b8c2be",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "5bbb379d-c4ba-4e25-b136-dd6234b8c2be",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20220722T075256Z:5bbb379d-c4ba-4e25-b136-dd6234b8c2be"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/5a57980f-c6bb-4cd7-8b26-6d258bae1d71/resourceGroups/lin-demo",
+        "name": "lin-demo",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {
+          "Env": "NonProd",
+          "ringValue": "r51"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/5a57980f-c6bb-4cd7-8b26-6d258bae1d71/resourceGroups/lin-demo/providers/Microsoft.FluidRelay/fluidRelayServers/dotNetSDKTest?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8a62ebe802d70a429d47191cab7d1ec8-bc672913e2500f4a-00",
+        "User-Agent": "azsdk-net-ResourceManager.FluidRelay/1.0.0-alpha.20220722.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22622)",
+        "x-ms-client-request-id": "12910af586d6abde8e073edd2880d528",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "826",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 22 Jul 2022 07:52:57 GMT",
+        "ETag": "\u00228c0156fe-0000-0500-0000-62d8f8490000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b61d70c7-6806-4d52-8c68-85f996ec228c",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "e6270bec-c092-4821-aeec-0e0fb16fbbf8",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20220722T075257Z:b61d70c7-6806-4d52-8c68-85f996ec228c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/5a57980f-c6bb-4cd7-8b26-6d258bae1d71/resourceGroups/lin-demo/providers/Microsoft.FluidRelay/fluidRelayServers/dotNetSDKTest",
+        "name": "dotNetSDKTest",
+        "type": "microsoft.fluidrelay/fluidrelayservers",
+        "location": "westus2",
+        "tags": {},
+        "systemData": {
+          "createdBy": "linlin1@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2022-07-21T06:55:03.5778616Z",
+          "lastModifiedBy": "linlin1@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2022-07-21T06:55:03.5778616Z"
+        },
+        "identity": {
+          "type": "None"
+        },
+        "properties": {
+          "frsTenantId": "8b399496-4538-4dc9-b7b8-b9bbcef185b9",
+          "fluidRelayEndpoints": {
+            "ordererEndpoints": [
+              "https://alfred.westus2.fluidrelay.azure.com"
+            ],
+            "storageEndpoints": [
+              "https://historian.westus2.fluidrelay.azure.com"
+            ],
+            "serviceEndpoints": [
+              "https://us.fluidrelay.azure.com"
+            ]
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/5a57980f-c6bb-4cd7-8b26-6d258bae1d71/resourceGroups/lin-demo/providers/Microsoft.FluidRelay/fluidRelayServers/dotNetSDKTest/fluidRelayContainers/19b201e5-a5f6-4f90-b3c0-bc36b650e64e?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-904dc1c8e1335d4f91dea15acdfd50cd-2194339800cf1e41-00",
+        "User-Agent": "azsdk-net-ResourceManager.FluidRelay/1.0.0-alpha.20220722.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22622)",
+        "x-ms-client-request-id": "d6e3c24fe34a7e644b52ce43d875ce41",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "530",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 22 Jul 2022 07:52:58 GMT",
+        "ETag": "W/\u0022212-7USW1L78WKMz3e73XC8i7fHC9M4\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "97ce116a-1d0f-4ccb-b97e-9c5a650196ab",
+        "x-ms-correlation-request-id": "d9e634e8-fe17-461f-bd6b-ded3df167ee1",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "4c519f02-3d26-4ea2-8064-4c5c2afd5804",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20220722T075259Z:d9e634e8-fe17-461f-bd6b-ded3df167ee1",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/5a57980f-c6bb-4cd7-8b26-6d258bae1d71/resourceGroups/lin-demo/providers/Microsoft.FluidRelay/fluidRelayServers/dotnetsdktest/fluidRelayContainers/19b201e5-a5f6-4f90-b3c0-bc36b650e64e",
+        "name": "19b201e5-a5f6-4f90-b3c0-bc36b650e64e",
+        "type": "Microsoft.FluidRelay/fluidRelayServers/fluidRelayContainers",
+        "properties": {
+          "frsContainerId": "19b201e5-a5f6-4f90-b3c0-bc36b650e64e",
+          "frsTenantId": "8b399496-4538-4dc9-b7b8-b9bbcef185b9",
+          "creationTime": "2022-07-21T07:33:57.310Z",
+          "lastAccessTime": "2022-07-22T00:10:25.148Z"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "786886015",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "5a57980f-c6bb-4cd7-8b26-6d258bae1d71"
+  }
+}

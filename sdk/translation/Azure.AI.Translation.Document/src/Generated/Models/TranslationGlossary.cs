@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
@@ -23,14 +24,8 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryUri"/> or <paramref name="format"/> is null. </exception>
         public TranslationGlossary(Uri glossaryUri, string format)
         {
-            if (glossaryUri == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryUri));
-            }
-            if (format == null)
-            {
-                throw new ArgumentNullException(nameof(format));
-            }
+            Argument.AssertNotNull(glossaryUri, nameof(glossaryUri));
+            Argument.AssertNotNull(format, nameof(format));
 
             GlossaryUri = glossaryUri;
             Format = format;

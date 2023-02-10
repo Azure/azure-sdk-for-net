@@ -36,5 +36,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public OciBlobDescriptor Config { get; set; }
         /// <summary> List of V2 image layer information. </summary>
         public IList<OciBlobDescriptor> Layers { get; }
+        /// <summary> Additional information provided through arbitrary metadata. </summary>
+        public OciAnnotations Annotations { get; set; }
+        /// <summary> Schema version. </summary>
+        public int? SchemaVersion { get; set; }
     }
 }

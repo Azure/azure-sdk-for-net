@@ -37,7 +37,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
         }
 
         /// <summary>
-        /// XUnit [Theory] with [InlineData] works, 
+        /// XUnit [Theory] with [InlineData] works,
         /// but recording/playback doen't work, it generate single recording file, with recording from latest permutation.
         /// </summary>
         /// <param name="scope"></param>
@@ -76,7 +76,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
         }
 
         /// <summary>
-        /// cover blueprint operations on MG 
+        /// cover blueprint operations on MG
         /// </summary>
         /// <returns></returns>
         [Fact]
@@ -121,7 +121,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
         }
 
         /// <summary>
-        /// cover blueprint operations on Subscription 
+        /// cover blueprint operations on Subscription
         /// </summary>
         /// <returns></returns>
         [Fact]
@@ -470,7 +470,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                             return result;
                         }
                     }
-                    throw ex;
+                    throw;
                 }
 
                 if (condition(result))

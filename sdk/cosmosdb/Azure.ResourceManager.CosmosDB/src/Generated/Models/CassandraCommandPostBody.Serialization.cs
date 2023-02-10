@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("command");
+            writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
             if (Optional.IsCollectionDefined(Arguments))
             {
-                writer.WritePropertyName("arguments");
+                writer.WritePropertyName("arguments"u8);
                 writer.WriteStartObject();
                 foreach (var item in Arguments)
                 {
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("host");
+            writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
             if (Optional.IsDefined(CassandraStopStart))
             {
-                writer.WritePropertyName("cassandra-stop-start");
+                writer.WritePropertyName("cassandra-stop-start"u8);
                 writer.WriteBooleanValue(CassandraStopStart.Value);
             }
-            if (Optional.IsDefined(Readwrite))
+            if (Optional.IsDefined(AllowWrite))
             {
-                writer.WritePropertyName("readwrite");
-                writer.WriteBooleanValue(Readwrite.Value);
+                writer.WritePropertyName("readwrite"u8);
+                writer.WriteBooleanValue(AllowWrite.Value);
             }
             writer.WriteEndObject();
         }

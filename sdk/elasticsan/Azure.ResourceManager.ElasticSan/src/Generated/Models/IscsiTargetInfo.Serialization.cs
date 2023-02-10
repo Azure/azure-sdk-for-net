@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Optional<string> targetIqn = default;
             Optional<string> targetPortalHostname = default;
             Optional<int> targetPortalPort = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<OperationalStatus> status = default;
+            Optional<ElasticSanProvisioningState> provisioningState = default;
+            Optional<ResourceOperationalStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetIqn"))
+                if (property.NameEquals("targetIqn"u8))
                 {
                     targetIqn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetPortalHostname"))
+                if (property.NameEquals("targetPortalHostname"u8))
                 {
                     targetPortalHostname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetPortalPort"))
+                if (property.NameEquals("targetPortalPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,24 +41,24 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     targetPortalPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ElasticSanProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new OperationalStatus(property.Value.GetString());
+                    status = new ResourceOperationalStatus(property.Value.GetString());
                     continue;
                 }
             }

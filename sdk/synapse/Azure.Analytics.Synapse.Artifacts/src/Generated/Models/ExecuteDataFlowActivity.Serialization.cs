@@ -21,26 +21,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
-                writer.WritePropertyName("linkedServiceName");
+                writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
-                writer.WritePropertyName("policy");
+                writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn");
+                writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(UserProperties))
             {
-                writer.WritePropertyName("userProperties");
+                writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
@@ -58,39 +58,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("dataflow");
+            writer.WritePropertyName("dataflow"u8);
             writer.WriteObjectValue(Dataflow);
             if (Optional.IsDefined(Staging))
             {
-                writer.WritePropertyName("staging");
+                writer.WritePropertyName("staging"u8);
                 writer.WriteObjectValue(Staging);
             }
             if (Optional.IsDefined(IntegrationRuntime))
             {
-                writer.WritePropertyName("integrationRuntime");
+                writer.WritePropertyName("integrationRuntime"u8);
                 writer.WriteObjectValue(IntegrationRuntime);
             }
             if (Optional.IsDefined(Compute))
             {
-                writer.WritePropertyName("compute");
+                writer.WritePropertyName("compute"u8);
                 writer.WriteObjectValue(Compute);
             }
             if (Optional.IsDefined(TraceLevel))
             {
-                writer.WritePropertyName("traceLevel");
+                writer.WritePropertyName("traceLevel"u8);
                 writer.WriteObjectValue(TraceLevel);
             }
             if (Optional.IsDefined(ContinueOnError))
             {
-                writer.WritePropertyName("continueOnError");
+                writer.WritePropertyName("continueOnError"u8);
                 writer.WriteObjectValue(ContinueOnError);
             }
             if (Optional.IsDefined(RunConcurrently))
             {
-                writer.WritePropertyName("runConcurrently");
+                writer.WritePropertyName("runConcurrently"u8);
                 writer.WriteObjectValue(RunConcurrently);
+            }
+            if (Optional.IsDefined(SourceStagingConcurrency))
+            {
+                writer.WritePropertyName("sourceStagingConcurrency"u8);
+                writer.WriteObjectValue(SourceStagingConcurrency);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -117,11 +122,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> traceLevel = default;
             Optional<object> continueOnError = default;
             Optional<object> runConcurrently = default;
+            Optional<object> sourceStagingConcurrency = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,7 +137,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,22 +147,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,7 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"))
+                if (property.NameEquals("userProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -186,7 +192,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     userProperties = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -195,12 +201,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("dataflow"))
+                        if (property0.NameEquals("dataflow"u8))
                         {
                             dataflow = DataFlowReference.DeserializeDataFlowReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("staging"))
+                        if (property0.NameEquals("staging"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -210,7 +216,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("integrationRuntime"))
+                        if (property0.NameEquals("integrationRuntime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -220,7 +226,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             integrationRuntime = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("compute"))
+                        if (property0.NameEquals("compute"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -230,7 +236,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             compute = ExecuteDataFlowActivityTypePropertiesCompute.DeserializeExecuteDataFlowActivityTypePropertiesCompute(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("traceLevel"))
+                        if (property0.NameEquals("traceLevel"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -240,7 +246,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             traceLevel = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("continueOnError"))
+                        if (property0.NameEquals("continueOnError"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -250,7 +256,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             continueOnError = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("runConcurrently"))
+                        if (property0.NameEquals("runConcurrently"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -260,13 +266,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             runConcurrently = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("sourceStagingConcurrency"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceStagingConcurrency = property0.Value.GetObject();
+                            continue;
+                        }
                     }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteDataFlowActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, dataflow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value);
+            return new ExecuteDataFlowActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, dataflow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value, sourceStagingConcurrency.Value);
         }
 
         internal partial class ExecuteDataFlowActivityConverter : JsonConverter<ExecuteDataFlowActivity>

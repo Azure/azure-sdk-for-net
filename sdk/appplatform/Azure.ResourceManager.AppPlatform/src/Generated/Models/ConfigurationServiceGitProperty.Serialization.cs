@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Repositories))
+            if (Optional.IsCollectionDefined(ConfigurationServiceGitRepositories))
             {
-                writer.WritePropertyName("repositories");
+                writer.WritePropertyName("repositories"u8);
                 writer.WriteStartArray();
-                foreach (var item in Repositories)
+                foreach (var item in ConfigurationServiceGitRepositories)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static ConfigurationServiceGitProperty DeserializeConfigurationServiceGitProperty(JsonElement element)
         {
-            Optional<IList<ConfigurationServiceGitRepository>> repositories = default;
+            Optional<IList<AppPlatformConfigurationServiceGitRepository>> repositories = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("repositories"))
+                if (property.NameEquals("repositories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConfigurationServiceGitRepository> array = new List<ConfigurationServiceGitRepository>();
+                    List<AppPlatformConfigurationServiceGitRepository> array = new List<AppPlatformConfigurationServiceGitRepository>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationServiceGitRepository.DeserializeConfigurationServiceGitRepository(item));
+                        array.Add(AppPlatformConfigurationServiceGitRepository.DeserializeAppPlatformConfigurationServiceGitRepository(item));
                     }
                     repositories = array;
                     continue;

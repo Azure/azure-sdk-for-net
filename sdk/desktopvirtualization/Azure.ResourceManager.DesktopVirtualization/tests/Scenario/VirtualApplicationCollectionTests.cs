@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             HostPoolData hostPoolData = new HostPoolData(
                 DefaultLocation,
                 HostPoolType.Pooled,
-                LoadBalancerType.BreadthFirst,
+                HostPoolLoadBalancerType.BreadthFirst,
                 PreferredAppGroupType.Desktop);
 
             ArmOperation<HostPoolResource> opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 hostPoolData);
 
             VirtualApplicationGroupCollection agCollection = rg.GetVirtualApplicationGroups();
-            VirtualApplicationGroupData agData = new VirtualApplicationGroupData(DefaultLocation, opHostPoolCreate.Value.Data.Id, ApplicationGroupType.RemoteApp);
+            VirtualApplicationGroupData agData = new VirtualApplicationGroupData(DefaultLocation, opHostPoolCreate.Value.Data.Id, VirtualApplicationGroupType.RemoteApp);
 
             ArmOperation<VirtualApplicationGroupResource> opApplicationGroupCreate = await agCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             Assert.IsNotNull(applications);
 
-            VirtualApplicationData applicationData = new VirtualApplicationData(CommandLineSetting.DoNotAllow);
+            VirtualApplicationData applicationData = new VirtualApplicationData(VirtualApplicationCommandLineSetting.DoNotAllow);
             applicationData.FilePath = "c:\\notepad.exe";
             applicationData.IconPath = "c:\\notepad.exe";
             applicationData.Description = "Note Pad";

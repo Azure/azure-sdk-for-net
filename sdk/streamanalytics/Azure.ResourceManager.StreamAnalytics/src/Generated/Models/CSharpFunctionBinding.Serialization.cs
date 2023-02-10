@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionBindingType);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DllPath))
             {
-                writer.WritePropertyName("dllPath");
+                writer.WritePropertyName("dllPath"u8);
                 writer.WriteStringValue(DllPath);
             }
             if (Optional.IsDefined(Class))
             {
-                writer.WritePropertyName("class");
+                writer.WritePropertyName("class"u8);
                 writer.WriteStringValue(Class);
             }
             if (Optional.IsDefined(Method))
             {
-                writer.WritePropertyName("method");
+                writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
             if (Optional.IsDefined(UpdateMode))
             {
-                writer.WritePropertyName("updateMode");
+                writer.WritePropertyName("updateMode"u8);
                 writer.WriteStringValue(UpdateMode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> dllPath = default;
             Optional<string> @class = default;
             Optional<string> method = default;
-            Optional<UpdateMode> updateMode = default;
+            Optional<StreamingJobFunctionUpdateMode> updateMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,29 +66,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("dllPath"))
+                        if (property0.NameEquals("dllPath"u8))
                         {
                             dllPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("class"))
+                        if (property0.NameEquals("class"u8))
                         {
                             @class = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("method"))
+                        if (property0.NameEquals("method"u8))
                         {
                             method = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("updateMode"))
+                        if (property0.NameEquals("updateMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updateMode = new UpdateMode(property0.Value.GetString());
+                            updateMode = new StreamingJobFunctionUpdateMode(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -1,14 +1,100 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.9.0-beta.2 (Unreleased)
 
 ### Features Added
+ - Allow `VisualStudioCredential` on non-Windows platforms
+ - Added `AzureDeveloperCliCredential` for Azure Developer CLI
 
 ### Breaking Changes
+- Previously, if environment variables for username and password auth are set in addition to the AZURE_CLIENT_CERTIFICATE_PATH, EnvironmentCredential would select the `UsernamePasswordCredential`. After this change, `ClientCertificateCredential` will be selected, which is consistent with all other languages. This is potentially a behavioral breaking change.
+
+## 1.8.2 (2023-02-08)
 
 ### Bugs Fixed
+- Fixed error message parsing in `AzurePowerShellCredential` which would misinterpret AAD errors with the need to install PowerShell. [#31998](https://github.com/Azure/azure-sdk-for-net/issues/31998)
+- Fix regional endpoint validation error when using `ManagedIdentityCredential`. [#32498])(https://github.com/Azure/azure-sdk-for-net/issues/32498)
+
+## 1.8.1 (2023-01-13)
+
+### Bugs Fixed
+- Fixed an issue when using `ManagedIdentityCredential` in combination with authorities other than Azure public cloud that resulted in a incorrect instance metadata validation error. [#32498](https://github.com/Azure/azure-sdk-for-net/issues/32498)
+
+## 1.8.0 (2022-11-08)
+
+### Bugs Fixed
+- Fixed error message parsing in `AzureCliCredential` which would misinterpret AAD errors with the need to login with `az login`. [#26894](https://github.com/Azure/azure-sdk-for-net/issues/26894), [#29109](https://github.com/Azure/azure-sdk-for-net/issues/29109)
+- `ManagedIdentityCredential` will no longer fail when a response received from the endpoint is invalid JSON. It now treats this scenario as if the credential is unavailable. [#30467](https://github.com/Azure/azure-sdk-for-net/issues/30467), [#32061](https://github.com/Azure/azure-sdk-for-net/issues/32061)
+
+## 1.9.0-beta.1 (2022-10-13)
+
+### Features Added
+- Credentials that are implemented via launching a sub-process to acquire tokens now have configurable timeouts. This addresses scenarios where these proceses can take longer than the current default timeout values. (A community contribution, courtesy of _[reynaldoburgos](https://github.com/reynaldoburgos)_). The affected credentials and their associated options are:
+  - `AzureCliCredential` and `AzureCliCredentialOptions.CliProcessTimeout`
+  - `AzurePowerShellCredential` and `AzurePowerShellCredentialOptions.PowerShellProcessTimeout`
+  - `VisualStudioCredential` and `VisualStudioCredentialOptions.VisualStudioProcessTimeout`
+  - `DefaultAzureCredential` and `DefaultAzureCredentialOptions.DeveloperCredentialTimeout`  Note: this option applies to all developer credentials above when using `DefaultAzureCredential`.
+
+### Acknowledgments
+Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
+
+- _[reynaldoburgos](https://github.com/reynaldoburgos)_
+
+## 1.8.0-beta.1 (2022-10-13)
+
+### Features Added
+- Reintroduced `ManagedIdentityCredential` token caching support from 1.7.0-beta.1
+- `EnvironmentCredential` updated to support specifying a certificate password via the `AZURE_CLIENT_CERTIFICATE_PASSWORD` environment variable
+
+### Breaking Changes
+- Excluded `VisualStudioCodeCredential` from `DefaultAzureCredential` token chain by default as SDK authentication via Visual Studio Code is broken due to issue [#27263](https://github.com/Azure/azure-sdk-for-net/issues/27263). The `VisualStudioCodeCredential` will be re-enabled in the `DefaultAzureCredential` flow once a fix is in place. Issue [#30525](https://github.com/Azure/azure-sdk-for-net/issues/30525) tracks this. In the meantime Visual Studio Code users can authenticate their development environment using the [Azure CLI](https://learn.microsoft.com/cli/azure/).
+
+## 1.7.0 (2022-09-19)
+
+### Features Added
+- Added `AdditionallyAllowedTenants` to the following credential options to force explicit opt-in behavior for multi-tenant authentication:
+    - `AuthorizationCodeCredentialOptions`
+    - `AzureCliCredentialOptions`
+    - `AzurePowerShellCredentialOptions`
+    - `ClientAssertionCredentialOptions`
+    - `ClientCertificateCredentialOptions`
+    - `ClientSecretCredentialOptions`
+    - `DefaultAzureCredentialOptions`
+    - `OnBehalfOfCredentialOptions`
+    - `UsernamePasswordCredentialOptions`
+    - `VisualStudioCodeCredentialOptions`
+    - `VisualStudioCredentialOptions`
+- Added `TenantId` to `DefaultAzureCredentialOptions` to avoid having to set `InteractiveBrowserTenantId`, `SharedTokenCacheTenantId`, `VisualStudioCodeTenantId`, and `VisualStudioTenantId` individually.
+
+### Bugs Fixed
+- Fixed overly restrictive scope validation to allow the '_' character, for common scopes such as `user_impersonation` [#30647](https://github.com/Azure/azure-sdk-for-net/issues/30647)
+
+### Breaking Changes
+- Credential types supporting multi-tenant authentication will now throw `AuthenticationFailedException` if the requested tenant ID doesn't match the credential's tenant ID, and is not included in the `AdditionallyAllowedTenants` option. Applications must now explicitly add additional tenants to the `AdditionallyAllowedTenants` list, or add '*' to list, to enable acquiring tokens from tenants other than the originally specified tenant ID. See [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#170).
+- `ManagedIdentityCredential` token caching added in 1.7.0-beta.1 has been removed from this release and will be added back in 1.8.0-beta.1
+
+## 1.7.0-beta.1 (2022-08-09)
+
+### Features Added
+- `ManagedIdentityCredential` will now internally cache tokens. Apps can call `GetToken` or `GetTokenAsync` directly without needing to cache to avoid throttling.
+
+## 1.6.1 (2022-08-08)
+
+### Bugs Fixed
+- Fixed `AZURE_REGIONAL_AUTHORITY_NAME` support in `ClientCertificateCredential` [#29112](https://github.com/Azure/azure-sdk-for-net/issues/29112)
+- Fixed regression in `SharedTokenCacheCredential` default behavior [#28029](https://github.com/Azure/azure-sdk-for-net/issues/28029)
+- Fixed legacy PowerShell discovery failures [#28030](https://github.com/Azure/azure-sdk-for-net/issues/28030) (A community contribution, courtesy of _[nerddtvg](https://github.com/nerddtvg)_)
 
 ### Other Changes
+- Documentation improvements to `TokenCacheRefreshArgs` and `EnvironmentCredential` (Community contributions, courtesy of _[pmaytak](https://github.com/pmaytak)_ and _[goenning](https://github.com/goenning)_)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
+
+- _[nerddtvg](https://github.com/nerddtvg)_
+- _[pmaytak](https://github.com/pmaytak)_
+- _[goenning](https://github.com/goenning)_
 
 ## 1.6.0 (2022-04-05)
 
@@ -48,7 +134,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 ### Breaking Changes from 1.5.0-beta.4
 - The `AllowMultiTenantAuthentication` option has been removed and the default behavior is now as if it were true. The multi-tenant discovery feature can be totally disabled by either setting an `AppContext` switch named "Azure.Identity.DisableTenantDiscovery" to `true` or by setting the environment variable "AZURE_IDENTITY_DISABLE_MULTITENANTAUTH" to "true".
 - Removed the `IsPIILoggingEnabled` property from `TokenCredentialOptions`, similar functionality is planned to be added to `TokenCredentialOptions.Diagnostics` in a later release.
-- Removed `RegionalAuthority` from `ClientCertificateCredentialOptions` and `ClientSecretCredentialOptions`, along with the `RegionalAuthority` type. This feature will stay in preview, and these APIs will be added back in `1.6.0-beta.1`.
+- Removed `RegionalAuthority` from `ClientCertificateCredentialOptions` and `ClientSecretCredentialOptions`, along with the `RegionalAuthority` type.
 - Renamed struct `TokenCacheDetails` to `TokenCacheData`.
 - Renamed class `TokenCacheNotificationDetails` to `TokenCacheRefreshArgs`.
 - Updated `CacheBytes` property on `TokenCacheData` to be readonly and a required constructor parameter.
@@ -120,12 +206,12 @@ Thank you to our developer community members who helped to make Azure Identity b
   - By default, `AllowMultiTenantAuthentication` is false. When this option property is false and the tenant Id configured in the credential options differs from the tenant Id set in the `TokenRequestContext` sent to a credential, an `AuthorizationFailedException` will be thrown. This is potentially breaking change as it could be a different exception than what was thrown previously. This exception behavior can be overridden by either setting an `AppContext` switch named "Azure.Identity.EnableLegacyTenantSelection" to `true` or by setting the environment variable "AZURE_IDENTITY_ENABLE_LEGACY_TENANT_SELECTION" to "true". Note: AppContext switches can also be configured via configuration like below:
 - Added `OnBehalfOfFlowCredential` which enables support for AAD On-Behalf-Of (OBO) flow. See the [Azure Active Directory documentation](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow) to learn more about OBO flow scenarios.
 
-```xml  
+```xml
 <ItemGroup>
     <RuntimeHostConfigurationOption Include="Azure.Identity.EnableLegacyTenantSelection" Value="true" />
-</ItemGroup> 
+</ItemGroup>
   ```
-  
+
 ## 1.5.0-beta.1 (2021-06-08)
 
 ### Fixes and improvements
@@ -140,11 +226,11 @@ Thank you to our developer community members who helped to make Azure Identity b
 - By default, the MSAL Public Client Client Capabilities are populated with "CP1" to enable support for [Continuous Access Evaluation (CAE)](https://docs.microsoft.com/azure/active-directory/develop/app-resilience-continuous-access-evaluation).
 This indicates to AAD that your application is CAE ready and can handle the CAE claim challenge. This capability can be disabled, if necessary, by either setting an `AppContext` switch named "Azure.Identity.DisableCP1" to `true` or by setting the environment variable;
 "AZURE_IDENTITY_DISABLE_CP1" to "true". Note: AppContext switches can also be configured via configuration like below:
-  
-```xml  
+
+```xml
 <ItemGroup>
     <RuntimeHostConfigurationOption Include="Azure.Identity.DisableCP1" Value="true" />
-</ItemGroup> 
+</ItemGroup>
   ```
 ### Fixes and improvements
 
@@ -391,7 +477,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 - Update `SharedTokenCacheCredential` to filter accounts by tenant id
   - Added `SharedTokenCacheCredentialOptions` class with properties `TenantId` and `Username`
-  - Added constructor overload to `SharedTokenCacheCredential` which accepts `SharedTokenCacheCredentialOptions` 
+  - Added constructor overload to `SharedTokenCacheCredential` which accepts `SharedTokenCacheCredentialOptions`
   - Added property `SharedTokenCacheTenantId` to `DefaultAzureCredentialOptions`
 - Support for personal account authentication in `DefaultAzureCredential`, `InteractiveBrowserCredential`, and `SharedTokenCacheCredential`
 - Added `InteractiveBrowserTenantId` to `DefaultAzureCredentialOptions`
@@ -432,7 +518,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 - Updated exception model across the Azure.Identity library.
   - `TokenCredential` implementations in the Azure.Identity library now throw exceptions rather than returning `default`(`AccessToken`) when no token is obtained
   - Added the `CredentialUnavailableExcpetion` exception type to distinguish cases when failure to obtain an `AccessToken` was expected
-  
+
 ### Dependency Changes
 
 - Adopted Azure.Core 1.0.0

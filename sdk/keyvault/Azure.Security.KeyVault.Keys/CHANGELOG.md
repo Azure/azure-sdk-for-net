@@ -1,14 +1,46 @@
 # Release History
 
-## 4.4.0-beta.1 (Unreleased)
+## 4.5.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Removed `CreateOkpKeyOptions`.
+- Removed `KeyClient.CreateOkpKey` and `CreateOkpKeyAsync`.
+- Removed `KeyType.Okp` and `KeyType.OkpHsm` from `JsonWebKey`.
+- Removed `KeyCurveName.Ed25519`.
+- Removed `SignatureAlgorithm.EdDsa`.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.5.0-beta.1 (2022-11-09)
+
+### Features Added
+
+- Added `CreateOkpKeyOptions` to pass key options when creating an Octet Key Pair (OKP) on Managed HSM.
+- Added `KeyClient.CreateOkpKey` and `CreateOkpKeyAsync` to create an Octet Key Pair (OKP) on Managed HSM.
+- Added `KeyType.Okp` and `KeyType.OkpHsm` for `JsonWebKey`.
+- Added `KeyCurveName.Ed25519` to create an Octet Key Pair (OKP) using the Ed25519 curve.
+- Added `SignatureAlgorithm.EdDsa` to support signing and verifying using an Edwards Curve Digital Signature Algorithm (EdDSA) on Managed HSM.
+
+### Bugs Fixed
+
+- Fixed possible "ObjectIsBeingRecovered" error immediately after restoring certificates, keys, or secrets. ([#31581](https://github.com/Azure/azure-sdk-for-net/issues/31581))
+
+### Other Changes
+
+- The default service version is now "7.4-preview.1".
+
+## 4.4.0 (2022-09-20)
+
+### Breaking Changes
+
+- Verify the challenge resource matches the vault domain.
+  This should affect few customers who can set `KeyClientOptions.DisableChallengeResourceVerification` or `CryptographyClientOptions.DisableChallengeResourceVerification` to `true` to disable.
+  See https://aka.ms/azsdk/blog/vault-uri for more information.
 
 ## 4.3.0 (2022-03-24)
 

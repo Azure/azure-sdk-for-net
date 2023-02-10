@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private CancellationTokenRegistration _batchReceiveRegistration;
         private Task _batchLoop;
         private Lazy<string> _details;
+        private Lazy<EntityScopeFactory> _scopeFactory;
 
         public ServiceBusListener(
             string functionId,
@@ -103,6 +105,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     loggerFactory,
                     clientFactory));
 
+            _scopeFactory = new Lazy<EntityScopeFactory>(
+                () => new EntityScopeFactory(_batchReceiver.Value.EntityPath, _batchReceiver.Value.FullyQualifiedNamespace));
+
             if (concurrencyManager.Enabled)
             {
                 _concurrencyUpdateManager = new ConcurrencyUpdateManager(concurrencyManager, _messageProcessor, _sessionMessageProcessor, _isSessionsEnabled, _functionId, _logger);
@@ -111,7 +116,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _singleDispatch = singleDispatch;
             _serviceBusOptions = options;
 
-            _details = new Lazy<string>(() => $"namespace='{_client.Value?.FullyQualifiedNamespace}', enityPath='{_entityPath}', singleDispatch='{_singleDispatch}', " +
+            _details = new Lazy<string>(() => $"namespace='{_client.Value?.FullyQualifiedNamespace}', entityPath='{_entityPath}', singleDispatch='{_singleDispatch}', " +
                 $"isSessionsEnabled='{_isSessionsEnabled}', functionId='{_functionId}'");
         }
 
@@ -390,10 +395,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         }
                     }
 
-                    IReadOnlyList<ServiceBusReceivedMessage> messages =
-                        await receiver.ReceiveMessagesAsync(
-                            _serviceBusOptions.MaxMessageBatchSize,
-                            cancellationToken: cancellationToken).AwaitWithCancellation(cancellationToken);
+                    // For non-session receiver, we just fall back to the operation timeout.
+                    TimeSpan? maxWaitTime = _isSessionsEnabled ? _serviceBusOptions.SessionIdleTimeout : null;
+
+                    IReadOnlyList<ServiceBusReceivedMessage> messages = await receiver.ReceiveMessagesAsync(
+                        _serviceBusOptions.MaxMessageBatchSize,
+                        maxWaitTime,
+                        cancellationToken).ConfigureAwait(false);
 
                     if (messages.Count > 0)
                     {
@@ -409,7 +417,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             receiveActions,
                             _client.Value);
 
+                        using DiagnosticScope scope = _scopeFactory.Value.CreateScope(
+                            _isSessionsEnabled ? Constants.ProcessSessionMessagesActivityName : Constants.ProcessMessagesActivityName,
+                            DiagnosticScope.ActivityKind.Consumer);
+                        scope.SetMessageData(messagesArray);
+
+                        scope.Start();
                         FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), cancellationToken).ConfigureAwait(false);
+                        if (result.Exception != null)
+                        {
+                            scope.Failed(result.Exception);
+                        }
                         receiveActions.EndExecutionScope();
 
                         var processedMessages = messagesArray.Concat(receiveActions.Messages.Keys);

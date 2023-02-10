@@ -28,18 +28,26 @@ namespace Azure.ResourceManager.CognitiveServices
             );
         }
 
-        /// <summary> Gets a collection of LocationResourceGroupDeletedAccountResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of CognitiveServicesDeletedAccountResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of LocationResourceGroupDeletedAccountResources and their operations over a LocationResourceGroupDeletedAccountResource. </returns>
-        public static LocationResourceGroupDeletedAccountCollection GetLocationResourceGroupDeletedAccounts(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of CognitiveServicesDeletedAccountResources and their operations over a CognitiveServicesDeletedAccountResource. </returns>
+        public static CognitiveServicesDeletedAccountCollection GetCognitiveServicesDeletedAccounts(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetLocationResourceGroupDeletedAccounts();
+            return GetExtensionClient(subscriptionResource).GetCognitiveServicesDeletedAccounts();
         }
 
         /// <summary>
         /// Returns a Cognitive Services account specified by the parameters.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
-        /// Operation Id: DeletedAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Resource location. </param>
@@ -49,15 +57,23 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<LocationResourceGroupDeletedAccountResource>> GetLocationResourceGroupDeletedAccountAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CognitiveServicesDeletedAccountResource>> GetCognitiveServicesDeletedAccountAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetLocationResourceGroupDeletedAccounts().GetAsync(location, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetCognitiveServicesDeletedAccounts().GetAsync(location, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns a Cognitive Services account specified by the parameters.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
-        /// Operation Id: DeletedAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Resource location. </param>
@@ -67,161 +83,249 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<LocationResourceGroupDeletedAccountResource> GetLocationResourceGroupDeletedAccount(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public static Response<CognitiveServicesDeletedAccountResource> GetCognitiveServicesDeletedAccount(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetLocationResourceGroupDeletedAccounts().Get(location, resourceGroupName, accountName, cancellationToken);
+            return subscriptionResource.GetCognitiveServicesDeletedAccounts().Get(location, resourceGroupName, accountName, cancellationToken);
         }
 
         /// <summary>
         /// Returns all the resources of a particular type belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/accounts
-        /// Operation Id: Accounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AccountResource> GetAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CognitiveServicesAccountResource> GetCognitiveServicesAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAccountsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCognitiveServicesAccountsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Returns all the resources of a particular type belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/accounts
-        /// Operation Id: Accounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AccountResource> GetAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CognitiveServicesAccountResource> GetCognitiveServicesAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAccounts(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCognitiveServicesAccounts(cancellationToken);
         }
 
         /// <summary>
         /// Returns all the resources of a particular type belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts
-        /// Operation Id: DeletedAccounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedAccounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LocationResourceGroupDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LocationResourceGroupDeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CognitiveServicesDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CognitiveServicesDeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Returns all the resources of a particular type belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts
-        /// Operation Id: DeletedAccounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedAccounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocationResourceGroupDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LocationResourceGroupDeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CognitiveServicesDeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetDeletedAccounts(cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of Microsoft.CognitiveServices SKUs available for your Subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/skus
-        /// Operation Id: ResourceSkus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceSkus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceSku> GetResourceSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AvailableCognitiveServicesSku" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AvailableCognitiveServicesSku> GetResourceSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetResourceSkusAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of Microsoft.CognitiveServices SKUs available for your Subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/skus
-        /// Operation Id: ResourceSkus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceSkus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceSku> GetResourceSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvailableCognitiveServicesSku" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AvailableCognitiveServicesSku> GetResourceSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetResourceSkus(cancellationToken);
         }
 
         /// <summary>
         /// Check available SKUs.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/checkSkuAvailability
-        /// Operation Id: CheckSkuAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/checkSkuAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckSkuAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="checkSkuAvailabilityParameter"> Check SKU Availability POST body. </param>
+        /// <param name="content"> Check SKU Availability POST body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkSkuAvailabilityParameter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SkuAvailability" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SkuAvailability> CheckSkuAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckSkuAvailabilityParameter checkSkuAvailabilityParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CognitiveServicesSkuAvailabilityList" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkSkuAvailabilityParameter, nameof(checkSkuAvailabilityParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckSkuAvailabilityAsync(location, checkSkuAvailabilityParameter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckSkuAvailabilityAsync(location, content, cancellationToken);
         }
 
         /// <summary>
         /// Check available SKUs.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/checkSkuAvailability
-        /// Operation Id: CheckSkuAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/checkSkuAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckSkuAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="checkSkuAvailabilityParameter"> Check SKU Availability POST body. </param>
+        /// <param name="content"> Check SKU Availability POST body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkSkuAvailabilityParameter"/> is null. </exception>
-        /// <returns> A collection of <see cref="SkuAvailability" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SkuAvailability> CheckSkuAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CheckSkuAvailabilityParameter checkSkuAvailabilityParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="CognitiveServicesSkuAvailabilityList" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkSkuAvailabilityParameter, nameof(checkSkuAvailabilityParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckSkuAvailability(location, checkSkuAvailabilityParameter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckSkuAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
         /// Check whether a domain is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/checkDomainAvailability
-        /// Operation Id: CheckDomainAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/checkDomainAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckDomainAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkDomainAvailabilityParameter"> Check Domain Availability parameter. </param>
+        /// <param name="content"> Check Domain Availability parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkDomainAvailabilityParameter"/> is null. </exception>
-        public static async Task<Response<DomainAvailability>> CheckDomainAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckDomainAvailabilityParameter checkDomainAvailabilityParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CognitiveServicesDomainAvailabilityList>> CheckDomainAvailabilityAsync(this SubscriptionResource subscriptionResource, CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkDomainAvailabilityParameter, nameof(checkDomainAvailabilityParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckDomainAvailabilityAsync(checkDomainAvailabilityParameter, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckDomainAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check whether a domain is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/checkDomainAvailability
-        /// Operation Id: CheckDomainAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/checkDomainAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckDomainAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkDomainAvailabilityParameter"> Check Domain Availability parameter. </param>
+        /// <param name="content"> Check Domain Availability parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkDomainAvailabilityParameter"/> is null. </exception>
-        public static Response<DomainAvailability> CheckDomainAvailability(this SubscriptionResource subscriptionResource, CheckDomainAvailabilityParameter checkDomainAvailabilityParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<CognitiveServicesDomainAvailabilityList> CheckDomainAvailability(this SubscriptionResource subscriptionResource, CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkDomainAvailabilityParameter, nameof(checkDomainAvailabilityParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckDomainAvailability(checkDomainAvailabilityParameter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckDomainAvailability(content, cancellationToken);
         }
 
         /// <summary>
         /// List Commitment Tiers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/commitmentTiers
-        /// Operation Id: CommitmentTiers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/commitmentTiers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommitmentTiers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Resource location. </param>
@@ -234,8 +338,16 @@ namespace Azure.ResourceManager.CognitiveServices
 
         /// <summary>
         /// List Commitment Tiers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/commitmentTiers
-        /// Operation Id: CommitmentTiers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/commitmentTiers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommitmentTiers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Resource location. </param>
@@ -244,6 +356,48 @@ namespace Azure.ResourceManager.CognitiveServices
         public static Pageable<CommitmentTier> GetCommitmentTiers(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCommitmentTiers(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns all the resources of a particular type belonging to a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/commitmentPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommitmentPlans_ListPlansBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CognitiveServicesCommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetCognitiveServicesCommitmentPlansAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns all the resources of a particular type belonging to a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/commitmentPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommitmentPlans_ListPlansBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CognitiveServicesCommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetCognitiveServicesCommitmentPlans(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -255,18 +409,26 @@ namespace Azure.ResourceManager.CognitiveServices
             );
         }
 
-        /// <summary> Gets a collection of AccountResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of CognitiveServicesAccountResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AccountResources and their operations over a AccountResource. </returns>
-        public static AccountCollection GetAccounts(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of CognitiveServicesAccountResources and their operations over a CognitiveServicesAccountResource. </returns>
+        public static CognitiveServicesAccountCollection GetCognitiveServicesAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetAccounts();
+            return GetExtensionClient(resourceGroupResource).GetCognitiveServicesAccounts();
         }
 
         /// <summary>
         /// Returns a Cognitive Services account specified by the parameters.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}
-        /// Operation Id: Accounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
@@ -274,15 +436,23 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AccountResource>> GetAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CognitiveServicesAccountResource>> GetCognitiveServicesAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCognitiveServicesAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns a Cognitive Services account specified by the parameters.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}
-        /// Operation Id: Accounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
@@ -290,44 +460,100 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AccountResource> GetAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        public static Response<CognitiveServicesAccountResource> GetCognitiveServicesAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAccounts().Get(accountName, cancellationToken);
+            return resourceGroupResource.GetCognitiveServicesAccounts().Get(accountName, cancellationToken);
         }
 
-        #region AccountResource
+        /// <summary> Gets a collection of CognitiveServicesCommitmentPlanResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of CognitiveServicesCommitmentPlanResources and their operations over a CognitiveServicesCommitmentPlanResource. </returns>
+        public static CognitiveServicesCommitmentPlanCollection GetCognitiveServicesCommitmentPlans(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetExtensionClient(resourceGroupResource).GetCognitiveServicesCommitmentPlans();
+        }
+
         /// <summary>
-        /// Gets an object representing an <see cref="AccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccountResource.CreateResourceIdentifier" /> to create an <see cref="AccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Returns a Cognitive Services commitment plan specified by the parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommitmentPlans_GetPlan</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<CognitiveServicesCommitmentPlanResource>> GetCognitiveServicesCommitmentPlanAsync(this ResourceGroupResource resourceGroupResource, string commitmentPlanName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetCognitiveServicesCommitmentPlans().GetAsync(commitmentPlanName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns a Cognitive Services commitment plan specified by the parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommitmentPlans_GetPlan</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlan(this ResourceGroupResource resourceGroupResource, string commitmentPlanName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetCognitiveServicesCommitmentPlans().Get(commitmentPlanName, cancellationToken);
+        }
+
+        #region CognitiveServicesAccountResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CognitiveServicesAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CognitiveServicesAccountResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccountResource" /> object. </returns>
-        public static AccountResource GetAccountResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesAccountResource" /> object. </returns>
+        public static CognitiveServicesAccountResource GetCognitiveServicesAccountResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AccountResource.ValidateResourceId(id);
-                return new AccountResource(client, id);
+                CognitiveServicesAccountResource.ValidateResourceId(id);
+                return new CognitiveServicesAccountResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LocationResourceGroupDeletedAccountResource
+        #region CognitiveServicesDeletedAccountResource
         /// <summary>
-        /// Gets an object representing a <see cref="LocationResourceGroupDeletedAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LocationResourceGroupDeletedAccountResource.CreateResourceIdentifier" /> to create a <see cref="LocationResourceGroupDeletedAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CognitiveServicesDeletedAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CognitiveServicesDeletedAccountResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesDeletedAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocationResourceGroupDeletedAccountResource" /> object. </returns>
-        public static LocationResourceGroupDeletedAccountResource GetLocationResourceGroupDeletedAccountResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesDeletedAccountResource" /> object. </returns>
+        public static CognitiveServicesDeletedAccountResource GetCognitiveServicesDeletedAccountResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LocationResourceGroupDeletedAccountResource.ValidateResourceId(id);
-                return new LocationResourceGroupDeletedAccountResource(client, id);
+                CognitiveServicesDeletedAccountResource.ValidateResourceId(id);
+                return new CognitiveServicesDeletedAccountResource(client, id);
             }
             );
         }
@@ -352,20 +578,20 @@ namespace Azure.ResourceManager.CognitiveServices
         }
         #endregion
 
-        #region DeploymentResource
+        #region CognitiveServicesAccountDeploymentResource
         /// <summary>
-        /// Gets an object representing a <see cref="DeploymentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeploymentResource.CreateResourceIdentifier" /> to create a <see cref="DeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CognitiveServicesAccountDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CognitiveServicesAccountDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesAccountDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeploymentResource" /> object. </returns>
-        public static DeploymentResource GetDeploymentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesAccountDeploymentResource" /> object. </returns>
+        public static CognitiveServicesAccountDeploymentResource GetCognitiveServicesAccountDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DeploymentResource.ValidateResourceId(id);
-                return new DeploymentResource(client, id);
+                CognitiveServicesAccountDeploymentResource.ValidateResourceId(id);
+                return new CognitiveServicesAccountDeploymentResource(client, id);
             }
             );
         }
@@ -385,6 +611,44 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CommitmentPlanResource.ValidateResourceId(id);
                 return new CommitmentPlanResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region CognitiveServicesCommitmentPlanResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CognitiveServicesCommitmentPlanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CognitiveServicesCommitmentPlanResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesCommitmentPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CognitiveServicesCommitmentPlanResource" /> object. </returns>
+        public static CognitiveServicesCommitmentPlanResource GetCognitiveServicesCommitmentPlanResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CognitiveServicesCommitmentPlanResource.ValidateResourceId(id);
+                return new CognitiveServicesCommitmentPlanResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region CommitmentPlanAccountAssociationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CommitmentPlanAccountAssociationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CommitmentPlanAccountAssociationResource.CreateResourceIdentifier" /> to create a <see cref="CommitmentPlanAccountAssociationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CommitmentPlanAccountAssociationResource" /> object. </returns>
+        public static CommitmentPlanAccountAssociationResource GetCommitmentPlanAccountAssociationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CommitmentPlanAccountAssociationResource.ValidateResourceId(id);
+                return new CommitmentPlanAccountAssociationResource(client, id);
             }
             );
         }

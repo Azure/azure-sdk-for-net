@@ -10,6 +10,7 @@ using Azure;
 using Azure.Core.TestFramework;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
+using Azure.Storage.Tests.Shared;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
@@ -459,6 +460,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
+        [RetryOnException(5, typeof(AssertionException))]
         public async Task RenewedQueueMessage_DeletesCorrectly()
         {
             QueueClient queue = Fixture.CreateNewQueue();

@@ -10,6 +10,8 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.Core;
+using System.Security.Cryptography;
+using Azure.ResourceManager.ManagedServiceIdentities;
 
 namespace Azure.ResourceManager.EventHubs.Tests.Helpers
 {
@@ -21,17 +23,32 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         protected SubscriptionResource DefaultSubscription;
         protected ArmClient Client { get; private set; }
 
+        protected const string VaultName = "PS-Test-kv1";
+        protected const string Key1 = "key1";
+        protected const string Key2 = "key2";
+
         public EventHubTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
             JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
             JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
             JsonPathSanitizers.Add("$..keyName");
+            JsonPathSanitizers.Add("$..primaryKey");
+            JsonPathSanitizers.Add("$..secondaryKey");
+            JsonPathSanitizers.Add("$..primaryConnectionString");
+            JsonPathSanitizers.Add("$..secondaryConnectionString");
+            JsonPathSanitizers.Add("$..key");
         }
 
         [SetUp]
         public async Task CreateCommonClient()
         {
-            Client = GetArmClient();
+            // Currently our pipeline will run this test project with project reference
+            // And we jsut upgraded the version of ManagedServiceIdentities, therefore the related tests will fail
+            // Use the version override as a work around because we lack the test resource now.
+            ArmClientOptions options = new ArmClientOptions();
+            options.SetApiVersion(UserAssignedIdentityResource.ResourceType, "2018-11-30");
+
+            Client = GetArmClient(options);
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
         public async Task<ResourceGroupResource> CreateResourceGroupAsync()
@@ -47,6 +64,23 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
                         { "test", "env" }
                     }
                 });
+            return operation.Value;
+        }
+
+        public static string GenerateRandomKey()
+        {
+            byte[] key256 = new byte[32];
+            using (var rngCryptoServiceProvider = RandomNumberGenerator.Create())
+            {
+                rngCryptoServiceProvider.GetBytes(key256);
+            }
+
+            return Convert.ToBase64String(key256);
+        }
+
+        public async Task<ResourceGroupResource> GetResourceGroupAsync(string resourceGroupName)
+        {
+            Response<ResourceGroupResource> operation = await DefaultSubscription.GetResourceGroups().GetAsync(resourceGroupName);
             return operation.Value;
         }
 

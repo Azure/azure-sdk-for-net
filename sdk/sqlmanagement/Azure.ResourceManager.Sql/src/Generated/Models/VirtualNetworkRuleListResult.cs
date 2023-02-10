@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of VirtualNetworkRuleListResult. </summary>
         internal VirtualNetworkRuleListResult()
         {
-            Value = new ChangeTrackingList<VirtualNetworkRuleData>();
+            Value = new ChangeTrackingList<SqlServerVirtualNetworkRuleData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkRuleListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal VirtualNetworkRuleListResult(IReadOnlyList<VirtualNetworkRuleData> value, string nextLink)
+        internal VirtualNetworkRuleListResult(IReadOnlyList<SqlServerVirtualNetworkRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<VirtualNetworkRuleData> Value { get; }
+        public IReadOnlyList<SqlServerVirtualNetworkRuleData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

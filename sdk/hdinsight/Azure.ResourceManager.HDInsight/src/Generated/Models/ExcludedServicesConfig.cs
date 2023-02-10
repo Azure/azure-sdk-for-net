@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class ExcludedServicesConfig
     {
         /// <summary> Initializes a new instance of ExcludedServicesConfig. </summary>
-        internal ExcludedServicesConfig()
+        public ExcludedServicesConfig()
         {
         }
 
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The config id of excluded services. </summary>
-        public string ExcludedServicesConfigId { get; }
+        public string ExcludedServicesConfigId { get; set; }
         /// <summary> The list of excluded services. </summary>
-        public string ExcludedServicesList { get; }
+        public string ExcludedServicesList { get; set; }
     }
 }

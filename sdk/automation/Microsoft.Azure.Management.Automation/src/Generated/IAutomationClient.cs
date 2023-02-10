@@ -176,11 +176,6 @@ namespace Microsoft.Azure.Management.Automation
         ICredentialOperations Credential { get; }
 
         /// <summary>
-        /// Gets the IHybridRunbookWorkerGroupOperations.
-        /// </summary>
-        IHybridRunbookWorkerGroupOperations HybridRunbookWorkerGroup { get; }
-
-        /// <summary>
         /// Gets the IJobScheduleOperations.
         /// </summary>
         IJobScheduleOperations JobSchedule { get; }
@@ -289,6 +284,16 @@ namespace Microsoft.Azure.Management.Automation
         /// Gets the IHybridRunbookWorkersOperations.
         /// </summary>
         IHybridRunbookWorkersOperations HybridRunbookWorkers { get; }
+
+        /// <summary>
+        /// Gets the IDeletedAutomationAccountsOperations.
+        /// </summary>
+        IDeletedAutomationAccountsOperations DeletedAutomationAccounts { get; }
+
+        /// <summary>
+        /// Gets the IHybridRunbookWorkerGroupOperations.
+        /// </summary>
+        IHybridRunbookWorkerGroupOperations HybridRunbookWorkerGroup { get; }
 
         /// <summary>
         /// Post operation to serialize or deserialize GraphRunbookContent

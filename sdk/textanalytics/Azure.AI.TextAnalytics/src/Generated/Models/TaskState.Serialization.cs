@@ -17,9 +17,9 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("lastUpdateDateTime");
+            writer.WritePropertyName("lastUpdateDateTime"u8);
             writer.WriteStringValue(LastUpdateDateTime, "O");
-            writer.WritePropertyName("status");
+            writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WriteEndObject();
         }
@@ -30,12 +30,12 @@ namespace Azure.AI.TextAnalytics.Models
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastUpdateDateTime"))
+                if (property.NameEquals("lastUpdateDateTime"u8))
                 {
                     lastUpdateDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new TextAnalyticsOperationStatus(property.Value.GetString());
                     continue;

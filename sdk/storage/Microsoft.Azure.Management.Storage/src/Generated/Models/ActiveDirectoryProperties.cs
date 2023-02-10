@@ -32,11 +32,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="domainName">Specifies the primary domain that the AD
         /// DNS server is authoritative for.</param>
+        /// <param name="domainGuid">Specifies the domain GUID.</param>
         /// <param name="netBiosDomainName">Specifies the NetBIOS domain
         /// name.</param>
         /// <param name="forestName">Specifies the Active Directory forest to
         /// get.</param>
-        /// <param name="domainGuid">Specifies the domain GUID.</param>
         /// <param name="domainSid">Specifies the security identifier
         /// (SID).</param>
         /// <param name="azureStorageSid">Specifies the security identifier
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="accountType">Specifies the Active Directory account
         /// type for Azure Storage. Possible values include: 'User',
         /// 'Computer'</param>
-        public ActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, string domainGuid, string domainSid, string azureStorageSid, string samAccountName = default(string), string accountType = default(string))
+        public ActiveDirectoryProperties(string domainName, string domainGuid, string netBiosDomainName = default(string), string forestName = default(string), string domainSid = default(string), string azureStorageSid = default(string), string samAccountName = default(string), string accountType = default(string))
         {
             DomainName = domainName;
             NetBiosDomainName = netBiosDomainName;
@@ -128,25 +128,9 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DomainName");
             }
-            if (NetBiosDomainName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "NetBiosDomainName");
-            }
-            if (ForestName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ForestName");
-            }
             if (DomainGuid == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DomainGuid");
-            }
-            if (DomainSid == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DomainSid");
-            }
-            if (AzureStorageSid == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AzureStorageSid");
             }
         }
     }

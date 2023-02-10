@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MySql
     /// A Class representing a MySqlPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlPrivateLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetMySqlPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServerResource" /> using the GetMySqlPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource" /> using the GetMySqlPrivateLinkResource method.
     /// </summary>
     public partial class MySqlPrivateLinkResource : ArmResource
     {
@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.MySql
 
         /// <summary>
         /// Gets a private link resource for MySQL server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/privateLinkResources/{groupName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MySqlPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.MySql
 
         /// <summary>
         /// Gets a private link resource for MySQL server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/privateLinkResources/{groupName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MySqlPrivateLinkResource> Get(CancellationToken cancellationToken = default)

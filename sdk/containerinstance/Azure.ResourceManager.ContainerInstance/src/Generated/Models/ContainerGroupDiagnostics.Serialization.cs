@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LogAnalytics))
             {
-                writer.WritePropertyName("logAnalytics");
+                writer.WritePropertyName("logAnalytics"u8);
                 writer.WriteObjectValue(LogAnalytics);
             }
             writer.WriteEndObject();
@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerGroupDiagnostics DeserializeContainerGroupDiagnostics(JsonElement element)
         {
-            Optional<LogAnalytics> logAnalytics = default;
+            Optional<ContainerGroupLogAnalytics> logAnalytics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logAnalytics"))
+                if (property.NameEquals("logAnalytics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    logAnalytics = LogAnalytics.DeserializeLogAnalytics(property.Value);
+                    logAnalytics = ContainerGroupLogAnalytics.DeserializeContainerGroupLogAnalytics(property.Value);
                     continue;
                 }
             }

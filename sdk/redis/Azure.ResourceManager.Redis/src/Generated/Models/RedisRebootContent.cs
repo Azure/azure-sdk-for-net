@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Which Redis node(s) to reboot. Depending on this value data loss is possible. </summary>
-        public RebootType? RebootType { get; set; }
+        public RedisRebootType? RebootType { get; set; }
         /// <summary> If clustering is enabled, the ID of the shard to be rebooted. </summary>
         public int? ShardId { get; set; }
         /// <summary> A list of redis instances to reboot, specified by per-instance SSL ports or non-SSL ports. </summary>

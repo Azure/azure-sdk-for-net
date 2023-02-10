@@ -58,11 +58,6 @@ await foreach (DocumentStatusResult document in operation.Value)
 }
 ```
 
-To see the full example source files, see:
-
-* [Synchronously StartTranslation ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_StartTranslation.cs)
-* [Asynchronously StartTranslation ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_StartTranslationAsync.cs)
-
 [Sas_token_permissions]: https://aka.ms/azsdk/documenttranslation/sas-permissions
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/README.md

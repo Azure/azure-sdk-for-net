@@ -15,9 +15,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("minAlertSeverity");
+            writer.WritePropertyName("minAlertSeverity"u8);
             writer.WriteStringValue(MinimumAlertSeverity.ToString());
-            writer.WritePropertyName("maxAlertSeverity");
+            writer.WritePropertyName("maxAlertSeverity"u8);
             writer.WriteStringValue(MaximumAlertSeverity.ToString());
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             AnomalySeverity maxAlertSeverity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minAlertSeverity"))
+                if (property.NameEquals("minAlertSeverity"u8))
                 {
                     minAlertSeverity = new AnomalySeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maxAlertSeverity"))
+                if (property.NameEquals("maxAlertSeverity"u8))
                 {
                     maxAlertSeverity = new AnomalySeverity(property.Value.GetString());
                     continue;

@@ -17,46 +17,46 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Branch))
             {
-                writer.WritePropertyName("branch");
+                writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
             if (Optional.IsDefined(CommitId))
             {
-                writer.WritePropertyName("commitId");
+                writer.WritePropertyName("commitId"u8);
                 writer.WriteStringValue(CommitId);
             }
-            if (Optional.IsDefined(IsExport))
+            if (Optional.IsDefined(IsExported))
             {
-                writer.WritePropertyName("isExport");
-                writer.WriteBooleanValue(IsExport.Value);
+                writer.WritePropertyName("isExport"u8);
+                writer.WriteBooleanValue(IsExported.Value);
             }
             if (Optional.IsDefined(IsSynced))
             {
-                writer.WritePropertyName("isSynced");
+                writer.WritePropertyName("isSynced"u8);
                 writer.WriteBooleanValue(IsSynced.Value);
             }
             if (Optional.IsDefined(IsGitEnabled))
             {
-                writer.WritePropertyName("isGitEnabled");
+                writer.WritePropertyName("isGitEnabled"u8);
                 writer.WriteBooleanValue(IsGitEnabled.Value);
             }
             if (Optional.IsDefined(SyncOn))
             {
-                writer.WritePropertyName("syncDate");
+                writer.WritePropertyName("syncDate"u8);
                 writer.WriteStringValue(SyncOn.Value, "O");
             }
             if (Optional.IsDefined(ConfigurationChangeOn))
             {
-                writer.WritePropertyName("configurationChangeDate");
+                writer.WritePropertyName("configurationChangeDate"u8);
                 writer.WriteStringValue(ConfigurationChangeOn.Value, "O");
             }
             if (Optional.IsDefined(LastOperationId))
             {
-                writer.WritePropertyName("lastOperationId");
+                writer.WritePropertyName("lastOperationId"u8);
                 writer.WriteStringValue(LastOperationId);
             }
             writer.WriteEndObject();
@@ -79,32 +79,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> lastOperationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("branch"))
+                        if (property0.NameEquals("branch"u8))
                         {
                             branch = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("commitId"))
+                        if (property0.NameEquals("commitId"u8))
                         {
                             commitId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isExport"))
+                        if (property0.NameEquals("isExport"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             isExport = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isSynced"))
+                        if (property0.NameEquals("isSynced"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             isSynced = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isGitEnabled"))
+                        if (property0.NameEquals("isGitEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             isGitEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("syncDate"))
+                        if (property0.NameEquals("syncDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             syncDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("configurationChangeDate"))
+                        if (property0.NameEquals("configurationChangeDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             configurationChangeDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastOperationId"))
+                        if (property0.NameEquals("lastOperationId"u8))
                         {
                             lastOperationId = property0.Value.GetString();
                             continue;

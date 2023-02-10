@@ -5,36 +5,37 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AssetContainerSas
+    internal partial class AssetContainerSas
     {
         internal static AssetContainerSas DeserializeAssetContainerSas(JsonElement element)
         {
-            Optional<IReadOnlyList<string>> assetContainerSasUrls = default;
+            Optional<IReadOnlyList<Uri>> assetContainerSasUris = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assetContainerSasUrls"))
+                if (property.NameEquals("assetContainerSasUrls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Uri> array = new List<Uri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new Uri(item.GetString()));
                     }
-                    assetContainerSasUrls = array;
+                    assetContainerSasUris = array;
                     continue;
                 }
             }
-            return new AssetContainerSas(Optional.ToList(assetContainerSasUrls));
+            return new AssetContainerSas(Optional.ToList(assetContainerSasUris));
         }
     }
 }

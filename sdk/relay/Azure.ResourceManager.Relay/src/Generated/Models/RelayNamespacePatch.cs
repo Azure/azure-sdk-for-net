@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
         /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. DO NOT USE PublicNetworkAccess on Namespace API. Please use the NetworkRuleSet API to enable or disable PublicNetworkAccess. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal RelayNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelaySku sku, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IList<RelayPrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal RelayNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelaySku sku, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IList<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             ProvisioningState = provisioningState;
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.Relay.Models
         public string MetricId { get; }
         /// <summary> List of private endpoint connections. </summary>
         public IList<RelayPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> This determines if traffic is allowed over public network. By default it is enabled. DO NOT USE PublicNetworkAccess on Namespace API. Please use the NetworkRuleSet API to enable or disable PublicNetworkAccess. </summary>
+        public RelayPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

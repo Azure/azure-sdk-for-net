@@ -44,6 +44,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
 
             Assert.AreEqual(ActivityIdFormat.W3C, activity.IdFormat);
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("kind", "internal"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute3", "3"));
@@ -87,6 +88,42 @@ namespace Azure.Core.Tests
             scope.Dispose();
 
             Assert.AreEqual(expectedStartTimeUtc, actualStartTimeUtc);
+        }
+
+        [Test]
+        public void ParentIdCanBeSet()
+        {
+            string parentId = "parentId";
+            using var testListener = new TestDiagnosticListener("Azure.Clients");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
+                "Azure.Clients",
+                "Microsoft.Azure.Core.Cool.Tests",
+                true,
+                false);
+
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            scope.SetTraceparent(parentId);
+            scope.Start();
+
+            Assert.AreEqual(parentId, Activity.Current.ParentId);
+        }
+
+        [Test]
+        public void ParentIdCannotBeSetOnStartedScope()
+        {
+            string parentId = "parentId";
+            using var testListener = new TestDiagnosticListener("Azure.Clients");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
+                "Azure.Clients",
+                "Microsoft.Azure.Core.Cool.Tests",
+                true,
+                false);
+
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            scope.Start();
+            Assert.Throws<InvalidOperationException>(() => scope.SetTraceparent(parentId));
         }
 
         [Test]

@@ -3,7 +3,7 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20211215.1
+      ref: refs/tags/azure-sdk-build-tools_20230206.1
 
 parameters:
 - name: Artifacts
@@ -21,9 +21,6 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
-- name: ServiceToTest
-  type: string
-  default: ''
 - name: TargetDocRepoOwner
   type: string
   default: Azure
@@ -32,7 +29,7 @@ parameters:
   default: azure-docs-sdk-dotnet
 - name: BuildSnippets
   type: boolean
-  default: false
+  default: true
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -55,6 +52,12 @@ parameters:
 - name: MatrixReplace
   type: object
   default: []
+- name: TestDependsOnDependency
+  type: string
+  default: not-specified
+- name: LimitForPullRequest
+  type: boolean
+  default: false
 
 variables:
   - template: ../variables/globals.yml
@@ -65,12 +68,12 @@ stages:
     - template: /eng/pipelines/templates/jobs/ci.yml
       parameters:
         SDKType: ${{ parameters.SDKType }}
-        ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         Artifacts: ${{ parameters.Artifacts }}
         ${{ if eq(parameters.ServiceDirectory, 'template') }}:
           TestPipeline: true
         ArtifactName: packages
+        LimitForPullRequest: ${{ parameters.LimitForPullRequest }}
         BuildSnippets: ${{ parameters.BuildSnippets }}
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
         TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
@@ -85,6 +88,7 @@ stages:
           - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
             - BuildConfiguration=Debug/Release
           - ${{ parameters.MatrixReplace }}
+        TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:

@@ -22,22 +22,10 @@ namespace Azure.Quantum.Jobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/>, <paramref name="inputDataFormat"/>, <paramref name="providerId"/> or <paramref name="target"/> is null. </exception>
         public JobDetails(string containerUri, string inputDataFormat, string providerId, string target)
         {
-            if (containerUri == null)
-            {
-                throw new ArgumentNullException(nameof(containerUri));
-            }
-            if (inputDataFormat == null)
-            {
-                throw new ArgumentNullException(nameof(inputDataFormat));
-            }
-            if (providerId == null)
-            {
-                throw new ArgumentNullException(nameof(providerId));
-            }
-            if (target == null)
-            {
-                throw new ArgumentNullException(nameof(target));
-            }
+            Argument.AssertNotNull(containerUri, nameof(containerUri));
+            Argument.AssertNotNull(inputDataFormat, nameof(inputDataFormat));
+            Argument.AssertNotNull(providerId, nameof(providerId));
+            Argument.AssertNotNull(target, nameof(target));
 
             ContainerUri = containerUri;
             InputDataFormat = inputDataFormat;

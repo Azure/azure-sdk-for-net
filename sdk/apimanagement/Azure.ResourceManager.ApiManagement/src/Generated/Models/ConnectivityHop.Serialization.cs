@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,33 +18,43 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             Optional<string> type = default;
             Optional<string> id = default;
-            Optional<string> address = default;
-            Optional<string> resourceId = default;
+            Optional<IPAddress> address = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<IReadOnlyList<string>> nextHopIds = default;
             Optional<IReadOnlyList<ConnectivityIssue>> issues = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
-                    address = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nextHopIds"))
+                if (property.NameEquals("nextHopIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     nextHopIds = array;
                     continue;
                 }
-                if (property.NameEquals("issues"))
+                if (property.NameEquals("issues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

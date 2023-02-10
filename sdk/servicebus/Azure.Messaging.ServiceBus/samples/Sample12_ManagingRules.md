@@ -1,4 +1,4 @@
-## Managing Rules
+# Managing rules
 
 As shown in the [CRUD operations sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample07_CrudOperations.md), rules can be created, deleted, and retrieved using the `ServiceBusAdministrationClient`. In order to perform these operations, you need to have `Manage` rights to the Service Bus namespace. When using Azure Identity, this translates to requiring the [Service Bus Data Owner role](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-service-bus-data-owner) be granted to your identity. It is also possible to perform these rule management operations using the `ServiceBusRuleManager` type. The major benefit to using this type is that you only need `Listen` rights for the subscription you wish to manage rules for, which corresponds to the [Service Bus Data Receiver role](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-service-bus-data-receiver). The following snippet provides an example of how to use this type.
 
@@ -70,9 +70,3 @@ while (true)
     Console.WriteLine($"Brand: {receivedMessage.Subject}, Price: {receivedMessage.ApplicationProperties["Price"]}");
 }
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample12_ManagingRules.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample12_ManagingRules.cs)

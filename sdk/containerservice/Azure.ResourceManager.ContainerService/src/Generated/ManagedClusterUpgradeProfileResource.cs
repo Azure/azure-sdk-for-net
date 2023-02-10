@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService
     /// A Class representing a ManagedClusterUpgradeProfile along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedClusterUpgradeProfileResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetManagedClusterUpgradeProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedClusterResource" /> using the GetManagedClusterUpgradeProfile method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceManagedClusterResource" /> using the GetManagedClusterUpgradeProfile method.
     /// </summary>
     public partial class ManagedClusterUpgradeProfileResource : ArmResource
     {
@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary>
         /// Gets the upgrade profile of a managed cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/upgradeProfiles/default
-        /// Operation Id: ManagedClusters_GetUpgradeProfile
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/upgradeProfiles/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_GetUpgradeProfile</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ManagedClusterUpgradeProfileResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary>
         /// Gets the upgrade profile of a managed cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/upgradeProfiles/default
-        /// Operation Id: ManagedClusters_GetUpgradeProfile
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/upgradeProfiles/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_GetUpgradeProfile</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedClusterUpgradeProfileResource> Get(CancellationToken cancellationToken = default)

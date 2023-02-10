@@ -1,8 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
+using System.Security.Cryptography;
 
 namespace Azure.Data.SchemaRegistry
 {
@@ -11,18 +12,29 @@ namespace Azure.Data.SchemaRegistry
     {
         private readonly string _value;
 
+        private const string AvroValue = "Avro";
+        private const string JsonValue = "JSON";
+        private const string CustomValue = "Custom";
+
+        private const string AvroContentType = "Avro";
+        private const string JsonContentType = "Json";
+
         /// <summary> Initializes a new instance of <see cref="SchemaFormat"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SchemaFormat(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
-            ContentType = $"application/json; serialization={_value}";
         }
-
-        private const string AvroValue = "Avro";
 
         /// <summary> Avro Serialization schema type. </summary>
         public static SchemaFormat Avro { get; } = new SchemaFormat(AvroValue);
+
+        /// <summary> Avro Serialization schema type. </summary>
+        public static SchemaFormat Json { get; } = new SchemaFormat(JsonValue);
+
+        /// <summary> Avro Serialization schema type. </summary>
+        public static SchemaFormat Custom { get; } = new SchemaFormat(CustomValue);
+
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are the same. </summary>
         public static bool operator ==(SchemaFormat left, SchemaFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are not the same. </summary>
@@ -42,6 +54,31 @@ namespace Azure.Data.SchemaRegistry
         /// <inheritdoc />
         public override string ToString() => _value;
 
-        internal string ContentType { get; }
+        internal ContentType ToContentType()
+        {
+            switch (_value)
+            {
+                case AvroValue:
+                    return ContentType.Avro;
+                case JsonValue:
+                    return ContentType.Json;
+                default:
+                    return ContentType.Custom;
+            }
+        }
+
+        internal static SchemaFormat FromContentType(string contentTypeValue)
+        {
+            var contentEquals = contentTypeValue.Split('=');
+            switch (contentEquals[1])
+            {
+                case AvroContentType:
+                    return SchemaFormat.Avro;
+                case JsonContentType:
+                    return SchemaFormat.Json;
+                default:
+                    return SchemaFormat.Custom;
+            }
+        }
     }
 }

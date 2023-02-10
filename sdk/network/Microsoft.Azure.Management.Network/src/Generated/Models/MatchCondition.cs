@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="operatorProperty">The operator to be matched. Possible
         /// values include: 'IPMatch', 'Equal', 'Contains', 'LessThan',
         /// 'GreaterThan', 'LessThanOrEqual', 'GreaterThanOrEqual',
-        /// 'BeginsWith', 'EndsWith', 'Regex', 'GeoMatch'</param>
+        /// 'BeginsWith', 'EndsWith', 'Regex', 'GeoMatch', 'Any'</param>
         /// <param name="matchValues">Match value.</param>
         /// <param name="negationConditon">Whether this is negate condition or
         /// not.</param>
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the operator to be matched. Possible values include:
         /// 'IPMatch', 'Equal', 'Contains', 'LessThan', 'GreaterThan',
         /// 'LessThanOrEqual', 'GreaterThanOrEqual', 'BeginsWith', 'EndsWith',
-        /// 'Regex', 'GeoMatch'
+        /// 'Regex', 'GeoMatch', 'Any'
         /// </summary>
         [JsonProperty(PropertyName = "operator")]
         public string OperatorProperty { get; set; }

@@ -22,16 +22,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string Three2Value = "3.2";
-        private const string Three6Value = "3.6";
-        private const string Four0Value = "4.0";
-
-        /// <summary> 3.2. </summary>
-        public static CosmosDBServerVersion Three2 { get; } = new CosmosDBServerVersion(Three2Value);
-        /// <summary> 3.6. </summary>
-        public static CosmosDBServerVersion Three6 { get; } = new CosmosDBServerVersion(Three6Value);
-        /// <summary> 4.0. </summary>
-        public static CosmosDBServerVersion Four0 { get; } = new CosmosDBServerVersion(Four0Value);
+        private const string V3_2Value = "3.2";
+        private const string V3_6Value = "3.6";
+        private const string V4_0Value = "4.0";
+        private const string V4_2Value = "4.2";
         /// <summary> Determines if two <see cref="CosmosDBServerVersion"/> values are the same. </summary>
         public static bool operator ==(CosmosDBServerVersion left, CosmosDBServerVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBServerVersion"/> values are not the same. </summary>

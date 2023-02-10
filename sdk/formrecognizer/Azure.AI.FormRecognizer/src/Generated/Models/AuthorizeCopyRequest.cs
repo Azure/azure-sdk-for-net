@@ -11,28 +11,25 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> Request body to authorize model copy. </summary>
+    /// <summary> Request body to authorize document model copy. </summary>
     internal partial class AuthorizeCopyRequest
     {
         /// <summary> Initializes a new instance of AuthorizeCopyRequest. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         public AuthorizeCopyRequest(string modelId)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
+            Argument.AssertNotNull(modelId, nameof(modelId));
 
             ModelId = modelId;
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Unique model name. </summary>
+        /// <summary> Unique document model name. </summary>
         public string ModelId { get; }
-        /// <summary> Model description. </summary>
+        /// <summary> Document model description. </summary>
         public string Description { get; set; }
-        /// <summary> List of key-value tag attributes associated with the model. </summary>
+        /// <summary> List of key-value tag attributes associated with the document model. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

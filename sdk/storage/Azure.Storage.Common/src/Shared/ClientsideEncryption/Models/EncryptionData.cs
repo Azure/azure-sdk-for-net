@@ -50,7 +50,7 @@ namespace Azure.Storage.Cryptography.Models
         public Metadata KeyWrappingMetadata { get; set; }
 #pragma warning restore CA2227 // Collection properties should be read only
 
-        internal static async Task<EncryptionData> CreateInternalV1_0(
+        internal static async ValueTask<EncryptionData> CreateInternalV1_0(
             byte[] contentEncryptionIv,
             string keyWrapAlgorithm,
             byte[] contentEncryptionKey,

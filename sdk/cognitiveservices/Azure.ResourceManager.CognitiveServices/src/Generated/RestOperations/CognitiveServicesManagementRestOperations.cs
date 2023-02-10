@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2022-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckSkuAvailabilityRequest(string subscriptionId, AzureLocation location, CheckSkuAvailabilityParameter checkSkuAvailabilityParameter)
+        internal HttpMessage CreateCheckSkuAvailabilityRequest(string subscriptionId, AzureLocation location, CognitiveServicesSkuAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.CognitiveServices
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkSkuAvailabilityParameter);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -63,24 +63,24 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> Check available SKUs. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="checkSkuAvailabilityParameter"> Check SKU Availability POST body. </param>
+        /// <param name="content"> Check SKU Availability POST body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkSkuAvailabilityParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SkuAvailabilityListResult>> CheckSkuAvailabilityAsync(string subscriptionId, AzureLocation location, CheckSkuAvailabilityParameter checkSkuAvailabilityParameter, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesSkuAvailabilityListResult>> CheckSkuAvailabilityAsync(string subscriptionId, AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(checkSkuAvailabilityParameter, nameof(checkSkuAvailabilityParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckSkuAvailabilityRequest(subscriptionId, location, checkSkuAvailabilityParameter);
+            using var message = CreateCheckSkuAvailabilityRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SkuAvailabilityListResult value = default;
+                        CognitiveServicesSkuAvailabilityListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SkuAvailabilityListResult.DeserializeSkuAvailabilityListResult(document.RootElement);
+                        value = CognitiveServicesSkuAvailabilityListResult.DeserializeCognitiveServicesSkuAvailabilityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -91,24 +91,24 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> Check available SKUs. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="checkSkuAvailabilityParameter"> Check SKU Availability POST body. </param>
+        /// <param name="content"> Check SKU Availability POST body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkSkuAvailabilityParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SkuAvailabilityListResult> CheckSkuAvailability(string subscriptionId, AzureLocation location, CheckSkuAvailabilityParameter checkSkuAvailabilityParameter, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesSkuAvailabilityListResult> CheckSkuAvailability(string subscriptionId, AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(checkSkuAvailabilityParameter, nameof(checkSkuAvailabilityParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckSkuAvailabilityRequest(subscriptionId, location, checkSkuAvailabilityParameter);
+            using var message = CreateCheckSkuAvailabilityRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SkuAvailabilityListResult value = default;
+                        CognitiveServicesSkuAvailabilityListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SkuAvailabilityListResult.DeserializeSkuAvailabilityListResult(document.RootElement);
+                        value = CognitiveServicesSkuAvailabilityListResult.DeserializeCognitiveServicesSkuAvailabilityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        internal HttpMessage CreateCheckDomainAvailabilityRequest(string subscriptionId, CheckDomainAvailabilityParameter checkDomainAvailabilityParameter)
+        internal HttpMessage CreateCheckDomainAvailabilityRequest(string subscriptionId, CognitiveServicesDomainAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -130,33 +130,33 @@ namespace Azure.ResourceManager.CognitiveServices
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkDomainAvailabilityParameter);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check whether a domain is available. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="checkDomainAvailabilityParameter"> Check Domain Availability parameter. </param>
+        /// <param name="content"> Check Domain Availability parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkDomainAvailabilityParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DomainAvailability>> CheckDomainAvailabilityAsync(string subscriptionId, CheckDomainAvailabilityParameter checkDomainAvailabilityParameter, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesDomainAvailabilityList>> CheckDomainAvailabilityAsync(string subscriptionId, CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(checkDomainAvailabilityParameter, nameof(checkDomainAvailabilityParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckDomainAvailabilityRequest(subscriptionId, checkDomainAvailabilityParameter);
+            using var message = CreateCheckDomainAvailabilityRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DomainAvailability value = default;
+                        CognitiveServicesDomainAvailabilityList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DomainAvailability.DeserializeDomainAvailability(document.RootElement);
+                        value = CognitiveServicesDomainAvailabilityList.DeserializeCognitiveServicesDomainAvailabilityList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -166,24 +166,24 @@ namespace Azure.ResourceManager.CognitiveServices
 
         /// <summary> Check whether a domain is available. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="checkDomainAvailabilityParameter"> Check Domain Availability parameter. </param>
+        /// <param name="content"> Check Domain Availability parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkDomainAvailabilityParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DomainAvailability> CheckDomainAvailability(string subscriptionId, CheckDomainAvailabilityParameter checkDomainAvailabilityParameter, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesDomainAvailabilityList> CheckDomainAvailability(string subscriptionId, CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(checkDomainAvailabilityParameter, nameof(checkDomainAvailabilityParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckDomainAvailabilityRequest(subscriptionId, checkDomainAvailabilityParameter);
+            using var message = CreateCheckDomainAvailabilityRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DomainAvailability value = default;
+                        CognitiveServicesDomainAvailabilityList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DomainAvailability.DeserializeDomainAvailability(document.RootElement);
+                        value = CognitiveServicesDomainAvailabilityList.DeserializeCognitiveServicesDomainAvailabilityList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SecretType.ToString());
             writer.WriteEndObject();
         }
@@ -32,16 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "UrlSigningKey": return UriSigningKeyProperties.DeserializeUriSigningKeyProperties(element);
                 }
             }
-            SecretType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new SecretType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new FrontDoorSecretProperties(type);
+            return UnknownSecretProperties.DeserializeUnknownSecretProperties(element);
         }
     }
 }

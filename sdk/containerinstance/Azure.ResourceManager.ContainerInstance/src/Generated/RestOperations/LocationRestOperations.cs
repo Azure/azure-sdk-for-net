@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-10-01";
+            _apiVersion = apiVersion ?? "2022-10-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UsageListResult>> ListUsageAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerInstanceUsageListResult>> ListUsageAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 case 200:
                     {
-                        UsageListResult value = default;
+                        ContainerInstanceUsageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UsageListResult.DeserializeUsageListResult(document.RootElement);
+                        value = ContainerInstanceUsageListResult.DeserializeContainerInstanceUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UsageListResult> ListUsage(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<ContainerInstanceUsageListResult> ListUsage(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 case 200:
                     {
-                        UsageListResult value = default;
+                        ContainerInstanceUsageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UsageListResult.DeserializeUsageListResult(document.RootElement);
+                        value = ContainerInstanceUsageListResult.DeserializeContainerInstanceUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapabilitiesListResult>> ListCapabilitiesAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerCapabilitiesListResult>> ListCapabilitiesAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -214,9 +214,9 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 case 200:
                     {
-                        CapabilitiesListResult value = default;
+                        ContainerCapabilitiesListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CapabilitiesListResult.DeserializeCapabilitiesListResult(document.RootElement);
+                        value = ContainerCapabilitiesListResult.DeserializeContainerCapabilitiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapabilitiesListResult> ListCapabilities(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<ContainerCapabilitiesListResult> ListCapabilities(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -240,9 +240,9 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 case 200:
                     {
-                        CapabilitiesListResult value = default;
+                        ContainerCapabilitiesListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CapabilitiesListResult.DeserializeCapabilitiesListResult(document.RootElement);
+                        value = ContainerCapabilitiesListResult.DeserializeContainerCapabilitiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapabilitiesListResult>> ListCapabilitiesNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerCapabilitiesListResult>> ListCapabilitiesNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -352,9 +352,9 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 case 200:
                     {
-                        CapabilitiesListResult value = default;
+                        ContainerCapabilitiesListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CapabilitiesListResult.DeserializeCapabilitiesListResult(document.RootElement);
+                        value = ContainerCapabilitiesListResult.DeserializeContainerCapabilitiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapabilitiesListResult> ListCapabilitiesNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<ContainerCapabilitiesListResult> ListCapabilitiesNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -380,9 +380,9 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 case 200:
                     {
-                        CapabilitiesListResult value = default;
+                        ContainerCapabilitiesListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CapabilitiesListResult.DeserializeCapabilitiesListResult(document.RootElement);
+                        value = ContainerCapabilitiesListResult.DeserializeContainerCapabilitiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

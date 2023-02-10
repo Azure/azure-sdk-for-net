@@ -80,17 +80,17 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         public string Thumbprint { get; private set; }
 
         /// <summary>
-        /// Gets determines whether certificate has been verified.
+        /// Gets or sets determines whether certificate has been verified.
         /// </summary>
         [JsonProperty(PropertyName = "isVerified")]
-        public bool? IsVerified { get; private set; }
+        public bool? IsVerified { get; set; }
 
         /// <summary>
-        /// Gets base-64 representation of X509 certificate .cer file or just
-        /// .pem file content.
+        /// Gets or sets base-64 representation of X509 certificate .cer file
+        /// or just .pem file content.
         /// </summary>
         [JsonProperty(PropertyName = "certificate")]
-        public byte[] Certificate { get; private set; }
+        public byte[] Certificate { get; set; }
 
         /// <summary>
         /// Gets the certificate's creation date and time.

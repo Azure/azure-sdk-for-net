@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal static CassandraClusterPublicStatus DeserializeCassandraClusterPublicStatus(JsonElement element)
         {
             Optional<ETag> eTag = default;
-            Optional<ManagedCassandraReaperStatus> reaperStatus = default;
+            Optional<CassandraReaperStatus> reaperStatus = default;
             Optional<IReadOnlyList<CassandraConnectionError>> connectionErrors = default;
             Optional<IReadOnlyList<CassandraClusterPublicStatusDataCentersItem>> dataCenters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("reaperStatus"))
+                if (property.NameEquals("reaperStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reaperStatus = ManagedCassandraReaperStatus.DeserializeManagedCassandraReaperStatus(property.Value);
+                    reaperStatus = CassandraReaperStatus.DeserializeCassandraReaperStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("connectionErrors"))
+                if (property.NameEquals("connectionErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     connectionErrors = array;
                     continue;
                 }
-                if (property.NameEquals("dataCenters"))
+                if (property.NameEquals("dataCenters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

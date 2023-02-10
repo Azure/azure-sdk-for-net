@@ -2,13 +2,13 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.26.0-beta.1</Version>
+    <Version>1.29.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.25.0</ApiCompatVersion>
+    <ApiCompatVersion>1.28.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;netcoreapp2.1;net5.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net461;netcoreapp2.1;net5.0;net6.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
@@ -72,6 +72,7 @@
     <Compile Include="Shared\OperationPoller.cs" />
     <Compile Include="Shared\DelayStrategy.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
+    <Compile Include="Shared\GeoRedundantFallbackPolicy.cs" />
   </ItemGroup>
 
 </Project>

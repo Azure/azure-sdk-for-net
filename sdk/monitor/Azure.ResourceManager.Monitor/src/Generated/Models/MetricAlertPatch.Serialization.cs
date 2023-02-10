@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,26 +26,26 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Severity))
             {
-                writer.WritePropertyName("severity");
+                writer.WritePropertyName("severity"u8);
                 writer.WriteNumberValue(Severity.Value);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Scopes))
             {
-                writer.WritePropertyName("scopes");
+                writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Scopes)
                 {
@@ -55,37 +55,37 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(EvaluationFrequency))
             {
-                writer.WritePropertyName("evaluationFrequency");
+                writer.WritePropertyName("evaluationFrequency"u8);
                 writer.WriteStringValue(EvaluationFrequency.Value, "P");
             }
             if (Optional.IsDefined(WindowSize))
             {
-                writer.WritePropertyName("windowSize");
+                writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
             if (Optional.IsDefined(TargetResourceType))
             {
-                writer.WritePropertyName("targetResourceType");
-                writer.WriteStringValue(TargetResourceType);
+                writer.WritePropertyName("targetResourceType"u8);
+                writer.WriteStringValue(TargetResourceType.Value);
             }
             if (Optional.IsDefined(TargetResourceRegion))
             {
-                writer.WritePropertyName("targetResourceRegion");
-                writer.WriteStringValue(TargetResourceRegion);
+                writer.WritePropertyName("targetResourceRegion"u8);
+                writer.WriteStringValue(TargetResourceRegion.Value);
             }
             if (Optional.IsDefined(Criteria))
             {
-                writer.WritePropertyName("criteria");
+                writer.WritePropertyName("criteria"u8);
                 writer.WriteObjectValue(Criteria);
             }
-            if (Optional.IsDefined(IsAutoMitigate))
+            if (Optional.IsDefined(IsAutoMitigateEnabled))
             {
-                writer.WritePropertyName("autoMitigate");
-                writer.WriteBooleanValue(IsAutoMitigate.Value);
+                writer.WritePropertyName("autoMitigate"u8);
+                writer.WriteBooleanValue(IsAutoMitigateEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Actions))
             {
-                writer.WritePropertyName("actions");
+                writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {

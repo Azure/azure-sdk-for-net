@@ -1,44 +1,43 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
-        "traceparent": "00-8781bf9658700b44b47d019c028007f2-c0219da366aaec4e-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "473d97ea7498ae968f5208dbb8d8254c",
+        "traceparent": "00-0002959815e1698db8465beed81b3f74-36a393a11a369e17-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "bd8af9c9f90373aeb4574d09e82a45bf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "458",
+        "Content-Length": "461",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:44:41 GMT",
+        "Date": "Wed, 10 Aug 2022 03:46:47 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "71a08411-d710-4ebf-af3c-d2709690f294",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "71a08411-d710-4ebf-af3c-d2709690f294",
-        "x-ms-routing-request-id": "WESTUS:20220607T064441Z:71a08411-d710-4ebf-af3c-d2709690f294"
+        "x-ms-correlation-request-id": "20fac107-89b6-40f2-bdde-0ea9101774ae",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "20fac107-89b6-40f2-bdde-0ea9101774ae",
+        "x-ms-routing-request-id": "WESTUS:20220810T034647Z:20fac107-89b6-40f2-bdde-0ea9101774ae"
       },
       "ResponseBody": {
-        "id": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603",
+        "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
         "tags": {
           "Env": "NonProd",
           "IsHostedOnBehalfOf": "False"
         },
-        "subscriptionId": "cf65b9a6-fe0f-4011-881c-aba5a5fb8603",
+        "subscriptionId": "a645d3be-5a4a-40ef-82a1-d5f5358a424c",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": "AzureDeviceUpdate/PPE-MS",
+        "displayName": "AzureDeviceUpdate/Canary-MS",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Internal_2014-09-01",
@@ -48,16 +47,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourcegroups/testRg-7644?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourcegroups/testRg-8018?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "20",
+        "Content-Length": "21",
         "Content-Type": "application/json",
-        "traceparent": "00-7ca19bb77b9ce84b9289a9b75b77632c-cf23550032b6ce4e-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "b4f8badc2f95515f8978f829c472b36f",
+        "traceparent": "00-d8918b63b50e3b46889c794770206c5c-82ddbded4fec928e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "19d80d6410e5820e99411f591f682c90",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -68,19 +67,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "244",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:44:41 GMT",
+        "Date": "Wed, 10 Aug 2022 03:46:47 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "56036c60-cbc7-43dd-95c2-74a313d04586",
-        "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "56036c60-cbc7-43dd-95c2-74a313d04586",
-        "x-ms-routing-request-id": "WESTUS:20220607T064441Z:56036c60-cbc7-43dd-95c2-74a313d04586"
+        "x-ms-correlation-request-id": "911e6988-31f5-4d79-92c7-edc84ab89dc1",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "911e6988-31f5-4d79-92c7-edc84ab89dc1",
+        "x-ms-routing-request-id": "WESTUS:20220810T034647Z:911e6988-31f5-4d79-92c7-edc84ab89dc1"
       },
       "ResponseBody": {
-        "id": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644",
-        "name": "testRg-7644",
+        "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018",
+        "name": "testRg-8018",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus",
         "tags": {
@@ -92,16 +91,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304?api-version=2022-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "64",
         "Content-Type": "application/json",
-        "traceparent": "00-006f920fcb844b4ba44c2ba723c8253b-d06d9274cfa48148-00",
-        "User-Agent": "azsdk-net-ResourceManager.DeviceUpdate/1.0.0-alpha.20220606.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "aa984eb4333a3fe60ad04f610909be8f",
+        "traceparent": "00-48908a8fad7c5e7291282e096119e9ce-3354bd7413aa00fe-00",
+        "User-Agent": "azsdk-net-ResourceManager.DeviceUpdate/1.0.0-alpha.20220809.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "2bd03d1e6038ad06f14f178cf27a5e07",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -113,36 +112,37 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-03-01-preview, 2022-04-01-preview",
-        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578?api-version=2022-04-01-preview",
+        "api-supported-versions": "2020-03-01-preview, 2022-04-01-preview, 2022-10-01",
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D?api-version=2022-10-01",
         "Cache-Control": "no-cache",
         "Content-Length": "577",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:44:43 GMT",
-        "ETag": "\u0022f503397c-0000-0800-0000-629ef3db0000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:46:49 GMT",
+        "ETag": "\u0022c600144b-0000-0800-0000-62f32a290000\u0022",
         "Expires": "-1",
+        "mise-correlation-id": "41d50aa4-c09d-48de-a50b-e6e4fa05f1d1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e567064f-976c-49e7-854d-e23ef9222b6c",
+        "x-ms-correlation-request-id": "7215e00f-75cf-466c-906a-0ff18689ee13",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "9e33eee4-c52b-4a15-b751-141db6e57f1f",
-        "x-ms-routing-request-id": "WESTUS:20220607T064444Z:e567064f-976c-49e7-854d-e23ef9222b6c"
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "1a543798-99f4-459d-b0be-905af18a1f0f",
+        "x-ms-routing-request-id": "WESTUS:20220810T034649Z:7215e00f-75cf-466c-906a-0ff18689ee13"
       },
       "ResponseBody": {
-        "id": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109",
-        "name": "Account-8109",
+        "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304",
+        "name": "Account-7304",
         "type": "microsoft.deviceupdate/accounts",
         "location": "westus2",
         "tags": {},
         "systemData": {
           "createdBy": "1e5942b3-36f1-43eb-88d9-98c12d95000b",
           "createdByType": "Application",
-          "createdAt": "2022-06-07T06:44:42.2860688Z",
+          "createdAt": "2022-08-10T03:46:48.0307919Z",
           "lastModifiedBy": "1e5942b3-36f1-43eb-88d9-98c12d95000b",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2022-06-07T06:44:42.2860688Z"
+          "lastModifiedAt": "2022-08-10T03:46:48.0307919Z"
         },
         "properties": {
           "sku": "Standard",
@@ -151,364 +151,364 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-006f920fcb844b4ba44c2ba723c8253b-762d2992af73414b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "d624476b59b386a112758a5e10f07f6f",
+        "traceparent": "00-48908a8fad7c5e7291282e096119e9ce-5bdc988154421bcd-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "080bf17957efac2cd26cf4c1f7f6a6c6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "502",
+        "Content-Length": "503",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:44:44 GMT",
-        "ETag": "\u0022d40460c5-0000-0800-0000-629ef3db0000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:46:49 GMT",
+        "ETag": "\u0022e600ad3d-0000-0800-0000-62f32a290000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "5cbace22-023c-4408-b71f-57742900689c",
-        "x-ms-ratelimit-remaining-tenant-reads": "11999",
-        "x-ms-request-id": "fdd2b93f-f6b6-489e-b6e7-6658daa6da40",
-        "x-ms-routing-request-id": "WESTUS:20220607T064444Z:5cbace22-023c-4408-b71f-57742900689c"
+        "x-ms-correlation-request-id": "fb16e675-08d6-4501-be2d-5454b81c034b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11980",
+        "x-ms-request-id": "d6c4b8b8-f07c-4d95-84dd-d2314a2c9c32",
+        "x-ms-routing-request-id": "WESTUS:20220810T034649Z:fb16e675-08d6-4501-be2d-5454b81c034b"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "name": "9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "name": "1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:44:43.898884Z"
+        "startTime": "2022-08-10T03:46:49.4486343Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-006f920fcb844b4ba44c2ba723c8253b-b948c345bc88e44f-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "107f9939bce15f9be6b9b52b3748ba3f",
+        "traceparent": "00-48908a8fad7c5e7291282e096119e9ce-eea7850d2315b689-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "960a51c1a3973a5f5453efcea876935c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "502",
+        "Content-Length": "503",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:44:45 GMT",
-        "ETag": "\u0022d40460c5-0000-0800-0000-629ef3db0000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:46:50 GMT",
+        "ETag": "\u0022e600ad3d-0000-0800-0000-62f32a290000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1984e4c0-3710-4f2b-8169-21192d129b07",
-        "x-ms-ratelimit-remaining-tenant-reads": "11998",
-        "x-ms-request-id": "85b26024-274d-4025-9812-f03f0eb51142",
-        "x-ms-routing-request-id": "WESTUS:20220607T064445Z:1984e4c0-3710-4f2b-8169-21192d129b07"
+        "x-ms-correlation-request-id": "e1cd4679-df0e-4618-a547-260a4608e47a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11979",
+        "x-ms-request-id": "f5df89dc-b40c-41ed-8c2c-7267e1866f9d",
+        "x-ms-routing-request-id": "WESTUS:20220810T034650Z:e1cd4679-df0e-4618-a547-260a4608e47a"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "name": "9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "name": "1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:44:43.898884Z"
+        "startTime": "2022-08-10T03:46:49.4486343Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-006f920fcb844b4ba44c2ba723c8253b-2bca45b2b1dd1545-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "c2f5f9f0e8e5ebdcc04aa05fca09ce04",
+        "traceparent": "00-48908a8fad7c5e7291282e096119e9ce-faedb6937c60321e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "0113f661566ebc17a5e8192bef278544",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "502",
+        "Content-Length": "503",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:44:46 GMT",
-        "ETag": "\u0022d40460c5-0000-0800-0000-629ef3db0000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:46:51 GMT",
+        "ETag": "\u0022e600ad3d-0000-0800-0000-62f32a290000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "21b76901-6a48-44ec-ae65-e9514423ba6f",
-        "x-ms-ratelimit-remaining-tenant-reads": "11997",
-        "x-ms-request-id": "189bc513-7464-4b36-bfb9-49db1e7b3df5",
-        "x-ms-routing-request-id": "WESTUS:20220607T064446Z:21b76901-6a48-44ec-ae65-e9514423ba6f"
+        "x-ms-correlation-request-id": "dd1ff2e3-8087-4af9-aac3-7e775c5ed4b0",
+        "x-ms-ratelimit-remaining-tenant-reads": "11978",
+        "x-ms-request-id": "d8f0ba16-9a0e-43da-9843-9cd189747a57",
+        "x-ms-routing-request-id": "WESTUS:20220810T034651Z:dd1ff2e3-8087-4af9-aac3-7e775c5ed4b0"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "name": "9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "name": "1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:44:43.898884Z"
+        "startTime": "2022-08-10T03:46:49.4486343Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-006f920fcb844b4ba44c2ba723c8253b-5afd77cffe3a1d42-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "eb648c8fcf4bae73abc5f0faa4764eca",
+        "traceparent": "00-48908a8fad7c5e7291282e096119e9ce-5a8835854f9934bf-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "c8cdf1c3578ad58992d1b39c675d035b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "502",
+        "Content-Length": "503",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:44:47 GMT",
-        "ETag": "\u0022d40460c5-0000-0800-0000-629ef3db0000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:46:52 GMT",
+        "ETag": "\u0022e600ad3d-0000-0800-0000-62f32a290000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "abed2adf-4c06-4f43-b775-81e06c9fbca9",
-        "x-ms-ratelimit-remaining-tenant-reads": "11996",
-        "x-ms-request-id": "8f7b4f1b-7b48-4ef4-80b9-b10c38ad15f2",
-        "x-ms-routing-request-id": "WESTUS:20220607T064447Z:abed2adf-4c06-4f43-b775-81e06c9fbca9"
+        "x-ms-correlation-request-id": "5b7376b3-0bdf-4a8c-ad6f-11d839eb9532",
+        "x-ms-ratelimit-remaining-tenant-reads": "11977",
+        "x-ms-request-id": "8c238585-63fa-47c0-b2f5-ff5393680cdd",
+        "x-ms-routing-request-id": "WESTUS:20220810T034652Z:5b7376b3-0bdf-4a8c-ad6f-11d839eb9532"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "name": "9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "name": "1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:44:43.898884Z"
+        "startTime": "2022-08-10T03:46:49.4486343Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-006f920fcb844b4ba44c2ba723c8253b-ffe33da55d6fce44-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "166d4abbbdfa5189bd934f961c3b94dc",
+        "traceparent": "00-48908a8fad7c5e7291282e096119e9ce-d0bbf171c0504099-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "015f97d8a5e36b583a4df1af89344a2c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "502",
+        "Content-Length": "503",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:44:49 GMT",
-        "ETag": "\u0022d40460c5-0000-0800-0000-629ef3db0000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:46:54 GMT",
+        "ETag": "\u0022e600ad3d-0000-0800-0000-62f32a290000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "3178a529-d11a-4c39-9677-8f7204d1f854",
-        "x-ms-ratelimit-remaining-tenant-reads": "11995",
-        "x-ms-request-id": "d921ab9c-6639-41fd-9dc7-53f62f841f2e",
-        "x-ms-routing-request-id": "WESTUS:20220607T064449Z:3178a529-d11a-4c39-9677-8f7204d1f854"
+        "x-ms-correlation-request-id": "d71d973b-ec20-45d5-9829-610dace4baf3",
+        "x-ms-ratelimit-remaining-tenant-reads": "11976",
+        "x-ms-request-id": "39b10cbc-ec05-4d48-b05a-12c12a89bdf8",
+        "x-ms-routing-request-id": "WESTUS:20220810T034654Z:d71d973b-ec20-45d5-9829-610dace4baf3"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "name": "9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "name": "1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:44:43.898884Z"
+        "startTime": "2022-08-10T03:46:49.4486343Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-006f920fcb844b4ba44c2ba723c8253b-9c9c5c2300536941-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "ab9cb0ebcee321f486471620f7e1474a",
+        "traceparent": "00-48908a8fad7c5e7291282e096119e9ce-34fbfdd192a6c005-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b60baacecba90ad26c3d6e9da27b5448",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "502",
+        "Content-Length": "503",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:44:53 GMT",
-        "ETag": "\u0022d40460c5-0000-0800-0000-629ef3db0000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:46:58 GMT",
+        "ETag": "\u0022e600ad3d-0000-0800-0000-62f32a290000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e141c0c8-d549-461e-8202-249022905f8c",
-        "x-ms-ratelimit-remaining-tenant-reads": "11994",
-        "x-ms-request-id": "8e58c087-ba45-4b8b-a7c6-a890a3853186",
-        "x-ms-routing-request-id": "WESTUS:20220607T064453Z:e141c0c8-d549-461e-8202-249022905f8c"
+        "x-ms-correlation-request-id": "7372fafb-f2c0-48ef-9b62-cdab4e79bfa6",
+        "x-ms-ratelimit-remaining-tenant-reads": "11975",
+        "x-ms-request-id": "fe99d035-cfc9-4c25-901a-d424ba13fd7b",
+        "x-ms-routing-request-id": "WESTUS:20220810T034659Z:7372fafb-f2c0-48ef-9b62-cdab4e79bfa6"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "name": "9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "name": "1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:44:43.898884Z"
+        "startTime": "2022-08-10T03:46:49.4486343Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-006f920fcb844b4ba44c2ba723c8253b-bfa4df2aa7b6754f-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "7fa4d6fcb89bd20a03132eb77fdc926f",
+        "traceparent": "00-48908a8fad7c5e7291282e096119e9ce-fe7e01a818dc07f7-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5852bee484c81d6199628e3c66d94b5d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "502",
+        "Content-Length": "503",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:45:01 GMT",
-        "ETag": "\u0022d40460c5-0000-0800-0000-629ef3db0000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:47:06 GMT",
+        "ETag": "\u0022e600ad3d-0000-0800-0000-62f32a290000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "fc433fe9-13cc-42c6-83f3-deab6d234f06",
-        "x-ms-ratelimit-remaining-tenant-reads": "11993",
-        "x-ms-request-id": "ff1b6460-fef9-45a0-8610-00c018c81994",
-        "x-ms-routing-request-id": "WESTUS:20220607T064501Z:fc433fe9-13cc-42c6-83f3-deab6d234f06"
+        "x-ms-correlation-request-id": "9e6ac815-8e62-44d9-9dce-88b0adfd624b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11974",
+        "x-ms-request-id": "d1f0aa93-9df7-4deb-ae32-43e584f420a5",
+        "x-ms-routing-request-id": "WESTUS:20220810T034707Z:9e6ac815-8e62-44d9-9dce-88b0adfd624b"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "name": "9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "name": "1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:44:43.898884Z"
+        "startTime": "2022-08-10T03:46:49.4486343Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-006f920fcb844b4ba44c2ba723c8253b-49ff006dac823f44-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "f40e1330a3daece6564c8fb3a66959db",
+        "traceparent": "00-48908a8fad7c5e7291282e096119e9ce-96e9f9da57050a06-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "bcce86864d520db2c55594a536bbc8be",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "502",
+        "Content-Length": "503",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:45:17 GMT",
-        "ETag": "\u0022d40460c5-0000-0800-0000-629ef3db0000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:47:22 GMT",
+        "ETag": "\u0022e600ad3d-0000-0800-0000-62f32a290000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "adc707d7-3c79-42bb-9003-9f75cb445196",
-        "x-ms-ratelimit-remaining-tenant-reads": "11992",
-        "x-ms-request-id": "e0e30fee-4a1e-4885-a44c-f7634326a0c8",
-        "x-ms-routing-request-id": "WESTUS:20220607T064517Z:adc707d7-3c79-42bb-9003-9f75cb445196"
+        "x-ms-correlation-request-id": "14c5ae15-b0c1-474d-a91a-1a0618a5ea93",
+        "x-ms-ratelimit-remaining-tenant-reads": "11973",
+        "x-ms-request-id": "b59fdbb6-769f-4b0e-9cff-818fdd97da99",
+        "x-ms-routing-request-id": "WESTUS:20220810T034723Z:14c5ae15-b0c1-474d-a91a-1a0618a5ea93"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "name": "9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "name": "1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:44:43.898884Z"
+        "startTime": "2022-08-10T03:46:49.4486343Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-006f920fcb844b4ba44c2ba723c8253b-8c1f0138f1c71043-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "459a054c14973340a5c9a8d09f3ca1aa",
+        "traceparent": "00-48908a8fad7c5e7291282e096119e9ce-b27822c5f52ea931-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "cbcba8f8f2e2496449ed1d473c95a393",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "502",
+        "Content-Length": "503",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:45:49 GMT",
-        "ETag": "\u0022d40460c5-0000-0800-0000-629ef3db0000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:47:54 GMT",
+        "ETag": "\u0022e600ad3d-0000-0800-0000-62f32a290000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "6c819a26-930c-4d04-bce5-2da857cf95a1",
-        "x-ms-ratelimit-remaining-tenant-reads": "11991",
-        "x-ms-request-id": "a67e9467-9be7-41d3-9a0f-66d5a135aa10",
-        "x-ms-routing-request-id": "WESTUS:20220607T064549Z:6c819a26-930c-4d04-bce5-2da857cf95a1"
+        "x-ms-correlation-request-id": "a3fcf4a1-41d6-4f5e-8608-cb5c4a49f6f6",
+        "x-ms-ratelimit-remaining-tenant-reads": "11972",
+        "x-ms-request-id": "d8248837-40ca-4652-9666-478e503f3c80",
+        "x-ms-routing-request-id": "WESTUS:20220810T034755Z:a3fcf4a1-41d6-4f5e-8608-cb5c4a49f6f6"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "name": "9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "name": "1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304",
         "status": "Accepted",
-        "startTime": "2022-06-07T06:44:43.898884Z"
+        "startTime": "2022-08-10T03:46:49.4486343Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-006f920fcb844b4ba44c2ba723c8253b-9857401ac489154c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "e3efa7b453d25870f0b8294f28562c99",
+        "traceparent": "00-48908a8fad7c5e7291282e096119e9ce-ee4d853c41be3329-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "1b1610f197ad97f60b449272f0bbe6de",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "521",
+        "Content-Length": "522",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:46:20 GMT",
-        "ETag": "\u0022d404a2c6-0000-0800-0000-629ef41d0000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:48:26 GMT",
+        "ETag": "\u0022e600224f-0000-0800-0000-62f32a6b0000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1f851e99-df30-4a7b-9cd3-4196cff57f29",
-        "x-ms-ratelimit-remaining-tenant-reads": "11990",
-        "x-ms-request-id": "55fe0b18-5b03-4a56-b8b1-5cd07663e48c",
-        "x-ms-routing-request-id": "WESTUS:20220607T064621Z:1f851e99-df30-4a7b-9cd3-4196cff57f29"
+        "x-ms-correlation-request-id": "08e4565e-d7b7-4516-ba5e-7b491d8d460f",
+        "x-ms-ratelimit-remaining-tenant-reads": "11971",
+        "x-ms-request-id": "9c26e74e-89fb-4f57-9807-93146b3b1b8d",
+        "x-ms-routing-request-id": "WESTUS:20220810T034827Z:08e4565e-d7b7-4516-ba5e-7b491d8d460f"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "name": "9e33eee4-c52b-4a15-b751-141db6e57f1f*890B4F1DAEC955C405242E0E8829B9AD0D2009C82779A1F3EA97FA7843F8F578",
-        "resourceId": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109",
+        "id": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "name": "1a543798-99f4-459d-b0be-905af18a1f0f*6782E8648202F4A89CB3601B2492C0DA7D8BC6C58BF6E70CCE52EAE6C9A44F1D",
+        "resourceId": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304",
         "status": "Succeeded",
-        "startTime": "2022-06-07T06:44:43.898884Z",
+        "startTime": "2022-08-10T03:46:49.4486343Z",
         "properties": null
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-006f920fcb844b4ba44c2ba723c8253b-bf0858af164da547-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "796b53b94c411cd8d3db4e10fb154c19",
+        "traceparent": "00-48908a8fad7c5e7291282e096119e9ce-737eb381a8688c52-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "bd43cf99800e937b22847364306bd12f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -517,35 +517,35 @@
         "Cache-Control": "no-cache",
         "Content-Length": "751",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:46:20 GMT",
-        "ETag": "\u0022f503557c-0000-0800-0000-629ef4030000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:48:26 GMT",
+        "ETag": "\u0022c600fa4d-0000-0800-0000-62f32a510000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "6bd8a430-71be-47c0-bdb8-0cf0bf51aa6f",
+        "x-ms-correlation-request-id": "0e6a42fe-5317-472c-b07b-d1fc036bf445",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "d1cf60c1-30f6-4402-8179-4912bd7c9407",
-        "x-ms-routing-request-id": "WESTUS:20220607T064621Z:6bd8a430-71be-47c0-bdb8-0cf0bf51aa6f"
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "41ebbd7c-930a-44e1-8922-ebfa36110d60",
+        "x-ms-routing-request-id": "WESTUS:20220810T034827Z:0e6a42fe-5317-472c-b07b-d1fc036bf445"
       },
       "ResponseBody": {
-        "id": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109",
-        "name": "Account-8109",
+        "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304",
+        "name": "Account-7304",
         "type": "microsoft.deviceupdate/accounts",
         "location": "westus2",
         "tags": {},
         "systemData": {
           "createdBy": "1e5942b3-36f1-43eb-88d9-98c12d95000b",
           "createdByType": "Application",
-          "createdAt": "2022-06-07T06:44:42.2860688Z",
+          "createdAt": "2022-08-10T03:46:48.0307919Z",
           "lastModifiedBy": "1e5942b3-36f1-43eb-88d9-98c12d95000b",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2022-06-07T06:44:42.2860688Z"
+          "lastModifiedAt": "2022-08-10T03:46:48.0307919Z"
         },
         "properties": {
           "provisioningState": "Succeeded",
-          "hostName": "account-8109.api.adu.microsoft.com",
+          "hostName": "account-7304.api.adu.microsoft.com",
           "locations": [
             {
               "name": "westus2",
@@ -562,14 +562,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-af68033f14facd41a6a5a2973fd959c6-f52fd2dcd7a22344-00",
-        "User-Agent": "azsdk-net-ResourceManager.DeviceUpdate/1.0.0-alpha.20220606.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "fefee5aa7679f808954255deebf10a4e",
+        "traceparent": "00-8113a41a4c73bf601b62f41a943da18a-370c73334b683e55-00",
+        "User-Agent": "azsdk-net-ResourceManager.DeviceUpdate/1.0.0-alpha.20220809.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "25b300b1ada46010b233bf9d5ff1598d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -578,35 +578,35 @@
         "Cache-Control": "no-cache",
         "Content-Length": "751",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 06:46:21 GMT",
-        "ETag": "\u0022f503557c-0000-0800-0000-629ef4030000\u0022",
+        "Date": "Wed, 10 Aug 2022 03:48:26 GMT",
+        "ETag": "\u0022c600fa4d-0000-0800-0000-62f32a510000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f78801b9-f6a0-40c8-8258-014e13d8a977",
+        "x-ms-correlation-request-id": "df142f9a-516f-4b30-9c10-413d3005be93",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "5ed39e82-a94b-4a75-90b8-5421ffe9aa62",
-        "x-ms-routing-request-id": "WESTUS:20220607T064622Z:f78801b9-f6a0-40c8-8258-014e13d8a977"
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "b901dc5d-612d-46e2-b112-8d4253e6410b",
+        "x-ms-routing-request-id": "WESTUS:20220810T034827Z:df142f9a-516f-4b30-9c10-413d3005be93"
       },
       "ResponseBody": {
-        "id": "/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-7644/providers/Microsoft.DeviceUpdate/accounts/Account-8109",
-        "name": "Account-8109",
+        "id": "/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourceGroups/testRg-8018/providers/Microsoft.DeviceUpdate/accounts/Account-7304",
+        "name": "Account-7304",
         "type": "microsoft.deviceupdate/accounts",
         "location": "westus2",
         "tags": {},
         "systemData": {
           "createdBy": "1e5942b3-36f1-43eb-88d9-98c12d95000b",
           "createdByType": "Application",
-          "createdAt": "2022-06-07T06:44:42.2860688Z",
+          "createdAt": "2022-08-10T03:46:48.0307919Z",
           "lastModifiedBy": "1e5942b3-36f1-43eb-88d9-98c12d95000b",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2022-06-07T06:44:42.2860688Z"
+          "lastModifiedAt": "2022-08-10T03:46:48.0307919Z"
         },
         "properties": {
           "provisioningState": "Succeeded",
-          "hostName": "account-8109.api.adu.microsoft.com",
+          "hostName": "account-7304.api.adu.microsoft.com",
           "locations": [
             {
               "name": "westus2",
@@ -624,8 +624,9 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "308878709",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "857773072",
     "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "cf65b9a6-fe0f-4011-881c-aba5a5fb8603"
+    "SUBSCRIPTION_ID": "a645d3be-5a4a-40ef-82a1-d5f5358a424c"
   }
 }

@@ -15,23 +15,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PolicyType.ToString());
             writer.WriteEndObject();
         }
 
         internal static ServicePlacementPolicyDescription DeserializeServicePlacementPolicyDescription(JsonElement element)
         {
-            ServicePlacementPolicyType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new ServicePlacementPolicyType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new ServicePlacementPolicyDescription(type);
+            return UnknownServicePlacementPolicyDescription.DeserializeUnknownServicePlacementPolicyDescription(element);
         }
     }
 }

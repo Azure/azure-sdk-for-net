@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             if (Optional.IsDefined(LabelReferenceInStreamingPolicy))
             {
-                writer.WritePropertyName("labelReferenceInStreamingPolicy");
+                writer.WritePropertyName("labelReferenceInStreamingPolicy"u8);
                 writer.WriteStringValue(LabelReferenceInStreamingPolicy);
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             writer.WriteEndObject();
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> labelReferenceInStreamingPolicy = default;
             Optional<string> value = default;
             Optional<string> policyName = default;
-            Optional<IReadOnlyList<TrackSelection>> tracks = default;
+            Optional<IReadOnlyList<MediaTrackSelection>> tracks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,32 +57,32 @@ namespace Azure.ResourceManager.Media.Models
                     type = new StreamingLocatorContentKeyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("labelReferenceInStreamingPolicy"))
+                if (property.NameEquals("labelReferenceInStreamingPolicy"u8))
                 {
                     labelReferenceInStreamingPolicy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyName"))
+                if (property.NameEquals("policyName"u8))
                 {
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tracks"))
+                if (property.NameEquals("tracks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TrackSelection> array = new List<TrackSelection>();
+                    List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrackSelection.DeserializeTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
                     }
                     tracks = array;
                     continue;

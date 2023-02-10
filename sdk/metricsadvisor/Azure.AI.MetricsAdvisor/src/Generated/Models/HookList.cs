@@ -22,7 +22,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> Initializes a new instance of HookList. </summary>
         /// <param name="nextLink"></param>
-        /// <param name="value"></param>
+        /// <param name="value">
+        /// Please note <see cref="NotificationHook"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="EmailNotificationHook"/> and <see cref="WebNotificationHook"/>.
+        /// </param>
         internal HookList(string nextLink, IReadOnlyList<NotificationHook> value)
         {
             NextLink = nextLink;
@@ -31,7 +34,11 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
-        /// <summary> Gets the value. </summary>
+        /// <summary>
+        /// Gets the value
+        /// Please note <see cref="NotificationHook"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="EmailNotificationHook"/> and <see cref="WebNotificationHook"/>.
+        /// </summary>
         public IReadOnlyList<NotificationHook> Value { get; }
     }
 }

@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayVersion))
             {
-                writer.WritePropertyName("displayVersion");
+                writer.WritePropertyName("displayVersion"u8);
                 writer.WriteStringValue(DisplayVersion);
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
-                writer.WritePropertyName("runtimeVersion");
+                writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
             if (Optional.IsDefined(IsDefault))
             {
-                writer.WritePropertyName("isDefault");
+                writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
             if (Optional.IsCollectionDefined(MinorVersions))
             {
-                writer.WritePropertyName("minorVersions");
+                writer.WritePropertyName("minorVersions"u8);
                 writer.WriteStartArray();
                 foreach (var item in MinorVersions)
                 {
@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ApplicationInsights))
+            if (Optional.IsDefined(IsApplicationInsights))
             {
-                writer.WritePropertyName("applicationInsights");
-                writer.WriteBooleanValue(ApplicationInsights.Value);
+                writer.WritePropertyName("applicationInsights"u8);
+                writer.WriteBooleanValue(IsApplicationInsights.Value);
             }
             if (Optional.IsDefined(IsPreview))
             {
-                writer.WritePropertyName("isPreview");
+                writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
             if (Optional.IsDefined(IsDeprecated))
             {
-                writer.WritePropertyName("isDeprecated");
+                writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteBooleanValue(IsDeprecated.Value);
             }
             if (Optional.IsDefined(IsHidden))
             {
-                writer.WritePropertyName("isHidden");
+                writer.WritePropertyName("isHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
             if (Optional.IsCollectionDefined(AppSettingsDictionary))
             {
-                writer.WritePropertyName("appSettingsDictionary");
+                writer.WritePropertyName("appSettingsDictionary"u8);
                 writer.WriteStartObject();
                 foreach (var item in AppSettingsDictionary)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(SiteConfigPropertiesDictionary))
             {
-                writer.WritePropertyName("siteConfigPropertiesDictionary");
+                writer.WritePropertyName("siteConfigPropertiesDictionary"u8);
                 writer.WriteStartObject();
                 foreach (var item in SiteConfigPropertiesDictionary)
                 {
@@ -109,17 +109,17 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IDictionary<string, BinaryData>> siteConfigPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayVersion"))
+                if (property.NameEquals("displayVersion"u8))
                 {
                     displayVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runtimeVersion"))
+                if (property.NameEquals("runtimeVersion"u8))
                 {
                     runtimeVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDefault"))
+                if (property.NameEquals("isDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService.Models
                     isDefault = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("minorVersions"))
+                if (property.NameEquals("minorVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
                     minorVersions = array;
                     continue;
                 }
-                if (property.NameEquals("applicationInsights"))
+                if (property.NameEquals("applicationInsights"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Models
                     applicationInsights = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isPreview"))
+                if (property.NameEquals("isPreview"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
                     isPreview = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isDeprecated"))
+                if (property.NameEquals("isDeprecated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Models
                     isDeprecated = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isHidden"))
+                if (property.NameEquals("isHidden"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppService.Models
                     isHidden = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("appSettingsDictionary"))
+                if (property.NameEquals("appSettingsDictionary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService.Models
                     appSettingsDictionary = dictionary;
                     continue;
                 }
-                if (property.NameEquals("siteConfigPropertiesDictionary"))
+                if (property.NameEquals("siteConfigPropertiesDictionary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

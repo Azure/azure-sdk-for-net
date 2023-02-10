@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
             writer.WriteEndObject();
         }
@@ -47,16 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "UrlPath": return DeliveryRuleUriPathCondition.DeserializeDeliveryRuleUriPathCondition(element);
                 }
             }
-            MatchVariable name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = new MatchVariable(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new DeliveryRuleCondition(name);
+            return UnknownDeliveryRuleCondition.DeserializeUnknownDeliveryRuleCondition(element);
         }
     }
 }

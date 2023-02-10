@@ -6,40 +6,43 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-87ef46f6db2a39f9c4e4f291bde5b174-29ec9d5b659271a0-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044) azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "4b2042603213f71ec81df8dd728cdac0",
+        "traceparent": "00-a0cb82ee67c36c1bcf03d4ca12f7b6b8-8c708f77f3b53706-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "a5d7aa55d648917d1952033ffa2fc914",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "647",
+        "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Mar 2022 02:33:36 GMT",
+        "Date": "Wed, 03 Aug 2022 17:14:48 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a9858ee9-50fb-4a69-b0bb-32173c2b6317",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "a9858ee9-50fb-4a69-b0bb-32173c2b6317",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220307T023336Z:a9858ee9-50fb-4a69-b0bb-32173c2b6317"
+        "x-ms-correlation-request-id": "c01633ea-5e38-4c5b-9443-a53f459d147b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11890",
+        "x-ms-request-id": "c01633ea-5e38-4c5b-9443-a53f459d147b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220803T171449Z:c01633ea-5e38-4c5b-9443-a53f459d147b"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
         "tags": {
-          "tagKey1": "tagValue1",
-          "tagKey2": "tagValue2",
-          "TagKey-3829": "TagValue-1478",
-          "TagKey-8632": "TagValue-622",
-          "TagKey-1884": "TagValue-5685",
-          "TagKey-9159": "TagValue-5509",
-          "TagKey-8053": "TagValue-1419",
-          "TagKey-4768": "TagValue-5890"
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
         },
         "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
@@ -53,15 +56,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Default-AppConfiguration-2496?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Default-AppConfiguration-5229?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "20",
+        "Content-Length": "21",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044) azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "7922f9f605428a4b9fd1c2ba6539583c",
+        "traceparent": "00-4ec374524a558f43128d5e08957867bc-4b7cdd595945d9a3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "f229bc2bb0a97aa571cc4f485c4a07f7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -70,39 +74,39 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "265",
+        "Content-Length": "255",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Mar 2022 02:33:38 GMT",
+        "Date": "Wed, 03 Aug 2022 17:14:49 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "07d27afd-6d4b-4ccd-bc9f-f3916c3680ed",
-        "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "07d27afd-6d4b-4ccd-bc9f-f3916c3680ed",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220307T023338Z:07d27afd-6d4b-4ccd-bc9f-f3916c3680ed"
+        "x-ms-correlation-request-id": "e0d640bc-3fd7-4f1f-a0e0-802b4c845d4a",
+        "x-ms-ratelimit-remaining-subscription-writes": "1137",
+        "x-ms-request-id": "e0d640bc-3fd7-4f1f-a0e0-802b4c845d4a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220803T171450Z:e0d640bc-3fd7-4f1f-a0e0-802b4c845d4a"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-AppConfiguration-2496",
-        "name": "Default-AppConfiguration-2496",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-AppConfiguration-5229",
+        "name": "Default-AppConfiguration-5229",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus",
-        "tags": {},
         "properties": {
           "provisioningState": "Succeeded"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-AppConfiguration-2496/providers/Microsoft.AppConfiguration/configurationStores/testapp-884?api-version=2021-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-AppConfiguration-5229/providers/Microsoft.AppConfiguration/configurationStores/testapp-7465?api-version=2022-05-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "105",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-ResourceManager.AppConfiguration/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044) azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "890ec691ddec8c2327e7665d3b1f89ea",
+        "traceparent": "00-1e39abf4417ab6e67bdf784953b6fe77-e243465e8b7144dc-00",
+        "User-Agent": "azsdk-net-ResourceManager.AppConfiguration/1.0.0-alpha.20220804.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "91d3aadcc65d1d5fdbd3f1e016dff2ee",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -117,29 +121,29 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/operationsStatus/2795fb07-91f0-40c3-9d3c-f8b29e052f6b?api-version=2021-10-01-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/operationsStatus/kOLjJQi6esVYetaXUwv7mfxmFRLs0uRm0x7xSl9BmVQ?api-version=2022-05-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "575",
+        "Content-Length": "578",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Mar 2022 02:33:45 GMT",
+        "Date": "Wed, 03 Aug 2022 17:14:53 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "10",
         "Server": "nginx/1.17.10",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "890ec691ddec8c2327e7665d3b1f89ea",
-        "x-ms-correlation-request-id": "39d21da0-5c20-46b4-b65b-db9cc7dd97e7",
-        "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "c128a9f8-4b47-4d6e-ac72-4e8a7a3756ca",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220307T023345Z:39d21da0-5c20-46b4-b65b-db9cc7dd97e7"
+        "x-ms-client-request-id": "91d3aadcc65d1d5fdbd3f1e016dff2ee",
+        "x-ms-correlation-request-id": "e8e5b86c-e347-483a-a927-7019d03f7fc9",
+        "x-ms-ratelimit-remaining-subscription-writes": "1136",
+        "x-ms-request-id": "5407e9c1-9600-4e12-bc5e-92d643786b2c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220803T171453Z:e8e5b86c-e347-483a-a927-7019d03f7fc9"
       },
       "ResponseBody": {
         "type": "Microsoft.AppConfiguration/configurationStores",
         "location": "eastus",
         "properties": {
           "provisioningState": "Creating",
-          "creationDate": "2022-03-07T02:33:44.020413\u002B00:00",
+          "creationDate": "2022-08-03T17:14:52.2088886\u002B00:00",
           "endpoint": null,
           "encryption": null,
           "privateEndpointConnections": null,
@@ -151,83 +155,85 @@
           "name": "Standard"
         },
         "systemData": null,
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-AppConfiguration-2496/providers/Microsoft.AppConfiguration/configurationStores/testapp-884",
-        "name": "testapp-884",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-AppConfiguration-5229/providers/Microsoft.AppConfiguration/configurationStores/testapp-7465",
+        "name": "testapp-7465",
         "tags": {}
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/operationsStatus/2795fb07-91f0-40c3-9d3c-f8b29e052f6b?api-version=2021-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/operationsStatus/kOLjJQi6esVYetaXUwv7mfxmFRLs0uRm0x7xSl9BmVQ?api-version=2022-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044) azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "13fb32a01cb11c0afeec1a1ee52d63b1",
+        "traceparent": "00-1e39abf4417ab6e67bdf784953b6fe77-bbe49b1e2babe19b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "1e5210489440f5cdc9d4cddcb4995bed",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/operationsStatus/2795fb07-91f0-40c3-9d3c-f8b29e052f6b?api-version=2021-10-01-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/operationsStatus/kOLjJQi6esVYetaXUwv7mfxmFRLs0uRm0x7xSl9BmVQ?api-version=2022-05-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "248",
+        "Content-Length": "262",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Mar 2022 02:33:45 GMT",
+        "Date": "Wed, 03 Aug 2022 17:14:53 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "nginx/1.17.10",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "13fb32a01cb11c0afeec1a1ee52d63b1",
-        "x-ms-correlation-request-id": "ef5f79ae-cce8-45ad-92e4-1e12a4135dbc",
-        "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "771f0c42-ef16-4d2c-938f-5582948f0b22",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220307T023345Z:ef5f79ae-cce8-45ad-92e4-1e12a4135dbc"
+        "x-ms-client-request-id": "1e5210489440f5cdc9d4cddcb4995bed",
+        "x-ms-correlation-request-id": "7ded15ae-c684-482c-90c0-b3016e6d427b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11889",
+        "x-ms-request-id": "49288a86-38bd-4065-85b8-df3d1094340d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220803T171453Z:7ded15ae-c684-482c-90c0-b3016e6d427b"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/operationsStatus/2795fb07-91f0-40c3-9d3c-f8b29e052f6b",
-        "name": "2795fb07-91f0-40c3-9d3c-f8b29e052f6b",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/operationsStatus/kOLjJQi6esVYetaXUwv7mfxmFRLs0uRm0x7xSl9BmVQ",
+        "name": "kOLjJQi6esVYetaXUwv7mfxmFRLs0uRm0x7xSl9BmVQ",
         "status": "Succeeded",
         "error": null
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-AppConfiguration-2496/providers/Microsoft.AppConfiguration/configurationStores/testapp-884?api-version=2021-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-AppConfiguration-5229/providers/Microsoft.AppConfiguration/configurationStores/testapp-7465?api-version=2022-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044) azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "7352cf3958af73c38a39c8777cc74fc4",
+        "traceparent": "00-1e39abf4417ab6e67bdf784953b6fe77-16b3a6197ac3694c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "330d5a5c907b3143b0a26586bc31d41e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "907",
+        "Content-Length": "910",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Mar 2022 02:33:45 GMT",
-        "ETag": "W/\u002261013f31-0000-0100-0000-62256f090000\u0022",
+        "Date": "Wed, 03 Aug 2022 17:14:53 GMT",
+        "ETag": "W/\u00220300b6ae-0000-0100-0000-62eaad0c0000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "nginx/1.17.10",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "7352cf3958af73c38a39c8777cc74fc4",
-        "x-ms-correlation-request-id": "a9169db8-c7a1-47da-900e-10108148b965",
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "304c45b9-ff1a-47c8-b2c7-70e053d63b8c",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220307T023346Z:a9169db8-c7a1-47da-900e-10108148b965"
+        "x-ms-client-request-id": "330d5a5c907b3143b0a26586bc31d41e",
+        "x-ms-correlation-request-id": "e74174d9-3947-4177-bb8c-3ad7e32df768",
+        "x-ms-ratelimit-remaining-subscription-reads": "11888",
+        "x-ms-request-id": "ee717fba-a0ac-450d-a856-aad1305cfe0f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220803T171454Z:e74174d9-3947-4177-bb8c-3ad7e32df768"
       },
       "ResponseBody": {
         "type": "Microsoft.AppConfiguration/configurationStores",
         "location": "eastus",
         "properties": {
           "provisioningState": "Succeeded",
-          "creationDate": "2022-03-07T02:33:44\u002B00:00",
-          "endpoint": "https://testapp-884.azconfig.io",
+          "creationDate": "2022-08-03T17:14:52\u002B00:00",
+          "endpoint": "https://testapp-7465.azconfig.io",
           "encryption": {
             "keyVaultProperties": null
           },
@@ -241,26 +247,27 @@
           "name": "standard"
         },
         "systemData": {
-          "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+          "createdBy": "18521949-6d6e-454b-b208-4d3141df8607",
           "createdByType": "Application",
-          "createdAt": "2022-03-07T02:33:44\u002B00:00",
-          "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+          "createdAt": "2022-08-03T17:14:52\u002B00:00",
+          "lastModifiedBy": "18521949-6d6e-454b-b208-4d3141df8607",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2022-03-07T02:33:45\u002B00:00"
+          "lastModifiedAt": "2022-08-03T17:14:52\u002B00:00"
         },
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-2496/providers/Microsoft.AppConfiguration/configurationStores/testapp-884",
-        "name": "testapp-884",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-5229/providers/Microsoft.AppConfiguration/configurationStores/testapp-7465",
+        "name": "testapp-7465",
         "tags": {}
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-2496/providers/Microsoft.AppConfiguration/configurationStores/testapp-884?api-version=2021-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-5229/providers/Microsoft.AppConfiguration/configurationStores/testapp-7465?api-version=2022-05-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.AppConfiguration/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044) azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "09bcc5047524f539bb8ce48f031def93",
+        "traceparent": "00-0d67311487a09b44b84cd3588c39ff66-712a786682ce9f02-00",
+        "User-Agent": "azsdk-net-ResourceManager.AppConfiguration/1.0.0-alpha.20220804.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "0598f5cbd38cbaad48969dd1de1d7c91",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -268,133 +275,456 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 07 Mar 2022 02:33:52 GMT",
+        "Date": "Wed, 03 Aug 2022 17:14:58 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "nginx/1.17.10",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "09bcc5047524f539bb8ce48f031def93",
-        "x-ms-correlation-request-id": "d7c2d842-76c4-41d6-b8bc-cc60195dd0f9",
-        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
-        "x-ms-request-id": "2aa4f8b7-36f3-49bc-a278-a3f3db64e85e",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220307T023352Z:d7c2d842-76c4-41d6-b8bc-cc60195dd0f9"
+        "x-ms-client-request-id": "0598f5cbd38cbaad48969dd1de1d7c91",
+        "x-ms-correlation-request-id": "8313e8d8-92e2-4bb8-9d3c-ab43c4556167",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14993",
+        "x-ms-request-id": "6a2b12ff-8392-4f61-9049-403562f48ccf",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220803T171459Z:8313e8d8-92e2-4bb8-9d3c-ab43c4556167"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/deletedConfigurationStores?api-version=2021-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/deletedConfigurationStores?api-version=2022-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.AppConfiguration/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044) azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "1f1a569d5a71c38d965db7227334706c",
+        "traceparent": "00-b29390aea0762f029b13868faa07ea22-80c1053be1955f4c-00",
+        "User-Agent": "azsdk-net-ResourceManager.AppConfiguration/1.0.0-alpha.20220804.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "be11af0055018860ad53ebe5f3715292",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "2271",
+        "Content-Length": "16736",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Mar 2022 02:33:53 GMT",
+        "Date": "Wed, 03 Aug 2022 17:15:00 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "49a04e37-be3e-4dad-bf60-8e3c84b8dff7",
+        "x-ms-correlation-request-id": "7f1a3815-27c3-4c6b-bf21-ca607c047e01",
         "x-ms-original-request-ids": [
-          "c126f280-cd61-4da0-9a74-ee031d37ab71",
-          "b68a11a6-ee09-4f97-8b29-c500fe6237c7",
-          "59043de8-26e9-46e3-9e9c-817a28964599",
-          "6a8cb2ca-5ab9-46a4-adf2-91e6da1335c6",
-          "7491faa2-b18d-4537-bb6b-6f561f176438",
-          "9d5b4f8e-8f55-4bf2-9dfa-2a4266ae93c9",
-          "7b3c31ec-237b-4965-adbc-39abce79635b",
-          "1b6e0a04-081d-409f-8fa8-917dec2f1ada",
-          "0e3bbd16-3a23-409c-9a67-69bac51a8758",
-          "440975f9-5bbd-4726-a23e-fdd079711e12",
-          "a7c7f51b-a138-4a01-a860-b5d3c289b4cc",
-          "06beef6d-6169-4809-978e-67de3690d399",
-          "a11eb58d-ced3-48ed-9868-2583eaa40979",
-          "d76edccd-4220-4e39-b4e9-3c519859e60a",
-          "e1771a59-7f27-4bb2-a34d-8d7f7bcbce50",
-          "2c3decce-7334-443c-b3b7-f6bef9a24004",
-          "2bd45c1f-c1bc-4221-beda-666788caf38b",
-          "fa477ca8-c60a-4ad1-bdfe-bbcf0c52002a",
-          "e5c298c8-f8a3-4b2a-8392-4595629ff79e",
-          "c8eb776a-8379-48c2-aeb0-1d8ccdbadeb7",
-          "da5f71b8-57f7-46a8-ab6e-85e01399313a",
-          "119c3e1d-308c-4057-aff3-65170a23098e",
-          "64ac0e46-1a4e-48dd-a296-1c67c9a5d4f7",
-          "7cfa098a-a807-41eb-930d-77b0c9c12a96",
-          "b739004a-f91e-483a-ab6e-53ee777ef8da",
-          "d0c676f3-cf77-4e91-a2f4-ba6c707f407d",
-          "6a008447-783c-438f-bf2f-f09a9750f94b",
-          "37b803d9-dda6-4d5a-93e8-c815d02110ce",
-          "db9b96f0-9a6a-45e3-82e6-24f056115ab7",
-          "b2b45a78-48ad-4101-915e-f5943dc37a1d",
-          "269ab06c-3abd-4441-a274-9e2209091c2c",
-          "d57adfa5-fbe5-4b68-98d3-25c341ff1967"
+          "8dd051e3-fe25-459d-bc7a-ef8ba51da813",
+          "0536ab6b-3add-46bd-ae70-f484320f5236",
+          "c9dbea75-a552-4a57-936d-ae5e8c9ca705",
+          "ca349c1a-ecfb-4d4e-8b16-d13d722cb22b",
+          "826547e8-ff11-4775-bd4e-8b022be0835c",
+          "13dd35c4-c3c0-459a-a938-ed729c90e5b0",
+          "a7c67e01-db6a-48ff-bb10-d52a50c7dbdc",
+          "5899b212-d1ad-4816-9328-4530ec8b132d",
+          "bf55e002-6e84-42bf-85a9-50ea17fffda3",
+          "cd2bba01-f084-4de2-9ac8-f5b170ba43f7",
+          "ba345d93-ae71-44e1-b6aa-4b76424af272",
+          "617bdfa0-7f99-4823-a376-f53f64f5b3dc",
+          "7253c124-c0ad-4f03-9495-371b26cc7558",
+          "071e0fe8-275e-4dba-a122-55e1fdac44e0",
+          "f72c75ea-36d3-447b-badb-e7197cacfea0",
+          "9ae75bf0-aba0-416d-916b-82ce157d65d7",
+          "4631cd02-892e-490b-8801-cc0dc5e4f54d",
+          "37399e2c-b60a-4d43-b65b-c1ee031f0421",
+          "c3c3d127-e3ad-428d-a0de-e5621f69fe44",
+          "41df72dd-2ab2-40f2-991b-d1aeb06ec8aa",
+          "639da0da-3ad3-46f4-b1d5-07b992b0b901",
+          "a54575db-f13b-406f-9941-aaeebf7cfaa6",
+          "594e1f1a-b98d-4ffd-bbb5-4fb74e67dbac",
+          "b1f4be7d-f6e3-446e-a829-11bc01c4ea54",
+          "723416d7-65ee-4f9c-8feb-c7ef79a4105d",
+          "4486c150-78a2-4c5c-a9c4-6eb3d1c47001",
+          "e7c915c5-1c7a-4086-a2b8-4f0133d2def1",
+          "57dbb5dd-f04a-4bf2-ac6d-242620dd235e",
+          "409ad8b8-2d9e-4aee-9273-b78df46d0d67",
+          "403c1f99-1c85-401c-9528-bd966d5f5cb4",
+          "23e4840c-4bc4-4fc7-bc8c-1689ee896876",
+          "8676278b-149a-4c3a-ad24-50048cc42c64"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": "11996",
-        "x-ms-request-id": "49a04e37-be3e-4dad-bf60-8e3c84b8dff7",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220307T023354Z:49a04e37-be3e-4dad-bf60-8e3c84b8dff7"
+        "x-ms-ratelimit-remaining-subscription-reads": "11887",
+        "x-ms-request-id": "7f1a3815-27c3-4c6b-bf21-ca607c047e01",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220803T171501Z:7f1a3815-27c3-4c6b-bf21-ca607c047e01"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-2154",
-            "name": "testapp-2154",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-2867",
+            "name": "testapp-2867",
             "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
             "properties": {
-              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-5044/providers/Microsoft.AppConfiguration/configurationStores/testapp-2154",
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-78/providers/Microsoft.AppConfiguration/configurationStores/testapp-2867",
               "location": "eastus",
-              "deletionDate": "2022-03-07T02:14:11\u002B00:00",
-              "scheduledPurgeDate": "2022-03-14T02:14:11\u002B00:00",
+              "deletionDate": "2022-08-03T17:10:50\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:10:50\u002B00:00",
               "tags": {},
               "purgeProtectionEnabled": false
             }
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-444",
-            "name": "testapp-444",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-2910",
+            "name": "testapp-2910",
             "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
             "properties": {
-              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-3793/providers/Microsoft.AppConfiguration/configurationStores/testapp-444",
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-4153/providers/Microsoft.AppConfiguration/configurationStores/testapp-2910",
               "location": "eastus",
-              "deletionDate": "2022-03-07T02:14:34\u002B00:00",
-              "scheduledPurgeDate": "2022-03-14T02:14:34\u002B00:00",
+              "deletionDate": "2022-08-03T17:14:40\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:14:40\u002B00:00",
               "tags": {},
               "purgeProtectionEnabled": false
             }
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-884",
-            "name": "testapp-884",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-2985",
+            "name": "testapp-2985",
             "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
             "properties": {
-              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-2496/providers/Microsoft.AppConfiguration/configurationStores/testapp-884",
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-4313/providers/Microsoft.AppConfiguration/configurationStores/testapp-2985",
               "location": "eastus",
-              "deletionDate": "2022-03-07T02:33:46\u002B00:00",
-              "scheduledPurgeDate": "2022-03-14T02:33:46\u002B00:00",
+              "deletionDate": "2022-08-03T17:10:59\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:10:59\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-3452",
+            "name": "testapp-3452",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-599/providers/Microsoft.AppConfiguration/configurationStores/testapp-3452",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:11:14\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:11:14\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-3455",
+            "name": "testapp-3455",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-9466/providers/Microsoft.AppConfiguration/configurationStores/testapp-3455",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:14:08\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:14:08\u002B00:00",
+              "tags": {
+                "key1": "value1"
+              },
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-3652",
+            "name": "testapp-3652",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-417/providers/Microsoft.AppConfiguration/configurationStores/testapp-3652",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:11:33\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:11:33\u002B00:00",
+              "tags": {
+                "key1": "value1"
+              },
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-3860",
+            "name": "testapp-3860",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-6672/providers/Microsoft.AppConfiguration/configurationStores/testapp-3860",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:09:32\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:09:32\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-3931",
+            "name": "testapp-3931",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-3306/providers/Microsoft.AppConfiguration/configurationStores/testapp-3931",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:14:30\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:14:30\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-4512",
+            "name": "testapp-4512",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-8400/providers/Microsoft.AppConfiguration/configurationStores/testapp-4512",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:12:35\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:12:35\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-4541",
+            "name": "testapp-4541",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-4068/providers/Microsoft.AppConfiguration/configurationStores/testapp-4541",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:10:38\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:10:38\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-4736",
+            "name": "testapp-4736",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-6672/providers/Microsoft.AppConfiguration/configurationStores/testapp-4736",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:12:24\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:12:24\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-5073",
+            "name": "testapp-5073",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-8369/providers/Microsoft.AppConfiguration/configurationStores/testapp-5073",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:12:12\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:12:12\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-5342",
+            "name": "testapp-5342",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-888/providers/Microsoft.AppConfiguration/configurationStores/testapp-5342",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:09:44\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:09:44\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-6159",
+            "name": "testapp-6159",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-2694/providers/Microsoft.AppConfiguration/configurationStores/testapp-6159",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:14:50\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:14:50\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-6671",
+            "name": "testapp-6671",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-6672/providers/Microsoft.AppConfiguration/configurationStores/testapp-6671",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:09:32\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:09:32\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-6961",
+            "name": "testapp-6961",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-9982/providers/Microsoft.AppConfiguration/configurationStores/testapp-6961",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:10:35\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:10:35\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-7145",
+            "name": "testapp-7145",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-2751/providers/Microsoft.AppConfiguration/configurationStores/testapp-7145",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:12:45\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:12:45\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-7465",
+            "name": "testapp-7465",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-5229/providers/Microsoft.AppConfiguration/configurationStores/testapp-7465",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:14:55\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:14:55\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-7713",
+            "name": "testapp-7713",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-599/providers/Microsoft.AppConfiguration/configurationStores/testapp-7713",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:11:14\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:11:14\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-7786",
+            "name": "testapp-7786",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-6825/providers/Microsoft.AppConfiguration/configurationStores/testapp-7786",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:09:20\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:09:20\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-8115",
+            "name": "testapp-8115",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-4068/providers/Microsoft.AppConfiguration/configurationStores/testapp-8115",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:10:38\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:10:38\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-825",
+            "name": "testapp-825",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-4031/providers/Microsoft.AppConfiguration/configurationStores/testapp-825",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:10:11\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:10:11\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-8380",
+            "name": "testapp-8380",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-5301/providers/Microsoft.AppConfiguration/configurationStores/testapp-8380",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:13:10\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:13:10\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-9308",
+            "name": "testapp-9308",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-4953/providers/Microsoft.AppConfiguration/configurationStores/testapp-9308",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:13:03\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:13:03\u002B00:00",
+              "tags": {
+                "key2": "vaule2"
+              },
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-9678",
+            "name": "testapp-9678",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-3586/providers/Microsoft.AppConfiguration/configurationStores/testapp-9678",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:13:18\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:13:18\u002B00:00",
+              "tags": {
+                "key1": "Value1",
+                "key2": "vaule2"
+              },
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-9714",
+            "name": "testapp-9714",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-3466/providers/Microsoft.AppConfiguration/configurationStores/testapp-9714",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:11:22\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:11:22\u002B00:00",
+              "tags": {},
+              "purgeProtectionEnabled": false
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/locations/eastus/deletedConfigurationStores/testapp-9789",
+            "name": "testapp-9789",
+            "type": "Microsoft.AppConfiguration/deletedConfigurationStores",
+            "properties": {
+              "configurationStoreId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-appconfiguration-6756/providers/Microsoft.AppConfiguration/configurationStores/testapp-9789",
+              "location": "eastus",
+              "deletionDate": "2022-08-03T17:13:56\u002B00:00",
+              "scheduledPurgeDate": "2022-08-10T17:13:56\u002B00:00",
               "tags": {},
               "purgeProtectionEnabled": false
             }
           }
         ],
-        "nextLink": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/deletedConfigurationStores?api-version=2021-10-01-preview\u0026%24skiptoken=VY3LTsMwEEX%2fxULsHD8atU2kClWIHaxSPsBxJmUUYo88k4Co%2bu%2bEJdurc869qQTf8oppYtXe1Mu5u7x3qlUfIsStMXNI4QozJKnCz1Kgink2vPQcC5JgTmyG3oV%2bP1pdH%2faNrnt%2f0M3OgrYOPIxNdH4XDZW84gCFzRvGkjmPUp2JnnMa8bqU8JcyA3yCwPBv7CQX4KdAqNdN37CTt95pZ7cDTQVWhK%2fHB56QLnmCdBJgCUT6eKzV%2ff4L"
+        "nextLink": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/deletedConfigurationStores?api-version=2022-05-01\u0026%24skiptoken=VY3LbsIwEEX%2fxarYOXbMIzgSqhBiV1aBD3CcSbDS2CPPBFVF%2fHvTJdurc859igg%2f%2fBXiSKJ%2bivOxud4aUYs7M1Kt1OSiG2CCyIX7nTMUPk2K5pZ8DsghRVJdW7p212u5qXZWblpTSbvWIHUJBnrrS7P2CnN6hA4yqUvwOVHquTginlLswzBn959SHXwDQ%2fc2Npwy0KfDIB%2bLvmAHo42RerscrD5oDHhNI8QDA7FDlLbaW%2fF6%2fQE%3d"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/deletedConfigurationStores?api-version=2021-10-01-preview\u0026%24skiptoken=VY3LTsMwEEX%2fxULsHD8atU2kClWIHaxSPsBxJmUUYo88k4Co%2bu%2bEJdurc869qQTf8oppYtXe1Mu5u7x3qlUfIsStMXNI4QozJKnCz1Kgink2vPQcC5JgTmyG3oV%2bP1pdH%2faNrnt%2f0M3OgrYOPIxNdH4XDZW84gCFzRvGkjmPUp2JnnMa8bqU8JcyA3yCwPBv7CQX4KdAqNdN37CTt95pZ7cDTQVWhK%2fHB56QLnmCdBJgCUT6eKzV%2ff4L",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/deletedConfigurationStores?api-version=2022-05-01\u0026%24skiptoken=VY3LbsIwEEX%2fxarYOXbMIzgSqhBiV1aBD3CcSbDS2CPPBFVF%2fHvTJdurc859igg%2f%2fBXiSKJ%2bivOxud4aUYs7M1Kt1OSiG2CCyIX7nTMUPk2K5pZ8DsghRVJdW7p212u5qXZWblpTSbvWIHUJBnrrS7P2CnN6hA4yqUvwOVHquTginlLswzBn959SHXwDQ%2fc2Npwy0KfDIB%2bLvmAHo42RerscrD5oDHhNI8QDA7FDlLbaW%2fF6%2fQE%3d",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.AppConfiguration/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044) azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET 6.0.2; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "cb66354ae2a494b4d5739a9becc1a128",
+        "traceparent": "00-17913bfca176333d3932f83c831f1de0-4a6eadff21c5dc83-00",
+        "User-Agent": "azsdk-net-ResourceManager.AppConfiguration/1.0.0-alpha.20220804.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "a00bd425e560f66f76e0386b650f8c01",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -403,16 +733,16 @@
         "Cache-Control": "no-cache",
         "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Mar 2022 02:33:54 GMT",
+        "Date": "Wed, 03 Aug 2022 17:15:01 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "544797f8-489d-4097-ab4d-127bd5f3dd10",
-        "x-ms-original-request-ids": "c85feee9-5eb0-49db-b16f-85e946db05fa",
-        "x-ms-ratelimit-remaining-subscription-reads": "11995",
-        "x-ms-request-id": "544797f8-489d-4097-ab4d-127bd5f3dd10",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220307T023354Z:544797f8-489d-4097-ab4d-127bd5f3dd10"
+        "x-ms-correlation-request-id": "b3dda8a2-f43f-48a4-8d10-fa5236dc4640",
+        "x-ms-original-request-ids": "d7d393ef-f73d-4f1b-8db7-e6ba901b805d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11886",
+        "x-ms-request-id": "b3dda8a2-f43f-48a4-8d10-fa5236dc4640",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220803T171501Z:b3dda8a2-f43f-48a4-8d10-fa5236dc4640"
       },
       "ResponseBody": {
         "value": []
@@ -420,7 +750,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "394639850",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1187137079",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

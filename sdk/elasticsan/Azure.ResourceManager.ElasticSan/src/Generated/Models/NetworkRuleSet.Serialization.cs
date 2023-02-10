@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
-                writer.WritePropertyName("virtualNetworkRules");
+                writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         internal static NetworkRuleSet DeserializeNetworkRuleSet(JsonElement element)
         {
-            Optional<IList<VirtualNetworkRule>> virtualNetworkRules = default;
+            Optional<IList<ElasticSanVirtualNetworkRule>> virtualNetworkRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualNetworkRules"))
+                if (property.NameEquals("virtualNetworkRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualNetworkRule> array = new List<VirtualNetworkRule>();
+                    List<ElasticSanVirtualNetworkRule> array = new List<ElasticSanVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkRule.DeserializeVirtualNetworkRule(item));
+                        array.Add(ElasticSanVirtualNetworkRule.DeserializeElasticSanVirtualNetworkRule(item));
                     }
                     virtualNetworkRules = array;
                     continue;

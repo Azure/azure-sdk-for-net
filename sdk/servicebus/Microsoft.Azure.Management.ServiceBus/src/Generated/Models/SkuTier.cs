@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.ServiceBus.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SkuTier.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum SkuTier
+    public static class SkuTier
     {
-        [EnumMember(Value = "Basic")]
-        Basic,
-        [EnumMember(Value = "Standard")]
-        Standard,
-        [EnumMember(Value = "Premium")]
-        Premium
-    }
-    internal static class SkuTierEnumExtension
-    {
-        internal static string ToSerializedValue(this SkuTier? value)
-        {
-            return value == null ? null : ((SkuTier)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this SkuTier value)
-        {
-            switch( value )
-            {
-                case SkuTier.Basic:
-                    return "Basic";
-                case SkuTier.Standard:
-                    return "Standard";
-                case SkuTier.Premium:
-                    return "Premium";
-            }
-            return null;
-        }
-
-        internal static SkuTier? ParseSkuTier(this string value)
-        {
-            switch( value )
-            {
-                case "Basic":
-                    return SkuTier.Basic;
-                case "Standard":
-                    return SkuTier.Standard;
-                case "Premium":
-                    return SkuTier.Premium;
-            }
-            return null;
-        }
+        public const string Basic = "Basic";
+        public const string Standard = "Standard";
+        public const string Premium = "Premium";
     }
 }

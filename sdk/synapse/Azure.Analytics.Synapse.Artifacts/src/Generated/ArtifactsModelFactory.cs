@@ -34,13 +34,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="isPartiallyFailed"> Is link connection partially failed. </param>
         /// <param name="startTime"> Link connection start time. </param>
         /// <param name="stopTime"> Link connection stop time. </param>
-        /// <param name="status"> Link connection status. </param>
+        /// <param name="status"> Link connection status, please refer to this [articles](https://learn.microsoft.com/azure/synapse-analytics/synapse-link/sql-database-synapse-link#monitoring) for details. </param>
         /// <param name="continuousRunId"> Link connection&apos;s corresponding continuous run id. </param>
         /// <param name="error"> Link connection error. </param>
+        /// <param name="refreshStatus"> Link connection refresh status. </param>
+        /// <param name="landingZoneCredentialExpireTime"> Link connection landing zone credential expire time. </param>
         /// <returns> A new <see cref="Models.LinkConnectionDetailedStatus"/> instance for mocking. </returns>
-        public static LinkConnectionDetailedStatus LinkConnectionDetailedStatus(string id = null, string name = null, bool? isApplyingChanges = null, bool? isPartiallyFailed = null, object startTime = null, object stopTime = null, string status = null, string continuousRunId = null, object error = null)
+        public static LinkConnectionDetailedStatus LinkConnectionDetailedStatus(string id = null, string name = null, bool? isApplyingChanges = null, bool? isPartiallyFailed = null, object startTime = null, object stopTime = null, string status = null, string continuousRunId = null, object error = null, LinkConnectionRefreshStatus refreshStatus = null, DateTimeOffset? landingZoneCredentialExpireTime = null)
         {
-            return new LinkConnectionDetailedStatus(id, name, isApplyingChanges, isPartiallyFailed, startTime, stopTime, status, continuousRunId, error);
+            return new LinkConnectionDetailedStatus(id, name, isApplyingChanges, isPartiallyFailed, startTime, stopTime, status, continuousRunId, error, refreshStatus, landingZoneCredentialExpireTime);
+        }
+
+        /// <summary> Initializes a new instance of LinkConnectionRefreshStatus. </summary>
+        /// <param name="refreshStatus"> Link connection refresh status. </param>
+        /// <param name="errorMessage"> Link connection refresh error message. </param>
+        /// <returns> A new <see cref="Models.LinkConnectionRefreshStatus"/> instance for mocking. </returns>
+        public static LinkConnectionRefreshStatus LinkConnectionRefreshStatus(string refreshStatus = null, string errorMessage = null)
+        {
+            return new LinkConnectionRefreshStatus(refreshStatus, errorMessage);
         }
 
         /// <summary> Initializes a new instance of LinkTableListResponse. </summary>
@@ -76,15 +87,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of LinkTableStatus. </summary>
-        /// <param name="id"> Link table id. </param>
-        /// <param name="status"> Link table status. </param>
+        /// <param name="id"> ID provided by the client. </param>
+        /// <param name="status"> Link table status, please refer to this [articles](https://learn.microsoft.com/azure/synapse-analytics/synapse-link/sql-database-synapse-link#monitoring) for details. </param>
         /// <param name="errorMessage"> Link table error message. </param>
         /// <param name="startTime"> Link table start time. </param>
         /// <param name="stopTime"> Link table stop time. </param>
+        /// <param name="linkTableId"> Link table ID. </param>
+        /// <param name="errorCode"> Link table error code. </param>
+        /// <param name="lastProcessedData"> Link table last processed data time. </param>
+        /// <param name="lastTransactionCommitTime"> Link table last transaction commit time. </param>
         /// <returns> A new <see cref="Models.LinkTableStatus"/> instance for mocking. </returns>
-        public static LinkTableStatus LinkTableStatus(string id = null, string status = null, string errorMessage = null, object startTime = null, object stopTime = null)
+        public static LinkTableStatus LinkTableStatus(string id = null, string status = null, string errorMessage = null, object startTime = null, object stopTime = null, string linkTableId = null, string errorCode = null, DateTimeOffset? lastProcessedData = null, DateTimeOffset? lastTransactionCommitTime = null)
         {
-            return new LinkTableStatus(id, status, errorMessage, startTime, stopTime);
+            return new LinkTableStatus(id, status, errorMessage, startTime, stopTime, linkTableId, errorCode, lastProcessedData, lastTransactionCommitTime);
         }
 
         /// <summary> Initializes a new instance of MetastoreRegistrationResponse. </summary>
@@ -321,9 +336,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of CreateRunResponse. </summary>
         /// <param name="runId"> Identifier of a run. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <returns> A new <see cref="Models.CreateRunResponse"/> instance for mocking. </returns>
         public static CreateRunResponse CreateRunResponse(string runId = null)
         {
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+
             return new CreateRunResponse(runId);
         }
 
@@ -695,6 +716,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new WorkspaceIdentity(type, principalId, tenantId);
         }
 
+        /// <summary> Initializes a new instance of ExposureControlResponse. </summary>
+        /// <param name="featureName"> The feature name. </param>
+        /// <param name="value"> The feature value. </param>
+        /// <returns> A new <see cref="Models.ExposureControlResponse"/> instance for mocking. </returns>
+        public static ExposureControlResponse ExposureControlResponse(string featureName = null, string value = null)
+        {
+            return new ExposureControlResponse(featureName, value);
+        }
+
         /// <summary> Initializes a new instance of RerunTriggerListResponse. </summary>
         /// <param name="value"> List of rerun triggers. </param>
         /// <param name="nextLink"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
@@ -704,15 +734,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             value ??= new List<RerunTriggerResource>();
 
             return new RerunTriggerListResponse(value?.ToList(), nextLink);
-        }
-
-        /// <summary> Initializes a new instance of ExposureControlResponse. </summary>
-        /// <param name="featureName"> The feature name. </param>
-        /// <param name="value"> The feature value. </param>
-        /// <returns> A new <see cref="Models.ExposureControlResponse"/> instance for mocking. </returns>
-        public static ExposureControlResponse ExposureControlResponse(string featureName = null, string value = null)
-        {
-            return new ExposureControlResponse(featureName, value);
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>

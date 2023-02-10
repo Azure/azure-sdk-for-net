@@ -6,18 +6,34 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientSecretCredentialTests : CredentialTestBase
+    public class ClientSecretCredentialTests : CredentialTestBase<ClientSecretCredentialOptions>
     {
         public ClientSecretCredentialTests(bool isAsync) : base(isAsync)
         { }
 
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
             new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            if (config.TenantId == null)
+            {
+                Assert.Ignore("Null TenantId test does not apply to this credential");
+            }
+
+            var options = new ClientSecretCredentialOptions
+            {
+                Transport = config.Transport,
+                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants
+            };
+            var pipeline = CredentialPipeline.GetInstance(options);
+            return InstrumentClient(new ClientSecretCredential(config.TenantId, ClientId, "secret", options, pipeline, null));
+        }
 
         [Test]
         public void VerifyCtorParametersValidation()
@@ -38,7 +54,8 @@ namespace Azure.Identity.Tests
         {
             TestSetup();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            var options = new ClientSecretCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
             ClientSecretCredential client =
                 InstrumentClient(new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
 

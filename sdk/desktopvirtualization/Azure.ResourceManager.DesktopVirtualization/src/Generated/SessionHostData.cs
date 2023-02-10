@@ -28,37 +28,37 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="objectId"> ObjectId of SessionHost. (internal use). </param>
-        /// <param name="lastHeartBeat"> Last heart beat from SessionHost. </param>
+        /// <param name="lastHeartBeatOn"> Last heart beat from SessionHost. </param>
         /// <param name="sessions"> Number of sessions on SessionHost. </param>
         /// <param name="agentVersion"> Version of agent on SessionHost. </param>
         /// <param name="allowNewSession"> Allow a new session. </param>
-        /// <param name="virtualMachineId"> Virtual Machine Id of SessionHost&apos;s underlying virtual machine. </param>
+        /// <param name="vmId"> Virtual Machine Id of SessionHost&apos;s underlying virtual machine. </param>
         /// <param name="resourceId"> Resource Id of SessionHost&apos;s underlying virtual machine. </param>
         /// <param name="assignedUser"> User assigned to SessionHost. </param>
         /// <param name="status"> Status for a SessionHost. </param>
         /// <param name="statusTimestamp"> The timestamp of the status. </param>
         /// <param name="osVersion"> The version of the OS on the session host. </param>
-        /// <param name="sxSStackVersion"> The version of the side by side stack on the session host. </param>
+        /// <param name="sxsStackVersion"> The version of the side by side stack on the session host. </param>
         /// <param name="updateState"> Update state of a SessionHost. </param>
-        /// <param name="lastUpdateOn"> The timestamp of the last update. </param>
+        /// <param name="lastUpdatedOn"> The timestamp of the last update. </param>
         /// <param name="updateErrorMessage"> The error message. </param>
         /// <param name="sessionHostHealthCheckResults"> List of SessionHostHealthCheckReports. </param>
-        internal SessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeat, int? sessions, string agentVersion, bool? allowNewSession, string virtualMachineId, string resourceId, string assignedUser, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxSStackVersion, UpdateState? updateState, DateTimeOffset? lastUpdateOn, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, resourceType, systemData)
+        internal SessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeatOn, int? sessions, string agentVersion, bool? allowNewSession, string vmId, ResourceIdentifier resourceId, string assignedUser, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxsStackVersion, SessionHostUpdateState? updateState, DateTimeOffset? lastUpdatedOn, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
-            LastHeartBeat = lastHeartBeat;
+            LastHeartBeatOn = lastHeartBeatOn;
             Sessions = sessions;
             AgentVersion = agentVersion;
             AllowNewSession = allowNewSession;
-            VirtualMachineId = virtualMachineId;
+            VmId = vmId;
             ResourceId = resourceId;
             AssignedUser = assignedUser;
             Status = status;
             StatusTimestamp = statusTimestamp;
             OSVersion = osVersion;
-            SxSStackVersion = sxSStackVersion;
+            SxsStackVersion = sxsStackVersion;
             UpdateState = updateState;
-            LastUpdateOn = lastUpdateOn;
+            LastUpdatedOn = lastUpdatedOn;
             UpdateErrorMessage = updateErrorMessage;
             SessionHostHealthCheckResults = sessionHostHealthCheckResults;
         }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> ObjectId of SessionHost. (internal use). </summary>
         public string ObjectId { get; }
         /// <summary> Last heart beat from SessionHost. </summary>
-        public DateTimeOffset? LastHeartBeat { get; set; }
+        public DateTimeOffset? LastHeartBeatOn { get; set; }
         /// <summary> Number of sessions on SessionHost. </summary>
         public int? Sessions { get; set; }
         /// <summary> Version of agent on SessionHost. </summary>
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Allow a new session. </summary>
         public bool? AllowNewSession { get; set; }
         /// <summary> Virtual Machine Id of SessionHost&apos;s underlying virtual machine. </summary>
-        public string VirtualMachineId { get; }
+        public string VmId { get; }
         /// <summary> Resource Id of SessionHost&apos;s underlying virtual machine. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> User assigned to SessionHost. </summary>
         public string AssignedUser { get; set; }
         /// <summary> Status for a SessionHost. </summary>
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> The version of the OS on the session host. </summary>
         public string OSVersion { get; set; }
         /// <summary> The version of the side by side stack on the session host. </summary>
-        public string SxSStackVersion { get; set; }
+        public string SxsStackVersion { get; set; }
         /// <summary> Update state of a SessionHost. </summary>
-        public UpdateState? UpdateState { get; set; }
+        public SessionHostUpdateState? UpdateState { get; set; }
         /// <summary> The timestamp of the last update. </summary>
-        public DateTimeOffset? LastUpdateOn { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> The error message. </summary>
         public string UpdateErrorMessage { get; set; }
         /// <summary> List of SessionHostHealthCheckReports. </summary>

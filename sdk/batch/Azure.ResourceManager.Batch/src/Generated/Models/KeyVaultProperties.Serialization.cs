@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,20 +18,25 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyIdentifier))
             {
-                writer.WritePropertyName("keyIdentifier");
-                writer.WriteStringValue(KeyIdentifier);
+                writer.WritePropertyName("keyIdentifier"u8);
+                writer.WriteStringValue(KeyIdentifier.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
 
         internal static KeyVaultProperties DeserializeKeyVaultProperties(JsonElement element)
         {
-            Optional<string> keyIdentifier = default;
+            Optional<Uri> keyIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyIdentifier"))
+                if (property.NameEquals("keyIdentifier"u8))
                 {
-                    keyIdentifier = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        keyIdentifier = null;
+                        continue;
+                    }
+                    keyIdentifier = new Uri(property.Value.GetString());
                     continue;
                 }
             }

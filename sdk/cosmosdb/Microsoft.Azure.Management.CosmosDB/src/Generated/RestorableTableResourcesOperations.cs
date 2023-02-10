@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<string>>> ListWithHttpMessagesAsync(string location, string instanceId, string restoreLocation = default(string), string restoreTimestampInUtc = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<RestorableTableResourcesGetResult>>> ListWithHttpMessagesAsync(string location, string instanceId, string restoreLocation = default(string), string restoreTimestampInUtc = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<string>>();
+            var _result = new AzureOperationResponse<IEnumerable<RestorableTableResourcesGetResult>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<string>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<RestorableTableResourcesGetResult>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService
     /// A Class representing an AgentPoolUpgradeProfile along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AgentPoolUpgradeProfileResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetAgentPoolUpgradeProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AgentPoolResource" /> using the GetAgentPoolUpgradeProfile method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceAgentPoolResource" /> using the GetAgentPoolUpgradeProfile method.
     /// </summary>
     public partial class AgentPoolUpgradeProfileResource : ArmResource
     {
@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary>
         /// Gets the upgrade profile for an agent pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/upgradeProfiles/default
-        /// Operation Id: AgentPools_GetUpgradeProfile
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/upgradeProfiles/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AgentPools_GetUpgradeProfile</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AgentPoolUpgradeProfileResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary>
         /// Gets the upgrade profile for an agent pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/upgradeProfiles/default
-        /// Operation Id: AgentPools_GetUpgradeProfile
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/upgradeProfiles/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AgentPools_GetUpgradeProfile</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AgentPoolUpgradeProfileResource> Get(CancellationToken cancellationToken = default)

@@ -36,6 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             [SemanticConventions.AttributeNetHostName] = OperationType.Common,
             [SemanticConventions.AttributeComponent] = OperationType.Common,
             ["otel.status_code"] = OperationType.Common,
+            ["sampleRate"] = OperationType.Common,
 
             [SemanticConventions.AttributeRpcService] = OperationType.Rpc,
             [SemanticConventions.AttributeRpcSystem] = OperationType.Rpc,

@@ -1,87 +1,5 @@
 namespace Azure.ResourceManager.Logic
 {
-    public partial class AssemblyDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.AssemblyDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.AssemblyDefinitionResource>, System.Collections.IEnumerable
-    {
-        protected AssemblyDefinitionCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.AssemblyDefinitionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string assemblyArtifactName, Azure.ResourceManager.Logic.AssemblyDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.AssemblyDefinitionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string assemblyArtifactName, Azure.ResourceManager.Logic.AssemblyDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.AssemblyDefinitionResource> Get(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.AssemblyDefinitionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.AssemblyDefinitionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.AssemblyDefinitionResource>> GetAsync(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.AssemblyDefinitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.AssemblyDefinitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.AssemblyDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.AssemblyDefinitionResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AssemblyDefinitionData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public AssemblyDefinitionData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.AssemblyProperties properties) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.AssemblyProperties Properties { get { throw null; } set { } }
-    }
-    public partial class AssemblyDefinitionResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AssemblyDefinitionResource() { }
-        public virtual Azure.ResourceManager.Logic.AssemblyDefinitionData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.AssemblyDefinitionResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.AssemblyDefinitionResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.AssemblyDefinitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.AssemblyDefinitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri> GetContentCallbackUrl(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.AssemblyDefinitionResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.AssemblyDefinitionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.AssemblyDefinitionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.AssemblyDefinitionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.AssemblyDefinitionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.AssemblyDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.AssemblyDefinitionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.AssemblyDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class BatchConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.BatchConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.BatchConfigurationResource>, System.Collections.IEnumerable
-    {
-        protected BatchConfigurationCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.BatchConfigurationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string batchConfigurationName, Azure.ResourceManager.Logic.BatchConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.BatchConfigurationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string batchConfigurationName, Azure.ResourceManager.Logic.BatchConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.BatchConfigurationResource> Get(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.BatchConfigurationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.BatchConfigurationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.BatchConfigurationResource>> GetAsync(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.BatchConfigurationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.BatchConfigurationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.BatchConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.BatchConfigurationResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class BatchConfigurationData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public BatchConfigurationData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.BatchConfigurationProperties properties) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.BatchConfigurationProperties Properties { get { throw null; } set { } }
-    }
-    public partial class BatchConfigurationResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected BatchConfigurationResource() { }
-        public virtual Azure.ResourceManager.Logic.BatchConfigurationData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.BatchConfigurationResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.BatchConfigurationResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.BatchConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.BatchConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.BatchConfigurationResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.BatchConfigurationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.BatchConfigurationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.BatchConfigurationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.BatchConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.BatchConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.BatchConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.BatchConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class IntegrationAccountAgreementCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource>, System.Collections.IEnumerable
     {
         protected IntegrationAccountAgreementCollection() { }
@@ -99,14 +17,14 @@ namespace Azure.ResourceManager.Logic
     }
     public partial class IntegrationAccountAgreementData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountAgreementData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.AgreementType agreementType, string hostPartner, string guestPartner, Azure.ResourceManager.Logic.Models.BusinessIdentity hostIdentity, Azure.ResourceManager.Logic.Models.BusinessIdentity guestIdentity, Azure.ResourceManager.Logic.Models.AgreementContent content) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.AgreementType AgreementType { get { throw null; } set { } }
+        public IntegrationAccountAgreementData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity hostIdentity, Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity guestIdentity, Azure.ResourceManager.Logic.Models.IntegrationAccountAgreementContent content) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountAgreementType AgreementType { get { throw null; } set { } }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.AgreementContent Content { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountAgreementContent Content { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity GuestIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity GuestIdentity { get { throw null; } set { } }
         public string GuestPartner { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity HostIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity HostIdentity { get { throw null; } set { } }
         public string HostPartner { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
     }
@@ -123,14 +41,96 @@ namespace Azure.ResourceManager.Logic
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri> GetContentCallbackUrl(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters listContentCallbackUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters listContentCallbackUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri> GetContentCallbackUrl(Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.IntegrationAccountAgreementData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.IntegrationAccountAgreementData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class IntegrationAccountAssemblyDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>, System.Collections.IEnumerable
+    {
+        protected IntegrationAccountAssemblyDefinitionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string assemblyArtifactName, Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string assemblyArtifactName, Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> Get(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>> GetAsync(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class IntegrationAccountAssemblyDefinitionData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public IntegrationAccountAssemblyDefinitionData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountAssemblyProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountAssemblyProperties Properties { get { throw null; } set { } }
+    }
+    public partial class IntegrationAccountAssemblyDefinitionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected IntegrationAccountAssemblyDefinitionResource() { }
+        public virtual Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri> GetContentCallbackUrl(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class IntegrationAccountBatchConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>, System.Collections.IEnumerable
+    {
+        protected IntegrationAccountBatchConfigurationCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string batchConfigurationName, Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string batchConfigurationName, Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> Get(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>> GetAsync(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class IntegrationAccountBatchConfigurationData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public IntegrationAccountBatchConfigurationData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountBatchConfigurationProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBatchConfigurationProperties Properties { get { throw null; } set { } }
+    }
+    public partial class IntegrationAccountBatchConfigurationResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected IntegrationAccountBatchConfigurationResource() { }
+        public virtual Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class IntegrationAccountCertificateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountCertificateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountCertificateResource>, System.Collections.IEnumerable
     {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Logic
         public IntegrationAccountCertificateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.KeyVaultKeyReference Key { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountKeyVaultKeyReference Key { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
-        public string PublicCertificate { get { throw null; } set { } }
+        public System.BinaryData PublicCertificate { get { throw null; } set { } }
     }
     public partial class IntegrationAccountCertificateResource : Azure.ResourceManager.ArmResource
     {
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.Logic
     public partial class IntegrationAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public IntegrationAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName? SkuName { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.WorkflowState? State { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowState? State { get { throw null; } set { } }
     }
     public partial class IntegrationAccountMapCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountMapResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountMapResource>, System.Collections.IEnumerable
     {
@@ -215,13 +215,13 @@ namespace Azure.ResourceManager.Logic
     }
     public partial class IntegrationAccountMapData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountMapData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.MapType mapType) : base (default(Azure.Core.AzureLocation)) { }
+        public IntegrationAccountMapData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountMapType mapType) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
-        public string Content { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ContentLink ContentLink { get { throw null; } }
-        public string ContentType { get { throw null; } set { } }
+        public System.BinaryData Content { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } }
+        public Azure.Core.ContentType? ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.MapType MapType { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountMapType MapType { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
         public string ParametersSchemaRef { get { throw null; } set { } }
     }
@@ -238,8 +238,8 @@ namespace Azure.ResourceManager.Logic
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountMapResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountMapResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri> GetContentCallbackUrl(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters listContentCallbackUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters listContentCallbackUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri> GetContentCallbackUrl(Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountMapResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountMapResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountMapResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.Logic
     }
     public partial class IntegrationAccountPartnerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountPartnerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.PartnerType partnerType, Azure.ResourceManager.Logic.Models.PartnerContent content) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.BusinessIdentity> B2BBusinessIdentities { get { throw null; } }
+        public IntegrationAccountPartnerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType partnerType, Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerContent content) : base (default(Azure.Core.AzureLocation)) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity> B2BBusinessIdentities { get { throw null; } }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.BinaryData Metadata { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.PartnerType PartnerType { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType PartnerType { get { throw null; } set { } }
     }
     public partial class IntegrationAccountPartnerResource : Azure.ResourceManager.ArmResource
     {
@@ -284,8 +284,8 @@ namespace Azure.ResourceManager.Logic
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountPartnerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountPartnerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri> GetContentCallbackUrl(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters listContentCallbackUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters listContentCallbackUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri> GetContentCallbackUrl(Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountPartnerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountPartnerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountPartnerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -305,18 +305,18 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.AssemblyDefinitionResource> GetAssemblyDefinition(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.AssemblyDefinitionResource>> GetAssemblyDefinitionAsync(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Logic.AssemblyDefinitionCollection GetAssemblyDefinitions() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.BatchConfigurationResource> GetBatchConfiguration(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.BatchConfigurationResource>> GetBatchConfigurationAsync(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Logic.BatchConfigurationCollection GetBatchConfigurations() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.CallbackUri> GetCallbackUrl(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters getCallbackUrlParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.CallbackUri>> GetCallbackUrlAsync(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters getCallbackUrlParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.ListOperationCallbackUri> GetCallbackUrl(Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.ListOperationCallbackUri>> GetCallbackUrlAsync(Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource> GetIntegrationAccountAgreement(string agreementName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource>> GetIntegrationAccountAgreementAsync(string agreementName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Logic.IntegrationAccountAgreementCollection GetIntegrationAccountAgreements() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> GetIntegrationAccountAssemblyDefinition(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>> GetIntegrationAccountAssemblyDefinitionAsync(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionCollection GetIntegrationAccountAssemblyDefinitions() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> GetIntegrationAccountBatchConfiguration(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>> GetIntegrationAccountBatchConfigurationAsync(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationCollection GetIntegrationAccountBatchConfigurations() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountCertificateResource> GetIntegrationAccountCertificate(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountCertificateResource>> GetIntegrationAccountCertificateAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Logic.IntegrationAccountCertificateCollection GetIntegrationAccountCertificates() { throw null; }
@@ -332,12 +332,12 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountSessionResource> GetIntegrationAccountSession(string sessionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountSessionResource>> GetIntegrationAccountSessionAsync(string sessionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Logic.IntegrationAccountSessionCollection GetIntegrationAccountSessions() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.Models.KeyVaultKey> GetKeyVaultKeys(Azure.ResourceManager.Logic.Models.ListKeyVaultKeysDefinition listKeyVaultKeys, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.Models.KeyVaultKey> GetKeyVaultKeysAsync(Azure.ResourceManager.Logic.Models.ListKeyVaultKeysDefinition listKeyVaultKeys, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response LogTrackingEvents(Azure.ResourceManager.Logic.Models.TrackingEventsDefinition logTrackingEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> LogTrackingEventsAsync(Azure.ResourceManager.Logic.Models.TrackingEventsDefinition logTrackingEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource> RegenerateAccessKey(Azure.ResourceManager.Logic.Models.RegenerateActionParameter regenerateAccessKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource>> RegenerateAccessKeyAsync(Azure.ResourceManager.Logic.Models.RegenerateActionParameter regenerateAccessKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.Models.IntegrationAccountKeyVaultKey> GetKeyVaultKeys(Azure.ResourceManager.Logic.Models.IntegrationAccountListKeyVaultKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.Models.IntegrationAccountKeyVaultKey> GetKeyVaultKeysAsync(Azure.ResourceManager.Logic.Models.IntegrationAccountListKeyVaultKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response LogTrackingEvents(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingEventsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> LogTrackingEventsAsync(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingEventsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource> RegenerateAccessKey(Azure.ResourceManager.Logic.Models.LogicWorkflowRegenerateActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource>> RegenerateAccessKeyAsync(Azure.ResourceManager.Logic.Models.LogicWorkflowRegenerateActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -362,16 +362,16 @@ namespace Azure.ResourceManager.Logic
     }
     public partial class IntegrationAccountSchemaData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountSchemaData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.SchemaType schemaType) : base (default(Azure.Core.AzureLocation)) { }
+        public IntegrationAccountSchemaData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType schemaType) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
-        public string Content { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ContentLink ContentLink { get { throw null; } }
-        public string ContentType { get { throw null; } set { } }
+        public System.BinaryData Content { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } }
+        public Azure.Core.ContentType? ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DocumentName { get { throw null; } set { } }
         public string FileName { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.SchemaType SchemaType { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType SchemaType { get { throw null; } set { } }
         public string TargetNamespace { get { throw null; } set { } }
     }
     public partial class IntegrationAccountSchemaResource : Azure.ResourceManager.ArmResource
@@ -387,8 +387,8 @@ namespace Azure.ResourceManager.Logic
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountSchemaResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountSchemaResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri> GetContentCallbackUrl(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters listContentCallbackUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters listContentCallbackUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri> GetContentCallbackUrl(Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountSchemaResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountSchemaResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountSchemaResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Logic
     public partial class IntegrationServiceEnvironmentData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public IntegrationServiceEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSku Sku { get { throw null; } set { } }
     }
@@ -478,19 +478,19 @@ namespace Azure.ResourceManager.Logic
     public partial class IntegrationServiceEnvironmentManagedApiData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public IntegrationServiceEnvironmentManagedApiData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.ApiResourceDefinitions ApiDefinitions { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicApiResourceDefinitions ApiDefinitions { get { throw null; } }
         public System.Uri ApiDefinitionUri { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Capabilities { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ApiTier? Category { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicApiTier? Category { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ConnectionParameters { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink DeploymentParametersContentLinkDefinition { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ApiResourceGeneralInformation GeneralInformation { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ApiResourceMetadata Metadata { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicContentLink DeploymentParametersContentLinkDefinition { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicApiResourceGeneralInformation GeneralInformation { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicApiResourceMetadata Metadata { get { throw null; } }
         public string NamePropertiesName { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ApiResourcePolicies Policies { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> RuntimeUrls { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicApiResourcePolicies Policies { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Uri> RuntimeUris { get { throw null; } }
         public System.Uri ServiceUri { get { throw null; } }
     }
     public partial class IntegrationServiceEnvironmentManagedApiResource : Azure.ResourceManager.ArmResource
@@ -506,8 +506,8 @@ namespace Azure.ResourceManager.Logic
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.Models.ApiOperation> GetIntegrationServiceEnvironmentManagedApiOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.Models.ApiOperation> GetIntegrationServiceEnvironmentManagedApiOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.Models.LogicApiOperationInfo> GetIntegrationServiceEnvironmentManagedApiOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.Models.LogicApiOperationInfo> GetIntegrationServiceEnvironmentManagedApiOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -546,11 +546,11 @@ namespace Azure.ResourceManager.Logic
     }
     public static partial class LogicExtensions
     {
-        public static Azure.ResourceManager.Logic.AssemblyDefinitionResource GetAssemblyDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Logic.BatchConfigurationResource GetBatchConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource> GetIntegrationAccount(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string integrationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Logic.IntegrationAccountAgreementResource GetIntegrationAccountAgreementResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource GetIntegrationAccountAssemblyDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource>> GetIntegrationAccountAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string integrationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource GetIntegrationAccountBatchConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Logic.IntegrationAccountCertificateResource GetIntegrationAccountCertificateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Logic.IntegrationAccountMapResource GetIntegrationAccountMapResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Logic.IntegrationAccountPartnerResource GetIntegrationAccountPartnerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -567,71 +567,71 @@ namespace Azure.ResourceManager.Logic
         public static Azure.ResourceManager.Logic.IntegrationServiceEnvironmentCollection GetIntegrationServiceEnvironments(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironments(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironmentsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Logic.WorkflowResource> GetWorkflow(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowResource>> GetWorkflowAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Logic.WorkflowResource GetWorkflowResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource GetWorkflowRunActionRepetitionRequestHistoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource GetWorkflowRunActionRepetitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource GetWorkflowRunActionRequestHistoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Logic.WorkflowRunActionResource GetWorkflowRunActionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource GetWorkflowRunActionScopeRepetitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Logic.WorkflowRunOperationResource GetWorkflowRunOperationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Logic.WorkflowRunResource GetWorkflowRunResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Logic.WorkflowCollection GetWorkflows(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Logic.WorkflowResource> GetWorkflows(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Logic.WorkflowResource> GetWorkflowsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource GetWorkflowTriggerHistoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Logic.WorkflowTriggerResource GetWorkflowTriggerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Logic.WorkflowVersionResource GetWorkflowVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response ValidateByLocationWorkflow(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, string workflowName, Azure.ResourceManager.Logic.WorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response> ValidateByLocationWorkflowAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, string workflowName, Azure.ResourceManager.Logic.WorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource> GetLogicWorkflow(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource>> GetLogicWorkflowAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Logic.LogicWorkflowResource GetLogicWorkflowResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource GetLogicWorkflowRunActionRepetitionRequestHistoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource GetLogicWorkflowRunActionRepetitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource GetLogicWorkflowRunActionRequestHistoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Logic.LogicWorkflowRunActionResource GetLogicWorkflowRunActionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource GetLogicWorkflowRunActionScopeRepetitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Logic.LogicWorkflowRunOperationResource GetLogicWorkflowRunOperationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Logic.LogicWorkflowRunResource GetLogicWorkflowRunResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Logic.LogicWorkflowCollection GetLogicWorkflows(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowResource> GetLogicWorkflows(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowResource> GetLogicWorkflowsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource GetLogicWorkflowTriggerHistoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Logic.LogicWorkflowTriggerResource GetLogicWorkflowTriggerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Logic.LogicWorkflowVersionResource GetLogicWorkflowVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response ValidateByLocationWorkflow(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, string workflowName, Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response> ValidateByLocationWorkflowAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, string workflowName, Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class RequestHistoryData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class LogicWorkflowCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowResource>, System.Collections.IEnumerable
     {
-        public RequestHistoryData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.RequestHistoryProperties Properties { get { throw null; } set { } }
-    }
-    public partial class WorkflowCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowResource>, System.Collections.IEnumerable
-    {
-        protected WorkflowCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.WorkflowResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string workflowName, Azure.ResourceManager.Logic.WorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.WorkflowResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string workflowName, Azure.ResourceManager.Logic.WorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected LogicWorkflowCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.LogicWorkflowResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string workflowName, Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.LogicWorkflowResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string workflowName, Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowResource> Get(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.WorkflowResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.WorkflowResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowResource>> GetAsync(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.WorkflowResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.WorkflowResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource> Get(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource>> GetAsync(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkflowData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class LogicWorkflowData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public WorkflowData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LogicWorkflowData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Logic.Models.FlowAccessControlConfiguration AccessControl { get { throw null; } set { } }
         public string AccessEndpoint { get { throw null; } }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.BinaryData Definition { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.FlowEndpointsConfiguration EndpointsConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationAccount { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.WorkflowParameter> Parameters { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicResourceReference IntegrationAccount { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.LogicWorkflowParameterInfo> Parameters { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicSku Sku { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowState? State { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowState? State { get { throw null; } set { } }
         public string Version { get { throw null; } }
     }
-    public partial class WorkflowResource : Azure.ResourceManager.ArmResource
+    public partial class LogicWorkflowRequestHistoryData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public LogicWorkflowRequestHistoryData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowRequestHistoryProperties Properties { get { throw null; } set { } }
+    }
+    public partial class LogicWorkflowResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected WorkflowResource() { }
-        public virtual Azure.ResourceManager.Logic.WorkflowData Data { get { throw null; } }
+        protected LogicWorkflowResource() { }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -641,596 +641,410 @@ namespace Azure.ResourceManager.Logic
         public virtual System.Threading.Tasks.Task<Azure.Response> EnableAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.BinaryData> GenerateUpgradedDefinition(Azure.ResourceManager.Logic.Models.GenerateUpgradedDefinitionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GenerateUpgradedDefinitionAsync(Azure.ResourceManager.Logic.Models.GenerateUpgradedDefinitionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri> GetCallbackUrl(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters listCallbackUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri>> GetCallbackUrlAsync(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters listCallbackUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri> GetCallbackUrl(Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri>> GetCallbackUrlAsync(Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunResource> GetLogicWorkflowRun(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunResource>> GetLogicWorkflowRunAsync(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunCollection GetLogicWorkflowRuns() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource> GetLogicWorkflowTrigger(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource>> GetLogicWorkflowTriggerAsync(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowTriggerCollection GetLogicWorkflowTriggers() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowVersionResource> GetLogicWorkflowVersion(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowVersionResource>> GetLogicWorkflowVersionAsync(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowVersionCollection GetLogicWorkflowVersions() { throw null; }
         public virtual Azure.Response<System.BinaryData> GetSwagger(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetSwaggerAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunResource> GetWorkflowRun(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunResource>> GetWorkflowRunAsync(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Logic.WorkflowRunCollection GetWorkflowRuns() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowTriggerResource> GetWorkflowTrigger(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowTriggerResource>> GetWorkflowTriggerAsync(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Logic.WorkflowTriggerCollection GetWorkflowTriggers() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowVersionResource> GetWorkflowVersion(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowVersionResource>> GetWorkflowVersionAsync(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Logic.WorkflowVersionCollection GetWorkflowVersions() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Move(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.Models.WorkflowReference move, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> MoveAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.Models.WorkflowReference move, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RegenerateAccessKey(Azure.ResourceManager.Logic.Models.RegenerateActionParameter keyType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RegenerateAccessKeyAsync(Azure.ResourceManager.Logic.Models.RegenerateActionParameter keyType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowResource> Update(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowResource>> UpdateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ValidateByResourceGroup(Azure.ResourceManager.Logic.WorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ValidateByResourceGroupAsync(Azure.ResourceManager.Logic.WorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Move(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.Models.LogicWorkflowReference move, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> MoveAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.Models.LogicWorkflowReference move, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RegenerateAccessKey(Azure.ResourceManager.Logic.Models.LogicWorkflowRegenerateActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RegenerateAccessKeyAsync(Azure.ResourceManager.Logic.Models.LogicWorkflowRegenerateActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.LogicWorkflowResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use Update(WaitUntil waitUntil, LogicWorkflowData data, CancellationToken cancellationToken = default) instead.", false)]
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource> Update(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.LogicWorkflowResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use UpdateAsync(WaitUntil waitUntil, LogicWorkflowData data, CancellationToken cancellationToken = default) instead.", false)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource>> UpdateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response ValidateByResourceGroup(Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ValidateByResourceGroupAsync(Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WorkflowRunActionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionResource>, System.Collections.IEnumerable
+    public partial class LogicWorkflowRunActionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource>, System.Collections.IEnumerable
     {
-        protected WorkflowRunActionCollection() { }
+        protected LogicWorkflowRunActionCollection() { }
         public virtual Azure.Response<bool> Exists(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionResource> Get(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.WorkflowRunActionResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.WorkflowRunActionResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionResource>> GetAsync(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.WorkflowRunActionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.WorkflowRunActionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource> Get(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource>> GetAsync(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkflowRunActionData : Azure.ResourceManager.Models.ResourceData
+    public partial class LogicWorkflowRunActionData : Azure.ResourceManager.Models.ResourceData
     {
-        internal WorkflowRunActionData() { }
+        internal LogicWorkflowRunActionData() { }
         public string Code { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.RunActionCorrelation Correlation { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowRunActionCorrelation Correlation { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.BinaryData Error { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink InputsLink { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink OutputsLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Logic.Models.RetryHistory> RetryHistory { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicContentLink InputsLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicContentLink OutputsLink { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Logic.Models.LogicWorkRetryHistory> RetryHistory { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowStatus? Status { get { throw null; } }
         public System.BinaryData TrackedProperties { get { throw null; } }
-        public string TrackingId { get { throw null; } }
+        public System.Guid? TrackingId { get { throw null; } }
     }
-    public partial class WorkflowRunActionRepetitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource>, System.Collections.IEnumerable
+    public partial class LogicWorkflowRunActionRepetitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource>, System.Collections.IEnumerable
     {
-        protected WorkflowRunActionRepetitionCollection() { }
+        protected LogicWorkflowRunActionRepetitionCollection() { }
         public virtual Azure.Response<bool> Exists(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource> Get(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource>> GetAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource> Get(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource>> GetAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkflowRunActionRepetitionDefinitionData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class LogicWorkflowRunActionRepetitionDefinitionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public WorkflowRunActionRepetitionDefinitionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LogicWorkflowRunActionRepetitionDefinitionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Code { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.RunActionCorrelation Correlation { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowRunActionCorrelation Correlation { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public System.BinaryData Error { get { throw null; } set { } }
         public System.BinaryData Inputs { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink InputsLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicContentLink InputsLink { get { throw null; } }
         public int? IterationCount { get { throw null; } set { } }
         public System.BinaryData Outputs { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink OutputsLink { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.RepetitionIndex> RepetitionIndexes { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.RetryHistory> RetryHistory { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicContentLink OutputsLink { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.LogicWorkflowRepetitionIndex> RepetitionIndexes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.LogicWorkRetryHistory> RetryHistory { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.WorkflowStatus? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowStatus? Status { get { throw null; } set { } }
         public System.BinaryData TrackedProperties { get { throw null; } }
-        public string TrackingId { get { throw null; } }
+        public System.Guid? TrackingId { get { throw null; } }
     }
-    public partial class WorkflowRunActionRepetitionRequestHistoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource>, System.Collections.IEnumerable
+    public partial class LogicWorkflowRunActionRepetitionRequestHistoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource>, System.Collections.IEnumerable
     {
-        protected WorkflowRunActionRepetitionRequestHistoryCollection() { }
+        protected LogicWorkflowRunActionRepetitionRequestHistoryCollection() { }
         public virtual Azure.Response<bool> Exists(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource> Get(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource>> GetAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource> Get(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource>> GetAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkflowRunActionRepetitionRequestHistoryResource : Azure.ResourceManager.ArmResource
+    public partial class LogicWorkflowRunActionRepetitionRequestHistoryResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected WorkflowRunActionRepetitionRequestHistoryResource() { }
-        public virtual Azure.ResourceManager.Logic.RequestHistoryData Data { get { throw null; } }
+        protected LogicWorkflowRunActionRepetitionRequestHistoryResource() { }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRequestHistoryData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string runName, string actionName, string repetitionName, string requestHistoryName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WorkflowRunActionRepetitionResource : Azure.ResourceManager.ArmResource
+    public partial class LogicWorkflowRunActionRepetitionResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected WorkflowRunActionRepetitionResource() { }
-        public virtual Azure.ResourceManager.Logic.WorkflowRunActionRepetitionDefinitionData Data { get { throw null; } }
+        protected LogicWorkflowRunActionRepetitionResource() { }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionDefinitionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string runName, string actionName, string repetitionName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.Models.ExpressionRoot> GetExpressionTraces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.Models.ExpressionRoot> GetExpressionTracesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryCollection GetWorkflowRunActionRepetitionRequestHistories() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource> GetWorkflowRunActionRepetitionRequestHistory(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionRequestHistoryResource>> GetWorkflowRunActionRepetitionRequestHistoryAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.Models.LogicExpressionRoot> GetExpressionTraces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.Models.LogicExpressionRoot> GetExpressionTracesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryCollection GetLogicWorkflowRunActionRepetitionRequestHistories() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource> GetLogicWorkflowRunActionRepetitionRequestHistory(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource>> GetLogicWorkflowRunActionRepetitionRequestHistoryAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WorkflowRunActionRequestHistoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource>, System.Collections.IEnumerable
+    public partial class LogicWorkflowRunActionRequestHistoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource>, System.Collections.IEnumerable
     {
-        protected WorkflowRunActionRequestHistoryCollection() { }
+        protected LogicWorkflowRunActionRequestHistoryCollection() { }
         public virtual Azure.Response<bool> Exists(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource> Get(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource>> GetAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource> Get(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource>> GetAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkflowRunActionRequestHistoryResource : Azure.ResourceManager.ArmResource
+    public partial class LogicWorkflowRunActionRequestHistoryResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected WorkflowRunActionRequestHistoryResource() { }
-        public virtual Azure.ResourceManager.Logic.RequestHistoryData Data { get { throw null; } }
+        protected LogicWorkflowRunActionRequestHistoryResource() { }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRequestHistoryData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string runName, string actionName, string requestHistoryName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WorkflowRunActionResource : Azure.ResourceManager.ArmResource
+    public partial class LogicWorkflowRunActionResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected WorkflowRunActionResource() { }
-        public virtual Azure.ResourceManager.Logic.WorkflowRunActionData Data { get { throw null; } }
+        protected LogicWorkflowRunActionResource() { }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunActionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string runName, string actionName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.Models.ExpressionRoot> GetExpressionTraces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.Models.ExpressionRoot> GetExpressionTracesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource> GetWorkflowRunActionRepetition(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRepetitionResource>> GetWorkflowRunActionRepetitionAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Logic.WorkflowRunActionRepetitionCollection GetWorkflowRunActionRepetitions() { throw null; }
-        public virtual Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryCollection GetWorkflowRunActionRequestHistories() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource> GetWorkflowRunActionRequestHistory(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionRequestHistoryResource>> GetWorkflowRunActionRequestHistoryAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource> GetWorkflowRunActionScopeRepetition(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource>> GetWorkflowRunActionScopeRepetitionAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionCollection GetWorkflowRunActionScopeRepetitions() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.Models.LogicExpressionRoot> GetExpressionTraces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.Models.LogicExpressionRoot> GetExpressionTracesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource> GetLogicWorkflowRunActionRepetition(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource>> GetLogicWorkflowRunActionRepetitionAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionCollection GetLogicWorkflowRunActionRepetitions() { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryCollection GetLogicWorkflowRunActionRequestHistories() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource> GetLogicWorkflowRunActionRequestHistory(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource>> GetLogicWorkflowRunActionRequestHistoryAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource> GetLogicWorkflowRunActionScopeRepetition(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource>> GetLogicWorkflowRunActionScopeRepetitionAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionCollection GetLogicWorkflowRunActionScopeRepetitions() { throw null; }
     }
-    public partial class WorkflowRunActionScopeRepetitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource>, System.Collections.IEnumerable
+    public partial class LogicWorkflowRunActionScopeRepetitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource>, System.Collections.IEnumerable
     {
-        protected WorkflowRunActionScopeRepetitionCollection() { }
+        protected LogicWorkflowRunActionScopeRepetitionCollection() { }
         public virtual Azure.Response<bool> Exists(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource> Get(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource>> GetAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource> Get(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource>> GetAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkflowRunActionScopeRepetitionResource : Azure.ResourceManager.ArmResource
+    public partial class LogicWorkflowRunActionScopeRepetitionResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected WorkflowRunActionScopeRepetitionResource() { }
-        public virtual Azure.ResourceManager.Logic.WorkflowRunActionRepetitionDefinitionData Data { get { throw null; } }
+        protected LogicWorkflowRunActionScopeRepetitionResource() { }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionDefinitionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string runName, string actionName, string repetitionName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionScopeRepetitionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WorkflowRunCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowRunResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowRunResource>, System.Collections.IEnumerable
+    public partial class LogicWorkflowRunCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunResource>, System.Collections.IEnumerable
     {
-        protected WorkflowRunCollection() { }
+        protected LogicWorkflowRunCollection() { }
         public virtual Azure.Response<bool> Exists(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunResource> Get(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.WorkflowRunResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.WorkflowRunResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunResource>> GetAsync(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.WorkflowRunResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowRunResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.WorkflowRunResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowRunResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunResource> Get(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowRunResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowRunResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunResource>> GetAsync(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkflowRunData : Azure.ResourceManager.Models.ResourceData
+    public partial class LogicWorkflowRunData : Azure.ResourceManager.Models.ResourceData
     {
-        internal WorkflowRunData() { }
+        internal LogicWorkflowRunData() { }
         public string Code { get { throw null; } }
         public string CorrelationClientTrackingId { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.BinaryData Error { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Logic.Models.WorkflowOutputParameter> Outputs { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowRunTrigger Response { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Logic.Models.LogicWorkflowOutputParameterInfo> Outputs { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowRunTrigger Response { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowStatus? Status { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowRunTrigger Trigger { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowRunTrigger Trigger { get { throw null; } }
         public System.DateTimeOffset? WaitEndOn { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference Workflow { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicResourceReference Workflow { get { throw null; } }
     }
-    public partial class WorkflowRunOperationCollection : Azure.ResourceManager.ArmCollection
+    public partial class LogicWorkflowRunOperationCollection : Azure.ResourceManager.ArmCollection
     {
-        protected WorkflowRunOperationCollection() { }
+        protected LogicWorkflowRunOperationCollection() { }
         public virtual Azure.Response<bool> Exists(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunOperationResource> Get(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunOperationResource>> GetAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunOperationResource> Get(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunOperationResource>> GetAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WorkflowRunOperationResource : Azure.ResourceManager.ArmResource
+    public partial class LogicWorkflowRunOperationResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected WorkflowRunOperationResource() { }
-        public virtual Azure.ResourceManager.Logic.WorkflowRunData Data { get { throw null; } }
+        protected LogicWorkflowRunOperationResource() { }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string runName, string operationId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunOperationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunOperationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunOperationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunOperationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WorkflowRunResource : Azure.ResourceManager.ArmResource
+    public partial class LogicWorkflowRunResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected WorkflowRunResource() { }
-        public virtual Azure.ResourceManager.Logic.WorkflowRunData Data { get { throw null; } }
+        protected LogicWorkflowRunResource() { }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string runName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionResource> GetWorkflowRunAction(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunActionResource>> GetWorkflowRunActionAsync(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Logic.WorkflowRunActionCollection GetWorkflowRunActions() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowRunOperationResource> GetWorkflowRunOperation(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowRunOperationResource>> GetWorkflowRunOperationAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Logic.WorkflowRunOperationCollection GetWorkflowRunOperations() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource> GetLogicWorkflowRunAction(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource>> GetLogicWorkflowRunActionAsync(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunActionCollection GetLogicWorkflowRunActions() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunOperationResource> GetLogicWorkflowRunOperation(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunOperationResource>> GetLogicWorkflowRunOperationAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunOperationCollection GetLogicWorkflowRunOperations() { throw null; }
     }
-    public partial class WorkflowTriggerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowTriggerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowTriggerResource>, System.Collections.IEnumerable
+    public partial class LogicWorkflowTriggerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource>, System.Collections.IEnumerable
     {
-        protected WorkflowTriggerCollection() { }
+        protected LogicWorkflowTriggerCollection() { }
         public virtual Azure.Response<bool> Exists(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowTriggerResource> Get(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.WorkflowTriggerResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.WorkflowTriggerResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowTriggerResource>> GetAsync(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.WorkflowTriggerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowTriggerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.WorkflowTriggerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowTriggerResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource> Get(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource>> GetAsync(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkflowTriggerData : Azure.ResourceManager.Models.ResourceData
+    public partial class LogicWorkflowTriggerData : Azure.ResourceManager.Models.ResourceData
     {
-        internal WorkflowTriggerData() { }
+        internal LogicWorkflowTriggerData() { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? LastExecutionOn { get { throw null; } }
         public System.DateTimeOffset? NextExecutionOn { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowTriggerRecurrence Recurrence { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowState? State { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowStatus? Status { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference Workflow { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrence Recurrence { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowState? State { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicResourceReference Workflow { get { throw null; } }
     }
-    public partial class WorkflowTriggerHistoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource>, System.Collections.IEnumerable
+    public partial class LogicWorkflowTriggerHistoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource>, System.Collections.IEnumerable
     {
-        protected WorkflowTriggerHistoryCollection() { }
+        protected LogicWorkflowTriggerHistoryCollection() { }
         public virtual Azure.Response<bool> Exists(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource> Get(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource>> GetAsync(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource> Get(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource>> GetAsync(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkflowTriggerHistoryData : Azure.ResourceManager.Models.ResourceData
+    public partial class LogicWorkflowTriggerHistoryData : Azure.ResourceManager.Models.ResourceData
     {
-        internal WorkflowTriggerHistoryData() { }
+        internal LogicWorkflowTriggerHistoryData() { }
         public string Code { get { throw null; } }
         public string CorrelationClientTrackingId { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.BinaryData Error { get { throw null; } }
-        public bool? Fired { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink InputsLink { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink OutputsLink { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference Run { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicContentLink InputsLink { get { throw null; } }
+        public bool? IsFired { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicContentLink OutputsLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicResourceReference Run { get { throw null; } }
         public System.DateTimeOffset? ScheduledOn { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowStatus? Status { get { throw null; } }
-        public string TrackingId { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowStatus? Status { get { throw null; } }
+        public System.Guid? TrackingId { get { throw null; } }
     }
-    public partial class WorkflowTriggerHistoryResource : Azure.ResourceManager.ArmResource
+    public partial class LogicWorkflowTriggerHistoryResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected WorkflowTriggerHistoryResource() { }
-        public virtual Azure.ResourceManager.Logic.WorkflowTriggerHistoryData Data { get { throw null; } }
+        protected LogicWorkflowTriggerHistoryResource() { }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string triggerName, string historyName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Resubmit(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ResubmitAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WorkflowTriggerResource : Azure.ResourceManager.ArmResource
+    public partial class LogicWorkflowTriggerResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected WorkflowTriggerResource() { }
-        public virtual Azure.ResourceManager.Logic.WorkflowTriggerData Data { get { throw null; } }
+        protected LogicWorkflowTriggerResource() { }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowTriggerData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string triggerName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowTriggerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowTriggerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri> GetCallbackUrl(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri>> GetCallbackUrlAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.JsonSchema> GetSchemaJson(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.JsonSchema>> GetSchemaJsonAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Logic.WorkflowTriggerHistoryCollection GetWorkflowTriggerHistories() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource> GetWorkflowTriggerHistory(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowTriggerHistoryResource>> GetWorkflowTriggerHistoryAsync(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri> GetCallbackUrl(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri>> GetCallbackUrlAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryCollection GetLogicWorkflowTriggerHistories() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource> GetLogicWorkflowTriggerHistory(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource>> GetLogicWorkflowTriggerHistoryAsync(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.LogicJsonSchema> GetSchemaJson(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.LogicJsonSchema>> GetSchemaJsonAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Reset(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ResetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Run(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RunAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response SetState(Azure.ResourceManager.Logic.Models.SetTriggerStateActionDefinition setState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SetStateAsync(Azure.ResourceManager.Logic.Models.SetTriggerStateActionDefinition setState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SetState(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerStateActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetStateAsync(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerStateActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WorkflowVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowVersionResource>, System.Collections.IEnumerable
+    public partial class LogicWorkflowVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowVersionResource>, System.Collections.IEnumerable
     {
-        protected WorkflowVersionCollection() { }
+        protected LogicWorkflowVersionCollection() { }
         public virtual Azure.Response<bool> Exists(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowVersionResource> Get(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.WorkflowVersionResource> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.WorkflowVersionResource> GetAllAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowVersionResource>> GetAsync(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.WorkflowVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.WorkflowVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.WorkflowVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.WorkflowVersionResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowVersionResource> Get(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowVersionResource> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowVersionResource> GetAllAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowVersionResource>> GetAsync(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowVersionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkflowVersionData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class LogicWorkflowVersionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public WorkflowVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LogicWorkflowVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Logic.Models.FlowAccessControlConfiguration AccessControl { get { throw null; } set { } }
         public string AccessEndpoint { get { throw null; } }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.BinaryData Definition { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.FlowEndpointsConfiguration EndpointsConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationAccount { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.WorkflowParameter> Parameters { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicResourceReference IntegrationAccount { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.LogicWorkflowParameterInfo> Parameters { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicSku Sku { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowState? State { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowState? State { get { throw null; } set { } }
         public string Version { get { throw null; } }
     }
-    public partial class WorkflowVersionResource : Azure.ResourceManager.ArmResource
+    public partial class LogicWorkflowVersionResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected WorkflowVersionResource() { }
-        public virtual Azure.ResourceManager.Logic.WorkflowVersionData Data { get { throw null; } }
+        protected LogicWorkflowVersionResource() { }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowVersionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowVersionResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowVersionResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string versionId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri> GetCallbackUrlWorkflowVersionTrigger(string triggerName, Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters getCallbackUrlParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.WorkflowTriggerCallbackUri>> GetCallbackUrlWorkflowVersionTriggerAsync(string triggerName, Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters getCallbackUrlParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowVersionResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowVersionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.WorkflowVersionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.WorkflowVersionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri> GetCallbackUrlWorkflowVersionTrigger(string triggerName, Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri>> GetCallbackUrlWorkflowVersionTriggerAsync(string triggerName, Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AgreementContent
+    public partial class ArtifactContentProperties : Azure.ResourceManager.Logic.Models.ArtifactProperties
     {
-        public AgreementContent() { }
-        public Azure.ResourceManager.Logic.Models.AS2AgreementContent AS2 { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.EdifactAgreementContent Edifact { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.X12AgreementContent X12 { get { throw null; } set { } }
-    }
-    public enum AgreementType
-    {
-        NotSpecified = 0,
-        AS2 = 1,
-        X12 = 2,
-        Edifact = 3,
-    }
-    public partial class ApiDeploymentParameterMetadata
-    {
-        internal ApiDeploymentParameterMetadata() { }
-        public string ApiDeploymentParameterMetadataType { get { throw null; } }
-        public string Description { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public bool? IsRequired { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility? Visibility { get { throw null; } }
-    }
-    public partial class ApiDeploymentParameterMetadataSet
-    {
-        internal ApiDeploymentParameterMetadataSet() { }
-        public Azure.ResourceManager.Logic.Models.ApiDeploymentParameterMetadata PackageContentLink { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ApiDeploymentParameterMetadata RedisCacheConnectionString { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApiDeploymentParameterVisibility : System.IEquatable<Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApiDeploymentParameterVisibility(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility Default { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility Internal { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility NotSpecified { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility left, Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility left, Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ApiOperation : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public ApiOperation(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.ApiOperationPropertiesDefinition Properties { get { throw null; } set { } }
-    }
-    public partial class ApiOperationAnnotation
-    {
-        public ApiOperationAnnotation() { }
-        public string Family { get { throw null; } set { } }
-        public int? Revision { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.StatusAnnotation? Status { get { throw null; } set { } }
-    }
-    public partial class ApiOperationPropertiesDefinition
-    {
-        public ApiOperationPropertiesDefinition() { }
-        public Azure.ResourceManager.Logic.Models.ApiOperationAnnotation Annotation { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ApiReference Api { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.SwaggerSchema InputsDefinition { get { throw null; } set { } }
-        public bool? IsNotification { get { throw null; } set { } }
-        public bool? IsWebhook { get { throw null; } set { } }
-        public bool? Pageable { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.SwaggerSchema> ResponsesDefinition { get { throw null; } }
-        public string Summary { get { throw null; } set { } }
-        public string Trigger { get { throw null; } set { } }
-        public string TriggerHint { get { throw null; } set { } }
-        public string Visibility { get { throw null; } set { } }
-    }
-    public partial class ApiReference : Azure.ResourceManager.Logic.Models.ResourceReference
-    {
-        public ApiReference() { }
-        public string BrandColor { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ApiTier? Category { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public string DisplayName { get { throw null; } set { } }
-        public System.Uri IconUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
-        public System.BinaryData Swagger { get { throw null; } set { } }
-    }
-    public partial class ApiResourceDefinitions
-    {
-        internal ApiResourceDefinitions() { }
-        public System.Uri ModifiedSwaggerUri { get { throw null; } }
-        public System.Uri OriginalSwaggerUri { get { throw null; } }
-    }
-    public partial class ApiResourceGeneralInformation
-    {
-        internal ApiResourceGeneralInformation() { }
-        public string Description { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public System.Uri IconUri { get { throw null; } }
-        public string ReleaseTag { get { throw null; } }
-        public System.Uri TermsOfUseUri { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ApiTier? Tier { get { throw null; } }
-    }
-    public partial class ApiResourceMetadata
-    {
-        internal ApiResourceMetadata() { }
-        public Azure.ResourceManager.Logic.Models.ApiType? ApiType { get { throw null; } }
-        public string BrandColor { get { throw null; } }
-        public string ConnectionType { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ApiDeploymentParameterMetadataSet DeploymentParameters { get { throw null; } }
-        public string HideKey { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowProvisioningState? ProvisioningState { get { throw null; } }
-        public string Source { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WsdlImportMethod? WsdlImportMethod { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WsdlService WsdlService { get { throw null; } }
-    }
-    public partial class ApiResourcePolicies
-    {
-        internal ApiResourcePolicies() { }
-        public string Content { get { throw null; } }
-        public string ContentLink { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApiTier : System.IEquatable<Azure.ResourceManager.Logic.Models.ApiTier>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApiTier(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.ApiTier Enterprise { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ApiTier NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ApiTier Premium { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ApiTier Standard { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.ApiTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.ApiTier left, Azure.ResourceManager.Logic.Models.ApiTier right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.ApiTier (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.ApiTier left, Azure.ResourceManager.Logic.Models.ApiTier right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApiType : System.IEquatable<Azure.ResourceManager.Logic.Models.ApiType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApiType(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.ApiType NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ApiType Rest { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ApiType Soap { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.ApiType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.ApiType left, Azure.ResourceManager.Logic.Models.ApiType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.ApiType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.ApiType left, Azure.ResourceManager.Logic.Models.ApiType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ArtifactContentPropertiesDefinition : Azure.ResourceManager.Logic.Models.ArtifactProperties
-    {
-        public ArtifactContentPropertiesDefinition() { }
+        public ArtifactContentProperties() { }
         public System.BinaryData Content { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ContentLink ContentLink { get { throw null; } set { } }
-        public string ContentType { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } set { } }
+        public Azure.Core.ContentType? ContentType { get { throw null; } set { } }
     }
     public partial class ArtifactProperties
     {
@@ -1253,33 +1067,79 @@ namespace Azure.ResourceManager.Logic.Models
         public Azure.ResourceManager.Logic.Models.AS2OneWayAgreement ReceiveAgreement { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.AS2OneWayAgreement SendAgreement { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AS2EncryptionAlgorithm : System.IEquatable<Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AS2EncryptionAlgorithm(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm Aes128 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm Aes192 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm Aes256 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm Des3 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm None { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm RC2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm left, Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm left, Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AS2EnvelopeSettings
     {
-        public AS2EnvelopeSettings(string messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autogenerateFileName) { }
-        public bool AutogenerateFileName { get { throw null; } set { } }
+        public AS2EnvelopeSettings(Azure.Core.ContentType messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autoGenerateFileName) { }
+        public bool AutoGenerateFileName { get { throw null; } set { } }
         public string FileNameTemplate { get { throw null; } set { } }
-        public string MessageContentType { get { throw null; } set { } }
+        public Azure.Core.ContentType MessageContentType { get { throw null; } set { } }
         public bool SuspendMessageOnFileNameGenerationError { get { throw null; } set { } }
         public bool TransmitFileNameInMimeHeader { get { throw null; } set { } }
     }
     public partial class AS2ErrorSettings
     {
-        public AS2ErrorSettings(bool suspendDuplicateMessage, bool resendIfMDNNotReceived) { }
-        public bool ResendIfMDNNotReceived { get { throw null; } set { } }
+        public AS2ErrorSettings(bool suspendDuplicateMessage, bool resendIfMdnNotReceived) { }
+        public bool ResendIfMdnNotReceived { get { throw null; } set { } }
         public bool SuspendDuplicateMessage { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AS2HashingAlgorithm : System.IEquatable<Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AS2HashingAlgorithm(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm MD5 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm None { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm Sha1 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm Sha2256 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm Sha2384 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm Sha2512 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm left, Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm left, Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AS2MdnSettings
     {
-        public AS2MdnSettings(bool needMDN, bool signMDN, bool sendMDNAsynchronously, bool signOutboundMDNIfOptional, bool sendInboundMDNToMessageBox, Azure.ResourceManager.Logic.Models.HashingAlgorithm micHashingAlgorithm) { }
+        public AS2MdnSettings(bool needMdn, bool signMdn, bool sendMdnAsynchronously, bool signOutboundMdnIfOptional, bool sendInboundMdnToMessageBox, Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm micHashingAlgorithm) { }
         public string DispositionNotificationTo { get { throw null; } set { } }
         public string MdnText { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.HashingAlgorithm MicHashingAlgorithm { get { throw null; } set { } }
-        public bool NeedMDN { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm MicHashingAlgorithm { get { throw null; } set { } }
+        public bool NeedMdn { get { throw null; } set { } }
         public System.Uri ReceiptDeliveryUri { get { throw null; } set { } }
-        public bool SendInboundMDNToMessageBox { get { throw null; } set { } }
-        public bool SendMDNAsynchronously { get { throw null; } set { } }
-        public bool SignMDN { get { throw null; } set { } }
-        public bool SignOutboundMDNIfOptional { get { throw null; } set { } }
+        public bool SendInboundMdnToMessageBox { get { throw null; } set { } }
+        public bool SendMdnAsynchronously { get { throw null; } set { } }
+        public bool SignMdn { get { throw null; } set { } }
+        public bool SignOutboundMdnIfOptional { get { throw null; } set { } }
     }
     public partial class AS2MessageConnectionSettings
     {
@@ -1291,10 +1151,10 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class AS2OneWayAgreement
     {
-        public AS2OneWayAgreement(Azure.ResourceManager.Logic.Models.BusinessIdentity senderBusinessIdentity, Azure.ResourceManager.Logic.Models.BusinessIdentity receiverBusinessIdentity, Azure.ResourceManager.Logic.Models.AS2ProtocolSettings protocolSettings) { }
+        public AS2OneWayAgreement(Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity senderBusinessIdentity, Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity receiverBusinessIdentity, Azure.ResourceManager.Logic.Models.AS2ProtocolSettings protocolSettings) { }
         public Azure.ResourceManager.Logic.Models.AS2ProtocolSettings ProtocolSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity ReceiverBusinessIdentity { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity SenderBusinessIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity ReceiverBusinessIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity SenderBusinessIdentity { get { throw null; } set { } }
     }
     public partial class AS2ProtocolSettings
     {
@@ -1309,114 +1169,63 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class AS2SecuritySettings
     {
-        public AS2SecuritySettings(bool overrideGroupSigningCertificate, bool enableNRRForInboundEncodedMessages, bool enableNRRForInboundDecodedMessages, bool enableNRRForOutboundMDN, bool enableNRRForOutboundEncodedMessages, bool enableNRRForOutboundDecodedMessages, bool enableNRRForInboundMDN) { }
-        public bool EnableNRRForInboundDecodedMessages { get { throw null; } set { } }
-        public bool EnableNRRForInboundEncodedMessages { get { throw null; } set { } }
-        public bool EnableNRRForInboundMDN { get { throw null; } set { } }
-        public bool EnableNRRForOutboundDecodedMessages { get { throw null; } set { } }
-        public bool EnableNRRForOutboundEncodedMessages { get { throw null; } set { } }
-        public bool EnableNRRForOutboundMDN { get { throw null; } set { } }
+        public AS2SecuritySettings(bool overrideGroupSigningCertificate, bool enableNrrForInboundEncodedMessages, bool enableNrrForInboundDecodedMessages, bool enableNrrForOutboundMdn, bool enableNrrForOutboundEncodedMessages, bool enableNrrForOutboundDecodedMessages, bool enableNrrForInboundMdn) { }
+        public bool EnableNrrForInboundDecodedMessages { get { throw null; } set { } }
+        public bool EnableNrrForInboundEncodedMessages { get { throw null; } set { } }
+        public bool EnableNrrForInboundMdn { get { throw null; } set { } }
+        public bool EnableNrrForOutboundDecodedMessages { get { throw null; } set { } }
+        public bool EnableNrrForOutboundEncodedMessages { get { throw null; } set { } }
+        public bool EnableNrrForOutboundMdn { get { throw null; } set { } }
         public string EncryptionCertificateName { get { throw null; } set { } }
         public bool OverrideGroupSigningCertificate { get { throw null; } set { } }
         public string Sha2AlgorithmFormat { get { throw null; } set { } }
         public string SigningCertificateName { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AS2SigningAlgorithm : System.IEquatable<Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AS2SigningAlgorithm(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm Default { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm Sha1 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm Sha2256 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm Sha2384 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm Sha2512 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm left, Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm left, Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AS2ValidationSettings
     {
-        public AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, Azure.ResourceManager.Logic.Models.EncryptionAlgorithm encryptionAlgorithm) { }
+        public AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm encryptionAlgorithm) { }
         public bool CheckCertificateRevocationListOnReceive { get { throw null; } set { } }
         public bool CheckCertificateRevocationListOnSend { get { throw null; } set { } }
         public bool CheckDuplicateMessage { get { throw null; } set { } }
         public bool CompressMessage { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.EncryptionAlgorithm EncryptionAlgorithm { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm EncryptionAlgorithm { get { throw null; } set { } }
         public bool EncryptMessage { get { throw null; } set { } }
         public int InterchangeDuplicatesValidityDays { get { throw null; } set { } }
         public bool OverrideMessageProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.SigningAlgorithm? SigningAlgorithm { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm? SigningAlgorithm { get { throw null; } set { } }
         public bool SignMessage { get { throw null; } set { } }
-    }
-    public partial class AssemblyProperties : Azure.ResourceManager.Logic.Models.ArtifactContentPropertiesDefinition
-    {
-        public AssemblyProperties(string assemblyName) { }
-        public string AssemblyCulture { get { throw null; } set { } }
-        public string AssemblyName { get { throw null; } set { } }
-        public string AssemblyPublicKeyToken { get { throw null; } set { } }
-        public string AssemblyVersion { get { throw null; } set { } }
-    }
-    public partial class AzureResourceErrorInfo : Azure.ResourceManager.Logic.Models.ErrorInfo
-    {
-        internal AzureResourceErrorInfo() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Logic.Models.AzureResourceErrorInfo> Details { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
-    public partial class BatchConfigurationProperties : Azure.ResourceManager.Logic.Models.ArtifactProperties
-    {
-        public BatchConfigurationProperties(string batchGroupName, Azure.ResourceManager.Logic.Models.BatchReleaseCriteria releaseCriteria) { }
-        public string BatchGroupName { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BatchReleaseCriteria ReleaseCriteria { get { throw null; } set { } }
-    }
-    public partial class BatchReleaseCriteria
-    {
-        public BatchReleaseCriteria() { }
-        public int? BatchSize { get { throw null; } set { } }
-        public int? MessageCount { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.WorkflowTriggerRecurrence Recurrence { get { throw null; } set { } }
-    }
-    public partial class BusinessIdentity
-    {
-        public BusinessIdentity(string qualifier, string value) { }
-        public string Qualifier { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
-    public partial class CallbackUri
-    {
-        internal CallbackUri() { }
-        public string Value { get { throw null; } }
-    }
-    public partial class ContentHash
-    {
-        internal ContentHash() { }
-        public string Algorithm { get { throw null; } }
-        public string Value { get { throw null; } }
-    }
-    public partial class ContentLink
-    {
-        public ContentLink() { }
-        public Azure.ResourceManager.Logic.Models.ContentHash ContentHash { get { throw null; } }
-        public long? ContentSize { get { throw null; } }
-        public string ContentVersion { get { throw null; } }
-        public System.BinaryData Metadata { get { throw null; } }
-        public System.Uri Uri { get { throw null; } set { } }
-    }
-    public enum DayOfWeek
-    {
-        Sunday = 0,
-        Monday = 1,
-        Tuesday = 2,
-        Wednesday = 3,
-        Thursday = 4,
-        Friday = 5,
-        Saturday = 6,
-    }
-    public enum DaysOfWeek
-    {
-        Sunday = 0,
-        Monday = 1,
-        Tuesday = 2,
-        Wednesday = 3,
-        Thursday = 4,
-        Friday = 5,
-        Saturday = 6,
     }
     public partial class EdifactAcknowledgementSettings
     {
-        public EdifactAcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgements, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgements, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber) { }
+        public EdifactAcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgement, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgement, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber) { }
         public int AcknowledgementControlNumberLowerBound { get { throw null; } set { } }
         public string AcknowledgementControlNumberPrefix { get { throw null; } set { } }
         public string AcknowledgementControlNumberSuffix { get { throw null; } set { } }
         public int AcknowledgementControlNumberUpperBound { get { throw null; } set { } }
-        public bool BatchFunctionalAcknowledgements { get { throw null; } set { } }
-        public bool BatchTechnicalAcknowledgements { get { throw null; } set { } }
+        public bool BatchFunctionalAcknowledgement { get { throw null; } set { } }
+        public bool BatchTechnicalAcknowledgement { get { throw null; } set { } }
         public bool NeedFunctionalAcknowledgement { get { throw null; } set { } }
         public bool NeedLoopForValidMessages { get { throw null; } set { } }
         public bool NeedTechnicalAcknowledgement { get { throw null; } set { } }
@@ -1573,10 +1382,10 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class EdifactOneWayAgreement
     {
-        public EdifactOneWayAgreement(Azure.ResourceManager.Logic.Models.BusinessIdentity senderBusinessIdentity, Azure.ResourceManager.Logic.Models.BusinessIdentity receiverBusinessIdentity, Azure.ResourceManager.Logic.Models.EdifactProtocolSettings protocolSettings) { }
+        public EdifactOneWayAgreement(Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity senderBusinessIdentity, Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity receiverBusinessIdentity, Azure.ResourceManager.Logic.Models.EdifactProtocolSettings protocolSettings) { }
         public Azure.ResourceManager.Logic.Models.EdifactProtocolSettings ProtocolSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity ReceiverBusinessIdentity { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity SenderBusinessIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity ReceiverBusinessIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity SenderBusinessIdentity { get { throw null; } set { } }
     }
     public partial class EdifactProcessingSettings
     {
@@ -1615,18 +1424,18 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class EdifactValidationOverride
     {
-        public EdifactValidationOverride(string messageId, bool enforceCharacterSet, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy, bool trimLeadingAndTrailingSpacesAndZeroes) { }
+        public EdifactValidationOverride(string messageId, bool enforceCharacterSet, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy, bool trimLeadingAndTrailingSpacesAndZeroes) { }
         public bool AllowLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
         public bool EnforceCharacterSet { get { throw null; } set { } }
         public string MessageId { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy TrailingSeparatorPolicy { get { throw null; } set { } }
         public bool TrimLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
-        public bool ValidateEDITypes { get { throw null; } set { } }
-        public bool ValidateXSDTypes { get { throw null; } set { } }
+        public bool ValidateEdiTypes { get { throw null; } set { } }
+        public bool ValidateXsdTypes { get { throw null; } set { } }
     }
     public partial class EdifactValidationSettings
     {
-        public EdifactValidationSettings(bool validateCharacterSet, bool checkDuplicateInterchangeControlNumber, int interchangeControlNumberValidityDays, bool checkDuplicateGroupControlNumber, bool checkDuplicateTransactionSetControlNumber, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool trimLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy) { }
+        public EdifactValidationSettings(bool validateCharacterSet, bool checkDuplicateInterchangeControlNumber, int interchangeControlNumberValidityDays, bool checkDuplicateGroupControlNumber, bool checkDuplicateTransactionSetControlNumber, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool trimLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy) { }
         public bool AllowLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
         public bool CheckDuplicateGroupControlNumber { get { throw null; } set { } }
         public bool CheckDuplicateInterchangeControlNumber { get { throw null; } set { } }
@@ -1635,92 +1444,8 @@ namespace Azure.ResourceManager.Logic.Models
         public Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy TrailingSeparatorPolicy { get { throw null; } set { } }
         public bool TrimLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
         public bool ValidateCharacterSet { get { throw null; } set { } }
-        public bool ValidateEDITypes { get { throw null; } set { } }
-        public bool ValidateXSDTypes { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EncryptionAlgorithm : System.IEquatable<Azure.ResourceManager.Logic.Models.EncryptionAlgorithm>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EncryptionAlgorithm(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm AES128 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm AES192 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm AES256 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm DES3 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm None { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm RC2 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.EncryptionAlgorithm other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.EncryptionAlgorithm left, Azure.ResourceManager.Logic.Models.EncryptionAlgorithm right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.EncryptionAlgorithm (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.EncryptionAlgorithm left, Azure.ResourceManager.Logic.Models.EncryptionAlgorithm right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ErrorInfo
-    {
-        internal ErrorInfo() { }
-        public string Code { get { throw null; } }
-    }
-    public partial class ErrorProperties
-    {
-        public ErrorProperties() { }
-        public string Code { get { throw null; } set { } }
-        public string Message { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ErrorResponseCode : System.IEquatable<Azure.ResourceManager.Logic.Models.ErrorResponseCode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ErrorResponseCode(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.ErrorResponseCode IntegrationServiceEnvironmentNotFound { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ErrorResponseCode InternalServerError { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ErrorResponseCode InvalidOperationId { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ErrorResponseCode NotSpecified { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.ErrorResponseCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.ErrorResponseCode left, Azure.ResourceManager.Logic.Models.ErrorResponseCode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.ErrorResponseCode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.ErrorResponseCode left, Azure.ResourceManager.Logic.Models.ErrorResponseCode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public enum EventLevel
-    {
-        LogAlways = 0,
-        Critical = 1,
-        Error = 2,
-        Warning = 3,
-        Informational = 4,
-        Verbose = 5,
-    }
-    public partial class Expression
-    {
-        internal Expression() { }
-        public Azure.ResourceManager.Logic.Models.AzureResourceErrorInfo Error { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Logic.Models.Expression> Subexpressions { get { throw null; } }
-        public string Text { get { throw null; } }
-        public System.BinaryData Value { get { throw null; } }
-    }
-    public partial class ExpressionRoot : Azure.ResourceManager.Logic.Models.Expression
-    {
-        internal ExpressionRoot() { }
-        public string Path { get { throw null; } }
-    }
-    public partial class ExtendedErrorInfo
-    {
-        internal ExtendedErrorInfo() { }
-        public Azure.ResourceManager.Logic.Models.ErrorResponseCode Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Logic.Models.ExtendedErrorInfo> Details { get { throw null; } }
-        public System.BinaryData InnerError { get { throw null; } }
-        public string Message { get { throw null; } }
+        public bool ValidateEdiTypes { get { throw null; } set { } }
+        public bool ValidateXsdTypes { get { throw null; } set { } }
     }
     public partial class FlowAccessControlConfiguration
     {
@@ -1734,13 +1459,23 @@ namespace Azure.ResourceManager.Logic.Models
     {
         public FlowAccessControlConfigurationPolicy() { }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.OpenAuthenticationAccessPolicy> AccessPolicies { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.IPAddressRange> AllowedCallerIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.FlowAccessControlIPAddressRange> AllowedCallerIPAddresses { get { throw null; } }
+    }
+    public partial class FlowAccessControlIPAddressRange
+    {
+        public FlowAccessControlIPAddressRange() { }
+        public string AddressRange { get { throw null; } set { } }
+    }
+    public partial class FlowEndpointIPAddress
+    {
+        public FlowEndpointIPAddress() { }
+        public string CidrAddress { get { throw null; } set { } }
     }
     public partial class FlowEndpoints
     {
         public FlowEndpoints() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.IPAddress> AccessEndpointIPAddresses { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.IPAddress> OutgoingIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.FlowEndpointIPAddress> AccessEndpointIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.FlowEndpointIPAddress> OutgoingIPAddresses { get { throw null; } }
     }
     public partial class FlowEndpointsConfiguration
     {
@@ -1753,33 +1488,143 @@ namespace Azure.ResourceManager.Logic.Models
         public GenerateUpgradedDefinitionContent() { }
         public string TargetSchemaVersion { get { throw null; } set { } }
     }
-    public partial class GetCallbackUrlParameters
+    public partial class IntegrationAccountAgreementContent
     {
-        public GetCallbackUrlParameters() { }
-        public Azure.ResourceManager.Logic.Models.KeyType? KeyType { get { throw null; } set { } }
-        public System.DateTimeOffset? NotAfter { get { throw null; } set { } }
+        public IntegrationAccountAgreementContent() { }
+        public Azure.ResourceManager.Logic.Models.AS2AgreementContent AS2 { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.EdifactAgreementContent Edifact { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.X12AgreementContent X12 { get { throw null; } set { } }
+    }
+    public enum IntegrationAccountAgreementType
+    {
+        NotSpecified = 0,
+        AS2 = 1,
+        X12 = 2,
+        Edifact = 3,
+    }
+    public partial class IntegrationAccountAssemblyProperties : Azure.ResourceManager.Logic.Models.ArtifactContentProperties
+    {
+        public IntegrationAccountAssemblyProperties(string assemblyName) { }
+        public string AssemblyCulture { get { throw null; } set { } }
+        public string AssemblyName { get { throw null; } set { } }
+        public string AssemblyPublicKeyToken { get { throw null; } set { } }
+        public string AssemblyVersion { get { throw null; } set { } }
+    }
+    public partial class IntegrationAccountBatchConfigurationProperties : Azure.ResourceManager.Logic.Models.ArtifactProperties
+    {
+        public IntegrationAccountBatchConfigurationProperties(string batchGroupName, Azure.ResourceManager.Logic.Models.IntegrationAccountBatchReleaseCriteria releaseCriteria) { }
+        public string BatchGroupName { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBatchReleaseCriteria ReleaseCriteria { get { throw null; } set { } }
+    }
+    public partial class IntegrationAccountBatchReleaseCriteria
+    {
+        public IntegrationAccountBatchReleaseCriteria() { }
+        public int? BatchSize { get { throw null; } set { } }
+        public int? MessageCount { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrence Recurrence { get { throw null; } set { } }
+    }
+    public partial class IntegrationAccountBusinessIdentity
+    {
+        public IntegrationAccountBusinessIdentity(string qualifier, string value) { }
+        public string Qualifier { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
+    public enum IntegrationAccountEventLevel
+    {
+        LogAlways = 0,
+        Critical = 1,
+        Error = 2,
+        Warning = 3,
+        Informational = 4,
+        Verbose = 5,
+    }
+    public partial class IntegrationAccountKeyVaultKey
+    {
+        internal IntegrationAccountKeyVaultKey() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public bool? IsEnabled { get { throw null; } }
+        public System.Uri KeyId { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+    }
+    public partial class IntegrationAccountKeyVaultKeyReference
+    {
+        public IntegrationAccountKeyVaultKeyReference(string keyName) { }
+        public string KeyName { get { throw null; } set { } }
+        public string KeyVersion { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        public string ResourceName { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+    }
+    public partial class IntegrationAccountKeyVaultNameReference : Azure.ResourceManager.Logic.Models.LogicResourceReference
+    {
+        public IntegrationAccountKeyVaultNameReference() { }
+    }
+    public partial class IntegrationAccountListKeyVaultKeyContent
+    {
+        public IntegrationAccountListKeyVaultKeyContent(Azure.ResourceManager.Logic.Models.IntegrationAccountKeyVaultNameReference keyVault) { }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountKeyVaultNameReference KeyVault { get { throw null; } }
+        public string SkipToken { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HashingAlgorithm : System.IEquatable<Azure.ResourceManager.Logic.Models.HashingAlgorithm>
+    public readonly partial struct IntegrationAccountMapType : System.IEquatable<Azure.ResourceManager.Logic.Models.IntegrationAccountMapType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public HashingAlgorithm(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.HashingAlgorithm MD5 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.HashingAlgorithm None { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.HashingAlgorithm NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.HashingAlgorithm SHA1 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.HashingAlgorithm SHA2256 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.HashingAlgorithm SHA2384 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.HashingAlgorithm SHA2512 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.HashingAlgorithm other) { throw null; }
+        public IntegrationAccountMapType(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountMapType Liquid { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountMapType NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountMapType Xslt { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountMapType Xslt20 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountMapType Xslt30 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationAccountMapType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.HashingAlgorithm left, Azure.ResourceManager.Logic.Models.HashingAlgorithm right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.HashingAlgorithm (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.HashingAlgorithm left, Azure.ResourceManager.Logic.Models.HashingAlgorithm right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountMapType left, Azure.ResourceManager.Logic.Models.IntegrationAccountMapType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountMapType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.IntegrationAccountMapType left, Azure.ResourceManager.Logic.Models.IntegrationAccountMapType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class IntegrationAccountPartnerContent
+    {
+        public IntegrationAccountPartnerContent() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity> B2BBusinessIdentities { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IntegrationAccountPartnerType : System.IEquatable<Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IntegrationAccountPartnerType(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType B2B { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType NotSpecified { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType left, Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType left, Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IntegrationAccountSchemaType : System.IEquatable<Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IntegrationAccountSchemaType(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType Xml { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType left, Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType left, Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1802,11 +1647,83 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator !=(Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName left, Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IntegrationAccountTrackEventOperationOption : System.IEquatable<Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IntegrationAccountTrackEventOperationOption(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption DisableSourceInfoEnrich { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption left, Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption left, Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class IntegrationAccountTrackingEvent
+    {
+        public IntegrationAccountTrackingEvent(Azure.ResourceManager.Logic.Models.IntegrationAccountEventLevel eventLevel, System.DateTimeOffset eventOn, Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType recordType) { }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingEventErrorInfo Error { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountEventLevel EventLevel { get { throw null; } }
+        public System.DateTimeOffset EventOn { get { throw null; } }
+        public System.BinaryData Record { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType RecordType { get { throw null; } }
+    }
+    public partial class IntegrationAccountTrackingEventErrorInfo
+    {
+        public IntegrationAccountTrackingEventErrorInfo() { }
+        public string Code { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
+    }
+    public partial class IntegrationAccountTrackingEventsContent
+    {
+        public IntegrationAccountTrackingEventsContent(string sourceType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingEvent> events) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingEvent> Events { get { throw null; } }
+        public string SourceType { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption? TrackEventsOptions { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IntegrationAccountTrackingRecordType : System.IEquatable<Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IntegrationAccountTrackingRecordType(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType AS2Mdn { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType AS2Message { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType Custom { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType EdifactFunctionalGroup { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType EdifactFunctionalGroupAcknowledgment { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType EdifactInterchange { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType EdifactInterchangeAcknowledgment { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType EdifactTransactionSet { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType EdifactTransactionSetAcknowledgment { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType X12FunctionalGroup { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType X12FunctionalGroupAcknowledgment { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType X12Interchange { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType X12InterchangeAcknowledgment { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType X12TransactionSet { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType X12TransactionSetAcknowledgment { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType left, Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType left, Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class IntegrationServiceEnvironmenEncryptionKeyReference
     {
         public IntegrationServiceEnvironmenEncryptionKeyReference() { }
         public string KeyName { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference KeyVault { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicResourceReference KeyVault { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1851,8 +1768,8 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyCategoryType RecoveryService { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyCategoryType RedisCache { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyCategoryType RegionalService { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyCategoryType SQL { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyCategoryType SSLCertificateVerification { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyCategoryType Sql { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyCategoryType SslCertificateVerification { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyCategoryType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1866,7 +1783,7 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class IntegrationServiceEnvironmentNetworkDependencyHealth
     {
         internal IntegrationServiceEnvironmentNetworkDependencyHealth() { }
-        public Azure.ResourceManager.Logic.Models.ExtendedErrorInfo Error { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.IntegrationServiceErrorInfo Error { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyHealthState? State { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1922,9 +1839,9 @@ namespace Azure.ResourceManager.Logic.Models
         public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmenEncryptionKeyReference EncryptionKeyReference { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.FlowEndpointsConfiguration EndpointsConfiguration { get { throw null; } set { } }
         public string IntegrationServiceEnvironmentId { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.NetworkConfiguration NetworkConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.WorkflowProvisioningState? ProvisioningState { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.WorkflowState? State { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationServiceNetworkConfiguration NetworkConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowState? State { get { throw null; } set { } }
     }
     public partial class IntegrationServiceEnvironmentSku
     {
@@ -1944,7 +1861,7 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal IntegrationServiceEnvironmentSkuDefinition() { }
         public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSkuCapacity Capacity { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSkuDefinitionSku Sku { get { throw null; } }
     }
     public partial class IntegrationServiceEnvironmentSkuDefinitionSku
@@ -1998,83 +1915,301 @@ namespace Azure.ResourceManager.Logic.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependency> OutboundNetworkDependencies { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyHealth OutboundNetworkHealth { get { throw null; } }
     }
-    public partial class IPAddress
-    {
-        public IPAddress() { }
-        public string Address { get { throw null; } set { } }
-    }
-    public partial class IPAddressRange
-    {
-        public IPAddressRange() { }
-        public string AddressRange { get { throw null; } set { } }
-    }
-    public partial class JsonSchema
-    {
-        internal JsonSchema() { }
-        public string Content { get { throw null; } }
-        public string Title { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KeyType : System.IEquatable<Azure.ResourceManager.Logic.Models.KeyType>
+    public readonly partial struct IntegrationServiceErrorCode : System.IEquatable<Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public KeyType(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.KeyType NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.KeyType Primary { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.KeyType Secondary { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.KeyType other) { throw null; }
+        public IntegrationServiceErrorCode(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode IntegrationServiceEnvironmentNotFound { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode InternalServerError { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode InvalidOperationId { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode NotSpecified { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.KeyType left, Azure.ResourceManager.Logic.Models.KeyType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.KeyType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.KeyType left, Azure.ResourceManager.Logic.Models.KeyType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode left, Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode left, Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KeyVaultKey
+    public partial class IntegrationServiceErrorInfo
     {
-        internal KeyVaultKey() { }
-        public Azure.ResourceManager.Logic.Models.KeyVaultKeyAttributes Attributes { get { throw null; } }
-        public string Kid { get { throw null; } }
+        internal IntegrationServiceErrorInfo() { }
+        public Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Logic.Models.IntegrationServiceErrorInfo> Details { get { throw null; } }
+        public System.BinaryData InnerError { get { throw null; } }
+        public string Message { get { throw null; } }
     }
-    public partial class KeyVaultKeyAttributes
+    public partial class IntegrationServiceNetworkConfiguration
     {
-        internal KeyVaultKeyAttributes() { }
-        public long? Created { get { throw null; } }
-        public bool? Enabled { get { throw null; } }
-        public long? Updated { get { throw null; } }
+        public IntegrationServiceNetworkConfiguration() { }
+        public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentAccessEndpointType? EndpointType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.LogicResourceReference> Subnets { get { throw null; } }
+        public string VirtualNetworkAddressSpace { get { throw null; } set { } }
     }
-    public partial class KeyVaultKeyReference
+    public partial class ListOperationCallbackUri
     {
-        public KeyVaultKeyReference(Azure.ResourceManager.Logic.Models.KeyVaultKeyReferenceKeyVault keyVault, string keyName) { }
-        public string KeyName { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.KeyVaultKeyReferenceKeyVault KeyVault { get { throw null; } set { } }
-        public string KeyVersion { get { throw null; } set { } }
+        internal ListOperationCallbackUri() { }
+        public System.Uri Uri { get { throw null; } }
     }
-    public partial class KeyVaultKeyReferenceKeyVault
+    public partial class ListOperationCallbackUrlParameterInfo
     {
-        public KeyVaultKeyReferenceKeyVault() { }
-        public string Id { get { throw null; } set { } }
+        public ListOperationCallbackUrlParameterInfo() { }
+        public Azure.ResourceManager.Logic.Models.LogicKeyType? KeyType { get { throw null; } set { } }
+        public System.DateTimeOffset? NotAfter { get { throw null; } set { } }
+    }
+    public partial class LogicApiDeploymentParameterMetadata
+    {
+        internal LogicApiDeploymentParameterMetadata() { }
+        public string ApiDeploymentParameterMetadataType { get { throw null; } }
+        public string Description { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public bool? IsRequired { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility? Visibility { get { throw null; } }
+    }
+    public partial class LogicApiDeploymentParameterMetadataSet
+    {
+        internal LogicApiDeploymentParameterMetadataSet() { }
+        public Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterMetadata PackageContentLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterMetadata RedisCacheConnectionString { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicApiDeploymentParameterVisibility : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicApiDeploymentParameterVisibility(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility Default { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility Internal { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility NotSpecified { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility left, Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility left, Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LogicApiOperationAnnotation
+    {
+        public LogicApiOperationAnnotation() { }
+        public string Family { get { throw null; } set { } }
+        public int? Revision { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus? Status { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicApiOperationAnnotationStatus : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicApiOperationAnnotationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus Preview { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus Production { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus left, Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus left, Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LogicApiOperationInfo : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public LogicApiOperationInfo(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Logic.Models.LogicApiOperationProperties Properties { get { throw null; } set { } }
+    }
+    public partial class LogicApiOperationProperties
+    {
+        public LogicApiOperationProperties() { }
+        public Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotation Annotation { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicApiReference Api { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.SwaggerSchema InputsDefinition { get { throw null; } set { } }
+        public bool? IsNotification { get { throw null; } set { } }
+        public bool? IsPageable { get { throw null; } set { } }
+        public bool? IsWebhook { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.SwaggerSchema> ResponsesDefinition { get { throw null; } }
+        public string Summary { get { throw null; } set { } }
+        public string Trigger { get { throw null; } set { } }
+        public string TriggerHint { get { throw null; } set { } }
+        public string Visibility { get { throw null; } set { } }
+    }
+    public partial class LogicApiReference : Azure.ResourceManager.Logic.Models.LogicResourceReference
+    {
+        public LogicApiReference() { }
+        public string BrandColor { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicApiTier? Category { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public System.Uri IconUri { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
+        public System.BinaryData Swagger { get { throw null; } set { } }
+    }
+    public partial class LogicApiResourceDefinitions
+    {
+        internal LogicApiResourceDefinitions() { }
+        public System.Uri ModifiedSwaggerUri { get { throw null; } }
+        public System.Uri OriginalSwaggerUri { get { throw null; } }
+    }
+    public partial class LogicApiResourceGeneralInformation
+    {
+        internal LogicApiResourceGeneralInformation() { }
+        public string Description { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public System.Uri IconUri { get { throw null; } }
+        public string ReleaseTag { get { throw null; } }
+        public System.Uri TermsOfUseUri { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicApiTier? Tier { get { throw null; } }
+    }
+    public partial class LogicApiResourceMetadata
+    {
+        internal LogicApiResourceMetadata() { }
+        public Azure.ResourceManager.Logic.Models.LogicApiType? ApiType { get { throw null; } }
+        public string BrandColor { get { throw null; } }
+        public string ConnectionType { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterMetadataSet DeploymentParameters { get { throw null; } }
+        public string HideKey { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState? ProvisioningState { get { throw null; } }
+        public string Source { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod? WsdlImportMethod { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWsdlService WsdlService { get { throw null; } }
+    }
+    public partial class LogicApiResourcePolicies
+    {
+        internal LogicApiResourcePolicies() { }
+        public System.BinaryData Content { get { throw null; } }
+        public string ContentLink { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicApiTier : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicApiTier>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicApiTier(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicApiTier Enterprise { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicApiTier NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicApiTier Premium { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicApiTier Standard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicApiTier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicApiTier left, Azure.ResourceManager.Logic.Models.LogicApiTier right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicApiTier (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicApiTier left, Azure.ResourceManager.Logic.Models.LogicApiTier right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicApiType : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicApiType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicApiType(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicApiType NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicApiType Rest { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicApiType Soap { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicApiType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicApiType left, Azure.ResourceManager.Logic.Models.LogicApiType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicApiType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicApiType left, Azure.ResourceManager.Logic.Models.LogicApiType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LogicContentHash
+    {
+        internal LogicContentHash() { }
+        public string Algorithm { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    public partial class LogicContentLink
+    {
+        public LogicContentLink() { }
+        public Azure.ResourceManager.Logic.Models.LogicContentHash ContentHash { get { throw null; } }
+        public long? ContentSize { get { throw null; } }
+        public string ContentVersion { get { throw null; } }
+        public System.BinaryData Metadata { get { throw null; } }
+        public System.Uri Uri { get { throw null; } set { } }
+    }
+    public partial class LogicErrorInfo
+    {
+        internal LogicErrorInfo() { }
+        public string Code { get { throw null; } }
+    }
+    public partial class LogicErrorResponse
+    {
+        public LogicErrorResponse() { }
+        public string Code { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
+    }
+    public partial class LogicExpression
+    {
+        internal LogicExpression() { }
+        public Azure.ResourceManager.Logic.Models.LogicExpressionErrorInfo Error { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Logic.Models.LogicExpression> Subexpressions { get { throw null; } }
+        public string Text { get { throw null; } }
+        public System.BinaryData Value { get { throw null; } }
+    }
+    public partial class LogicExpressionErrorInfo : Azure.ResourceManager.Logic.Models.LogicErrorInfo
+    {
+        internal LogicExpressionErrorInfo() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Logic.Models.LogicExpressionErrorInfo> Details { get { throw null; } }
+        public string Message { get { throw null; } }
+    }
+    public partial class LogicExpressionRoot : Azure.ResourceManager.Logic.Models.LogicExpression
+    {
+        internal LogicExpressionRoot() { }
+        public string Path { get { throw null; } }
+    }
+    public partial class LogicJsonSchema
+    {
+        internal LogicJsonSchema() { }
+        public System.BinaryData Content { get { throw null; } }
+        public string Title { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicKeyType : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicKeyType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicKeyType(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicKeyType NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicKeyType Primary { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicKeyType Secondary { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicKeyType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicKeyType left, Azure.ResourceManager.Logic.Models.LogicKeyType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicKeyType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicKeyType left, Azure.ResourceManager.Logic.Models.LogicKeyType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LogicResourceReference
+    {
+        public LogicResourceReference() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-    }
-    public partial class KeyVaultReference : Azure.ResourceManager.Logic.Models.ResourceReference
-    {
-        public KeyVaultReference() { }
-    }
-    public partial class ListKeyVaultKeysDefinition
-    {
-        public ListKeyVaultKeysDefinition(Azure.ResourceManager.Logic.Models.KeyVaultReference keyVault) { }
-        public Azure.ResourceManager.Logic.Models.KeyVaultReference KeyVault { get { throw null; } }
-        public string SkipToken { get { throw null; } set { } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
     }
     public partial class LogicSku
     {
         internal LogicSku() { }
         public Azure.ResourceManager.Logic.Models.LogicSkuName Name { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference Plan { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicResourceReference Plan { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LogicSkuName : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicSkuName>
@@ -2098,53 +2233,356 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicSkuName left, Azure.ResourceManager.Logic.Models.LogicSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedServiceIdentity
+    public enum LogicWorkflowDayOfWeek
     {
-        public ManagedServiceIdentity(Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType identityType) { }
-        public Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType IdentityType { get { throw null; } set { } }
-        public System.Guid? PrincipalId { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+        Sunday = 0,
+        Monday = 1,
+        Tuesday = 2,
+        Wednesday = 3,
+        Thursday = 4,
+        Friday = 5,
+        Saturday = 6,
+    }
+    public partial class LogicWorkflowOutputParameterInfo : Azure.ResourceManager.Logic.Models.LogicWorkflowParameterInfo
+    {
+        public LogicWorkflowOutputParameterInfo() { }
+        public System.BinaryData Error { get { throw null; } }
+    }
+    public partial class LogicWorkflowParameterInfo
+    {
+        public LogicWorkflowParameterInfo() { }
+        public string Description { get { throw null; } set { } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType? ParameterType { get { throw null; } set { } }
+        public System.BinaryData Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType>
+    public readonly partial struct LogicWorkflowParameterType : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ManagedServiceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType other) { throw null; }
+        public LogicWorkflowParameterType(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType Array { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType Bool { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType Float { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType Int { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType Object { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType SecureObject { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType SecureString { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType String { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType left, Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType left, Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MapType : System.IEquatable<Azure.ResourceManager.Logic.Models.MapType>
+    public readonly partial struct LogicWorkflowProvisioningState : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public MapType(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.MapType Liquid { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.MapType NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.MapType Xslt { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.MapType Xslt20 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.MapType Xslt30 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.MapType other) { throw null; }
+        public LogicWorkflowProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Completed { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Created { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState InProgress { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Moving { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Pending { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Ready { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Registered { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Registering { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Renewing { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Running { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Unregistered { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Unregistering { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Updating { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Waiting { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.MapType left, Azure.ResourceManager.Logic.Models.MapType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.MapType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.MapType left, Azure.ResourceManager.Logic.Models.MapType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState left, Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState left, Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicWorkflowRecurrenceFrequency : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicWorkflowRecurrenceFrequency(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Day { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Hour { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Minute { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Month { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Second { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Week { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Year { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency left, Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency left, Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LogicWorkflowRecurrenceSchedule
+    {
+        public LogicWorkflowRecurrenceSchedule() { }
+        public System.Collections.Generic.IList<int> Hours { get { throw null; } }
+        public System.Collections.Generic.IList<int> Minutes { get { throw null; } }
+        public System.Collections.Generic.IList<int> MonthDays { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceScheduleOccurrence> MonthlyOccurrences { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.LogicWorkflowDayOfWeek> WeekDays { get { throw null; } }
+    }
+    public partial class LogicWorkflowRecurrenceScheduleOccurrence
+    {
+        public LogicWorkflowRecurrenceScheduleOccurrence() { }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowDayOfWeek? Day { get { throw null; } set { } }
+        public int? Occurrence { get { throw null; } set { } }
+    }
+    public partial class LogicWorkflowReference : Azure.ResourceManager.Logic.Models.LogicResourceReference
+    {
+        public LogicWorkflowReference() { }
+    }
+    public partial class LogicWorkflowRegenerateActionContent
+    {
+        public LogicWorkflowRegenerateActionContent() { }
+        public Azure.ResourceManager.Logic.Models.LogicKeyType? KeyType { get { throw null; } set { } }
+    }
+    public partial class LogicWorkflowRepetitionIndex
+    {
+        public LogicWorkflowRepetitionIndex(int itemIndex) { }
+        public int ItemIndex { get { throw null; } set { } }
+        public string ScopeName { get { throw null; } set { } }
+    }
+    public partial class LogicWorkflowRequest
+    {
+        public LogicWorkflowRequest() { }
+        public System.BinaryData Headers { get { throw null; } set { } }
+        public string Method { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+    }
+    public partial class LogicWorkflowRequestHistoryProperties
+    {
+        public LogicWorkflowRequestHistoryProperties() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowRequest Request { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowResponse Response { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+    }
+    public partial class LogicWorkflowResponse
+    {
+        public LogicWorkflowResponse() { }
+        public Azure.ResourceManager.Logic.Models.LogicContentLink BodyLink { get { throw null; } set { } }
+        public System.BinaryData Headers { get { throw null; } set { } }
+        public int? StatusCode { get { throw null; } set { } }
+    }
+    public partial class LogicWorkflowRunActionCorrelation : Azure.ResourceManager.Logic.Models.LogicWorkflowRunCorrelation
+    {
+        public LogicWorkflowRunActionCorrelation() { }
+        public System.Guid? ActionTrackingId { get { throw null; } set { } }
+    }
+    public partial class LogicWorkflowRunCorrelation
+    {
+        public LogicWorkflowRunCorrelation() { }
+        public System.Collections.Generic.IList<string> ClientKeywords { get { throw null; } }
+        public string ClientTrackingId { get { throw null; } set { } }
+    }
+    public partial class LogicWorkflowRunTrigger
+    {
+        internal LogicWorkflowRunTrigger() { }
+        public string Code { get { throw null; } }
+        public string CorrelationClientTrackingId { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.BinaryData Error { get { throw null; } }
+        public System.BinaryData Inputs { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicContentLink InputsLink { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.BinaryData Outputs { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicContentLink OutputsLink { get { throw null; } }
+        public System.DateTimeOffset? ScheduledOn { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowStatus? Status { get { throw null; } }
+        public System.BinaryData TrackedProperties { get { throw null; } }
+        public System.Guid? TrackingId { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicWorkflowState : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicWorkflowState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicWorkflowState(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowState Completed { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowState Enabled { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowState NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowState Suspended { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicWorkflowState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWorkflowState left, Azure.ResourceManager.Logic.Models.LogicWorkflowState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicWorkflowState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicWorkflowState left, Azure.ResourceManager.Logic.Models.LogicWorkflowState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicWorkflowStatus : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicWorkflowStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicWorkflowStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus Aborted { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus Faulted { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus Ignored { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus Paused { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus Running { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus Skipped { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus Suspended { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus TimedOut { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus Waiting { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicWorkflowStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWorkflowStatus left, Azure.ResourceManager.Logic.Models.LogicWorkflowStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicWorkflowStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicWorkflowStatus left, Azure.ResourceManager.Logic.Models.LogicWorkflowStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LogicWorkflowTriggerCallbackQueryParameterInfo
+    {
+        internal LogicWorkflowTriggerCallbackQueryParameterInfo() { }
+        public string ApiVersion { get { throw null; } }
+        public string Se { get { throw null; } }
+        public string Sig { get { throw null; } }
+        public string Sp { get { throw null; } }
+        public string Sv { get { throw null; } }
+    }
+    public partial class LogicWorkflowTriggerCallbackUri
+    {
+        internal LogicWorkflowTriggerCallbackUri() { }
+        public string BasePath { get { throw null; } }
+        public Azure.Core.RequestMethod? Method { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackQueryParameterInfo Queries { get { throw null; } }
+        public string RelativePath { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RelativePathParameters { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicWorkflowTriggerProvisioningState : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicWorkflowTriggerProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Completed { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Created { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Moving { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Ready { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Registered { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Registering { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Running { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Unregistered { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Unregistering { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState left, Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState left, Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LogicWorkflowTriggerRecurrence
+    {
+        public LogicWorkflowTriggerRecurrence() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency? Frequency { get { throw null; } set { } }
+        public int? Interval { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceSchedule Schedule { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public string TimeZone { get { throw null; } set { } }
+    }
+    public partial class LogicWorkflowTriggerReference : Azure.ResourceManager.Logic.Models.LogicResourceReference
+    {
+        public LogicWorkflowTriggerReference() { }
+        public string FlowName { get { throw null; } set { } }
+        public string TriggerName { get { throw null; } set { } }
+    }
+    public partial class LogicWorkflowTriggerStateActionContent
+    {
+        public LogicWorkflowTriggerStateActionContent(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerReference source) { }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerReference Source { get { throw null; } }
+    }
+    public partial class LogicWorkRetryHistory
+    {
+        public LogicWorkRetryHistory() { }
+        public string ClientRequestId { get { throw null; } set { } }
+        public string Code { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicErrorResponse Error { get { throw null; } set { } }
+        public string ServiceRequestId { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicWsdlImportMethod : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicWsdlImportMethod(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod SoapPassThrough { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod SoapToRest { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod left, Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod left, Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LogicWsdlService
+    {
+        internal LogicWsdlService() { }
+        public System.Collections.Generic.IReadOnlyList<string> EndpointQualifiedNames { get { throw null; } }
+        public string QualifiedName { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MessageFilterType : System.IEquatable<Azure.ResourceManager.Logic.Models.MessageFilterType>
@@ -2164,13 +2602,6 @@ namespace Azure.ResourceManager.Logic.Models
         public static implicit operator Azure.ResourceManager.Logic.Models.MessageFilterType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Logic.Models.MessageFilterType left, Azure.ResourceManager.Logic.Models.MessageFilterType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class NetworkConfiguration
-    {
-        public NetworkConfiguration() { }
-        public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentAccessEndpointType? EndpointType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.ResourceReference> Subnets { get { throw null; } }
-        public string VirtualNetworkAddressSpace { get { throw null; } set { } }
     }
     public partial class OpenAuthenticationAccessPolicy
     {
@@ -2201,172 +2632,6 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator !=(Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType left, Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ParameterType : System.IEquatable<Azure.ResourceManager.Logic.Models.ParameterType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ParameterType(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.ParameterType Array { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ParameterType Bool { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ParameterType Float { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ParameterType Int { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ParameterType NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ParameterType Object { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ParameterType SecureObject { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ParameterType SecureString { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ParameterType String { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.ParameterType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.ParameterType left, Azure.ResourceManager.Logic.Models.ParameterType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.ParameterType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.ParameterType left, Azure.ResourceManager.Logic.Models.ParameterType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class PartnerContent
-    {
-        public PartnerContent() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.BusinessIdentity> B2BBusinessIdentities { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PartnerType : System.IEquatable<Azure.ResourceManager.Logic.Models.PartnerType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PartnerType(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.PartnerType B2B { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.PartnerType NotSpecified { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.PartnerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.PartnerType left, Azure.ResourceManager.Logic.Models.PartnerType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.PartnerType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.PartnerType left, Azure.ResourceManager.Logic.Models.PartnerType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecurrenceFrequency : System.IEquatable<Azure.ResourceManager.Logic.Models.RecurrenceFrequency>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecurrenceFrequency(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.RecurrenceFrequency Day { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.RecurrenceFrequency Hour { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.RecurrenceFrequency Minute { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.RecurrenceFrequency Month { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.RecurrenceFrequency NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.RecurrenceFrequency Second { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.RecurrenceFrequency Week { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.RecurrenceFrequency Year { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.RecurrenceFrequency other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.RecurrenceFrequency left, Azure.ResourceManager.Logic.Models.RecurrenceFrequency right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.RecurrenceFrequency (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.RecurrenceFrequency left, Azure.ResourceManager.Logic.Models.RecurrenceFrequency right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class RecurrenceSchedule
-    {
-        public RecurrenceSchedule() { }
-        public System.Collections.Generic.IList<int> Hours { get { throw null; } }
-        public System.Collections.Generic.IList<int> Minutes { get { throw null; } }
-        public System.Collections.Generic.IList<int> MonthDays { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.RecurrenceScheduleOccurrence> MonthlyOccurrences { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.DaysOfWeek> WeekDays { get { throw null; } }
-    }
-    public partial class RecurrenceScheduleOccurrence
-    {
-        public RecurrenceScheduleOccurrence() { }
-        public Azure.ResourceManager.Logic.Models.DayOfWeek? Day { get { throw null; } set { } }
-        public int? Occurrence { get { throw null; } set { } }
-    }
-    public partial class RegenerateActionParameter
-    {
-        public RegenerateActionParameter() { }
-        public Azure.ResourceManager.Logic.Models.KeyType? KeyType { get { throw null; } set { } }
-    }
-    public partial class RepetitionIndex
-    {
-        public RepetitionIndex(int itemIndex) { }
-        public int ItemIndex { get { throw null; } set { } }
-        public string ScopeName { get { throw null; } set { } }
-    }
-    public partial class Request
-    {
-        public Request() { }
-        public System.BinaryData Headers { get { throw null; } set { } }
-        public string Method { get { throw null; } set { } }
-        public System.Uri Uri { get { throw null; } set { } }
-    }
-    public partial class RequestHistoryProperties
-    {
-        public RequestHistoryProperties() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.Request Request { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.Response Response { get { throw null; } set { } }
-        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
-    }
-    public partial class ResourceReference
-    {
-        public ResourceReference() { }
-        public string Id { get { throw null; } set { } }
-        public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-    }
-    public partial class Response
-    {
-        public Response() { }
-        public Azure.ResourceManager.Logic.Models.ContentLink BodyLink { get { throw null; } set { } }
-        public System.BinaryData Headers { get { throw null; } set { } }
-        public int? StatusCode { get { throw null; } set { } }
-    }
-    public partial class RetryHistory
-    {
-        public RetryHistory() { }
-        public string ClientRequestId { get { throw null; } set { } }
-        public string Code { get { throw null; } set { } }
-        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ErrorProperties Error { get { throw null; } set { } }
-        public string ServiceRequestId { get { throw null; } set { } }
-        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
-    }
-    public partial class RunActionCorrelation : Azure.ResourceManager.Logic.Models.RunCorrelation
-    {
-        public RunActionCorrelation() { }
-        public string ActionTrackingId { get { throw null; } set { } }
-    }
-    public partial class RunCorrelation
-    {
-        public RunCorrelation() { }
-        public System.Collections.Generic.IList<string> ClientKeywords { get { throw null; } }
-        public string ClientTrackingId { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SchemaType : System.IEquatable<Azure.ResourceManager.Logic.Models.SchemaType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SchemaType(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.SchemaType NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.SchemaType Xml { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.SchemaType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.SchemaType left, Azure.ResourceManager.Logic.Models.SchemaType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.SchemaType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.SchemaType left, Azure.ResourceManager.Logic.Models.SchemaType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public enum SegmentTerminatorSuffix
     {
         None = 0,
@@ -2374,52 +2639,6 @@ namespace Azure.ResourceManager.Logic.Models
         CR = 2,
         LF = 3,
         Crlf = 4,
-    }
-    public partial class SetTriggerStateActionDefinition
-    {
-        public SetTriggerStateActionDefinition(Azure.ResourceManager.Logic.Models.WorkflowTriggerReference source) { }
-        public Azure.ResourceManager.Logic.Models.WorkflowTriggerReference Source { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SigningAlgorithm : System.IEquatable<Azure.ResourceManager.Logic.Models.SigningAlgorithm>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SigningAlgorithm(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.SigningAlgorithm Default { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.SigningAlgorithm NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.SigningAlgorithm SHA1 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.SigningAlgorithm SHA2256 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.SigningAlgorithm SHA2384 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.SigningAlgorithm SHA2512 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.SigningAlgorithm other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.SigningAlgorithm left, Azure.ResourceManager.Logic.Models.SigningAlgorithm right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.SigningAlgorithm (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.SigningAlgorithm left, Azure.ResourceManager.Logic.Models.SigningAlgorithm right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StatusAnnotation : System.IEquatable<Azure.ResourceManager.Logic.Models.StatusAnnotation>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StatusAnnotation(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.StatusAnnotation NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.StatusAnnotation Preview { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.StatusAnnotation Production { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.StatusAnnotation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.StatusAnnotation left, Azure.ResourceManager.Logic.Models.StatusAnnotation right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.StatusAnnotation (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.StatusAnnotation left, Azure.ResourceManager.Logic.Models.StatusAnnotation right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class SwaggerCustomDynamicList
     {
@@ -2461,14 +2680,14 @@ namespace Azure.ResourceManager.Logic.Models
         public string ItemTitlePath { get { throw null; } set { } }
         public string ItemValuePath { get { throw null; } set { } }
         public string OperationId { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.SwaggerCustomDynamicTreeParameter> Parameters { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.SwaggerCustomDynamicTreeParameterInfo> Parameters { get { throw null; } }
         public string SelectableFilter { get { throw null; } set { } }
     }
-    public partial class SwaggerCustomDynamicTreeParameter
+    public partial class SwaggerCustomDynamicTreeParameterInfo
     {
-        public SwaggerCustomDynamicTreeParameter() { }
+        public SwaggerCustomDynamicTreeParameterInfo() { }
+        public bool? IsRequired { get { throw null; } set { } }
         public string ParameterReference { get { throw null; } set { } }
-        public bool? Required { get { throw null; } set { } }
         public string SelectedItemValuePath { get { throw null; } set { } }
         public System.BinaryData Value { get { throw null; } set { } }
     }
@@ -2497,14 +2716,14 @@ namespace Azure.ResourceManager.Logic.Models
         public Azure.ResourceManager.Logic.Models.SwaggerCustomDynamicTree DynamicTree { get { throw null; } set { } }
         public System.BinaryData Example { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.SwaggerExternalDocumentation ExternalDocs { get { throw null; } set { } }
+        public bool? IsNotificationUrlExtension { get { throw null; } set { } }
+        public bool? IsReadOnly { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.SwaggerSchema Items { get { throw null; } set { } }
         public int? MaxProperties { get { throw null; } set { } }
         public int? MinProperties { get { throw null; } set { } }
-        public bool? NotificationUrlExtension { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.SwaggerSchema> Properties { get { throw null; } }
-        public bool? ReadOnly { get { throw null; } set { } }
-        public string Ref { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Required { get { throw null; } }
+        public string Reference { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> RequiredProperties { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.SwaggerSchemaType? SchemaType { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.SwaggerXml Xml { get { throw null; } set { } }
@@ -2536,84 +2755,12 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class SwaggerXml
     {
         public SwaggerXml() { }
-        public bool? Attribute { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Extensions { get { throw null; } }
+        public bool? IsAttribute { get { throw null; } set { } }
+        public bool? IsWrapped { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Namespace { get { throw null; } set { } }
         public string Prefix { get { throw null; } set { } }
-        public bool? Wrapped { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TrackEventsOperationOption : System.IEquatable<Azure.ResourceManager.Logic.Models.TrackEventsOperationOption>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TrackEventsOperationOption(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.TrackEventsOperationOption DisableSourceInfoEnrich { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackEventsOperationOption None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.TrackEventsOperationOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.TrackEventsOperationOption left, Azure.ResourceManager.Logic.Models.TrackEventsOperationOption right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.TrackEventsOperationOption (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.TrackEventsOperationOption left, Azure.ResourceManager.Logic.Models.TrackEventsOperationOption right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class TrackingEvent
-    {
-        public TrackingEvent(Azure.ResourceManager.Logic.Models.EventLevel eventLevel, System.DateTimeOffset eventOn, Azure.ResourceManager.Logic.Models.TrackingRecordType recordType) { }
-        public Azure.ResourceManager.Logic.Models.TrackingEventErrorInfo Error { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.EventLevel EventLevel { get { throw null; } }
-        public System.DateTimeOffset EventOn { get { throw null; } }
-        public System.BinaryData Record { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.TrackingRecordType RecordType { get { throw null; } }
-    }
-    public partial class TrackingEventErrorInfo
-    {
-        public TrackingEventErrorInfo() { }
-        public string Code { get { throw null; } set { } }
-        public string Message { get { throw null; } set { } }
-    }
-    public partial class TrackingEventsDefinition
-    {
-        public TrackingEventsDefinition(string sourceType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.Models.TrackingEvent> events) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.TrackingEvent> Events { get { throw null; } }
-        public string SourceType { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.TrackEventsOperationOption? TrackEventsOptions { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TrackingRecordType : System.IEquatable<Azure.ResourceManager.Logic.Models.TrackingRecordType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TrackingRecordType(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType AS2MDN { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType AS2Message { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType Custom { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType EdifactFunctionalGroup { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType EdifactFunctionalGroupAcknowledgment { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType EdifactInterchange { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType EdifactInterchangeAcknowledgment { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType EdifactTransactionSet { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType EdifactTransactionSetAcknowledgment { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType X12FunctionalGroup { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType X12FunctionalGroupAcknowledgment { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType X12Interchange { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType X12InterchangeAcknowledgment { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType X12TransactionSet { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType X12TransactionSetAcknowledgment { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.TrackingRecordType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.TrackingRecordType left, Azure.ResourceManager.Logic.Models.TrackingRecordType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.TrackingRecordType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.TrackingRecordType left, Azure.ResourceManager.Logic.Models.TrackingRecordType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TrailingSeparatorPolicy : System.IEquatable<Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy>
@@ -2655,234 +2802,16 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator !=(Azure.ResourceManager.Logic.Models.UsageIndicator left, Azure.ResourceManager.Logic.Models.UsageIndicator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WorkflowOutputParameter : Azure.ResourceManager.Logic.Models.WorkflowParameter
-    {
-        public WorkflowOutputParameter() { }
-        public System.BinaryData Error { get { throw null; } }
-    }
-    public partial class WorkflowParameter
-    {
-        public WorkflowParameter() { }
-        public string Description { get { throw null; } set { } }
-        public System.BinaryData Metadata { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ParameterType? ParameterType { get { throw null; } set { } }
-        public System.BinaryData Value { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WorkflowProvisioningState : System.IEquatable<Azure.ResourceManager.Logic.Models.WorkflowProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WorkflowProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Completed { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Created { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Deleted { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState InProgress { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Moving { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Pending { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Ready { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Registered { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Registering { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Renewing { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Running { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Unregistered { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Unregistering { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Updating { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowProvisioningState Waiting { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.WorkflowProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.WorkflowProvisioningState left, Azure.ResourceManager.Logic.Models.WorkflowProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.WorkflowProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.WorkflowProvisioningState left, Azure.ResourceManager.Logic.Models.WorkflowProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class WorkflowReference : Azure.ResourceManager.Logic.Models.ResourceReference
-    {
-        public WorkflowReference() { }
-    }
-    public partial class WorkflowRunTrigger
-    {
-        internal WorkflowRunTrigger() { }
-        public string Code { get { throw null; } }
-        public string CorrelationClientTrackingId { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public System.BinaryData Error { get { throw null; } }
-        public System.BinaryData Inputs { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink InputsLink { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.BinaryData Outputs { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink OutputsLink { get { throw null; } }
-        public System.DateTimeOffset? ScheduledOn { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowStatus? Status { get { throw null; } }
-        public System.BinaryData TrackedProperties { get { throw null; } }
-        public string TrackingId { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WorkflowState : System.IEquatable<Azure.ResourceManager.Logic.Models.WorkflowState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WorkflowState(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.WorkflowState Completed { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowState Deleted { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowState Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowState Enabled { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowState NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowState Suspended { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.WorkflowState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.WorkflowState left, Azure.ResourceManager.Logic.Models.WorkflowState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.WorkflowState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.WorkflowState left, Azure.ResourceManager.Logic.Models.WorkflowState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WorkflowStatus : System.IEquatable<Azure.ResourceManager.Logic.Models.WorkflowStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WorkflowStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.WorkflowStatus Aborted { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowStatus Cancelled { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowStatus Faulted { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowStatus Ignored { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowStatus NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowStatus Paused { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowStatus Running { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowStatus Skipped { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowStatus Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowStatus Suspended { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowStatus TimedOut { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowStatus Waiting { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.WorkflowStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.WorkflowStatus left, Azure.ResourceManager.Logic.Models.WorkflowStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.WorkflowStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.WorkflowStatus left, Azure.ResourceManager.Logic.Models.WorkflowStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class WorkflowTriggerCallbackUri
-    {
-        internal WorkflowTriggerCallbackUri() { }
-        public string BasePath { get { throw null; } }
-        public string Method { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.WorkflowTriggerListCallbackUrlQueries Queries { get { throw null; } }
-        public string RelativePath { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> RelativePathParameters { get { throw null; } }
-        public string Value { get { throw null; } }
-    }
-    public partial class WorkflowTriggerListCallbackUrlQueries
-    {
-        internal WorkflowTriggerListCallbackUrlQueries() { }
-        public string ApiVersion { get { throw null; } }
-        public string Se { get { throw null; } }
-        public string Sig { get { throw null; } }
-        public string Sp { get { throw null; } }
-        public string Sv { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WorkflowTriggerProvisioningState : System.IEquatable<Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WorkflowTriggerProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Completed { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Created { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Deleted { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Moving { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Ready { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Registered { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Registering { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Running { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Unregistered { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Unregistering { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState left, Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState left, Azure.ResourceManager.Logic.Models.WorkflowTriggerProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class WorkflowTriggerRecurrence
-    {
-        public WorkflowTriggerRecurrence() { }
-        public string EndTime { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.RecurrenceFrequency? Frequency { get { throw null; } set { } }
-        public int? Interval { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.RecurrenceSchedule Schedule { get { throw null; } set { } }
-        public string StartTime { get { throw null; } set { } }
-        public string TimeZone { get { throw null; } set { } }
-    }
-    public partial class WorkflowTriggerReference : Azure.ResourceManager.Logic.Models.ResourceReference
-    {
-        public WorkflowTriggerReference() { }
-        public string FlowName { get { throw null; } set { } }
-        public string TriggerName { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WsdlImportMethod : System.IEquatable<Azure.ResourceManager.Logic.Models.WsdlImportMethod>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WsdlImportMethod(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.WsdlImportMethod NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WsdlImportMethod SoapPassThrough { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.WsdlImportMethod SoapToRest { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.WsdlImportMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.WsdlImportMethod left, Azure.ResourceManager.Logic.Models.WsdlImportMethod right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.WsdlImportMethod (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.WsdlImportMethod left, Azure.ResourceManager.Logic.Models.WsdlImportMethod right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class WsdlService
-    {
-        internal WsdlService() { }
-        public System.Collections.Generic.IReadOnlyList<string> EndpointQualifiedNames { get { throw null; } }
-        public string QualifiedName { get { throw null; } }
-    }
     public partial class X12AcknowledgementSettings
     {
-        public X12AcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgements, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgements, bool needImplementationAcknowledgement, bool batchImplementationAcknowledgements, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber) { }
+        public X12AcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgement, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgement, bool needImplementationAcknowledgement, bool batchImplementationAcknowledgement, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber) { }
         public int AcknowledgementControlNumberLowerBound { get { throw null; } set { } }
         public string AcknowledgementControlNumberPrefix { get { throw null; } set { } }
         public string AcknowledgementControlNumberSuffix { get { throw null; } set { } }
         public int AcknowledgementControlNumberUpperBound { get { throw null; } set { } }
-        public bool BatchFunctionalAcknowledgements { get { throw null; } set { } }
-        public bool BatchImplementationAcknowledgements { get { throw null; } set { } }
-        public bool BatchTechnicalAcknowledgements { get { throw null; } set { } }
+        public bool BatchFunctionalAcknowledgement { get { throw null; } set { } }
+        public bool BatchImplementationAcknowledgement { get { throw null; } set { } }
+        public bool BatchTechnicalAcknowledgement { get { throw null; } set { } }
         public string FunctionalAcknowledgementVersion { get { throw null; } set { } }
         public string ImplementationAcknowledgementVersion { get { throw null; } set { } }
         public bool NeedFunctionalAcknowledgement { get { throw null; } set { } }
@@ -2907,7 +2836,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.X12CharacterSet Basic { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.X12CharacterSet Extended { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.X12CharacterSet NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.X12CharacterSet UTF8 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.X12CharacterSet Utf8 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.X12CharacterSet other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -3015,10 +2944,10 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class X12OneWayAgreement
     {
-        public X12OneWayAgreement(Azure.ResourceManager.Logic.Models.BusinessIdentity senderBusinessIdentity, Azure.ResourceManager.Logic.Models.BusinessIdentity receiverBusinessIdentity, Azure.ResourceManager.Logic.Models.X12ProtocolSettings protocolSettings) { }
+        public X12OneWayAgreement(Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity senderBusinessIdentity, Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity receiverBusinessIdentity, Azure.ResourceManager.Logic.Models.X12ProtocolSettings protocolSettings) { }
         public Azure.ResourceManager.Logic.Models.X12ProtocolSettings ProtocolSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity ReceiverBusinessIdentity { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity SenderBusinessIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity ReceiverBusinessIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity SenderBusinessIdentity { get { throw null; } set { } }
     }
     public partial class X12ProcessingSettings
     {
@@ -3085,18 +3014,18 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class X12ValidationOverride
     {
-        public X12ValidationOverride(string messageId, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool validateCharacterSet, bool trimLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy) { }
+        public X12ValidationOverride(string messageId, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool validateCharacterSet, bool trimLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy) { }
         public bool AllowLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
         public string MessageId { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy TrailingSeparatorPolicy { get { throw null; } set { } }
         public bool TrimLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
         public bool ValidateCharacterSet { get { throw null; } set { } }
-        public bool ValidateEDITypes { get { throw null; } set { } }
-        public bool ValidateXSDTypes { get { throw null; } set { } }
+        public bool ValidateEdiTypes { get { throw null; } set { } }
+        public bool ValidateXsdTypes { get { throw null; } set { } }
     }
     public partial class X12ValidationSettings
     {
-        public X12ValidationSettings(bool validateCharacterSet, bool checkDuplicateInterchangeControlNumber, int interchangeControlNumberValidityDays, bool checkDuplicateGroupControlNumber, bool checkDuplicateTransactionSetControlNumber, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool trimLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy) { }
+        public X12ValidationSettings(bool validateCharacterSet, bool checkDuplicateInterchangeControlNumber, int interchangeControlNumberValidityDays, bool checkDuplicateGroupControlNumber, bool checkDuplicateTransactionSetControlNumber, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool trimLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy) { }
         public bool AllowLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
         public bool CheckDuplicateGroupControlNumber { get { throw null; } set { } }
         public bool CheckDuplicateInterchangeControlNumber { get { throw null; } set { } }
@@ -3105,7 +3034,7 @@ namespace Azure.ResourceManager.Logic.Models
         public Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy TrailingSeparatorPolicy { get { throw null; } set { } }
         public bool TrimLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
         public bool ValidateCharacterSet { get { throw null; } set { } }
-        public bool ValidateEDITypes { get { throw null; } set { } }
-        public bool ValidateXSDTypes { get { throw null; } set { } }
+        public bool ValidateEdiTypes { get { throw null; } set { } }
+        public bool ValidateXsdTypes { get { throw null; } set { } }
     }
 }

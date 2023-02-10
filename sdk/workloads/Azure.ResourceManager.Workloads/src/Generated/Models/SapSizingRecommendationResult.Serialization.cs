@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -22,16 +21,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     case "ThreeTier": return ThreeTierRecommendationResult.DeserializeThreeTierRecommendationResult(element);
                 }
             }
-            SapDeploymentType deploymentType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("deploymentType"))
-                {
-                    deploymentType = new SapDeploymentType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new SapSizingRecommendationResult(deploymentType);
+            return UnknownSapSizingRecommendationResult.DeserializeUnknownSapSizingRecommendationResult(element);
         }
     }
 }

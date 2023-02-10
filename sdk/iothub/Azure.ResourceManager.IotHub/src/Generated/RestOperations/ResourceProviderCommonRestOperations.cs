@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UserSubscriptionQuotaListResult>> GetSubscriptionQuotaAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubUserSubscriptionQuotaListResult>> GetSubscriptionQuotaAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        UserSubscriptionQuotaListResult value = default;
+                        IotHubUserSubscriptionQuotaListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UserSubscriptionQuotaListResult.DeserializeUserSubscriptionQuotaListResult(document.RootElement);
+                        value = IotHubUserSubscriptionQuotaListResult.DeserializeIotHubUserSubscriptionQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UserSubscriptionQuotaListResult> GetSubscriptionQuota(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<IotHubUserSubscriptionQuotaListResult> GetSubscriptionQuota(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        UserSubscriptionQuotaListResult value = default;
+                        IotHubUserSubscriptionQuotaListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UserSubscriptionQuotaListResult.DeserializeUserSubscriptionQuotaListResult(document.RootElement);
+                        value = IotHubUserSubscriptionQuotaListResult.DeserializeIotHubUserSubscriptionQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

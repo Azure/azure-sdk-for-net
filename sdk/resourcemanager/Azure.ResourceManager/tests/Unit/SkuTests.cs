@@ -167,7 +167,8 @@ namespace Azure.ResourceManager.Tests
         public void DeserializationTest()
         {
             string json = "{\"name\":\"NameForSku\",\"tier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":123456789}";
-            JsonElement element = JsonDocument.Parse(json).RootElement;
+            using var jsonDocument = JsonDocument.Parse(json);
+            JsonElement element = jsonDocument.RootElement;
             ArmSku sku = ArmSku.DeserializeArmSku(element);
             Assert.IsTrue(sku.Name.Equals("NameForSku"));
             Assert.IsTrue(sku.Capacity == 123456789);
@@ -177,7 +178,8 @@ namespace Azure.ResourceManager.Tests
         public void InvalidDeserializationTest()
         {
             string json = "{\"name\":\"NameForSku\",\"notTier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\"}";
-            JsonElement element = JsonDocument.Parse(json).RootElement;
+            using var jsonDocument = JsonDocument.Parse(json);
+            JsonElement element = jsonDocument.RootElement;
             ArmSku sku = ArmSku.DeserializeArmSku(element);
             Assert.IsTrue(sku.Tier == null);
             Assert.IsTrue(sku.Capacity == null);

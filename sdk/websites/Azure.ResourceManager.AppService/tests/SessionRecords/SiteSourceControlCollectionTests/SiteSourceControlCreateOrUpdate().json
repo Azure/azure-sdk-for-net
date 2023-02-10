@@ -6,37 +6,43 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b2d7a9ace16b3a4f93b10488b5ade795-6685dabce4fda242-00",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20220118.1",
-          "(.NET Core 3.1.22; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "bf7382f29b3848fd74b1891212945791",
+        "traceparent": "00-29c2032e542e104cb817fc6aff4a1e72-0bd3e475c643ba41-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c535628c2ee10b77af26ee806f0a911c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "468",
+        "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Jan 2022 02:39:09 GMT",
+        "Date": "Mon, 20 Jun 2022 08:39:17 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ad53aab4-2226-4f4e-925f-fa49d4f25bd1",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "ad53aab4-2226-4f4e-925f-fa49d4f25bd1",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220119T023910Z:ad53aab4-2226-4f4e-925f-fa49d4f25bd1"
+        "x-ms-correlation-request-id": "bc331ef5-db15-4325-a7f0-4d1fa4278ceb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11953",
+        "x-ms-request-id": "bc331ef5-db15-4325-a7f0-4d1fa4278ceb",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220620T083918Z:bc331ef5-db15-4325-a7f0-4d1fa4278ceb"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
         "tags": {
-          "tagKey1": "tagValue1",
-          "tagKey2": "tagValue2"
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
         },
         "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
@@ -50,18 +56,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-306?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-1242?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "43",
         "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20220118.1",
-          "(.NET Core 3.1.22; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "4513cfbc2f5a90f080c2deeeb81c03a5",
+        "traceparent": "00-6e612436d7b2d44a90abf009f9463e7d-ab7792f9a68d304c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "73f1de39cbe3632106aa76155e0f168f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -70,24 +74,24 @@
         },
         "location": "eastus"
       },
-      "StatusCode": 200,
+      "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "239",
+        "Content-Length": "241",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Jan 2022 02:39:12 GMT",
+        "Date": "Mon, 20 Jun 2022 08:39:19 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "112800eb-e5a6-4433-a0d1-26fcaa6623f4",
-        "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "112800eb-e5a6-4433-a0d1-26fcaa6623f4",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220119T023913Z:112800eb-e5a6-4433-a0d1-26fcaa6623f4"
+        "x-ms-correlation-request-id": "cb188056-6f2a-4832-90fe-7ea5cf006e92",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "cb188056-6f2a-4832-90fe-7ea5cf006e92",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220620T083920Z:cb188056-6f2a-4832-90fe-7ea5cf006e92"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-306",
-        "name": "testRG-306",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242",
+        "name": "testRG-1242",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus",
         "tags": {
@@ -99,18 +103,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-306/providers/Microsoft.Web/sites/testSiteSource9282?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363?api-version=2021-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "47",
         "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.AppService/1.0.0-alpha.20220119.1",
-          "(.NET Core 3.1.22; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "bd4ce91e940881c6c3476d5b27ea2eaf",
+        "traceparent": "00-0348af800d96c347b5a94e39c565aece-047eb288b904d747-00",
+        "User-Agent": "azsdk-net-ResourceManager.AppService/1.0.0-alpha.20220620.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "a6e6365ee74b2a0d69b4c9fbe62a6588",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -121,45 +123,45 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "6211",
+        "Content-Length": "6343",
         "Content-Type": "application/json",
-        "Date": "Wed, 19 Jan 2022 02:39:19 GMT",
-        "ETag": "\u00221D80CDDA8FEB480\u0022",
+        "Date": "Mon, 20 Jun 2022 08:39:46 GMT",
+        "ETag": "\u00221D884814197A095\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "999b0803-e875-4c43-b473-c7d0d6087789",
-        "x-ms-ratelimit-remaining-subscription-resource-requests": "499",
-        "x-ms-request-id": "7b42c39d-9112-4a18-b833-48b88a7ffb57",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220119T023920Z:999b0803-e875-4c43-b473-c7d0d6087789",
+        "x-ms-correlation-request-id": "273b74a8-85f0-47ed-ba84-1676c86200d1",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "495",
+        "x-ms-request-id": "2625b87d-b84e-4c1c-b991-20f02b8b0f7d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220620T083946Z:273b74a8-85f0-47ed-ba84-1676c86200d1",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-306/providers/Microsoft.Web/sites/testSiteSource9282",
-        "name": "testSiteSource9282",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363",
+        "name": "testSiteSource4363",
         "type": "Microsoft.Web/sites",
         "kind": "app",
         "location": "eastus",
         "tags": {},
         "properties": {
-          "name": "testSiteSource9282",
+          "name": "testSiteSource4363",
           "state": "Running",
           "hostNames": [
-            "testsitesource9282.azurewebsites.net"
+            "testsitesource4363.azurewebsites.net"
           ],
-          "webSpace": "testRG-306-EastUSwebspace",
-          "selfLink": "https://waws-prod-blu-225.api.azurewebsites.windows.net:454/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/webspaces/testRG-306-EastUSwebspace/sites/testSiteSource9282",
-          "repositorySiteName": "testSiteSource9282",
+          "webSpace": "testRG-1242-EastUSwebspace",
+          "selfLink": "https://waws-prod-blu-315.api.azurewebsites.windows.net:454/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/webspaces/testRG-1242-EastUSwebspace/sites/testSiteSource4363",
+          "repositorySiteName": "testSiteSource4363",
           "owner": null,
           "usageState": "Normal",
           "enabled": true,
           "adminEnabled": true,
           "enabledHostNames": [
-            "testsitesource9282.azurewebsites.net",
-            "testsitesource9282.scm.azurewebsites.net"
+            "testsitesource4363.azurewebsites.net",
+            "testsitesource4363.scm.azurewebsites.net"
           ],
           "siteProperties": {
             "metadata": null,
@@ -182,7 +184,7 @@
           "siteMode": null,
           "hostNameSslStates": [
             {
-              "name": "testsitesource9282.azurewebsites.net",
+              "name": "testsitesource4363.azurewebsites.net",
               "sslState": "Disabled",
               "ipBasedSslResult": null,
               "virtualIP": null,
@@ -193,7 +195,7 @@
               "hostType": "Standard"
             },
             {
-              "name": "testsitesource9282.scm.azurewebsites.net",
+              "name": "testsitesource4363.scm.azurewebsites.net",
               "sslState": "Disabled",
               "ipBasedSslResult": null,
               "virtualIP": null,
@@ -206,14 +208,15 @@
           ],
           "computeMode": null,
           "serverFarm": null,
-          "serverFarmId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-306/providers/Microsoft.Web/serverfarms/Default1oj",
+          "serverFarmId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/serverfarms/Default1pr",
           "reserved": false,
           "isXenon": false,
           "hyperV": false,
-          "lastModifiedTimeUtc": "2022-01-19T02:39:15.3466667",
+          "lastModifiedTimeUtc": "2022-06-20T08:39:29.2166667",
           "storageRecoveryDefaultState": "Running",
           "contentAvailabilityState": "Normal",
           "runtimeAvailabilityState": "Normal",
+          "vnetRouteAllEnabled": false,
           "siteConfig": {
             "numberOfWorkers": 1,
             "defaultDocuments": null,
@@ -298,6 +301,8 @@
             "scmIpSecurityRestrictionsUseMain": null,
             "http20Enabled": false,
             "minTlsVersion": null,
+            "minTlsCipherSuite": null,
+            "supportedTlsCipherSuites": null,
             "scmMinTlsVersion": null,
             "ftpsState": null,
             "preWarmedInstanceCount": null,
@@ -310,9 +315,10 @@
             "azureStorageAccounts": null,
             "http20ProxyFlag": null,
             "sitePort": null,
-            "antivirusScanEnabled": null
+            "antivirusScanEnabled": null,
+            "storageType": null
           },
-          "deploymentId": "testSiteSource9282",
+          "deploymentId": "testSiteSource4363",
           "slotName": null,
           "trafficManagerHostNames": null,
           "sku": "Free",
@@ -328,30 +334,31 @@
           "domainVerificationIdentifiers": null,
           "customDomainVerificationId": "B2B26A95110144FA7D61C7F11182785CA097CEE09243353FC8B6B68E6270D88A",
           "kind": "app",
-          "inboundIpAddress": "20.49.104.20",
-          "possibleInboundIpAddresses": "20.49.104.20",
-          "ftpUsername": "testSiteSource9282\\$testSiteSource9282",
-          "ftpsHostName": "ftps://waws-prod-blu-225.ftp.azurewebsites.windows.net/site/wwwroot",
-          "outboundIpAddresses": "20.62.237.133,20.62.237.111,20.62.237.0,20.62.237.137,20.62.237.142,20.62.237.180,20.49.104.20",
-          "possibleOutboundIpAddresses": "20.62.237.133,20.62.237.111,20.62.237.0,20.62.237.137,20.62.237.142,20.62.237.180,20.62.237.185,20.62.237.191,20.62.237.194,20.62.237.209,20.62.237.216,20.62.237.220,20.62.237.227,20.62.237.233,20.62.238.17,20.62.238.19,20.62.238.30,20.62.238.37,20.62.238.40,20.62.238.54,20.62.238.61,20.62.238.63,20.62.238.64,20.62.238.68,20.62.238.74,20.62.233.46,20.62.233.47,20.72.136.166,20.62.155.209,20.72.136.171,20.49.104.20",
+          "inboundIpAddress": "20.119.8.0",
+          "possibleInboundIpAddresses": "20.119.8.0",
+          "ftpUsername": "testSiteSource4363\\$testSiteSource4363",
+          "ftpsHostName": "ftps://waws-prod-blu-315.ftp.azurewebsites.windows.net/site/wwwroot",
+          "outboundIpAddresses": "20.120.57.126,20.120.57.157,20.120.57.168,20.120.57.202,20.120.57.225,20.120.57.251,20.119.8.0",
+          "possibleOutboundIpAddresses": "20.120.57.126,20.120.57.157,20.120.57.168,20.120.57.202,20.120.57.225,20.120.57.251,20.120.58.20,20.120.58.60,20.120.58.210,20.120.58.218,20.120.58.235,20.120.58.255,20.120.59.0,20.120.59.21,20.120.59.107,20.120.59.200,20.120.59.206,20.120.59.247,20.120.60.94,20.120.60.97,20.120.60.118,20.120.60.157,20.120.60.165,20.120.60.192,20.120.60.200,20.120.60.203,20.120.56.58,20.120.61.0,20.120.61.2,20.120.61.11,20.119.8.0",
           "containerSize": 0,
           "dailyMemoryTimeQuota": 0,
           "suspendedTill": null,
           "siteDisabledReason": 0,
           "functionExecutionUnitsCache": null,
           "maxNumberOfWorkers": null,
-          "homeStamp": "waws-prod-blu-225",
+          "homeStamp": "waws-prod-blu-315",
           "cloningInfo": null,
           "hostingEnvironmentId": null,
           "tags": {},
-          "resourceGroup": "testRG-306",
-          "defaultHostName": "testsitesource9282.azurewebsites.net",
+          "resourceGroup": "testRG-1242",
+          "defaultHostName": "testsitesource4363.azurewebsites.net",
           "slotSwapStatus": null,
           "httpsOnly": false,
           "redundancyMode": "None",
           "inProgressOperationId": null,
           "geoDistributions": null,
           "privateEndpointConnections": null,
+          "publicNetworkAccess": null,
           "buildVersion": null,
           "targetBuildVersion": null,
           "migrationState": null,
@@ -363,18 +370,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-306/providers/Microsoft.Web/sites/testSiteSource9282/sourcecontrols/web?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web?api-version=2021-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "136",
         "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.AppService/1.0.0-alpha.20220119.1",
-          "(.NET Core 3.1.22; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "6e76e66c50453bb34dc397e8833458d7",
+        "traceparent": "00-0031a207dfeb7749899ae121976c474d-f265182a8cdb484a-00",
+        "User-Agent": "azsdk-net-ResourceManager.AppService/1.0.0-alpha.20220620.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "5aacdaf1b635f6eee348791757672080",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -385,28 +390,419 @@
           "isMercurial": false
         }
       },
-      "StatusCode": 200,
+      "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "514",
+        "Content-Length": "516",
         "Content-Type": "application/json",
-        "Date": "Wed, 19 Jan 2022 02:39:20 GMT",
-        "ETag": "\u00221D80CDDBFD9F12B\u0022",
+        "Date": "Mon, 20 Jun 2022 08:39:52 GMT",
+        "ETag": "\u00221D884814F37C955\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f2019a3b-39d9-4d89-8f4b-104610785fb6",
-        "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "4ff7f336-3124-460f-834d-4035a5ec7770",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220119T023921Z:f2019a3b-39d9-4d89-8f4b-104610785fb6",
+        "x-ms-correlation-request-id": "1c245117-1278-4418-912a-90fb39e8bc86",
+        "x-ms-ratelimit-remaining-subscription-writes": "1193",
+        "x-ms-request-id": "04a9c76d-64f3-4c01-bcf9-2ee8e01587d9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220620T083952Z:1c245117-1278-4418-912a-90fb39e8bc86",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-306/providers/Microsoft.Web/sites/testSiteSource9282/sourcecontrols/web",
-        "name": "testSiteSource9282",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web",
+        "name": "testSiteSource4363",
+        "type": "Microsoft.Web/sites/sourcecontrols",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "repoUrl": "https://github.com/00Kai0/azure-site-test",
+          "branch": "staging",
+          "isManualIntegration": true,
+          "isGitHubAction": false,
+          "deploymentRollbackEnabled": false,
+          "isMercurial": false,
+          "provisioningState": "InProgress",
+          "gitHubActionConfiguration": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0031a207dfeb7749899ae121976c474d-7d4219080f844d45-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "0c0af19d0a7d0d520796385e2e7ebcf9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "585",
+        "Content-Type": "application/json",
+        "Date": "Mon, 20 Jun 2022 08:39:53 GMT",
+        "ETag": "\u00221D884814F37C955\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4c96cca6-f080-4699-bd43-130f9b27a42e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11952",
+        "x-ms-request-id": "08cd3b43-3c06-4aba-8fef-3a98a22da75f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220620T083953Z:4c96cca6-f080-4699-bd43-130f9b27a42e",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web",
+        "name": "testSiteSource4363",
+        "type": "Microsoft.Web/sites/sourcecontrols",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "repoUrl": "https://github.com/00Kai0/azure-site-test",
+          "branch": "staging",
+          "isManualIntegration": true,
+          "isGitHubAction": false,
+          "deploymentRollbackEnabled": false,
+          "isMercurial": false,
+          "provisioningState": "InProgress",
+          "provisioningDetails": "2022-06-20T08:39:51.6933333 Ensuring ScmType",
+          "gitHubActionConfiguration": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0031a207dfeb7749899ae121976c474d-5769540865103f49-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "68f003b9fcb67e4eebf6bb63717d92d6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "585",
+        "Content-Type": "application/json",
+        "Date": "Mon, 20 Jun 2022 08:40:00 GMT",
+        "ETag": "\u00221D884814F37C955\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "153eaccf-aafb-4fe1-a814-c10861ccc600",
+        "x-ms-ratelimit-remaining-subscription-reads": "11951",
+        "x-ms-request-id": "b40cc3e3-ef8a-47e6-8ddb-2084c028fb44",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220620T084000Z:153eaccf-aafb-4fe1-a814-c10861ccc600",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web",
+        "name": "testSiteSource4363",
+        "type": "Microsoft.Web/sites/sourcecontrols",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "repoUrl": "https://github.com/00Kai0/azure-site-test",
+          "branch": "staging",
+          "isManualIntegration": true,
+          "isGitHubAction": false,
+          "deploymentRollbackEnabled": false,
+          "isMercurial": false,
+          "provisioningState": "InProgress",
+          "provisioningDetails": "2022-06-20T08:39:51.6933333 Ensuring ScmType",
+          "gitHubActionConfiguration": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0031a207dfeb7749899ae121976c474d-ac8f28cd4e0d7e42-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "667a6113145d0502398c12f33a8f8720",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "682",
+        "Content-Type": "application/json",
+        "Date": "Mon, 20 Jun 2022 08:40:04 GMT",
+        "ETag": "\u00221D884814F37C955\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "19a1e07d-7733-438a-a0b5-ed2841991e3f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11950",
+        "x-ms-request-id": "1e215a6a-c2c1-49b2-a5e2-e8360d86210e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220620T084004Z:19a1e07d-7733-438a-a0b5-ed2841991e3f",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web",
+        "name": "testSiteSource4363",
+        "type": "Microsoft.Web/sites/sourcecontrols",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "repoUrl": "https://github.com/00Kai0/azure-site-test",
+          "branch": "staging",
+          "isManualIntegration": true,
+          "isGitHubAction": false,
+          "deploymentRollbackEnabled": false,
+          "isMercurial": false,
+          "provisioningState": "InProgress",
+          "provisioningDetails": "2022-06-20T08:40:01.1206155 https://testsitesource4363.scm.azurewebsites.net/api/deployments/latest?deployer=GitHub\u0026time=2022-06-20_08-40-00Z",
+          "gitHubActionConfiguration": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0031a207dfeb7749899ae121976c474d-cf41f6ca766c5c44-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "5fb74a16cc1ca061a28c20874fef9b89",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "682",
+        "Content-Type": "application/json",
+        "Date": "Mon, 20 Jun 2022 08:40:06 GMT",
+        "ETag": "\u00221D884814F37C955\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0b9b51d6-9a9c-4259-b174-b6559997b1f1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11949",
+        "x-ms-request-id": "c5c14147-9e02-49d5-869d-aa93af1ab072",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220620T084006Z:0b9b51d6-9a9c-4259-b174-b6559997b1f1",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web",
+        "name": "testSiteSource4363",
+        "type": "Microsoft.Web/sites/sourcecontrols",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "repoUrl": "https://github.com/00Kai0/azure-site-test",
+          "branch": "staging",
+          "isManualIntegration": true,
+          "isGitHubAction": false,
+          "deploymentRollbackEnabled": false,
+          "isMercurial": false,
+          "provisioningState": "InProgress",
+          "provisioningDetails": "2022-06-20T08:40:01.1206155 https://testsitesource4363.scm.azurewebsites.net/api/deployments/latest?deployer=GitHub\u0026time=2022-06-20_08-40-00Z",
+          "gitHubActionConfiguration": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0031a207dfeb7749899ae121976c474d-5fffbf0665807442-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "cd4a61035504a59c01ea2f2aea5b445c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "682",
+        "Content-Type": "application/json",
+        "Date": "Mon, 20 Jun 2022 08:40:10 GMT",
+        "ETag": "\u00221D884814F37C955\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9acfe85d-fcad-454e-83aa-e3ca4ee2006c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11948",
+        "x-ms-request-id": "dc6d5414-c807-489e-8a9e-63b61d36e75c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220620T084010Z:9acfe85d-fcad-454e-83aa-e3ca4ee2006c",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web",
+        "name": "testSiteSource4363",
+        "type": "Microsoft.Web/sites/sourcecontrols",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "repoUrl": "https://github.com/00Kai0/azure-site-test",
+          "branch": "staging",
+          "isManualIntegration": true,
+          "isGitHubAction": false,
+          "deploymentRollbackEnabled": false,
+          "isMercurial": false,
+          "provisioningState": "InProgress",
+          "provisioningDetails": "2022-06-20T08:40:01.1206155 https://testsitesource4363.scm.azurewebsites.net/api/deployments/latest?deployer=GitHub\u0026time=2022-06-20_08-40-00Z",
+          "gitHubActionConfiguration": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0031a207dfeb7749899ae121976c474d-8734969fb204ea40-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "274c9a6f32c647b9ffdac4d0f47ab64a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "682",
+        "Content-Type": "application/json",
+        "Date": "Mon, 20 Jun 2022 08:40:15 GMT",
+        "ETag": "\u00221D884814F37C955\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "664c5c73-39cc-4fa1-817a-936766c644e0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11947",
+        "x-ms-request-id": "53f3afb0-6378-456e-8652-c24053f67872",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220620T084015Z:664c5c73-39cc-4fa1-817a-936766c644e0",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web",
+        "name": "testSiteSource4363",
+        "type": "Microsoft.Web/sites/sourcecontrols",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "repoUrl": "https://github.com/00Kai0/azure-site-test",
+          "branch": "staging",
+          "isManualIntegration": true,
+          "isGitHubAction": false,
+          "deploymentRollbackEnabled": false,
+          "isMercurial": false,
+          "provisioningState": "InProgress",
+          "provisioningDetails": "2022-06-20T08:40:11.3498358 https://testsitesource4363.scm.azurewebsites.net/api/deployments/latest?deployer=GitHub\u0026time=2022-06-20_08-40-00Z",
+          "gitHubActionConfiguration": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0031a207dfeb7749899ae121976c474d-d98ecdbd8730b545-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d8ef88f0b944c11cad115e329d37b646",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "682",
+        "Content-Type": "application/json",
+        "Date": "Mon, 20 Jun 2022 08:40:24 GMT",
+        "ETag": "\u00221D884814F37C955\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "bba11567-133c-4484-80b1-3d173d72abdc",
+        "x-ms-ratelimit-remaining-subscription-reads": "11946",
+        "x-ms-request-id": "383b3738-6167-445f-a24a-b46819634b25",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220620T084024Z:bba11567-133c-4484-80b1-3d173d72abdc",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web",
+        "name": "testSiteSource4363",
+        "type": "Microsoft.Web/sites/sourcecontrols",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "repoUrl": "https://github.com/00Kai0/azure-site-test",
+          "branch": "staging",
+          "isManualIntegration": true,
+          "isGitHubAction": false,
+          "deploymentRollbackEnabled": false,
+          "isMercurial": false,
+          "provisioningState": "InProgress",
+          "provisioningDetails": "2022-06-20T08:40:21.5358390 https://testsitesource4363.scm.azurewebsites.net/api/deployments/latest?deployer=GitHub\u0026time=2022-06-20_08-40-00Z",
+          "gitHubActionConfiguration": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0031a207dfeb7749899ae121976c474d-3d86c50821e98048-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "b518c44774a2d0c3a703cd2a90ccb187",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "515",
+        "Content-Type": "application/json",
+        "Date": "Mon, 20 Jun 2022 08:40:40 GMT",
+        "ETag": "\u00221D884814F37C955\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3ce61757-09f7-4c73-950e-d1ea720f9cca",
+        "x-ms-ratelimit-remaining-subscription-reads": "11945",
+        "x-ms-request-id": "b29ede07-dc77-44fb-ab3c-cca11499c7b0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220620T084041Z:3ce61757-09f7-4c73-950e-d1ea720f9cca",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1242/providers/Microsoft.Web/sites/testSiteSource4363/sourcecontrols/web",
+        "name": "testSiteSource4363",
         "type": "Microsoft.Web/sites/sourcecontrols",
         "location": "East US",
         "tags": {},
@@ -424,7 +820,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "17749257",
+    "RandomSeed": "1639228974",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

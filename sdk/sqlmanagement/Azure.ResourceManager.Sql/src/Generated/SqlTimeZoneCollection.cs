@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.Sql
     {
         private readonly ClientDiagnostics _sqlTimeZoneTimeZonesClientDiagnostics;
         private readonly TimeZonesRestOperations _sqlTimeZoneTimeZonesRestClient;
-        private readonly string _locationName;
+        private readonly AzureLocation _locationName;
 
         /// <summary> Initializes a new instance of the <see cref="SqlTimeZoneCollection"/> class for mocking. </summary>
         protected SqlTimeZoneCollection()
@@ -40,9 +39,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="locationName"> The String to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal SqlTimeZoneCollection(ArmClient client, ResourceIdentifier id, string locationName) : base(client, id)
+        internal SqlTimeZoneCollection(ArmClient client, ResourceIdentifier id, AzureLocation locationName) : base(client, id)
         {
             _locationName = locationName;
             _sqlTimeZoneTimeZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlTimeZoneResource.ResourceType.Namespace, Diagnostics);
@@ -61,8 +58,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed instance time zone.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
-        /// Operation Id: TimeZones_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TimeZones_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -76,7 +81,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _sqlTimeZoneTimeZonesRestClient.GetAsync(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlTimeZoneTimeZonesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_locationName), timeZoneId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlTimeZoneResource(Client, response.Value), response.GetRawResponse());
@@ -90,8 +95,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed instance time zone.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
-        /// Operation Id: TimeZones_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TimeZones_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -105,7 +118,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _sqlTimeZoneTimeZonesRestClient.Get(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken);
+                var response = _sqlTimeZoneTimeZonesRestClient.Get(Id.SubscriptionId, new AzureLocation(_locationName), timeZoneId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlTimeZoneResource(Client, response.Value), response.GetRawResponse());
@@ -119,92 +132,60 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of managed instance time zones by location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones
-        /// Operation Id: TimeZones_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TimeZones_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlTimeZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlTimeZoneResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlTimeZoneResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlTimeZoneTimeZonesRestClient.ListByLocationAsync(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlTimeZoneResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlTimeZoneTimeZonesRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlTimeZoneResource(Client, SqlTimeZoneData.DeserializeSqlTimeZoneData(e)), _sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, "SqlTimeZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of managed instance time zones by location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones
-        /// Operation Id: TimeZones_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TimeZones_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlTimeZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlTimeZoneResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SqlTimeZoneResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlTimeZoneTimeZonesRestClient.ListByLocation(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlTimeZoneResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlTimeZoneTimeZonesRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlTimeZoneResource(Client, SqlTimeZoneData.DeserializeSqlTimeZoneData(e)), _sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, "SqlTimeZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
-        /// Operation Id: TimeZones_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TimeZones_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -218,7 +199,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _sqlTimeZoneTimeZonesRestClient.GetAsync(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sqlTimeZoneTimeZonesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_locationName), timeZoneId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -230,8 +211,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
-        /// Operation Id: TimeZones_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TimeZones_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -245,7 +234,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _sqlTimeZoneTimeZonesRestClient.Get(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken: cancellationToken);
+                var response = _sqlTimeZoneTimeZonesRestClient.Get(Id.SubscriptionId, new AzureLocation(_locationName), timeZoneId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

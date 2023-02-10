@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,10 +17,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _sqlVirtualMachineGroupClientDiagnostics;
-        private SqlVirtualMachineGroupsRestOperations _sqlVirtualMachineGroupRestClient;
-        private ClientDiagnostics _sqlVirtualMachineClientDiagnostics;
-        private SqlVirtualMachinesRestOperations _sqlVirtualMachineRestClient;
+        private ClientDiagnostics _sqlVmGroupSqlVmGroupsClientDiagnostics;
+        private SqlVirtualMachineGroupsRestOperations _sqlVmGroupSqlVmGroupsRestClient;
+        private ClientDiagnostics _sqlVmSqlVirtualMachinesClientDiagnostics;
+        private SqlVirtualMachinesRestOperations _sqlVmSqlVirtualMachinesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -36,10 +34,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
         }
 
-        private ClientDiagnostics SqlVirtualMachineGroupClientDiagnostics => _sqlVirtualMachineGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVirtualMachineGroupResource.ResourceType.Namespace, Diagnostics);
-        private SqlVirtualMachineGroupsRestOperations SqlVirtualMachineGroupRestClient => _sqlVirtualMachineGroupRestClient ??= new SqlVirtualMachineGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlVirtualMachineGroupResource.ResourceType));
-        private ClientDiagnostics SqlVirtualMachineClientDiagnostics => _sqlVirtualMachineClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVirtualMachineResource.ResourceType.Namespace, Diagnostics);
-        private SqlVirtualMachinesRestOperations SqlVirtualMachineRestClient => _sqlVirtualMachineRestClient ??= new SqlVirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlVirtualMachineResource.ResourceType));
+        private ClientDiagnostics SqlVmGroupSqlVirtualMachineGroupsClientDiagnostics => _sqlVmGroupSqlVmGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVmGroupResource.ResourceType.Namespace, Diagnostics);
+        private SqlVirtualMachineGroupsRestOperations SqlVmGroupSqlVirtualMachineGroupsRestClient => _sqlVmGroupSqlVmGroupsRestClient ??= new SqlVirtualMachineGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlVmGroupResource.ResourceType));
+        private ClientDiagnostics SqlVmSqlVirtualMachinesClientDiagnostics => _sqlVmSqlVirtualMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVmResource.ResourceType.Namespace, Diagnostics);
+        private SqlVirtualMachinesRestOperations SqlVmSqlVirtualMachinesRestClient => _sqlVmSqlVirtualMachinesRestClient ??= new SqlVirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlVmResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -49,170 +47,90 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Gets all SQL virtual machine groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups
-        /// Operation Id: SqlVirtualMachineGroups_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlVirtualMachineGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlVirtualMachineGroupResource> GetSqlVirtualMachineGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlVmGroupResource> GetSqlVmGroupsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlVirtualMachineGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SqlVirtualMachineGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachineGroups");
-                scope.Start();
-                try
-                {
-                    var response = await SqlVirtualMachineGroupRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlVirtualMachineGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SqlVirtualMachineGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachineGroups");
-                scope.Start();
-                try
-                {
-                    var response = await SqlVirtualMachineGroupRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlVmGroupSqlVirtualMachineGroupsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlVmGroupSqlVirtualMachineGroupsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlVmGroupResource(Client, SqlVmGroupData.DeserializeSqlVmGroupData(e)), SqlVmGroupSqlVirtualMachineGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlVmGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all SQL virtual machine groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups
-        /// Operation Id: SqlVirtualMachineGroups_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlVirtualMachineGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlVirtualMachineGroupResource> GetSqlVirtualMachineGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlVmGroupResource> GetSqlVmGroups(CancellationToken cancellationToken = default)
         {
-            Page<SqlVirtualMachineGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SqlVirtualMachineGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachineGroups");
-                scope.Start();
-                try
-                {
-                    var response = SqlVirtualMachineGroupRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlVirtualMachineGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SqlVirtualMachineGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachineGroups");
-                scope.Start();
-                try
-                {
-                    var response = SqlVirtualMachineGroupRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlVmGroupSqlVirtualMachineGroupsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlVmGroupSqlVirtualMachineGroupsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlVmGroupResource(Client, SqlVmGroupData.DeserializeSqlVmGroupData(e)), SqlVmGroupSqlVirtualMachineGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlVmGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all SQL virtual machines in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines
-        /// Operation Id: SqlVirtualMachines_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlVirtualMachineResource> GetSqlVirtualMachinesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlVmResource> GetSqlVmsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlVirtualMachineResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SqlVirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachines");
-                scope.Start();
-                try
-                {
-                    var response = await SqlVirtualMachineRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlVirtualMachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SqlVirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachines");
-                scope.Start();
-                try
-                {
-                    var response = await SqlVirtualMachineRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlVmSqlVirtualMachinesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlVmSqlVirtualMachinesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlVmResource(Client, SqlVmData.DeserializeSqlVmData(e)), SqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlVms", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all SQL virtual machines in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines
-        /// Operation Id: SqlVirtualMachines_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlVirtualMachineResource> GetSqlVirtualMachines(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlVmResource> GetSqlVms(CancellationToken cancellationToken = default)
         {
-            Page<SqlVirtualMachineResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SqlVirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachines");
-                scope.Start();
-                try
-                {
-                    var response = SqlVirtualMachineRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlVirtualMachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SqlVirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlVirtualMachines");
-                scope.Start();
-                try
-                {
-                    var response = SqlVirtualMachineRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlVmSqlVirtualMachinesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlVmSqlVirtualMachinesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlVmResource(Client, SqlVmData.DeserializeSqlVmData(e)), SqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlVms", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+
 namespace Azure.Identity
 {
     /// <summary>
     /// Options used to configure the <see cref="ClientSecretCredential"/>.
     /// </summary>
-    public class ClientSecretCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
+    public class ClientSecretCredentialOptions : TokenCredentialOptions, ITokenCacheOptions, ISupportsDisableInstanceDiscovery
     {
         /// <summary>
         /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. If not options are specified, the token cache will not be persisted to disk.
@@ -14,9 +16,11 @@ namespace Azure.Identity
         public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
 
         /// <summary>
-        /// Specifies either the specific <see cref="RegionalAuthority"/> (preferred), or use <see cref="RegionalAuthority.AutoDiscoverRegion"/> to attempt to auto-detect the region.
-        /// If not specified or auto-detection fails the non-regional endpoint will be used.
+        /// For multi-tenant applications, specifies additional tenants for which the credential may acquire tokens. Add the wildcard value "*" to allow the credential to acquire tokens for any tenant in which the application is installed.
         /// </summary>
-        internal RegionalAuthority? RegionalAuthority { get; set; } = Azure.Identity.RegionalAuthority.FromEnvironment();
+        public IList<string> AdditionallyAllowedTenants => AdditionallyAllowedTenantsCore;
+
+        /// <inheritdoc/>
+        public bool DisableInstanceDiscovery { get; set; }
     }
 }

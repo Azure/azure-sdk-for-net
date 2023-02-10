@@ -114,7 +114,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-2cd1f83c-cdb8-30fc-ad5e-5809631dacb2/test-directory-a6760e9d-b1b0-675d-2e70-a9727bb1c890/test-file-48a8abc6-135c-2d0c-368b-42271e5e5178?sv=2021-08-06\u0026se=2021-10-30T19%3A39%3A36Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026comp=rename",
+      "RequestUri": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-2cd1f83c-cdb8-30fc-ad5e-5809631dacb2/test-directory-a6760e9d-b1b0-675d-2e70-a9727bb1c890/test-file-48a8abc6-135c-2d0c-368b-42271e5e5178?sv=2021-12-02\u0026se=2021-10-30T19%3A39%3A36Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026comp=rename",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -124,7 +124,7 @@
           "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "b2db58d4-4050-d370-48eb-cc780b5e6547",
-        "x-ms-file-rename-source": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-2cd1f83c-cdb8-30fc-ad5e-5809631dacb2/test-directory-a6760e9d-b1b0-675d-2e70-a9727bb1c890/test-file-2646209d-ecf4-af00-7176-7ae04ca744e4?sv=2021-08-06&se=2021-10-30T19%3A39%3A36Z&sr=s&sp=rcwdl&sig=Sanitized",
+        "x-ms-file-rename-source": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-2cd1f83c-cdb8-30fc-ad5e-5809631dacb2/test-directory-a6760e9d-b1b0-675d-2e70-a9727bb1c890/test-file-2646209d-ecf4-af00-7176-7ae04ca744e4?sv=2021-12-02&se=2021-10-30T19%3A39%3A36Z&sr=s&sp=rcwdl&sig=Sanitized",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-06-08"
       },
@@ -150,7 +150,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-2cd1f83c-cdb8-30fc-ad5e-5809631dacb2/test-directory-a6760e9d-b1b0-675d-2e70-a9727bb1c890/test-file-48a8abc6-135c-2d0c-368b-42271e5e5178?sv=2021-08-06\u0026se=2021-10-30T19%3A39%3A36Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized",
+      "RequestUri": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-2cd1f83c-cdb8-30fc-ad5e-5809631dacb2/test-directory-a6760e9d-b1b0-675d-2e70-a9727bb1c890/test-file-48a8abc6-135c-2d0c-368b-42271e5e5178?sv=2021-12-02\u0026se=2021-10-30T19%3A39%3A36Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",

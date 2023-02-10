@@ -68,7 +68,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-a8dfc548-d1ce-08fd-2a67-8c23b012ad0e/test-directory-59020a84-df7d-d3f5-9907-63029acc46b6?sv=2021-08-06&se=2021-02-20T19%3A12%3A15Z&sr=b&sp=racwdlmeop&sig=Sanitized",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-a8dfc548-d1ce-08fd-2a67-8c23b012ad0e/test-directory-59020a84-df7d-d3f5-9907-63029acc46b6?sv=2021-12-02&se=2021-02-20T19%3A12%3A15Z&sr=b&sp=racwdlmeop&sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -112,7 +112,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-a8dfc548-d1ce-08fd-2a67-8c23b012ad0e/test-directory-59020a84-df7d-d3f5-9907-63029acc46b6?sv=2021-08-06&se=2021-02-20T19%3A12%3A15Z&sr=b&sp=racwdlmeop&sig=Sanitized&action=getAccessControl",
+      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-a8dfc548-d1ce-08fd-2a67-8c23b012ad0e/test-directory-59020a84-df7d-d3f5-9907-63029acc46b6?sv=2021-12-02&se=2021-02-20T19%3A12%3A15Z&sr=b&sp=racwdlmeop&sig=Sanitized&action=getAccessControl",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/json",

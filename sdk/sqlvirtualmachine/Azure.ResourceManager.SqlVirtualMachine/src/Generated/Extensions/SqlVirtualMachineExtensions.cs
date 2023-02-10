@@ -29,54 +29,86 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Gets all SQL virtual machine groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups
-        /// Operation Id: SqlVirtualMachineGroups_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlVirtualMachineGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SqlVirtualMachineGroupResource> GetSqlVirtualMachineGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SqlVmGroupResource> GetSqlVmGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSqlVirtualMachineGroupsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSqlVmGroupsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets all SQL virtual machine groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups
-        /// Operation Id: SqlVirtualMachineGroups_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlVirtualMachineGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SqlVirtualMachineGroupResource> GetSqlVirtualMachineGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SqlVmGroupResource> GetSqlVmGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSqlVirtualMachineGroups(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSqlVmGroups(cancellationToken);
         }
 
         /// <summary>
         /// Gets all SQL virtual machines in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines
-        /// Operation Id: SqlVirtualMachines_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SqlVirtualMachineResource> GetSqlVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SqlVmResource> GetSqlVmsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSqlVirtualMachinesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSqlVmsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets all SQL virtual machines in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines
-        /// Operation Id: SqlVirtualMachines_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SqlVirtualMachineResource> GetSqlVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SqlVmResource> GetSqlVms(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSqlVirtualMachines(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSqlVms(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -88,86 +120,118 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             );
         }
 
-        /// <summary> Gets a collection of SqlVirtualMachineGroupResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of SqlVmGroupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SqlVirtualMachineGroupResources and their operations over a SqlVirtualMachineGroupResource. </returns>
-        public static SqlVirtualMachineGroupCollection GetSqlVirtualMachineGroups(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of SqlVmGroupResources and their operations over a SqlVmGroupResource. </returns>
+        public static SqlVmGroupCollection GetSqlVmGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetSqlVirtualMachineGroups();
+            return GetExtensionClient(resourceGroupResource).GetSqlVmGroups();
         }
 
         /// <summary>
         /// Gets a SQL virtual machine group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}
-        /// Operation Id: SqlVirtualMachineGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="sqlVirtualMachineGroupName"> Name of the SQL virtual machine group. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SqlVirtualMachineGroupResource>> GetSqlVirtualMachineGroupAsync(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SqlVmGroupResource>> GetSqlVmGroupAsync(this ResourceGroupResource resourceGroupResource, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSqlVirtualMachineGroups().GetAsync(sqlVirtualMachineGroupName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetSqlVmGroups().GetAsync(sqlVmGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a SQL virtual machine group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}
-        /// Operation Id: SqlVirtualMachineGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="sqlVirtualMachineGroupName"> Name of the SQL virtual machine group. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SqlVirtualMachineGroupResource> GetSqlVirtualMachineGroup(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineGroupName, CancellationToken cancellationToken = default)
+        public static Response<SqlVmGroupResource> GetSqlVmGroup(this ResourceGroupResource resourceGroupResource, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSqlVirtualMachineGroups().Get(sqlVirtualMachineGroupName, cancellationToken);
+            return resourceGroupResource.GetSqlVmGroups().Get(sqlVmGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlVirtualMachineResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of SqlVmResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SqlVirtualMachineResources and their operations over a SqlVirtualMachineResource. </returns>
-        public static SqlVirtualMachineCollection GetSqlVirtualMachines(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of SqlVmResources and their operations over a SqlVmResource. </returns>
+        public static SqlVmCollection GetSqlVms(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetSqlVirtualMachines();
-        }
-
-        /// <summary>
-        /// Gets a SQL virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}
-        /// Operation Id: SqlVirtualMachines_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SqlVirtualMachineResource>> GetSqlVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetSqlVirtualMachines().GetAsync(sqlVirtualMachineName, expand, cancellationToken).ConfigureAwait(false);
+            return GetExtensionClient(resourceGroupResource).GetSqlVms();
         }
 
         /// <summary>
         /// Gets a SQL virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}
-        /// Operation Id: SqlVirtualMachines_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SqlVirtualMachineResource> GetSqlVirtualMachine(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SqlVmResource>> GetSqlVmAsync(this ResourceGroupResource resourceGroupResource, string sqlVmName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSqlVirtualMachines().Get(sqlVirtualMachineName, expand, cancellationToken);
+            return await resourceGroupResource.GetSqlVms().GetAsync(sqlVmName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a SQL virtual machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SqlVmResource> GetSqlVm(this ResourceGroupResource resourceGroupResource, string sqlVmName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSqlVms().Get(sqlVmName, expand, cancellationToken);
         }
 
         #region AvailabilityGroupListenerResource
@@ -189,39 +253,39 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
         #endregion
 
-        #region SqlVirtualMachineGroupResource
+        #region SqlVmGroupResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlVirtualMachineGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlVirtualMachineGroupResource.CreateResourceIdentifier" /> to create a <see cref="SqlVirtualMachineGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlVmGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlVmGroupResource.CreateResourceIdentifier" /> to create a <see cref="SqlVmGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlVirtualMachineGroupResource" /> object. </returns>
-        public static SqlVirtualMachineGroupResource GetSqlVirtualMachineGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlVmGroupResource" /> object. </returns>
+        public static SqlVmGroupResource GetSqlVmGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlVirtualMachineGroupResource.ValidateResourceId(id);
-                return new SqlVirtualMachineGroupResource(client, id);
+                SqlVmGroupResource.ValidateResourceId(id);
+                return new SqlVmGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlVirtualMachineResource
+        #region SqlVmResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="SqlVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlVmResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlVmResource.CreateResourceIdentifier" /> to create a <see cref="SqlVmResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlVirtualMachineResource" /> object. </returns>
-        public static SqlVirtualMachineResource GetSqlVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlVmResource" /> object. </returns>
+        public static SqlVmResource GetSqlVmResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlVirtualMachineResource.ValidateResourceId(id);
-                return new SqlVirtualMachineResource(client, id);
+                SqlVmResource.ValidateResourceId(id);
+                return new SqlVmResource(client, id);
             }
             );
         }

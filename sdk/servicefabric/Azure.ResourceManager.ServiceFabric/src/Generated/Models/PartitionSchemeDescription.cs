@@ -12,21 +12,21 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// Please note <see cref="PartitionSchemeDescription"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="NamedPartitionSchemeDescription"/>, <see cref="SingletonPartitionSchemeDescription"/> and <see cref="UniformInt64RangePartitionSchemeDescription"/>.
     /// </summary>
-    public partial class PartitionSchemeDescription
+    public abstract partial class PartitionSchemeDescription
     {
         /// <summary> Initializes a new instance of PartitionSchemeDescription. </summary>
-        public PartitionSchemeDescription()
+        protected PartitionSchemeDescription()
         {
         }
 
         /// <summary> Initializes a new instance of PartitionSchemeDescription. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
-        internal PartitionSchemeDescription(PartitionScheme partitionScheme)
+        internal PartitionSchemeDescription(ApplicationPartitionScheme partitionScheme)
         {
             PartitionScheme = partitionScheme;
         }
 
         /// <summary> Specifies how the service is partitioned. </summary>
-        internal PartitionScheme PartitionScheme { get; set; }
+        internal ApplicationPartitionScheme PartitionScheme { get; set; }
     }
 }

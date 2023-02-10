@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -17,16 +18,14 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of AnalyzeTextJobState. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="jobId"></param>
-        /// <param name="lastUpdateDateTime"></param>
-        /// <param name="status"></param>
+        /// <param name="lastUpdatedDateTime"></param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="tasks"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
-        internal AnalyzeTextJobState(DateTimeOffset createdDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, AnalyzeTasks tasks) : base(createdDateTime, jobId, lastUpdateDateTime, status)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="tasks"/> is null. </exception>
+        internal AnalyzeTextJobState(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status, AnalyzeTasks tasks) : base(createdDateTime, jobId, lastUpdatedDateTime, status)
         {
-            if (tasks == null)
-            {
-                throw new ArgumentNullException(nameof(tasks));
-            }
+            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNull(tasks, nameof(tasks));
 
             Tasks = tasks;
         }
@@ -36,13 +35,13 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="createdDateTime"></param>
         /// <param name="expirationDateTime"></param>
         /// <param name="jobId"></param>
-        /// <param name="lastUpdateDateTime"></param>
-        /// <param name="status"></param>
+        /// <param name="lastUpdatedDateTime"></param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="errors"></param>
         /// <param name="nextLink"></param>
         /// <param name="tasks"></param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
-        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, IReadOnlyList<Error> errors, string nextLink, AnalyzeTasks tasks, TextDocumentBatchStatistics statistics) : base(displayName, createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status, errors, nextLink)
+        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status, IReadOnlyList<Error> errors, string nextLink, AnalyzeTasks tasks, TextDocumentBatchStatistics statistics) : base(displayName, createdDateTime, expirationDateTime, jobId, lastUpdatedDateTime, status, errors, nextLink)
         {
             Tasks = tasks;
             Statistics = statistics;

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,24 +18,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PrivateLinkResourcesWrapper(IEnumerable<DataFactoryPrivateLinkResource> value)
+        internal PrivateLinkResourcesWrapper(IEnumerable<FactoryPrivateLinkResource> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
         /// <param name="value"></param>
-        internal PrivateLinkResourcesWrapper(IReadOnlyList<DataFactoryPrivateLinkResource> value)
+        internal PrivateLinkResourcesWrapper(IReadOnlyList<FactoryPrivateLinkResource> value)
         {
             Value = value;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<DataFactoryPrivateLinkResource> Value { get; }
+        public IReadOnlyList<FactoryPrivateLinkResource> Value { get; }
     }
 }

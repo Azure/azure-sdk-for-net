@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,8 +17,8 @@ namespace Azure.ResourceManager.GuestConfiguration
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _guestConfigurationAssignmentClientDiagnostics;
-        private GuestConfigurationAssignmentsRestOperations _guestConfigurationAssignmentRestClient;
+        private ClientDiagnostics _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics;
+        private GuestConfigurationAssignmentsRestOperations _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
@@ -34,75 +32,13 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
         }
 
-        private ClientDiagnostics GuestConfigurationAssignmentClientDiagnostics => _guestConfigurationAssignmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
-        private GuestConfigurationAssignmentsRestOperations GuestConfigurationAssignmentRestClient => _guestConfigurationAssignmentRestClient ??= new GuestConfigurationAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(GuestConfigurationAssignmentResource.ResourceType));
+        private ClientDiagnostics GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics => _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmAssignmentResource.ResourceType.Namespace, Diagnostics);
+        private GuestConfigurationAssignmentsRestOperations GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient => _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient ??= new GuestConfigurationAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(GuestConfigurationVmAssignmentResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary> Gets a collection of GuestConfigurationAssignmentResources in the ResourceGroupResource. </summary>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <returns> An object representing collection of GuestConfigurationAssignmentResources and their operations over a GuestConfigurationAssignmentResource. </returns>
-        public virtual GuestConfigurationAssignmentCollection GetGuestConfigurationAssignments(string vmName)
-        {
-            return new GuestConfigurationAssignmentCollection(Client, Id, vmName);
-        }
-
-        /// <summary>
-        /// List all guest configuration assignments for a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments
-        /// Operation Id: GuestConfigurationAssignments_RGList
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationAssignmentResource> GetGuestConfigurationAssignmentsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<GuestConfigurationAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = GuestConfigurationAssignmentClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGuestConfigurationAssignments");
-                scope.Start();
-                try
-                {
-                    var response = await GuestConfigurationAssignmentRestClient.RGListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GuestConfigurationAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// List all guest configuration assignments for a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments
-        /// Operation Id: GuestConfigurationAssignments_RGList
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationAssignmentResource> GetGuestConfigurationAssignments(CancellationToken cancellationToken = default)
-        {
-            Page<GuestConfigurationAssignmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = GuestConfigurationAssignmentClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGuestConfigurationAssignments");
-                scope.Start();
-                try
-                {
-                    var response = GuestConfigurationAssignmentRestClient.RGList(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GuestConfigurationAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
     }
 }

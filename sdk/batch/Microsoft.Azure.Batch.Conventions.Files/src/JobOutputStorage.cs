@@ -12,10 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Azure.Storage.Blobs;
 using Microsoft.Azure.Batch.Conventions.Files.Utilities;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.WindowsAzure.Storage.RetryPolicies;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -49,7 +47,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// <remarks>The container must already exist; the JobOutputStorage class does not create
         /// it for you.</remarks>
         public JobOutputStorage(Uri jobOutputContainerUri)
-            : this(CloudBlobContainerUtils.GetContainerReference(jobOutputContainerUri), null)
+            : this(CloudBlobContainerUtils.GetContainerReference(jobOutputContainerUri))
         {
         }
 
@@ -57,54 +55,20 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// Initializes a new instance of the <see cref="JobOutputStorage"/> class from a storage account
         /// and job id.
         /// </summary>
-        /// <param name="storageAccount">The storage account linked to the Azure Batch account.</param>
+        /// <param name="blobClient">The blob service client linked to the Azure Batch Storage Account.</param>
         /// <param name="jobId">The id of the Azure Batch job.</param>
         /// <remarks>The job output container must already exist; the JobOutputStorage class does not create
         /// it for you.</remarks>
-        public JobOutputStorage(CloudStorageAccount storageAccount, string jobId)
-            : this(CloudBlobContainerUtils.GetContainerReference(storageAccount, jobId), null)
+        public JobOutputStorage(BlobServiceClient blobClient, string jobId)
+            : this(CloudBlobContainerUtils.GetContainerReference(blobClient, jobId))
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JobOutputStorage"/> class from a URL representing
-        /// the job output container.
-        /// </summary>
-        /// <param name="jobOutputContainerUri">The URL in Azure storage of the blob container to
-        /// use for job outputs. This URL must contain a SAS (Shared Access Signature) granting
-        /// access to the container, or the container must be public.</param>
-        /// <param name="storageRetryPolicy">The retry policy for storage requests.</param>
-        /// <remarks>The container must already exist; the JobOutputStorage class does not create
-        /// it for you.</remarks>
-        public JobOutputStorage(Uri jobOutputContainerUri, IRetryPolicy storageRetryPolicy)
-            : this(CloudBlobContainerUtils.GetContainerReference(jobOutputContainerUri), storageRetryPolicy)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JobOutputStorage"/> class from a storage account
-        /// and job id.
-        /// </summary>
-        /// <param name="storageAccount">The storage account linked to the Azure Batch account.</param>
-        /// <param name="jobId">The id of the Azure Batch job.</param>
-        /// <param name="storageRetryPolicy">The retry policy for storage requests.</param>
-        /// <remarks>The job output container must already exist; the JobOutputStorage class does not create
-        /// it for you.</remarks>
-        public JobOutputStorage(CloudStorageAccount storageAccount, string jobId, IRetryPolicy storageRetryPolicy)
-            : this(CloudBlobContainerUtils.GetContainerReference(storageAccount, jobId), storageRetryPolicy)
-        {
-        }
-
-        private JobOutputStorage(CloudBlobContainer jobOutputContainer, IRetryPolicy storageRetryPolicy)
+        private JobOutputStorage(BlobContainerClient jobOutputContainer)
         {
             if (jobOutputContainer == null)
             {
                 throw new ArgumentNullException(nameof(jobOutputContainer));
-            }
-
-            if (storageRetryPolicy != null)
-            {
-                jobOutputContainer.ServiceClient.DefaultRequestOptions.RetryPolicy = storageRetryPolicy;
             }
 
             _storagePath = new StoragePath.JobStoragePath(jobOutputContainer);
@@ -176,14 +140,12 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// <param name="kind">A <see cref="JobOutputKind"/> representing the category of the output to
         /// retrieve, for example <see cref="JobOutputKind.JobOutput"/> or <see cref="JobOutputKind.JobPreview"/>.</param>
         /// <param name="filePath">The path under which the output was persisted in blob storage.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A reference to the requested file in Azure blob storage.</returns>
-        public async Task<OutputFileReference> GetOutputAsync(
+        public OutputFileReference GetOutput(
             JobOutputKind kind,
-            string filePath,
-            CancellationToken cancellationToken = default(CancellationToken)
+            string filePath
         )
-            => await _storagePath.GetOutputAsync(kind, filePath, cancellationToken).ConfigureAwait(false);
+            => _storagePath.GetOutput(kind, filePath);
 
         /// <summary>
         /// Gets the Blob name prefix/folder where files of the given kind are stored

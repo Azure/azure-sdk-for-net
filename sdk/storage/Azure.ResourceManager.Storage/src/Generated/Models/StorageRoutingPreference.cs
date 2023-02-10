@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of StorageRoutingPreference. </summary>
         /// <param name="routingChoice"> Routing Choice defines the kind of network routing opted by the user. </param>
-        /// <param name="publishMicrosoftEndpoints"> A boolean flag which indicates whether microsoft routing storage endpoints are to be published. </param>
-        /// <param name="publishInternetEndpoints"> A boolean flag which indicates whether internet routing storage endpoints are to be published. </param>
-        internal StorageRoutingPreference(StorageRoutingChoice? routingChoice, bool? publishMicrosoftEndpoints, bool? publishInternetEndpoints)
+        /// <param name="isMicrosoftEndpointsPublished"> A boolean flag which indicates whether microsoft routing storage endpoints are to be published. </param>
+        /// <param name="isInternetEndpointsPublished"> A boolean flag which indicates whether internet routing storage endpoints are to be published. </param>
+        internal StorageRoutingPreference(StorageRoutingChoice? routingChoice, bool? isMicrosoftEndpointsPublished, bool? isInternetEndpointsPublished)
         {
             RoutingChoice = routingChoice;
-            PublishMicrosoftEndpoints = publishMicrosoftEndpoints;
-            PublishInternetEndpoints = publishInternetEndpoints;
+            IsMicrosoftEndpointsPublished = isMicrosoftEndpointsPublished;
+            IsInternetEndpointsPublished = isInternetEndpointsPublished;
         }
 
         /// <summary> Routing Choice defines the kind of network routing opted by the user. </summary>
         public StorageRoutingChoice? RoutingChoice { get; set; }
         /// <summary> A boolean flag which indicates whether microsoft routing storage endpoints are to be published. </summary>
-        public bool? PublishMicrosoftEndpoints { get; set; }
+        public bool? IsMicrosoftEndpointsPublished { get; set; }
         /// <summary> A boolean flag which indicates whether internet routing storage endpoints are to be published. </summary>
-        public bool? PublishInternetEndpoints { get; set; }
+        public bool? IsInternetEndpointsPublished { get; set; }
     }
 }

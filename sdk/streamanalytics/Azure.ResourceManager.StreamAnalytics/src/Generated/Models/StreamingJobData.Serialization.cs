@@ -11,7 +11,6 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
@@ -23,12 +22,13 @@ namespace Azure.ResourceManager.StreamAnalytics
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                writer.WritePropertyName("identity"u8);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -37,63 +37,63 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(JobType))
             {
-                writer.WritePropertyName("jobType");
+                writer.WritePropertyName("jobType"u8);
                 writer.WriteStringValue(JobType.Value.ToString());
             }
             if (Optional.IsDefined(OutputStartMode))
             {
-                writer.WritePropertyName("outputStartMode");
+                writer.WritePropertyName("outputStartMode"u8);
                 writer.WriteStringValue(OutputStartMode.Value.ToString());
             }
             if (Optional.IsDefined(OutputStartOn))
             {
-                writer.WritePropertyName("outputStartTime");
+                writer.WritePropertyName("outputStartTime"u8);
                 writer.WriteStringValue(OutputStartOn.Value, "O");
             }
             if (Optional.IsDefined(EventsOutOfOrderPolicy))
             {
-                writer.WritePropertyName("eventsOutOfOrderPolicy");
+                writer.WritePropertyName("eventsOutOfOrderPolicy"u8);
                 writer.WriteStringValue(EventsOutOfOrderPolicy.Value.ToString());
             }
             if (Optional.IsDefined(OutputErrorPolicy))
             {
-                writer.WritePropertyName("outputErrorPolicy");
+                writer.WritePropertyName("outputErrorPolicy"u8);
                 writer.WriteStringValue(OutputErrorPolicy.Value.ToString());
             }
             if (Optional.IsDefined(EventsOutOfOrderMaxDelayInSeconds))
             {
-                writer.WritePropertyName("eventsOutOfOrderMaxDelayInSeconds");
+                writer.WritePropertyName("eventsOutOfOrderMaxDelayInSeconds"u8);
                 writer.WriteNumberValue(EventsOutOfOrderMaxDelayInSeconds.Value);
             }
             if (Optional.IsDefined(EventsLateArrivalMaxDelayInSeconds))
             {
-                writer.WritePropertyName("eventsLateArrivalMaxDelayInSeconds");
+                writer.WritePropertyName("eventsLateArrivalMaxDelayInSeconds"u8);
                 writer.WriteNumberValue(EventsLateArrivalMaxDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(DataLocale))
+            if (Optional.IsDefined(DataLocalion))
             {
-                writer.WritePropertyName("dataLocale");
-                writer.WriteStringValue(DataLocale);
+                writer.WritePropertyName("dataLocale"u8);
+                writer.WriteStringValue(DataLocalion.Value);
             }
             if (Optional.IsDefined(CompatibilityLevel))
             {
-                writer.WritePropertyName("compatibilityLevel");
+                writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Inputs))
             {
-                writer.WritePropertyName("inputs");
+                writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
             if (Optional.IsDefined(Transformation))
             {
-                writer.WritePropertyName("transformation");
+                writer.WritePropertyName("transformation"u8);
                 writer.WriteObjectValue(Transformation);
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
-                writer.WritePropertyName("outputs");
+                writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
             if (Optional.IsCollectionDefined(Functions))
             {
-                writer.WritePropertyName("functions");
+                writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
@@ -128,23 +128,37 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
             if (Optional.IsDefined(JobStorageAccount))
             {
-                writer.WritePropertyName("jobStorageAccount");
-                writer.WriteObjectValue(JobStorageAccount);
+                if (JobStorageAccount != null)
+                {
+                    writer.WritePropertyName("jobStorageAccount"u8);
+                    writer.WriteObjectValue(JobStorageAccount);
+                }
+                else
+                {
+                    writer.WriteNull("jobStorageAccount");
+                }
             }
             if (Optional.IsDefined(ContentStoragePolicy))
             {
-                writer.WritePropertyName("contentStoragePolicy");
+                writer.WritePropertyName("contentStoragePolicy"u8);
                 writer.WriteStringValue(ContentStoragePolicy.Value.ToString());
             }
             if (Optional.IsDefined(Externals))
             {
-                writer.WritePropertyName("externals");
+                writer.WritePropertyName("externals"u8);
                 writer.WriteObjectValue(Externals);
             }
             if (Optional.IsDefined(Cluster))
             {
-                writer.WritePropertyName("cluster");
-                JsonSerializer.Serialize(writer, Cluster);
+                if (Cluster != null)
+                {
+                    writer.WritePropertyName("cluster"u8);
+                    writer.WriteObjectValue(Cluster);
+                }
+                else
+                {
+                    writer.WriteNull("cluster");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -152,7 +166,7 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         internal static StreamingJobData DeserializeStreamingJobData(JsonElement element)
         {
-            Optional<ManagedIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -160,42 +174,43 @@ namespace Azure.ResourceManager.StreamAnalytics
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<StreamAnalyticsSku> sku = default;
-            Optional<string> jobId = default;
+            Optional<Guid> jobId = default;
             Optional<string> provisioningState = default;
             Optional<string> jobState = default;
-            Optional<JobType> jobType = default;
-            Optional<OutputStartMode> outputStartMode = default;
+            Optional<StreamingJobType> jobType = default;
+            Optional<StreamingJobOutputStartMode> outputStartMode = default;
             Optional<DateTimeOffset> outputStartTime = default;
             Optional<DateTimeOffset> lastOutputEventTime = default;
             Optional<EventsOutOfOrderPolicy> eventsOutOfOrderPolicy = default;
-            Optional<OutputErrorPolicy> outputErrorPolicy = default;
+            Optional<StreamingJobOutputErrorPolicy> outputErrorPolicy = default;
             Optional<int> eventsOutOfOrderMaxDelayInSeconds = default;
             Optional<int> eventsLateArrivalMaxDelayInSeconds = default;
-            Optional<string> dataLocale = default;
-            Optional<CompatibilityLevel> compatibilityLevel = default;
+            Optional<AzureLocation> dataLocale = default;
+            Optional<StreamingJobCompatibilityLevel> compatibilityLevel = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<IList<StreamingJobInputData>> inputs = default;
             Optional<StreamingJobTransformationData> transformation = default;
             Optional<IList<StreamingJobOutputData>> outputs = default;
             Optional<IList<StreamingJobFunctionData>> functions = default;
             Optional<ETag> etag = default;
-            Optional<JobStorageAccount> jobStorageAccount = default;
-            Optional<ContentStoragePolicy> contentStoragePolicy = default;
-            Optional<ExternalStorageAccount> externals = default;
-            Optional<WritableSubResource> cluster = default;
+            Optional<StreamingJobStorageAccount> jobStorageAccount = default;
+            Optional<StreamingJobContentStoragePolicy> contentStoragePolicy = default;
+            Optional<StreamingJobExternal> externals = default;
+            Optional<ClusterInfo> cluster = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -210,37 +225,37 @@ namespace Azure.ResourceManager.StreamAnalytics
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -249,7 +264,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sku"))
+                        if (property0.NameEquals("sku"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -259,42 +274,47 @@ namespace Azure.ResourceManager.StreamAnalytics
                             sku = StreamAnalyticsSku.DeserializeStreamAnalyticsSku(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("jobId"))
+                        if (property0.NameEquals("jobId"u8))
                         {
-                            jobId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            jobId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("jobState"))
+                        if (property0.NameEquals("jobState"u8))
                         {
                             jobState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("jobType"))
+                        if (property0.NameEquals("jobType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            jobType = new JobType(property0.Value.GetString());
+                            jobType = new StreamingJobType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("outputStartMode"))
+                        if (property0.NameEquals("outputStartMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            outputStartMode = new OutputStartMode(property0.Value.GetString());
+                            outputStartMode = new StreamingJobOutputStartMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("outputStartTime"))
+                        if (property0.NameEquals("outputStartTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -304,7 +324,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             outputStartTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastOutputEventTime"))
+                        if (property0.NameEquals("lastOutputEventTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -314,7 +334,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             lastOutputEventTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("eventsOutOfOrderPolicy"))
+                        if (property0.NameEquals("eventsOutOfOrderPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -324,17 +344,17 @@ namespace Azure.ResourceManager.StreamAnalytics
                             eventsOutOfOrderPolicy = new EventsOutOfOrderPolicy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("outputErrorPolicy"))
+                        if (property0.NameEquals("outputErrorPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            outputErrorPolicy = new OutputErrorPolicy(property0.Value.GetString());
+                            outputErrorPolicy = new StreamingJobOutputErrorPolicy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("eventsOutOfOrderMaxDelayInSeconds"))
+                        if (property0.NameEquals("eventsOutOfOrderMaxDelayInSeconds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -344,7 +364,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             eventsOutOfOrderMaxDelayInSeconds = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("eventsLateArrivalMaxDelayInSeconds"))
+                        if (property0.NameEquals("eventsLateArrivalMaxDelayInSeconds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -354,22 +374,27 @@ namespace Azure.ResourceManager.StreamAnalytics
                             eventsLateArrivalMaxDelayInSeconds = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("dataLocale"))
-                        {
-                            dataLocale = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("compatibilityLevel"))
+                        if (property0.NameEquals("dataLocale"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            compatibilityLevel = new CompatibilityLevel(property0.Value.GetString());
+                            dataLocale = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("createdDate"))
+                        if (property0.NameEquals("compatibilityLevel"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            compatibilityLevel = new StreamingJobCompatibilityLevel(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("createdDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -379,7 +404,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             createdDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("inputs"))
+                        if (property0.NameEquals("inputs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -394,7 +419,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             inputs = array;
                             continue;
                         }
-                        if (property0.NameEquals("transformation"))
+                        if (property0.NameEquals("transformation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -404,7 +429,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             transformation = StreamingJobTransformationData.DeserializeStreamingJobTransformationData(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("outputs"))
+                        if (property0.NameEquals("outputs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -419,7 +444,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             outputs = array;
                             continue;
                         }
-                        if (property0.NameEquals("functions"))
+                        if (property0.NameEquals("functions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -434,7 +459,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             functions = array;
                             continue;
                         }
-                        if (property0.NameEquals("etag"))
+                        if (property0.NameEquals("etag"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -444,51 +469,51 @@ namespace Azure.ResourceManager.StreamAnalytics
                             etag = new ETag(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("jobStorageAccount"))
+                        if (property0.NameEquals("jobStorageAccount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                jobStorageAccount = null;
                                 continue;
                             }
-                            jobStorageAccount = JobStorageAccount.DeserializeJobStorageAccount(property0.Value);
+                            jobStorageAccount = StreamingJobStorageAccount.DeserializeStreamingJobStorageAccount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("contentStoragePolicy"))
+                        if (property0.NameEquals("contentStoragePolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contentStoragePolicy = new ContentStoragePolicy(property0.Value.GetString());
+                            contentStoragePolicy = new StreamingJobContentStoragePolicy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("externals"))
+                        if (property0.NameEquals("externals"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            externals = ExternalStorageAccount.DeserializeExternalStorageAccount(property0.Value);
+                            externals = StreamingJobExternal.DeserializeStreamingJobExternal(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("cluster"))
+                        if (property0.NameEquals("cluster"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                cluster = null;
                                 continue;
                             }
-                            cluster = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            cluster = ClusterInfo.DeserializeClusterInfo(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new StreamingJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, sku.Value, jobId.Value, provisioningState.Value, jobState.Value, Optional.ToNullable(jobType), Optional.ToNullable(outputStartMode), Optional.ToNullable(outputStartTime), Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(eventsOutOfOrderPolicy), Optional.ToNullable(outputErrorPolicy), Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds), Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds), dataLocale.Value, Optional.ToNullable(compatibilityLevel), Optional.ToNullable(createdDate), Optional.ToList(inputs), transformation.Value, Optional.ToList(outputs), Optional.ToList(functions), Optional.ToNullable(etag), jobStorageAccount.Value, Optional.ToNullable(contentStoragePolicy), externals.Value, cluster);
+            return new StreamingJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(jobId), provisioningState.Value, jobState.Value, Optional.ToNullable(jobType), Optional.ToNullable(outputStartMode), Optional.ToNullable(outputStartTime), Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(eventsOutOfOrderPolicy), Optional.ToNullable(outputErrorPolicy), Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds), Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds), Optional.ToNullable(dataLocale), Optional.ToNullable(compatibilityLevel), Optional.ToNullable(createdDate), Optional.ToList(inputs), transformation.Value, Optional.ToList(outputs), Optional.ToList(functions), Optional.ToNullable(etag), jobStorageAccount.Value, Optional.ToNullable(contentStoragePolicy), externals.Value, cluster.Value);
         }
     }
 }

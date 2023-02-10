@@ -92,7 +92,17 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// The 2021-08-06 service version.
             /// </summary>
-            V2021_08_06 = 13
+            V2021_08_06 = 13,
+
+            /// <summary>
+            /// The 2021-10-04 service version.
+            /// </summary>
+            V2021_10_04 = 14,
+
+            /// <summary>
+            /// The 2021-12-02 service version.
+            /// </summary>
+            V2021_12_02 = 15
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -103,6 +113,11 @@ namespace Azure.Storage.Files.Shares
         /// Versioning for the Azure Storage services</see>.
         /// </summary>
         public ServiceVersion Version { get; }
+
+        /// <summary>
+        /// Transfer validation options to be applied to file transfers from this client.
+        /// </summary>
+        public TransferValidationOptions TransferValidation { get; } = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareClientOptions"/>

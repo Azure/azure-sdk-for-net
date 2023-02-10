@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        internal HttpMessage CreateListCallbackUrlRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, GetCallbackUrlParameters getCallbackUrlParameters)
+        internal HttpMessage CreateListCallbackUrlRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, ListOperationCallbackUrlParameterInfo info)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Logic
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(getCallbackUrlParameters);
+            content.JsonWriter.WriteObjectValue(info);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -544,26 +544,26 @@ namespace Azure.ResourceManager.Logic
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
-        /// <param name="getCallbackUrlParameters"> The callback URL parameters. </param>
+        /// <param name="info"> The callback URL parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="getCallbackUrlParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CallbackUri>> ListCallbackUrlAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, GetCallbackUrlParameters getCallbackUrlParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ListOperationCallbackUri>> ListCallbackUrlAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
-            Argument.AssertNotNull(getCallbackUrlParameters, nameof(getCallbackUrlParameters));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateListCallbackUrlRequest(subscriptionId, resourceGroupName, integrationAccountName, getCallbackUrlParameters);
+            using var message = CreateListCallbackUrlRequest(subscriptionId, resourceGroupName, integrationAccountName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CallbackUri value = default;
+                        ListOperationCallbackUri value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CallbackUri.DeserializeCallbackUri(document.RootElement);
+                        value = ListOperationCallbackUri.DeserializeListOperationCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -575,26 +575,26 @@ namespace Azure.ResourceManager.Logic
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
-        /// <param name="getCallbackUrlParameters"> The callback URL parameters. </param>
+        /// <param name="info"> The callback URL parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="getCallbackUrlParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CallbackUri> ListCallbackUrl(string subscriptionId, string resourceGroupName, string integrationAccountName, GetCallbackUrlParameters getCallbackUrlParameters, CancellationToken cancellationToken = default)
+        public Response<ListOperationCallbackUri> ListCallbackUrl(string subscriptionId, string resourceGroupName, string integrationAccountName, ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
-            Argument.AssertNotNull(getCallbackUrlParameters, nameof(getCallbackUrlParameters));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateListCallbackUrlRequest(subscriptionId, resourceGroupName, integrationAccountName, getCallbackUrlParameters);
+            using var message = CreateListCallbackUrlRequest(subscriptionId, resourceGroupName, integrationAccountName, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CallbackUri value = default;
+                        ListOperationCallbackUri value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CallbackUri.DeserializeCallbackUri(document.RootElement);
+                        value = ListOperationCallbackUri.DeserializeListOperationCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        internal HttpMessage CreateListKeyVaultKeysRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, ListKeyVaultKeysDefinition listKeyVaultKeys)
+        internal HttpMessage CreateListKeyVaultKeysRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, IntegrationAccountListKeyVaultKeyContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -620,9 +620,9 @@ namespace Azure.ResourceManager.Logic
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(listKeyVaultKeys);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -631,26 +631,26 @@ namespace Azure.ResourceManager.Logic
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
-        /// <param name="listKeyVaultKeys"> The key vault parameters. </param>
+        /// <param name="content"> The key vault parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="listKeyVaultKeys"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KeyVaultKeyCollection>> ListKeyVaultKeysAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, ListKeyVaultKeysDefinition listKeyVaultKeys, CancellationToken cancellationToken = default)
+        public async Task<Response<IntegrationAccountKeyVaultKeyList>> ListKeyVaultKeysAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, IntegrationAccountListKeyVaultKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
-            Argument.AssertNotNull(listKeyVaultKeys, nameof(listKeyVaultKeys));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListKeyVaultKeysRequest(subscriptionId, resourceGroupName, integrationAccountName, listKeyVaultKeys);
+            using var message = CreateListKeyVaultKeysRequest(subscriptionId, resourceGroupName, integrationAccountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        KeyVaultKeyCollection value = default;
+                        IntegrationAccountKeyVaultKeyList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyVaultKeyCollection.DeserializeKeyVaultKeyCollection(document.RootElement);
+                        value = IntegrationAccountKeyVaultKeyList.DeserializeIntegrationAccountKeyVaultKeyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -662,26 +662,26 @@ namespace Azure.ResourceManager.Logic
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
-        /// <param name="listKeyVaultKeys"> The key vault parameters. </param>
+        /// <param name="content"> The key vault parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="listKeyVaultKeys"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KeyVaultKeyCollection> ListKeyVaultKeys(string subscriptionId, string resourceGroupName, string integrationAccountName, ListKeyVaultKeysDefinition listKeyVaultKeys, CancellationToken cancellationToken = default)
+        public Response<IntegrationAccountKeyVaultKeyList> ListKeyVaultKeys(string subscriptionId, string resourceGroupName, string integrationAccountName, IntegrationAccountListKeyVaultKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
-            Argument.AssertNotNull(listKeyVaultKeys, nameof(listKeyVaultKeys));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListKeyVaultKeysRequest(subscriptionId, resourceGroupName, integrationAccountName, listKeyVaultKeys);
+            using var message = CreateListKeyVaultKeysRequest(subscriptionId, resourceGroupName, integrationAccountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        KeyVaultKeyCollection value = default;
+                        IntegrationAccountKeyVaultKeyList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyVaultKeyCollection.DeserializeKeyVaultKeyCollection(document.RootElement);
+                        value = IntegrationAccountKeyVaultKeyList.DeserializeIntegrationAccountKeyVaultKeyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        internal HttpMessage CreateLogTrackingEventsRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, TrackingEventsDefinition logTrackingEvents)
+        internal HttpMessage CreateLogTrackingEventsRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, IntegrationAccountTrackingEventsContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -707,9 +707,9 @@ namespace Azure.ResourceManager.Logic
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(logTrackingEvents);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -718,18 +718,18 @@ namespace Azure.ResourceManager.Logic
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
-        /// <param name="logTrackingEvents"> The callback URL parameters. </param>
+        /// <param name="content"> The callback URL parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="logTrackingEvents"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> LogTrackingEventsAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, TrackingEventsDefinition logTrackingEvents, CancellationToken cancellationToken = default)
+        public async Task<Response> LogTrackingEventsAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, IntegrationAccountTrackingEventsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
-            Argument.AssertNotNull(logTrackingEvents, nameof(logTrackingEvents));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateLogTrackingEventsRequest(subscriptionId, resourceGroupName, integrationAccountName, logTrackingEvents);
+            using var message = CreateLogTrackingEventsRequest(subscriptionId, resourceGroupName, integrationAccountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -744,18 +744,18 @@ namespace Azure.ResourceManager.Logic
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
-        /// <param name="logTrackingEvents"> The callback URL parameters. </param>
+        /// <param name="content"> The callback URL parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="logTrackingEvents"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response LogTrackingEvents(string subscriptionId, string resourceGroupName, string integrationAccountName, TrackingEventsDefinition logTrackingEvents, CancellationToken cancellationToken = default)
+        public Response LogTrackingEvents(string subscriptionId, string resourceGroupName, string integrationAccountName, IntegrationAccountTrackingEventsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
-            Argument.AssertNotNull(logTrackingEvents, nameof(logTrackingEvents));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateLogTrackingEventsRequest(subscriptionId, resourceGroupName, integrationAccountName, logTrackingEvents);
+            using var message = CreateLogTrackingEventsRequest(subscriptionId, resourceGroupName, integrationAccountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        internal HttpMessage CreateRegenerateAccessKeyRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, RegenerateActionParameter regenerateAccessKey)
+        internal HttpMessage CreateRegenerateAccessKeyRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, LogicWorkflowRegenerateActionContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -784,9 +784,9 @@ namespace Azure.ResourceManager.Logic
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(regenerateAccessKey);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -795,18 +795,18 @@ namespace Azure.ResourceManager.Logic
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
-        /// <param name="regenerateAccessKey"> The access key type. </param>
+        /// <param name="content"> The access key type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="regenerateAccessKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IntegrationAccountData>> RegenerateAccessKeyAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, RegenerateActionParameter regenerateAccessKey, CancellationToken cancellationToken = default)
+        public async Task<Response<IntegrationAccountData>> RegenerateAccessKeyAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, LogicWorkflowRegenerateActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
-            Argument.AssertNotNull(regenerateAccessKey, nameof(regenerateAccessKey));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateAccessKeyRequest(subscriptionId, resourceGroupName, integrationAccountName, regenerateAccessKey);
+            using var message = CreateRegenerateAccessKeyRequest(subscriptionId, resourceGroupName, integrationAccountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -826,18 +826,18 @@ namespace Azure.ResourceManager.Logic
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
-        /// <param name="regenerateAccessKey"> The access key type. </param>
+        /// <param name="content"> The access key type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="regenerateAccessKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IntegrationAccountData> RegenerateAccessKey(string subscriptionId, string resourceGroupName, string integrationAccountName, RegenerateActionParameter regenerateAccessKey, CancellationToken cancellationToken = default)
+        public Response<IntegrationAccountData> RegenerateAccessKey(string subscriptionId, string resourceGroupName, string integrationAccountName, LogicWorkflowRegenerateActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
-            Argument.AssertNotNull(regenerateAccessKey, nameof(regenerateAccessKey));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateAccessKeyRequest(subscriptionId, resourceGroupName, integrationAccountName, regenerateAccessKey);
+            using var message = CreateRegenerateAccessKeyRequest(subscriptionId, resourceGroupName, integrationAccountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

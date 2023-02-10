@@ -15,43 +15,43 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountId))
             {
-                writer.WritePropertyName("accountId");
+                writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
             if (Optional.IsDefined(AccountKey))
             {
-                writer.WritePropertyName("accountKey");
+                writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
             if (Optional.IsDefined(Database))
             {
-                writer.WritePropertyName("database");
+                writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
             if (Optional.IsDefined(CollectionNamePattern))
             {
-                writer.WritePropertyName("collectionNamePattern");
+                writer.WritePropertyName("collectionNamePattern"u8);
                 writer.WriteStringValue(CollectionNamePattern);
             }
             if (Optional.IsDefined(PartitionKey))
             {
-                writer.WritePropertyName("partitionKey");
+                writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
             if (Optional.IsDefined(DocumentId))
             {
-                writer.WritePropertyName("documentId");
+                writer.WritePropertyName("documentId"u8);
                 writer.WriteStringValue(DocumentId);
             }
             if (Optional.IsDefined(AuthenticationMode))
             {
-                writer.WritePropertyName("authenticationMode");
+                writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -67,15 +67,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> collectionNamePattern = default;
             Optional<string> partitionKey = default;
             Optional<string> documentId = default;
-            Optional<AuthenticationMode> authenticationMode = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,44 +84,44 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("accountId"))
+                        if (property0.NameEquals("accountId"u8))
                         {
                             accountId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("accountKey"))
+                        if (property0.NameEquals("accountKey"u8))
                         {
                             accountKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("database"))
+                        if (property0.NameEquals("database"u8))
                         {
                             database = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("collectionNamePattern"))
+                        if (property0.NameEquals("collectionNamePattern"u8))
                         {
                             collectionNamePattern = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("partitionKey"))
+                        if (property0.NameEquals("partitionKey"u8))
                         {
                             partitionKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("documentId"))
+                        if (property0.NameEquals("documentId"u8))
                         {
                             documentId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authenticationMode"))
+                        if (property0.NameEquals("authenticationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authenticationMode = new AuthenticationMode(property0.Value.GetString());
+                            authenticationMode = new StreamAnalyticsAuthenticationMode(property0.Value.GetString());
                             continue;
                         }
                     }

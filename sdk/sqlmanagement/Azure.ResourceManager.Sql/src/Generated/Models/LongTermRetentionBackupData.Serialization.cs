@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
-                writer.WritePropertyName("requestedBackupStorageRedundancy");
+                writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
             writer.WriteEndObject();
@@ -41,36 +41,36 @@ namespace Azure.ResourceManager.Sql
             Optional<DateTimeOffset> databaseDeletionTime = default;
             Optional<DateTimeOffset> backupTime = default;
             Optional<DateTimeOffset> backupExpirationTime = default;
-            Optional<BackupStorageRedundancy> backupStorageRedundancy = default;
-            Optional<BackupStorageRedundancy> requestedBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("serverName"))
+                        if (property0.NameEquals("serverName"u8))
                         {
                             serverName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serverCreateTime"))
+                        if (property0.NameEquals("serverCreateTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Sql
                             serverCreateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("databaseName"))
+                        if (property0.NameEquals("databaseName"u8))
                         {
                             databaseName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("databaseDeletionTime"))
+                        if (property0.NameEquals("databaseDeletionTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql
                             databaseDeletionTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("backupTime"))
+                        if (property0.NameEquals("backupTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
                             backupTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("backupExpirationTime"))
+                        if (property0.NameEquals("backupExpirationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -129,24 +129,24 @@ namespace Azure.ResourceManager.Sql
                             backupExpirationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("backupStorageRedundancy"))
+                        if (property0.NameEquals("backupStorageRedundancy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            backupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("requestedBackupStorageRedundancy"))
+                        if (property0.NameEquals("requestedBackupStorageRedundancy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            requestedBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            requestedBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                     }

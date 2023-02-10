@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
@@ -88,6 +89,23 @@ namespace Azure.AI.FormRecognizer
                 forms.Add(new RecognizedForm(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults, default));
             }
             return new RecognizedFormCollection(forms);
+        }
+
+        public static IReadOnlyList<PointF> CovertToListOfPointF(IReadOnlyList<float> coordinates)
+        {
+            if (coordinates == null || coordinates.Count == 0)
+            {
+                return Array.Empty<PointF>();
+            }
+
+            List<PointF> points = new List<PointF>();
+
+            for (int i = 0; i < coordinates.Count; i += 2)
+            {
+                points.Add(new PointF(coordinates[i], coordinates[i + 1]));
+            }
+
+            return points;
         }
     }
 }

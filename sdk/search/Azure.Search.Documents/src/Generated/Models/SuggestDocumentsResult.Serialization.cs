@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Models
             Optional<double> searchCoverage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SuggestResult> array = new List<SuggestResult>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("@search.coverage"))
+                if (property.NameEquals("@search.coverage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

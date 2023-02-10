@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// storage URLs.</param>
         /// <param name="cloudInitConfiguration">CloudInitConfiguration string
         /// in plain text.</param>
-        /// <param name="virtualApplianceAsn">VirtualAppliance ASN.</param>
+        /// <param name="virtualApplianceAsn">VirtualAppliance ASN. Microsoft
+        /// private, public and IANA reserved ASN are not supported.</param>
         /// <param name="sshPublicKey">Public key for SSH login.</param>
         /// <param name="virtualApplianceNics">List of Virtual Appliance
         /// Network Interfaces.</param>
@@ -62,11 +63,17 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
+        /// <param name="deploymentType">The deployment type. PartnerManaged
+        /// for the SaaS NVA</param>
+        /// <param name="delegation">The delegation for the Virtual
+        /// Appliance</param>
+        /// <param name="partnerManagedResource">The delegation for the Virtual
+        /// Appliance</param>
         /// <param name="identity">The service principal that has read access
         /// to cloud-init and config blob.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkVirtualAppliance(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), VirtualApplianceSkuProperties nvaSku = default(VirtualApplianceSkuProperties), string addressPrefix = default(string), IList<string> bootStrapConfigurationBlobs = default(IList<string>), SubResource virtualHub = default(SubResource), IList<string> cloudInitConfigurationBlobs = default(IList<string>), string cloudInitConfiguration = default(string), long? virtualApplianceAsn = default(long?), string sshPublicKey = default(string), IList<VirtualApplianceNicProperties> virtualApplianceNics = default(IList<VirtualApplianceNicProperties>), IList<SubResource> virtualApplianceSites = default(IList<SubResource>), IList<SubResource> inboundSecurityRules = default(IList<SubResource>), string provisioningState = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string etag = default(string))
+        public NetworkVirtualAppliance(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), VirtualApplianceSkuProperties nvaSku = default(VirtualApplianceSkuProperties), string addressPrefix = default(string), IList<string> bootStrapConfigurationBlobs = default(IList<string>), SubResource virtualHub = default(SubResource), IList<string> cloudInitConfigurationBlobs = default(IList<string>), string cloudInitConfiguration = default(string), long? virtualApplianceAsn = default(long?), string sshPublicKey = default(string), IList<VirtualApplianceNicProperties> virtualApplianceNics = default(IList<VirtualApplianceNicProperties>), IList<SubResource> virtualApplianceSites = default(IList<SubResource>), IList<SubResource> inboundSecurityRules = default(IList<SubResource>), string provisioningState = default(string), string deploymentType = default(string), DelegationProperties delegation = default(DelegationProperties), PartnerManagedResourceProperties partnerManagedResource = default(PartnerManagedResourceProperties), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             NvaSku = nvaSku;
@@ -81,6 +88,9 @@ namespace Microsoft.Azure.Management.Network.Models
             VirtualApplianceSites = virtualApplianceSites;
             InboundSecurityRules = inboundSecurityRules;
             ProvisioningState = provisioningState;
+            DeploymentType = deploymentType;
+            Delegation = delegation;
+            PartnerManagedResource = partnerManagedResource;
             Identity = identity;
             Etag = etag;
             CustomInit();
@@ -129,7 +139,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string CloudInitConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets virtualAppliance ASN.
+        /// Gets or sets virtualAppliance ASN. Microsoft private, public and
+        /// IANA reserved ASN are not supported.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualApplianceAsn")]
         public long? VirtualApplianceAsn { get; set; }
@@ -164,6 +175,24 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets the deployment type. PartnerManaged for the SaaS NVA
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deploymentType")]
+        public string DeploymentType { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the delegation for the Virtual Appliance
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.delegation")]
+        public DelegationProperties Delegation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the delegation for the Virtual Appliance
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.partnerManagedResource")]
+        public PartnerManagedResourceProperties PartnerManagedResource { get; set; }
 
         /// <summary>
         /// Gets or sets the service principal that has read access to

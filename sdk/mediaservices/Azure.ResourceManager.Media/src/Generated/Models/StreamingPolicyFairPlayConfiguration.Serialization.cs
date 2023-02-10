@@ -15,34 +15,34 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomLicenseAcquisitionUrlTemplate))
+            if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
             {
-                writer.WritePropertyName("customLicenseAcquisitionUrlTemplate");
-                writer.WriteStringValue(CustomLicenseAcquisitionUrlTemplate);
+                writer.WritePropertyName("customLicenseAcquisitionUrlTemplate"u8);
+                writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate);
             }
-            writer.WritePropertyName("allowPersistentLicense");
+            writer.WritePropertyName("allowPersistentLicense"u8);
             writer.WriteBooleanValue(AllowPersistentLicense);
             writer.WriteEndObject();
         }
 
         internal static StreamingPolicyFairPlayConfiguration DeserializeStreamingPolicyFairPlayConfiguration(JsonElement element)
         {
-            Optional<string> customLicenseAcquisitionUrlTemplate = default;
+            Optional<string> customLicenseAcquisitionUriTemplate = default;
             bool allowPersistentLicense = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customLicenseAcquisitionUrlTemplate"))
+                if (property.NameEquals("customLicenseAcquisitionUrlTemplate"u8))
                 {
-                    customLicenseAcquisitionUrlTemplate = property.Value.GetString();
+                    customLicenseAcquisitionUriTemplate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allowPersistentLicense"))
+                if (property.NameEquals("allowPersistentLicense"u8))
                 {
                     allowPersistentLicense = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new StreamingPolicyFairPlayConfiguration(customLicenseAcquisitionUrlTemplate.Value, allowPersistentLicense);
+            return new StreamingPolicyFairPlayConfiguration(customLicenseAcquisitionUriTemplate.Value, allowPersistentLicense);
         }
     }
 }

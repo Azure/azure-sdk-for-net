@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.MySql.Tests
     {
         protected ArmClient Client { get; private set; }
 
+        protected SubscriptionResource Subscription { get; private set; }
+
         protected MySqlManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -25,12 +27,13 @@ namespace Azure.ResourceManager.MySql.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            Subscription = await Client.GetDefaultSubscriptionAsync();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);

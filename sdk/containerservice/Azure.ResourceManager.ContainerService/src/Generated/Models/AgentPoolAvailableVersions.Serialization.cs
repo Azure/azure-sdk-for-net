@@ -20,35 +20,35 @@ namespace Azure.ResourceManager.ContainerService.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>> agentPoolVersions = default;
+            Optional<IReadOnlyList<AgentPoolAvailableVersion>> agentPoolVersions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.ContainerService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("agentPoolVersions"))
+                        if (property0.NameEquals("agentPoolVersions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem> array = new List<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>();
+                            List<AgentPoolAvailableVersion> array = new List<AgentPoolAvailableVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.DeserializeAgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem(item));
+                                array.Add(AgentPoolAvailableVersion.DeserializeAgentPoolAvailableVersion(item));
                             }
                             agentPoolVersions = array;
                             continue;

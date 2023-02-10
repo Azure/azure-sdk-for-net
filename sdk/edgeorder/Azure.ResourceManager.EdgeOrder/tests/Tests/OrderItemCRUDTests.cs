@@ -38,20 +38,20 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             await EdgeOrderManagementTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
                 EdgeOrderManagementTestUtilities.DefaultResourceLocation, resourceGroupName);
             var orderItemName = Recording.GenerateAssetName("Sdk-OrderItem");
-            ContactDetails contactDetails = GetDefaultContactDetails();
-            ShippingAddress shippingAddress = GetDefaultShippingAddress();
-            AddressProperties addressProperties = new(contactDetails)
+            EdgeOrderAddressContactDetails contactDetails = GetDefaultContactDetails();
+            EdgeOrderShippingAddress shippingAddress = GetDefaultShippingAddress();
+            EdgeOrderItemAddressProperties addressProperties = new(contactDetails)
             {
                 ShippingAddress = shippingAddress
             };
-            AddressDetails addressDetails = new(addressProperties);
+            EdgeOrderItemAddressDetails addressDetails = new(addressProperties);
             string orderId = string.Format(EdgeOrderManagementTestUtilities.OrderArmIdFormat,
                 TestEnvironment.SubscriptionId, resourceGroupName, EdgeOrderManagementTestUtilities.DefaultResourceLocation, orderItemName);
 
-            OrderItemResourceCollection _orderItemResourceCollection = await GetOrderItemResourceCollectionAsync(resourceGroupName);
+            EdgeOrderItemCollection _orderItemResourceCollection = await GetOrderItemResourceCollectionAsync(resourceGroupName);
 
-            OrderItemResourceData orderItemResourceData = new(EdgeOrderManagementTestUtilities.DefaultResourceLocation,
-                GetDefaultOrderItemDetails(), addressDetails, orderId);
+            EdgeOrderItemData orderItemResourceData = new(EdgeOrderManagementTestUtilities.DefaultResourceLocation,
+                GetDefaultOrderItemDetails(), addressDetails, new Core.ResourceIdentifier(orderId));
 
             // Create
             var createOrderItemOperation = await _orderItemResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, orderItemName, orderItemResourceData);
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             Assert.IsTrue(createOrderItemOperation.HasValue);
 
             // Get
-            Response<OrderItemResource> getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(orderItemName);
-            OrderItemResource orderItemResource = getOrderItemResourceResponse.Value;
+            Response<EdgeOrderItemResource> getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(orderItemName);
+            EdgeOrderItemResource orderItemResource = getOrderItemResourceResponse.Value;
             Assert.IsNotNull(orderItemResource);
 
             // Update
             addressProperties.ContactDetails.ContactName = "Updated contact name";
-            OrderItemResourcePatch orderItemUpdateParameter = new()
+            EdgeOrderItemPatch orderItemUpdateParameter = new()
             {
                 ForwardAddress = addressProperties
             };
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             Assert.IsNotNull(orderItemResource);
 
             //Cancel
-            Response cancelOrderItemResponse = await orderItemResource.CancelOrderItemAsync(
-                new CancellationReason("Order item cancelled"));
+            Response cancelOrderItemResponse = await orderItemResource.CancelAsync(
+                new EdgeOrderItemCancellationReason("Order item cancelled"));
             Assert.AreEqual(cancelOrderItemResponse.Status, 204);
 
             // Get

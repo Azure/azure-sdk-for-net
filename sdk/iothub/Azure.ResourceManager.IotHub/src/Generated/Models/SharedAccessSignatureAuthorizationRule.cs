@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -16,12 +17,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="keyName"> The name of the shared access policy. </param>
         /// <param name="rights"> The permissions assigned to the shared access policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public SharedAccessSignatureAuthorizationRule(string keyName, AccessRight rights)
+        public SharedAccessSignatureAuthorizationRule(string keyName, IotHubSharedAccessRight rights)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNull(keyName, nameof(keyName));
 
             KeyName = keyName;
             Rights = rights;
@@ -32,7 +30,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="primaryKey"> The primary key. </param>
         /// <param name="secondaryKey"> The secondary key. </param>
         /// <param name="rights"> The permissions assigned to the shared access policy. </param>
-        internal SharedAccessSignatureAuthorizationRule(string keyName, string primaryKey, string secondaryKey, AccessRight rights)
+        internal SharedAccessSignatureAuthorizationRule(string keyName, string primaryKey, string secondaryKey, IotHubSharedAccessRight rights)
         {
             KeyName = keyName;
             PrimaryKey = primaryKey;
@@ -47,6 +45,6 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> The secondary key. </summary>
         public string SecondaryKey { get; set; }
         /// <summary> The permissions assigned to the shared access policy. </summary>
-        public AccessRight Rights { get; set; }
+        public IotHubSharedAccessRight Rights { get; set; }
     }
 }

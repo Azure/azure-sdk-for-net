@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [OneTimeTearDown]
-        public void GlobalTeardown()
+        public async Task GlobalTeardown()
         {
-            _sqlContainer.Delete(WaitUntil.Completed);
-            _sqlDatabase.Delete(WaitUntil.Completed);
-            _databaseAccount.Delete(WaitUntil.Completed);
+            await _sqlContainer.DeleteAsync(WaitUntil.Completed);
+            await _sqlDatabase.DeleteAsync(WaitUntil.Completed);
+            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
         }
 
         [SetUp]
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlStoredProcedureCreateAndUpdate()
         {
             var storedProcedure = await CreateSqlStoredProcedure(null);
-            Assert.AreEqual(_storedProcedureName, storedProcedure.Data.Resource.Id);
+            Assert.AreEqual(_storedProcedureName, storedProcedure.Data.Resource.StoredProcedureName);
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, container.Data.Options.Throughput);
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // NOT WORKING API
             //ThroughputSettingsData throughtput = await container.GetMongoDBCollectionThroughputAsync();
             CosmosDBSqlStoredProcedureResource storedProcedure2 = await SqlStoredProcedureCollection.GetAsync(_storedProcedureName);
-            Assert.AreEqual(_storedProcedureName, storedProcedure2.Data.Resource.Id);
+            Assert.AreEqual(_storedProcedureName, storedProcedure2.Data.Resource.StoredProcedureName);
             //Assert.AreEqual(TestThroughput1, container2.Data.Options.Throughput);
 
             VerifySqlStoredProcedures(storedProcedure, storedProcedure2);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
 
             storedProcedure = (await SqlStoredProcedureCollection.CreateOrUpdateAsync(WaitUntil.Completed, _storedProcedureName, updateOptions)).Value;
-            Assert.AreEqual(_storedProcedureName, storedProcedure.Data.Resource.Id);
+            Assert.AreEqual(_storedProcedureName, storedProcedure.Data.Resource.StoredProcedureName);
             storedProcedure2 = await SqlStoredProcedureCollection.GetAsync(_storedProcedureName);
             VerifySqlStoredProcedures(storedProcedure, storedProcedure2);
         }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
+            Assert.AreEqual(expectedValue.Data.Resource.StoredProcedureName, actualValue.Data.Resource.StoredProcedureName);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
             Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
             Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);

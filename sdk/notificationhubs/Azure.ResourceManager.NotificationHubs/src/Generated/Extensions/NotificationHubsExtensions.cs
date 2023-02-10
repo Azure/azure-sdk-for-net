@@ -30,60 +30,92 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Checks the availability of the given service namespace across all Azure subscriptions. This is useful because the domain name is created based on the service namespace name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability
-        /// Operation Id: Namespaces_CheckAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkAvailabilityParameters"> The namespace name. </param>
+        /// <param name="content"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkAvailabilityParameters"/> is null. </exception>
-        public static async Task<Response<CheckAvailabilityResult>> CheckAvailabilityNamespaceAsync(this SubscriptionResource subscriptionResource, CheckAvailabilityParameters checkAvailabilityParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<NotificationHubAvailabilityResult>> CheckNotificationHubNamespaceAvailabilityAsync(this SubscriptionResource subscriptionResource, NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkAvailabilityParameters, nameof(checkAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckAvailabilityNamespaceAsync(checkAvailabilityParameters, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckNotificationHubNamespaceAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks the availability of the given service namespace across all Azure subscriptions. This is useful because the domain name is created based on the service namespace name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability
-        /// Operation Id: Namespaces_CheckAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkAvailabilityParameters"> The namespace name. </param>
+        /// <param name="content"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkAvailabilityParameters"/> is null. </exception>
-        public static Response<CheckAvailabilityResult> CheckAvailabilityNamespace(this SubscriptionResource subscriptionResource, CheckAvailabilityParameters checkAvailabilityParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<NotificationHubAvailabilityResult> CheckNotificationHubNamespaceAvailability(this SubscriptionResource subscriptionResource, NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkAvailabilityParameters, nameof(checkAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckAvailabilityNamespace(checkAvailabilityParameters, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckNotificationHubNamespaceAvailability(content, cancellationToken);
         }
 
         /// <summary>
         /// Lists all the available namespaces within the subscription irrespective of the resourceGroups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/namespaces
-        /// Operation Id: Namespaces_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NamespaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NamespaceResource> GetNamespaceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NotificationHubNamespaceResource> GetNotificationHubNamespacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetNamespaceResourcesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetNotificationHubNamespacesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all the available namespaces within the subscription irrespective of the resourceGroups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/namespaces
-        /// Operation Id: Namespaces_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NamespaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NamespaceResource> GetNamespaceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NotificationHubNamespaceResource> GetNotificationHubNamespaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetNamespaceResources(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetNotificationHubNamespaces(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -95,18 +127,26 @@ namespace Azure.ResourceManager.NotificationHubs
             );
         }
 
-        /// <summary> Gets a collection of NamespaceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NotificationHubNamespaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of NamespaceResources and their operations over a NamespaceResource. </returns>
-        public static NamespaceResourceCollection GetNamespaceResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NotificationHubNamespaceResources and their operations over a NotificationHubNamespaceResource. </returns>
+        public static NotificationHubNamespaceCollection GetNotificationHubNamespaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetNamespaceResources();
+            return GetExtensionClient(resourceGroupResource).GetNotificationHubNamespaces();
         }
 
         /// <summary>
         /// Returns the description for the specified namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -114,15 +154,23 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NamespaceResource>> GetNamespaceResourceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NotificationHubNamespaceResource>> GetNotificationHubNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNamespaceResources().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNotificationHubNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns the description for the specified namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -130,63 +178,63 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<NamespaceResource> GetNamespaceResource(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
+        public static Response<NotificationHubNamespaceResource> GetNotificationHubNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNamespaceResources().Get(namespaceName, cancellationToken);
+            return resourceGroupResource.GetNotificationHubNamespaces().Get(namespaceName, cancellationToken);
         }
 
-        #region NamespaceResource
+        #region NotificationHubNamespaceResource
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NotificationHubNamespaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NotificationHubNamespaceResource.CreateResourceIdentifier" /> to create a <see cref="NotificationHubNamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceResource" /> object. </returns>
-        public static NamespaceResource GetNamespaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NotificationHubNamespaceResource" /> object. </returns>
+        public static NotificationHubNamespaceResource GetNotificationHubNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NamespaceResource.ValidateResourceId(id);
-                return new NamespaceResource(client, id);
+                NotificationHubNamespaceResource.ValidateResourceId(id);
+                return new NotificationHubNamespaceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NamespaceAuthorizationRuleResource
+        #region NotificationHubNamespaceAuthorizationRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NotificationHubNamespaceAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NotificationHubNamespaceAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NotificationHubNamespaceAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceAuthorizationRuleResource" /> object. </returns>
-        public static NamespaceAuthorizationRuleResource GetNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NotificationHubNamespaceAuthorizationRuleResource" /> object. </returns>
+        public static NotificationHubNamespaceAuthorizationRuleResource GetNotificationHubNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NamespaceAuthorizationRuleResource.ValidateResourceId(id);
-                return new NamespaceAuthorizationRuleResource(client, id);
+                NotificationHubNamespaceAuthorizationRuleResource.ValidateResourceId(id);
+                return new NotificationHubNamespaceAuthorizationRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NamespaceNotificationHubAuthorizationRuleResource
+        #region NotificationHubAuthorizationRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceNotificationHubAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceNotificationHubAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceNotificationHubAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NotificationHubAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NotificationHubAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NotificationHubAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceNotificationHubAuthorizationRuleResource" /> object. </returns>
-        public static NamespaceNotificationHubAuthorizationRuleResource GetNamespaceNotificationHubAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NotificationHubAuthorizationRuleResource" /> object. </returns>
+        public static NotificationHubAuthorizationRuleResource GetNotificationHubAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NamespaceNotificationHubAuthorizationRuleResource.ValidateResourceId(id);
-                return new NamespaceNotificationHubAuthorizationRuleResource(client, id);
+                NotificationHubAuthorizationRuleResource.ValidateResourceId(id);
+                return new NotificationHubAuthorizationRuleResource(client, id);
             }
             );
         }

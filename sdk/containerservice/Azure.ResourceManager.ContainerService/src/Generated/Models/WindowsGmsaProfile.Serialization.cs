@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(DnsServer))
             {
-                writer.WritePropertyName("dnsServer");
+                writer.WritePropertyName("dnsServer"u8);
                 writer.WriteStringValue(DnsServer);
             }
             if (Optional.IsDefined(RootDomainName))
             {
-                writer.WritePropertyName("rootDomainName");
+                writer.WritePropertyName("rootDomainName"u8);
                 writer.WriteStringValue(RootDomainName);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<string> rootDomainName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dnsServer"))
+                if (property.NameEquals("dnsServer"u8))
                 {
                     dnsServer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rootDomainName"))
+                if (property.NameEquals("rootDomainName"u8))
                 {
                     rootDomainName = property.Value.GetString();
                     continue;

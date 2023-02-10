@@ -20,49 +20,49 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(FunctionAppId))
             {
-                writer.WritePropertyName("function_app_id");
+                writer.WritePropertyName("function_app_id"u8);
                 writer.WriteStringValue(FunctionAppId);
             }
             if (Optional.IsDefined(ScriptRootPathHref))
             {
-                writer.WritePropertyName("script_root_path_href");
+                writer.WritePropertyName("script_root_path_href"u8);
                 writer.WriteStringValue(ScriptRootPathHref);
             }
             if (Optional.IsDefined(ScriptHref))
             {
-                writer.WritePropertyName("script_href");
+                writer.WritePropertyName("script_href"u8);
                 writer.WriteStringValue(ScriptHref);
             }
             if (Optional.IsDefined(ConfigHref))
             {
-                writer.WritePropertyName("config_href");
+                writer.WritePropertyName("config_href"u8);
                 writer.WriteStringValue(ConfigHref);
             }
             if (Optional.IsDefined(TestDataHref))
             {
-                writer.WritePropertyName("test_data_href");
+                writer.WritePropertyName("test_data_href"u8);
                 writer.WriteStringValue(TestDataHref);
             }
             if (Optional.IsDefined(SecretsFileHref))
             {
-                writer.WritePropertyName("secrets_file_href");
+                writer.WritePropertyName("secrets_file_href"u8);
                 writer.WriteStringValue(SecretsFileHref);
             }
             if (Optional.IsDefined(Href))
             {
-                writer.WritePropertyName("href");
+                writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
             if (Optional.IsDefined(Config))
             {
-                writer.WritePropertyName("config");
+                writer.WritePropertyName("config"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Config);
 #else
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsCollectionDefined(Files))
             {
-                writer.WritePropertyName("files");
+                writer.WritePropertyName("files"u8);
                 writer.WriteStartObject();
                 foreach (var item in Files)
                 {
@@ -82,22 +82,22 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(TestData))
             {
-                writer.WritePropertyName("test_data");
+                writer.WritePropertyName("test_data"u8);
                 writer.WriteStringValue(TestData);
             }
             if (Optional.IsDefined(InvokeUrlTemplate))
             {
-                writer.WritePropertyName("invoke_url_template");
+                writer.WritePropertyName("invoke_url_template"u8);
                 writer.WriteStringValue(InvokeUrlTemplate);
             }
             if (Optional.IsDefined(Language))
             {
-                writer.WritePropertyName("language");
+                writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
             if (Optional.IsDefined(IsDisabled))
             {
-                writer.WritePropertyName("isDisabled");
+                writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
             writer.WriteEndObject();
@@ -126,37 +126,37 @@ namespace Azure.ResourceManager.AppService
             Optional<bool> isDisabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -165,42 +165,42 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("function_app_id"))
+                        if (property0.NameEquals("function_app_id"u8))
                         {
                             functionAppId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("script_root_path_href"))
+                        if (property0.NameEquals("script_root_path_href"u8))
                         {
                             scriptRootPathHref = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("script_href"))
+                        if (property0.NameEquals("script_href"u8))
                         {
                             scriptHref = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("config_href"))
+                        if (property0.NameEquals("config_href"u8))
                         {
                             configHref = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("test_data_href"))
+                        if (property0.NameEquals("test_data_href"u8))
                         {
                             testDataHref = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("secrets_file_href"))
+                        if (property0.NameEquals("secrets_file_href"u8))
                         {
                             secretsFileHref = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("href"))
+                        if (property0.NameEquals("href"u8))
                         {
                             href = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("config"))
+                        if (property0.NameEquals("config"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppService
                             config = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("files"))
+                        if (property0.NameEquals("files"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -225,22 +225,22 @@ namespace Azure.ResourceManager.AppService
                             files = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("test_data"))
+                        if (property0.NameEquals("test_data"u8))
                         {
                             testData = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("invoke_url_template"))
+                        if (property0.NameEquals("invoke_url_template"u8))
                         {
                             invokeUrlTemplate = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("language"))
+                        if (property0.NameEquals("language"u8))
                         {
                             language = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isDisabled"))
+                        if (property0.NameEquals("isDisabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

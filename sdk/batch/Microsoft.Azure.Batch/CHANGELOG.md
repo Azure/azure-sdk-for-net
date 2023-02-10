@@ -1,6 +1,6 @@
 # Release History
 
-## 15.4.0-beta.1 (Unreleased)
+## 15.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 15.4.0 (2022-10-01)
+
+### Features Added
+
+- Added new custom enum type `NodeCommunicationMode`.
+  - This property determines how a pool communicates with the Batch service.
+  - Possible values: Default, Classic, Simplified.
+- Added properties `CurrentNodeCommunicationMode` and `TargetNodeCommunicationMode` of type `NodeCommunicationMode` to `CloudPool`.
+- Added property `TargetNodeCommunicationMode` of type `NodeCommunicationMode` to `PoolSpecification`, `PoolAddParameter`, `PoolPatchParameter`, and `PoolUpdatePropertiesParameter`.
+
+### Other Changes
+
+- Modified descriptions of `ApplicationId`, `UploadHeaders`, and `Name` (UserAccount) properties.
 
 ## 15.3.0 (2022-01-07)
 

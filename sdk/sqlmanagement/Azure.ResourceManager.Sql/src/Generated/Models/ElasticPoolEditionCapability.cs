@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ElasticPoolEditionCapability. </summary>
         /// <param name="name"> The elastic pool edition name. </param>
         /// <param name="supportedElasticPoolPerformanceLevels"> The list of supported elastic pool DTU levels for the edition. </param>
-        /// <param name="zoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
+        /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ElasticPoolEditionCapability(string name, IReadOnlyList<ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels, bool? zoneRedundant, CapabilityStatus? status, string reason)
+        internal ElasticPoolEditionCapability(string name, IReadOnlyList<ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels, bool? isZoneRedundant, SqlCapabilityStatus? status, string reason)
         {
             Name = name;
             SupportedElasticPoolPerformanceLevels = supportedElasticPoolPerformanceLevels;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             Status = status;
             Reason = reason;
         }
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The list of supported elastic pool DTU levels for the edition. </summary>
         public IReadOnlyList<ElasticPoolPerformanceLevelCapability> SupportedElasticPoolPerformanceLevels { get; }
         /// <summary> Whether or not zone redundancy is supported for the edition. </summary>
-        public bool? ZoneRedundant { get; }
+        public bool? IsZoneRedundant { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

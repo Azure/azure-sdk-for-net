@@ -21,7 +21,12 @@ namespace Azure.Core.Tests
                 new MockResponse(1));
 
             var pipeline = new HttpPipeline(mockTransport, new[] {
-                new RetryPolicy(RetryMode.Exponential, TimeSpan.Zero, TimeSpan.Zero, 5)
+                new DefaultRetryPolicy(
+                    new RetryOptions {
+                        Mode = RetryMode.Exponential,
+                        Delay = TimeSpan.Zero,
+                        MaxDelay = TimeSpan.Zero,
+                        MaxRetries = 5})
             }, responseClassifier: new CustomResponseClassifier());
 
             Request request = pipeline.CreateRequest();

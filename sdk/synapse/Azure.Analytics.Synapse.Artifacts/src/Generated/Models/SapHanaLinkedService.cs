@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> is null. </exception>
         public SapHanaLinkedService(object server)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
+            Argument.AssertNotNull(server, nameof(server));
 
             Server = server;
             Type = "SapHana";
@@ -38,7 +36,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="server"> Host name of the SAP HANA server. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to be used to connect to the SAP HANA server. </param>
         /// <param name="userName"> Username to access the SAP HANA server. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password to access the SAP HANA server. </param>
+        /// <param name="password">
+        /// Password to access the SAP HANA server.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal SapHanaLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, object server, SapHanaAuthenticationType? authenticationType, object userName, SecretBase password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
@@ -59,7 +61,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SapHanaAuthenticationType? AuthenticationType { get; set; }
         /// <summary> Username to access the SAP HANA server. Type: string (or Expression with resultType string). </summary>
         public object UserName { get; set; }
-        /// <summary> Password to access the SAP HANA server. </summary>
+        /// <summary>
+        /// Password to access the SAP HANA server.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }

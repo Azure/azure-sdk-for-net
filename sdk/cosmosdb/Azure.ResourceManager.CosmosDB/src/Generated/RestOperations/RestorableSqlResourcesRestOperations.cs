@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-10-15";
+            _apiVersion = apiVersion ?? "2022-08-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, string instanceId, string restoreLocation, string restoreTimestampInUtc)
+        internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, Guid instanceId, AzureLocation? restoreLocation, string restoreTimestampInUtc)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", _apiVersion, true);
             if (restoreLocation != null)
             {
-                uri.AppendQuery("restoreLocation", restoreLocation, true);
+                uri.AppendQuery("restoreLocation", restoreLocation.Value, true);
             }
             if (restoreTimestampInUtc != null)
             {
@@ -73,12 +73,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreLocation"> The location where the restorable resources are located. </param>
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RestorableSqlResourcesListResult>> ListAsync(string subscriptionId, AzureLocation location, string instanceId, string restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<RestorableSqlResourcesListResult>> ListAsync(string subscriptionId, AzureLocation location, Guid instanceId, AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var message = CreateListRequest(subscriptionId, location, instanceId, restoreLocation, restoreTimestampInUtc);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -103,12 +102,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreLocation"> The location where the restorable resources are located. </param>
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RestorableSqlResourcesListResult> List(string subscriptionId, AzureLocation location, string instanceId, string restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<RestorableSqlResourcesListResult> List(string subscriptionId, AzureLocation location, Guid instanceId, AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var message = CreateListRequest(subscriptionId, location, instanceId, restoreLocation, restoreTimestampInUtc);
             _pipeline.Send(message, cancellationToken);

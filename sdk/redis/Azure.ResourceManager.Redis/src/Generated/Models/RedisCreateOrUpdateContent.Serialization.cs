@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -40,39 +40,39 @@ namespace Azure.ResourceManager.Redis.Models
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RedisConfiguration))
             {
-                writer.WritePropertyName("redisConfiguration");
+                writer.WritePropertyName("redisConfiguration"u8);
                 writer.WriteObjectValue(RedisConfiguration);
             }
             if (Optional.IsDefined(RedisVersion))
             {
-                writer.WritePropertyName("redisVersion");
+                writer.WritePropertyName("redisVersion"u8);
                 writer.WriteStringValue(RedisVersion);
             }
             if (Optional.IsDefined(EnableNonSslPort))
             {
-                writer.WritePropertyName("enableNonSslPort");
+                writer.WritePropertyName("enableNonSslPort"u8);
                 writer.WriteBooleanValue(EnableNonSslPort.Value);
             }
             if (Optional.IsDefined(ReplicasPerMaster))
             {
-                writer.WritePropertyName("replicasPerMaster");
+                writer.WritePropertyName("replicasPerMaster"u8);
                 writer.WriteNumberValue(ReplicasPerMaster.Value);
             }
             if (Optional.IsDefined(ReplicasPerPrimary))
             {
-                writer.WritePropertyName("replicasPerPrimary");
+                writer.WritePropertyName("replicasPerPrimary"u8);
                 writer.WriteNumberValue(ReplicasPerPrimary.Value);
             }
             if (Optional.IsCollectionDefined(TenantSettings))
             {
-                writer.WritePropertyName("tenantSettings");
+                writer.WritePropertyName("tenantSettings"u8);
                 writer.WriteStartObject();
                 foreach (var item in TenantSettings)
                 {
@@ -83,30 +83,30 @@ namespace Azure.ResourceManager.Redis.Models
             }
             if (Optional.IsDefined(ShardCount))
             {
-                writer.WritePropertyName("shardCount");
+                writer.WritePropertyName("shardCount"u8);
                 writer.WriteNumberValue(ShardCount.Value);
             }
             if (Optional.IsDefined(MinimumTlsVersion))
             {
-                writer.WritePropertyName("minimumTlsVersion");
+                writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            writer.WritePropertyName("sku");
+            writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             if (Optional.IsDefined(SubnetId))
             {
-                writer.WritePropertyName("subnetId");
+                writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
             if (Optional.IsDefined(StaticIP))
             {
-                writer.WritePropertyName("staticIP");
-                writer.WriteStringValue(StaticIP);
+                writer.WritePropertyName("staticIP"u8);
+                writer.WriteStringValue(StaticIP.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

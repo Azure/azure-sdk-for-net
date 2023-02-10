@@ -1,5 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.Storage" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Media.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\MediaServicesTests\" />
+    <Folder Include="SessionRecords\MediaTransformJobTests\" />
+    <Folder Include="SessionRecords\StreamingEndpointTests\" />
   </ItemGroup>
 </Project>

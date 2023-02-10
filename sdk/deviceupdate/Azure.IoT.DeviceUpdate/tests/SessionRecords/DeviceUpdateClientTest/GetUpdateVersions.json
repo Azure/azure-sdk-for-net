@@ -1,38 +1,38 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/updates/providers/fabrikam/names/vacuum/versions?api-version=2022-07-01-preview",
+      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/updates/providers/fabrikam/names/vacuum/versions?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2ed23e42df77e14dafff9e866e2deb7a-842db3d68dbee842-00",
-        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "2ff1d5f6302da2d2c3969021bc70acf1",
+        "traceparent": "00-11a84c7034aadf4a80b280c643cda5d1-4d991e570984b448-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220901.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c453f0c0794a45b85e9ac1de0c064560",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "81",
+        "Content-Length": "63",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 01 Jul 2022 21:48:03 GMT",
-        "mise-correlation-id": "68718801-0e8c-496f-878d-5643309597bf",
-        "traceparent": "00-2ed23e42df77e14dafff9e866e2deb7a-842db3d68dbee842-00"
+        "Date": "Thu, 01 Sep 2022 20:26:19 GMT",
+        "mise-correlation-id": "018e3e7a-1f8d-4532-ad27-f82f2509e4f1",
+        "traceparent": "00-11a84c7034aadf4a80b280c643cda5d1-4d991e570984b448-00"
       },
       "ResponseBody": {
         "value": [
-          "2022.701.235.32",
-          "2022.609.510.21",
-          "2022.608.554.1",
+          "2022.812.237.5",
+          "2022.809.131.21",
           "2022.401.504.6"
         ]
       }
     }
   ],
   "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "DEVICEUPDATE_ACCOUNT_ENDPOINT": "adu-sdk-testing.api.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "sdkinstance",
-    "RandomSeed": "1783172637"
+    "RandomSeed": "892052285"
   }
 }

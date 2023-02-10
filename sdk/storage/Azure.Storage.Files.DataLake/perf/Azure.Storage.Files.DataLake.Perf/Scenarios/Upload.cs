@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,109 +9,53 @@ using Azure.Test.Perf;
 namespace Azure.Storage.Files.DataLake.Perf.Scenarios
 {
     /// <summary>
-    ///   The performance test scenario focused on uploading to Data Lake storage.
+    /// The performance test scenario focused on uploading to Data Lake storage.
     /// </summary>
-    ///
     /// <seealso cref="Azure.Test.Perf.PerfTest{SizeOptions}" />
-    ///
-    public sealed class Upload : PerfTest<SizeOptions>
+    public sealed class Upload : FileTest<Options.PartitionedTransferOptions>
     {
-        /// <summary>
-        ///   The ambient test environment associated with the current execution.
-        /// </summary>
-        ///
-        private static PerfTestEnvironment TestEnvironment { get; } = PerfTestEnvironment.Instance;
+        private readonly Stream _stream;
 
         /// <summary>
-        ///   The name of the file system to use across parallel executions of the scenario.
+        /// Initializes a new instance of the <see cref="Upload"/> class.
         /// </summary>
-        ///
-        private static string FileSystemName { get; } = Guid.NewGuid().ToString();
-
-        /// <summary>
-        ///   The client for interaction with the Data Lake file system.
-        /// </summary>
-        ///
-        private DataLakeFileSystemClient FileSystemClient { get; }
-
-        /// <summary>
-        ///   The payload to use with a file being uploaded.
-        /// </summary>
-        ///
-        private Stream Payload { get; set; }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="Upload"/> class.
-        /// </summary>
-        ///
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
-        ///
-        public Upload(SizeOptions options) : base(options)
+        public Upload(Options.PartitionedTransferOptions options)
+            : base(options, createFile: false, singletonFile: false)
         {
-            var serviceClient = new DataLakeServiceClient(TestEnvironment.DataLakeServiceUri, TestEnvironment.DataLakeCredential);
-            FileSystemClient = serviceClient.GetFileSystemClient(FileSystemName);
-
-            Payload = RandomStream.Create(Options.Size);
+            _stream = RandomStream.Create(options.Size);
         }
 
         public override void Dispose(bool disposing)
         {
-            Payload.Dispose();
+            _stream.Dispose();
             base.Dispose(disposing);
         }
 
         /// <summary>
-        ///   Performs the tasks needed to initialize and set up the environment for the test scenario.
-        ///   When multiple instances are run in parallel, the setup will take place once, prior to the
-        ///   execution of the first test instance.
+        /// Executes the performance test scenario synchronously.
         /// </summary>
-        ///
-        public async override Task GlobalSetupAsync()
-        {
-            await base.GlobalSetupAsync();
-            await FileSystemClient.CreateIfNotExistsAsync();
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to clean up the environment for the test scenario.
-        ///   When multiple instances are run in parallel, the cleanup will take place once,
-        ///   after the execution of all test instances.
-        /// </summary>
-        ///
-        public async override Task GlobalCleanupAsync()
-        {
-            await base.GlobalCleanupAsync();
-            await FileSystemClient.DeleteIfExistsAsync();
-        }
-
-        /// <summary>
-        ///   Executes the performance test scenario synchronously.
-        /// </summary>
-        ///
         /// <param name="cancellationToken">The token used to signal when cancellation is requested.</param>
-        ///
         public override void Run(CancellationToken cancellationToken)
         {
-            var fileClient = FileSystemClient.GetFileClient(Path.GetRandomFileName());
-            Payload.Position = 0;
-
-            fileClient.CreateIfNotExists(cancellationToken: cancellationToken);
-            fileClient.Upload(Payload, true, cancellationToken);
+            _stream.Seek(0, SeekOrigin.Begin);
+            FileClient.Upload(
+                _stream,
+                transferOptions: Options.StorageTransferOptions,
+                cancellationToken: cancellationToken);
         }
 
         /// <summary>
-        ///   Executes the performance test scenario asynchronously.
+        /// Executes the performance test scenario asynchronously.
         /// </summary>
-        ///
         /// <param name="cancellationToken">The token used to signal when cancellation is requested.</param>
-        ///
-        public async override Task RunAsync(CancellationToken cancellationToken)
+        public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            var fileClient = FileSystemClient.GetFileClient(Path.GetRandomFileName());
-            Payload.Position = 0;
-
-            await fileClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken);
-            await fileClient.UploadAsync(Payload, true, cancellationToken);
+            _stream.Seek(0, SeekOrigin.Begin);
+            await FileClient.UploadAsync(
+                _stream,
+                transferOptions: Options.StorageTransferOptions,
+                cancellationToken: cancellationToken);
         }
     }
 }

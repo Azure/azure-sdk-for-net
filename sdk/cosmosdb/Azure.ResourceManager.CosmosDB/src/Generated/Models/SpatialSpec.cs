@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of SpatialSpec. </summary>
         public SpatialSpec()
         {
-            Types = new ChangeTrackingList<SpatialType>();
+            Types = new ChangeTrackingList<CosmosDBSpatialType>();
         }
 
         /// <summary> Initializes a new instance of SpatialSpec. </summary>
         /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
         /// <param name="types"> List of path&apos;s spatial type. </param>
-        internal SpatialSpec(string path, IList<SpatialType> types)
+        internal SpatialSpec(string path, IList<CosmosDBSpatialType> types)
         {
             Path = path;
             Types = types;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </summary>
         public string Path { get; set; }
         /// <summary> List of path&apos;s spatial type. </summary>
-        public IList<SpatialType> Types { get; }
+        public IList<CosmosDBSpatialType> Types { get; }
     }
 }

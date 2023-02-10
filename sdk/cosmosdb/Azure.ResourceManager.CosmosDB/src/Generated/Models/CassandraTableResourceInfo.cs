@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -13,33 +14,30 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraTableResourceInfo
     {
         /// <summary> Initializes a new instance of CassandraTableResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB Cassandra table. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public CassandraTableResourceInfo(string id)
+        /// <param name="tableName"> Name of the Cosmos DB Cassandra table. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        public CassandraTableResourceInfo(string tableName)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(tableName, nameof(tableName));
 
-            Id = id;
+            TableName = tableName;
         }
 
         /// <summary> Initializes a new instance of CassandraTableResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB Cassandra table. </param>
+        /// <param name="tableName"> Name of the Cosmos DB Cassandra table. </param>
         /// <param name="defaultTtl"> Time to live of the Cosmos DB Cassandra table. </param>
         /// <param name="schema"> Schema of the Cosmos DB Cassandra table. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
-        internal CassandraTableResourceInfo(string id, int? defaultTtl, CassandraSchema schema, int? analyticalStorageTtl)
+        internal CassandraTableResourceInfo(string tableName, int? defaultTtl, CassandraSchema schema, int? analyticalStorageTtl)
         {
-            Id = id;
+            TableName = tableName;
             DefaultTtl = defaultTtl;
             Schema = schema;
             AnalyticalStorageTtl = analyticalStorageTtl;
         }
 
         /// <summary> Name of the Cosmos DB Cassandra table. </summary>
-        public string Id { get; set; }
+        public string TableName { get; set; }
         /// <summary> Time to live of the Cosmos DB Cassandra table. </summary>
         public int? DefaultTtl { get; set; }
         /// <summary> Schema of the Cosmos DB Cassandra table. </summary>

@@ -18,58 +18,58 @@ namespace Azure.ResourceManager.ServiceBus.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ApplicationProperties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
                 foreach (var item in ApplicationProperties)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(CorrelationId))
             {
-                writer.WritePropertyName("correlationId");
+                writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
             if (Optional.IsDefined(MessageId))
             {
-                writer.WritePropertyName("messageId");
+                writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
             if (Optional.IsDefined(SendTo))
             {
-                writer.WritePropertyName("to");
+                writer.WritePropertyName("to"u8);
                 writer.WriteStringValue(SendTo);
             }
             if (Optional.IsDefined(ReplyTo))
             {
-                writer.WritePropertyName("replyTo");
+                writer.WritePropertyName("replyTo"u8);
                 writer.WriteStringValue(ReplyTo);
             }
             if (Optional.IsDefined(Subject))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Subject);
             }
             if (Optional.IsDefined(SessionId))
             {
-                writer.WritePropertyName("sessionId");
+                writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
             if (Optional.IsDefined(ReplyToSessionId))
             {
-                writer.WritePropertyName("replyToSessionId");
+                writer.WritePropertyName("replyToSessionId"u8);
                 writer.WriteStringValue(ReplyToSessionId);
             }
             if (Optional.IsDefined(ContentType))
             {
-                writer.WritePropertyName("contentType");
+                writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
             if (Optional.IsDefined(RequiresPreprocessing))
             {
-                writer.WritePropertyName("requiresPreprocessing");
+                writer.WritePropertyName("requiresPreprocessing"u8);
                 writer.WriteBooleanValue(RequiresPreprocessing.Value);
             }
             writer.WriteEndObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusCorrelationFilter DeserializeServiceBusCorrelationFilter(JsonElement element)
         {
-            Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, object>> properties = default;
             Optional<string> correlationId = default;
             Optional<string> messageId = default;
             Optional<string> to = default;
@@ -89,62 +89,62 @@ namespace Azure.ResourceManager.ServiceBus.Models
             Optional<bool> requiresPreprocessing = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
                     }
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("correlationId"))
+                if (property.NameEquals("correlationId"u8))
                 {
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("to"))
+                if (property.NameEquals("to"u8))
                 {
                     to = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("replyTo"))
+                if (property.NameEquals("replyTo"u8))
                 {
                     replyTo = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sessionId"))
+                if (property.NameEquals("sessionId"u8))
                 {
                     sessionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("replyToSessionId"))
+                if (property.NameEquals("replyToSessionId"u8))
                 {
                     replyToSessionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentType"))
+                if (property.NameEquals("contentType"u8))
                 {
                     contentType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requiresPreprocessing"))
+                if (property.NameEquals("requiresPreprocessing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

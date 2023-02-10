@@ -13,25 +13,35 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Identitiy;
 
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using data from Visual Studio
+    /// Enables authentication to Azure Active Directory using data from Visual Studio 2017 or later. See
+    /// <seealso href="https://learn.microsoft.com/dotnet/azure/configure-visual-studio" /> for more information
+    /// on how to configure Visual Studio for Azure development.
     /// </summary>
     public class VisualStudioCredential : TokenCredential
     {
-        private const string TokenProviderFilePath = @".IdentityService\AzureServiceAuth\tokenprovider.json";
+        private static readonly string TokenProviderFilePath = Path.Combine(
+            Environment.GetFolderPath(RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ?
+                Environment.SpecialFolder.LocalApplicationData :
+                Environment.SpecialFolder.UserProfile),
+            ".IdentityService",
+            "AzureServiceAuth",
+            "tokenprovider.json");
         private const string ResourceArgumentName = "--resource";
         private const string TenantArgumentName = "--tenant";
 
         private readonly CredentialPipeline _pipeline;
-        private readonly string _tenantId;
+        internal string TenantId { get; }
+        internal string[] AdditionallyAllowedTenantIds { get; }
         private readonly IFileSystemService _fileSystem;
         private readonly IProcessService _processService;
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
+
+        internal TimeSpan VisualStudioProcessTimeout { get; private set; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
@@ -42,7 +52,7 @@ namespace Azure.Identity
         /// Creates a new instance of the <see cref="VisualStudioCredential"/> with the specified options.
         /// </summary>
         /// <param name="options">Options for configuring the credential.</param>
-        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default)
+        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default, options)
         {
         }
 
@@ -50,10 +60,12 @@ namespace Azure.Identity
         {
             _logPII = options?.IsLoggingPIIEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
-            _tenantId = tenantId;
+            TenantId = tenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _processService = processService ?? ProcessService.Default;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
+            VisualStudioProcessTimeout = options?.VisualStudioProcessTimeout ?? TimeSpan.FromSeconds(30);
         }
 
         /// <inheritdoc />
@@ -70,13 +82,12 @@ namespace Azure.Identity
 
             try
             {
-                if (string.Equals(_tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
+                if (string.Equals(TenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
                 {
                     throw new CredentialUnavailableException("VisualStudioCredential authentication unavailable. ADFS tenant/authorities are not supported.");
                 }
 
-                var tokenProviderPath = GetTokenProviderPath();
-                var tokenProviders = GetTokenProviders(tokenProviderPath);
+                var tokenProviders = GetTokenProviders(TokenProviderFilePath);
 
                 var resource = ScopeUtilities.ScopesToResource(requestContext.Scopes);
                 var processStartInfos = GetProcessStartInfos(tokenProviders, resource, requestContext, cancellationToken);
@@ -91,7 +102,7 @@ namespace Azure.Identity
                 if (_logAccountDetails)
                 {
                     var accountDetails = TokenHelper.ParseAccountInfoFromToken(accessToken.Token);
-                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? _tenantId, accountDetails.Upn, accountDetails.ObjectId);
+                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? TenantId, accountDetails.Upn, accountDetails.ObjectId);
                 }
 
                 return scope.Succeeded(accessToken);
@@ -102,16 +113,6 @@ namespace Azure.Identity
             }
         }
 
-        private static string GetTokenProviderPath()
-        {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), TokenProviderFilePath);
-            }
-
-            throw new CredentialUnavailableException($"Operating system {RuntimeInformation.OSDescription} isn't supported.");
-        }
-
         private async Task<AccessToken> RunProcessesAsync(List<ProcessStartInfo> processStartInfos, bool async, CancellationToken cancellationToken)
         {
             var exceptions = new List<Exception>();
@@ -120,7 +121,7 @@ namespace Azure.Identity
                 string output = string.Empty;
                 try
                 {
-                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromSeconds(30), _logPII, cancellationToken);
+                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), VisualStudioProcessTimeout, _logPII, cancellationToken);
                     output = async
                         ? await processRunner.RunAsync().ConfigureAwait(false)
                         : processRunner.Run();
@@ -132,7 +133,7 @@ namespace Azure.Identity
                 }
                 catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
                 {
-                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed to get access token in 30 seconds."));
+                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed to get access token in {VisualStudioProcessTimeout.TotalSeconds} seconds."));
                 }
                 catch (JsonException exception)
                 {
@@ -174,7 +175,7 @@ namespace Azure.Identity
                 arguments.Clear();
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 if (tenantId != default)
                 {
                     arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);

@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="checkAccessRequest"></param>
         public virtual Response<CheckPrincipalAccessResponse> CheckPrincipalAccess(CheckPrincipalAccessRequest checkAccessRequest)
         {
-            Response response = CheckPrincipalAccess(checkAccessRequest, default);
+            Response response = CheckPrincipalAccess(checkAccessRequest, ContentType.ApplicationJson, default);
             return Response.FromValue((CheckPrincipalAccessResponse)response, response);
         }
 
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="checkAccessRequest"></param>
         public virtual async Task<Response<CheckPrincipalAccessResponse>> CheckPrincipalAccessAsync(CheckPrincipalAccessRequest checkAccessRequest)
         {
-            Response response = await CheckPrincipalAccessAsync(checkAccessRequest, default).ConfigureAwait(false);
+            Response response = await CheckPrincipalAccessAsync(checkAccessRequest, ContentType.ApplicationJson, default).ConfigureAwait(false);
             return Response.FromValue((CheckPrincipalAccessResponse)response, response);
         }
     }

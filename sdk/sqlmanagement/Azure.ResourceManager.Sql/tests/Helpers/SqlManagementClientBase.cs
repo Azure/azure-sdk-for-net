@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Sql.Tests
                 AdministratorLogin = $"admin-{managedInstanceName}",
                 AdministratorLoginPassword = CreateGeneralPassword(),
                 SubnetId = subnetId,
-                PublicDataEndpointEnabled = false,
+                IsPublicDataEndpointEnabled = false,
                 MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default"),
                 ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
                 TimezoneId = "UTC",
-                ZoneRedundant = false,
+                IsZoneRedundant = false,
             };
             var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);
             var managedInstance = managedInstanceLro.Value;
@@ -148,6 +148,25 @@ namespace Azure.ResourceManager.Sql.Tests
             };
             var privateEndpoint = await resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, data);
             return privateEndpoint.Value;
+        }
+
+        /// <summary>
+        /// create a defaut sql server.
+        /// </summary>
+        /// <param name="serverName"></param>
+        /// <param name="location"></param>
+        /// <param name="resourceGroup"></param>
+        /// <returns></returns>
+        protected async Task<SqlServerResource> CreateDefaultSqlServer(string serverName, AzureLocation location, ResourceGroupResource resourceGroup)
+        {
+            // create SqlServer
+            SqlServerData data = new SqlServerData(location)
+            {
+                AdministratorLogin = $"admin-{serverName}",
+                AdministratorLoginPassword = CreateGeneralPassword(),
+            };
+            var sqlServerResponse = await resourceGroup.GetSqlServers().CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
+            return sqlServerResponse.Value;
         }
     }
 }

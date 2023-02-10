@@ -30,60 +30,92 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary>
         /// Checks whether the container registry name is available for use. The name must contain only alphanumeric characters, be globally unique, and between 5 and 50 characters in length.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/checkNameAvailability
-        /// Operation Id: Registries_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<RegistryNameStatus>> CheckNameAvailabilityRegistryAsync(this SubscriptionResource subscriptionResource, RegistryNameCheckContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerRegistryNameAvailableResult>> CheckContainerRegistryNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityRegistryAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckContainerRegistryNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks whether the container registry name is available for use. The name must contain only alphanumeric characters, be globally unique, and between 5 and 50 characters in length.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/checkNameAvailability
-        /// Operation Id: Registries_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<RegistryNameStatus> CheckNameAvailabilityRegistry(this SubscriptionResource subscriptionResource, RegistryNameCheckContent content, CancellationToken cancellationToken = default)
+        public static Response<ContainerRegistryNameAvailableResult> CheckContainerRegistryNameAvailability(this SubscriptionResource subscriptionResource, ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityRegistry(content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckContainerRegistryNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
         /// Lists all the container registries under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/registries
-        /// Operation Id: Registries_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/registries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RegistryResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RegistryResource> GetRegistriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerRegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerRegistryResource> GetContainerRegistriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetRegistriesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetContainerRegistriesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all the container registries under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/registries
-        /// Operation Id: Registries_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/registries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RegistryResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RegistryResource> GetRegistries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerRegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerRegistryResource> GetContainerRegistries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetRegistries(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetContainerRegistries(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -95,18 +127,26 @@ namespace Azure.ResourceManager.ContainerRegistry
             );
         }
 
-        /// <summary> Gets a collection of RegistryResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ContainerRegistryResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RegistryResources and their operations over a RegistryResource. </returns>
-        public static RegistryCollection GetRegistries(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ContainerRegistryResources and their operations over a ContainerRegistryResource. </returns>
+        public static ContainerRegistryCollection GetContainerRegistries(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetRegistries();
+            return GetExtensionClient(resourceGroupResource).GetContainerRegistries();
         }
 
         /// <summary>
         /// Gets the properties of the specified container registry.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}
-        /// Operation Id: Registries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="registryName"> The name of the container registry. </param>
@@ -114,15 +154,23 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RegistryResource>> GetRegistryAsync(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerRegistryResource>> GetContainerRegistryAsync(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetRegistries().GetAsync(registryName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetContainerRegistries().GetAsync(registryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the properties of the specified container registry.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}
-        /// Operation Id: Registries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="registryName"> The name of the container registry. </param>
@@ -130,25 +178,63 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RegistryResource> GetRegistry(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
+        public static Response<ContainerRegistryResource> GetContainerRegistry(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetRegistries().Get(registryName, cancellationToken);
+            return resourceGroupResource.GetContainerRegistries().Get(registryName, cancellationToken);
         }
 
-        #region RegistryResource
+        #region ConnectedRegistryResource
         /// <summary>
-        /// Gets an object representing a <see cref="RegistryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RegistryResource.CreateResourceIdentifier" /> to create a <see cref="RegistryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConnectedRegistryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedRegistryResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedRegistryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RegistryResource" /> object. </returns>
-        public static RegistryResource GetRegistryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConnectedRegistryResource" /> object. </returns>
+        public static ConnectedRegistryResource GetConnectedRegistryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RegistryResource.ValidateResourceId(id);
-                return new RegistryResource(client, id);
+                ConnectedRegistryResource.ValidateResourceId(id);
+                return new ConnectedRegistryResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ExportPipelineResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ExportPipelineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExportPipelineResource.CreateResourceIdentifier" /> to create an <see cref="ExportPipelineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExportPipelineResource" /> object. </returns>
+        public static ExportPipelineResource GetExportPipelineResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ExportPipelineResource.ValidateResourceId(id);
+                return new ExportPipelineResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ContainerRegistryResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerRegistryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerRegistryResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerRegistryResource" /> object. </returns>
+        public static ContainerRegistryResource GetContainerRegistryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ContainerRegistryResource.ValidateResourceId(id);
+                return new ContainerRegistryResource(client, id);
             }
             );
         }
@@ -173,6 +259,44 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
         #endregion
 
+        #region ImportPipelineResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ImportPipelineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ImportPipelineResource.CreateResourceIdentifier" /> to create an <see cref="ImportPipelineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ImportPipelineResource" /> object. </returns>
+        public static ImportPipelineResource GetImportPipelineResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ImportPipelineResource.ValidateResourceId(id);
+                return new ImportPipelineResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ContainerRegistryPipelineRunResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerRegistryPipelineRunResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerRegistryPipelineRunResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryPipelineRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerRegistryPipelineRunResource" /> object. </returns>
+        public static ContainerRegistryPipelineRunResource GetContainerRegistryPipelineRunResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ContainerRegistryPipelineRunResource.ValidateResourceId(id);
+                return new ContainerRegistryPipelineRunResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region ContainerRegistryPrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="ContainerRegistryPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
@@ -192,115 +316,153 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
         #endregion
 
-        #region ReplicationResource
+        #region ContainerRegistryReplicationResource
         /// <summary>
-        /// Gets an object representing a <see cref="ReplicationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicationResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerRegistryReplicationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerRegistryReplicationResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryReplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicationResource" /> object. </returns>
-        public static ReplicationResource GetReplicationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerRegistryReplicationResource" /> object. </returns>
+        public static ContainerRegistryReplicationResource GetContainerRegistryReplicationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ReplicationResource.ValidateResourceId(id);
-                return new ReplicationResource(client, id);
+                ContainerRegistryReplicationResource.ValidateResourceId(id);
+                return new ContainerRegistryReplicationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WebhookResource
+        #region ScopeMapResource
         /// <summary>
-        /// Gets an object representing a <see cref="WebhookResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebhookResource.CreateResourceIdentifier" /> to create a <see cref="WebhookResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScopeMapResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScopeMapResource.CreateResourceIdentifier" /> to create a <see cref="ScopeMapResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebhookResource" /> object. </returns>
-        public static WebhookResource GetWebhookResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScopeMapResource" /> object. </returns>
+        public static ScopeMapResource GetScopeMapResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WebhookResource.ValidateResourceId(id);
-                return new WebhookResource(client, id);
+                ScopeMapResource.ValidateResourceId(id);
+                return new ScopeMapResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AgentPoolResource
+        #region ContainerRegistryTokenResource
         /// <summary>
-        /// Gets an object representing an <see cref="AgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AgentPoolResource.CreateResourceIdentifier" /> to create an <see cref="AgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerRegistryTokenResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerRegistryTokenResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryTokenResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AgentPoolResource" /> object. </returns>
-        public static AgentPoolResource GetAgentPoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerRegistryTokenResource" /> object. </returns>
+        public static ContainerRegistryTokenResource GetContainerRegistryTokenResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AgentPoolResource.ValidateResourceId(id);
-                return new AgentPoolResource(client, id);
+                ContainerRegistryTokenResource.ValidateResourceId(id);
+                return new ContainerRegistryTokenResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RunResource
+        #region ContainerRegistryWebhookResource
         /// <summary>
-        /// Gets an object representing a <see cref="RunResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RunResource.CreateResourceIdentifier" /> to create a <see cref="RunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerRegistryWebhookResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerRegistryWebhookResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryWebhookResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RunResource" /> object. </returns>
-        public static RunResource GetRunResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerRegistryWebhookResource" /> object. </returns>
+        public static ContainerRegistryWebhookResource GetContainerRegistryWebhookResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RunResource.ValidateResourceId(id);
-                return new RunResource(client, id);
+                ContainerRegistryWebhookResource.ValidateResourceId(id);
+                return new ContainerRegistryWebhookResource(client, id);
             }
             );
         }
         #endregion
 
-        #region TaskRunResource
+        #region ContainerRegistryAgentPoolResource
         /// <summary>
-        /// Gets an object representing a <see cref="TaskRunResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TaskRunResource.CreateResourceIdentifier" /> to create a <see cref="TaskRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerRegistryAgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerRegistryAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryAgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TaskRunResource" /> object. </returns>
-        public static TaskRunResource GetTaskRunResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerRegistryAgentPoolResource" /> object. </returns>
+        public static ContainerRegistryAgentPoolResource GetContainerRegistryAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TaskRunResource.ValidateResourceId(id);
-                return new TaskRunResource(client, id);
+                ContainerRegistryAgentPoolResource.ValidateResourceId(id);
+                return new ContainerRegistryAgentPoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region TaskResource
+        #region ContainerRegistryRunResource
         /// <summary>
-        /// Gets an object representing a <see cref="TaskResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TaskResource.CreateResourceIdentifier" /> to create a <see cref="TaskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerRegistryRunResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerRegistryRunResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryRunResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TaskResource" /> object. </returns>
-        public static TaskResource GetTaskResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerRegistryRunResource" /> object. </returns>
+        public static ContainerRegistryRunResource GetContainerRegistryRunResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TaskResource.ValidateResourceId(id);
-                return new TaskResource(client, id);
+                ContainerRegistryRunResource.ValidateResourceId(id);
+                return new ContainerRegistryRunResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ContainerRegistryTaskRunResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerRegistryTaskRunResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerRegistryTaskRunResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryTaskRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerRegistryTaskRunResource" /> object. </returns>
+        public static ContainerRegistryTaskRunResource GetContainerRegistryTaskRunResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ContainerRegistryTaskRunResource.ValidateResourceId(id);
+                return new ContainerRegistryTaskRunResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ContainerRegistryTaskResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerRegistryTaskResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerRegistryTaskResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryTaskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerRegistryTaskResource" /> object. </returns>
+        public static ContainerRegistryTaskResource GetContainerRegistryTaskResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ContainerRegistryTaskResource.ValidateResourceId(id);
+                return new ContainerRegistryTaskResource(client, id);
             }
             );
         }

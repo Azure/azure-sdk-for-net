@@ -4,7 +4,8 @@ parameters:
   ArtifactName: 'not-specified'
   # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
   DevOpsFeedId: '29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f'
-
+  TargetDocRepoOwner: 'not-specified'
+  TargetDocRepoName: 'not-specified'
 stages:
   - stage: Signing
     dependsOn: ${{parameters.DependsOn}}
@@ -12,8 +13,8 @@ stages:
       - deployment: SignPackage
         environment: esrp
         pool:
-          name: azsdk-pool-mms-win-2019-general
-          vmImage: MMS2019
+          name: azsdk-pool-mms-win-2022-general
+          vmImage: MMS2022
 
         strategy:
           runOnce:
@@ -51,8 +52,8 @@ stages:
                 environment: github
 
                 pool:
-                  name: azsdk-pool-mms-win-2019-general
-                  vmImage: MMS2019
+                  name: azsdk-pool-mms-win-2022-general
+                  vmImage: MMS2022
 
                 strategy:
                   runOnce:
@@ -129,8 +130,8 @@ stages:
                 dependsOn: PublishPackage
 
                 pool:
-                  name: azsdk-pool-mms-win-2019-general
-                  vmImage: MMS2019
+                  name: azsdk-pool-mms-win-2022-general
+                  vmImage: MMS2022
 
                 strategy:
                   runOnce:
@@ -165,7 +166,6 @@ stages:
                       steps:
                         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
                           parameters:
-                            SkipDefaultCheckout: true
                             Paths:
                               - sdk/**/*.md
                               - .github/CODEOWNERS
@@ -179,8 +179,8 @@ stages:
                             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
                             Language: 'dotnet'
                             SparseCheckoutPaths:
-                              - api/overview/azure/
-                              - metadata/
+                              - /api/overview/azure/
+                              - /metadata/
 
             - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
               - deployment: PublishDocs
@@ -190,8 +190,8 @@ stages:
                 dependsOn: PublishPackage
 
                 pool:
-                  name: azsdk-pool-mms-win-2019-general
-                  vmImage: MMS2019
+                  name: azsdk-pool-mms-win-2022-general
+                  vmImage: MMS2022
 
                 strategy:
                   runOnce:
@@ -216,8 +216,8 @@ stages:
                 dependsOn: PublishPackage
 
                 pool:
-                  name: azsdk-pool-mms-win-2019-general
-                  vmImage: MMS2019
+                  name: azsdk-pool-mms-win-2022-general
+                  vmImage: MMS2022
 
                 strategy:
                   runOnce:
@@ -254,8 +254,8 @@ stages:
       condition: or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal')))
       displayName: Publish package to daily feed
       pool:
-        name: azsdk-pool-mms-win-2019-general
-        vmImage: MMS2019
+        name: azsdk-pool-mms-win-2022-general
+        vmImage: MMS2022
       steps:
       - checkout: none
       - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
@@ -289,7 +289,6 @@ stages:
       steps:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
-            SkipDefaultCheckout: true
             Paths:
               - sdk/**/*.md
               - .github/CODEOWNERS
@@ -308,5 +307,5 @@ stages:
             Language: 'dotnet'
             DailyDocsBuild: true
             SparseCheckoutPaths:
-              - api/overview/azure/
-              - metadata/
+              - /api/overview/azure/
+              - /metadata/

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (EarlyTermination != null)
                 {
-                    writer.WritePropertyName("earlyTermination");
+                    writer.WritePropertyName("earlyTermination"u8);
                     writer.WriteObjectValue(EarlyTermination);
                 }
                 else
@@ -27,42 +27,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("earlyTermination");
                 }
             }
-            writer.WritePropertyName("limits");
-            writer.WriteObjectValue(Limits);
-            writer.WritePropertyName("samplingAlgorithm");
+            writer.WritePropertyName("samplingAlgorithm"u8);
             writer.WriteStringValue(SamplingAlgorithm.ToString());
             writer.WriteEndObject();
         }
 
         internal static ImageSweepSettings DeserializeImageSweepSettings(JsonElement element)
         {
-            Optional<EarlyTerminationPolicy> earlyTermination = default;
-            ImageSweepLimitSettings limits = default;
+            Optional<MachineLearningEarlyTerminationPolicy> earlyTermination = default;
             SamplingAlgorithmType samplingAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("earlyTermination"))
+                if (property.NameEquals("earlyTermination"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         earlyTermination = null;
                         continue;
                     }
-                    earlyTermination = EarlyTerminationPolicy.DeserializeEarlyTerminationPolicy(property.Value);
+                    earlyTermination = MachineLearningEarlyTerminationPolicy.DeserializeMachineLearningEarlyTerminationPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("limits"))
-                {
-                    limits = ImageSweepLimitSettings.DeserializeImageSweepLimitSettings(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("samplingAlgorithm"))
+                if (property.NameEquals("samplingAlgorithm"u8))
                 {
                     samplingAlgorithm = new SamplingAlgorithmType(property.Value.GetString());
                     continue;
                 }
             }
-            return new ImageSweepSettings(earlyTermination.Value, limits, samplingAlgorithm);
+            return new ImageSweepSettings(earlyTermination.Value, samplingAlgorithm);
         }
     }
 }

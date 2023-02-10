@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             await EdgeOrderManagementTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
                 EdgeOrderManagementTestUtilities.DefaultResourceLocation, resourceGroupName);
             var addressName = Recording.GenerateAssetName("SdkAddress");
-            ContactDetails contactDetails = GetDefaultContactDetails();
-            ShippingAddress shippingAddress = GetDefaultShippingAddress();
-            AddressResourceCollection addressResourceCollection = await GetAddressResourceCollectionAsync(resourceGroupName);
+            EdgeOrderAddressContactDetails contactDetails = GetDefaultContactDetails();
+            EdgeOrderShippingAddress shippingAddress = GetDefaultShippingAddress();
+            EdgeOrderAddressCollection addressResourceCollection = await GetAddressResourceCollectionAsync(resourceGroupName);
 
-            AddressResourceData addressResourceData = new(EdgeOrderManagementTestUtilities.DefaultResourceLocation, contactDetails)
+            EdgeOrderAddressData addressResourceData = new(EdgeOrderManagementTestUtilities.DefaultResourceLocation, contactDetails)
             {
                 ShippingAddress = shippingAddress
             };
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             Assert.IsTrue(createAddressOperation.HasValue);
 
             // Get
-            Response<AddressResource> getAddressResponse = await addressResourceCollection.GetAsync(addressName);
-            AddressResource addressResource = getAddressResponse.Value;
+            Response<EdgeOrderAddressResource> getAddressResponse = await addressResourceCollection.GetAsync(addressName);
+            EdgeOrderAddressResource addressResource = getAddressResponse.Value;
             Assert.IsNotNull(addressResource);
 
             // Update
             contactDetails.ContactName = "Updated contact name";
-            AddressResourcePatch addressUpdateParameter = new()
+            EdgeOrderAddressPatch addressUpdateParameter = new()
             {
                 ShippingAddress = shippingAddress,
                 ContactDetails = contactDetails

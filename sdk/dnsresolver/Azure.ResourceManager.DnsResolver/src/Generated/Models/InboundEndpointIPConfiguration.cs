@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subnet"/> is null. </exception>
         public InboundEndpointIPConfiguration(WritableSubResource subnet)
         {
-            if (subnet == null)
-            {
-                throw new ArgumentNullException(nameof(subnet));
-            }
+            Argument.AssertNotNull(subnet, nameof(subnet));
 
             Subnet = subnet;
         }
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="subnet"> The reference to the subnet bound to the IP configuration. </param>
         /// <param name="privateIPAddress"> Private IP address of the IP configuration. </param>
         /// <param name="privateIPAllocationMethod"> Private IP address allocation method. </param>
-        internal InboundEndpointIPConfiguration(WritableSubResource subnet, string privateIPAddress, InboundEndpointIPAllocationMethod? privateIPAllocationMethod)
+        internal InboundEndpointIPConfiguration(WritableSubResource subnet, IPAddress privateIPAddress, InboundEndpointIPAllocationMethod? privateIPAllocationMethod)
         {
             Subnet = subnet;
             PrivateIPAddress = privateIPAddress;
@@ -53,7 +51,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Private IP address of the IP configuration. </summary>
-        public string PrivateIPAddress { get; set; }
+        public IPAddress PrivateIPAddress { get; set; }
         /// <summary> Private IP address allocation method. </summary>
         public InboundEndpointIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
     }

@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this container event. </param>
         /// <param name="eventTimestamp"> The when this container event happened. </param>
-        /// <param name="ownerId"> The name of this SQL container. </param>
-        /// <param name="ownerResourceId"> The resource ID of this SQL container. </param>
+        /// <param name="containerName"> The name of this SQL container. </param>
+        /// <param name="containerId"> The resource ID of this SQL container. </param>
         /// <param name="container"> Cosmos DB SQL container resource object. </param>
-        internal ExtendedRestorableSqlContainerResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string ownerId, string ownerResourceId, RestorableSqlContainerPropertiesResourceContainer container)
+        internal ExtendedRestorableSqlContainerResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string containerName, string containerId, RestorableSqlContainerPropertiesResourceContainer container)
         {
             Rid = rid;
             OperationType = operationType;
             EventTimestamp = eventTimestamp;
-            OwnerId = ownerId;
-            OwnerResourceId = ownerResourceId;
+            ContainerName = containerName;
+            ContainerId = containerId;
             Container = container;
         }
 
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The when this container event happened. </summary>
         public string EventTimestamp { get; }
         /// <summary> The name of this SQL container. </summary>
-        public string OwnerId { get; }
+        public string ContainerName { get; }
         /// <summary> The resource ID of this SQL container. </summary>
-        public string OwnerResourceId { get; }
+        public string ContainerId { get; }
         /// <summary> Cosmos DB SQL container resource object. </summary>
         public RestorableSqlContainerPropertiesResourceContainer Container { get; }
     }

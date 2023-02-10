@@ -34,18 +34,18 @@ namespace Azure.ResourceManager.CosmosDB
         MongoDBDatabaseThroughputSettingResource IOperationSource<MongoDBDatabaseThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
+            var data = ScrubId(ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement));
             return new MongoDBDatabaseThroughputSettingResource(_client, data);
         }
 
         async ValueTask<MongoDBDatabaseThroughputSettingResource> IOperationSource<MongoDBDatabaseThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
+            var data = ScrubId(ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement));
             return new MongoDBDatabaseThroughputSettingResource(_client, data);
         }
 
-        private ThroughputSettingsData ScrubId(ThroughputSettingsData data)
+        private ThroughputSettingData ScrubId(ThroughputSettingData data)
         {
             if (data.Id.ResourceType == MongoDBDatabaseThroughputSettingResource.ResourceType)
                 return data;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB
                 GetName("accountName", data.Id),
                 GetName("databaseName", data.Id));
 
-            return new ThroughputSettingsData(
+            return new ThroughputSettingData(
                 newId,
                 newId.Name,
                 newId.ResourceType,

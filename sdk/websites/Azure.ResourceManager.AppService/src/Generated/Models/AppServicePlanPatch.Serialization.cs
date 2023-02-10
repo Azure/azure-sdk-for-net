@@ -19,85 +19,85 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(WorkerTierName))
             {
-                writer.WritePropertyName("workerTierName");
+                writer.WritePropertyName("workerTierName"u8);
                 writer.WriteStringValue(WorkerTierName);
             }
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
-                writer.WritePropertyName("hostingEnvironmentProfile");
+                writer.WritePropertyName("hostingEnvironmentProfile"u8);
                 writer.WriteObjectValue(HostingEnvironmentProfile);
             }
-            if (Optional.IsDefined(PerSiteScaling))
+            if (Optional.IsDefined(IsPerSiteScaling))
             {
-                writer.WritePropertyName("perSiteScaling");
-                writer.WriteBooleanValue(PerSiteScaling.Value);
+                writer.WritePropertyName("perSiteScaling"u8);
+                writer.WriteBooleanValue(IsPerSiteScaling.Value);
             }
-            if (Optional.IsDefined(ElasticScaleEnabled))
+            if (Optional.IsDefined(IsElasticScaleEnabled))
             {
-                writer.WritePropertyName("elasticScaleEnabled");
-                writer.WriteBooleanValue(ElasticScaleEnabled.Value);
+                writer.WritePropertyName("elasticScaleEnabled"u8);
+                writer.WriteBooleanValue(IsElasticScaleEnabled.Value);
             }
             if (Optional.IsDefined(MaximumElasticWorkerCount))
             {
-                writer.WritePropertyName("maximumElasticWorkerCount");
+                writer.WritePropertyName("maximumElasticWorkerCount"u8);
                 writer.WriteNumberValue(MaximumElasticWorkerCount.Value);
             }
             if (Optional.IsDefined(IsSpot))
             {
-                writer.WritePropertyName("isSpot");
+                writer.WritePropertyName("isSpot"u8);
                 writer.WriteBooleanValue(IsSpot.Value);
             }
             if (Optional.IsDefined(SpotExpirationOn))
             {
-                writer.WritePropertyName("spotExpirationTime");
+                writer.WritePropertyName("spotExpirationTime"u8);
                 writer.WriteStringValue(SpotExpirationOn.Value, "O");
             }
             if (Optional.IsDefined(FreeOfferExpirationOn))
             {
-                writer.WritePropertyName("freeOfferExpirationTime");
+                writer.WritePropertyName("freeOfferExpirationTime"u8);
                 writer.WriteStringValue(FreeOfferExpirationOn.Value, "O");
             }
-            if (Optional.IsDefined(Reserved))
+            if (Optional.IsDefined(IsReserved))
             {
-                writer.WritePropertyName("reserved");
-                writer.WriteBooleanValue(Reserved.Value);
+                writer.WritePropertyName("reserved"u8);
+                writer.WriteBooleanValue(IsReserved.Value);
             }
             if (Optional.IsDefined(IsXenon))
             {
-                writer.WritePropertyName("isXenon");
+                writer.WritePropertyName("isXenon"u8);
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (Optional.IsDefined(HyperV))
+            if (Optional.IsDefined(IsHyperV))
             {
-                writer.WritePropertyName("hyperV");
-                writer.WriteBooleanValue(HyperV.Value);
+                writer.WritePropertyName("hyperV"u8);
+                writer.WriteBooleanValue(IsHyperV.Value);
             }
             if (Optional.IsDefined(TargetWorkerCount))
             {
-                writer.WritePropertyName("targetWorkerCount");
+                writer.WritePropertyName("targetWorkerCount"u8);
                 writer.WriteNumberValue(TargetWorkerCount.Value);
             }
             if (Optional.IsDefined(TargetWorkerSizeId))
             {
-                writer.WritePropertyName("targetWorkerSizeId");
+                writer.WritePropertyName("targetWorkerSizeId"u8);
                 writer.WriteNumberValue(TargetWorkerSizeId.Value);
             }
             if (Optional.IsDefined(KubeEnvironmentProfile))
             {
-                writer.WritePropertyName("kubeEnvironmentProfile");
+                writer.WritePropertyName("kubeEnvironmentProfile"u8);
                 writer.WriteObjectValue(KubeEnvironmentProfile);
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
-                writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WritePropertyName("zoneRedundant"u8);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> workerTierName = default;
-            Optional<StatusOption> status = default;
+            Optional<AppServicePlanStatus> status = default;
             Optional<string> subscription = default;
             Optional<HostingEnvironmentProfile> hostingEnvironmentProfile = default;
             Optional<int> maximumNumberOfWorkers = default;
@@ -134,37 +134,37 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> zoneRedundant = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,27 +173,27 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("workerTierName"))
+                        if (property0.NameEquals("workerTierName"u8))
                         {
                             workerTierName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = property0.Value.GetString().ToStatusOption();
+                            status = property0.Value.GetString().ToAppServicePlanStatus();
                             continue;
                         }
-                        if (property0.NameEquals("subscription"))
+                        if (property0.NameEquals("subscription"u8))
                         {
                             subscription = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hostingEnvironmentProfile"))
+                        if (property0.NameEquals("hostingEnvironmentProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService.Models
                             hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("maximumNumberOfWorkers"))
+                        if (property0.NameEquals("maximumNumberOfWorkers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.AppService.Models
                             maximumNumberOfWorkers = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("geoRegion"))
+                        if (property0.NameEquals("geoRegion"u8))
                         {
                             geoRegion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("perSiteScaling"))
+                        if (property0.NameEquals("perSiteScaling"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService.Models
                             perSiteScaling = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("elasticScaleEnabled"))
+                        if (property0.NameEquals("elasticScaleEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService.Models
                             elasticScaleEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("maximumElasticWorkerCount"))
+                        if (property0.NameEquals("maximumElasticWorkerCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService.Models
                             maximumElasticWorkerCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("numberOfSites"))
+                        if (property0.NameEquals("numberOfSites"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.AppService.Models
                             numberOfSites = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("isSpot"))
+                        if (property0.NameEquals("isSpot"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.AppService.Models
                             isSpot = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("spotExpirationTime"))
+                        if (property0.NameEquals("spotExpirationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppService.Models
                             spotExpirationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("freeOfferExpirationTime"))
+                        if (property0.NameEquals("freeOfferExpirationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -288,12 +288,12 @@ namespace Azure.ResourceManager.AppService.Models
                             freeOfferExpirationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("resourceGroup"))
+                        if (property0.NameEquals("resourceGroup"u8))
                         {
                             resourceGroup = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("reserved"))
+                        if (property0.NameEquals("reserved"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.AppService.Models
                             reserved = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isXenon"))
+                        if (property0.NameEquals("isXenon"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.AppService.Models
                             isXenon = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("hyperV"))
+                        if (property0.NameEquals("hyperV"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.AppService.Models
                             hyperV = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("targetWorkerCount"))
+                        if (property0.NameEquals("targetWorkerCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.AppService.Models
                             targetWorkerCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("targetWorkerSizeId"))
+                        if (property0.NameEquals("targetWorkerSizeId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.AppService.Models
                             targetWorkerSizeId = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.AppService.Models
                             provisioningState = property0.Value.GetString().ToProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("kubeEnvironmentProfile"))
+                        if (property0.NameEquals("kubeEnvironmentProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppService.Models
                             kubeEnvironmentProfile = KubeEnvironmentProfile.DeserializeKubeEnvironmentProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("zoneRedundant"))
+                        if (property0.NameEquals("zoneRedundant"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

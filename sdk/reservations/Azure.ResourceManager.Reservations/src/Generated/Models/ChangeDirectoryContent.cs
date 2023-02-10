@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The ChangeDirectoryContent. </summary>
@@ -16,6 +18,6 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Tenant id GUID that reservation order is to be transferred to. </summary>
-        public string DestinationTenantId { get; set; }
+        public Guid? DestinationTenantId { get; set; }
     }
 }

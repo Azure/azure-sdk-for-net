@@ -21,10 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
         public CassandraKeyspaceCreateOrUpdateContent(AzureLocation location, CassandraKeyspaceResourceInfo resource) : base(location)
         {
-            if (resource == null)
-            {
-                throw new ArgumentNullException(nameof(resource));
-            }
+            Argument.AssertNotNull(resource, nameof(resource));
 
             Resource = resource;
         }
@@ -47,9 +44,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The standard JSON format of a Cassandra keyspace. </summary>
         internal CassandraKeyspaceResourceInfo Resource { get; set; }
         /// <summary> Name of the Cosmos DB Cassandra keyspace. </summary>
-        public string ResourceId
+        public string ResourceKeyspaceName
         {
-            get => Resource is null ? default : Resource.Id;
+            get => Resource is null ? default : Resource.KeyspaceName;
             set => Resource = new CassandraKeyspaceResourceInfo(value);
         }
 

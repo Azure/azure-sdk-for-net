@@ -15,6 +15,10 @@ model-namespace: true
 public-clients: false
 head-as-boolean: false
 
+patch-initializer-customization:
+  ArmDeploymentContent:
+    Properties: 'new ArmDeploymentProperties(current.Properties.Mode.HasValue ? current.Properties.Mode.Value : ArmDeploymentMode.Incremental)'
+
 request-path-to-parent:
   # setting these to the same parent will automatically merge these operations
   /providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}

@@ -37,10 +37,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _host = host ?? throw new ArgumentNullException(nameof(host));
         }
 
-        /// <summary> This operation sends a sequence of telemetry events that will be monitored by Azure Monitor. </summary>
+        /// <summary> Track telemetry events. </summary>
         /// <param name="body"> The list of telemetry events to track. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> This operation sends a sequence of telemetry events that will be monitored by Azure Monitor. </remarks>
         public async Task<Response<TrackResponse>> TrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -65,10 +66,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
-        /// <summary> This operation sends a sequence of telemetry events that will be monitored by Azure Monitor. </summary>
+        /// <summary> Track telemetry events. </summary>
         /// <param name="body"> The list of telemetry events to track. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> This operation sends a sequence of telemetry events that will be monitored by Azure Monitor. </remarks>
         public Response<TrackResponse> Track(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
         {
             if (body == null)

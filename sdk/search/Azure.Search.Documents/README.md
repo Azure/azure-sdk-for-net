@@ -203,6 +203,10 @@ much more.
 * [Retrieving a specific document from your index](#retrieving-a-specific-document-from-your-index)
 * [Async APIs](#async-apis)
 
+### Advanced authentication
+ 
+- [Create a client that can authenticate in a national cloud](#authenticate-in-a-national-cloud)
+
 ### Querying
 
 Let's start by importing our namespaces.
@@ -342,8 +346,8 @@ SearchIndex index = new SearchIndex("hotels")
     Fields = new FieldBuilder().Build(typeof(Hotel)),
     Suggesters =
     {
-        // Suggest query terms from the hotelName field.
-        new SearchSuggester("sg", "hotelName")
+        // Suggest query terms from the HotelName field.
+        new SearchSuggester("sg", "HotelName")
     }
 };
 
@@ -360,26 +364,26 @@ SearchIndex index = new SearchIndex("hotels")
 {
     Fields =
     {
-        new SimpleField("hotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
-        new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
-        new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
-        new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
-        new ComplexField("address")
+        new SimpleField("HotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
+        new SearchableField("HotelName") { IsFilterable = true, IsSortable = true },
+        new SearchableField("Description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
+        new SearchableField("Tags", collection: true) { IsFilterable = true, IsFacetable = true },
+        new ComplexField("Address")
         {
             Fields =
             {
-                new SearchableField("streetAddress"),
-                new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                new SearchableField("stateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                new SearchableField("country") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                new SearchableField("postalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true }
+                new SearchableField("StreetAddress"),
+                new SearchableField("City") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                new SearchableField("StateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                new SearchableField("Country") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                new SearchableField("PostalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true }
             }
         }
     },
     Suggesters =
     {
         // Suggest query terms from the hotelName field.
-        new SearchSuggester("sg", "hotelName")
+        new SearchSuggester("sg", "HotelName")
     }
 };
 
@@ -425,12 +429,35 @@ support for async APIs as well.  You'll generally just add an `Async` suffix to
 the name of the method and `await` it.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_StaticQueryAsync
-SearchResults<Hotel> response = await client.SearchAsync<Hotel>("luxury");
-await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+SearchResults<Hotel> searchResponse = await client.SearchAsync<Hotel>("luxury");
+await foreach (SearchResult<Hotel> result in searchResponse.GetResultsAsync())
 {
     Hotel doc = result.Document;
     Console.WriteLine($"{doc.Id}: {doc.Name}");
 }
+```
+
+### Authenticate in a National Cloud
+
+To authenticate in a [National Cloud](https://docs.microsoft.com/azure/active-directory/develop/authentication-national-cloud), you will need to make the following additions to your client configuration:
+
+- Set the `AuthorityHost` in the credential options or via the `AZURE_AUTHORITY_HOST` environment variable
+- Set the `Audience` in `SearchClientOptions`
+
+```C#
+// Create a SearchClient that will authenticate through AAD in the China national cloud
+string indexName = "nycjobs";
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+SearchClient client = new SearchClient(endpoint, indexName,
+    new DefaultAzureCredential(
+        new DefaultAzureCredentialOptions()
+        {
+            AuthorityHost = AzureAuthorityHosts.AzureChina
+        }),
+    new SearchClientOptions()
+    {
+        Audience = SearchAudience.AzureChina
+    });
 ```
 
 ## Troubleshooting

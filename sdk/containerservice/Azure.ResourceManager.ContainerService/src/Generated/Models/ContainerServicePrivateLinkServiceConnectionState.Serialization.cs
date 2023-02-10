@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -30,21 +30,21 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServicePrivateLinkServiceConnectionState DeserializeContainerServicePrivateLinkServiceConnectionState(JsonElement element)
         {
-            Optional<ConnectionStatus> status = default;
+            Optional<ContainerServicePrivateLinkServiceConnectionStatus> status = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new ConnectionStatus(property.Value.GetString());
+                    status = new ContainerServicePrivateLinkServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

@@ -52,30 +52,36 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
 
             // Parse segment manifest
-            JsonDocument jsonManifest;
-
-            if (async)
+            JsonDocument jsonManifest = null;
+            try
             {
-                jsonManifest = await JsonDocument.ParseAsync(blobDownloadStreamingResult.Content).ConfigureAwait(false);
-            }
-            else
-            {
-                jsonManifest = JsonDocument.Parse(blobDownloadStreamingResult.Content);
-            }
-
-            foreach (JsonElement shardJsonElement in jsonManifest.RootElement.GetProperty("chunkFilePaths").EnumerateArray())
-            {
-                string shardPath = shardJsonElement.ToString().Substring("$blobchangefeed/".Length);
-                ShardCursor shardCursor = cursor?.ShardCursors?.Find(x => x.CurrentChunkPath.StartsWith(shardPath, StringComparison.InvariantCulture));
-                Shard shard = await _shardFactory.BuildShard(
-                    async,
-                    shardPath,
-                    shardCursor)
-                    .ConfigureAwait(false);
-                if (shard.HasNext())
+                if (async)
                 {
-                    shards.Add(shard);
+                    jsonManifest = await JsonDocument.ParseAsync(blobDownloadStreamingResult.Content).ConfigureAwait(false);
                 }
+                else
+                {
+                    jsonManifest = JsonDocument.Parse(blobDownloadStreamingResult.Content);
+                }
+
+                foreach (JsonElement shardJsonElement in jsonManifest.RootElement.GetProperty("chunkFilePaths").EnumerateArray())
+                {
+                    string shardPath = shardJsonElement.ToString().Substring("$blobchangefeed/".Length);
+                    ShardCursor shardCursor = cursor?.ShardCursors?.Find(x => x.CurrentChunkPath.StartsWith(shardPath, StringComparison.InvariantCulture));
+                    Shard shard = await _shardFactory.BuildShard(
+                        async,
+                        shardPath,
+                        shardCursor)
+                        .ConfigureAwait(false);
+                    if (shard.HasNext())
+                    {
+                        shards.Add(shard);
+                    }
+                }
+            }
+            finally
+            {
+                jsonManifest?.Dispose();
             }
 
             int shardIndex = 0;

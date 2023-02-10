@@ -12,36 +12,30 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> Request body to create a composed model from component models. </summary>
+    /// <summary> Request body to create a composed document model from component document models. </summary>
     internal partial class ComposeDocumentModelRequest
     {
         /// <summary> Initializes a new instance of ComposeDocumentModelRequest. </summary>
-        /// <param name="modelId"> Unique model name. </param>
-        /// <param name="componentModels"> List of component models to compose. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="componentModels"> List of component document models to compose. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="componentModels"/> is null. </exception>
-        public ComposeDocumentModelRequest(string modelId, IEnumerable<ComponentModelInfo> componentModels)
+        public ComposeDocumentModelRequest(string modelId, IEnumerable<ComponentDocumentModelDetails> componentModels)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (componentModels == null)
-            {
-                throw new ArgumentNullException(nameof(componentModels));
-            }
+            Argument.AssertNotNull(modelId, nameof(modelId));
+            Argument.AssertNotNull(componentModels, nameof(componentModels));
 
             ModelId = modelId;
             ComponentModels = componentModels.ToList();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Unique model name. </summary>
+        /// <summary> Unique document model name. </summary>
         public string ModelId { get; }
-        /// <summary> Model description. </summary>
+        /// <summary> Document model description. </summary>
         public string Description { get; set; }
-        /// <summary> List of component models to compose. </summary>
-        public IList<ComponentModelInfo> ComponentModels { get; }
-        /// <summary> List of key-value tag attributes associated with the model. </summary>
+        /// <summary> List of component document models to compose. </summary>
+        public IList<ComponentDocumentModelDetails> ComponentModels { get; }
+        /// <summary> List of key-value tag attributes associated with the document model. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

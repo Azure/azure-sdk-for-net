@@ -31,11 +31,18 @@ namespace Azure.ResourceManager.CognitiveServices
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AccountResources and their operations over a AccountResource. </returns>
-        public virtual AccountCollection GetAccounts()
+        /// <summary> Gets a collection of CognitiveServicesAccountResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of CognitiveServicesAccountResources and their operations over a CognitiveServicesAccountResource. </returns>
+        public virtual CognitiveServicesAccountCollection GetCognitiveServicesAccounts()
         {
-            return GetCachedClient(Client => new AccountCollection(Client, Id));
+            return GetCachedClient(Client => new CognitiveServicesAccountCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of CognitiveServicesCommitmentPlanResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of CognitiveServicesCommitmentPlanResources and their operations over a CognitiveServicesCommitmentPlanResource. </returns>
+        public virtual CognitiveServicesCommitmentPlanCollection GetCognitiveServicesCommitmentPlans()
+        {
+            return GetCachedClient(Client => new CognitiveServicesCommitmentPlanCollection(Client, Id));
         }
     }
 }

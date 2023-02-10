@@ -1,6 +1,6 @@
 # Extract the layout of a document
 
-This sample demonstrates how to extract text, paragraphs, styles, table structures, and selection marks, along with their bounding region coordinates from documents. If you want to analyze entities and key-value pairs in addition to this data, please see the [Analyze a general document][document_sample] sample.
+This sample demonstrates how to extract text, paragraphs, styles, table structures, and selection marks, along with their bounding region coordinates from documents. If you want to analyze key-value pairs in addition to this data, please see the [Analyze with the prebuilt general document model][document_sample] sample.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -19,15 +19,12 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 
 ## Extract the layout of a document from a URI
 
-To extract the layout from a given file at a URI, use the `StartAnalyzeDocumentFromUri` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To extract the layout from a given file at a URI, use the `AnalyzeDocumentFromUri` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-layout", fileUri);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -42,7 +39,7 @@ foreach (DocumentPage page in result.Pages)
 
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < line.BoundingPolygon.Count; j++)
         {
             Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
         }
@@ -55,7 +52,7 @@ foreach (DocumentPage page in result.Pages)
         Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < selectionMark.BoundingPolygon.Count; j++)
         {
             Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
         }
@@ -87,7 +84,7 @@ foreach (DocumentStyle style in result.Styles)
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
         }
     }
 }
@@ -108,16 +105,13 @@ for (int i = 0; i < result.Tables.Count; i++)
 
 ## Extract the layout of a document from a file stream
 
-To extract the layout from a given file at a file stream, use the `StartAnalyzeDocument` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To extract the layout from a given file at a file stream, use the `AnalyzeDocument` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerExtractLayoutFromFileAsync
 string filePath = "<filePath>";
 using var stream = new FileStream(filePath, FileMode.Open);
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -132,7 +126,7 @@ foreach (DocumentPage page in result.Pages)
 
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < line.BoundingPolygon.Count; j++)
         {
             Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
         }
@@ -145,7 +139,7 @@ foreach (DocumentPage page in result.Pages)
         Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < selectionMark.BoundingPolygon.Count; j++)
         {
             Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
         }
@@ -177,7 +171,7 @@ foreach (DocumentStyle style in result.Styles)
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
         }
     }
 }
@@ -195,11 +189,6 @@ for (int i = 0; i < result.Tables.Count; i++)
     }
 }
 ```
-
-To see the full example source files, see:
-
-* [Extract layout from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_ExtractLayoutFromUriAsync.cs)
-* [Extract layout from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_ExtractLayoutFromFileAsync.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [document_sample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_AnalyzePrebuiltDocument.md

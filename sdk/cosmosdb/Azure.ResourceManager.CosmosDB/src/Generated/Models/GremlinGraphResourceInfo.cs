@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,41 +15,40 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class GremlinGraphResourceInfo
     {
         /// <summary> Initializes a new instance of GremlinGraphResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB Gremlin graph. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public GremlinGraphResourceInfo(string id)
+        /// <param name="graphName"> Name of the Cosmos DB Gremlin graph. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
+        public GremlinGraphResourceInfo(string graphName)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(graphName, nameof(graphName));
 
-            Id = id;
+            GraphName = graphName;
         }
 
         /// <summary> Initializes a new instance of GremlinGraphResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB Gremlin graph. </param>
+        /// <param name="graphName"> Name of the Cosmos DB Gremlin graph. </param>
         /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the graph. </param>
         /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>
         /// <param name="defaultTtl"> Default time to live. </param>
         /// <param name="uniqueKeyPolicy"> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </param>
         /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the graph. </param>
-        internal GremlinGraphResourceInfo(string id, CosmosDBIndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy)
+        /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
+        internal GremlinGraphResourceInfo(string graphName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl)
         {
-            Id = id;
+            GraphName = graphName;
             IndexingPolicy = indexingPolicy;
             PartitionKey = partitionKey;
             DefaultTtl = defaultTtl;
             UniqueKeyPolicy = uniqueKeyPolicy;
             ConflictResolutionPolicy = conflictResolutionPolicy;
+            AnalyticalStorageTtl = analyticalStorageTtl;
         }
 
         /// <summary> Name of the Cosmos DB Gremlin graph. </summary>
-        public string Id { get; set; }
+        public string GraphName { get; set; }
         /// <summary> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the graph. </summary>
         public CosmosDBIndexingPolicy IndexingPolicy { get; set; }
         /// <summary> The configuration of the partition key to be used for partitioning data into multiple partitions. </summary>
-        public ContainerPartitionKey PartitionKey { get; set; }
+        public CosmosDBContainerPartitionKey PartitionKey { get; set; }
         /// <summary> Default time to live. </summary>
         public int? DefaultTtl { get; set; }
         /// <summary> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </summary>
@@ -66,5 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The conflict resolution policy for the graph. </summary>
         public ConflictResolutionPolicy ConflictResolutionPolicy { get; set; }
+        /// <summary> Analytical TTL. </summary>
+        public long? AnalyticalStorageTtl { get; set; }
     }
 }

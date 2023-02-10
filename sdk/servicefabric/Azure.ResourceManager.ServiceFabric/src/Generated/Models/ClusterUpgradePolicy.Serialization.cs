@@ -18,26 +18,26 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ForceRestart))
             {
-                writer.WritePropertyName("forceRestart");
+                writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
-            writer.WritePropertyName("upgradeReplicaSetCheckTimeout");
-            writer.WriteStringValue(UpgradeReplicaSetCheckTimeout);
-            writer.WritePropertyName("healthCheckWaitDuration");
+            writer.WritePropertyName("upgradeReplicaSetCheckTimeout"u8);
+            writer.WriteStringValue(UpgradeReplicaSetCheckTimeout, "c");
+            writer.WritePropertyName("healthCheckWaitDuration"u8);
             writer.WriteStringValue(HealthCheckWaitDuration, "c");
-            writer.WritePropertyName("healthCheckStableDuration");
+            writer.WritePropertyName("healthCheckStableDuration"u8);
             writer.WriteStringValue(HealthCheckStableDuration, "c");
-            writer.WritePropertyName("healthCheckRetryTimeout");
-            writer.WriteStringValue(HealthCheckRetryTimeout);
-            writer.WritePropertyName("upgradeTimeout");
-            writer.WriteStringValue(UpgradeTimeout);
-            writer.WritePropertyName("upgradeDomainTimeout");
-            writer.WriteStringValue(UpgradeDomainTimeout);
-            writer.WritePropertyName("healthPolicy");
+            writer.WritePropertyName("healthCheckRetryTimeout"u8);
+            writer.WriteStringValue(HealthCheckRetryTimeout, "c");
+            writer.WritePropertyName("upgradeTimeout"u8);
+            writer.WriteStringValue(UpgradeTimeout, "c");
+            writer.WritePropertyName("upgradeDomainTimeout"u8);
+            writer.WriteStringValue(UpgradeDomainTimeout, "c");
+            writer.WritePropertyName("healthPolicy"u8);
             writer.WriteObjectValue(HealthPolicy);
             if (Optional.IsDefined(DeltaHealthPolicy))
             {
-                writer.WritePropertyName("deltaHealthPolicy");
+                writer.WritePropertyName("deltaHealthPolicy"u8);
                 writer.WriteObjectValue(DeltaHealthPolicy);
             }
             writer.WriteEndObject();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         internal static ClusterUpgradePolicy DeserializeClusterUpgradePolicy(JsonElement element)
         {
             Optional<bool> forceRestart = default;
-            string upgradeReplicaSetCheckTimeout = default;
+            TimeSpan upgradeReplicaSetCheckTimeout = default;
             TimeSpan healthCheckWaitDuration = default;
             TimeSpan healthCheckStableDuration = default;
-            string healthCheckRetryTimeout = default;
-            string upgradeTimeout = default;
-            string upgradeDomainTimeout = default;
+            TimeSpan healthCheckRetryTimeout = default;
+            TimeSpan upgradeTimeout = default;
+            TimeSpan upgradeDomainTimeout = default;
             ClusterHealthPolicy healthPolicy = default;
             Optional<ClusterUpgradeDeltaHealthPolicy> deltaHealthPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("forceRestart"))
+                if (property.NameEquals("forceRestart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,42 +66,42 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     forceRestart = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("upgradeReplicaSetCheckTimeout"))
+                if (property.NameEquals("upgradeReplicaSetCheckTimeout"u8))
                 {
-                    upgradeReplicaSetCheckTimeout = property.Value.GetString();
+                    upgradeReplicaSetCheckTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("healthCheckWaitDuration"))
+                if (property.NameEquals("healthCheckWaitDuration"u8))
                 {
                     healthCheckWaitDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("healthCheckStableDuration"))
+                if (property.NameEquals("healthCheckStableDuration"u8))
                 {
                     healthCheckStableDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("healthCheckRetryTimeout"))
+                if (property.NameEquals("healthCheckRetryTimeout"u8))
                 {
-                    healthCheckRetryTimeout = property.Value.GetString();
+                    healthCheckRetryTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("upgradeTimeout"))
+                if (property.NameEquals("upgradeTimeout"u8))
                 {
-                    upgradeTimeout = property.Value.GetString();
+                    upgradeTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("upgradeDomainTimeout"))
+                if (property.NameEquals("upgradeDomainTimeout"u8))
                 {
-                    upgradeDomainTimeout = property.Value.GetString();
+                    upgradeDomainTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("healthPolicy"))
+                if (property.NameEquals("healthPolicy"u8))
                 {
                     healthPolicy = ClusterHealthPolicy.DeserializeClusterHealthPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("deltaHealthPolicy"))
+                if (property.NameEquals("deltaHealthPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

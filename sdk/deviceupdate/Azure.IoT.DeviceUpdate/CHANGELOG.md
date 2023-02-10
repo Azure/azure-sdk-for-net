@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-09-09)
+
+### Features Added
+- Added filter to DeviceManagement.ListDeviceClasses method
+- Updated description for some methods to be more descriptive and less ambiguous
+
+### Breaking Changes
+- Removed filter from DeviceManagement.ListBestUpdatesForGroup method
+- DeploymentDeviceStatesFilter.DeviceState property type changed from DeviceState to DeviceDeploymentState
 
 ## 1.0.0-beta.4 (2022-07-11)
 

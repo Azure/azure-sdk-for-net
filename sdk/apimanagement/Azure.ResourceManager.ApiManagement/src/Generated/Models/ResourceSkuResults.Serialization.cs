@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ResourceSkuResults DeserializeResourceSkuResults(JsonElement element)
         {
-            IReadOnlyList<ResourceSkuResult> value = default;
+            IReadOnlyList<AvailableApiManagementServiceSkuResult> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<ResourceSkuResult> array = new List<ResourceSkuResult>();
+                    List<AvailableApiManagementServiceSkuResult> array = new List<AvailableApiManagementServiceSkuResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuResult.DeserializeResourceSkuResult(item));
+                        array.Add(AvailableApiManagementServiceSkuResult.DeserializeAvailableApiManagementServiceSkuResult(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

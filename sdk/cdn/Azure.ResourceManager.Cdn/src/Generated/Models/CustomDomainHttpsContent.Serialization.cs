@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("certificateSource");
+            writer.WritePropertyName("certificateSource"u8);
             writer.WriteStringValue(CertificateSource.ToString());
-            writer.WritePropertyName("protocolType");
+            writer.WritePropertyName("protocolType"u8);
             writer.WriteStringValue(ProtocolType.ToString());
             if (Optional.IsDefined(MinimumTlsVersion))
             {
-                writer.WritePropertyName("minimumTlsVersion");
+                writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -37,33 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "Cdn": return CdnManagedHttpsContent.DeserializeCdnManagedHttpsContent(element);
                 }
             }
-            CertificateSource certificateSource = default;
-            SecureDeliveryProtocolType protocolType = default;
-            Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("certificateSource"))
-                {
-                    certificateSource = new CertificateSource(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("protocolType"))
-                {
-                    protocolType = new SecureDeliveryProtocolType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("minimumTlsVersion"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    minimumTlsVersion = property.Value.GetString().ToCdnMinimumTlsVersion();
-                    continue;
-                }
-            }
-            return new CustomDomainHttpsContent(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion));
+            return UnknownCustomDomainHttpsParameters.DeserializeUnknownCustomDomainHttpsParameters(element);
         }
     }
 }

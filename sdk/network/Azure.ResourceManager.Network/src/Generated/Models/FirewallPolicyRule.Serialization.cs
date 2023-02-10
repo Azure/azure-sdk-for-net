@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("ruleType");
+            writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
             writer.WriteEndObject();
         }
@@ -41,28 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                     case "NetworkRule": return NetworkRule.DeserializeNetworkRule(element);
                 }
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            FirewallPolicyRuleType ruleType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("ruleType"))
-                {
-                    ruleType = new FirewallPolicyRuleType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new FirewallPolicyRule(name.Value, description.Value, ruleType);
+            return UnknownFirewallPolicyRule.DeserializeUnknownFirewallPolicyRule(element);
         }
     }
 }

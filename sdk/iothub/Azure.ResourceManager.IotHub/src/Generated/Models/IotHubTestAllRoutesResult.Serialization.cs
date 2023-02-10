@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubTestAllRoutesResult DeserializeIotHubTestAllRoutesResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MatchedRoute>> routes = default;
+            Optional<IReadOnlyList<IotHubMatchedRoute>> routes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("routes"))
+                if (property.NameEquals("routes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MatchedRoute> array = new List<MatchedRoute>();
+                    List<IotHubMatchedRoute> array = new List<IotHubMatchedRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchedRoute.DeserializeMatchedRoute(item));
+                        array.Add(IotHubMatchedRoute.DeserializeIotHubMatchedRoute(item));
                     }
                     routes = array;
                     continue;

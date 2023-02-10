@@ -45,7 +45,8 @@ namespace Azure.Core.TestFramework
                     // copied from HttpClientTransport - not needed for HttpWebRequestTransport case as cookies are already off by default and can't be turned on
                     UseCookies = AppContextSwitchHelper.GetConfigValue(
                         "Azure.Core.Pipeline.HttpClientTransport.EnableCookies",
-                        "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES")
+                        "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES"),
+                    AllowAutoRedirect = false
                 };
                 _innerTransport = new HttpClientTransport(handler);
             }
@@ -66,6 +67,12 @@ namespace Azure.Core.TestFramework
 
         private async Task ProcessAsyncInternalAsync(HttpMessage message, bool async)
         {
+            if (_recording.Mode == RecordedTestMode.Playback && _filter() == EntryRecordModel.DoNotRecord)
+            {
+                throw new InvalidOperationException(
+                    "Operations that are enclosed in a 'TestRecording.DisableRecordingScope' created with the 'DisableRecording' method should not be executed in Playback mode." +
+                    "Instead, update the test to skip the operation when in Playback mode by checking the 'Mode' property of 'RecordedTestBase'.");
+            }
             try
             {
                 RedirectToTestProxy(message);

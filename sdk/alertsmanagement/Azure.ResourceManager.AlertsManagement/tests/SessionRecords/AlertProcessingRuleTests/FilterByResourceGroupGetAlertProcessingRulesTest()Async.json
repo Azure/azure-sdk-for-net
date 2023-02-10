@@ -1,0 +1,335 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-cc62a34b0e52be4b9eb391b463bad374-0a52406a37589a4a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "8ccde3dd57e07bee300ae37e8c169b72",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "629",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Sep 2022 12:24:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "06c722df-e564-4ed7-a759-fe12fdd0102d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "06c722df-e564-4ed7-a759-fe12fdd0102d",
+        "x-ms-routing-request-id": "GERMANYWESTCENTRAL:20220905T122427Z:06c722df-e564-4ed7-a759-fe12fdd0102d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "avjerafi_tag1": "testing subscription-level alert 1",
+          "avjerafi_tag2": "testing subscription-level alert 2",
+          "avjerafi_tag3": "testing subscription-level alert 3",
+          "avjerafi_tag4": "testing subscription-level alert 4"
+        },
+        "subscriptionId": "042ebc40-492c-4e4e-a02a-c04b5ba7ee23",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Alerts_AMP_Playground_DEV_00",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/ActionRulesRG?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ef5e8b74dc79374a8cad5a4414f5927a-a43ff282bf16b142-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "ff02c7dda2f5e3ec232703d8d4baec56",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Sep 2022 12:24:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c726e754-dd6c-46a1-ac38-71d89c8daf2f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "c726e754-dd6c-46a1-ac38-71d89c8daf2f",
+        "x-ms-routing-request-id": "GERMANYWESTCENTRAL:20220905T122428Z:c726e754-dd6c-46a1-ac38-71d89c8daf2f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ActionRulesRG",
+        "name": "ActionRulesRG",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ActionRulesRG/providers/Microsoft.AlertsManagement/actionRules?api-version=2021-08-08",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-16eede2d5ac1bd44a0337af42f96975e-77fed8106af5fa45-00",
+        "User-Agent": "azsdk-net-ResourceManager.AlertsManagement/1.0.0-alpha.20220905.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "596982b712f3f73349de22a9faa2b165",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "4728",
+        "Content-Security-Policy": "script-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Sep 2022 12:24:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "859bc870-13eb-4170-b436-d4aad1345c35",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "998",
+        "x-ms-request-id": "e777fb11-898c-48a9-b04f-d1c0676d9252",
+        "x-ms-routing-request-id": "GERMANYWESTCENTRAL:20220905T122428Z:859bc870-13eb-4170-b436-d4aad1345c35",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/AMPE2EValidation",
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/avhaddadResourceGroup/providers/Microsoft.Storage/storageAccounts/avhaddadstorage"
+              ],
+              "schedule": {
+                "effectiveFrom": "2022-04-10T00:00:00",
+                "effectiveUntil": "2022-05-01T23:59:59",
+                "timeZone": "Central America Standard Time",
+                "recurrences": [
+                  {
+                    "daysOfWeek": [
+                      "Monday",
+                      "Tuesday",
+                      "Wednesday",
+                      "Thursday",
+                      "Friday"
+                    ],
+                    "recurrenceType": "Weekly",
+                    "startTime": "18:00:00",
+                    "endTime": "09:00:00"
+                  },
+                  {
+                    "daysOfWeek": [
+                      "Saturday",
+                      "Sunday"
+                    ],
+                    "recurrenceType": "Weekly"
+                  }
+                ]
+              },
+              "conditions": [
+                {
+                  "field": "Severity",
+                  "operator": "NotEquals",
+                  "values": [
+                    "Sev1"
+                  ]
+                }
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionGroupIds": [
+                    "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ActionRulesRG/providers/microsoft.insights/actionGroups/Tami email"
+                  ],
+                  "actionType": "AddActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "taruas@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-04-10T11:36:12.7889047Z",
+              "lastModifiedBy": "taruas@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-04-10T19:06:39.1896667Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ActionRulesRG/providers/Microsoft.AlertsManagement/actionRules/ASC Demo Rule",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "ASC Demo Rule"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "schedule": {
+                "effectiveFrom": "2022-09-03T17:00:00",
+                "effectiveUntil": "2022-09-03T17:01:00",
+                "timeZone": "Israel Standard Time"
+              },
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "khaboasb@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-09-03T12:27:37.1078973Z",
+              "lastModifiedBy": "khaboasb@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-09-03T12:27:37.1078973Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ActionRulesRG/providers/Microsoft.AlertsManagement/actionRules/AlertProcessingRuleTestSDK",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "AlertProcessingRuleTestSDK"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "enabled": true,
+              "actions": [
+                {
+                  "actionGroupIds": [
+                    "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourcegroups/actionrulesrg/providers/microsoft.insights/actiongroups/test-sweden"
+                  ],
+                  "actionType": "AddActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "khaboasb@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-07-20T17:11:34.1670318Z",
+              "lastModifiedBy": "khaboasb@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-07-20T17:11:34.1670318Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ActionRulesRG/providers/Microsoft.AlertsManagement/actionRules/TestSwedenKhaled",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "TestSwedenKhaled"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "schedule": {
+                "effectiveFrom": "2022-03-10T00:00:00",
+                "effectiveUntil": "2022-03-14T23:59:59",
+                "timeZone": "Israel Standard Time",
+                "recurrences": [
+                  {
+                    "recurrenceType": "Daily",
+                    "startTime": "00:00:00",
+                    "endTime": "00:00:00"
+                  }
+                ]
+              },
+              "enabled": false,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ]
+            },
+            "systemData": {
+              "createdBy": "taruas@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-03-10T14:07:38.9612457Z",
+              "lastModifiedBy": "taruas@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-03-10T14:47:44.1440847Z"
+            },
+            "location": "Global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ActionRulesRG/providers/Microsoft.AlertsManagement/actionRules/Testing daily all day",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "Testing daily all day"
+          },
+          {
+            "properties": {
+              "scopes": [
+                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+              ],
+              "schedule": {
+                "effectiveFrom": "2021-03-21T13:35:09",
+                "effectiveUntil": "2021-03-28T17:00:00",
+                "recurrences": [
+                  {
+                    "daysOfWeek": [
+                      "Sunday",
+                      "Monday",
+                      "Tuesday",
+                      "Wednesday",
+                      "Thursday",
+                      "Friday",
+                      "Saturday"
+                    ],
+                    "recurrenceType": "Weekly",
+                    "startTime": "13:35:09",
+                    "endTime": "17:00:00"
+                  }
+                ]
+              },
+              "enabled": true,
+              "actions": [
+                {
+                  "actionType": "RemoveAllActionGroups"
+                }
+              ],
+              "description": "testfordelete"
+            },
+            "systemData": {
+              "createdBy": "lienglender@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-08-17T15:45:07.7883973Z",
+              "lastModifiedBy": "lienglender@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-08-17T15:45:07.7883973Z"
+            },
+            "location": "global",
+            "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/resourceGroups/ActionRulesRG/providers/Microsoft.AlertsManagement/actionRules/testfordelete2",
+            "type": "Microsoft.AlertsManagement/actionRules",
+            "name": "testfordelete2"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "722726969",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+  }
+}

@@ -156,7 +156,7 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options);
             _shareRestClient = BuildShareRestClient(_uri);
         }
@@ -256,7 +256,7 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options);
             _shareRestClient = BuildShareRestClient(shareUri);
         }
@@ -292,7 +292,7 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sasCredential: sasCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options);
             _shareRestClient = BuildShareRestClient(shareUri);
         }
@@ -3525,6 +3525,7 @@ namespace Azure.Storage.Files.Shares
                 ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
                 {
                     // erase parameters unrelated to container
+                    ShareName = null,
                     DirectoryOrFilePath = null,
                     Snapshot = null,
                 };

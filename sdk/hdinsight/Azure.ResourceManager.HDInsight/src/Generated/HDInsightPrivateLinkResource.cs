@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight
     /// A Class representing a HDInsightPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HDInsightPrivateLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetHDInsightPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ClusterResource" /> using the GetHDInsightPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource" /> using the GetHDInsightPrivateLinkResource method.
     /// </summary>
     public partial class HDInsightPrivateLinkResource : ArmResource
     {
@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Gets the specific private link resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HDInsightPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Gets the specific private link resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HDInsightPrivateLinkResource> Get(CancellationToken cancellationToken = default)

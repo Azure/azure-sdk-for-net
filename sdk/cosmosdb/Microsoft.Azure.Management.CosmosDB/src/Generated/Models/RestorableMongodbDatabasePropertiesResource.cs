@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// identifier.</param>
         /// <param name="operationType">The operation type of this database
         /// event. Possible values include: 'Create', 'Replace', 'Delete',
-        /// 'SystemOperation'</param>
+        /// 'Recreate', 'SystemOperation'</param>
         /// <param name="eventTimestamp">The time when this database event
         /// happened.</param>
         /// <param name="ownerId">The name of this MongoDB database.</param>
@@ -64,7 +64,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
 
         /// <summary>
         /// Gets the operation type of this database event. Possible values
-        /// include: 'Create', 'Replace', 'Delete', 'SystemOperation'
+        /// include: 'Create', 'Replace', 'Delete', 'Recreate',
+        /// 'SystemOperation'
         /// </summary>
         [JsonProperty(PropertyName = "operationType")]
         public string OperationType { get; private set; }

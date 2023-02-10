@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2022-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceSkuListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableCognitiveServicesSkuResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ResourceSkuListResult value = default;
+                        AvailableCognitiveServicesSkuResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourceSkuListResult.DeserializeResourceSkuListResult(document.RootElement);
+                        value = AvailableCognitiveServicesSkuResult.DeserializeAvailableCognitiveServicesSkuResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceSkuListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<AvailableCognitiveServicesSkuResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ResourceSkuListResult value = default;
+                        AvailableCognitiveServicesSkuResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourceSkuListResult.DeserializeResourceSkuListResult(document.RootElement);
+                        value = AvailableCognitiveServicesSkuResult.DeserializeAvailableCognitiveServicesSkuResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceSkuListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableCognitiveServicesSkuResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ResourceSkuListResult value = default;
+                        AvailableCognitiveServicesSkuResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourceSkuListResult.DeserializeResourceSkuListResult(document.RootElement);
+                        value = AvailableCognitiveServicesSkuResult.DeserializeAvailableCognitiveServicesSkuResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceSkuListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<AvailableCognitiveServicesSkuResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ResourceSkuListResult value = default;
+                        AvailableCognitiveServicesSkuResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourceSkuListResult.DeserializeResourceSkuListResult(document.RootElement);
+                        value = AvailableCognitiveServicesSkuResult.DeserializeAvailableCognitiveServicesSkuResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

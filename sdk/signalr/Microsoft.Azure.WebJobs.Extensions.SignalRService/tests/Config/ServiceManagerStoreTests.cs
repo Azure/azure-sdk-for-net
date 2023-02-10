@@ -3,20 +3,23 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
+using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Common;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.SignalR.Tests.Common;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
+using Moq;
 using Xunit;
+using Constants = Microsoft.Azure.WebJobs.Extensions.SignalRService.Constants;
 
 namespace SignalRServiceExtension.Tests
 {
@@ -44,17 +47,11 @@ namespace SignalRServiceExtension.Tests
             configuration[connectionStringKey] = connectionString;
             configuration[Constants.FunctionsWorkerRuntime] = Constants.DotnetWorker;
 
-            var productInfo = new ServiceCollection()
-                .AddSignalRServiceManager(new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, connectionStringKey))
-                .BuildServiceProvider()
-                .GetRequiredService<IOptions<ServiceManagerOptions>>()
-                .Value.ProductInfo;
-
+            var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()));
+            var productInfo = (serviceManagerStore.GetOrAddByConnectionStringKey(connectionStringKey).GetAsync("hub").Result as ServiceHubContextImpl).ServiceProvider.GetRequiredService<IOptions<ServiceManagerOptions>>().Value.ProductInfo;
             Assert.NotNull(productInfo);
-            var reg = new Regex(@"\[(\w*)=(\w*)\]");
-            var match = reg.Match(productInfo);
-            Assert.Equal(Constants.FunctionsWorkerProductInfoKey, match.Groups[1].Value);
-            Assert.Equal(Constants.DotnetWorker, match.Groups[2].Value);
+            Assert.StartsWith("Microsoft.Azure.WebJobs.Extensions.SignalRService", productInfo);
+            Assert.EndsWith(" [func=dotnet]", productInfo);
         }
 
         [Fact]
@@ -93,6 +90,30 @@ namespace SignalRServiceExtension.Tests
             Assert.Equal(3, resultOptions.ServiceEndpoints.Length);
             Assert.Equal(ServiceTransportType.Persistent, resultOptions.ServiceTransportType);
             Assert.IsType<NewtonsoftJsonObjectSerializer>(resultOptions.ObjectSerializer);
+        }
+
+        [Fact]
+        public async void TestConfigurationHotReload()
+        {
+            var mock = new Mock<IEndpointRouter>();
+            var connectionStrings = FakeEndpointUtils.GetFakeConnectionString(2).ToArray();
+            var configuration = new ConfigurationRoot(new List<IConfigurationProvider>() { new MemoryConfigurationProvider(new()) });
+            configuration[Constants.AzureSignalRConnectionStringName] = connectionStrings[0];
+            // Only persistent mode supports hot reload.
+            configuration[Constants.ServiceTransportTypeName] = "Persistent";
+            var managerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()), mock.Object);
+            var hubContextStore = managerStore.GetOrAddByConnectionStringKey(Constants.AzureSignalRConnectionStringName);
+            var hubContext = await hubContextStore.GetAsync("hub") as ServiceHubContext;
+            await hubContext.ClientManager.UserExistsAsync("a");
+
+            configuration[Constants.AzureSignalRConnectionStringName] = connectionStrings[1];
+            configuration.Reload();
+            await Task.Delay(6000);
+            await hubContext.ClientManager.UserExistsAsync("a");
+
+            Assert.Equal(2, mock.Invocations.Count);
+            // By design, the new endpoint is firstly appended to the original endpoint list instead of replacing the old endpoint.
+            Assert.Equal(2, (mock.Invocations.Last().Arguments[1] as IEnumerable<ServiceEndpoint>).Count());
         }
     }
 }

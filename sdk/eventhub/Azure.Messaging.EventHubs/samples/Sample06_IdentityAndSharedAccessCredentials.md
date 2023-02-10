@@ -12,6 +12,7 @@ This sample demonstrates using credentials to authorize clients with the Event H
 - [Publishing events with identity-based authorization](#publishing-events-with-identity-based-authorization)
 - [Publishing events with Shared Access Signature authorization](#publishing-events-with-shared-access-signature-authorization)
 - [Publishing events with Shared Access Key authorization](#publishing-events-with-shared-access-key-authorization)
+- [Generating SAS tokens](#generating-sas-tokens)
 - [Parsing a connection string for information](#parsing-a-connection-string-for-information)
 
 ## Prerequisites
@@ -38,9 +39,9 @@ The available role choices for Event Hubs are:
 
 ### Event Hubs Shared Access Signature authorization
 
-Shared access signatures (SAS) are recommended over shared access keys, when RBAC cannot be used.  A shared access signature allows for granular and time-limited access to Event Hubs resources.  In order to use SAS-based authorization, a token needs to be generated and the associated Event Hubs resource needs to be configured to authorize its use.
+Shared access signatures (SAS) are recommended over shared access keys when RBAC cannot be used.  A shared access signature allows for granular and time-limited access to Event Hubs resources.  In order to use SAS-based authorization, a token needs to be generated and the associated Event Hubs resource needs to be configured to authorize its use.
 
-The steps to to generate a SAS token can be found in the article "[Authenticate access to Event Hubs resources using shared access signatures (SAS)](https://docs.microsoft.com/azure/event-hubs/authenticate-shared-access-signature)", with details for some additional languages detailed in the article "[Generate SAS token](https://docs.microsoft.com/rest/api/eventhub/generate-sas-token)".   Information about configuring SAS authorization can be found in the article "[Authorizing access to Event Hubs resources using Shared Access Signatures](https://docs.microsoft.com/azure/event-hubs/authorize-access-shared-access-signature)".
+The steps to to generate a SAS token can be found in the [example below](#generating-sas-tokens) and are detailed in the article "[Authenticate access to Event Hubs resources using shared access signatures (SAS)](https://docs.microsoft.com/azure/event-hubs/authenticate-shared-access-signature)".  Details for for some additional languages are discussed in the article "[Generate SAS token](https://docs.microsoft.com/rest/api/eventhub/generate-sas-token)".  Information about configuring SAS authorization can be found in the article "[Authorizing access to Event Hubs resources using Shared Access Signatures](https://docs.microsoft.com/azure/event-hubs/authorize-access-shared-access-signature)".
 
 ### Event Hubs Shared Access Key authorization
 
@@ -151,6 +152,48 @@ finally
 {
     await producer.CloseAsync();
 }
+```
+
+## Generating SAS tokens
+
+```C# Snippet:EventHubs_Sample06_GenerateSasCredentail
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var sharedAccessKeyName = "<< SHARED ACCESS KEY NAME >>";
+var sharedAccessKey = "<< SHARED ACCESS KEY STRING >>";
+var expirationTime = DateTimeOffset.Now.Add(TimeSpan.FromMinutes(30));
+
+var builder = new UriBuilder(fullyQualifiedNamespace)
+{
+    Scheme = "amqps",
+    Path = eventHubName
+};
+
+builder.Path = builder.Path.TrimEnd('/');
+
+string encodedAudience = WebUtility.UrlEncode(builder.Uri.AbsoluteUri.ToLowerInvariant());
+string expiration = Convert.ToString(expirationTime.ToUnixTimeSeconds(), CultureInfo.InvariantCulture);
+
+using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(sharedAccessKey));
+
+string signature = Convert.ToBase64String(
+    hmac.ComputeHash(Encoding.UTF8.GetBytes($"{encodedAudience}\n{expiration}")));
+
+string sasToken = string.Format(CultureInfo.InvariantCulture, "{0} {1}={2}&{3}={4}&{5}={6}&{7}={8}",
+    "SharedAccessSignature",
+    "sr",
+    encodedAudience,
+    "sig",
+    WebUtility.UrlEncode(signature),
+    "se",
+    WebUtility.UrlEncode(expiration),
+    "skn",
+    WebUtility.UrlEncode(sharedAccessKeyName));
+
+// To use the token with the Event Hubs client library, a credential instance
+// is needed.
+
+var credential = new AzureSasCredential(sasToken);
 ```
 
 ## Parsing a connection string for information

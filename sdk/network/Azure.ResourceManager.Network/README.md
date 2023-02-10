@@ -1,17 +1,27 @@
-# Azure Network Management client library for .NET
+# Microsoft Azure Networking management client library for .NET
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including:
+The networking services in Microsoft Azure provide a variety of networking capabilities that can be used together or separately. Key capabilities are:
 
-- The intuitive Azure Identity library.
-- An HTTP pipeline with custom policies.
-- Error handling.
-- Distributed tracing.
+- Connectivity services: Connect Azure resources and on-premises resources using any or a combination of these networking services in Azure - Virtual Network (VNet), Virtual WAN, ExpressRoute, VPN Gateway, Virtual network NAT Gateway, Azure DNS, Peering service, and Azure Bastion.
+- Application protection services: Protect your applications using any or a combination of these networking services in Azure - Load Balancer, Private Link, DDoS protection, Firewall, - Network Security Groups, Web Application Firewall, and Virtual Network Endpoints.
+- Application delivery services: Deliver applications in the Azure network using any or a combination of these networking services in Azure - Content Delivery Network (CDN), Azure Front Door Service, Traffic Manager, Application Gateway, Internet Analyzer, and Load Balancer.
+- Network monitoring: Monitor your network resources using any or a combination of these networking services in Azure - Network Watcher, ExpressRoute Monitor, Azure Monitor, or VNet Terminal Access Point (TAP).
+
+This library supports managing Microsoft Azure Networking resources.
+
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+
+    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
+    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
+    - HTTP pipeline with custom policies.
+    - Better error-handling.
+    - Support uniform telemetry across all languages.
 
 ## Getting started
 
 ### Install the package
 
-Install the Azure Network management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Network management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.Network
@@ -19,61 +29,37 @@ dotnet add package Azure.ResourceManager.Network
 
 ### Prerequisites
 
-Set up a way to authenticate to Azure with Azure Identity.
-
-Some options are:
-
-- Through the [Azure CLI Login](https://docs.microsoft.com/cli/azure/authenticate-azure-cli).
-- Via [Visual Studio](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
-- Setting [Environment Variables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/AuthUsingEnvironmentVariables.md).
-
-More information and different authentication approaches using Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+* You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
 ### Authenticate the Client
 
-The default option to create an authenticated client is to use `DefaultAzureCredential`. Since all management APIs go through the same endpoint, in order to interact with resources, only one top-level `ArmClient` has to be created.
-
-To authenticate to Azure and create an `ArmClient`, do the following:
-
-```csharp
-using Azure.Identity;
-
-// Code omitted for brevity
-
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-```
-
-Additional documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
+To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
 
 ## Key concepts
 
-Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
 ## Documentation
 
-Documentation is available to help you learn how to use this package
+Documentation is available to help you learn how to use this package:
 
-- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md)
-- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet)
-- [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md)
+- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
+- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples
 
 Code samples for using the management library for .NET can be found in the following locations
-
-- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
+- [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
 ## Troubleshooting
 
-- If you find a bug or have a suggestion, file an issue via [GitHub issues](https://github.com/Azure/azure-sdk-for-net/issues) and make sure you add the "Preview" label to the issue.
-- If you need help, check [previous
-    questions](https://stackoverflow.com/questions/tagged/azure+.net)
-    or ask new ones on StackOverflow using azure and .NET tags.
-- If having trouble with authentication, go to [DefaultAzureCredential documentation](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet)
+-   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+-   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
 
 ## Next steps
 
-For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/)
+For more information about Microsoft Azure SDK, see [this website](https://azure.github.io/azure-sdk/).
 
 ## Contributing
 
@@ -87,13 +73,13 @@ your contribution. For details, visit <https://cla.microsoft.com>.
 
 When you submit a pull request, a CLA-bot will automatically determine
 whether you need to provide a CLA and decorate the PR appropriately
-(e.g., label, comment). Simply follow the instructions provided by the
-bot. You will only need to do this once across all repositories using
-our CLA.
+(for example, label, comment). Follow the instructions provided by the
+bot. You'll only need to do this action once across all repositories
+using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For
-more information see the [Code of Conduct FAQ][coc_faq] or contact
-<opencode@microsoft.com> with any additional questions or comments.
+more information, see the [Code of Conduct FAQ][coc_faq] or contact
+<opencode@microsoft.com> with any other questions or comments.
 
 <!-- LINKS -->
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md

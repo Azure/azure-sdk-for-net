@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,21 +16,21 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageAccountName");
+            writer.WritePropertyName("storageAccountName"u8);
             writer.WriteStringValue(StorageAccountName);
-            writer.WritePropertyName("protectedAccountKeyName");
+            writer.WritePropertyName("protectedAccountKeyName"u8);
             writer.WriteStringValue(ProtectedAccountKeyName);
             if (Optional.IsDefined(ProtectedAccountKeyName2))
             {
-                writer.WritePropertyName("protectedAccountKeyName2");
+                writer.WritePropertyName("protectedAccountKeyName2"u8);
                 writer.WriteStringValue(ProtectedAccountKeyName2);
             }
-            writer.WritePropertyName("blobEndpoint");
-            writer.WriteStringValue(BlobEndpoint);
-            writer.WritePropertyName("queueEndpoint");
-            writer.WriteStringValue(QueueEndpoint);
-            writer.WritePropertyName("tableEndpoint");
-            writer.WriteStringValue(TableEndpoint);
+            writer.WritePropertyName("blobEndpoint"u8);
+            writer.WriteStringValue(BlobEndpoint.AbsoluteUri);
+            writer.WritePropertyName("queueEndpoint"u8);
+            writer.WriteStringValue(QueueEndpoint.AbsoluteUri);
+            writer.WritePropertyName("tableEndpoint"u8);
+            writer.WriteStringValue(TableEndpoint.AbsoluteUri);
             writer.WriteEndObject();
         }
 
@@ -38,39 +39,39 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             string storageAccountName = default;
             string protectedAccountKeyName = default;
             Optional<string> protectedAccountKeyName2 = default;
-            string blobEndpoint = default;
-            string queueEndpoint = default;
-            string tableEndpoint = default;
+            Uri blobEndpoint = default;
+            Uri queueEndpoint = default;
+            Uri tableEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccountName"))
+                if (property.NameEquals("storageAccountName"u8))
                 {
                     storageAccountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedAccountKeyName"))
+                if (property.NameEquals("protectedAccountKeyName"u8))
                 {
                     protectedAccountKeyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedAccountKeyName2"))
+                if (property.NameEquals("protectedAccountKeyName2"u8))
                 {
                     protectedAccountKeyName2 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blobEndpoint"))
+                if (property.NameEquals("blobEndpoint"u8))
                 {
-                    blobEndpoint = property.Value.GetString();
+                    blobEndpoint = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queueEndpoint"))
+                if (property.NameEquals("queueEndpoint"u8))
                 {
-                    queueEndpoint = property.Value.GetString();
+                    queueEndpoint = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tableEndpoint"))
+                if (property.NameEquals("tableEndpoint"u8))
                 {
-                    tableEndpoint = property.Value.GetString();
+                    tableEndpoint = new Uri(property.Value.GetString());
                     continue;
                 }
             }

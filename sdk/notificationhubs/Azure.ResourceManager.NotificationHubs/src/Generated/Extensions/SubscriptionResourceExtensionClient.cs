@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,10 +19,8 @@ namespace Azure.ResourceManager.NotificationHubs
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _namespacesClientDiagnostics;
-        private NamespacesRestOperations _namespacesRestClient;
-        private ClientDiagnostics _namespaceResourceNamespacesClientDiagnostics;
-        private NamespacesRestOperations _namespaceResourceNamespacesRestClient;
+        private ClientDiagnostics _notificationHubNamespaceNamespacesClientDiagnostics;
+        private NamespacesRestOperations _notificationHubNamespaceNamespacesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -37,10 +34,8 @@ namespace Azure.ResourceManager.NotificationHubs
         {
         }
 
-        private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private NamespacesRestOperations NamespacesRestClient => _namespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics NamespaceResourceNamespacesClientDiagnostics => _namespaceResourceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NamespaceResource.ResourceType.Namespace, Diagnostics);
-        private NamespacesRestOperations NamespaceResourceNamespacesRestClient => _namespaceResourceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NamespaceResource.ResourceType));
+        private ClientDiagnostics NotificationHubNamespaceNamespacesClientDiagnostics => _notificationHubNamespaceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubNamespaceResource.ResourceType.Namespace, Diagnostics);
+        private NamespacesRestOperations NotificationHubNamespaceNamespacesRestClient => _notificationHubNamespaceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NotificationHubNamespaceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -50,18 +45,26 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Checks the availability of the given service namespace across all Azure subscriptions. This is useful because the domain name is created based on the service namespace name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability
-        /// Operation Id: Namespaces_CheckAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="checkAvailabilityParameters"> The namespace name. </param>
+        /// <param name="content"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckAvailabilityResult>> CheckAvailabilityNamespaceAsync(CheckAvailabilityParameters checkAvailabilityParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationHubAvailabilityResult>> CheckNotificationHubNamespaceAvailabilityAsync(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvailabilityNamespace");
+            using var scope = NotificationHubNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNotificationHubNamespaceAvailability");
             scope.Start();
             try
             {
-                var response = await NamespacesRestClient.CheckAvailabilityAsync(Id.SubscriptionId, checkAvailabilityParameters, cancellationToken).ConfigureAwait(false);
+                var response = await NotificationHubNamespaceNamespacesRestClient.CheckAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -73,18 +76,26 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Checks the availability of the given service namespace across all Azure subscriptions. This is useful because the domain name is created based on the service namespace name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability
-        /// Operation Id: Namespaces_CheckAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="checkAvailabilityParameters"> The namespace name. </param>
+        /// <param name="content"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckAvailabilityResult> CheckAvailabilityNamespace(CheckAvailabilityParameters checkAvailabilityParameters, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationHubAvailabilityResult> CheckNotificationHubNamespaceAvailability(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvailabilityNamespace");
+            using var scope = NotificationHubNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNotificationHubNamespaceAvailability");
             scope.Start();
             try
             {
-                var response = NamespacesRestClient.CheckAvailability(Id.SubscriptionId, checkAvailabilityParameters, cancellationToken);
+                var response = NotificationHubNamespaceNamespacesRestClient.CheckAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -96,86 +107,46 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Lists all the available namespaces within the subscription irrespective of the resourceGroups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/namespaces
-        /// Operation Id: Namespaces_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NamespaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NamespaceResource> GetNamespaceResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NotificationHubNamespaceResource> GetNotificationHubNamespacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NamespaceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NamespaceResourceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNamespaceResources");
-                scope.Start();
-                try
-                {
-                    var response = await NamespaceResourceNamespacesRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NamespaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NamespaceResourceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNamespaceResources");
-                scope.Start();
-                try
-                {
-                    var response = await NamespaceResourceNamespacesRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NotificationHubNamespaceNamespacesRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NotificationHubNamespaceNamespacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), NotificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNotificationHubNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the available namespaces within the subscription irrespective of the resourceGroups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/namespaces
-        /// Operation Id: Namespaces_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NamespaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NamespaceResource> GetNamespaceResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NotificationHubNamespaceResource> GetNotificationHubNamespaces(CancellationToken cancellationToken = default)
         {
-            Page<NamespaceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NamespaceResourceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNamespaceResources");
-                scope.Start();
-                try
-                {
-                    var response = NamespaceResourceNamespacesRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NamespaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NamespaceResourceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNamespaceResources");
-                scope.Start();
-                try
-                {
-                    var response = NamespaceResourceNamespacesRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NotificationHubNamespaceNamespacesRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NotificationHubNamespaceNamespacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), NotificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNotificationHubNamespaces", "value", "nextLink", cancellationToken);
         }
     }
 }

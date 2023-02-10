@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     /// <summary>
     /// Constants for semantic attribute names outlined by the OpenTelemetry specifications.
@@ -140,5 +140,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public const string AttributeMessageBusDestination = "message_bus.destination";
 
         public const string AttributeAzureNameSpace = "az.namespace";
+
+        public const string AttributeExceptionEventName = "exception";
+        public const string AttributeExceptionType = "exception.type";
+        public const string AttributeExceptionMessage = "exception.message";
+        public const string AttributeExceptionStacktrace = "exception.stacktrace";
     }
 }

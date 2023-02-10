@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Threading;
@@ -34,7 +35,8 @@ namespace Azure.Messaging.ServiceBus.Tests
         public void CalculateLinkAuthorizationRefreshIntervalRespectsTheRefreshBuffer()
         {
             var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
-            var mockScope = new MockConnectionScope(new Uri("sb://mine.hubs.com"), credential.Object, ServiceBusTransportType.AmqpTcp, null);
+            var endpoint = new Uri("sb://mine.hubs.com");
+            var mockScope = new MockConnectionScope(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null);
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
             var expireTime = currentTime.AddHours(1);
             var buffer = GetAuthorizationRefreshBuffer();
@@ -55,7 +57,8 @@ namespace Azure.Messaging.ServiceBus.Tests
         public void CalculateLinkAuthorizationRefreshIntervalRespectsTheMinimumDuration()
         {
             var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
-            var mockScope = new MockConnectionScope(new Uri("sb://mine.hubs.com"), credential.Object, ServiceBusTransportType.AmqpTcp, null);
+            var endpoint = new Uri("sb://mine.hubs.com");
+            var mockScope = new MockConnectionScope(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null);
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
             var jitterBuffer = TimeSpan.FromSeconds(GetAuthorizationBaseJitterSeconds()).Add(TimeSpan.FromSeconds(5));
             var minimumRefresh = GetMinimumAuthorizationRefresh();
@@ -75,7 +78,8 @@ namespace Azure.Messaging.ServiceBus.Tests
         public void CalculateLinkAuthorizationRefreshIntervalRespectsTheMaximumDuration()
         {
             var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
-            var mockScope = new MockConnectionScope(new Uri("sb://mine.hubs.com"), credential.Object, ServiceBusTransportType.AmqpTcp, null);
+            var endpoint = new Uri("sb://mine.hubs.com");
+            var mockScope = new MockConnectionScope(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null);
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
             var refreshBuffer = GetAuthorizationRefreshBuffer();
             var jitterBuffer = TimeSpan.FromSeconds(GetAuthorizationBaseJitterSeconds()).Add(TimeSpan.FromSeconds(5));
@@ -103,7 +107,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var transport = ServiceBusTransportType.AmqpTcp;
             var mockCredential = new Mock<TokenCredential>();
             var mockServiceBusCredential = new Mock<ServiceBusTokenCredential>(mockCredential.Object);
-            var mockScope = new MockConnectionScope(endpoint, mockServiceBusCredential.Object, transport, null);
+            var mockScope = new MockConnectionScope(endpoint, endpoint, mockServiceBusCredential.Object, transport, null);
 
             mockScope.MockConnection
                 .Protected()
@@ -113,7 +117,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             try
             {
-                await mockScope.InvokeOpenAmqpObjectAsync(mockScope.MockConnection.Object, TimeSpan.FromMinutes(5), CancellationToken.None);
+                await mockScope.InvokeOpenAmqpObjectAsync(mockScope.MockConnection.Object, TimeSpan.FromMinutes(5));
             }
             catch (Exception ex)
             {
@@ -125,6 +129,142 @@ namespace Azure.Messaging.ServiceBus.Tests
             Assert.That(((ServiceBusException)observedException).IsTransient, Is.True, "The exception should be transient.");
 
             mockScope.MockConnection.VerifyAll();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.OpenSenderLinkAsync(string, string, TimeSpan, CancellationToken)" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task OpenLinkAssociatesSendLinkSource()
+        {
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            var endpoint = new Uri("amqp://mine.hubs.com");
+            var linkIdentifier = "MyAmqpConnectionScope";
+            var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
+            var cancellationSource = new CancellationTokenSource();
+            var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
+
+            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default)
+            {
+                CallBase = true,
+            };
+
+            mockScope
+                .Protected()
+                .Setup<Task<AmqpConnection>>("CreateAndOpenConnectionAsync",
+                ItExpr.IsAny<Version>(),
+                ItExpr.IsAny<Uri>(),
+                ItExpr.IsAny<Uri>(),
+                ItExpr.IsAny<ServiceBusTransportType>(),
+                ItExpr.IsAny<IWebProxy>(),
+                ItExpr.IsAny<string>(),
+                ItExpr.IsAny<TimeSpan>())
+                .Returns(Task.FromResult(mockConnection))
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task<DateTime>>("RequestAuthorizationUsingCbsAsync",
+                    ItExpr.IsAny<AmqpConnection>(),
+                    ItExpr.IsAny<CbsTokenProvider>(),
+                    ItExpr.IsAny<Uri>(),
+                    ItExpr.IsAny<string[]>(),
+                    ItExpr.IsAny<string[]>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<string>())
+                .Returns(Task.FromResult(DateTime.UtcNow.AddDays(1)))
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task>("OpenAmqpObjectAsync",
+                    ItExpr.IsAny<AmqpObject>(),
+                    ItExpr.IsAny<TimeSpan>())
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task>("OpenAmqpLinkAsync",
+                    ItExpr.IsAny<SendingAmqpLink>(),
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+
+            var link = await mockScope.Object.OpenSenderLinkAsync("fake/path", linkIdentifier, TimeSpan.FromDays(1), cancellationSource.Token);
+            Assert.That(link, Is.Not.Null, "The link produced was null");
+            Assert.That(link.Settings.Source.ToString(), Contains.Substring(linkIdentifier));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.OpenReceiverLinkAsync(string, string, TimeSpan, uint, ServiceBusReceiveMode, string, bool, CancellationToken)" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task OpenLinkAssociatesReceiveLinkTarget()
+        {
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            var endpoint = new Uri("amqp://mine.hubs.com");
+            var linkIdentifier = "MyAmqpConnectionScope";
+            var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
+            var cancellationSource = new CancellationTokenSource();
+            var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
+
+            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default)
+            {
+                CallBase = true,
+            };
+
+            mockScope
+                .Protected()
+                .Setup<Task<AmqpConnection>>("CreateAndOpenConnectionAsync",
+                ItExpr.IsAny<Version>(),
+                ItExpr.IsAny<Uri>(),
+                ItExpr.IsAny<Uri>(),
+                ItExpr.IsAny<ServiceBusTransportType>(),
+                ItExpr.IsAny<IWebProxy>(),
+                ItExpr.IsAny<string>(),
+                ItExpr.IsAny<TimeSpan>())
+                .Returns(Task.FromResult(mockConnection))
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task<DateTime>>("RequestAuthorizationUsingCbsAsync",
+                    ItExpr.IsAny<AmqpConnection>(),
+                    ItExpr.IsAny<CbsTokenProvider>(),
+                    ItExpr.IsAny<Uri>(),
+                    ItExpr.IsAny<string[]>(),
+                    ItExpr.IsAny<string[]>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<string>())
+                .Returns(Task.FromResult(DateTime.UtcNow.AddDays(1)))
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task>("OpenAmqpObjectAsync",
+                    ItExpr.IsAny<AmqpObject>(),
+                    ItExpr.IsAny<TimeSpan>())
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task>("OpenAmqpLinkAsync",
+                    ItExpr.IsAny<ReceivingAmqpLink>(),
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+
+            var link = await mockScope.Object.OpenReceiverLinkAsync(linkIdentifier, "fake/path", TimeSpan.FromDays(1), 100, ServiceBusReceiveMode.ReceiveAndDelete, "0", false, cancellationSource.Token);
+            Assert.That(link, Is.Not.Null, "The link produced was null");
+            Assert.That(link.Settings.Target.ToString(), Contains.Substring(linkIdentifier));
         }
 
         /// <summary>
@@ -212,21 +352,33 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             public MockConnectionScope(
                 Uri serviceEndpoint,
+                Uri customConnectionEndpoint,
                 ServiceBusTokenCredential credential,
                 ServiceBusTransportType transport,
-                IWebProxy proxy) : base(serviceEndpoint, credential, transport, proxy, false, default, default)
+                IWebProxy proxy) : base(serviceEndpoint, customConnectionEndpoint, credential, transport, proxy, false, default)
             {
                 MockConnection = new Mock<AmqpConnection>(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             }
 
             public Task InvokeOpenAmqpObjectAsync(
                 AmqpObject target,
-                TimeSpan timeout,
-                CancellationToken cancellationToken) => base.OpenAmqpObjectAsync(target, timeout, cancellationToken);
+                TimeSpan timeout) =>
+                base.OpenAmqpObjectAsync(target, timeout);
 
             public TimeSpan InvokeCalculateLinkAuthorizationRefreshInterval(
                 DateTime expirationTimeUtc,
                 DateTime currentTimeUtc) => base.CalculateLinkAuthorizationRefreshInterval(expirationTimeUtc, currentTimeUtc);
+
+            protected override Task<AmqpConnection> CreateAndOpenConnectionAsync(Version amqpVersion,
+                                                                                Uri serviceEndpoint,
+                                                                                Uri connectionEndpoint,
+                                                                                ServiceBusTransportType transportType,
+                                                                                IWebProxy proxy,
+                                                                                string scopeIdentifier,
+                                                                                TimeSpan timeout)
+            {
+                return Task.FromResult(MockConnection.Object);
+            }
         }
     }
 }

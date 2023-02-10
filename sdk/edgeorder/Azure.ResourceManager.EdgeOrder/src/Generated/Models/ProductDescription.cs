@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="keywords"> Keywords for the product system. </param>
         /// <param name="attributes"> Attributes for the product system. </param>
         /// <param name="links"> Links for the product system. </param>
-        internal ProductDescription(DescriptionType? descriptionType, string shortDescription, string longDescription, IReadOnlyList<string> keywords, IReadOnlyList<string> attributes, IReadOnlyList<ProductLink> links)
+        internal ProductDescription(ProductDescriptionType? descriptionType, string shortDescription, string longDescription, IReadOnlyList<string> keywords, IReadOnlyList<string> attributes, IReadOnlyList<ProductLink> links)
         {
             DescriptionType = descriptionType;
             ShortDescription = shortDescription;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Type of description. </summary>
-        public DescriptionType? DescriptionType { get; }
+        public ProductDescriptionType? DescriptionType { get; }
         /// <summary> Short description of the product system. </summary>
         public string ShortDescription { get; }
         /// <summary> Long description of the product system. </summary>

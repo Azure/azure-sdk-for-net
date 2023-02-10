@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -15,26 +16,23 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ExposureControlBatchResult
     {
         /// <summary> Initializes a new instance of ExposureControlBatchResult. </summary>
-        /// <param name="exposureControlResponses"> List of exposure control feature values. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exposureControlResponses"/> is null. </exception>
-        internal ExposureControlBatchResult(IEnumerable<ExposureControlResult> exposureControlResponses)
+        /// <param name="exposureControlResults"> List of exposure control feature values. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exposureControlResults"/> is null. </exception>
+        internal ExposureControlBatchResult(IEnumerable<ExposureControlResult> exposureControlResults)
         {
-            if (exposureControlResponses == null)
-            {
-                throw new ArgumentNullException(nameof(exposureControlResponses));
-            }
+            Argument.AssertNotNull(exposureControlResults, nameof(exposureControlResults));
 
-            ExposureControlResponses = exposureControlResponses.ToList();
+            ExposureControlResults = exposureControlResults.ToList();
         }
 
         /// <summary> Initializes a new instance of ExposureControlBatchResult. </summary>
-        /// <param name="exposureControlResponses"> List of exposure control feature values. </param>
-        internal ExposureControlBatchResult(IReadOnlyList<ExposureControlResult> exposureControlResponses)
+        /// <param name="exposureControlResults"> List of exposure control feature values. </param>
+        internal ExposureControlBatchResult(IReadOnlyList<ExposureControlResult> exposureControlResults)
         {
-            ExposureControlResponses = exposureControlResponses;
+            ExposureControlResults = exposureControlResults;
         }
 
         /// <summary> List of exposure control feature values. </summary>
-        public IReadOnlyList<ExposureControlResult> ExposureControlResponses { get; }
+        public IReadOnlyList<ExposureControlResult> ExposureControlResults { get; }
     }
 }

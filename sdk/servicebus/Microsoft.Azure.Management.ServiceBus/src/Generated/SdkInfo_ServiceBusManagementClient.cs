@@ -19,26 +19,26 @@ namespace Microsoft.Azure.Management.ServiceBus
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ServiceBus", "DisasterRecoveryConfigs", "2021-11-01"),
-                new Tuple<string, string, string>("ServiceBus", "MigrationConfigs", "2021-11-01"),
-                new Tuple<string, string, string>("ServiceBus", "Namespaces", "2021-11-01"),
-                new Tuple<string, string, string>("ServiceBus", "Operations", "2021-11-01"),
-                new Tuple<string, string, string>("ServiceBus", "PrivateEndpointConnections", "2021-11-01"),
-                new Tuple<string, string, string>("ServiceBus", "PrivateLinkResources", "2021-11-01"),
-                new Tuple<string, string, string>("ServiceBus", "Queues", "2021-11-01"),
-                new Tuple<string, string, string>("ServiceBus", "Rules", "2021-11-01"),
-                new Tuple<string, string, string>("ServiceBus", "Subscriptions", "2021-11-01"),
-                new Tuple<string, string, string>("ServiceBus", "Topics", "2021-11-01"),
+                new Tuple<string, string, string>("ServiceBus", "DisasterRecoveryConfigs", "2022-01-01-preview"),
+                new Tuple<string, string, string>("ServiceBus", "MigrationConfigs", "2022-01-01-preview"),
+                new Tuple<string, string, string>("ServiceBus", "Namespaces", "2022-01-01-preview"),
+                new Tuple<string, string, string>("ServiceBus", "Operations", "2022-01-01-preview"),
+                new Tuple<string, string, string>("ServiceBus", "PrivateEndpointConnections", "2022-01-01-preview"),
+                new Tuple<string, string, string>("ServiceBus", "PrivateLinkResources", "2022-01-01-preview"),
+                new Tuple<string, string, string>("ServiceBus", "Queues", "2022-01-01-preview"),
+                new Tuple<string, string, string>("ServiceBus", "Rules", "2022-01-01-preview"),
+                new Tuple<string, string, string>("ServiceBus", "Subscriptions", "2022-01-01-preview"),
+                new Tuple<string, string, string>("ServiceBus", "Topics", "2022-01-01-preview"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@3.4.2";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/servicebus/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-2021-11 --csharp-sdks-folder=C:\\SwaggerNetSdk\\6\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/servicebus/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\\azuresdk\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "475e39b72894a8bdef428a472bc6d661c50032eb";
+      public static readonly String GithubCommidId = "226c70f75acef9073d7634dd1506605a9b1db6c7";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

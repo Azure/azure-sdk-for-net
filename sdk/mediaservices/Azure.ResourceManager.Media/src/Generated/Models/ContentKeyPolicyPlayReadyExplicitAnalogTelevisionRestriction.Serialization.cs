@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("bestEffort");
-            writer.WriteBooleanValue(BestEffort);
-            writer.WritePropertyName("configurationData");
+            writer.WritePropertyName("bestEffort"u8);
+            writer.WriteBooleanValue(IsBestEffort);
+            writer.WritePropertyName("configurationData"u8);
             writer.WriteNumberValue(ConfigurationData);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Media.Models
             int configurationData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bestEffort"))
+                if (property.NameEquals("bestEffort"u8))
                 {
                     bestEffort = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("configurationData"))
+                if (property.NameEquals("configurationData"u8))
                 {
                     configurationData = property.Value.GetInt32();
                     continue;

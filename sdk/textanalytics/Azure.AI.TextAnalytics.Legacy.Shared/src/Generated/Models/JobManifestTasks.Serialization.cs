@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(EntityRecognitionTasks))
             {
-                writer.WritePropertyName("entityRecognitionTasks");
+                writer.WritePropertyName("entityRecognitionTasks"u8);
                 writer.WriteStartArray();
                 foreach (var item in EntityRecognitionTasks)
                 {
@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             if (Optional.IsCollectionDefined(EntityRecognitionPiiTasks))
             {
-                writer.WritePropertyName("entityRecognitionPiiTasks");
+                writer.WritePropertyName("entityRecognitionPiiTasks"u8);
                 writer.WriteStartArray();
                 foreach (var item in EntityRecognitionPiiTasks)
                 {
@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             if (Optional.IsCollectionDefined(KeyPhraseExtractionTasks))
             {
-                writer.WritePropertyName("keyPhraseExtractionTasks");
+                writer.WritePropertyName("keyPhraseExtractionTasks"u8);
                 writer.WriteStartArray();
                 foreach (var item in KeyPhraseExtractionTasks)
                 {
@@ -47,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             if (Optional.IsCollectionDefined(EntityLinkingTasks))
             {
-                writer.WritePropertyName("entityLinkingTasks");
+                writer.WritePropertyName("entityLinkingTasks"u8);
                 writer.WriteStartArray();
                 foreach (var item in EntityLinkingTasks)
                 {
@@ -57,49 +57,9 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             if (Optional.IsCollectionDefined(SentimentAnalysisTasks))
             {
-                writer.WritePropertyName("sentimentAnalysisTasks");
+                writer.WritePropertyName("sentimentAnalysisTasks"u8);
                 writer.WriteStartArray();
                 foreach (var item in SentimentAnalysisTasks)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ExtractiveSummarizationTasks))
-            {
-                writer.WritePropertyName("extractiveSummarizationTasks");
-                writer.WriteStartArray();
-                foreach (var item in ExtractiveSummarizationTasks)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(CustomEntityRecognitionTasks))
-            {
-                writer.WritePropertyName("customEntityRecognitionTasks");
-                writer.WriteStartArray();
-                foreach (var item in CustomEntityRecognitionTasks)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(CustomSingleClassificationTasks))
-            {
-                writer.WritePropertyName("customSingleClassificationTasks");
-                writer.WriteStartArray();
-                foreach (var item in CustomSingleClassificationTasks)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(CustomMultiClassificationTasks))
-            {
-                writer.WritePropertyName("customMultiClassificationTasks");
-                writer.WriteStartArray();
-                foreach (var item in CustomMultiClassificationTasks)
                 {
                     writer.WriteObjectValue(item);
                 }

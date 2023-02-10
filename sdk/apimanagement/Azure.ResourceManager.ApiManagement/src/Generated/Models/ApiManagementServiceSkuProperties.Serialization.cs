@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            writer.WritePropertyName("capacity");
+            writer.WritePropertyName("capacity"u8);
             writer.WriteNumberValue(Capacity);
             writer.WriteEndObject();
         }
 
         internal static ApiManagementServiceSkuProperties DeserializeApiManagementServiceSkuProperties(JsonElement element)
         {
-            SkuType name = default;
+            ApiManagementServiceSkuType name = default;
             int capacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
-                    name = new SkuType(property.Value.GetString());
+                    name = new ApiManagementServiceSkuType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     capacity = property.Value.GetInt32();
                     continue;

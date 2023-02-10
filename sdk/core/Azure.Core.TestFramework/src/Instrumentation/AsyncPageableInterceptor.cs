@@ -19,7 +19,7 @@ namespace Azure.Core.TestFramework
             _inner = inner;
         }
 
-        public T Current => _testBase.InstrumentClient(typeof(T), _inner.Current, new IInterceptor[] { new ManagementInterceptor(_testBase) }) as T;
+        public T Current => _testBase.InstrumentClient(_inner.Current.GetType(), _inner.Current, new IInterceptor[] { new ManagementInterceptor(_testBase) }) as T;
 
         public ValueTask<bool> MoveNextAsync()
         {

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -13,25 +14,19 @@ namespace Azure.AI.TextAnalytics.Models
     internal partial class CustomMultiLabelClassificationTaskParameters : CustomTaskParameters
     {
         /// <summary> Initializes a new instance of CustomMultiLabelClassificationTaskParameters. </summary>
-        /// <param name="projectName"></param>
-        /// <param name="deploymentName"></param>
+        /// <param name="projectName"> This field indicates the project name for the model. </param>
+        /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         public CustomMultiLabelClassificationTaskParameters(string projectName, string deploymentName) : base(projectName, deploymentName)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
         }
 
         /// <summary> Initializes a new instance of CustomMultiLabelClassificationTaskParameters. </summary>
         /// <param name="loggingOptOut"></param>
-        /// <param name="projectName"></param>
-        /// <param name="deploymentName"></param>
+        /// <param name="projectName"> This field indicates the project name for the model. </param>
+        /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         internal CustomMultiLabelClassificationTaskParameters(bool? loggingOptOut, string projectName, string deploymentName) : base(loggingOptOut, projectName, deploymentName)
         {
         }

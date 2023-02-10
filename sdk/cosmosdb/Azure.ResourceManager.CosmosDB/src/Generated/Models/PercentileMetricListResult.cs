@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of PercentileMetricListResult. </summary>
         internal PercentileMetricListResult()
         {
-            Value = new ChangeTrackingList<PercentileMetric>();
+            Value = new ChangeTrackingList<CosmosDBPercentileMetric>();
         }
 
         /// <summary> Initializes a new instance of PercentileMetricListResult. </summary>
         /// <param name="value"> The list of percentile metrics for the account. </param>
-        internal PercentileMetricListResult(IReadOnlyList<PercentileMetric> value)
+        internal PercentileMetricListResult(IReadOnlyList<CosmosDBPercentileMetric> value)
         {
             Value = value;
         }
 
         /// <summary> The list of percentile metrics for the account. </summary>
-        public IReadOnlyList<PercentileMetric> Value { get; }
+        public IReadOnlyList<CosmosDBPercentileMetric> Value { get; }
     }
 }

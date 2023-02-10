@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Invalid', 'VM', 'FileFolder', 'AzureSqlDb', 'SQLDB', 'Exchange',
         /// 'Sharepoint', 'VMwareVM', 'SystemState', 'Client',
         /// 'GenericDataSource', 'SQLDataBase', 'AzureFileShare',
-        /// 'SAPHanaDatabase', 'SAPAseDatabase'</param>
+        /// 'SAPHanaDatabase', 'SAPAseDatabase', 'SAPHanaDBInstance'</param>
         /// <param name="containerName">Full name of the container whose
         /// Protectable Objects should be returned.</param>
         /// <param name="status">Backup status query parameter.</param>
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'VM', 'FileFolder', 'AzureSqlDb', 'SQLDB', 'Exchange',
         /// 'Sharepoint', 'VMwareVM', 'SystemState', 'Client',
         /// 'GenericDataSource', 'SQLDataBase', 'AzureFileShare',
-        /// 'SAPHanaDatabase', 'SAPAseDatabase'
+        /// 'SAPHanaDatabase', 'SAPAseDatabase', 'SAPHanaDBInstance'
         /// </summary>
         [JsonProperty(PropertyName = "workloadType")]
         public string WorkloadType { get; set; }

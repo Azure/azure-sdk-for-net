@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CustomSetupBaseType);
             writer.WriteEndObject();
         }
@@ -32,16 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "EnvironmentVariableSetup": return EnvironmentVariableSetup.DeserializeEnvironmentVariableSetup(element);
                 }
             }
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new CustomSetupBase(type);
+            return UnknownCustomSetupBase.DeserializeUnknownCustomSetupBase(element);
         }
     }
 }

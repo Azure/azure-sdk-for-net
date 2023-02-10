@@ -451,7 +451,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [documenttranslation_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Document/src
 [documenttranslation_docs]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview
-[documenttranslation_refdocs]: https://aka.ms/azsdk/net/documenttranslation/docs
+[documenttranslation_refdocs]: https://aka.ms/azsdk/net/docs/documenttranslation
 [documenttranslation_nuget_package]: https://www.nuget.org/packages/Azure.AI.Translation.Document
 [documenttranslation_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Document/samples/README.md
 [documenttranslation_rest_api]: https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/TranslatorText/stable/v1.0/TranslatorBatch.json

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,29 +15,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosDBSqlContainerResourceInfo
     {
         /// <summary> Initializes a new instance of CosmosDBSqlContainerResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL container. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public CosmosDBSqlContainerResourceInfo(string id)
+        /// <param name="containerName"> Name of the Cosmos DB SQL container. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        public CosmosDBSqlContainerResourceInfo(string containerName)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(containerName, nameof(containerName));
 
-            Id = id;
+            ContainerName = containerName;
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlContainerResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL container. </param>
+        /// <param name="containerName"> Name of the Cosmos DB SQL container. </param>
         /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the container. </param>
         /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>
         /// <param name="defaultTtl"> Default time to live. </param>
         /// <param name="uniqueKeyPolicy"> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </param>
         /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the container. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
-        internal CosmosDBSqlContainerResourceInfo(string id, CosmosDBIndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl)
+        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl)
         {
-            Id = id;
+            ContainerName = containerName;
             IndexingPolicy = indexingPolicy;
             PartitionKey = partitionKey;
             DefaultTtl = defaultTtl;
@@ -46,11 +44,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB SQL container. </summary>
-        public string Id { get; set; }
+        public string ContainerName { get; set; }
         /// <summary> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the container. </summary>
         public CosmosDBIndexingPolicy IndexingPolicy { get; set; }
         /// <summary> The configuration of the partition key to be used for partitioning data into multiple partitions. </summary>
-        public ContainerPartitionKey PartitionKey { get; set; }
+        public CosmosDBContainerPartitionKey PartitionKey { get; set; }
         /// <summary> Default time to live. </summary>
         public int? DefaultTtl { get; set; }
         /// <summary> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </summary>

@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,11 +15,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
             if (Optional.IsDefined(Serializer))
             {
-                writer.WritePropertyName("serializer");
+                writer.WritePropertyName("serializer"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Serializer);
 #else
@@ -30,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Deserializer))
             {
-                writer.WritePropertyName("deserializer");
+                writer.WritePropertyName("deserializer"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Deserializer);
 #else
@@ -55,49 +53,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AvroFormat": return AvroFormat.DeserializeAvroFormat(element);
-                    case "JsonFormat": return JsonFormat.DeserializeJsonFormat(element);
-                    case "OrcFormat": return OrcFormat.DeserializeOrcFormat(element);
-                    case "ParquetFormat": return ParquetFormat.DeserializeParquetFormat(element);
-                    case "TextFormat": return TextFormat.DeserializeTextFormat(element);
+                    case "AvroFormat": return DatasetAvroFormat.DeserializeDatasetAvroFormat(element);
+                    case "JsonFormat": return DatasetJsonFormat.DeserializeDatasetJsonFormat(element);
+                    case "OrcFormat": return DatasetOrcFormat.DeserializeDatasetOrcFormat(element);
+                    case "ParquetFormat": return DatasetParquetFormat.DeserializeDatasetParquetFormat(element);
+                    case "TextFormat": return DatasetTextFormat.DeserializeDatasetTextFormat(element);
                 }
             }
-            string type = default;
-            Optional<BinaryData> serializer = default;
-            Optional<BinaryData> deserializer = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serializer"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    serializer = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("deserializer"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    deserializer = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new DatasetStorageFormat(type, serializer.Value, deserializer.Value, additionalProperties);
+            return UnknownDatasetStorageFormat.DeserializeUnknownDatasetStorageFormat(element);
         }
     }
 }

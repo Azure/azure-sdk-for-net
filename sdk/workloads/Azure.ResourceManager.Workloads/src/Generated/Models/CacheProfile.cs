@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public CacheProfile(string skuName, RedisCacheFamily family, long capacity)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
+            Argument.AssertNotNull(skuName, nameof(skuName));
 
             SkuName = skuName;
             Family = family;

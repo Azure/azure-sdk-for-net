@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("licenses");
+            writer.WritePropertyName("licenses"u8);
             writer.WriteStartArray();
             foreach (var item in Licenses)
             {
@@ -25,10 +26,14 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(ResponseCustomData))
             {
-                writer.WritePropertyName("responseCustomData");
-                writer.WriteStringValue(ResponseCustomData);
+                writer.WritePropertyName("responseCustomData"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ResponseCustomData);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ResponseCustomData.ToString()).RootElement);
+#endif
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -36,11 +41,11 @@ namespace Azure.ResourceManager.Media.Models
         internal static ContentKeyPolicyPlayReadyConfiguration DeserializeContentKeyPolicyPlayReadyConfiguration(JsonElement element)
         {
             IList<ContentKeyPolicyPlayReadyLicense> licenses = default;
-            Optional<string> responseCustomData = default;
+            Optional<BinaryData> responseCustomData = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("licenses"))
+                if (property.NameEquals("licenses"u8))
                 {
                     List<ContentKeyPolicyPlayReadyLicense> array = new List<ContentKeyPolicyPlayReadyLicense>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -50,12 +55,17 @@ namespace Azure.ResourceManager.Media.Models
                     licenses = array;
                     continue;
                 }
-                if (property.NameEquals("responseCustomData"))
+                if (property.NameEquals("responseCustomData"u8))
                 {
-                    responseCustomData = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    responseCustomData = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

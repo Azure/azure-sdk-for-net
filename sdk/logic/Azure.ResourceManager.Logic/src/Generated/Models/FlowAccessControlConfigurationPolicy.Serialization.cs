@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedCallerIPAddresses))
             {
-                writer.WritePropertyName("allowedCallerIpAddresses");
+                writer.WritePropertyName("allowedCallerIpAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedCallerIPAddresses)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsDefined(OpenAuthenticationPolicies))
             {
-                writer.WritePropertyName("openAuthenticationPolicies");
+                writer.WritePropertyName("openAuthenticationPolicies"u8);
                 writer.WriteObjectValue(OpenAuthenticationPolicies);
             }
             writer.WriteEndObject();
@@ -36,26 +36,26 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowAccessControlConfigurationPolicy DeserializeFlowAccessControlConfigurationPolicy(JsonElement element)
         {
-            Optional<IList<IPAddressRange>> allowedCallerIPAddresses = default;
+            Optional<IList<FlowAccessControlIPAddressRange>> allowedCallerIPAddresses = default;
             Optional<OpenAuthenticationAccessPolicies> openAuthenticationPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedCallerIpAddresses"))
+                if (property.NameEquals("allowedCallerIpAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IPAddressRange> array = new List<IPAddressRange>();
+                    List<FlowAccessControlIPAddressRange> array = new List<FlowAccessControlIPAddressRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddressRange.DeserializeIPAddressRange(item));
+                        array.Add(FlowAccessControlIPAddressRange.DeserializeFlowAccessControlIPAddressRange(item));
                     }
                     allowedCallerIPAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("openAuthenticationPolicies"))
+                if (property.NameEquals("openAuthenticationPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -1,17 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.3.0-beta.1</Version>
+    <Version>1.5.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.2.0</ApiCompatVersion>
+    <ApiCompatVersion>1.4.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager</PackageId>
-    <Description>
-      Azure management SDK for Azure resources.
-      This version uses the Track 2 code generator that introduces important breaking changes, but also new features (such as intuitive authentication, custom HTTP pipeline, distributed tracing and much more).
-    </Description>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resources.</Description>
     <PackageTags>azure;management;resource</PackageTags>
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Profile\2020-09-01-hybrid.json" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared\Core" />
@@ -20,6 +21,10 @@
     <Compile Include="$(AzureCoreSharedSources)ReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)SerializationConstructorAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)TypeReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Profile\2020-09-01-hybrid.json" />
   </ItemGroup>
 
 </Project>

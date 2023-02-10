@@ -9,8 +9,6 @@ input-file:
  
 model-namespace: false
 generation1-convenience-client: true
-modelerfour:
-    seal-single-value-enum-by-default: true
 ```
 
 ## Customizations for Code Generator
@@ -69,7 +67,7 @@ directive:
       delete $.properties.configMediaType
 ```
 
-# Add content-type parameter
+# Add content-type parameter to upload manifest
 ``` yaml
 directive:
     from: swagger-document
@@ -82,6 +80,26 @@ directive:
             "description": "The manifest's Content-Type."
         });
         delete $.responses["201"].schema;
+```
+
+# Add content-range and content-length parameters to upload chunk
+``` yaml
+directive:
+    from: swagger-document
+    where: $.paths["/{nextBlobUuidLink}"].patch
+    transform: >
+        $.parameters.push({
+            "name": "Content-Range",
+            "in": "header",
+            "type": "string",
+            "description": "Range of bytes identifying the desired block of content represented by the body. Start must the end offset retrieved via status check plus one. Note that this is a non-standard use of the Content-Range header."
+        });
+        $.parameters.push({
+            "name": "Content-Length",
+            "in": "header",
+            "type": "string",
+            "description": "Length of the chunk being uploaded, corresponding the length of the request body."
+        });
 ```
 
 # Change NextLink client name to nextLink

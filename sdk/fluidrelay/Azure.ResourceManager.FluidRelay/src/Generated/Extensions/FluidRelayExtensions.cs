@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.FluidRelay.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.FluidRelay
@@ -19,41 +18,6 @@ namespace Azure.ResourceManager.FluidRelay
     /// <summary> A class to add extension methods to Azure.ResourceManager.FluidRelay. </summary>
     public static partial class FluidRelayExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient((client) =>
-            {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
-        }
-
-        /// <summary>
-        /// List all operations provided by Microsoft.FluidRelay.
-        /// Request Path: /providers/Microsoft.FluidRelay/operations
-        /// Operation Id: FluidRelayOperations_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationResult" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OperationResult> GetFluidRelayOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetFluidRelayOperationsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List all operations provided by Microsoft.FluidRelay.
-        /// Request Path: /providers/Microsoft.FluidRelay/operations
-        /// Operation Id: FluidRelayOperations_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationResult" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OperationResult> GetFluidRelayOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetFluidRelayOperations(cancellationToken);
-        }
-
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
             return subscriptionResource.GetCachedClient((client) =>
@@ -65,8 +29,16 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary>
         /// List all Fluid Relay servers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.FluidRelay/fluidRelayServers
-        /// Operation Id: FluidRelayServers_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.FluidRelay/fluidRelayServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayServers_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -78,8 +50,16 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary>
         /// List all Fluid Relay servers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.FluidRelay/fluidRelayServers
-        /// Operation Id: FluidRelayServers_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.FluidRelay/fluidRelayServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayServers_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -108,8 +88,16 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary>
         /// Get a Fluid Relay server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}
-        /// Operation Id: FluidRelayServers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayServers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="fluidRelayServerName"> The Fluid Relay server resource name. </param>
@@ -124,8 +112,16 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary>
         /// Get a Fluid Relay server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}
-        /// Operation Id: FluidRelayServers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayServers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="fluidRelayServerName"> The Fluid Relay server resource name. </param>

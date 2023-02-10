@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes a DocumentDB output data source. </summary>
-    public partial class DocumentDbOutputDataSource : OutputDataSource
+    public partial class DocumentDbOutputDataSource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of DocumentDbOutputDataSource. </summary>
         public DocumentDbOutputDataSource()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="partitionKey"> The name of the field in output events used to specify the key for partitioning output across collections. If &apos;collectionNamePattern&apos; contains the {partition} token, this property is required to be specified. </param>
         /// <param name="documentId"> The name of the field in output events used to specify the primary key which insert or update operations are based on. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal DocumentDbOutputDataSource(string outputDataSourceType, string accountId, string accountKey, string database, string collectionNamePattern, string partitionKey, string documentId, AuthenticationMode? authenticationMode) : base(outputDataSourceType)
+        internal DocumentDbOutputDataSource(string outputDataSourceType, string accountId, string accountKey, string database, string collectionNamePattern, string partitionKey, string documentId, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType)
         {
             AccountId = accountId;
             AccountKey = accountKey;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The name of the field in output events used to specify the primary key which insert or update operations are based on. </summary>
         public string DocumentId { get; set; }
         /// <summary> Authentication Mode. </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
     }
 }

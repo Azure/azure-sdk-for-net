@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/keyvault/
+    exclude:
+    - sdk/keyvault/Azure.ResourceManager.KeyVault/
 
 pr:
   branches:
@@ -20,14 +22,13 @@ pr:
   paths:
     include:
     - sdk/keyvault/
-    - sdk/resourcemanager/
-    - sdk/network/
+    exclude:
+    - sdk/keyvault/Azure.ResourceManager.KeyVault/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: keyvault
-    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Security.KeyVault.Administration
@@ -38,5 +39,3 @@ extends:
       safeName: AzureSecurityKeyVaultKeys
     - name: Azure.Security.KeyVault.Secrets
       safeName: AzureSecurityKeyVaultSecrets
-    - name: Azure.ResourceManager.KeyVault
-      safeName: AzureResourceManagerKeyVault

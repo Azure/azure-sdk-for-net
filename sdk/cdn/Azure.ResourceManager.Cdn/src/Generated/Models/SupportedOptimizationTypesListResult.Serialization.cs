@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<IReadOnlyList<OptimizationType>> supportedOptimizationTypes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("supportedOptimizationTypes"))
+                if (property.NameEquals("supportedOptimizationTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

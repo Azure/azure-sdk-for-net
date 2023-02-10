@@ -21,10 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
         public MongoDBDatabaseCreateOrUpdateContent(AzureLocation location, MongoDBDatabaseResourceInfo resource) : base(location)
         {
-            if (resource == null)
-            {
-                throw new ArgumentNullException(nameof(resource));
-            }
+            Argument.AssertNotNull(resource, nameof(resource));
 
             Resource = resource;
         }
@@ -47,9 +44,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The standard JSON format of a MongoDB database. </summary>
         internal MongoDBDatabaseResourceInfo Resource { get; set; }
         /// <summary> Name of the Cosmos DB MongoDB database. </summary>
-        public string ResourceId
+        public string ResourceDatabaseName
         {
-            get => Resource is null ? default : Resource.Id;
+            get => Resource is null ? default : Resource.DatabaseName;
             set => Resource = new MongoDBDatabaseResourceInfo(value);
         }
 

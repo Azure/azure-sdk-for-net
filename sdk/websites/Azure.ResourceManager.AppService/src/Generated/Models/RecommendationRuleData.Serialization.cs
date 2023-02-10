@@ -21,69 +21,69 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RecommendationName))
             {
-                writer.WritePropertyName("recommendationName");
+                writer.WritePropertyName("recommendationName"u8);
                 writer.WriteStringValue(RecommendationName);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("message");
+                writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
             if (Optional.IsDefined(RecommendationId))
             {
-                writer.WritePropertyName("recommendationId");
+                writer.WritePropertyName("recommendationId"u8);
                 writer.WriteStringValue(RecommendationId.Value);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(ActionName))
             {
-                writer.WritePropertyName("actionName");
+                writer.WritePropertyName("actionName"u8);
                 writer.WriteStringValue(ActionName);
             }
             if (Optional.IsDefined(Level))
             {
-                writer.WritePropertyName("level");
+                writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
             if (Optional.IsDefined(Channels))
             {
-                writer.WritePropertyName("channels");
+                writer.WritePropertyName("channels"u8);
                 writer.WriteStringValue(Channels.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsDynamic))
             {
-                writer.WritePropertyName("isDynamic");
+                writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);
             }
             if (Optional.IsDefined(ExtensionName))
             {
-                writer.WritePropertyName("extensionName");
+                writer.WritePropertyName("extensionName"u8);
                 writer.WriteStringValue(ExtensionName);
             }
             if (Optional.IsDefined(BladeName))
             {
-                writer.WritePropertyName("bladeName");
+                writer.WritePropertyName("bladeName"u8);
                 writer.WriteStringValue(BladeName);
             }
             if (Optional.IsDefined(ForwardLink))
             {
-                writer.WritePropertyName("forwardLink");
+                writer.WritePropertyName("forwardLink"u8);
                 writer.WriteStringValue(ForwardLink);
             }
             writer.WriteEndObject();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> description = default;
             Optional<string> actionName = default;
             Optional<NotificationLevel> level = default;
-            Optional<Channel> channels = default;
+            Optional<RecommendationChannel> channels = default;
             Optional<IReadOnlyList<string>> categoryTags = default;
             Optional<bool> isDynamic = default;
             Optional<string> extensionName = default;
@@ -112,37 +112,37 @@ namespace Azure.ResourceManager.AppService
             Optional<string> forwardLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -151,22 +151,22 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("recommendationName"))
+                        if (property0.NameEquals("recommendationName"u8))
                         {
                             recommendationName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("message"))
+                        if (property0.NameEquals("message"u8))
                         {
                             message = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("recommendationId"))
+                        if (property0.NameEquals("recommendationId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -176,17 +176,17 @@ namespace Azure.ResourceManager.AppService
                             recommendationId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("actionName"))
+                        if (property0.NameEquals("actionName"u8))
                         {
                             actionName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("level"))
+                        if (property0.NameEquals("level"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -196,17 +196,17 @@ namespace Azure.ResourceManager.AppService
                             level = property0.Value.GetString().ToNotificationLevel();
                             continue;
                         }
-                        if (property0.NameEquals("channels"))
+                        if (property0.NameEquals("channels"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            channels = property0.Value.GetString().ToChannel();
+                            channels = property0.Value.GetString().ToRecommendationChannel();
                             continue;
                         }
-                        if (property0.NameEquals("categoryTags"))
+                        if (property0.NameEquals("categoryTags"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService
                             categoryTags = array;
                             continue;
                         }
-                        if (property0.NameEquals("isDynamic"))
+                        if (property0.NameEquals("isDynamic"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -231,17 +231,17 @@ namespace Azure.ResourceManager.AppService
                             isDynamic = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("extensionName"))
+                        if (property0.NameEquals("extensionName"u8))
                         {
                             extensionName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("bladeName"))
+                        if (property0.NameEquals("bladeName"u8))
                         {
                             bladeName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("forwardLink"))
+                        if (property0.NameEquals("forwardLink"u8))
                         {
                             forwardLink = property0.Value.GetString();
                             continue;

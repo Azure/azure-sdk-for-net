@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 ResourceGroupResource resGroup = (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, groupName, new ResourceGroupData(Location))).Value;
 
                 configurationStoreName = Recording.GenerateAssetName("testapp-");
-                ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
+                AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
                 {
-                    PublicNetworkAccess = PublicNetworkAccess.Disabled
+                    PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
                 };
-                ConfigurationStoreResource configStore = (await resGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
+                AppConfigurationStoreResource configStore = (await resGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
                 await configStore.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task GetAllTest()
         {
             int count = 0;
-            await foreach (var item in subscription.GetDeletedConfigurationStores().GetAllAsync())
+            await foreach (var item in subscription.GetDeletedAppConfigurationStores().GetAllAsync())
             {
                 count++;
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetTest()
         {
-            DeletedConfigurationStoreResource deletedConfigurationStore = await subscription.GetDeletedConfigurationStores().GetAsync(Location, configurationStoreName);
+            DeletedAppConfigurationStoreResource deletedConfigurationStore = await subscription.GetDeletedAppConfigurationStores().GetAsync(Location, configurationStoreName);
             Assert.AreEqual(deletedConfigurationStore.Data.Name, configurationStoreName);
         }
     }

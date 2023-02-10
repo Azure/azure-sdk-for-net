@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrincipalId))
             {
-                writer.WritePropertyName("principalId");
-                writer.WriteStringValue(PrincipalId);
+                writer.WritePropertyName("principalId"u8);
+                writer.WriteStringValue(PrincipalId.Value);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(LedgerRoleName))
             {
-                writer.WritePropertyName("ledgerRoleName");
+                writer.WritePropertyName("ledgerRoleName"u8);
                 writer.WriteStringValue(LedgerRoleName.Value.ToString());
             }
             writer.WriteEndObject();
@@ -36,17 +36,22 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         internal static AadBasedSecurityPrincipal DeserializeAadBasedSecurityPrincipal(JsonElement element)
         {
-            Optional<string> principalId = default;
+            Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
-            Optional<LedgerRoleName> ledgerRoleName = default;
+            Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("principalId"))
+                if (property.NameEquals("principalId"u8))
                 {
-                    principalId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,18 +61,18 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("ledgerRoleName"))
+                if (property.NameEquals("ledgerRoleName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ledgerRoleName = new LedgerRoleName(property.Value.GetString());
+                    ledgerRoleName = new ConfidentialLedgerRoleName(property.Value.GetString());
                     continue;
                 }
             }
-            return new AadBasedSecurityPrincipal(principalId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(ledgerRoleName));
+            return new AadBasedSecurityPrincipal(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(ledgerRoleName));
         }
     }
 }

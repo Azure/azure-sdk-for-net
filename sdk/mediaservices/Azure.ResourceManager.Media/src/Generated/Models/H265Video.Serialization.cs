@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SceneChangeDetection))
+            if (Optional.IsDefined(UseSceneChangeDetection))
             {
-                writer.WritePropertyName("sceneChangeDetection");
-                writer.WriteBooleanValue(SceneChangeDetection.Value);
+                writer.WritePropertyName("sceneChangeDetection"u8);
+                writer.WriteBooleanValue(UseSceneChangeDetection.Value);
             }
             if (Optional.IsDefined(Complexity))
             {
-                writer.WritePropertyName("complexity");
+                writer.WritePropertyName("complexity"u8);
                 writer.WriteStringValue(Complexity.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Layers))
             {
-                writer.WritePropertyName("layers");
+                writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
@@ -39,24 +39,24 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsDefined(KeyFrameInterval))
             {
-                writer.WritePropertyName("keyFrameInterval");
+                writer.WritePropertyName("keyFrameInterval"u8);
                 writer.WriteStringValue(KeyFrameInterval.Value, "P");
             }
             if (Optional.IsDefined(StretchMode))
             {
-                writer.WritePropertyName("stretchMode");
+                writer.WritePropertyName("stretchMode"u8);
                 writer.WriteStringValue(StretchMode.Value.ToString());
             }
             if (Optional.IsDefined(SyncMode))
             {
-                writer.WritePropertyName("syncMode");
+                writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             writer.WriteEndObject();
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.Media.Models
             Optional<H265Complexity> complexity = default;
             Optional<IList<H265Layer>> layers = default;
             Optional<TimeSpan> keyFrameInterval = default;
-            Optional<StretchMode> stretchMode = default;
+            Optional<InputVideoStretchMode> stretchMode = default;
             Optional<VideoSyncMode> syncMode = default;
             string odataType = default;
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sceneChangeDetection"))
+                if (property.NameEquals("sceneChangeDetection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Media.Models
                     sceneChangeDetection = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("complexity"))
+                if (property.NameEquals("complexity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Media.Models
                     complexity = new H265Complexity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("layers"))
+                if (property.NameEquals("layers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Media.Models
                     layers = array;
                     continue;
                 }
-                if (property.NameEquals("keyFrameInterval"))
+                if (property.NameEquals("keyFrameInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.Media.Models
                     keyFrameInterval = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("stretchMode"))
+                if (property.NameEquals("stretchMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    stretchMode = new StretchMode(property.Value.GetString());
+                    stretchMode = new InputVideoStretchMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("syncMode"))
+                if (property.NameEquals("syncMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.Media.Models
                     syncMode = new VideoSyncMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;

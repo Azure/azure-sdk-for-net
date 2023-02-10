@@ -10,10 +10,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [ClientTestFixture(true, "2022-07-02", "2021-04-01", "2019-07-01")]
     public class ManagedDiskCollectionTests : ComputeTestBase
     {
-        public ManagedDiskCollectionTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+        public ManagedDiskCollectionTests(bool isAsync, string apiVersion)
+            : base(isAsync, ManagedDiskResource.ResourceType, apiVersion)//, RecordedTestMode.Record)
         {
         }
 

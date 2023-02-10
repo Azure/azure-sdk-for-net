@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -15,12 +16,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubTestRouteContent. </summary>
         /// <param name="route"> Route properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="route"/> is null. </exception>
-        public IotHubTestRouteContent(RouteProperties route)
+        public IotHubTestRouteContent(RoutingRuleProperties route)
         {
-            if (route == null)
-            {
-                throw new ArgumentNullException(nameof(route));
-            }
+            Argument.AssertNotNull(route, nameof(route));
 
             Route = route;
         }
@@ -28,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Routing message. </summary>
         public RoutingMessage Message { get; set; }
         /// <summary> Route properties. </summary>
-        public RouteProperties Route { get; }
+        public RoutingRuleProperties Route { get; }
         /// <summary> Routing Twin Reference. </summary>
         public RoutingTwin Twin { get; set; }
     }

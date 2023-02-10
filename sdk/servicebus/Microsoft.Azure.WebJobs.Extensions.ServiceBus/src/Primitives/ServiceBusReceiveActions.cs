@@ -102,7 +102,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         ///   The specified sequence number does not correspond to a message that has been deferred.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageNotFound"/> in this case.
         /// </exception>
-       public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
+        public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
@@ -122,6 +122,40 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             }
 
             return await _sessionEventArgs.GetReceiveActions().ReceiveDeferredMessagesAsync(sequenceNumbers, cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <inheritdoc cref="ServiceBusReceiver.PeekMessagesAsync"/>
+        public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesAsync(
+            int maxMessages,
+            long? fromSequenceNumber = default,
+            CancellationToken cancellationToken = default)
+        {
+            ValidateCallbackInScope();
+
+            if (_receiver != null)
+            {
+                // Peeked messages are not locked so we don't need to track them for lock renewal or autocompletion, as these options do not apply.
+                return await _receiver.PeekMessagesAsync(
+                       maxMessages: maxMessages,
+                       fromSequenceNumber: fromSequenceNumber,
+                       cancellationToken: cancellationToken)
+                   .ConfigureAwait(false);
+            }
+
+            if (_eventArgs != null)
+            {
+                return await _eventArgs.GetReceiveActions().PeekMessagesAsync(
+                        maxMessages: maxMessages,
+                        fromSequenceNumber: fromSequenceNumber,
+                        cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+
+            return await _sessionEventArgs.GetReceiveActions().PeekMessagesAsync(
+                    maxMessages: maxMessages,
+                    fromSequenceNumber: fromSequenceNumber,
+                    cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
 

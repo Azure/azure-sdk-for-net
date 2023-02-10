@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<WritableSubResource>> networkInterfaces = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkInterfaces"))
+                if (property.NameEquals("networkInterfaces"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     networkInterfaces = array;
                     continue;

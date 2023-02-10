@@ -5,43 +5,70 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class ConnectivityEndpoint
+    public partial class ConnectivityEndpoint : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Protocol))
+            {
+                writer.WritePropertyName("protocol"u8);
+                writer.WriteStringValue(Protocol);
+            }
+            if (Optional.IsDefined(EndpointLocation))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(EndpointLocation);
+            }
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                writer.WriteNumberValue(Port.Value);
+            }
+            if (Optional.IsDefined(PrivateIPAddress))
+            {
+                writer.WritePropertyName("privateIPAddress"u8);
+                writer.WriteStringValue(PrivateIPAddress.ToString());
+            }
+            writer.WriteEndObject();
+        }
+
         internal static ConnectivityEndpoint DeserializeConnectivityEndpoint(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> protocol = default;
-            Optional<AzureLocation> location = default;
+            Optional<string> location = default;
             Optional<int> port = default;
-            Optional<string> privateIPAddress = default;
+            Optional<IPAddress> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     protocol = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
+                    location = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,13 +78,18 @@ namespace Azure.ResourceManager.HDInsight.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("privateIPAddress"))
+                if (property.NameEquals("privateIPAddress"u8))
                 {
-                    privateIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
             }
-            return new ConnectivityEndpoint(name.Value, protocol.Value, Optional.ToNullable(location), Optional.ToNullable(port), privateIPAddress.Value);
+            return new ConnectivityEndpoint(name.Value, protocol.Value, location.Value, Optional.ToNullable(port), privateIPAddress.Value);
         }
     }
 }

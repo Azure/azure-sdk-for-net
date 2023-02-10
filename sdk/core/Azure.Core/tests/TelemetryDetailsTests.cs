@@ -57,7 +57,7 @@ namespace Azure.Core.Tests
 
             target.Apply(message);
 
-            message.TryGetInternalProperty(typeof(UserAgentValueKey), out var obj);
+            message.TryGetProperty(typeof(UserAgentValueKey), out var obj);
             string actualValue = obj as string;
 
             Assert.AreEqual(target.ToString(), actualValue);

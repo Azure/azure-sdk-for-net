@@ -24,17 +24,17 @@ namespace Azure.Security.KeyVault.Administration.Models
             Optional<string> azureStorageBlobContainerUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusDetails"))
+                if (property.NameEquals("statusDetails"u8))
                 {
                     statusDetails = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     error = KeyVaultServiceError.DeserializeKeyVaultServiceError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     startTime = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,12 +64,12 @@ namespace Azure.Security.KeyVault.Administration.Models
                     endTime = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureStorageBlobContainerUri"))
+                if (property.NameEquals("azureStorageBlobContainerUri"u8))
                 {
                     azureStorageBlobContainerUri = property.Value.GetString();
                     continue;

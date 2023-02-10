@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of ReservationCatalog. </summary>
-        /// <param name="reservedResourceType"> The type of resource the SKU applies to. </param>
+        /// <param name="appliedResourceType"> The type of resource the SKU applies to. </param>
         /// <param name="skuName"> The name of SKU. </param>
         /// <param name="billingPlans"> The billing plan options available for this SKU. </param>
         /// <param name="terms"> Available reservation terms for this resource. </param>
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="tier"> The tier of this SKU. </param>
         /// <param name="size"> The size of this SKU. </param>
         /// <param name="capabilities"></param>
-        internal ReservationCatalog(string reservedResourceType, string skuName, IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans, IReadOnlyList<ReservationTerm> terms, IReadOnlyList<AzureLocation> locations, IReadOnlyList<SkuProperty> skuProperties, CatalogMsrp msrp, IReadOnlyList<SkuRestriction> restrictions, string tier, string size, IReadOnlyList<SkuCapability> capabilities)
+        internal ReservationCatalog(string appliedResourceType, string skuName, IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans, IReadOnlyList<ReservationTerm> terms, IReadOnlyList<AzureLocation> locations, IReadOnlyList<SkuProperty> skuProperties, CatalogMsrp msrp, IReadOnlyList<SkuRestriction> restrictions, string tier, string size, IReadOnlyList<SkuCapability> capabilities)
         {
-            ReservedResourceType = reservedResourceType;
+            AppliedResourceType = appliedResourceType;
             SkuName = skuName;
             BillingPlans = billingPlans;
             Terms = terms;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>
-        public string ReservedResourceType { get; }
+        public string AppliedResourceType { get; }
         /// <summary> The name of SKU. </summary>
         public string SkuName { get; }
         /// <summary> The billing plan options available for this SKU. </summary>

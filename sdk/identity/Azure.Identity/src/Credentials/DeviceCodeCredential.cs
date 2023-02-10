@@ -18,6 +18,7 @@ namespace Azure.Identity
     public class DeviceCodeCredential : TokenCredential
     {
         private readonly string _tenantId;
+        internal readonly string[] AdditionallyAllowedTenantIds;
         internal MsalPublicClient Client { get; set; }
         internal string ClientId { get; }
         internal bool DisableAutomaticAuthentication { get; }
@@ -92,6 +93,7 @@ namespace Azure.Identity
                 ClientId,
                 AzureAuthorityHosts.GetDeviceCodeRedirectUri(Pipeline.AuthorityHost).AbsoluteUri,
                 options);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }
 
         /// <summary>
@@ -143,7 +145,9 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token for a user account, authenticating them through the device code authentication flow. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Obtains a token for a user account, authenticating them through the device code authentication flow. Acquired tokens are cached
+        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -154,7 +158,9 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token for a user account, authenticating them through the device code authentication flow. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Obtains a token for a user account, authenticating them through the device code authentication flow. Acquired tokens are cached
+        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -197,11 +203,12 @@ namespace Azure.Identity
             {
                 Exception inner = null;
 
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
+
                 if (Record != null)
                 {
                     try
                     {
-                        var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
                         AuthenticationResult result = await Client
                             .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
                             .ConfigureAwait(false);

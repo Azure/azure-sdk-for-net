@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Logic
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
-                writer.WritePropertyName("integrationServiceEnvironment");
+                writer.WritePropertyName("integrationServiceEnvironment"u8);
                 writer.WriteObjectValue(IntegrationServiceEnvironment);
             }
             if (Optional.IsDefined(DeploymentParameters))
             {
-                writer.WritePropertyName("deploymentParameters");
+                writer.WritePropertyName("deploymentParameters"u8);
                 writer.WriteObjectValue(DeploymentParameters);
             }
             writer.WriteEndObject();
@@ -58,21 +58,21 @@ namespace Azure.ResourceManager.Logic
             Optional<SystemData> systemData = default;
             Optional<string> name0 = default;
             Optional<IReadOnlyDictionary<string, BinaryData>> connectionParameters = default;
-            Optional<ApiResourceMetadata> metadata = default;
-            Optional<IReadOnlyList<string>> runtimeUrls = default;
-            Optional<ApiResourceGeneralInformation> generalInformation = default;
+            Optional<LogicApiResourceMetadata> metadata = default;
+            Optional<IReadOnlyList<Uri>> runtimeUrls = default;
+            Optional<LogicApiResourceGeneralInformation> generalInformation = default;
             Optional<IReadOnlyList<string>> capabilities = default;
-            Optional<ApiResourceBackendService> backendService = default;
-            Optional<ApiResourcePolicies> policies = default;
+            Optional<LogicApiResourceBackendService> backendService = default;
+            Optional<LogicApiResourcePolicies> policies = default;
             Optional<Uri> apiDefinitionUrl = default;
-            Optional<ApiResourceDefinitions> apiDefinitions = default;
-            Optional<ResourceReference> integrationServiceEnvironment = default;
-            Optional<WorkflowProvisioningState> provisioningState = default;
-            Optional<ApiTier> category = default;
+            Optional<LogicApiResourceDefinitions> apiDefinitions = default;
+            Optional<LogicResourceReference> integrationServiceEnvironment = default;
+            Optional<LogicWorkflowProvisioningState> provisioningState = default;
+            Optional<LogicApiTier> category = default;
             Optional<IntegrationServiceEnvironmentManagedApiDeploymentParameters> deploymentParameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,37 +87,37 @@ namespace Azure.ResourceManager.Logic
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.Logic
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("name"))
+                        if (property0.NameEquals("name"u8))
                         {
                             name0 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("connectionParameters"))
+                        if (property0.NameEquals("connectionParameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -146,42 +146,42 @@ namespace Azure.ResourceManager.Logic
                             connectionParameters = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("metadata"))
+                        if (property0.NameEquals("metadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            metadata = ApiResourceMetadata.DeserializeApiResourceMetadata(property0.Value);
+                            metadata = LogicApiResourceMetadata.DeserializeLogicApiResourceMetadata(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("runtimeUrls"))
+                        if (property0.NameEquals("runtimeUrls"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<Uri> array = new List<Uri>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new Uri(item.GetString()));
                             }
                             runtimeUrls = array;
                             continue;
                         }
-                        if (property0.NameEquals("generalInformation"))
+                        if (property0.NameEquals("generalInformation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            generalInformation = ApiResourceGeneralInformation.DeserializeApiResourceGeneralInformation(property0.Value);
+                            generalInformation = LogicApiResourceGeneralInformation.DeserializeLogicApiResourceGeneralInformation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("capabilities"))
+                        if (property0.NameEquals("capabilities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -196,27 +196,27 @@ namespace Azure.ResourceManager.Logic
                             capabilities = array;
                             continue;
                         }
-                        if (property0.NameEquals("backendService"))
+                        if (property0.NameEquals("backendService"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backendService = ApiResourceBackendService.DeserializeApiResourceBackendService(property0.Value);
+                            backendService = LogicApiResourceBackendService.DeserializeLogicApiResourceBackendService(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("policies"))
+                        if (property0.NameEquals("policies"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            policies = ApiResourcePolicies.DeserializeApiResourcePolicies(property0.Value);
+                            policies = LogicApiResourcePolicies.DeserializeLogicApiResourcePolicies(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("apiDefinitionUrl"))
+                        if (property0.NameEquals("apiDefinitionUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -226,47 +226,47 @@ namespace Azure.ResourceManager.Logic
                             apiDefinitionUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("apiDefinitions"))
+                        if (property0.NameEquals("apiDefinitions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            apiDefinitions = ApiResourceDefinitions.DeserializeApiResourceDefinitions(property0.Value);
+                            apiDefinitions = LogicApiResourceDefinitions.DeserializeLogicApiResourceDefinitions(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("integrationServiceEnvironment"))
+                        if (property0.NameEquals("integrationServiceEnvironment"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            integrationServiceEnvironment = ResourceReference.DeserializeResourceReference(property0.Value);
+                            integrationServiceEnvironment = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new WorkflowProvisioningState(property0.Value.GetString());
+                            provisioningState = new LogicWorkflowProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("category"))
+                        if (property0.NameEquals("category"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            category = new ApiTier(property0.Value.GetString());
+                            category = new LogicApiTier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("deploymentParameters"))
+                        if (property0.NameEquals("deploymentParameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

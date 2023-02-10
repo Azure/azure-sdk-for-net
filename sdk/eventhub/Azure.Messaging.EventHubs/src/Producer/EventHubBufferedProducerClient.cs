@@ -46,9 +46,10 @@ namespace Azure.Messaging.EventHubs.Producer
     ///
     /// <remarks>
     ///   The <see cref="EventHubBufferedProducerClient"/> is safe to cache and use as a singleton for the lifetime of an
-    ///   application. This is the recommended approach, since the client is responsible for efficient network,
-    ///   CPU, and memory use. Calling <see cref="CloseAsync(bool, CancellationToken)"/> or <see cref="DisposeAsync"/>
-    ///   is required so that resources can be cleaned up after use.
+    ///   application, which is the recommended approach.  The producer is responsible for ensuring efficient network,
+    ///   CPU, and memory use. Calling either <see cref="CloseAsync(bool, CancellationToken)"/> or <see cref="DisposeAsync"/>
+    ///   when no more events will be enqueued or as the application is shutting down is required so that the buffer can be flushed
+    ///   and resources cleaned up properly.
     /// </remarks>
     ///
     /// <seealso cref="EventHubProducerClient" />
@@ -1880,6 +1881,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 _backgroundTasksCancellationSource?.Cancel();
                 _backgroundTasksCancellationSource?.Dispose();
+                _backgroundTasksCancellationSource = null;
 
                 if (cancelActiveSendOperations)
                 {

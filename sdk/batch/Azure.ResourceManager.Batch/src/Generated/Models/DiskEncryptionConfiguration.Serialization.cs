@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Targets))
             {
-                writer.WritePropertyName("targets");
+                writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Targets)
                 {
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static DiskEncryptionConfiguration DeserializeDiskEncryptionConfiguration(JsonElement element)
         {
-            Optional<IList<DiskEncryptionTarget>> targets = default;
+            Optional<IList<BatchDiskEncryptionTarget>> targets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targets"))
+                if (property.NameEquals("targets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DiskEncryptionTarget> array = new List<DiskEncryptionTarget>();
+                    List<BatchDiskEncryptionTarget> array = new List<BatchDiskEncryptionTarget>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToDiskEncryptionTarget());
+                        array.Add(item.GetString().ToBatchDiskEncryptionTarget());
                     }
                     targets = array;
                     continue;

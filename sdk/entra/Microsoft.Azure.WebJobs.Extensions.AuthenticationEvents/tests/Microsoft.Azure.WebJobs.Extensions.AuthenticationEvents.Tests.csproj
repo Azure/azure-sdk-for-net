@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Payloads\TokenIssuanceStart\CloudEventActionResponse.json" />
+		<None Remove="Payloads\TokenIssuanceStart\ConversionPayload.json" />
+		<None Remove="Payloads\TokenIssuanceStart\InvalidActionResponse.json" />
+		<None Remove="Payloads\TokenIssuanceStart\NoActionResponse.json" />
+		<None Remove="Payloads\TokenIssuanceStart\QueryParameters.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Payloads\OpenApi\OpenApiDocument.json" />
+		<EmbeddedResource Include="Payloads\OpenApi\OpenApiDocumentMerge.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\CloudEventActionResponse.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ConversionPayload.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\InvalidActionResponse.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\NoActionResponse.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ExpectedPayload.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\QueryParameters.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		
+		<PackageReference Include="xunit" />
+		<PackageReference Include="Moq" />
+		
+		<PackageReference Include="xunit.runner.visualstudio">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="coverlet.collector">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+
+		<ProjectReference Include="$(AzureCoreTestFramework)" />
+
+		<ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.csproj" />
+	</ItemGroup>
+
+
+</Project>

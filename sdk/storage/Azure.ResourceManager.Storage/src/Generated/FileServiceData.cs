@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Protocol settings for file service. </summary>
         internal ProtocolSettings ProtocolSettings { get; set; }
         /// <summary> Setting for SMB protocol. </summary>
-        public SmbSetting ProtocolSmb
+        public SmbSetting ProtocolSmbSetting
         {
-            get => ProtocolSettings is null ? default : ProtocolSettings.Smb;
+            get => ProtocolSettings is null ? default : ProtocolSettings.SmbSetting;
             set
             {
                 if (ProtocolSettings is null)
                     ProtocolSettings = new ProtocolSettings();
-                ProtocolSettings.Smb = value;
+                ProtocolSettings.SmbSetting = value;
             }
         }
     }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static PartitionUsage DeserializePartitionUsage(JsonElement element)
         {
-            Optional<string> partitionId = default;
+            Optional<Guid> partitionId = default;
             Optional<string> partitionKeyRangeId = default;
             Optional<CosmosDBMetricUnitType> unit = default;
             Optional<CosmosDBMetricName> name = default;
@@ -23,17 +24,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<long> currentValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("partitionId"))
+                if (property.NameEquals("partitionId"u8))
                 {
-                    partitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    partitionId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("partitionKeyRangeId"))
+                if (property.NameEquals("partitionKeyRangeId"u8))
                 {
                     partitionKeyRangeId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     unit = new CosmosDBMetricUnitType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,12 +59,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value);
                     continue;
                 }
-                if (property.NameEquals("quotaPeriod"))
+                if (property.NameEquals("quotaPeriod"u8))
                 {
                     quotaPeriod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     limit = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PartitionUsage(Optional.ToNullable(unit), name.Value, quotaPeriod.Value, Optional.ToNullable(limit), Optional.ToNullable(currentValue), partitionId.Value, partitionKeyRangeId.Value);
+            return new PartitionUsage(Optional.ToNullable(unit), name.Value, quotaPeriod.Value, Optional.ToNullable(limit), Optional.ToNullable(currentValue), Optional.ToNullable(partitionId), partitionKeyRangeId.Value);
         }
     }
 }

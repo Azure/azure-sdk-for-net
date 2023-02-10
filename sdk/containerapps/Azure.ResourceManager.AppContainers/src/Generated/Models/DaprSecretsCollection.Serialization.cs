@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static DaprSecretsCollection DeserializeDaprSecretsCollection(JsonElement element)
         {
-            IReadOnlyList<AppSecret> value = default;
+            IReadOnlyList<ContainerAppDaprSecret> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<AppSecret> array = new List<AppSecret>();
+                    List<ContainerAppDaprSecret> array = new List<ContainerAppDaprSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppSecret.DeserializeAppSecret(item));
+                        array.Add(ContainerAppDaprSecret.DeserializeContainerAppDaprSecret(item));
                     }
                     value = array;
                     continue;

@@ -20,34 +20,34 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(IssueDetected))
             {
-                writer.WritePropertyName("issueDetected");
+                writer.WritePropertyName("issueDetected"u8);
                 writer.WriteBooleanValue(IssueDetected.Value);
             }
             if (Optional.IsDefined(DetectorDefinition))
             {
-                writer.WritePropertyName("detectorDefinition");
+                writer.WritePropertyName("detectorDefinition"u8);
                 writer.WriteObjectValue(DetectorDefinition);
             }
             if (Optional.IsCollectionDefined(Metrics))
             {
-                writer.WritePropertyName("metrics");
+                writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(AbnormalTimePeriods))
             {
-                writer.WritePropertyName("abnormalTimePeriods");
+                writer.WritePropertyName("abnormalTimePeriods"u8);
                 writer.WriteStartArray();
                 foreach (var item in AbnormalTimePeriods)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(Data))
             {
-                writer.WritePropertyName("data");
+                writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(ResponseMetaData))
             {
-                writer.WritePropertyName("responseMetaData");
+                writer.WritePropertyName("responseMetaData"u8);
                 writer.WriteObjectValue(ResponseMetaData);
             }
             writer.WriteEndObject();
@@ -102,41 +102,41 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DetectorDefinition> detectorDefinition = default;
             Optional<IList<DiagnosticMetricSet>> metrics = default;
             Optional<IList<DetectorAbnormalTimePeriod>> abnormalTimePeriods = default;
-            Optional<IList<IList<NameValuePair>>> data = default;
-            Optional<ResponseMetaData> responseMetaData = default;
+            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
+            Optional<DetectorMetadata> responseMetaData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService.Models
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("endTime"))
+                        if (property0.NameEquals("endTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
                             endTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("issueDetected"))
+                        if (property0.NameEquals("issueDetected"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppService.Models
                             issueDetected = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("detectorDefinition"))
+                        if (property0.NameEquals("detectorDefinition"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AppService.Models
                             detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("metrics"))
+                        if (property0.NameEquals("metrics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                             metrics = array;
                             continue;
                         }
-                        if (property0.NameEquals("abnormalTimePeriods"))
+                        if (property0.NameEquals("abnormalTimePeriods"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -215,34 +215,34 @@ namespace Azure.ResourceManager.AppService.Models
                             abnormalTimePeriods = array;
                             continue;
                         }
-                        if (property0.NameEquals("data"))
+                        if (property0.NameEquals("data"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IList<NameValuePair>> array = new List<IList<NameValuePair>>();
+                            List<IList<AppServiceNameValuePair>> array = new List<IList<AppServiceNameValuePair>>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                List<NameValuePair> array0 = new List<NameValuePair>();
+                                List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                                 foreach (var item0 in item.EnumerateArray())
                                 {
-                                    array0.Add(NameValuePair.DeserializeNameValuePair(item0));
+                                    array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
                                 }
                                 array.Add(array0);
                             }
                             data = array;
                             continue;
                         }
-                        if (property0.NameEquals("responseMetaData"))
+                        if (property0.NameEquals("responseMetaData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            responseMetaData = ResponseMetaData.DeserializeResponseMetaData(property0.Value);
+                            responseMetaData = DetectorMetadata.DeserializeDetectorMetadata(property0.Value);
                             continue;
                         }
                     }

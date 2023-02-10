@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/hdinsight/
+    exclude:
+    - sdk/hdinsight/Azure.ResourceManager.HDInsight/
 
 pr:
   branches:
@@ -20,7 +22,8 @@ pr:
   paths:
     include:
     - sdk/hdinsight/
-    - sdk/resourcemanager/
+    exclude:
+    - sdk/hdinsight/Azure.ResourceManager.HDInsight/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -30,5 +33,3 @@ extends:
     Artifacts:
     - name: Microsoft.Azure.HDInsight.Job
       safeName: MicrosoftAzureHDInsightJob
-    - name: Azure.ResourceManager.HDInsight
-      safeName: AzureResourceManagerHDInsight

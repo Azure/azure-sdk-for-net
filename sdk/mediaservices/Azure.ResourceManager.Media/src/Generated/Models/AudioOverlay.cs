@@ -6,21 +6,19 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes the properties of an audio overlay. </summary>
-    public partial class AudioOverlay : Overlay
+    public partial class AudioOverlay : MediaOverlayBase
     {
         /// <summary> Initializes a new instance of AudioOverlay. </summary>
         /// <param name="inputLabel"> The label of the job input which is to be used as an overlay. The Input must specify exactly one file. You can specify an image file in JPG, PNG, GIF or BMP format, or an audio file (such as a WAV, MP3, WMA or M4A file), or a video file. See https://aka.ms/mesformats for the complete list of supported audio and video file formats. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputLabel"/> is null. </exception>
         public AudioOverlay(string inputLabel) : base(inputLabel)
         {
-            if (inputLabel == null)
-            {
-                throw new ArgumentNullException(nameof(inputLabel));
-            }
+            Argument.AssertNotNull(inputLabel, nameof(inputLabel));
 
             OdataType = "#Microsoft.Media.AudioOverlay";
         }

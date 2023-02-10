@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The URIs that are used to perform a retrieval of a public blob, queue, table, web or dfs object. </summary>
@@ -16,38 +18,38 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of StorageAccountEndpoints. </summary>
-        /// <param name="blob"> Gets the blob endpoint. </param>
-        /// <param name="queue"> Gets the queue endpoint. </param>
-        /// <param name="table"> Gets the table endpoint. </param>
-        /// <param name="file"> Gets the file endpoint. </param>
-        /// <param name="web"> Gets the web endpoint. </param>
-        /// <param name="dfs"> Gets the dfs endpoint. </param>
+        /// <param name="blobUri"> Gets the blob endpoint. </param>
+        /// <param name="queueUri"> Gets the queue endpoint. </param>
+        /// <param name="tableUri"> Gets the table endpoint. </param>
+        /// <param name="fileUri"> Gets the file endpoint. </param>
+        /// <param name="webUri"> Gets the web endpoint. </param>
+        /// <param name="dfsUri"> Gets the dfs endpoint. </param>
         /// <param name="microsoftEndpoints"> Gets the microsoft routing storage endpoints. </param>
         /// <param name="internetEndpoints"> Gets the internet routing storage endpoints. </param>
-        internal StorageAccountEndpoints(string blob, string queue, string table, string file, string web, string dfs, StorageAccountMicrosoftEndpoints microsoftEndpoints, StorageAccountInternetEndpoints internetEndpoints)
+        internal StorageAccountEndpoints(Uri blobUri, Uri queueUri, Uri tableUri, Uri fileUri, Uri webUri, Uri dfsUri, StorageAccountMicrosoftEndpoints microsoftEndpoints, StorageAccountInternetEndpoints internetEndpoints)
         {
-            Blob = blob;
-            Queue = queue;
-            Table = table;
-            File = file;
-            Web = web;
-            Dfs = dfs;
+            BlobUri = blobUri;
+            QueueUri = queueUri;
+            TableUri = tableUri;
+            FileUri = fileUri;
+            WebUri = webUri;
+            DfsUri = dfsUri;
             MicrosoftEndpoints = microsoftEndpoints;
             InternetEndpoints = internetEndpoints;
         }
 
         /// <summary> Gets the blob endpoint. </summary>
-        public string Blob { get; }
+        public Uri BlobUri { get; }
         /// <summary> Gets the queue endpoint. </summary>
-        public string Queue { get; }
+        public Uri QueueUri { get; }
         /// <summary> Gets the table endpoint. </summary>
-        public string Table { get; }
+        public Uri TableUri { get; }
         /// <summary> Gets the file endpoint. </summary>
-        public string File { get; }
+        public Uri FileUri { get; }
         /// <summary> Gets the web endpoint. </summary>
-        public string Web { get; }
+        public Uri WebUri { get; }
         /// <summary> Gets the dfs endpoint. </summary>
-        public string Dfs { get; }
+        public Uri DfsUri { get; }
         /// <summary> Gets the microsoft routing storage endpoints. </summary>
         public StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get; }
         /// <summary> Gets the internet routing storage endpoints. </summary>

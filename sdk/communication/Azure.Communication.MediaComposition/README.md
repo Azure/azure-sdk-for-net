@@ -48,69 +48,50 @@ var client = new MediaCompositionClient(endpoint, tokenCredential);
 ### Creating the media composition
 
 ```C# Snippet:CreateMediaComposition
-var gridLayoutOptions = new GridLayoutOptions(2, 2);
-gridLayoutOptions.InputIds.Add(new List<string> { "jill", "jack" });
-gridLayoutOptions.InputIds.Add(new List<string> { "jane", "jerry" });
-var layout = new MediaCompositionLayout()
+var layout = new GridLayout(2, 2, new List<List<string>>{ new List<string> { "jill", "jack" }, new List<string> { "jane", "jerry" } })
 {
-    Resolution = new(1920, 1080),
-    Grid = gridLayoutOptions
+    Resolution = new(1920, 1080)
 };
 
 var inputs = new Dictionary<string, MediaInput>()
 {
-    ["jill"] = new()
+    ["jill"] = new ParticipantInput
+    (
+        id: new CommunicationUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"),
+        call: "acsGroupCall")
     {
-        Participant = new(
-            id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7") },
-            call: "teamsMeeting")
-        {
-            PlaceholderImageUri = "https://imageendpoint"
-        }
+        PlaceholderImageUri = "https://imageendpoint"
     },
-    ["jack"] = new()
+    ["jack"] = new ParticipantInput
+    (
+        id: new CommunicationUserIdentifier("fa4337b5-f13a-41c5-a34f-f2aa46699b61"),
+        call: "acsGroupCall")
     {
-        Participant = new(
-            id: new() { MicrosoftTeamsUser = new("fa4337b5-f13a-41c5-a34f-f2aa46699b61") },
-            call: "teamsMeeting")
-        {
-            PlaceholderImageUri = "https://imageendpoint"
-        }
+        PlaceholderImageUri = "https://imageendpoint"
     },
-    ["jane"] = new()
+    ["jane"] = new ParticipantInput
+    (
+        id: new CommunicationUserIdentifier("2dd69470-dc25-49cf-b5c3-f562f08bf3b2"),
+        call: "acsGroupCall"
+    )
     {
-        Participant = new(
-            id: new() { MicrosoftTeamsUser = new("2dd69470-dc25-49cf-b5c3-f562f08bf3b2") },
-            call: "teamsMeeting")
-        {
-            PlaceholderImageUri = "https://imageendpoint"
-        }
+        PlaceholderImageUri = "https://imageendpoint"
     },
-    ["jerry"] = new()
+    ["jerry"] = new ParticipantInput
+    (
+        id: new CommunicationUserIdentifier("30e29fde-ac1c-448f-bb34-0f3448d5a677"),
+        call: "acsGroupCall")
     {
-        Participant = new(
-            id: new() { MicrosoftTeamsUser = new("30e29fde-ac1c-448f-bb34-0f3448d5a677") },
-            call: "teamsMeeting")
-        {
-            PlaceholderImageUri = "https://imageendpoint"
-        }
+        PlaceholderImageUri = "https://imageendpoint"
     },
-    ["teamsMeeting"] = new()
-    {
-        TeamsMeeting = new("https://teamsJoinUrl")
-    }
+    ["acsGroupCall"] = new GroupCallInput("d12d2277-ffec-4e22-9979-8c0d8c13d193")
 };
 
 var outputs = new Dictionary<string, MediaOutput>()
 {
-    {
-        "acsGroupCall",
-        new()
-        {
-            GroupCall = new("d12d2277-ffec-4e22-9979-8c0d8c13d193")
-        }
-    }
+    ["acsGroupCall"] = new GroupCallOutput("d12d2277-ffec-4e22-9979-8c0d8c13d193")
 };
+
 var response = await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, inputs, outputs);
 ```
 
@@ -122,18 +103,59 @@ var gridMediaCompositionResponse = await mediaCompositionClient.GetAsync(mediaCo
 
 ### Updating an existing media composition
 
-Note: Updating the `groupCallInput` and the `teamsMeetingInput` is currently not supported. A new media composition will need to be created if `groupCallInput` and the `teamsMeetingInput` needs to change.
-```C# Snippet:UpdateMediaComposition
-var layout = new MediaCompositionLayout()
+You can update the layout:
+```C# Snippet:UpdateLayout
+var layout = new AutoGridLayout(new List<string>() { "acsGroupCall" })
 {
     Resolution = new(720, 480),
-    Presenter = new("jill", "jack")
+};
+
+var response = await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, layout);
+```
+
+Note: Upserting `GroupCall` and `Room` input kind is currently not supported if the media composition is running. The media composition will need to be stopped if `GroupCall` or `Room` inputs need to change.
+You can upsert or remove inputs:
+
+```C# Snippet:UpsertInputs
+var inputsToUpsert = new Dictionary<string, MediaInput>()
+{
+    ["james"] = new ParticipantInput
+    (
+        id: new CommunicationUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"),
+        call: "acsGroupCall"
+    )
     {
-        SupportPosition = SupportPosition.BottomRight,
-        SupportAspectRatio = 3 / 2
+        PlaceholderImageUri = "https://imageendpoint"
     }
 };
-var response = await mediaCompositionClient.UpdateAsync(mediaCompositionId, layout);
+
+var response = await mediaCompositionClient.UpsertInputsAsync(mediaCompositionId, inputsToUpsert);
+```
+
+```C# Snippet:RemoveInputs
+var inputIdsToRemove = new List<string>()
+{
+    "jane", "jerry"
+};
+var response = await mediaCompositionClient.RemoveInputsAsync(mediaCompositionId, inputIdsToRemove);
+```
+
+You can also upsert or remove outputs:
+```C# Snippet:UpsertOutputs
+var outputsToUpsert = new Dictionary<string, MediaOutput>()
+{
+    ["youtube"] = new RtmpOutput("key", new(1920, 1080), "rtmp://a.rtmp.youtube.com/live2")
+};
+
+var response = await mediaCompositionClient.UpsertOutputsAsync(mediaCompositionId, outputsToUpsert);
+```
+
+```C# Snippet:RemoveOutputs
+var outputIdsToRemove = new List<string>()
+{
+    "acsGroupCall"
+};
+var response = await mediaCompositionClient.RemoveOutputsAsync(mediaCompositionId, outputIdsToRemove);
 ```
 
 ### Starting the media composition to start streaming

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Configuration of a virtual network to which API Management service is deployed. </summary>
@@ -19,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="vnetId"> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </param>
         /// <param name="subnetname"> The name of the subnet. </param>
         /// <param name="subnetResourceId"> The full resource ID of a subnet in a virtual network to deploy the API Management service in. </param>
-        internal VirtualNetworkConfiguration(string vnetId, string subnetname, string subnetResourceId)
+        internal VirtualNetworkConfiguration(Guid? vnetId, string subnetname, ResourceIdentifier subnetResourceId)
         {
             VnetId = vnetId;
             Subnetname = subnetname;
@@ -27,10 +30,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </summary>
-        public string VnetId { get; }
+        public Guid? VnetId { get; }
         /// <summary> The name of the subnet. </summary>
         public string Subnetname { get; }
         /// <summary> The full resource ID of a subnet in a virtual network to deploy the API Management service in. </summary>
-        public string SubnetResourceId { get; set; }
+        public ResourceIdentifier SubnetResourceId { get; set; }
     }
 }

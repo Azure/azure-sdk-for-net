@@ -8,7 +8,7 @@ namespace Azure.Communication.CallingServer
 {
     internal static class AmsDirectRequestHelpers
     {
-        internal static HttpMessage GetHttpMessage(CallingServerClient client, Uri requestEndpoint, RequestMethod requestMethod, HttpRange? rangeHeader = null)
+        internal static HttpMessage GetHttpMessage(CallRecording client, Uri requestEndpoint, RequestMethod requestMethod, HttpRange? rangeHeader = null)
         {
             Argument.CheckNotNull(client, nameof(client));
             Argument.CheckNotNull(requestEndpoint, nameof(requestEndpoint));

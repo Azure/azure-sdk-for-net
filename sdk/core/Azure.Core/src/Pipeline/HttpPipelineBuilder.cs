@@ -152,8 +152,7 @@ namespace Azure.Core.Pipeline
                 policies.Add(CreateTelemetryPolicy(buildOptions.ClientOptions));
             }
 
-            RetryOptions retryOptions = buildOptions.ClientOptions.Retry;
-            policies.Add(new RetryPolicy(retryOptions.Mode, retryOptions.Delay, retryOptions.MaxDelay, retryOptions.MaxRetries));
+            policies.Add(buildOptions.ClientOptions.RetryPolicy ?? new DefaultRetryPolicy(buildOptions.ClientOptions.Retry));
 
             policies.Add(RedirectPolicy.Shared);
 

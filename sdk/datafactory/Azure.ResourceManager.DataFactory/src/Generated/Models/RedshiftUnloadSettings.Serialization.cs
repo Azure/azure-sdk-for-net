@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("s3LinkedServiceName");
+            writer.WritePropertyName("s3LinkedServiceName"u8);
             writer.WriteObjectValue(S3LinkedServiceName);
-            writer.WritePropertyName("bucketName");
+            writer.WritePropertyName("bucketName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(BucketName);
 #else
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static RedshiftUnloadSettings DeserializeRedshiftUnloadSettings(JsonElement element)
         {
-            LinkedServiceReference s3LinkedServiceName = default;
+            FactoryLinkedServiceReference s3LinkedServiceName = default;
             BinaryData bucketName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("s3LinkedServiceName"))
+                if (property.NameEquals("s3LinkedServiceName"u8))
                 {
-                    s3LinkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    s3LinkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("bucketName"))
+                if (property.NameEquals("bucketName"u8))
                 {
                     bucketName = BinaryData.FromString(property.Value.GetRawText());
                     continue;

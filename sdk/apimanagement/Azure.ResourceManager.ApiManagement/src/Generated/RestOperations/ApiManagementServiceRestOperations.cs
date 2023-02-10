@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateRestoreRequest(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreParameters apiManagementServiceBackupRestoreParameters)
+        internal HttpMessage CreateRestoreRequest(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ApiManagement
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(apiManagementServiceBackupRestoreParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -66,18 +66,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="apiManagementServiceBackupRestoreParameters"> Parameters supplied to the Restore API Management service from backup operation. </param>
+        /// <param name="content"> Parameters supplied to the Restore API Management service from backup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiManagementServiceBackupRestoreParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RestoreAsync(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreParameters apiManagementServiceBackupRestoreParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> RestoreAsync(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(apiManagementServiceBackupRestoreParameters, nameof(apiManagementServiceBackupRestoreParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRestoreRequest(subscriptionId, resourceGroupName, serviceName, apiManagementServiceBackupRestoreParameters);
+            using var message = CreateRestoreRequest(subscriptionId, resourceGroupName, serviceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -93,18 +93,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="apiManagementServiceBackupRestoreParameters"> Parameters supplied to the Restore API Management service from backup operation. </param>
+        /// <param name="content"> Parameters supplied to the Restore API Management service from backup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiManagementServiceBackupRestoreParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Restore(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreParameters apiManagementServiceBackupRestoreParameters, CancellationToken cancellationToken = default)
+        public Response Restore(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(apiManagementServiceBackupRestoreParameters, nameof(apiManagementServiceBackupRestoreParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRestoreRequest(subscriptionId, resourceGroupName, serviceName, apiManagementServiceBackupRestoreParameters);
+            using var message = CreateRestoreRequest(subscriptionId, resourceGroupName, serviceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateBackupRequest(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreParameters apiManagementServiceBackupRestoreParameters)
+        internal HttpMessage CreateBackupRequest(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.ApiManagement
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(apiManagementServiceBackupRestoreParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -145,18 +145,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="apiManagementServiceBackupRestoreParameters"> Parameters supplied to the ApiManagementService_Backup operation. </param>
+        /// <param name="content"> Parameters supplied to the ApiManagementService_Backup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiManagementServiceBackupRestoreParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> BackupAsync(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreParameters apiManagementServiceBackupRestoreParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> BackupAsync(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(apiManagementServiceBackupRestoreParameters, nameof(apiManagementServiceBackupRestoreParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateBackupRequest(subscriptionId, resourceGroupName, serviceName, apiManagementServiceBackupRestoreParameters);
+            using var message = CreateBackupRequest(subscriptionId, resourceGroupName, serviceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -172,18 +172,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="apiManagementServiceBackupRestoreParameters"> Parameters supplied to the ApiManagementService_Backup operation. </param>
+        /// <param name="content"> Parameters supplied to the ApiManagementService_Backup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiManagementServiceBackupRestoreParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Backup(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreParameters apiManagementServiceBackupRestoreParameters, CancellationToken cancellationToken = default)
+        public Response Backup(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(apiManagementServiceBackupRestoreParameters, nameof(apiManagementServiceBackupRestoreParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateBackupRequest(subscriptionId, resourceGroupName, serviceName, apiManagementServiceBackupRestoreParameters);
+            using var message = CreateBackupRequest(subscriptionId, resourceGroupName, serviceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceResourcePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServicePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServicePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServiceResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string serviceName, ApiManagementServicePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiManagementServiceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementServiceData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -392,13 +392,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiManagementServiceResourceData value = default;
+                        ApiManagementServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiManagementServiceResourceData.DeserializeApiManagementServiceResourceData(document.RootElement);
+                        value = ApiManagementServiceData.DeserializeApiManagementServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiManagementServiceResourceData)null, message.Response);
+                    return Response.FromValue((ApiManagementServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiManagementServiceResourceData> Get(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<ApiManagementServiceData> Get(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -423,13 +423,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiManagementServiceResourceData value = default;
+                        ApiManagementServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiManagementServiceResourceData.DeserializeApiManagementServiceResourceData(document.RootElement);
+                        value = ApiManagementServiceData.DeserializeApiManagementServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiManagementServiceResourceData)null, message.Response);
+                    return Response.FromValue((ApiManagementServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, ApiManagementServiceCheckNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, ApiManagementServiceNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiManagementServiceNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, ApiManagementServiceCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementServiceNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, ApiManagementServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiManagementServiceNameAvailabilityResult> CheckNameAvailability(string subscriptionId, ApiManagementServiceCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<ApiManagementServiceNameAvailabilityResult> CheckNameAvailability(string subscriptionId, ApiManagementServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));

@@ -20,8 +20,8 @@ namespace Microsoft.Azure.Management.Security.Models
     /// (under the 'Security'/'SecurityCenterFree' solutions). Note that in
     /// order to view the data in the workspace, the Security Center Log
     /// Analytics free/standard solution needs to be enabled on that workspace.
-    /// To learn more about Security Center continuous export capabilities,
-    /// visit https://aka.ms/ASCExportLearnMore
+    /// To learn more about Microsoft Defender for Cloud continuous export
+    /// capabilities, visit https://aka.ms/ASCExportLearnMore
     /// </summary>
     [Newtonsoft.Json.JsonObject("Workspace")]
     public partial class AutomationActionWorkspace : AutomationAction

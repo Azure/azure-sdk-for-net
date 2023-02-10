@@ -1,0 +1,261 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "452",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-5e6b28bc05b69a6df26239f0b8d1eb40-bc9f9fce5009ce7d-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0d7a1d4823cf9bbf64cd73a9bac69114",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "defaultLanguage": "en",
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft",
+              "language": "auto"
+            },
+            {
+              "id": "1",
+              "text": "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check",
+              "language": "auto"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "stringIndexType": "Utf16CodeUnit"
+            },
+            "kind": "PiiEntityRecognition"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "21f5f59c-17ba-47a6-8a81-e000eb1f0ed1",
+        "Content-Length": "0",
+        "Date": "Tue, 29 Nov 2022 20:37:44 GMT",
+        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/734c6f52-ff67-4a19-8f99-dd075d4afab3?api-version=2022-10-01-preview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "208",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/734c6f52-ff67-4a19-8f99-dd075d4afab3?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a0b43e91010742b44fc6ad835a7b976d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3bb4b982-cdbf-4f9f-9068-dd060fd27475",
+        "Content-Length": "283",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 29 Nov 2022 20:37:44 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "6",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "jobId": "734c6f52-ff67-4a19-8f99-dd075d4afab3",
+        "lastUpdatedDateTime": "2022-11-29T20:37:45Z",
+        "createdDateTime": "2022-11-29T20:37:45Z",
+        "expirationDateTime": "2022-11-30T20:37:45Z",
+        "status": "notStarted",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/734c6f52-ff67-4a19-8f99-dd075d4afab3?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9bb5405963a47aa0cad8cd4760d0b68e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3ba20f11-1cb0-4907-9374-a848bc9ec45b",
+        "Content-Length": "280",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 29 Nov 2022 20:37:46 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "7",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "jobId": "734c6f52-ff67-4a19-8f99-dd075d4afab3",
+        "lastUpdatedDateTime": "2022-11-29T20:37:45Z",
+        "createdDateTime": "2022-11-29T20:37:45Z",
+        "expirationDateTime": "2022-11-30T20:37:45Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/734c6f52-ff67-4a19-8f99-dd075d4afab3?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ff05743bb03f46866938bd09763c41e8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "da8e5a98-a205-4223-ac7b-a5ff7503047c",
+        "Content-Length": "1692",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 29 Nov 2022 20:37:47 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "42",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "jobId": "734c6f52-ff67-4a19-8f99-dd075d4afab3",
+        "lastUpdatedDateTime": "2022-11-29T20:37:47Z",
+        "createdDateTime": "2022-11-29T20:37:45Z",
+        "expirationDateTime": "2022-11-30T20:37:45Z",
+        "status": "succeeded",
+        "errors": [],
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "items": [
+            {
+              "kind": "PiiEntityRecognitionLROResults",
+              "lastUpdateDateTime": "2022-11-29T20:37:47.4264916Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "redactedText": "A ********* with SSN *********** whose phone number is ************ is building tools with our APIs. They work at *********",
+                    "id": "0",
+                    "entities": [
+                      {
+                        "text": "developer",
+                        "category": "PersonType",
+                        "offset": 2,
+                        "length": 9,
+                        "confidenceScore": 0.97
+                      },
+                      {
+                        "text": "859-98-0987",
+                        "category": "USSocialSecurityNumber",
+                        "offset": 21,
+                        "length": 11,
+                        "confidenceScore": 0.65
+                      },
+                      {
+                        "text": "800-102-1100",
+                        "category": "PhoneNumber",
+                        "offset": 55,
+                        "length": 12,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "Microsoft",
+                        "category": "Organization",
+                        "offset": 114,
+                        "length": 9,
+                        "confidenceScore": 0.96
+                      }
+                    ],
+                    "warnings": [],
+                    "detectedLanguage": {
+                      "name": "English",
+                      "iso6391Name": "en",
+                      "confidenceScore": 0.99
+                    },
+                    "isLanguageDefaulted": false
+                  },
+                  {
+                    "redactedText": "Your ABA number - ********* - is the first 9 digits in the lower left hand corner of your personal check",
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "111000025",
+                        "category": "PhoneNumber",
+                        "offset": 18,
+                        "length": 9,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "111000025",
+                        "category": "ABARoutingNumber",
+                        "offset": 18,
+                        "length": 9,
+                        "confidenceScore": 0.75
+                      },
+                      {
+                        "text": "111000025",
+                        "category": "NZSocialWelfareNumber",
+                        "offset": 18,
+                        "length": 9,
+                        "confidenceScore": 0.65
+                      }
+                    ],
+                    "warnings": [],
+                    "detectedLanguage": {
+                      "name": "English",
+                      "iso6391Name": "en",
+                      "confidenceScore": 0.98
+                    },
+                    "isLanguageDefaulted": false
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-01-15"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2024190819",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
+  }
+}

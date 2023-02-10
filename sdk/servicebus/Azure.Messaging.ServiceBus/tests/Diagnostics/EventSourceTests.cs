@@ -9,6 +9,7 @@ using Azure.Core;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Microsoft.Azure.Amqp;
 using Moq;
 using NUnit.Framework;
 
@@ -129,8 +130,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Returns(3);
 
             mockTransportBatch
-                .Setup(transport => transport.AsReadOnly<ServiceBusMessage>())
-                .Returns(new List<ServiceBusMessage>());
+                .Setup(transport => transport.AsReadOnly<AmqpMessage>())
+                .Returns(new List<AmqpMessage>());
 
             mockTransportSender.Setup(
                  sender => sender.CreateMessageBatchAsync(
@@ -372,7 +373,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusReceiverOptions()
+                new ServiceBusReceiverOptions
                 {
                     PrefetchCount = maxMessages - 1
                 })
@@ -1256,6 +1257,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
         private Mock<ServiceBusConnection> GetMockConnection(Mock<TransportReceiver> mockTransportReceiver)
         {
+            var prefetchCount = 0;
+
+            mockTransportReceiver.Setup(receiver => receiver.PrefetchCount).Returns(() => prefetchCount);
             var mockConnection = GetMockConnection();
 
             mockConnection.Setup(
@@ -1268,7 +1272,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
                     It.IsAny<bool>(),
-                    CancellationToken.None))
+                    It.IsAny<CancellationToken>()))
+                .Callback<string, ServiceBusRetryPolicy, ServiceBusReceiveMode, uint, string, string, bool, bool, CancellationToken>(
+                    (_, _, _, count, _, _, _, _, _) =>
+                    {
+                        prefetchCount = (int) count;
+                    })
                 .Returns(mockTransportReceiver.Object);
 
             return mockConnection;

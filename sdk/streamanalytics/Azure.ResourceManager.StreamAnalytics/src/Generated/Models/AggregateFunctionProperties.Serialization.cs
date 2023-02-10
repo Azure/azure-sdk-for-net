@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionPropertiesType);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Inputs))
             {
-                writer.WritePropertyName("inputs");
+                writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             if (Optional.IsDefined(Output))
             {
-                writer.WritePropertyName("output");
+                writer.WritePropertyName("output"u8);
                 writer.WriteObjectValue(Output);
             }
             if (Optional.IsDefined(Binding))
             {
-                writer.WritePropertyName("binding");
+                writer.WritePropertyName("binding"u8);
                 writer.WriteObjectValue(Binding);
             }
             writer.WriteEndObject();
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             string type = default;
             Optional<ETag> etag = default;
-            Optional<IList<FunctionInput>> inputs = default;
-            Optional<FunctionOutput> output = default;
-            Optional<FunctionBinding> binding = default;
+            Optional<IList<StreamingJobFunctionInput>> inputs = default;
+            Optional<StreamingJobFunctionOutput> output = default;
+            Optional<StreamingJobFunctionBinding> binding = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,39 +78,39 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("inputs"))
+                        if (property0.NameEquals("inputs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<FunctionInput> array = new List<FunctionInput>();
+                            List<StreamingJobFunctionInput> array = new List<StreamingJobFunctionInput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FunctionInput.DeserializeFunctionInput(item));
+                                array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item));
                             }
                             inputs = array;
                             continue;
                         }
-                        if (property0.NameEquals("output"))
+                        if (property0.NameEquals("output"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            output = FunctionOutput.DeserializeFunctionOutput(property0.Value);
+                            output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("binding"))
+                        if (property0.NameEquals("binding"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            binding = FunctionBinding.DeserializeFunctionBinding(property0.Value);
+                            binding = StreamingJobFunctionBinding.DeserializeStreamingJobFunctionBinding(property0.Value);
                             continue;
                         }
                     }

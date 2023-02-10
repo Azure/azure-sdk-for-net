@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Authorization
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2015-07-01";
+            _apiVersion = apiVersion ?? "2022-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PermissionGetResult>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleDefinitionPermissionListResult>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        PermissionGetResult value = default;
+                        RoleDefinitionPermissionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PermissionGetResult.DeserializePermissionGetResult(document.RootElement);
+                        value = RoleDefinitionPermissionListResult.DeserializeRoleDefinitionPermissionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PermissionGetResult> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<RoleDefinitionPermissionListResult> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        PermissionGetResult value = default;
+                        RoleDefinitionPermissionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PermissionGetResult.DeserializePermissionGetResult(document.RootElement);
+                        value = RoleDefinitionPermissionListResult.DeserializeRoleDefinitionPermissionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PermissionGetResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleDefinitionPermissionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        PermissionGetResult value = default;
+                        RoleDefinitionPermissionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PermissionGetResult.DeserializePermissionGetResult(document.RootElement);
+                        value = RoleDefinitionPermissionListResult.DeserializeRoleDefinitionPermissionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PermissionGetResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<RoleDefinitionPermissionListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        PermissionGetResult value = default;
+                        RoleDefinitionPermissionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PermissionGetResult.DeserializePermissionGetResult(document.RootElement);
+                        value = RoleDefinitionPermissionListResult.DeserializeRoleDefinitionPermissionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

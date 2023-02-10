@@ -20,12 +20,9 @@ namespace Azure.ResourceManager.Redis
         /// <summary> Initializes a new instance of RedisPatchScheduleData. </summary>
         /// <param name="scheduleEntries"> List of patch schedules for a Redis cache. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleEntries"/> is null. </exception>
-        public RedisPatchScheduleData(IEnumerable<ScheduleEntry> scheduleEntries)
+        public RedisPatchScheduleData(IEnumerable<RedisPatchScheduleSetting> scheduleEntries)
         {
-            if (scheduleEntries == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleEntries));
-            }
+            Argument.AssertNotNull(scheduleEntries, nameof(scheduleEntries));
 
             ScheduleEntries = scheduleEntries.ToList();
         }
@@ -37,7 +34,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="scheduleEntries"> List of patch schedules for a Redis cache. </param>
-        internal RedisPatchScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IList<ScheduleEntry> scheduleEntries) : base(id, name, resourceType, systemData)
+        internal RedisPatchScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IList<RedisPatchScheduleSetting> scheduleEntries) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ScheduleEntries = scheduleEntries;
@@ -46,6 +43,6 @@ namespace Azure.ResourceManager.Redis
         /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; }
         /// <summary> List of patch schedules for a Redis cache. </summary>
-        public IList<ScheduleEntry> ScheduleEntries { get; }
+        public IList<RedisPatchScheduleSetting> ScheduleEntries { get; }
     }
 }

@@ -15,22 +15,27 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(RegionalReplicaCount))
             {
-                writer.WritePropertyName("regionalReplicaCount");
+                writer.WritePropertyName("regionalReplicaCount"u8);
                 writer.WriteNumberValue(RegionalReplicaCount.Value);
             }
             if (Optional.IsDefined(StorageAccountType))
             {
-                writer.WritePropertyName("storageAccountType");
+                writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
+                writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
+            }
+            if (Optional.IsDefined(IsExcludedFromLatest))
+            {
+                writer.WritePropertyName("excludeFromLatest"u8);
+                writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
             writer.WriteEndObject();
         }
@@ -41,14 +46,15 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> regionalReplicaCount = default;
             Optional<ImageStorageAccountType> storageAccountType = default;
             Optional<EncryptionImages> encryption = default;
+            Optional<bool> excludeFromLatest = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("regionalReplicaCount"))
+                if (property.NameEquals("regionalReplicaCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
                     regionalReplicaCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("storageAccountType"))
+                if (property.NameEquals("storageAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
                     storageAccountType = new ImageStorageAccountType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("encryption"))
+                if (property.NameEquals("encryption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,8 +84,18 @@ namespace Azure.ResourceManager.Compute.Models
                     encryption = EncryptionImages.DeserializeEncryptionImages(property.Value);
                     continue;
                 }
+                if (property.NameEquals("excludeFromLatest"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    excludeFromLatest = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new TargetRegion(name, Optional.ToNullable(regionalReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value);
+            return new TargetRegion(name, Optional.ToNullable(regionalReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value, Optional.ToNullable(excludeFromLatest));
         }
     }
 }

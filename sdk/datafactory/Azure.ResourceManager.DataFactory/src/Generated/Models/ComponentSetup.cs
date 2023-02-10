@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public ComponentSetup(string componentName)
         {
-            if (componentName == null)
-            {
-                throw new ArgumentNullException(nameof(componentName));
-            }
+            Argument.AssertNotNull(componentName, nameof(componentName));
 
             ComponentName = componentName;
             CustomSetupBaseType = "ComponentSetup";
@@ -31,10 +29,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="componentName"> The name of the 3rd party component. </param>
         /// <param name="licenseKey">
         /// The license key to activate the component.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        internal ComponentSetup(string customSetupBaseType, string componentName, SecretBase licenseKey) : base(customSetupBaseType)
+        internal ComponentSetup(string customSetupBaseType, string componentName, FactorySecretBaseDefinition licenseKey) : base(customSetupBaseType)
         {
             ComponentName = componentName;
             LicenseKey = licenseKey;
@@ -45,9 +43,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string ComponentName { get; set; }
         /// <summary>
         /// The license key to activate the component.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase LicenseKey { get; set; }
+        public FactorySecretBaseDefinition LicenseKey { get; set; }
     }
 }

@@ -136,6 +136,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
             var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
             var client = new ServiceBusClient(connString);
+            var identifier = "MyProcessor";
             var options = new ServiceBusSessionProcessorOptions
             {
                 AutoCompleteMessages = false,
@@ -143,7 +144,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 PrefetchCount = 5,
                 ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete,
                 MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(60),
-                MaxConcurrentCallsPerSession = 4
+                MaxConcurrentCallsPerSession = 4,
+                Identifier = identifier
             };
             var processor = client.CreateSessionProcessor("queueName", options);
             Assert.AreEqual(options.AutoCompleteMessages, processor.AutoCompleteMessages);
@@ -154,6 +156,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
             Assert.AreEqual(options.SessionIdleTimeout, processor.SessionIdleTimeout);
             Assert.AreEqual(fullyQualifiedNamespace, processor.FullyQualifiedNamespace);
+            Assert.AreEqual(identifier, processor.Identifier);
             Assert.IsFalse(processor.IsClosed);
             Assert.IsFalse(processor.IsProcessing);
         }

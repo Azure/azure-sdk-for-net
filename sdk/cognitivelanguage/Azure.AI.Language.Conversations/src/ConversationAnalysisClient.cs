@@ -36,9 +36,9 @@ namespace Azure.AI.Language.Conversations
             ClientDiagnostics = new ClientDiagnostics(options, suppressNestedClientActivities: true);
 
             // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29506
-            _keyCredential = _keyCredential0 = credential;
+            _keyCredential = credential;
 
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential0, AuthorizationHeader0) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -62,8 +62,10 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new ConversationsClientOptions();
 
+            var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? ConversationsAudience.AzurePublicCloud : options.Audience)}/.default";
+
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, "https://cognitiveservices.azure.com/.default") }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, authorizationScope) }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }

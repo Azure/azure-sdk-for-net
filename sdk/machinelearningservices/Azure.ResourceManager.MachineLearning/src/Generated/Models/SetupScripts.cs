@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of SetupScripts. </summary>
         /// <param name="scripts"> Customized setup scripts. </param>
-        internal SetupScripts(ScriptsToExecute scripts)
+        internal SetupScripts(MachineLearningScriptsToExecute scripts)
         {
             Scripts = scripts;
         }
 
         /// <summary> Customized setup scripts. </summary>
-        public ScriptsToExecute Scripts { get; set; }
+        public MachineLearningScriptsToExecute Scripts { get; set; }
     }
 }

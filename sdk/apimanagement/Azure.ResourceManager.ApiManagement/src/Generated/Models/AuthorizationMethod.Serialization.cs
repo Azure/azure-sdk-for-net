@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             AuthorizationMethod.Head => "HEAD",
             AuthorizationMethod.Options => "OPTIONS",
             AuthorizationMethod.Trace => "TRACE",
-            AuthorizationMethod.GET => "GET",
+            AuthorizationMethod.Get => "GET",
             AuthorizationMethod.Post => "POST",
-            AuthorizationMethod.PUT => "PUT",
+            AuthorizationMethod.Put => "PUT",
             AuthorizationMethod.Patch => "PATCH",
             AuthorizationMethod.Delete => "DELETE",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AuthorizationMethod value.")
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (string.Equals(value, "HEAD", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Head;
             if (string.Equals(value, "OPTIONS", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Options;
             if (string.Equals(value, "TRACE", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Trace;
-            if (string.Equals(value, "GET", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.GET;
+            if (string.Equals(value, "GET", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Get;
             if (string.Equals(value, "POST", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Post;
-            if (string.Equals(value, "PUT", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.PUT;
+            if (string.Equals(value, "PUT", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Put;
             if (string.Equals(value, "PATCH", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Patch;
             if (string.Equals(value, "DELETE", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationMethod.Delete;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AuthorizationMethod value.");

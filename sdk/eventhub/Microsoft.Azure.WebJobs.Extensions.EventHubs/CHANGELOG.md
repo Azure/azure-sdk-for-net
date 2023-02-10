@@ -4,11 +4,21 @@
 
 ### Features Added
 
+- Added the an overload for `IAsyncCollector<EventData>` allowing a partition key to be specified.  Because `IAsyncCollector<T>` is owned by the Functions runtime, this method could not be directly added.  Instead, this has been implemented as an extension method within the Event Hubs extension package.  Unfortunately, this knowingly makes the overload unable to be mocked.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Fixed a bug with creation of the event processor used by the trigger, where configuring an `eventHubName` that does not match the one that appears as `EntityPath` in the connection string would throw.  The behavior now follows that of other clients and gives precedence to the entity path in the connection string.
+
 ### Other Changes
+
+## 5.1.2 (2022-08-10)
+
+### Bugs Fixed
+
+- Fixed a bug in the runtime scale controller that could result in a null reference exception when encountering a null checkpoint. Also, correct the assumption that the beginning sequence number for a partition is always 0.
 
 ## 5.1.1 (2022-06-20)
 

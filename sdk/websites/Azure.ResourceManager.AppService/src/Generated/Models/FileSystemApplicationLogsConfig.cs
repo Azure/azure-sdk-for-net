@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of FileSystemApplicationLogsConfig. </summary>
         /// <param name="level"> Log level. </param>
-        internal FileSystemApplicationLogsConfig(LogLevel? level)
+        internal FileSystemApplicationLogsConfig(WebAppLogLevel? level)
         {
             Level = level;
         }
 
         /// <summary> Log level. </summary>
-        public LogLevel? Level { get; set; }
+        public WebAppLogLevel? Level { get; set; }
     }
 }

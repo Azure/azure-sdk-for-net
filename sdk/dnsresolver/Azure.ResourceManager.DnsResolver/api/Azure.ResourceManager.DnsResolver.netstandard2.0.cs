@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DnsResolver
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> DnsResolverOutboundEndpoints { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
     }
     public partial class DnsForwardingRulesetResource : Azure.ResourceManager.ArmResource
     {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DnsResolver
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverState? DnsResolverState { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
     }
     public static partial class DnsResolverExtensions
@@ -158,8 +158,6 @@ namespace Azure.ResourceManager.DnsResolver
         public static Azure.ResourceManager.DnsResolver.DnsForwardingRulesetCollection GetDnsForwardingRulesets(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource> GetDnsForwardingRulesets(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource> GetDnsForwardingRulesetsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesetsByVirtualNetwork(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string virtualNetworkName, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesetsByVirtualNetworkAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string virtualNetworkName, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkResource GetDnsForwardingRulesetVirtualNetworkLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.DnsResolver.DnsResolverResource> GetDnsResolver(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string dnsResolverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsResolverResource>> GetDnsResolverAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string dnsResolverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -169,8 +167,7 @@ namespace Azure.ResourceManager.DnsResolver
         public static Azure.ResourceManager.DnsResolver.DnsResolverCollection GetDnsResolvers(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.DnsResolver.DnsResolverResource> GetDnsResolvers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.DnsResolver.DnsResolverResource> GetDnsResolversAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Resources.Models.WritableSubResource> GetDnsResolversByVirtualNetwork(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string virtualNetworkName, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.WritableSubResource> GetDnsResolversByVirtualNetworkAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string virtualNetworkName, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DnsResolver.VirtualNetworkDnsResolverResource GetVirtualNetworkDnsResolverResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class DnsResolverInboundEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointResource>, System.Collections.IEnumerable
     {
@@ -193,7 +190,7 @@ namespace Azure.ResourceManager.DnsResolver
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPConfiguration> IPConfigurations { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
     }
     public partial class DnsResolverInboundEndpointResource : Azure.ResourceManager.ArmResource
     {
@@ -235,7 +232,7 @@ namespace Azure.ResourceManager.DnsResolver
         public DnsResolverOutboundEndpointData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.WritableSubResource subnet) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
     public partial class DnsResolverOutboundEndpointResource : Azure.ResourceManager.ArmResource
@@ -283,6 +280,15 @@ namespace Azure.ResourceManager.DnsResolver
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsResolverResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.DnsResolverResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.DnsResolverPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.DnsResolverResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.DnsResolverPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VirtualNetworkDnsResolverResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected VirtualNetworkDnsResolverResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesets(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesetsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.WritableSubResource> GetDnsResolvers(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.WritableSubResource> GetDnsResolversAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.DnsResolver.Models
@@ -399,14 +405,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
     public partial class InboundEndpointIPConfiguration
     {
         public InboundEndpointIPConfiguration(Azure.ResourceManager.Resources.Models.WritableSubResource subnet) { }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
     public partial class TargetDnsServer
     {
-        public TargetDnsServer(string ipAddress) { }
-        public string IPAddress { get { throw null; } set { } }
+        public TargetDnsServer(System.Net.IPAddress ipAddress) { }
+        public System.Net.IPAddress IPAddress { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
     }
     public partial class VirtualNetworkDnsForwardingRuleset

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -19,14 +20,14 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowNewPrivateEndpointConnections))
             {
-                writer.WritePropertyName("allowNewPrivateEndpointConnections");
+                writer.WritePropertyName("allowNewPrivateEndpointConnections"u8);
                 writer.WriteBooleanValue(AllowNewPrivateEndpointConnections.Value);
             }
             writer.WriteEndObject();
@@ -40,44 +41,44 @@ namespace Azure.ResourceManager.AppService
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> windowsOutboundIPAddresses = default;
-            Optional<IReadOnlyList<string>> linuxOutboundIPAddresses = default;
-            Optional<IReadOnlyList<string>> externalInboundIPAddresses = default;
-            Optional<IReadOnlyList<string>> internalInboundIPAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> windowsOutboundIPAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> linuxOutboundIPAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> externalInboundIPAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> internalInboundIPAddresses = default;
             Optional<bool> allowNewPrivateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,67 +87,67 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("windowsOutboundIpAddresses"))
+                        if (property0.NameEquals("windowsOutboundIpAddresses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(IPAddress.Parse(item.GetString()));
                             }
                             windowsOutboundIPAddresses = array;
                             continue;
                         }
-                        if (property0.NameEquals("linuxOutboundIpAddresses"))
+                        if (property0.NameEquals("linuxOutboundIpAddresses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(IPAddress.Parse(item.GetString()));
                             }
                             linuxOutboundIPAddresses = array;
                             continue;
                         }
-                        if (property0.NameEquals("externalInboundIpAddresses"))
+                        if (property0.NameEquals("externalInboundIpAddresses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(IPAddress.Parse(item.GetString()));
                             }
                             externalInboundIPAddresses = array;
                             continue;
                         }
-                        if (property0.NameEquals("internalInboundIpAddresses"))
+                        if (property0.NameEquals("internalInboundIpAddresses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(IPAddress.Parse(item.GetString()));
                             }
                             internalInboundIPAddresses = array;
                             continue;
                         }
-                        if (property0.NameEquals("allowNewPrivateEndpointConnections"))
+                        if (property0.NameEquals("allowNewPrivateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

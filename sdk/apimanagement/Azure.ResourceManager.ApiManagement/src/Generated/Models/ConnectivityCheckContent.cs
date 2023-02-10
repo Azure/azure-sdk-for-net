@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="destination"/> is null. </exception>
         public ConnectivityCheckContent(ConnectivityCheckRequestSource source, ConnectivityCheckRequestDestination destination)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if (destination == null)
-            {
-                throw new ArgumentNullException(nameof(destination));
-            }
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(destination, nameof(destination));
 
             Source = source;
             Destination = destination;
@@ -42,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Protocol-specific configuration. </summary>
         internal ConnectivityCheckRequestProtocolConfiguration ProtocolConfiguration { get; set; }
         /// <summary> Configuration for HTTP or HTTPS requests. </summary>
-        public ConnectivityCheckRequestProtocolConfigurationHttpConfiguration ProtocolHttpConfiguration
+        public ConnectivityCheckRequestHttpConfiguration ProtocolHttpConfiguration
         {
             get => ProtocolConfiguration is null ? default : ProtocolConfiguration.HttpConfiguration;
             set

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// identity may be used to authenticate to key vault to retrieve credentials or it may be the only 
         /// source of authentication used for accessing the registry.
         /// </param>
-        internal CustomRegistryCredentials(SecretObject userName, SecretObject password, string identity)
+        internal CustomRegistryCredentials(ContainerRegistrySecretObject userName, ContainerRegistrySecretObject password, string identity)
         {
             UserName = userName;
             Password = password;
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The username for logging into the custom registry. </summary>
-        public SecretObject UserName { get; set; }
+        public ContainerRegistrySecretObject UserName { get; set; }
         /// <summary>
         /// The password for logging into the custom registry. The password is a secret 
         /// object that allows multiple ways of providing the value for it.
         /// </summary>
-        public SecretObject Password { get; set; }
+        public ContainerRegistrySecretObject Password { get; set; }
         /// <summary>
         /// Indicates the managed identity assigned to the custom credential. If a user-assigned identity
         /// this value is the Client ID. If a system-assigned identity, the value will be `system`. In

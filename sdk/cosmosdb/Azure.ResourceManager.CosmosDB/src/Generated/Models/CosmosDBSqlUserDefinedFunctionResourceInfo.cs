@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -13,29 +14,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosDBSqlUserDefinedFunctionResourceInfo
     {
         /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL userDefinedFunction. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public CosmosDBSqlUserDefinedFunctionResourceInfo(string id)
+        /// <param name="functionName"> Name of the Cosmos DB SQL userDefinedFunction. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        public CosmosDBSqlUserDefinedFunctionResourceInfo(string functionName)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(functionName, nameof(functionName));
 
-            Id = id;
+            FunctionName = functionName;
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL userDefinedFunction. </param>
+        /// <param name="functionName"> Name of the Cosmos DB SQL userDefinedFunction. </param>
         /// <param name="body"> Body of the User Defined Function. </param>
-        internal CosmosDBSqlUserDefinedFunctionResourceInfo(string id, string body)
+        internal CosmosDBSqlUserDefinedFunctionResourceInfo(string functionName, string body)
         {
-            Id = id;
+            FunctionName = functionName;
             Body = body;
         }
 
         /// <summary> Name of the Cosmos DB SQL userDefinedFunction. </summary>
-        public string Id { get; set; }
+        public string FunctionName { get; set; }
         /// <summary> Body of the User Defined Function. </summary>
         public string Body { get; set; }
     }

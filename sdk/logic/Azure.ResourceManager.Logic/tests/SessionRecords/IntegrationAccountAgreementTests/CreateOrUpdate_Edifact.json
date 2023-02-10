@@ -1,0 +1,420 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-4541/providers/Microsoft.Logic/integrationAccounts/intergrationAccount6691?api-version=2019-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f93b641ac606764e861ad9cb2e8c6395-4f7e9760ed617646-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220825.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "220467829efe1e8817bd67f816224bf1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "331",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Aug 2022 08:52:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "627de95c-88e1-46b2-8908-0adba8efd6b1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "centralus:59ca6beb-a531-45e7-b29e-5685e9ce9634",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220826T085212Z:627de95c-88e1-46b2-8908-0adba8efd6b1"
+      },
+      "ResponseBody": {
+        "properties": {
+          "state": "Enabled"
+        },
+        "sku": {
+          "name": "Standard"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-4541/providers/Microsoft.Logic/integrationAccounts/intergrationAccount6691",
+        "name": "intergrationAccount6691",
+        "type": "Microsoft.Logic/integrationAccounts",
+        "location": "centralus",
+        "tags": {}
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-4541/providers/Microsoft.Logic/integrationAccounts/intergrationAccount6691/agreements/agreement9772?api-version=2019-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "4275",
+        "Content-Type": "application/json",
+        "traceparent": "00-f7726c829ddb9b4298cb59406b23bdc5-749d01f54ded3840-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220825.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "871faba307121b4618ce6d2249617587",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "centralus",
+        "properties": {
+          "agreementType": "Edifact",
+          "hostPartner": "HostPartner",
+          "guestPartner": "GuestPartner",
+          "hostIdentity": {
+            "qualifier": "ZZ",
+            "value": "zz"
+          },
+          "guestIdentity": {
+            "qualifier": "AA",
+            "value": "aa"
+          },
+          "content": {
+            "edifact": {
+              "receiveAgreement": {
+                "senderBusinessIdentity": {
+                  "qualifier": "AA",
+                  "value": "AA"
+                },
+                "receiverBusinessIdentity": {
+                  "qualifier": "ZZ",
+                  "value": "ZZ"
+                },
+                "protocolSettings": {
+                  "validationSettings": {
+                    "validateCharacterSet": true,
+                    "checkDuplicateInterchangeControlNumber": true,
+                    "interchangeControlNumberValidityDays": 30,
+                    "checkDuplicateGroupControlNumber": true,
+                    "checkDuplicateTransactionSetControlNumber": true,
+                    "validateEDITypes": true,
+                    "validateXSDTypes": true,
+                    "allowLeadingAndTrailingSpacesAndZeroes": true,
+                    "trimLeadingAndTrailingSpacesAndZeroes": true,
+                    "trailingSeparatorPolicy": "Optional"
+                  },
+                  "framingSettings": {
+                    "protocolVersion": 4,
+                    "dataElementSeparator": 53,
+                    "componentSeparator": 58,
+                    "segmentTerminator": 39,
+                    "releaseIndicator": 63,
+                    "repetitionSeparator": 42,
+                    "characterSet": "UNOC",
+                    "decimalPointIndicator": "Comma",
+                    "segmentTerminatorSuffix": "None"
+                  },
+                  "envelopeSettings": {
+                    "applyDelimiterStringAdvice": true,
+                    "createGroupingSegments": true,
+                    "enableDefaultGroupHeaders": true,
+                    "interchangeControlNumberLowerBound": 1,
+                    "interchangeControlNumberUpperBound": 99999999,
+                    "rolloverInterchangeControlNumber": true,
+                    "groupControlNumberLowerBound": 1,
+                    "groupControlNumberUpperBound": 99999999,
+                    "rolloverGroupControlNumber": true,
+                    "overwriteExistingTransactionSetControlNumber": true,
+                    "transactionSetControlNumberLowerBound": 1,
+                    "transactionSetControlNumberUpperBound": 99999999,
+                    "rolloverTransactionSetControlNumber": true,
+                    "isTestInterchange": true
+                  },
+                  "acknowledgementSettings": {
+                    "needTechnicalAcknowledgement": true,
+                    "batchTechnicalAcknowledgements": true,
+                    "needFunctionalAcknowledgement": false,
+                    "batchFunctionalAcknowledgements": true,
+                    "needLoopForValidMessages": false,
+                    "sendSynchronousAcknowledgement": true,
+                    "acknowledgementControlNumberLowerBound": 1,
+                    "acknowledgementControlNumberUpperBound": 99999999,
+                    "rolloverAcknowledgementControlNumber": true
+                  },
+                  "messageFilter": {
+                    "messageFilterType": "Exclude"
+                  },
+                  "processingSettings": {
+                    "maskSecurityInfo": true,
+                    "preserveInterchange": true,
+                    "suspendInterchangeOnError": true,
+                    "createEmptyXmlTagsForTrailingSeparators": true,
+                    "useDotAsDecimalSeparator": true
+                  },
+                  "schemaReferences": []
+                }
+              },
+              "sendAgreement": {
+                "senderBusinessIdentity": {
+                  "qualifier": "AA",
+                  "value": "AA"
+                },
+                "receiverBusinessIdentity": {
+                  "qualifier": "ZZ",
+                  "value": "ZZ"
+                },
+                "protocolSettings": {
+                  "validationSettings": {
+                    "validateCharacterSet": true,
+                    "checkDuplicateInterchangeControlNumber": true,
+                    "interchangeControlNumberValidityDays": 30,
+                    "checkDuplicateGroupControlNumber": true,
+                    "checkDuplicateTransactionSetControlNumber": true,
+                    "validateEDITypes": true,
+                    "validateXSDTypes": true,
+                    "allowLeadingAndTrailingSpacesAndZeroes": true,
+                    "trimLeadingAndTrailingSpacesAndZeroes": true,
+                    "trailingSeparatorPolicy": "Optional"
+                  },
+                  "framingSettings": {
+                    "protocolVersion": 4,
+                    "dataElementSeparator": 53,
+                    "componentSeparator": 58,
+                    "segmentTerminator": 39,
+                    "releaseIndicator": 63,
+                    "repetitionSeparator": 42,
+                    "characterSet": "UNOC",
+                    "decimalPointIndicator": "Comma",
+                    "segmentTerminatorSuffix": "None"
+                  },
+                  "envelopeSettings": {
+                    "applyDelimiterStringAdvice": true,
+                    "createGroupingSegments": true,
+                    "enableDefaultGroupHeaders": true,
+                    "interchangeControlNumberLowerBound": 1,
+                    "interchangeControlNumberUpperBound": 99999999,
+                    "rolloverInterchangeControlNumber": true,
+                    "groupControlNumberLowerBound": 1,
+                    "groupControlNumberUpperBound": 99999999,
+                    "rolloverGroupControlNumber": true,
+                    "overwriteExistingTransactionSetControlNumber": true,
+                    "transactionSetControlNumberLowerBound": 1,
+                    "transactionSetControlNumberUpperBound": 99999999,
+                    "rolloverTransactionSetControlNumber": true,
+                    "isTestInterchange": true
+                  },
+                  "acknowledgementSettings": {
+                    "needTechnicalAcknowledgement": true,
+                    "batchTechnicalAcknowledgements": true,
+                    "needFunctionalAcknowledgement": false,
+                    "batchFunctionalAcknowledgements": true,
+                    "needLoopForValidMessages": false,
+                    "sendSynchronousAcknowledgement": true,
+                    "acknowledgementControlNumberLowerBound": 1,
+                    "acknowledgementControlNumberUpperBound": 99999999,
+                    "rolloverAcknowledgementControlNumber": true
+                  },
+                  "messageFilter": {
+                    "messageFilterType": "Exclude"
+                  },
+                  "processingSettings": {
+                    "maskSecurityInfo": true,
+                    "preserveInterchange": true,
+                    "suspendInterchangeOnError": true,
+                    "createEmptyXmlTagsForTrailingSeparators": true,
+                    "useDotAsDecimalSeparator": true
+                  },
+                  "schemaReferences": []
+                }
+              }
+            }
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "4688",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Aug 2022 08:52:12 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "076042a2-5953-479c-a5b3-93bb5063d246",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "centralus:c8da8866-077c-4d50-93a3-7c7cf48f534a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220826T085213Z:076042a2-5953-479c-a5b3-93bb5063d246"
+      },
+      "ResponseBody": {
+        "properties": {
+          "hostPartner": "HostPartner",
+          "guestPartner": "GuestPartner",
+          "hostIdentity": {
+            "qualifier": "ZZ",
+            "value": "zz"
+          },
+          "guestIdentity": {
+            "qualifier": "AA",
+            "value": "aa"
+          },
+          "agreementType": "EDIFACT",
+          "content": {
+            "edifact": {
+              "receiveAgreement": {
+                "protocolSettings": {
+                  "validationSettings": {
+                    "validateCharacterSet": true,
+                    "checkDuplicateInterchangeControlNumber": true,
+                    "interchangeControlNumberValidityDays": 30,
+                    "checkDuplicateGroupControlNumber": true,
+                    "checkDuplicateTransactionSetControlNumber": true,
+                    "validateEDITypes": true,
+                    "validateXSDTypes": true,
+                    "trimLeadingAndTrailingSpacesAndZeroes": true,
+                    "allowLeadingAndTrailingSpacesAndZeroes": true,
+                    "trailingSeparatorPolicy": "Optional"
+                  },
+                  "framingSettings": {
+                    "protocolVersion": 4,
+                    "dataElementSeparator": 53,
+                    "componentSeparator": 58,
+                    "segmentTerminator": 39,
+                    "releaseIndicator": 63,
+                    "repetitionSeparator": 42,
+                    "characterSet": "UNOC",
+                    "decimalPointIndicator": "Comma",
+                    "segmentTerminatorSuffix": "None"
+                  },
+                  "envelopeSettings": {
+                    "applyDelimiterStringAdvice": true,
+                    "createGroupingSegments": true,
+                    "enableDefaultGroupHeaders": true,
+                    "interchangeControlNumberLowerBound": 1,
+                    "interchangeControlNumberUpperBound": 99999999,
+                    "rolloverInterchangeControlNumber": true,
+                    "groupControlNumberLowerBound": 1,
+                    "groupControlNumberUpperBound": 99999999,
+                    "rolloverGroupControlNumber": true,
+                    "overwriteExistingTransactionSetControlNumber": true,
+                    "transactionSetControlNumberLowerBound": 1,
+                    "transactionSetControlNumberUpperBound": 99999999,
+                    "rolloverTransactionSetControlNumber": true,
+                    "isTestInterchange": true,
+                    "businessIdentityQualifierPaddingType": "None"
+                  },
+                  "acknowledgementSettings": {
+                    "needTechnicalAcknowledgement": true,
+                    "batchTechnicalAcknowledgements": true,
+                    "needFunctionalAcknowledgement": false,
+                    "batchFunctionalAcknowledgements": true,
+                    "needLoopForValidMessages": false,
+                    "sendSynchronousAcknowledgement": true,
+                    "acknowledgementControlNumberLowerBound": 1,
+                    "acknowledgementControlNumberUpperBound": 99999999,
+                    "rolloverAcknowledgementControlNumber": true
+                  },
+                  "messageFilter": {
+                    "messageFilterType": "Exclude"
+                  },
+                  "processingSettings": {
+                    "maskSecurityInfo": true,
+                    "preserveInterchange": true,
+                    "suspendInterchangeOnError": true,
+                    "createEmptyXmlTagsForTrailingSeparators": true,
+                    "useDotAsDecimalSeparator": true
+                  },
+                  "schemaReferences": []
+                },
+                "senderBusinessIdentity": {
+                  "qualifier": "AA",
+                  "value": "AA"
+                },
+                "receiverBusinessIdentity": {
+                  "qualifier": "ZZ",
+                  "value": "ZZ"
+                }
+              },
+              "sendAgreement": {
+                "protocolSettings": {
+                  "validationSettings": {
+                    "validateCharacterSet": true,
+                    "checkDuplicateInterchangeControlNumber": true,
+                    "interchangeControlNumberValidityDays": 30,
+                    "checkDuplicateGroupControlNumber": true,
+                    "checkDuplicateTransactionSetControlNumber": true,
+                    "validateEDITypes": true,
+                    "validateXSDTypes": true,
+                    "trimLeadingAndTrailingSpacesAndZeroes": true,
+                    "allowLeadingAndTrailingSpacesAndZeroes": true,
+                    "trailingSeparatorPolicy": "Optional"
+                  },
+                  "framingSettings": {
+                    "protocolVersion": 4,
+                    "dataElementSeparator": 53,
+                    "componentSeparator": 58,
+                    "segmentTerminator": 39,
+                    "releaseIndicator": 63,
+                    "repetitionSeparator": 42,
+                    "characterSet": "UNOC",
+                    "decimalPointIndicator": "Comma",
+                    "segmentTerminatorSuffix": "None"
+                  },
+                  "envelopeSettings": {
+                    "applyDelimiterStringAdvice": true,
+                    "createGroupingSegments": true,
+                    "enableDefaultGroupHeaders": true,
+                    "interchangeControlNumberLowerBound": 1,
+                    "interchangeControlNumberUpperBound": 99999999,
+                    "rolloverInterchangeControlNumber": true,
+                    "groupControlNumberLowerBound": 1,
+                    "groupControlNumberUpperBound": 99999999,
+                    "rolloverGroupControlNumber": true,
+                    "overwriteExistingTransactionSetControlNumber": true,
+                    "transactionSetControlNumberLowerBound": 1,
+                    "transactionSetControlNumberUpperBound": 99999999,
+                    "rolloverTransactionSetControlNumber": true,
+                    "isTestInterchange": true,
+                    "businessIdentityQualifierPaddingType": "None"
+                  },
+                  "acknowledgementSettings": {
+                    "needTechnicalAcknowledgement": true,
+                    "batchTechnicalAcknowledgements": true,
+                    "needFunctionalAcknowledgement": false,
+                    "batchFunctionalAcknowledgements": true,
+                    "needLoopForValidMessages": false,
+                    "sendSynchronousAcknowledgement": true,
+                    "acknowledgementControlNumberLowerBound": 1,
+                    "acknowledgementControlNumberUpperBound": 99999999,
+                    "rolloverAcknowledgementControlNumber": true
+                  },
+                  "messageFilter": {
+                    "messageFilterType": "Exclude"
+                  },
+                  "processingSettings": {
+                    "maskSecurityInfo": true,
+                    "preserveInterchange": true,
+                    "suspendInterchangeOnError": true,
+                    "createEmptyXmlTagsForTrailingSeparators": true,
+                    "useDotAsDecimalSeparator": true
+                  },
+                  "schemaReferences": []
+                },
+                "senderBusinessIdentity": {
+                  "qualifier": "AA",
+                  "value": "AA"
+                },
+                "receiverBusinessIdentity": {
+                  "qualifier": "ZZ",
+                  "value": "ZZ"
+                }
+              }
+            }
+          },
+          "createdTime": "2022-08-26T08:52:12.9576924Z",
+          "changedTime": "2022-08-26T08:52:12.9585679Z"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-4541/providers/Microsoft.Logic/integrationAccounts/intergrationAccount6691/agreements/agreement9772",
+        "name": "agreement9772",
+        "type": "Microsoft.Logic/integrationAccounts/agreements"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1688237572",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

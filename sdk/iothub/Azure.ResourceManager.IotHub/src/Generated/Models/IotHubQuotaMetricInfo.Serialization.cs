@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<long> maxValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     currentValue = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maxValue"))
+                if (property.NameEquals("maxValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

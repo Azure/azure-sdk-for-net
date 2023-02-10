@@ -16,10 +16,7 @@ namespace Azure.Data.AppConfiguration
     /// </summary>
     public partial class ConfigurationClient
     {
-        private readonly Uri _endpoint;
         private readonly SyncTokenPolicy _syncTokenPolicy;
-        private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -50,11 +47,11 @@ namespace Azure.Data.AppConfiguration
                 throw new ArgumentNullException(nameof(options));
 
             ParseConnectionString(connectionString, out _endpoint, out var credential, out var secret);
-
+            _apiVersion = options.Version;
             _syncTokenPolicy = new SyncTokenPolicy();
             _pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary>
@@ -81,15 +78,40 @@ namespace Azure.Data.AppConfiguration
             _endpoint = endpoint;
             _syncTokenPolicy = new SyncTokenPolicy();
             _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint)), _syncTokenPolicy);
+            _apiVersion = options.Version;
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of ConfigurationClient. </summary>
+        /// <param name="endpoint"> The endpoint of the App Configuration instance to send requests to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal ConfigurationClient(Uri endpoint) : this(endpoint, (string)null, new ConfigurationClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of ConfigurationClient. </summary>
+        /// <param name="endpoint"> The endpoint of the App Configuration instance to send requests to. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal ConfigurationClient(Uri endpoint, string syncToken, ConfigurationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            options ??= new ConfigurationClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
+            _syncToken = syncToken;
+            _apiVersion = options.Version;
         }
 
         private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy, HttpPipelinePolicy syncTokenPolicy)
         {
             return HttpPipelineBuilder.Build(options,
-                new HttpPipelinePolicy[] {new CustomHeadersPolicy(), new ApiVersionPolicy(options.GetVersionString())},
-                new HttpPipelinePolicy[] {authenticationPolicy, syncTokenPolicy},
+                new HttpPipelinePolicy[] { new CustomHeadersPolicy() },
+                new HttpPipelinePolicy[] { authenticationPolicy, syncTokenPolicy },
                 new ResponseClassifier());
         }
 
@@ -132,14 +154,19 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
         public virtual async Task<Response<ConfigurationSetting>> AddConfigurationSettingAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
             try
             {
-                using Request request = CreateAddRequest(setting);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+
+                using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
+                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+                MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
+
+                using Response response = await SetConfigurationSettingAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -147,9 +174,9 @@ namespace Azure.Data.AppConfiguration
                     case 201:
                         return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
                     case 412:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "Setting was already present.")).ConfigureAwait(false);
+                        throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "Setting was already present.")).ConfigureAwait(false);
                     default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                        throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -167,24 +194,28 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
         public virtual Response<ConfigurationSetting> AddConfigurationSetting(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
             try
             {
-                using Request request = CreateAddRequest(setting);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
+                using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
+                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+                MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
+
+                using Response response = SetConfigurationSetting(setting.Key, content, contentType, setting.Label, requestOptions, context);
                 switch (response.Status)
                 {
                     case 200:
                     case 201:
                         return CreateResponse(response);
                     case 412:
-                        throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "Setting was already present."));
+                        throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "Setting was already present."));
                     default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                        throw ClientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -192,29 +223,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private Request CreateAddRequest(ConfigurationSetting setting)
-        {
-            Argument.AssertNotNull(setting, nameof(setting));
-            Argument.AssertNotNullOrEmpty(setting.Key, $"{nameof(setting)}.{nameof(setting.Key)}");
-
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = ConfigurationServiceSerializer.SerializeRequestBody(setting);
-
-            request.Method = RequestMethod.Put;
-
-            BuildUriForKvRoute(request.Uri, setting);
-
-            MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
-            ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
-
-            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            return request;
         }
 
         /// <summary>
@@ -258,22 +266,26 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<ConfigurationSetting>> SetConfigurationSettingAsync(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(setting, nameof(setting));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
             try
             {
-                using Request request = CreateSetRequest(setting, onlyIfUnchanged);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
+                using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
+                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
+
+                using Response response = await SetConfigurationSettingAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    409 => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "The setting is read only")).ConfigureAwait(false),
+                    409 => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "The setting is read only")).ConfigureAwait(false),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
+                    _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
                 };
             }
             catch (Exception e)
@@ -296,22 +308,27 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<ConfigurationSetting> SetConfigurationSetting(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(setting, nameof(setting));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
             try
             {
-                using Request request = CreateSetRequest(setting, onlyIfUnchanged);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+
+                using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
+                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
+
+                using Response response = SetConfigurationSetting(setting.Key, content, contentType, setting.Label, requestOptions, context);
 
                 return response.Status switch
                 {
                     200 => CreateResponse(response),
-                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
+                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw _clientDiagnostics.CreateRequestFailedException(response),
+                    _ => throw ClientDiagnostics.CreateRequestFailedException(response),
                 };
             }
             catch (Exception e)
@@ -319,28 +336,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private Request CreateSetRequest(ConfigurationSetting setting, bool onlyIfChanged)
-        {
-            Argument.AssertNotNull(setting, nameof(setting));
-            Argument.AssertNotNullOrEmpty(setting.Key, $"{nameof(setting)}.{nameof(setting.Key)}");
-
-            Request request = _pipeline.CreateRequest();
-            ReadOnlyMemory<byte> content = ConfigurationServiceSerializer.SerializeRequestBody(setting);
-
-            request.Method = RequestMethod.Put;
-            BuildUriForKvRoute(request.Uri, setting);
-            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-
-            if (onlyIfChanged)
-            {
-                ConditionalRequestOptionsExtensions.ApplyHeaders(request, new MatchConditions { IfMatch = setting.ETag });
-            }
-
-            request.Content = RequestContent.Create(content);
-            return request;
         }
 
         /// <summary>
@@ -405,23 +400,24 @@ namespace Azure.Data.AppConfiguration
 
         private async Task<Response> DeleteConfigurationSettingAsync(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
             scope.AddAttribute("key", key);
             scope.Start();
 
             try
             {
-                using Request request = CreateDeleteRequest(key, label, requestOptions);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+
+                using Response response = await DeleteConfigurationSettingAsync(key, label, requestOptions?.IfMatch, context).ConfigureAwait(false);
 
                 return response.Status switch
                 {
                     200 => response,
                     204 => response,
-                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
+                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw _clientDiagnostics.CreateRequestFailedException(response)
+                    _ => throw ClientDiagnostics.CreateRequestFailedException(response)
                 };
             }
             catch (Exception e)
@@ -433,23 +429,24 @@ namespace Azure.Data.AppConfiguration
 
         private Response DeleteConfigurationSetting(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
             scope.AddAttribute("key", key);
             scope.Start();
 
             try
             {
-                using Request request = CreateDeleteRequest(key, label, requestOptions);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+
+                using Response response = DeleteConfigurationSetting(key, label, requestOptions?.IfMatch, context);
 
                 return response.Status switch
                 {
                     200 => response,
                     204 => response,
-                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only.")),
+                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only.")),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw _clientDiagnostics.CreateRequestFailedException(response)
+                    _ => throw ClientDiagnostics.CreateRequestFailedException(response)
                 };
             }
             catch (Exception e)
@@ -459,18 +456,62 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateDeleteRequest(string key, string label, MatchConditions requestOptions)
+        /// <summary> Deletes a key-value. </summary>
+        /// <param name="key"> The key of the key-value to delete. </param>
+        /// <param name="label"> The label of the key-value to delete. </param>
+        /// <param name="ifMatch"> Used to perform an operation only if the targeted resource's etag matches the value provided. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteConfigurationSettingAsync(String,String,ETag,RequestContext)']/*" />
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string label, ETag? ifMatch, RequestContext context)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
-            Request request = _pipeline.CreateRequest();
-            request.Method = RequestMethod.Delete;
-            BuildUriForKvRoute(request.Uri, key, label);
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            if (requestOptions != null)
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
+            scope.Start();
+            try
             {
-                ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
+                using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, label, ifMatch, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-            return request;
+        /// <summary> Deletes a key-value. </summary>
+        /// <param name="key"> The key of the key-value to delete. </param>
+        /// <param name="label"> The label of the key-value to delete. </param>
+        /// <param name="ifMatch"> Used to perform an operation only if the targeted resource's etag matches the value provided. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteConfigurationSetting(String,String,ETag,RequestContext)']/*" />
+        public virtual Response DeleteConfigurationSetting(string key, string label, ETag? ifMatch, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, label, ifMatch, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -570,20 +611,22 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         internal virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
             scope.AddAttribute(nameof(key), key);
             scope.Start();
 
             try
             {
-                using Request request = CreateGetRequest(key, label, acceptDateTime, conditions);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+
+                var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
+                using Response response = await GetConfigurationSettingAsync(key, label, dateTime, null, conditions, context).ConfigureAwait(false);
 
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
                     304 => CreateResourceModifiedResponse(response),
-                    _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
+                    _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
                 };
             }
             catch (Exception e)
@@ -604,21 +647,85 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         internal virtual Response<ConfigurationSetting> GetConfigurationSetting(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
             scope.AddAttribute(nameof(key), key);
             scope.Start();
 
             try
             {
-                using Request request = CreateGetRequest(key, label, acceptDateTime, conditions);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+
+                var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
+                using Response response = GetConfigurationSetting(key, label, dateTime, null, conditions, context);
 
                 return response.Status switch
                 {
                     200 => CreateResponse(response),
                     304 => CreateResourceModifiedResponse(response),
-                    _ => throw _clientDiagnostics.CreateRequestFailedException(response),
+                    _ => throw ClientDiagnostics.CreateRequestFailedException(response),
                 };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a single key-value. </summary>
+        /// <param name="key"> The key of the key-value to retrieve. </param>
+        /// <param name="label"> The label of the key-value to retrieve. </param>
+        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettingAsync(String,String,String,IEnumerable,MatchConditions,RequestContext)']/*" />
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, acceptDatetime, select, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a single key-value. </summary>
+        /// <param name="key"> The key of the key-value to retrieve. </param>
+        /// <param name="label"> The label of the key-value to retrieve. </param>
+        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSetting(String,String,String,IEnumerable,MatchConditions,RequestContext)']/*" />
+        public virtual Response GetConfigurationSetting(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, acceptDatetime, select, matchConditions, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -636,7 +743,16 @@ namespace Azure.Data.AppConfiguration
         public virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetConfigurationSettingsPageAsync(selector, nextLink, cancellationToken));
+            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+            var key = selector.KeyFilter;
+            var label = selector.LabelFilter;
+
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            IEnumerable<string> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -647,7 +763,410 @@ namespace Azure.Data.AppConfiguration
         public virtual Pageable<ConfigurationSetting> GetConfigurationSettings(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
-            return PageResponseEnumerator.CreateEnumerable(nextLink => GetConfigurationSettingsPage(selector, nextLink, cancellationToken));
+            var key = selector.KeyFilter;
+            var label = selector.LabelFilter;
+            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            IEnumerable<string> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
+        }
+
+        /// <summary> Gets a single configuration setting snapshot. </summary>
+        /// <param name="name"> The name of the configuration setting snapshot to retrieve. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
+        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ConfigurationSettingsSnapshot>> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> select = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
+            scope.Start();
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+                List<string> snapshotFields = null;
+                if (select != null)
+                {
+                    snapshotFields = new();
+                    foreach (var field in select)
+                    {
+                        snapshotFields.Add(field.ToString());
+                    }
+                }
+
+                Response response = await GetSnapshotAsync(name, snapshotFields, matchConditions, context).ConfigureAwait(false);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a single configuration setting snapshot. </summary>
+        /// <param name="name"> The name of the configuration setting snapshot to retrieve. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
+        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConfigurationSettingsSnapshot> GetSnapshot(string name, IEnumerable<SnapshotFields> select = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
+            scope.Start();
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+                List<string> snapshotFields = null;
+                if (select != null)
+                {
+                    snapshotFields = new();
+                    foreach (var field in select)
+                    {
+                        snapshotFields.Add(field.ToString());
+                    }
+                }
+
+                Response response = GetSnapshot(name, snapshotFields, matchConditions, context);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a single key-value snapshot. </summary>
+        /// <param name="name"> The name of the key-value snapshot to retrieve. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshotAsync(String,IEnumerable,MatchConditions,RequestContext)']/*" />
+        public virtual async Task<Response> GetSnapshotAsync(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSnapshotRequest(name, select, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a single key-value snapshot. </summary>
+        /// <param name="name"> The name of the key-value snapshot to retrieve. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshot(String,IEnumerable,MatchConditions,RequestContext)']/*" />
+        public virtual Response GetSnapshot(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSnapshotRequest(name, select, matchConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a configuration setting snapshot. </summary>
+        /// <param name="name"> The name of the configuration setting snapshot to create. </param>
+        /// <param name="snapshot"> The configuration setting snapshot to create. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ConfigurationSettingsSnapshot>> CreateSnapshotAsync(string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(snapshot, nameof(snapshot));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
+            scope.Start();
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+                using RequestContent content = ConfigurationSettingsSnapshot.ToRequestContent(snapshot);
+                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+
+                Response response = await CreateSnapshotAsync(name, content, contentType, context).ConfigureAwait(false);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a configuration setting snapshot. </summary>
+        /// <param name="name"> The name of the configuration setting snapshot to create. </param>
+        /// <param name="snapshot"> The configuration setting snapshot to create. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConfigurationSettingsSnapshot> CreateSnapshot(string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(snapshot, nameof(snapshot));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
+            scope.Start();
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+                using RequestContent content = ConfigurationSettingsSnapshot.ToRequestContent(snapshot);
+                ContentType contentType = new(HttpHeader.Common.JsonContentType.Value.ToString());
+
+                Response response = CreateSnapshot(name, content, contentType, context);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
+        /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
+        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
+        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ConfigurationSettingsSnapshot>> ArchiveSnapshotAsync(string name, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            scope.Start();
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+
+                SnapshotUpdateParameters snapshotUpdateParameters = new()
+                {
+                    Status = SnapshotStatus.Archived
+                };
+                using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
+
+                Response response = await UpdateSnapshotStatusAsync(name, content, matchConditions, context).ConfigureAwait(false);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
+        /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
+        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
+        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(string name, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            scope.Start();
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+
+                SnapshotUpdateParameters snapshotUpdateParameters = new()
+                {
+                    Status = SnapshotStatus.Archived
+                };
+                using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
+
+                Response response = UpdateSnapshotStatus(name, content, matchConditions, context);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
+        /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
+        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
+        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ConfigurationSettingsSnapshot>> RecoverSnapshotAsync(string name, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            scope.Start();
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+
+                SnapshotUpdateParameters snapshotUpdateParameters = new()
+                {
+                    Status = SnapshotStatus.Ready
+                };
+                using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
+
+                Response response = await UpdateSnapshotStatusAsync(name, content, matchConditions, context).ConfigureAwait(false);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
+        /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
+        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
+        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConfigurationSettingsSnapshot> RecoverSnapshot(string name, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            scope.Start();
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+
+                SnapshotUpdateParameters snapshotUpdateParameters = new()
+                {
+                    Status = SnapshotStatus.Ready
+                };
+                using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
+
+                Response response = UpdateSnapshotStatus(name, content, matchConditions, context);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a list of configuration setting snapshots. </summary>
+        /// <param name="name"> A filter for the name of the returned snapshots. </param>
+        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="status"> Used to filter returned snapshots by their status property. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<ConfigurationSettingsSnapshot> GetSnapshotsAsync(string name = null, string after = null, IEnumerable<SnapshotFields> select = null, SnapshotStatus? status = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            string snapshotStatus = status?.ToString();
+            List<string> snapshotFields = null;
+            if (select != null)
+            {
+                snapshotFields = new();
+                foreach (SnapshotFields field in select)
+                {
+                    snapshotFields.Add(field.ToString());
+                }
+            }
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, snapshotFields, snapshotStatus, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, snapshotFields, snapshotStatus, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationSettingsSnapshot.DeserializeSnapshot, ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
+        }
+
+        /// <summary> Gets a list of configuration setting snapshots. </summary>
+        /// <param name="name"> A filter for the name of the returned snapshots. </param>
+        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="status"> Used to filter returned snapshots by their status property. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<ConfigurationSettingsSnapshot> GetSnapshots(string name = null, string after = null, IEnumerable<SnapshotFields> select = null, SnapshotStatus? status = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            string snapshotStatus = status?.ToString();
+            List<string> snapshotFields = null;
+            if (select != null)
+            {
+                snapshotFields = new();
+                foreach (SnapshotFields field in select)
+                {
+                    snapshotFields.Add(field.ToString());
+                }
+            }
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, snapshotFields, snapshotStatus, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, snapshotFields, snapshotStatus, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationSettingsSnapshot.DeserializeSnapshot, ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
+        }
+
+        /// <summary> Gets a list of key-value snapshots. </summary>
+        /// <param name="name"> A filter for the name of the returned snapshots. </param>
+        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="status"> Used to filter returned snapshots by their status property. Allowed values: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshotsAsync(String,String,IEnumerable,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetSnapshotsAsync(string name, string after, IEnumerable<string> select, string status, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", context);
+        }
+
+        /// <summary> Gets a list of key-value snapshots. </summary>
+        /// <param name="name"> A filter for the name of the returned snapshots. </param>
+        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="status"> Used to filter returned snapshots by their status property. Allowed values: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshots(String,String,IEnumerable,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetSnapshots(string name, string after, IEnumerable<string> select, string status, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -682,7 +1201,15 @@ namespace Azure.Data.AppConfiguration
         public virtual AsyncPageable<ConfigurationSetting> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetRevisionsPageAsync(selector, nextLink, cancellationToken));
+            var key = selector.KeyFilter;
+            var label = selector.LabelFilter;
+            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            IEnumerable<string> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, null, dateTime, fieldsString, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -693,193 +1220,15 @@ namespace Azure.Data.AppConfiguration
         public virtual Pageable<ConfigurationSetting> GetRevisions(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
-            return PageResponseEnumerator.CreateEnumerable(nextLink => GetRevisionsPage(selector, nextLink, cancellationToken));
-        }
+            var key = selector.KeyFilter;
+            var label = selector.LabelFilter;
+            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            IEnumerable<string> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
 
-        private Request CreateGetRequest(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions requestOptions)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            Request request = _pipeline.CreateRequest();
-            request.Method = RequestMethod.Get;
-            BuildUriForKvRoute(request.Uri, key, label);
-            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-
-            if (acceptDateTime.HasValue)
-            {
-                var dateTime = acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-                request.Headers.SetValue(AcceptDatetimeHeader, dateTime);
-            }
-
-            if (requestOptions != null)
-            {
-                ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
-            }
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            return request;
-        }
-
-        /// <summary>
-        /// Fetches the <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
-        /// </summary>
-        /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
-        /// <param name="pageLink"></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        private async Task<Page<ConfigurationSetting>> GetConfigurationSettingsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettings)}");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateBatchRequest(selector, pageLink);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Status)
-                {
-                    case 200:
-                    case 206:
-                        SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
-                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches the <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
-        /// </summary>
-        /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
-        /// <param name="pageLink"></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        private Page<ConfigurationSetting> GetConfigurationSettingsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettings)}");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateBatchRequest(selector, pageLink);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
-
-                switch (response.Status)
-                {
-                    case 200:
-                    case 206:
-                        SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
-                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private Request CreateBatchRequest(SettingSelector selector, string pageLink)
-        {
-            Request request = _pipeline.CreateRequest();
-            request.Method = RequestMethod.Get;
-            BuildUriForGetBatch(request.Uri, selector, pageLink);
-            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            if (selector.AcceptDateTime.HasValue)
-            {
-                var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-                request.Headers.SetValue(AcceptDatetimeHeader, dateTime);
-            }
-
-            return request;
-        }
-
-        /// <summary>
-        /// Lists chronological/historical representation of <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
-        /// </summary>
-        /// <remarks>Revisions are provided in descending order from their respective <see cref="ConfigurationSetting.LastModified"/> date.</remarks>
-        /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
-        /// <param name="pageLink"></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        private async Task<Page<ConfigurationSetting>> GetRevisionsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisions)}");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateGetRevisionsRequest(selector, pageLink);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-                switch (response.Status)
-                {
-                    case 200:
-                    case 206:
-                        SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
-                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists chronological/historical representation of <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
-        /// </summary>
-        /// <remarks>Revisions are provided in descending order from their respective <see cref="ConfigurationSetting.LastModified"/> date.</remarks>
-        /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
-        /// <param name="pageLink"></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        private Page<ConfigurationSetting> GetRevisionsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisions)}");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateGetRevisionsRequest(selector, pageLink);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
-                switch (response.Status)
-                {
-                    case 200:
-                    case 206:
-                        SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
-                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private Request CreateGetRevisionsRequest(SettingSelector selector, string pageLink)
-        {
-            Request request = _pipeline.CreateRequest();
-            request.Method = RequestMethod.Get;
-            BuildUriForRevisions(request.Uri, selector, pageLink);
-            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            if (selector.AcceptDateTime.HasValue)
-            {
-                var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-                request.Headers.SetValue(AcceptDatetimeHeader, dateTime);
-            }
-
-            return request;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, null, dateTime, fieldsString, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -968,16 +1317,14 @@ namespace Azure.Data.AppConfiguration
 
         private async ValueTask<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, MatchConditions requestOptions, bool isReadOnly, bool async, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetReadOnly)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetReadOnly)}");
             scope.AddAttribute("key", key);
             scope.Start();
 
             try
             {
-                using Request request = CreateSetReadOnlyRequest(key, label, requestOptions, isReadOnly);
-                Response response = async
-                    ? await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false)
-                    : _pipeline.SendRequest(request, cancellationToken);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+                using Response response = async ? await ToCreateAsyncResponse(key, label, requestOptions, isReadOnly, context).ConfigureAwait(false) : ToCreateResponse(key, label, requestOptions, isReadOnly, context);
 
                 return response.Status switch
                 {
@@ -985,8 +1332,8 @@ namespace Azure.Data.AppConfiguration
                         ? await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false)
                         : CreateResponse(response),
                     _ => throw (async
-                        ? await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
-                        : _clientDiagnostics.CreateRequestFailedException(response))
+                        ? await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
+                        : ClientDiagnostics.CreateRequestFailedException(response))
                 };
             }
             catch (Exception e)
@@ -996,18 +1343,16 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateSetReadOnlyRequest(string key, string label,  MatchConditions requestOptions, bool isReadOnly)
+        private async Task<Response> ToCreateAsyncResponse(string key, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
         {
-            Request request = _pipeline.CreateRequest();
-            request.Method = isReadOnly ? RequestMethod.Put : RequestMethod.Delete;
-            BuildUriForLocksRoute(request.Uri, key, label);
+            Response response = isReadOnly ? await CreateReadOnlyLockAsync(key, label, requestOptions, context).ConfigureAwait(false) : await DeleteReadOnlyLockAsync(key, label, requestOptions, context).ConfigureAwait(false);
+            return response;
+        }
 
-            if (requestOptions != null)
-            {
-                ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
-            }
-
-            return request;
+        private Response ToCreateResponse(string key, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
+        {
+            Response response = isReadOnly ? CreateReadOnlyLock(key, label, requestOptions, context) : DeleteReadOnlyLock(key, label, requestOptions, context);
+            return response;
         }
 
         /// <summary>
@@ -1018,6 +1363,15 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(token, nameof(token));
             _syncTokenPolicy.AddToken(token);
+        }
+
+        private static RequestContext CreateRequestContext(ErrorOptions errorOptions, CancellationToken cancellationToken)
+        {
+            return new RequestContext()
+            {
+                ErrorOptions = errorOptions,
+                CancellationToken = cancellationToken
+            };
         }
     }
 }

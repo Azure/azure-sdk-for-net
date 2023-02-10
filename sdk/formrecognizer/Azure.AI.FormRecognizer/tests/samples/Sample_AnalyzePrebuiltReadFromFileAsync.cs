@@ -9,7 +9,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
-    public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
+    public partial class DocumentAnalysisSamples
     {
         [RecordedTest]
         public async Task AnalyzePrebuiltReadFromFileAsync()
@@ -27,10 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
             using var stream = new FileStream(filePath, FileMode.Open);
 
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-read", stream);
-
-            await operation.WaitForCompletionAsync();
-
+            AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-read", stream);
             AnalyzeResult result = operation.Value;
 
             Console.WriteLine("Detected languages:");
@@ -52,7 +49,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                     Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-                    for (int j = 0; j < 4; j++)
+                    for (int j = 0; j < line.BoundingPolygon.Count; j++)
                     {
                         Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
                     }
@@ -72,7 +69,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                     foreach (DocumentSpan span in style.Spans)
                     {
-                        Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+                        Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
                     }
                 }
             }

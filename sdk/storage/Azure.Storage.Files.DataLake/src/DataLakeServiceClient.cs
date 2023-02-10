@@ -159,7 +159,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authPolicy),
                 sharedKeyCredential: sharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
 
@@ -411,7 +411,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: clientDiagnostics ?? new StorageClientDiagnostics(options),
+                clientDiagnostics: clientDiagnostics ?? new ClientDiagnostics(options),
                 clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
 
@@ -460,7 +460,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sasCredential: sasCredential,
-                clientDiagnostics: clientDiagnostics ?? new StorageClientDiagnostics(options),
+                clientDiagnostics: clientDiagnostics ?? new ClientDiagnostics(options),
                 clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
 
@@ -794,8 +794,8 @@ namespace Azure.Storage.Files.DataLake
 
         #region Create File System
         /// <summary>
-        /// The <see cref="CreateFileSystem"/> operation creates a new
-        /// file system under the specified account. If the file systen with the
+        /// The <see cref="CreateFileSystem(string, DataLakeFileSystemCreateOptions, CancellationToken)"/>
+        /// operation creates a new file system under the specified account. If the file systen with the
         /// same name already exists, the operation fails.
         ///
         /// For more information, see
@@ -805,21 +805,8 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileSystemName">
         /// The name of the file system to create.
         /// </param>
-        /// <param name="publicAccessType">
-        /// Optionally specifies whether data in the file system may be accessed
-        /// publicly and the level of access. <see cref="PublicAccessType.FileSystem"/>
-        /// specifies full public read access for file system and path data.
-        /// Clients can enumerate paths within the file system via anonymous
-        /// request, but cannot enumerate file systems within the storage
-        /// account.  <see cref="PublicAccessType.Path"/> specifies public
-        /// read access for paths.  Path data within this file system can be
-        /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate paths within the file system via anonymous
-        /// request.  <see cref="PublicAccessType.None"/> specifies that the
-        /// file system data is private to the account owner.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this file system.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -835,8 +822,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response<DataLakeFileSystemClient> CreateFileSystem(
             string fileSystemName,
-            PublicAccessType publicAccessType = PublicAccessType.None,
-            Metadata metadata = default,
+            DataLakeFileSystemCreateOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
@@ -846,7 +832,9 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 DataLakeFileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
-                Response<FileSystemInfo> response = fileSystem.Create(publicAccessType, metadata, cancellationToken);
+                Response<FileSystemInfo> response = fileSystem.Create(
+                    options,
+                    cancellationToken);
                 return Response.FromValue(fileSystem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -861,8 +849,64 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="CreateFileSystemAsync"/> operation creates a new
+        /// The <see cref="CreateFileSystem(string, DataLakeFileSystemCreateOptions, CancellationToken)"/>
+        /// operation creates a new
         /// file system under the specified account. If the file system with the
+        /// same name already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
+        /// </summary>
+        /// <param name="fileSystemName">
+        /// The name of the file system to create.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemClient}"/> referencing the
+        /// newly created file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileSystemClient>> CreateFileSystemAsync(
+            string fileSystemName,
+            DataLakeFileSystemCreateOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
+
+            try
+            {
+                scope.Start();
+
+                DataLakeFileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
+                Response<FileSystemInfo> response = await fileSystem.CreateAsync(
+                    options,
+                    cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(fileSystem, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateFileSystem(string, PublicAccessType, Metadata, CancellationToken)"/>
+        /// operation creates a new file system under the specified account. If the file systen with the
         /// same name already exists, the operation fails.
         ///
         /// For more information, see
@@ -900,11 +944,14 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<DataLakeFileSystemClient>> CreateFileSystemAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<DataLakeFileSystemClient> CreateFileSystem(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string fileSystemName,
-            PublicAccessType publicAccessType = PublicAccessType.None,
-            Metadata metadata = default,
-            CancellationToken cancellationToken = default)
+            PublicAccessType publicAccessType,
+            Metadata metadata,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
 
@@ -913,7 +960,83 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 DataLakeFileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
-                Response<FileSystemInfo> response = await fileSystem.CreateAsync(publicAccessType, metadata, cancellationToken).ConfigureAwait(false);
+                Response<FileSystemInfo> response = fileSystem.Create(
+                    publicAccessType,
+                    metadata,
+                    cancellationToken);
+                return Response.FromValue(fileSystem, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateFileSystemAsync(string, DataLakeFileSystemCreateOptions, CancellationToken)"/>
+        /// operation creates a new file system under the specified account. If the file system with the
+        /// same name already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
+        /// </summary>
+        /// <param name="fileSystemName">
+        /// The name of the file system to create.
+        /// </param>
+        /// <param name="publicAccessType">
+        /// Optionally specifies whether data in the file system may be accessed
+        /// publicly and the level of access. <see cref="PublicAccessType.FileSystem"/>
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
+        /// request, but cannot enumerate file systems within the storage
+        /// account.  <see cref="PublicAccessType.Path"/> specifies public
+        /// read access for paths.  Path data within this file system can be
+        /// read via anonymous request, but file system data is not available.
+        /// Clients cannot enumerate paths within the file system via anonymous
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// file system data is private to the account owner.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this file system.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemClient}"/> referencing the
+        /// newly created file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<DataLakeFileSystemClient>> CreateFileSystemAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string fileSystemName,
+            PublicAccessType publicAccessType,
+            Metadata metadata,
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
+
+            try
+            {
+                scope.Start();
+
+                DataLakeFileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
+                Response<FileSystemInfo> response = await fileSystem.CreateAsync(
+                    publicAccessType,
+                    metadata,
+                    cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(fileSystem, response.GetRawResponse());
             }
             catch (Exception ex)

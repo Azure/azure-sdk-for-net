@@ -14,28 +14,33 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubSkuDescription DeserializeIotHubSkuDescription(JsonElement element)
         {
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             IotHubSkuInfo sku = default;
             IotHubCapacity capacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = IotHubSkuInfo.DeserializeIotHubSkuInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     capacity = IotHubCapacity.DeserializeIotHubCapacity(property.Value);
                     continue;
                 }
             }
-            return new IotHubSkuDescription(resourceType.Value, sku, capacity);
+            return new IotHubSkuDescription(Optional.ToNullable(resourceType), sku, capacity);
         }
     }
 }

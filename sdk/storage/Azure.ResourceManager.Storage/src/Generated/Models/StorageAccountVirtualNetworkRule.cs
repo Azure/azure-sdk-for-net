@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,12 +16,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of StorageAccountVirtualNetworkRule. </summary>
         /// <param name="virtualNetworkResourceId"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkResourceId"/> is null. </exception>
-        public StorageAccountVirtualNetworkRule(string virtualNetworkResourceId)
+        public StorageAccountVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId)
         {
-            if (virtualNetworkResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkResourceId));
-            }
+            Argument.AssertNotNull(virtualNetworkResourceId, nameof(virtualNetworkResourceId));
 
             VirtualNetworkResourceId = virtualNetworkResourceId;
         }
@@ -29,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="virtualNetworkResourceId"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
         /// <param name="action"> The action of virtual network rule. </param>
         /// <param name="state"> Gets the state of virtual network rule. </param>
-        internal StorageAccountVirtualNetworkRule(string virtualNetworkResourceId, StorageAccountNetworkRuleAction? action, StorageAccountNetworkRuleState? state)
+        internal StorageAccountVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId, StorageAccountNetworkRuleAction? action, StorageAccountNetworkRuleState? state)
         {
             VirtualNetworkResourceId = virtualNetworkResourceId;
             Action = action;
@@ -37,7 +35,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </summary>
-        public string VirtualNetworkResourceId { get; set; }
+        public ResourceIdentifier VirtualNetworkResourceId { get; set; }
         /// <summary> The action of virtual network rule. </summary>
         public StorageAccountNetworkRuleAction? Action { get; set; }
         /// <summary> Gets the state of virtual network rule. </summary>

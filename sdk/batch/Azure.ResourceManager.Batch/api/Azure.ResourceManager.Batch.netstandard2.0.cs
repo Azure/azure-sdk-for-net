@@ -1,85 +1,49 @@
 namespace Azure.ResourceManager.Batch
 {
-    public partial class ApplicationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.ApplicationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.ApplicationResource>, System.Collections.IEnumerable
+    public partial class BatchAccountCertificateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchAccountCertificateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.BatchAccountCertificateResource>, System.Collections.IEnumerable
     {
-        protected ApplicationCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.Batch.ApplicationData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.Batch.ApplicationData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.ApplicationResource> Get(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Batch.ApplicationResource> GetAll(int? maxresults = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.ApplicationResource> GetAllAsync(int? maxresults = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.ApplicationResource>> GetAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Batch.ApplicationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.ApplicationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Batch.ApplicationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.ApplicationResource>.GetEnumerator() { throw null; }
+        protected BatchAccountCertificateCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.BatchAccountCertificateResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string certificateName, Azure.ResourceManager.Batch.Models.BatchAccountCertificateCreateOrUpdateContent content, Azure.ETag? ifMatch = default(Azure.ETag?), string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.BatchAccountCertificateResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string certificateName, Azure.ResourceManager.Batch.Models.BatchAccountCertificateCreateOrUpdateContent content, Azure.ETag? ifMatch = default(Azure.ETag?), string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountCertificateResource> Get(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Batch.BatchAccountCertificateResource> GetAll(int? maxresults = default(int?), string select = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.BatchAccountCertificateResource> GetAllAsync(int? maxresults = default(int?), string select = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountCertificateResource>> GetAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Batch.BatchAccountCertificateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchAccountCertificateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Batch.BatchAccountCertificateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.BatchAccountCertificateResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ApplicationData : Azure.ResourceManager.Models.ResourceData
+    public partial class BatchAccountCertificateData : Azure.ResourceManager.Models.ResourceData
     {
-        public ApplicationData() { }
-        public bool? AllowUpdates { get { throw null; } set { } }
-        public string DefaultVersion { get { throw null; } set { } }
-        public string DisplayName { get { throw null; } set { } }
+        public BatchAccountCertificateData() { }
+        public Azure.ResponseError DeleteCertificateError { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountCertificateFormat? Format { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState? PreviousProvisioningState { get { throw null; } }
+        public System.DateTimeOffset? PreviousProvisioningStateTransitOn { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState? ProvisioningState { get { throw null; } }
+        public System.DateTimeOffset? ProvisioningStateTransitOn { get { throw null; } }
+        public string PublicData { get { throw null; } }
+        public System.BinaryData Thumbprint { get { throw null; } set { } }
+        public string ThumbprintAlgorithm { get { throw null; } set { } }
     }
-    public partial class ApplicationPackageCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.ApplicationPackageResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.ApplicationPackageResource>, System.Collections.IEnumerable
-    {
-        protected ApplicationPackageCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationPackageResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string versionName, Azure.ResourceManager.Batch.ApplicationPackageData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationPackageResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string versionName, Azure.ResourceManager.Batch.ApplicationPackageData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.ApplicationPackageResource> Get(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Batch.ApplicationPackageResource> GetAll(int? maxresults = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.ApplicationPackageResource> GetAllAsync(int? maxresults = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.ApplicationPackageResource>> GetAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Batch.ApplicationPackageResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.ApplicationPackageResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Batch.ApplicationPackageResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.ApplicationPackageResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ApplicationPackageData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ApplicationPackageData() { }
-        public Azure.ETag? ETag { get { throw null; } }
-        public string Format { get { throw null; } }
-        public System.DateTimeOffset? LastActivationOn { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.PackageState? State { get { throw null; } }
-        public System.Uri StorageUri { get { throw null; } }
-        public System.DateTimeOffset? StorageUrlExpiry { get { throw null; } }
-    }
-    public partial class ApplicationPackageResource : Azure.ResourceManager.ArmResource
+    public partial class BatchAccountCertificateResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected ApplicationPackageResource() { }
-        public virtual Azure.ResourceManager.Batch.ApplicationPackageData Data { get { throw null; } }
+        protected BatchAccountCertificateResource() { }
+        public virtual Azure.ResourceManager.Batch.BatchAccountCertificateData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.ApplicationPackageResource> Activate(Azure.ResourceManager.Batch.Models.ActivateApplicationPackageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.ApplicationPackageResource>> ActivateAsync(Azure.ResourceManager.Batch.Models.ActivateApplicationPackageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string applicationName, string versionName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountCertificateResource> CancelDeletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountCertificateResource>> CancelDeletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string certificateName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.ApplicationPackageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.ApplicationPackageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationPackageResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Batch.ApplicationPackageData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationPackageResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Batch.ApplicationPackageData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ApplicationResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ApplicationResource() { }
-        public virtual Azure.ResourceManager.Batch.ApplicationData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string applicationName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.ApplicationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.ApplicationPackageResource> GetApplicationPackage(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.ApplicationPackageResource>> GetApplicationPackageAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Batch.ApplicationPackageCollection GetApplicationPackages() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.ApplicationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.ApplicationResource> Update(Azure.ResourceManager.Batch.ApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.ApplicationResource>> UpdateAsync(Azure.ResourceManager.Batch.ApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountCertificateResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountCertificateResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountCertificateResource> Update(Azure.ResourceManager.Batch.Models.BatchAccountCertificateCreateOrUpdateContent content, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountCertificateResource>> UpdateAsync(Azure.ResourceManager.Batch.Models.BatchAccountCertificateCreateOrUpdateContent content, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BatchAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.BatchAccountResource>, System.Collections.IEnumerable
     {
@@ -98,27 +62,122 @@ namespace Azure.ResourceManager.Batch
     }
     public partial class BatchAccountData : Azure.ResourceManager.Models.ResourceData
     {
-        internal BatchAccountData() { }
+        public BatchAccountData() { }
         public string AccountEndpoint { get { throw null; } }
         public int? ActiveJobAndJobScheduleQuota { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.AuthenticationMode> AllowedAuthenticationModes { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.AutoStorageProperties AutoStorage { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.BatchAuthenticationMode> AllowedAuthenticationModes { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountAutoStorageConfiguration AutoStorage { get { throw null; } }
         public int? DedicatedCoreQuota { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.VirtualMachineFamilyCoreQuota> DedicatedCoreQuotaPerVmFamily { get { throw null; } }
-        public bool? DedicatedCoreQuotaPerVmFamilyEnforced { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.EncryptionProperties Encryption { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.BatchAccountIdentity Identity { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.KeyVaultReference KeyVaultReference { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.BatchVmFamilyCoreQuota> DedicatedCoreQuotaPerVmFamily { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountEncryptionConfiguration Encryption { get { throw null; } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public bool? IsDedicatedCoreQuotaPerVmFamilyEnforced { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchKeyVaultReference KeyVaultReference { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public int? LowPriorityCoreQuota { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.BatchVirtualMachineNetworkProfile NetworkProfile { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchNetworkProfile NetworkProfile { get { throw null; } set { } }
         public string NodeManagementEndpoint { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.PoolAllocationMode? PoolAllocationMode { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountPoolAllocationMode? PoolAllocationMode { get { throw null; } }
         public int? PoolQuota { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class BatchAccountDetectorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchAccountDetectorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.BatchAccountDetectorResource>, System.Collections.IEnumerable
+    {
+        protected BatchAccountDetectorCollection() { }
+        public virtual Azure.Response<bool> Exists(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountDetectorResource> Get(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Batch.BatchAccountDetectorResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.BatchAccountDetectorResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountDetectorResource>> GetAsync(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Batch.BatchAccountDetectorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchAccountDetectorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Batch.BatchAccountDetectorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.BatchAccountDetectorResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class BatchAccountDetectorData : Azure.ResourceManager.Models.ResourceData
+    {
+        public BatchAccountDetectorData() { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public string Value { get { throw null; } set { } }
+    }
+    public partial class BatchAccountDetectorResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected BatchAccountDetectorResource() { }
+        public virtual Azure.ResourceManager.Batch.BatchAccountDetectorData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string detectorId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountDetectorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountDetectorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class BatchAccountPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchAccountPoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.BatchAccountPoolResource>, System.Collections.IEnumerable
+    {
+        protected BatchAccountPoolCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.BatchAccountPoolResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string poolName, Azure.ResourceManager.Batch.BatchAccountPoolData data, Azure.ETag? ifMatch = default(Azure.ETag?), string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.BatchAccountPoolResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string poolName, Azure.ResourceManager.Batch.BatchAccountPoolData data, Azure.ETag? ifMatch = default(Azure.ETag?), string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource> Get(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Batch.BatchAccountPoolResource> GetAll(int? maxresults = default(int?), string select = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.BatchAccountPoolResource> GetAllAsync(int? maxresults = default(int?), string select = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource>> GetAsync(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Batch.BatchAccountPoolResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchAccountPoolResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Batch.BatchAccountPoolResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.BatchAccountPoolResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class BatchAccountPoolData : Azure.ResourceManager.Models.ResourceData
+    {
+        public BatchAccountPoolData() { }
+        public Azure.ResourceManager.Batch.Models.BatchAccountPoolAllocationState? AllocationState { get { throw null; } }
+        public System.DateTimeOffset? AllocationStateTransitionOn { get { throw null; } }
+        public System.Collections.Generic.IList<string> ApplicationLicenses { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchApplicationPackageReference> ApplicationPackages { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountPoolAutoScaleRun AutoScaleRun { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchCertificateReference> Certificates { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public int? CurrentDedicatedNodes { get { throw null; } }
+        public int? CurrentLowPriorityNodes { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.NodeCommunicationMode? CurrentNodeCommunicationMode { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchDeploymentConfiguration DeploymentConfiguration { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.InterNodeCommunicationState? InterNodeCommunication { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchAccountPoolMetadataItem> Metadata { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchMountConfiguration> MountConfiguration { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchNetworkConfiguration NetworkConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState? ProvisioningState { get { throw null; } }
+        public System.DateTimeOffset? ProvisioningStateTransitOn { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchResizeOperationStatus ResizeOperationStatus { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountPoolScaleSettings ScaleSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountPoolStartTask StartTask { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.NodeCommunicationMode? TargetNodeCommunicationMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchNodeFillType? TaskSchedulingNodeFillType { get { throw null; } set { } }
+        public int? TaskSlotsPerNode { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchUserAccount> UserAccounts { get { throw null; } }
+        public string VmSize { get { throw null; } set { } }
+    }
+    public partial class BatchAccountPoolResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected BatchAccountPoolResource() { }
+        public virtual Azure.ResourceManager.Batch.BatchAccountPoolData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource> DisableAutoScale(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource>> DisableAutoScaleAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource> StopResize(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource>> StopResizeAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource> Update(Azure.ResourceManager.Batch.BatchAccountPoolData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource>> UpdateAsync(Azure.ResourceManager.Batch.BatchAccountPoolData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BatchAccountResource : Azure.ResourceManager.ArmResource
     {
@@ -132,29 +191,29 @@ namespace Azure.ResourceManager.Batch
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.ApplicationResource> GetApplication(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.ApplicationResource>> GetApplicationAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Batch.ApplicationCollection GetApplications() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountCertificateResource> GetBatchAccountCertificate(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountCertificateResource>> GetBatchAccountCertificateAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Batch.BatchAccountCertificateCollection GetBatchAccountCertificates() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountDetectorResource> GetBatchAccountDetector(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountDetectorResource>> GetBatchAccountDetectorAsync(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Batch.BatchAccountDetectorCollection GetBatchAccountDetectors() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource> GetBatchAccountPool(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountPoolResource>> GetBatchAccountPoolAsync(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Batch.BatchAccountPoolCollection GetBatchAccountPools() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchApplicationResource> GetBatchApplication(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchApplicationResource>> GetBatchApplicationAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Batch.BatchApplicationCollection GetBatchApplications() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource> GetBatchPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource>> GetBatchPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionCollection GetBatchPrivateEndpointConnections() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Batch.BatchPrivateLinkResource> GetBatchPrivateLinkResource(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchPrivateLinkResource>> GetBatchPrivateLinkResourceAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Batch.BatchPrivateLinkResourceCollection GetBatchPrivateLinkResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.CertificateResource> GetCertificate(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.CertificateResource>> GetCertificateAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Batch.CertificateCollection GetCertificates() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.DetectorResponseResource> GetDetectorResponse(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.DetectorResponseResource>> GetDetectorResponseAsync(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Batch.DetectorResponseCollection GetDetectorResponses() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Batch.Models.BatchAccountKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchAccountKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Batch.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.PoolResource> GetPool(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.PoolResource>> GetPoolAsync(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Batch.PoolCollection GetPools() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Batch.Models.BatchAccountOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.BatchAccountOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Batch.Models.BatchAccountKeys> RegenerateKey(Azure.ResourceManager.Batch.Models.BatchAccountRegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchAccountKeys>> RegenerateKeyAsync(Azure.ResourceManager.Batch.Models.BatchAccountRegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -166,29 +225,110 @@ namespace Azure.ResourceManager.Batch
         public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource> Update(Azure.ResourceManager.Batch.Models.BatchAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource>> UpdateAsync(Azure.ResourceManager.Batch.Models.BatchAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class BatchApplicationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchApplicationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.BatchApplicationResource>, System.Collections.IEnumerable
+    {
+        protected BatchApplicationCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.BatchApplicationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.Batch.BatchApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.BatchApplicationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.Batch.BatchApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchApplicationResource> Get(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Batch.BatchApplicationResource> GetAll(int? maxresults = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.BatchApplicationResource> GetAllAsync(int? maxresults = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchApplicationResource>> GetAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Batch.BatchApplicationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchApplicationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Batch.BatchApplicationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.BatchApplicationResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class BatchApplicationData : Azure.ResourceManager.Models.ResourceData
+    {
+        public BatchApplicationData() { }
+        public bool? AllowUpdates { get { throw null; } set { } }
+        public string DefaultVersion { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } }
+    }
+    public partial class BatchApplicationPackageCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchApplicationPackageResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.BatchApplicationPackageResource>, System.Collections.IEnumerable
+    {
+        protected BatchApplicationPackageCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.BatchApplicationPackageResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string versionName, Azure.ResourceManager.Batch.BatchApplicationPackageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.BatchApplicationPackageResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string versionName, Azure.ResourceManager.Batch.BatchApplicationPackageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchApplicationPackageResource> Get(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Batch.BatchApplicationPackageResource> GetAll(int? maxresults = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.BatchApplicationPackageResource> GetAllAsync(int? maxresults = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchApplicationPackageResource>> GetAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Batch.BatchApplicationPackageResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchApplicationPackageResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Batch.BatchApplicationPackageResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.BatchApplicationPackageResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class BatchApplicationPackageData : Azure.ResourceManager.Models.ResourceData
+    {
+        public BatchApplicationPackageData() { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public string Format { get { throw null; } }
+        public System.DateTimeOffset? LastActivatedOn { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchApplicationPackageState? State { get { throw null; } }
+        public System.Uri StorageUri { get { throw null; } }
+        public System.DateTimeOffset? StorageUriExpireOn { get { throw null; } }
+    }
+    public partial class BatchApplicationPackageResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected BatchApplicationPackageResource() { }
+        public virtual Azure.ResourceManager.Batch.BatchApplicationPackageData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchApplicationPackageResource> Activate(Azure.ResourceManager.Batch.Models.BatchApplicationPackageActivateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchApplicationPackageResource>> ActivateAsync(Azure.ResourceManager.Batch.Models.BatchApplicationPackageActivateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string applicationName, string versionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchApplicationPackageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchApplicationPackageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.BatchApplicationPackageResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Batch.BatchApplicationPackageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.BatchApplicationPackageResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Batch.BatchApplicationPackageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class BatchApplicationResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected BatchApplicationResource() { }
+        public virtual Azure.ResourceManager.Batch.BatchApplicationData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string applicationName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchApplicationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchApplicationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchApplicationPackageResource> GetBatchApplicationPackage(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchApplicationPackageResource>> GetBatchApplicationPackageAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Batch.BatchApplicationPackageCollection GetBatchApplicationPackages() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchApplicationResource> Update(Azure.ResourceManager.Batch.BatchApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchApplicationResource>> UpdateAsync(Azure.ResourceManager.Batch.BatchApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public static partial class BatchExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Batch.Models.CheckNameAvailabilityResult> CheckNameAvailabilityLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.Batch.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.Batch.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Batch.ApplicationPackageResource GetApplicationPackageResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Batch.ApplicationResource GetApplicationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult> CheckBatchNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource> GetBatchAccount(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource>> GetBatchAccountAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Batch.BatchAccountCertificateResource GetBatchAccountCertificateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Batch.BatchAccountDetectorResource GetBatchAccountDetectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Batch.BatchAccountPoolResource GetBatchAccountPoolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Batch.BatchAccountResource GetBatchAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Batch.BatchAccountCollection GetBatchAccounts(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Batch.BatchAccountResource> GetBatchAccounts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Batch.BatchAccountResource> GetBatchAccountsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Batch.BatchApplicationPackageResource GetBatchApplicationPackageResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Batch.BatchApplicationResource GetBatchApplicationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource GetBatchPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Batch.BatchPrivateLinkResource GetBatchPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Batch.CertificateResource GetCertificateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Batch.DetectorResponseResource GetDetectorResponseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Batch.PoolResource GetPoolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota> GetQuotasLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota>> GetQuotasLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Batch.Models.SupportedSku> GetSupportedCloudServiceSkusLocations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.SupportedSku> GetSupportedCloudServiceSkusLocationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Batch.Models.SupportedSku> GetSupportedVirtualMachineSkusLocations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.SupportedSku> GetSupportedVirtualMachineSkusLocationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota> GetBatchQuotas(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota>> GetBatchQuotasAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedCloudServiceSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedCloudServiceSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BatchPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -223,8 +363,8 @@ namespace Azure.ResourceManager.Batch
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BatchPrivateLinkResource : Azure.ResourceManager.ArmResource
     {
@@ -257,264 +397,95 @@ namespace Azure.ResourceManager.Batch
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
     }
-    public partial class CertificateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.CertificateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.CertificateResource>, System.Collections.IEnumerable
-    {
-        protected CertificateCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.CertificateResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string certificateName, Azure.ResourceManager.Batch.Models.CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.CertificateResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string certificateName, Azure.ResourceManager.Batch.Models.CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.CertificateResource> Get(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Batch.CertificateResource> GetAll(int? maxresults = default(int?), string select = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.CertificateResource> GetAllAsync(int? maxresults = default(int?), string select = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.CertificateResource>> GetAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Batch.CertificateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.CertificateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Batch.CertificateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.CertificateResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class CertificateData : Azure.ResourceManager.Models.ResourceData
-    {
-        public CertificateData() { }
-        public Azure.ResponseError DeleteCertificateError { get { throw null; } }
-        public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.CertificateFormat? Format { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.CertificateProvisioningState? PreviousProvisioningState { get { throw null; } }
-        public System.DateTimeOffset? PreviousProvisioningStateTransitionOn { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.CertificateProvisioningState? ProvisioningState { get { throw null; } }
-        public System.DateTimeOffset? ProvisioningStateTransitionOn { get { throw null; } }
-        public string PublicData { get { throw null; } }
-        public string Thumbprint { get { throw null; } set { } }
-        public string ThumbprintAlgorithm { get { throw null; } set { } }
-    }
-    public partial class CertificateResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected CertificateResource() { }
-        public virtual Azure.ResourceManager.Batch.CertificateData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.CertificateResource> CancelDeletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.CertificateResource>> CancelDeletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string certificateName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.CertificateResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.CertificateResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.CertificateResource> Update(Azure.ResourceManager.Batch.Models.CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.CertificateResource>> UpdateAsync(Azure.ResourceManager.Batch.Models.CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DetectorResponseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.DetectorResponseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.DetectorResponseResource>, System.Collections.IEnumerable
-    {
-        protected DetectorResponseCollection() { }
-        public virtual Azure.Response<bool> Exists(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.DetectorResponseResource> Get(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Batch.DetectorResponseResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.DetectorResponseResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.DetectorResponseResource>> GetAsync(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Batch.DetectorResponseResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.DetectorResponseResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Batch.DetectorResponseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.DetectorResponseResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class DetectorResponseData : Azure.ResourceManager.Models.ResourceData
-    {
-        public DetectorResponseData() { }
-        public Azure.ETag? ETag { get { throw null; } }
-        public string Value { get { throw null; } set { } }
-    }
-    public partial class DetectorResponseResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected DetectorResponseResource() { }
-        public virtual Azure.ResourceManager.Batch.DetectorResponseData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string detectorId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.DetectorResponseResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.DetectorResponseResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.PoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.PoolResource>, System.Collections.IEnumerable
-    {
-        protected PoolCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.PoolResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string poolName, Azure.ResourceManager.Batch.PoolData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.PoolResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string poolName, Azure.ResourceManager.Batch.PoolData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.PoolResource> Get(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Batch.PoolResource> GetAll(int? maxresults = default(int?), string select = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.PoolResource> GetAllAsync(int? maxresults = default(int?), string select = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.PoolResource>> GetAsync(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Batch.PoolResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.PoolResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Batch.PoolResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.PoolResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class PoolData : Azure.ResourceManager.Models.ResourceData
-    {
-        public PoolData() { }
-        public Azure.ResourceManager.Batch.Models.AllocationState? AllocationState { get { throw null; } }
-        public System.DateTimeOffset? AllocationStateTransitionOn { get { throw null; } }
-        public System.Collections.Generic.IList<string> ApplicationLicenses { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.ApplicationPackageReference> ApplicationPackages { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.AutoScaleRun AutoScaleRun { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.CertificateReference> Certificates { get { throw null; } }
-        public System.DateTimeOffset? CreationOn { get { throw null; } }
-        public int? CurrentDedicatedNodes { get { throw null; } }
-        public int? CurrentLowPriorityNodes { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.DeploymentConfiguration DeploymentConfiguration { get { throw null; } set { } }
-        public string DisplayName { get { throw null; } set { } }
-        public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.BatchPoolIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.InterNodeCommunicationState? InterNodeCommunication { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModified { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.MetadataItem> Metadata { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.MountConfiguration> MountConfiguration { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.NetworkConfiguration NetworkConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.PoolProvisioningState? ProvisioningState { get { throw null; } }
-        public System.DateTimeOffset? ProvisioningStateTransitionOn { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.ResizeOperationStatus ResizeOperationStatus { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.ScaleSettings ScaleSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.StartTask StartTask { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.ComputeNodeFillType? TaskSchedulingNodeFillType { get { throw null; } set { } }
-        public int? TaskSlotsPerNode { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.UserAccount> UserAccounts { get { throw null; } }
-        public string VmSize { get { throw null; } set { } }
-    }
-    public partial class PoolResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected PoolResource() { }
-        public virtual Azure.ResourceManager.Batch.PoolData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.PoolResource> DisableAutoScale(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.PoolResource>> DisableAutoScaleAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.PoolResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.PoolResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.PoolResource> StopResize(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.PoolResource>> StopResizeAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.PoolResource> Update(Azure.ResourceManager.Batch.PoolData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.PoolResource>> UpdateAsync(Azure.ResourceManager.Batch.PoolData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
 }
 namespace Azure.ResourceManager.Batch.Models
 {
-    public enum AccountKeyType
+    public partial class BatchAccountAutoScaleSettings
     {
-        Primary = 0,
-        Secondary = 1,
-    }
-    public partial class ActivateApplicationPackageContent
-    {
-        public ActivateApplicationPackageContent(string format) { }
-        public string Format { get { throw null; } }
-    }
-    public enum AllocationState
-    {
-        Steady = 0,
-        Resizing = 1,
-        Stopping = 2,
-    }
-    public partial class ApplicationPackageReference
-    {
-        public ApplicationPackageReference(string id) { }
-        public string Id { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
-    }
-    public enum AuthenticationMode
-    {
-        SharedKey = 0,
-        AAD = 1,
-        TaskAuthenticationToken = 2,
-    }
-    public partial class AutoScaleRun
-    {
-        internal AutoScaleRun() { }
-        public Azure.ResourceManager.Batch.Models.AutoScaleRunError Error { get { throw null; } }
-        public System.DateTimeOffset EvaluationOn { get { throw null; } }
-        public string Results { get { throw null; } }
-    }
-    public partial class AutoScaleRunError
-    {
-        internal AutoScaleRunError() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.AutoScaleRunError> Details { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
-    public partial class AutoScaleSettings
-    {
-        public AutoScaleSettings(string formula) { }
+        public BatchAccountAutoScaleSettings(string formula) { }
         public System.TimeSpan? EvaluationInterval { get { throw null; } set { } }
         public string Formula { get { throw null; } set { } }
     }
-    public enum AutoStorageAuthenticationMode
+    public partial class BatchAccountAutoStorageBaseConfiguration
     {
-        StorageKeys = 0,
-        BatchAccountManagedIdentity = 1,
+        public BatchAccountAutoStorageBaseConfiguration(Azure.Core.ResourceIdentifier storageAccountId) { }
+        public Azure.ResourceManager.Batch.Models.BatchAutoStorageAuthenticationMode? AuthenticationMode { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NodeIdentityResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
     }
-    public partial class AutoStorageBaseProperties
+    public partial class BatchAccountAutoStorageConfiguration : Azure.ResourceManager.Batch.Models.BatchAccountAutoStorageBaseConfiguration
     {
-        public AutoStorageBaseProperties(string storageAccountId) { }
-        public Azure.ResourceManager.Batch.Models.AutoStorageAuthenticationMode? AuthenticationMode { get { throw null; } set { } }
-        public string NodeIdentityReferenceResourceId { get { throw null; } set { } }
-        public string StorageAccountId { get { throw null; } set { } }
+        public BatchAccountAutoStorageConfiguration(Azure.Core.ResourceIdentifier storageAccountId, System.DateTimeOffset lastKeySyncedOn) : base (default(Azure.Core.ResourceIdentifier)) { }
+        public System.DateTimeOffset LastKeySyncedOn { get { throw null; } set { } }
     }
-    public partial class AutoStorageProperties : Azure.ResourceManager.Batch.Models.AutoStorageBaseProperties
+    public partial class BatchAccountCertificateCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {
-        public AutoStorageProperties(string storageAccountId, System.DateTimeOffset lastKeySync) : base (default(string)) { }
-        public System.DateTimeOffset LastKeySync { get { throw null; } set { } }
+        public BatchAccountCertificateCreateOrUpdateContent() { }
+        public System.BinaryData Data { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountCertificateFormat? Format { get { throw null; } set { } }
+        public string Password { get { throw null; } set { } }
+        public System.BinaryData Thumbprint { get { throw null; } set { } }
+        public string ThumbprintAlgorithm { get { throw null; } set { } }
     }
-    public enum AutoUserScope
+    public enum BatchAccountCertificateFormat
     {
-        Task = 0,
-        Pool = 1,
+        Pfx = 0,
+        Cer = 1,
     }
-    public partial class AutoUserSpecification
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchAccountCertificateProvisioningState : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState>
     {
-        public AutoUserSpecification() { }
-        public Azure.ResourceManager.Batch.Models.ElevationLevel? ElevationLevel { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.AutoUserScope? Scope { get { throw null; } set { } }
-    }
-    public partial class AzureBlobFileSystemConfiguration
-    {
-        public AzureBlobFileSystemConfiguration(string accountName, string containerName, string relativeMountPath) { }
-        public string AccountKey { get { throw null; } set { } }
-        public string AccountName { get { throw null; } set { } }
-        public string BlobfuseOptions { get { throw null; } set { } }
-        public string ContainerName { get { throw null; } set { } }
-        public string IdentityReferenceResourceId { get { throw null; } set { } }
-        public string RelativeMountPath { get { throw null; } set { } }
-        public string SasKey { get { throw null; } set { } }
-    }
-    public partial class AzureFileShareConfiguration
-    {
-        public AzureFileShareConfiguration(string accountName, System.Uri azureFileUri, string accountKey, string relativeMountPath) { }
-        public string AccountKey { get { throw null; } set { } }
-        public string AccountName { get { throw null; } set { } }
-        public System.Uri AzureFileUri { get { throw null; } set { } }
-        public string MountOptions { get { throw null; } set { } }
-        public string RelativeMountPath { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchAccountCertificateProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState left, Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState left, Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class BatchAccountCreateOrUpdateContent
     {
         public BatchAccountCreateOrUpdateContent(Azure.Core.AzureLocation location) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.AuthenticationMode> AllowedAuthenticationModes { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.AutoStorageBaseProperties AutoStorage { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.EncryptionProperties Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchAccountIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.KeyVaultReference KeyVaultReference { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchAuthenticationMode> AllowedAuthenticationModes { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountAutoStorageBaseConfiguration AutoStorage { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountEncryptionConfiguration Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchKeyVaultReference KeyVaultReference { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.BatchVirtualMachineNetworkProfile NetworkProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.PoolAllocationMode? PoolAllocationMode { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchNetworkProfile NetworkProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountPoolAllocationMode? PoolAllocationMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class BatchAccountIdentity
+    public partial class BatchAccountEncryptionConfiguration
     {
-        public BatchAccountIdentity(Azure.ResourceManager.Batch.Models.ResourceIdentityType resourceIdentityType) { }
-        public string PrincipalId { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.ResourceIdentityType ResourceIdentityType { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+        public BatchAccountEncryptionConfiguration() { }
+        public System.Uri KeyIdentifier { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountKeySource? KeySource { get { throw null; } set { } }
+    }
+    public partial class BatchAccountEndpointDependency
+    {
+        internal BatchAccountEndpointDependency() { }
+        public string Description { get { throw null; } }
+        public string DomainName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.BatchEndpointDetail> EndpointDetails { get { throw null; } }
+    }
+    public partial class BatchAccountFixedScaleSettings
+    {
+        public BatchAccountFixedScaleSettings() { }
+        public Azure.ResourceManager.Batch.Models.BatchNodeDeallocationOption? NodeDeallocationOption { get { throw null; } set { } }
+        public System.TimeSpan? ResizeTimeout { get { throw null; } set { } }
+        public int? TargetDedicatedNodes { get { throw null; } set { } }
+        public int? TargetLowPriorityNodes { get { throw null; } set { } }
     }
     public partial class BatchAccountKeys
     {
@@ -523,21 +494,207 @@ namespace Azure.ResourceManager.Batch.Models
         public string Primary { get { throw null; } }
         public string Secondary { get { throw null; } }
     }
+    public enum BatchAccountKeySource
+    {
+        MicrosoftBatch = 0,
+        MicrosoftKeyVault = 1,
+    }
+    public enum BatchAccountKeyType
+    {
+        Primary = 0,
+        Secondary = 1,
+    }
+    public partial class BatchAccountOutboundEnvironmentEndpoint
+    {
+        internal BatchAccountOutboundEnvironmentEndpoint() { }
+        public string Category { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.BatchAccountEndpointDependency> Endpoints { get { throw null; } }
+    }
     public partial class BatchAccountPatch
     {
         public BatchAccountPatch() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.AuthenticationMode> AllowedAuthenticationModes { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.AutoStorageBaseProperties AutoStorage { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.EncryptionProperties Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchAccountIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchVirtualMachineNetworkProfile NetworkProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchAuthenticationMode> AllowedAuthenticationModes { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountAutoStorageBaseConfiguration AutoStorage { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountEncryptionConfiguration Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchNetworkProfile NetworkProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public enum BatchAccountPoolAllocationMode
+    {
+        BatchService = 0,
+        UserSubscription = 1,
+    }
+    public enum BatchAccountPoolAllocationState
+    {
+        Steady = 0,
+        Resizing = 1,
+        Stopping = 2,
+    }
+    public partial class BatchAccountPoolAutoScaleRun
+    {
+        internal BatchAccountPoolAutoScaleRun() { }
+        public Azure.ResponseError Error { get { throw null; } }
+        public System.DateTimeOffset EvaluationOn { get { throw null; } }
+        public string Results { get { throw null; } }
+    }
+    public partial class BatchAccountPoolMetadataItem
+    {
+        public BatchAccountPoolMetadataItem(string name, string value) { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchAccountPoolProvisioningState : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchAccountPoolProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState left, Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState left, Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class BatchAccountPoolScaleSettings
+    {
+        public BatchAccountPoolScaleSettings() { }
+        public Azure.ResourceManager.Batch.Models.BatchAccountAutoScaleSettings AutoScale { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchAccountFixedScaleSettings FixedScale { get { throw null; } set { } }
+    }
+    public partial class BatchAccountPoolStartTask
+    {
+        public BatchAccountPoolStartTask() { }
+        public string CommandLine { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchTaskContainerSettings ContainerSettings { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchEnvironmentSetting> EnvironmentSettings { get { throw null; } }
+        public int? MaxTaskRetryCount { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchResourceFile> ResourceFiles { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchUserIdentity UserIdentity { get { throw null; } set { } }
+        public bool? WaitForSuccess { get { throw null; } set { } }
     }
     public partial class BatchAccountRegenerateKeyContent
     {
-        public BatchAccountRegenerateKeyContent(Azure.ResourceManager.Batch.Models.AccountKeyType keyName) { }
-        public Azure.ResourceManager.Batch.Models.AccountKeyType KeyName { get { throw null; } }
+        public BatchAccountRegenerateKeyContent(Azure.ResourceManager.Batch.Models.BatchAccountKeyType keyType) { }
+        public Azure.ResourceManager.Batch.Models.BatchAccountKeyType KeyType { get { throw null; } }
+    }
+    public partial class BatchApplicationPackageActivateContent
+    {
+        public BatchApplicationPackageActivateContent(string format) { }
+        public string Format { get { throw null; } }
+    }
+    public partial class BatchApplicationPackageReference
+    {
+        public BatchApplicationPackageReference(Azure.Core.ResourceIdentifier id) { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+    }
+    public enum BatchApplicationPackageState
+    {
+        Pending = 0,
+        Active = 1,
+    }
+    public enum BatchAuthenticationMode
+    {
+        SharedKey = 0,
+        Aad = 1,
+        TaskAuthenticationToken = 2,
+    }
+    public enum BatchAutoStorageAuthenticationMode
+    {
+        StorageKeys = 0,
+        BatchAccountManagedIdentity = 1,
+    }
+    public enum BatchAutoUserScope
+    {
+        Task = 0,
+        Pool = 1,
+    }
+    public partial class BatchAutoUserSpecification
+    {
+        public BatchAutoUserSpecification() { }
+        public Azure.ResourceManager.Batch.Models.BatchUserAccountElevationLevel? ElevationLevel { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchAutoUserScope? Scope { get { throw null; } set { } }
+    }
+    public partial class BatchBlobFileSystemConfiguration
+    {
+        public BatchBlobFileSystemConfiguration(string accountName, string containerName, string relativeMountPath) { }
+        public string AccountKey { get { throw null; } set { } }
+        public string AccountName { get { throw null; } set { } }
+        public string BlobfuseOptions { get { throw null; } set { } }
+        public string ContainerName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier IdentityResourceId { get { throw null; } set { } }
+        public string RelativeMountPath { get { throw null; } set { } }
+        public string SasKey { get { throw null; } set { } }
+    }
+    public partial class BatchCertificateReference
+    {
+        public BatchCertificateReference(Azure.Core.ResourceIdentifier id) { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchCertificateStoreLocation? StoreLocation { get { throw null; } set { } }
+        public string StoreName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchCertificateVisibility> Visibility { get { throw null; } }
+    }
+    public enum BatchCertificateStoreLocation
+    {
+        CurrentUser = 0,
+        LocalMachine = 1,
+    }
+    public enum BatchCertificateVisibility
+    {
+        StartTask = 0,
+        Task = 1,
+        RemoteUser = 2,
+    }
+    public partial class BatchCifsMountConfiguration
+    {
+        public BatchCifsMountConfiguration(string username, string source, string relativeMountPath, string password) { }
+        public string MountOptions { get { throw null; } set { } }
+        public string Password { get { throw null; } set { } }
+        public string RelativeMountPath { get { throw null; } set { } }
+        public string Source { get { throw null; } set { } }
+        public string Username { get { throw null; } set { } }
+    }
+    public partial class BatchCloudServiceConfiguration
+    {
+        public BatchCloudServiceConfiguration(string osFamily) { }
+        public string OSFamily { get { throw null; } set { } }
+        public string OSVersion { get { throw null; } set { } }
+    }
+    public enum BatchContainerWorkingDirectory
+    {
+        TaskWorkingDirectory = 0,
+        ContainerImageDefault = 1,
+    }
+    public partial class BatchDeploymentConfiguration
+    {
+        public BatchDeploymentConfiguration() { }
+        public Azure.ResourceManager.Batch.Models.BatchCloudServiceConfiguration CloudServiceConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchVmConfiguration VmConfiguration { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchDiffDiskPlacement : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchDiffDiskPlacement(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement CacheDisk { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement left, Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement left, Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum BatchDiskCachingType
     {
@@ -545,570 +702,417 @@ namespace Azure.ResourceManager.Batch.Models
         ReadOnly = 1,
         ReadWrite = 2,
     }
+    public enum BatchDiskEncryptionTarget
+    {
+        OSDisk = 0,
+        TemporaryDisk = 1,
+    }
+    public enum BatchEndpointAccessDefaultAction
+    {
+        Allow = 0,
+        Deny = 1,
+    }
+    public partial class BatchEndpointAccessProfile
+    {
+        public BatchEndpointAccessProfile(Azure.ResourceManager.Batch.Models.BatchEndpointAccessDefaultAction defaultAction) { }
+        public Azure.ResourceManager.Batch.Models.BatchEndpointAccessDefaultAction DefaultAction { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchIPRule> IPRules { get { throw null; } }
+    }
+    public partial class BatchEndpointDetail
+    {
+        internal BatchEndpointDetail() { }
+        public int? Port { get { throw null; } }
+    }
+    public partial class BatchEnvironmentSetting
+    {
+        public BatchEnvironmentSetting(string name) { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
+    public partial class BatchFileShareConfiguration
+    {
+        public BatchFileShareConfiguration(string accountName, System.Uri fileUri, string accountKey, string relativeMountPath) { }
+        public string AccountKey { get { throw null; } set { } }
+        public string AccountName { get { throw null; } set { } }
+        public System.Uri FileUri { get { throw null; } set { } }
+        public string MountOptions { get { throw null; } set { } }
+        public string RelativeMountPath { get { throw null; } set { } }
+    }
     public partial class BatchImageReference
     {
         public BatchImageReference() { }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Offer { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+    }
+    public enum BatchInboundEndpointProtocol
+    {
+        Tcp = 0,
+        Udp = 1,
+    }
+    public partial class BatchInboundNatPool
+    {
+        public BatchInboundNatPool(string name, Azure.ResourceManager.Batch.Models.BatchInboundEndpointProtocol protocol, int backendPort, int frontendPortRangeStart, int frontendPortRangeEnd) { }
+        public int BackendPort { get { throw null; } set { } }
+        public int FrontendPortRangeEnd { get { throw null; } set { } }
+        public int FrontendPortRangeStart { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchNetworkSecurityGroupRule> NetworkSecurityGroupRules { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchInboundEndpointProtocol Protocol { get { throw null; } set { } }
+    }
+    public enum BatchIPAddressProvisioningType
+    {
+        BatchManaged = 0,
+        UserManaged = 1,
+        NoPublicIPAddresses = 2,
+    }
+    public partial class BatchIPRule
+    {
+        public BatchIPRule(string value) { }
+        public Azure.ResourceManager.Batch.Models.BatchIPRuleAction Action { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchIPRuleAction : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchIPRuleAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchIPRuleAction(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchIPRuleAction Allow { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchIPRuleAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchIPRuleAction left, Azure.ResourceManager.Batch.Models.BatchIPRuleAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchIPRuleAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchIPRuleAction left, Azure.ResourceManager.Batch.Models.BatchIPRuleAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class BatchKeyVaultReference
+    {
+        public BatchKeyVaultReference(Azure.Core.ResourceIdentifier id, System.Uri uri) { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+    }
+    public partial class BatchLinuxUserConfiguration
+    {
+        public BatchLinuxUserConfiguration() { }
+        public int? Gid { get { throw null; } set { } }
+        public string SshPrivateKey { get { throw null; } set { } }
+        public int? Uid { get { throw null; } set { } }
     }
     public partial class BatchLocationQuota
     {
         internal BatchLocationQuota() { }
         public int? AccountQuota { get { throw null; } }
     }
-    public partial class BatchPoolIdentity
+    public partial class BatchMountConfiguration
     {
-        public BatchPoolIdentity(Azure.ResourceManager.Batch.Models.PoolIdentityType poolIdentityType) { }
-        public Azure.ResourceManager.Batch.Models.PoolIdentityType PoolIdentityType { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+        public BatchMountConfiguration() { }
+        public Azure.ResourceManager.Batch.Models.BatchBlobFileSystemConfiguration BlobFileSystemConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchCifsMountConfiguration CifsMountConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchFileShareConfiguration FileShareConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchNfsMountConfiguration NfsMountConfiguration { get { throw null; } set { } }
     }
-    public enum BatchPrivateEndpointConnectionProvisioningState
+    public partial class BatchNameAvailabilityContent
     {
-        Creating = 0,
-        Updating = 1,
-        Deleting = 2,
-        Succeeded = 3,
-        Failed = 4,
-        Cancelled = 5,
-    }
-    public partial class BatchPrivateLinkServiceConnectionState
-    {
-        public BatchPrivateLinkServiceConnectionState(Azure.ResourceManager.Batch.Models.PrivateLinkServiceConnectionStatus status) { }
-        public string ActionRequired { get { throw null; } }
-        public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.PrivateLinkServiceConnectionStatus Status { get { throw null; } set { } }
-    }
-    public enum BatchStorageAccountType
-    {
-        StandardLRS = 0,
-        PremiumLRS = 1,
-    }
-    public partial class BatchVirtualMachineDataDisk
-    {
-        public BatchVirtualMachineDataDisk(int lun, int diskSizeGB) { }
-        public Azure.ResourceManager.Batch.Models.BatchDiskCachingType? Caching { get { throw null; } set { } }
-        public int DiskSizeGB { get { throw null; } set { } }
-        public int Lun { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchStorageAccountType? StorageAccountType { get { throw null; } set { } }
-    }
-    public partial class BatchVirtualMachineNetworkProfile
-    {
-        public BatchVirtualMachineNetworkProfile() { }
-        public Azure.ResourceManager.Batch.Models.EndpointAccessProfile AccountAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.EndpointAccessProfile NodeManagementAccess { get { throw null; } set { } }
-    }
-    public partial class CertificateCreateOrUpdateParameters : Azure.ResourceManager.Models.ResourceData
-    {
-        public CertificateCreateOrUpdateParameters() { }
-        public string Data { get { throw null; } set { } }
-        public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.CertificateFormat? Format { get { throw null; } set { } }
-        public string Password { get { throw null; } set { } }
-        public string Thumbprint { get { throw null; } set { } }
-        public string ThumbprintAlgorithm { get { throw null; } set { } }
-    }
-    public enum CertificateFormat
-    {
-        Pfx = 0,
-        Cer = 1,
-    }
-    public enum CertificateProvisioningState
-    {
-        Succeeded = 0,
-        Deleting = 1,
-        Failed = 2,
-    }
-    public partial class CertificateReference
-    {
-        public CertificateReference(string id) { }
-        public string Id { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.CertificateStoreLocation? StoreLocation { get { throw null; } set { } }
-        public string StoreName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.CertificateVisibility> Visibility { get { throw null; } }
-    }
-    public enum CertificateStoreLocation
-    {
-        CurrentUser = 0,
-        LocalMachine = 1,
-    }
-    public enum CertificateVisibility
-    {
-        StartTask = 0,
-        Task = 1,
-        RemoteUser = 2,
-    }
-    public partial class CheckNameAvailabilityContent
-    {
-        public CheckNameAvailabilityContent(string name) { }
+        public BatchNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.ResourceType ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType ResourceType { get { throw null; } }
     }
-    public partial class CheckNameAvailabilityResult
+    public partial class BatchNameAvailabilityResult
     {
-        internal CheckNameAvailabilityResult() { }
+        internal BatchNameAvailabilityResult() { }
+        public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.NameAvailabilityReason? Reason { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchNameUnavailableReason? Reason { get { throw null; } }
     }
-    public partial class CifsMountConfiguration
+    public enum BatchNameUnavailableReason
     {
-        public CifsMountConfiguration(string username, string source, string relativeMountPath, string password) { }
+        Invalid = 0,
+        AlreadyExists = 1,
+    }
+    public partial class BatchNetworkConfiguration
+    {
+        public BatchNetworkConfiguration() { }
+        public Azure.ResourceManager.Batch.Models.DynamicVNetAssignmentScope? DynamicVNetAssignmentScope { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchInboundNatPool> EndpointInboundNatPools { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchPublicIPAddressConfiguration PublicIPAddressConfiguration { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+    }
+    public partial class BatchNetworkProfile
+    {
+        public BatchNetworkProfile() { }
+        public Azure.ResourceManager.Batch.Models.BatchEndpointAccessProfile AccountAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchEndpointAccessProfile NodeManagementAccess { get { throw null; } set { } }
+    }
+    public partial class BatchNetworkSecurityGroupRule
+    {
+        public BatchNetworkSecurityGroupRule(int priority, Azure.ResourceManager.Batch.Models.BatchNetworkSecurityGroupRuleAccess access, string sourceAddressPrefix) { }
+        public Azure.ResourceManager.Batch.Models.BatchNetworkSecurityGroupRuleAccess Access { get { throw null; } set { } }
+        public int Priority { get { throw null; } set { } }
+        public string SourceAddressPrefix { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> SourcePortRanges { get { throw null; } }
+    }
+    public enum BatchNetworkSecurityGroupRuleAccess
+    {
+        Allow = 0,
+        Deny = 1,
+    }
+    public partial class BatchNfsMountConfiguration
+    {
+        public BatchNfsMountConfiguration(string source, string relativeMountPath) { }
         public string MountOptions { get { throw null; } set { } }
-        public string Password { get { throw null; } set { } }
         public string RelativeMountPath { get { throw null; } set { } }
         public string Source { get { throw null; } set { } }
-        public string Username { get { throw null; } set { } }
     }
-    public partial class CloudServiceConfiguration
-    {
-        public CloudServiceConfiguration(string osFamily) { }
-        public string OSFamily { get { throw null; } set { } }
-        public string OSVersion { get { throw null; } set { } }
-    }
-    public enum ComputeNodeDeallocationOption
+    public enum BatchNodeDeallocationOption
     {
         Requeue = 0,
         Terminate = 1,
         TaskCompletion = 2,
         RetainedData = 3,
     }
-    public enum ComputeNodeFillType
+    public enum BatchNodeFillType
     {
         Spread = 0,
         Pack = 1,
     }
-    public partial class ContainerConfiguration
-    {
-        public ContainerConfiguration() { }
-        public System.Collections.Generic.IList<string> ContainerImageNames { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.ContainerRegistry> ContainerRegistries { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.ContainerType ContainerType { get { throw null; } set { } }
-    }
-    public partial class ContainerRegistry
-    {
-        public ContainerRegistry() { }
-        public string IdentityReferenceResourceId { get { throw null; } set { } }
-        public string Password { get { throw null; } set { } }
-        public string RegistryServer { get { throw null; } set { } }
-        public string UserName { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ContainerType : System.IEquatable<Azure.ResourceManager.Batch.Models.ContainerType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ContainerType(string value) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.ContainerType DockerCompatible { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Batch.Models.ContainerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Batch.Models.ContainerType left, Azure.ResourceManager.Batch.Models.ContainerType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Batch.Models.ContainerType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Batch.Models.ContainerType left, Azure.ResourceManager.Batch.Models.ContainerType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public enum ContainerWorkingDirectory
-    {
-        TaskWorkingDirectory = 0,
-        ContainerImageDefault = 1,
-    }
-    public partial class DeploymentConfiguration
-    {
-        public DeploymentConfiguration() { }
-        public Azure.ResourceManager.Batch.Models.CloudServiceConfiguration CloudServiceConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DiffDiskPlacement : System.IEquatable<Azure.ResourceManager.Batch.Models.DiffDiskPlacement>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DiffDiskPlacement(string value) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.DiffDiskPlacement CacheDisk { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Batch.Models.DiffDiskPlacement other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Batch.Models.DiffDiskPlacement left, Azure.ResourceManager.Batch.Models.DiffDiskPlacement right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Batch.Models.DiffDiskPlacement (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Batch.Models.DiffDiskPlacement left, Azure.ResourceManager.Batch.Models.DiffDiskPlacement right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public enum DiskEncryptionTarget
-    {
-        OSDisk = 0,
-        TemporaryDisk = 1,
-    }
-    public enum DynamicVNetAssignmentScope
-    {
-        None = 0,
-        Job = 1,
-    }
-    public enum ElevationLevel
-    {
-        NonAdmin = 0,
-        Admin = 1,
-    }
-    public partial class EncryptionProperties
-    {
-        public EncryptionProperties() { }
-        public string KeyIdentifier { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.KeySource? KeySource { get { throw null; } set { } }
-    }
-    public enum EndpointAccessDefaultAction
-    {
-        Allow = 0,
-        Deny = 1,
-    }
-    public partial class EndpointAccessProfile
-    {
-        public EndpointAccessProfile(Azure.ResourceManager.Batch.Models.EndpointAccessDefaultAction defaultAction) { }
-        public Azure.ResourceManager.Batch.Models.EndpointAccessDefaultAction DefaultAction { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.IPRule> IPRules { get { throw null; } }
-    }
-    public partial class EndpointDependency
-    {
-        internal EndpointDependency() { }
-        public string Description { get { throw null; } }
-        public string DomainName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.EndpointDetail> EndpointDetails { get { throw null; } }
-    }
-    public partial class EndpointDetail
-    {
-        internal EndpointDetail() { }
-        public int? Port { get { throw null; } }
-    }
-    public partial class EnvironmentSetting
-    {
-        public EnvironmentSetting(string name) { }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
-    public partial class FixedScaleSettings
-    {
-        public FixedScaleSettings() { }
-        public Azure.ResourceManager.Batch.Models.ComputeNodeDeallocationOption? NodeDeallocationOption { get { throw null; } set { } }
-        public System.TimeSpan? ResizeTimeout { get { throw null; } set { } }
-        public int? TargetDedicatedNodes { get { throw null; } set { } }
-        public int? TargetLowPriorityNodes { get { throw null; } set { } }
-    }
-    public enum InboundEndpointProtocol
-    {
-        TCP = 0,
-        UDP = 1,
-    }
-    public partial class InboundNatPool
-    {
-        public InboundNatPool(string name, Azure.ResourceManager.Batch.Models.InboundEndpointProtocol protocol, int backendPort, int frontendPortRangeStart, int frontendPortRangeEnd) { }
-        public int BackendPort { get { throw null; } set { } }
-        public int FrontendPortRangeEnd { get { throw null; } set { } }
-        public int FrontendPortRangeStart { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.NetworkSecurityGroupRule> NetworkSecurityGroupRules { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.InboundEndpointProtocol Protocol { get { throw null; } set { } }
-    }
-    public enum InterNodeCommunicationState
-    {
-        Enabled = 0,
-        Disabled = 1,
-    }
-    public enum IPAddressProvisioningType
-    {
-        BatchManaged = 0,
-        UserManaged = 1,
-        NoPublicIPAddresses = 2,
-    }
-    public partial class IPRule
-    {
-        public IPRule(string value) { }
-        public Azure.ResourceManager.Batch.Models.IPRuleAction Action { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IPRuleAction : System.IEquatable<Azure.ResourceManager.Batch.Models.IPRuleAction>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IPRuleAction(string value) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.IPRuleAction Allow { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Batch.Models.IPRuleAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Batch.Models.IPRuleAction left, Azure.ResourceManager.Batch.Models.IPRuleAction right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Batch.Models.IPRuleAction (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Batch.Models.IPRuleAction left, Azure.ResourceManager.Batch.Models.IPRuleAction right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public enum KeySource
-    {
-        MicrosoftBatch = 0,
-        MicrosoftKeyVault = 1,
-    }
-    public partial class KeyVaultReference
-    {
-        public KeyVaultReference(string id, System.Uri uri) { }
-        public string Id { get { throw null; } set { } }
-        public System.Uri Uri { get { throw null; } set { } }
-    }
-    public partial class LinuxUserConfiguration
-    {
-        public LinuxUserConfiguration() { }
-        public int? Gid { get { throw null; } set { } }
-        public string SshPrivateKey { get { throw null; } set { } }
-        public int? Uid { get { throw null; } set { } }
-    }
-    public enum LoginMode
-    {
-        Batch = 0,
-        Interactive = 1,
-    }
-    public partial class MetadataItem
-    {
-        public MetadataItem(string name, string value) { }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
-    public partial class MountConfiguration
-    {
-        public MountConfiguration() { }
-        public Azure.ResourceManager.Batch.Models.AzureBlobFileSystemConfiguration AzureBlobFileSystemConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.AzureFileShareConfiguration AzureFileShareConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.CifsMountConfiguration CifsMountConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.NFSMountConfiguration NfsMountConfiguration { get { throw null; } set { } }
-    }
-    public enum NameAvailabilityReason
-    {
-        Invalid = 0,
-        AlreadyExists = 1,
-    }
-    public partial class NetworkConfiguration
-    {
-        public NetworkConfiguration() { }
-        public Azure.ResourceManager.Batch.Models.DynamicVNetAssignmentScope? DynamicVNetAssignmentScope { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.InboundNatPool> EndpointInboundNatPools { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.PublicIPAddressConfiguration PublicIPAddressConfiguration { get { throw null; } set { } }
-        public string SubnetId { get { throw null; } set { } }
-    }
-    public partial class NetworkSecurityGroupRule
-    {
-        public NetworkSecurityGroupRule(int priority, Azure.ResourceManager.Batch.Models.NetworkSecurityGroupRuleAccess access, string sourceAddressPrefix) { }
-        public Azure.ResourceManager.Batch.Models.NetworkSecurityGroupRuleAccess Access { get { throw null; } set { } }
-        public int Priority { get { throw null; } set { } }
-        public string SourceAddressPrefix { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SourcePortRanges { get { throw null; } }
-    }
-    public enum NetworkSecurityGroupRuleAccess
-    {
-        Allow = 0,
-        Deny = 1,
-    }
-    public partial class NFSMountConfiguration
-    {
-        public NFSMountConfiguration(string source, string relativeMountPath) { }
-        public string MountOptions { get { throw null; } set { } }
-        public string RelativeMountPath { get { throw null; } set { } }
-        public string Source { get { throw null; } set { } }
-    }
-    public enum NodePlacementPolicyType
+    public enum BatchNodePlacementPolicyType
     {
         Regional = 0,
         Zonal = 1,
     }
-    public partial class OutboundEnvironmentEndpoint
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState>
     {
-        internal OutboundEnvironmentEndpoint() { }
-        public string Category { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.EndpointDependency> Endpoints { get { throw null; } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchPrivateEndpointConnectionProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
-    public enum PackageState
+    public partial class BatchPrivateLinkServiceConnectionState
     {
-        Pending = 0,
-        Active = 1,
+        public BatchPrivateLinkServiceConnectionState(Azure.ResourceManager.Batch.Models.BatchPrivateLinkServiceConnectionStatus status) { }
+        public string ActionRequired { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchPrivateLinkServiceConnectionStatus Status { get { throw null; } set { } }
     }
-    public enum PoolAllocationMode
-    {
-        BatchService = 0,
-        UserSubscription = 1,
-    }
-    public enum PoolIdentityType
-    {
-        None = 0,
-        UserAssigned = 1,
-    }
-    public enum PoolProvisioningState
-    {
-        Succeeded = 0,
-        Deleting = 1,
-    }
-    public enum PrivateLinkServiceConnectionStatus
+    public enum BatchPrivateLinkServiceConnectionStatus
     {
         Approved = 0,
         Pending = 1,
         Rejected = 2,
         Disconnected = 3,
     }
-    public enum ProvisioningState
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchProvisioningState : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchProvisioningState>
     {
-        Invalid = 0,
-        Creating = 1,
-        Deleting = 2,
-        Succeeded = 3,
-        Failed = 4,
-        Cancelled = 5,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchProvisioningState Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchProvisioningState Invalid { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchProvisioningState left, Azure.ResourceManager.Batch.Models.BatchProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchProvisioningState left, Azure.ResourceManager.Batch.Models.BatchProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
-    public partial class PublicIPAddressConfiguration
+    public partial class BatchPublicIPAddressConfiguration
     {
-        public PublicIPAddressConfiguration() { }
-        public System.Collections.Generic.IList<string> IPAddressIds { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.IPAddressProvisioningType? Provision { get { throw null; } set { } }
+        public BatchPublicIPAddressConfiguration() { }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> IPAddressIds { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchIPAddressProvisioningType? Provision { get { throw null; } set { } }
     }
-    public enum PublicNetworkAccessType
+    public enum BatchPublicNetworkAccess
     {
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class ResizeError
+    public partial class BatchResizeOperationStatus
     {
-        internal ResizeError() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.ResizeError> Details { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
-    public partial class ResizeOperationStatus
-    {
-        internal ResizeOperationStatus() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.ResizeError> Errors { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.ComputeNodeDeallocationOption? NodeDeallocationOption { get { throw null; } }
+        internal BatchResizeOperationStatus() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchNodeDeallocationOption? NodeDeallocationOption { get { throw null; } }
         public System.TimeSpan? ResizeTimeout { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public int? TargetDedicatedNodes { get { throw null; } }
         public int? TargetLowPriorityNodes { get { throw null; } }
     }
-    public partial class ResourceFile
+    public partial class BatchResourceFile
     {
-        public ResourceFile() { }
-        public string AutoStorageContainerName { get { throw null; } set { } }
+        public BatchResourceFile() { }
+        public string AutoBlobContainerName { get { throw null; } set { } }
+        public System.Uri BlobContainerUri { get { throw null; } set { } }
         public string BlobPrefix { get { throw null; } set { } }
         public string FileMode { get { throw null; } set { } }
         public string FilePath { get { throw null; } set { } }
         public System.Uri HttpUri { get { throw null; } set { } }
-        public string IdentityReferenceResourceId { get { throw null; } set { } }
-        public System.Uri StorageContainerUri { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier IdentityResourceId { get { throw null; } set { } }
     }
-    public enum ResourceIdentityType
+    public partial class BatchSkuCapability
     {
-        None = 0,
-        SystemAssigned = 1,
-        UserAssigned = 2,
+        internal BatchSkuCapability() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    public enum BatchStorageAccountType
+    {
+        StandardLrs = 0,
+        PremiumLrs = 1,
+    }
+    public partial class BatchSupportedSku
+    {
+        internal BatchSupportedSku() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.BatchSkuCapability> Capabilities { get { throw null; } }
+        public string FamilyName { get { throw null; } }
+        public string Name { get { throw null; } }
+    }
+    public partial class BatchTaskContainerSettings
+    {
+        public BatchTaskContainerSettings(string imageName) { }
+        public string ContainerRunOptions { get { throw null; } set { } }
+        public string ImageName { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchVmContainerRegistry Registry { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchContainerWorkingDirectory? WorkingDirectory { get { throw null; } set { } }
+    }
+    public partial class BatchUserAccount
+    {
+        public BatchUserAccount(string name, string password) { }
+        public Azure.ResourceManager.Batch.Models.BatchUserAccountElevationLevel? ElevationLevel { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchLinuxUserConfiguration LinuxUserConfiguration { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Password { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchWindowsLoginMode? WindowsUserLoginMode { get { throw null; } set { } }
+    }
+    public enum BatchUserAccountElevationLevel
+    {
+        NonAdmin = 0,
+        Admin = 1,
+    }
+    public partial class BatchUserIdentity
+    {
+        public BatchUserIdentity() { }
+        public Azure.ResourceManager.Batch.Models.BatchAutoUserSpecification AutoUser { get { throw null; } set { } }
+        public string UserName { get { throw null; } set { } }
+    }
+    public partial class BatchVmConfiguration
+    {
+        public BatchVmConfiguration(Azure.ResourceManager.Batch.Models.BatchImageReference imageReference, string nodeAgentSkuId) { }
+        public Azure.ResourceManager.Batch.Models.BatchVmContainerConfiguration ContainerConfiguration { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchVmDataDisk> DataDisks { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchDiskEncryptionTarget> DiskEncryptionTargets { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement? EphemeralOSDiskPlacement { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchVmExtension> Extensions { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchImageReference ImageReference { get { throw null; } set { } }
+        public bool? IsAutomaticUpdateEnabled { get { throw null; } set { } }
+        public string LicenseType { get { throw null; } set { } }
+        public string NodeAgentSkuId { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchNodePlacementPolicyType? NodePlacementPolicy { get { throw null; } set { } }
+    }
+    public partial class BatchVmContainerConfiguration
+    {
+        public BatchVmContainerConfiguration() { }
+        public System.Collections.Generic.IList<string> ContainerImageNames { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchVmContainerRegistry> ContainerRegistries { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchVmContainerType ContainerType { get { throw null; } set { } }
+    }
+    public partial class BatchVmContainerRegistry
+    {
+        public BatchVmContainerRegistry() { }
+        public Azure.Core.ResourceIdentifier IdentityResourceId { get { throw null; } set { } }
+        public string Password { get { throw null; } set { } }
+        public string RegistryServer { get { throw null; } set { } }
+        public string UserName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceType : System.IEquatable<Azure.ResourceManager.Batch.Models.ResourceType>
+    public readonly partial struct BatchVmContainerType : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchVmContainerType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ResourceType(string value) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.ResourceType MicrosoftBatchBatchAccounts { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Batch.Models.ResourceType other) { throw null; }
+        public BatchVmContainerType(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchVmContainerType DockerCompatible { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchVmContainerType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Batch.Models.ResourceType left, Azure.ResourceManager.Batch.Models.ResourceType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Batch.Models.ResourceType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Batch.Models.ResourceType left, Azure.ResourceManager.Batch.Models.ResourceType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchVmContainerType left, Azure.ResourceManager.Batch.Models.BatchVmContainerType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchVmContainerType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchVmContainerType left, Azure.ResourceManager.Batch.Models.BatchVmContainerType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ScaleSettings
+    public partial class BatchVmDataDisk
     {
-        public ScaleSettings() { }
-        public Azure.ResourceManager.Batch.Models.AutoScaleSettings AutoScale { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.FixedScaleSettings FixedScale { get { throw null; } set { } }
+        public BatchVmDataDisk(int lun, int diskSizeInGB) { }
+        public Azure.ResourceManager.Batch.Models.BatchDiskCachingType? Caching { get { throw null; } set { } }
+        public int DiskSizeInGB { get { throw null; } set { } }
+        public int Lun { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchStorageAccountType? StorageAccountType { get { throw null; } set { } }
     }
-    public partial class SkuCapability
+    public partial class BatchVmExtension
     {
-        internal SkuCapability() { }
-        public string Name { get { throw null; } }
-        public string Value { get { throw null; } }
-    }
-    public partial class StartTask
-    {
-        public StartTask() { }
-        public string CommandLine { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.TaskContainerSettings ContainerSettings { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.EnvironmentSetting> EnvironmentSettings { get { throw null; } }
-        public int? MaxTaskRetryCount { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.ResourceFile> ResourceFiles { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.UserIdentity UserIdentity { get { throw null; } set { } }
-        public bool? WaitForSuccess { get { throw null; } set { } }
-    }
-    public partial class SupportedSku
-    {
-        internal SupportedSku() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.SkuCapability> Capabilities { get { throw null; } }
-        public string FamilyName { get { throw null; } }
-        public string Name { get { throw null; } }
-    }
-    public partial class TaskContainerSettings
-    {
-        public TaskContainerSettings(string imageName) { }
-        public string ContainerRunOptions { get { throw null; } set { } }
-        public string ImageName { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.ContainerRegistry Registry { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.ContainerWorkingDirectory? WorkingDirectory { get { throw null; } set { } }
-    }
-    public partial class UserAccount
-    {
-        public UserAccount(string name, string password) { }
-        public Azure.ResourceManager.Batch.Models.ElevationLevel? ElevationLevel { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.LinuxUserConfiguration LinuxUserConfiguration { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Password { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.LoginMode? WindowsUserLoginMode { get { throw null; } set { } }
-    }
-    public partial class UserIdentity
-    {
-        public UserIdentity() { }
-        public Azure.ResourceManager.Batch.Models.AutoUserSpecification AutoUser { get { throw null; } set { } }
-        public string UserName { get { throw null; } set { } }
-    }
-    public partial class VirtualMachineConfiguration
-    {
-        public VirtualMachineConfiguration(Azure.ResourceManager.Batch.Models.BatchImageReference imageReference, string nodeAgentSkuId) { }
-        public Azure.ResourceManager.Batch.Models.ContainerConfiguration ContainerConfiguration { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchVirtualMachineDataDisk> DataDisks { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.DiskEncryptionTarget> DiskEncryptionTargets { get { throw null; } }
-        public bool? EnableAutomaticUpdates { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.DiffDiskPlacement? EphemeralOSDiskPlacement { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.VmExtension> Extensions { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.BatchImageReference ImageReference { get { throw null; } set { } }
-        public string LicenseType { get { throw null; } set { } }
-        public string NodeAgentSkuId { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.NodePlacementPolicyType? NodePlacementPolicy { get { throw null; } set { } }
-    }
-    public partial class VirtualMachineFamilyCoreQuota
-    {
-        internal VirtualMachineFamilyCoreQuota() { }
-        public int? CoreQuota { get { throw null; } }
-        public string Name { get { throw null; } }
-    }
-    public partial class VmExtension
-    {
-        public VmExtension(string name, string publisher, string vmExtensionType) { }
+        public BatchVmExtension(string name, string publisher, string extensionType) { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
+        public string ExtensionType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
         public System.BinaryData Settings { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
-        public string VMExtensionType { get { throw null; } set { } }
+    }
+    public partial class BatchVmFamilyCoreQuota
+    {
+        internal BatchVmFamilyCoreQuota() { }
+        public int? CoreQuota { get { throw null; } }
+        public string Name { get { throw null; } }
+    }
+    public enum BatchWindowsLoginMode
+    {
+        Batch = 0,
+        Interactive = 1,
+    }
+    public enum DynamicVNetAssignmentScope
+    {
+        None = 0,
+        Job = 1,
+    }
+    public enum InterNodeCommunicationState
+    {
+        Enabled = 0,
+        Disabled = 1,
+    }
+    public enum NodeCommunicationMode
+    {
+        Default = 0,
+        Classic = 1,
+        Simplified = 2,
     }
 }

@@ -16,25 +16,25 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("operator");
+            writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToSerialString());
-            writer.WritePropertyName("threshold");
+            writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
             if (Optional.IsDefined(WindowSize))
             {
-                writer.WritePropertyName("windowSize");
+                writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
             if (Optional.IsDefined(TimeAggregation))
             {
-                writer.WritePropertyName("timeAggregation");
+                writer.WritePropertyName("timeAggregation"u8);
                 writer.WriteStringValue(TimeAggregation.Value.ToSerialString());
             }
-            writer.WritePropertyName("odata.type");
+            writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(DataSource))
             {
-                writer.WritePropertyName("dataSource");
+                writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
             }
             writer.WriteEndObject();
@@ -42,25 +42,25 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ThresholdRuleCondition DeserializeThresholdRuleCondition(JsonElement element)
         {
-            ConditionOperator @operator = default;
+            MonitorConditionOperator @operator = default;
             double threshold = default;
             Optional<TimeSpan> windowSize = default;
-            Optional<TimeAggregationOperator> timeAggregation = default;
+            Optional<ThresholdRuleConditionTimeAggregationType> timeAggregation = default;
             string odataType = default;
             Optional<RuleDataSource> dataSource = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
-                    @operator = property.Value.GetString().ToConditionOperator();
+                    @operator = property.Value.GetString().ToMonitorConditionOperator();
                     continue;
                 }
-                if (property.NameEquals("threshold"))
+                if (property.NameEquals("threshold"u8))
                 {
                     threshold = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("windowSize"))
+                if (property.NameEquals("windowSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,22 +70,22 @@ namespace Azure.ResourceManager.Monitor.Models
                     windowSize = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("timeAggregation"))
+                if (property.NameEquals("timeAggregation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    timeAggregation = property.Value.GetString().ToTimeAggregationOperator();
+                    timeAggregation = property.Value.GetString().ToThresholdRuleConditionTimeAggregationType();
                     continue;
                 }
-                if (property.NameEquals("odata.type"))
+                if (property.NameEquals("odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSource"))
+                if (property.NameEquals("dataSource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

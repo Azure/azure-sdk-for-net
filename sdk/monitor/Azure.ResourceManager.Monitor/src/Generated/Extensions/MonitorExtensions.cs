@@ -30,34 +30,58 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Get the list of available event categories supported in the Activity Logs Service.&lt;br&gt;The current list includes the following: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy.
-        /// Request Path: /providers/Microsoft.Insights/eventcategories
-        /// Operation Id: EventCategories_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Insights/eventcategories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventCategories_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LocalizableString" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LocalizableString> GetEventCategoriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetEventCategoriesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Get the list of available event categories supported in the Activity Logs Service.&lt;br&gt;The current list includes the following: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy.
-        /// Request Path: /providers/Microsoft.Insights/eventcategories
-        /// Operation Id: EventCategories_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Insights/eventcategories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventCategories_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocalizableString" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LocalizableString> GetEventCategories(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MonitorLocalizableString> GetEventCategories(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetEventCategories(cancellationToken);
         }
 
         /// <summary>
         /// Gets the Activity Logs for the Tenant.&lt;br&gt;Everything that is applicable to the API to get the Activity Logs for the subscription is applicable to this API (the parameters, $filter, etc.).&lt;br&gt;One thing to point out here is that this API does *not* retrieve the logs at the individual subscription of the tenant but only surfaces the logs that were generated at the tenant level.
-        /// Request Path: /providers/Microsoft.Insights/eventtypes/management/values
-        /// Operation Id: TenantActivityLogs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Insights/eventtypes/management/values</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TenantActivityLogs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The **$filter** is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceGroupName eq &apos;&lt;ResourceGroupName&gt;&apos;.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceUri eq &apos;&lt;ResourceURI&gt;&apos;.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos;.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceProvider eq &apos;&lt;ResourceProviderName&gt;&apos;.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and eventChannels eq &apos;Admin, Operation&apos; and correlationId eq &apos;&lt;CorrelationID&gt;&apos;.&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
@@ -71,8 +95,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Gets the Activity Logs for the Tenant.&lt;br&gt;Everything that is applicable to the API to get the Activity Logs for the subscription is applicable to this API (the parameters, $filter, etc.).&lt;br&gt;One thing to point out here is that this API does *not* retrieve the logs at the individual subscription of the tenant but only surfaces the logs that were generated at the tenant level.
-        /// Request Path: /providers/Microsoft.Insights/eventtypes/management/values
-        /// Operation Id: TenantActivityLogs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Insights/eventtypes/management/values</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TenantActivityLogs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The **$filter** is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceGroupName eq &apos;&lt;ResourceGroupName&gt;&apos;.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceUri eq &apos;&lt;ResourceURI&gt;&apos;.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos;.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceProvider eq &apos;&lt;ResourceProviderName&gt;&apos;.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and eventChannels eq &apos;Admin, Operation&apos; and correlationId eq &apos;&lt;CorrelationID&gt;&apos;.&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
@@ -103,8 +135,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Gets the log profile.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// Operation Id: LogProfiles_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LogProfiles_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="logProfileName"> The name of the log profile. </param>
@@ -119,8 +159,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Gets the log profile.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// Operation Id: LogProfiles_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LogProfiles_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="logProfileName"> The name of the log profile. </param>
@@ -135,8 +183,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Lists the autoscale settings for a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings
-        /// Operation Id: AutoscaleSettings_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoscaleSettings_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -148,8 +204,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Lists the autoscale settings for a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings
-        /// Operation Id: AutoscaleSettings_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoscaleSettings_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,8 +225,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// List the classic metric alert rules within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/alertrules
-        /// Operation Id: AlertRules_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/alertrules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -174,8 +246,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// List the classic metric alert rules within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/alertrules
-        /// Operation Id: AlertRules_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/alertrules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -187,76 +267,116 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Send test notifications to a set of provided receivers
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/createNotifications
-        /// Operation Id: ActionGroups_PostTestNotifications
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/createNotifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_PostTestNotifications</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
-        public static async Task<ArmOperation<TestNotificationResponse>> PostTestNotificationsActionGroupAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).PostTestNotificationsActionGroupAsync(waitUntil, notificationRequest, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CreateNotificationsAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Send test notifications to a set of provided receivers
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/createNotifications
-        /// Operation Id: ActionGroups_PostTestNotifications
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/createNotifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_PostTestNotifications</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
-        public static ArmOperation<TestNotificationResponse> PostTestNotificationsActionGroup(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static ArmOperation<NotificationStatus> CreateNotifications(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).PostTestNotificationsActionGroup(waitUntil, notificationRequest, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CreateNotifications(waitUntil, content, cancellationToken);
         }
 
         /// <summary>
         /// Get the test notifications by the notification id
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/notificationStatus/{notificationId}
-        /// Operation Id: ActionGroups_GetTestNotifications
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/notificationStatus/{notificationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_GetTestNotifications</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
-        public static async Task<Response<TestNotificationDetailsResponse>> GetActionGroupTestNotificationsAsync(this SubscriptionResource subscriptionResource, string notificationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<NotificationStatus>> GetNotificationStatusAsync(this SubscriptionResource subscriptionResource, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
-            return await GetExtensionClient(subscriptionResource).GetActionGroupTestNotificationsAsync(notificationId, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetNotificationStatusAsync(notificationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the test notifications by the notification id
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/notificationStatus/{notificationId}
-        /// Operation Id: ActionGroups_GetTestNotifications
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/notificationStatus/{notificationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_GetTestNotifications</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
-        public static Response<TestNotificationDetailsResponse> GetActionGroupTestNotifications(this SubscriptionResource subscriptionResource, string notificationId, CancellationToken cancellationToken = default)
+        public static Response<NotificationStatus> GetNotificationStatus(this SubscriptionResource subscriptionResource, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
-            return GetExtensionClient(subscriptionResource).GetActionGroupTestNotifications(notificationId, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetNotificationStatus(notificationId, cancellationToken);
         }
 
         /// <summary>
         /// Get a list of all action groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/actionGroups
-        /// Operation Id: ActionGroups_ListBySubscriptionId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/actionGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -268,8 +388,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Get a list of all action groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/actionGroups
-        /// Operation Id: ActionGroups_ListBySubscriptionId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/actionGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -281,8 +409,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Provides the list of records from the activity logs.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/eventtypes/management/values
-        /// Operation Id: ActivityLogs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/eventtypes/management/values</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActivityLogs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Reduces the set of data collected.&lt;br&gt;This argument is required and it also requires at least the start date/time.&lt;br&gt;The **$filter** argument is very restricted and allows only the following patterns.&lt;br&gt;- *List events for a resource group*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceGroupName eq &apos;resourceGroupName&apos;.&lt;br&gt;- *List events for resource*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceUri eq &apos;resourceURI&apos;.&lt;br&gt;- *List events for a subscription in a time range*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos;.&lt;br&gt;- *List events for a resource provider*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceProvider eq &apos;resourceProviderName&apos;.&lt;br&gt;- *List events for a correlation Id*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and correlationId eq &apos;correlationID&apos;.&lt;br&gt;&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
@@ -299,8 +435,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Provides the list of records from the activity logs.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/eventtypes/management/values
-        /// Operation Id: ActivityLogs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/eventtypes/management/values</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActivityLogs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Reduces the set of data collected.&lt;br&gt;This argument is required and it also requires at least the start date/time.&lt;br&gt;The **$filter** argument is very restricted and allows only the following patterns.&lt;br&gt;- *List events for a resource group*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceGroupName eq &apos;resourceGroupName&apos;.&lt;br&gt;- *List events for resource*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceUri eq &apos;resourceURI&apos;.&lt;br&gt;- *List events for a subscription in a time range*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos;.&lt;br&gt;- *List events for a resource provider*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceProvider eq &apos;resourceProviderName&apos;.&lt;br&gt;- *List events for a correlation Id*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and correlationId eq &apos;correlationID&apos;.&lt;br&gt;&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
@@ -317,8 +461,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Retrieve alert rule definitions in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts
-        /// Operation Id: MetricAlerts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MetricAlerts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -330,8 +482,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Retrieve alert rule definitions in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts
-        /// Operation Id: MetricAlerts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MetricAlerts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -342,63 +502,101 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// List the Log Search rules within a subscription group.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules
-        /// Operation Id: ScheduledQueryRules_ListBySubscription
+        /// Retrieve a scheduled query rule definitions in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledQueryRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogSearchRuleResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LogSearchRuleResource> GetLogSearchRulesAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ScheduledQueryRuleResource> GetScheduledQueryRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLogSearchRulesAsync(filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetScheduledQueryRulesAsync(cancellationToken);
         }
 
         /// <summary>
-        /// List the Log Search rules within a subscription group.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules
-        /// Operation Id: ScheduledQueryRules_ListBySubscription
+        /// Retrieve a scheduled query rule definitions in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledQueryRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogSearchRuleResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LogSearchRuleResource> GetLogSearchRules(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ScheduledQueryRuleResource> GetScheduledQueryRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLogSearchRules(filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetScheduledQueryRules(cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of all Azure Monitor PrivateLinkScopes within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/privateLinkScopes
-        /// Operation Id: PrivateLinkScopes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/microsoft.insights/privateLinkScopes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkScopes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PrivateLinkScopeResource> GetPrivateLinkScopesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetPrivateLinkScopesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMonitorPrivateLinkScopesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of all Azure Monitor PrivateLinkScopes within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/privateLinkScopes
-        /// Operation Id: PrivateLinkScopes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/microsoft.insights/privateLinkScopes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkScopes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PrivateLinkScopeResource> GetPrivateLinkScopes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetPrivateLinkScopes(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMonitorPrivateLinkScopes(cancellationToken);
         }
 
         /// <summary>
-        /// Get a list of all activity log alerts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
-        /// Operation Id: ActivityLogAlerts_ListBySubscriptionId
+        /// Get a list of all Activity Log Alert rules in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/activityLogAlerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActivityLogAlerts_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -409,9 +607,17 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get a list of all activity log alerts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
-        /// Operation Id: ActivityLogAlerts_ListBySubscriptionId
+        /// Get a list of all Activity Log Alert rules in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/activityLogAlerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActivityLogAlerts_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -423,8 +629,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Lists all data collection endpoints in the specified subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionEndpoints
-        /// Operation Id: DataCollectionEndpoints_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataCollectionEndpoints_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -436,8 +650,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Lists all data collection endpoints in the specified subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionEndpoints
-        /// Operation Id: DataCollectionEndpoints_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataCollectionEndpoints_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -449,8 +671,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Lists all data collection rules in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionRules
-        /// Operation Id: DataCollectionRules_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataCollectionRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -462,8 +692,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Lists all data collection rules in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionRules
-        /// Operation Id: DataCollectionRules_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataCollectionRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -492,8 +730,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Gets an autoscale setting
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
-        /// Operation Id: AutoscaleSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoscaleSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
@@ -508,8 +754,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Gets an autoscale setting
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
-        /// Operation Id: AutoscaleSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoscaleSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
@@ -532,8 +786,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Gets a classic metric alert rule
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/alertrules/{ruleName}
-        /// Operation Id: AlertRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/alertrules/{ruleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ruleName"> The name of the rule. </param>
@@ -548,8 +810,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Gets a classic metric alert rule
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/alertrules/{ruleName}
-        /// Operation Id: AlertRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/alertrules/{ruleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ruleName"> The name of the rule. </param>
@@ -572,8 +842,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Get an action group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
-        /// Operation Id: ActionGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
@@ -588,8 +866,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Get an action group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
-        /// Operation Id: ActionGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
@@ -612,8 +898,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Retrieve an alert rule definition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}
-        /// Operation Id: MetricAlerts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MetricAlerts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ruleName"> The name of the rule. </param>
@@ -628,8 +922,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Retrieve an alert rule definition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}
-        /// Operation Id: MetricAlerts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MetricAlerts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ruleName"> The name of the rule. </param>
@@ -642,18 +944,26 @@ namespace Azure.ResourceManager.Monitor
             return resourceGroupResource.GetMetricAlerts().Get(ruleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LogSearchRuleResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ScheduledQueryRuleResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of LogSearchRuleResources and their operations over a LogSearchRuleResource. </returns>
-        public static LogSearchRuleCollection GetLogSearchRules(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ScheduledQueryRuleResources and their operations over a ScheduledQueryRuleResource. </returns>
+        public static ScheduledQueryRuleCollection GetScheduledQueryRules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetLogSearchRules();
+            return GetExtensionClient(resourceGroupResource).GetScheduledQueryRules();
         }
 
         /// <summary>
-        /// Gets an Log Search rule
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}
-        /// Operation Id: ScheduledQueryRules_Get
+        /// Retrieve an scheduled query rule definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledQueryRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ruleName"> The name of the rule. </param>
@@ -661,15 +971,23 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<LogSearchRuleResource>> GetLogSearchRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ScheduledQueryRuleResource>> GetScheduledQueryRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetLogSearchRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetScheduledQueryRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an Log Search rule
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}
-        /// Operation Id: ScheduledQueryRules_Get
+        /// Retrieve an scheduled query rule definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledQueryRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ruleName"> The name of the rule. </param>
@@ -677,23 +995,31 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<LogSearchRuleResource> GetLogSearchRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
+        public static Response<ScheduledQueryRuleResource> GetScheduledQueryRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetLogSearchRules().Get(ruleName, cancellationToken);
+            return resourceGroupResource.GetScheduledQueryRules().Get(ruleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkScopeResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of MonitorPrivateLinkScopeResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PrivateLinkScopeResources and their operations over a PrivateLinkScopeResource. </returns>
-        public static PrivateLinkScopeCollection GetPrivateLinkScopes(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of MonitorPrivateLinkScopeResources and their operations over a MonitorPrivateLinkScopeResource. </returns>
+        public static MonitorPrivateLinkScopeCollection GetMonitorPrivateLinkScopes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetPrivateLinkScopes();
+            return GetExtensionClient(resourceGroupResource).GetMonitorPrivateLinkScopes();
         }
 
         /// <summary>
         /// Returns a Azure Monitor PrivateLinkScope.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// Operation Id: PrivateLinkScopes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkScopes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
@@ -701,15 +1027,23 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PrivateLinkScopeResource>> GetPrivateLinkScopeAsync(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MonitorPrivateLinkScopeResource>> GetMonitorPrivateLinkScopeAsync(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPrivateLinkScopes().GetAsync(scopeName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetMonitorPrivateLinkScopes().GetAsync(scopeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns a Azure Monitor PrivateLinkScope.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// Operation Id: PrivateLinkScopes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkScopes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
@@ -717,9 +1051,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PrivateLinkScopeResource> GetPrivateLinkScope(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
+        public static Response<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScope(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPrivateLinkScopes().Get(scopeName, cancellationToken);
+            return resourceGroupResource.GetMonitorPrivateLinkScopes().Get(scopeName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ActivityLogAlertResources in the ResourceGroupResource. </summary>
@@ -731,12 +1065,20 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get an activity log alert.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// Operation Id: ActivityLogAlerts_Get
+        /// Get an Activity Log Alert rule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActivityLogAlerts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
+        /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
@@ -747,12 +1089,20 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get an activity log alert.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// Operation Id: ActivityLogAlerts_Get
+        /// Get an Activity Log Alert rule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActivityLogAlerts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
+        /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
@@ -772,8 +1122,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Returns the specified data collection endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}
-        /// Operation Id: DataCollectionEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataCollectionEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
@@ -788,8 +1146,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Returns the specified data collection endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}
-        /// Operation Id: DataCollectionEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataCollectionEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
@@ -812,8 +1178,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Returns the specified data collection rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// Operation Id: DataCollectionRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataCollectionRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="dataCollectionRuleName"> The name of the data collection rule. The name is case insensitive. </param>
@@ -828,8 +1202,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Returns the specified data collection rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// Operation Id: DataCollectionRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataCollectionRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="dataCollectionRuleName"> The name of the data collection rule. The name is case insensitive. </param>
@@ -843,37 +1225,162 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get the status of an azure asynchronous operation associated with a private link scope operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
-        /// Operation Id: PrivateLinkScopeOperationStatus_Get
+        /// Send test notifications to a set of provided receivers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/createNotifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_CreateNotificationsAtResourceGroupLevel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="asyncOperationId"> The operation Id. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
-        public static async Task<Response<OperationStatus>> GetPrivateLinkScopeOperationStatuAsync(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(resourceGroupResource).GetPrivateLinkScopeOperationStatuAsync(asyncOperationId, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).CreateNotificationsAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Send test notifications to a set of provided receivers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/createNotifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_CreateNotificationsAtResourceGroupLevel</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static ArmOperation<NotificationStatus> CreateNotifications(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetExtensionClient(resourceGroupResource).CreateNotifications(waitUntil, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the test notifications by the notification id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/notificationStatus/{notificationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_GetTestNotificationsAtResourceGroupLevel</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="notificationId"> The notification id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
+        public static async Task<Response<NotificationStatus>> GetNotificationStatusAsync(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
+
+            return await GetExtensionClient(resourceGroupResource).GetNotificationStatusAsync(notificationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the test notifications by the notification id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/notificationStatus/{notificationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_GetTestNotificationsAtResourceGroupLevel</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="notificationId"> The notification id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
+        public static Response<NotificationStatus> GetNotificationStatus(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
+
+            return GetExtensionClient(resourceGroupResource).GetNotificationStatus(notificationId, cancellationToken);
         }
 
         /// <summary>
         /// Get the status of an azure asynchronous operation associated with a private link scope operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
-        /// Operation Id: PrivateLinkScopeOperationStatus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkScopeOperationStatus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
-        public static Response<OperationStatus> GetPrivateLinkScopeOperationStatu(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<MonitorPrivateLinkScopeOperationStatus>> GetPrivateLinkScopeOperationStatusAsync(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
 
-            return GetExtensionClient(resourceGroupResource).GetPrivateLinkScopeOperationStatu(asyncOperationId, cancellationToken);
+            return await GetExtensionClient(resourceGroupResource).GetPrivateLinkScopeOperationStatusAsync(asyncOperationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the status of an azure asynchronous operation associated with a private link scope operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkScopeOperationStatus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="asyncOperationId"> The operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
+        public static Response<MonitorPrivateLinkScopeOperationStatus> GetPrivateLinkScopeOperationStatus(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
+
+            return GetExtensionClient(resourceGroupResource).GetPrivateLinkScopeOperationStatus(asyncOperationId, cancellationToken);
+        }
+
+        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ArmResourceExtensionClient(client, scope);
+            }
+            );
         }
 
         private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
@@ -885,132 +1392,190 @@ namespace Azure.ResourceManager.Monitor
             );
         }
 
-        /// <summary> Gets a collection of DiagnosticSettingsResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DiagnosticSettingsResources and their operations over a DiagnosticSettingsResource. </returns>
-        public static DiagnosticSettingsCollection GetDiagnosticSettings(this ArmResource armResource)
+        /// <summary> Gets a collection of DiagnosticSettingResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of DiagnosticSettingResources and their operations over a DiagnosticSettingResource. </returns>
+        public static DiagnosticSettingCollection GetDiagnosticSettings(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetDiagnosticSettings();
+            return GetExtensionClient(client, scope).GetDiagnosticSettings();
         }
 
         /// <summary>
         /// Gets the active diagnostic settings for the specified resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// Operation Id: DiagnosticSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiagnosticSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DiagnosticSettingsResource>> GetDiagnosticSettingsAsync(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetDiagnosticSettings().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await client.GetDiagnosticSettings(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the active diagnostic settings for the specified resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// Operation Id: DiagnosticSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiagnosticSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DiagnosticSettingsResource> GetDiagnosticSettings(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
+        public static Response<DiagnosticSettingResource> GetDiagnosticSetting(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return armResource.GetDiagnosticSettings().Get(name, cancellationToken);
+            return client.GetDiagnosticSettings(scope).Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of DiagnosticSettingsCategoryResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of DiagnosticSettingsCategoryResources and their operations over a DiagnosticSettingsCategoryResource. </returns>
-        public static DiagnosticSettingsCategoryCollection GetDiagnosticSettingsCategories(this ArmResource armResource)
+        public static DiagnosticSettingsCategoryCollection GetDiagnosticSettingsCategories(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetDiagnosticSettingsCategories();
+            return GetExtensionClient(client, scope).GetDiagnosticSettingsCategories();
         }
 
         /// <summary>
         /// Gets the diagnostic settings category for the specified resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// Operation Id: DiagnosticSettingsCategory_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiagnosticSettingsCategory_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DiagnosticSettingsCategoryResource>> GetDiagnosticSettingsCategoryAsync(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiagnosticSettingsCategoryResource>> GetDiagnosticSettingsCategoryAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetDiagnosticSettingsCategories().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await client.GetDiagnosticSettingsCategories(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the diagnostic settings category for the specified resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// Operation Id: DiagnosticSettingsCategory_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiagnosticSettingsCategory_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DiagnosticSettingsCategoryResource> GetDiagnosticSettingsCategory(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
+        public static Response<DiagnosticSettingsCategoryResource> GetDiagnosticSettingsCategory(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return armResource.GetDiagnosticSettingsCategories().Get(name, cancellationToken);
+            return client.GetDiagnosticSettingsCategories(scope).Get(name, cancellationToken);
         }
 
         /// <summary> Gets an object representing a VmInsightsOnboardingStatusResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource" /> object. </returns>
-        public static VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus(this ArmResource armResource)
+        public static VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetVmInsightsOnboardingStatus();
+            return GetExtensionClient(client, scope).GetVmInsightsOnboardingStatus();
         }
 
         /// <summary> Gets a collection of DataCollectionRuleAssociationResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of DataCollectionRuleAssociationResources and their operations over a DataCollectionRuleAssociationResource. </returns>
-        public static DataCollectionRuleAssociationCollection GetDataCollectionRuleAssociations(this ArmResource armResource)
+        public static DataCollectionRuleAssociationCollection GetDataCollectionRuleAssociations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetDataCollectionRuleAssociations();
+            return GetExtensionClient(client, scope).GetDataCollectionRuleAssociations();
         }
 
         /// <summary>
         /// Returns the specified association.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
-        /// Operation Id: DataCollectionRuleAssociations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataCollectionRuleAssociations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DataCollectionRuleAssociationResource>> GetDataCollectionRuleAssociationAsync(this ArmResource armResource, string associationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataCollectionRuleAssociationResource>> GetDataCollectionRuleAssociationAsync(this ArmClient client, ResourceIdentifier scope, string associationName, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetDataCollectionRuleAssociations().GetAsync(associationName, cancellationToken).ConfigureAwait(false);
+            return await client.GetDataCollectionRuleAssociations(scope).GetAsync(associationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns the specified association.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
-        /// Operation Id: DataCollectionRuleAssociations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataCollectionRuleAssociations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociation(this ArmResource armResource, string associationName, CancellationToken cancellationToken = default)
+        public static Response<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociation(this ArmClient client, ResourceIdentifier scope, string associationName, CancellationToken cancellationToken = default)
         {
-            return armResource.GetDataCollectionRuleAssociations().Get(associationName, cancellationToken);
+            return client.GetDataCollectionRuleAssociations(scope).Get(associationName, cancellationToken);
         }
 
         #region AutoscaleSettingResource
@@ -1070,20 +1635,20 @@ namespace Azure.ResourceManager.Monitor
         }
         #endregion
 
-        #region DiagnosticSettingsResource
+        #region DiagnosticSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticSettingsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiagnosticSettingsResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DiagnosticSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiagnosticSettingResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingsResource" /> object. </returns>
-        public static DiagnosticSettingsResource GetDiagnosticSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiagnosticSettingResource" /> object. </returns>
+        public static DiagnosticSettingResource GetDiagnosticSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DiagnosticSettingsResource.ValidateResourceId(id);
-                return new DiagnosticSettingsResource(client, id);
+                DiagnosticSettingResource.ValidateResourceId(id);
+                return new DiagnosticSettingResource(client, id);
             }
             );
         }
@@ -1146,20 +1711,20 @@ namespace Azure.ResourceManager.Monitor
         }
         #endregion
 
-        #region LogSearchRuleResource
+        #region ScheduledQueryRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="LogSearchRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogSearchRuleResource.CreateResourceIdentifier" /> to create a <see cref="LogSearchRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScheduledQueryRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScheduledQueryRuleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledQueryRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogSearchRuleResource" /> object. </returns>
-        public static LogSearchRuleResource GetLogSearchRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScheduledQueryRuleResource" /> object. </returns>
+        public static ScheduledQueryRuleResource GetScheduledQueryRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LogSearchRuleResource.ValidateResourceId(id);
-                return new LogSearchRuleResource(client, id);
+                ScheduledQueryRuleResource.ValidateResourceId(id);
+                return new ScheduledQueryRuleResource(client, id);
             }
             );
         }
@@ -1184,20 +1749,20 @@ namespace Azure.ResourceManager.Monitor
         }
         #endregion
 
-        #region PrivateLinkScopeResource
+        #region MonitorPrivateLinkScopeResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateLinkScopeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkScopeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MonitorPrivateLinkScopeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorPrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkScopeResource" /> object. </returns>
-        public static PrivateLinkScopeResource GetPrivateLinkScopeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MonitorPrivateLinkScopeResource" /> object. </returns>
+        public static MonitorPrivateLinkScopeResource GetMonitorPrivateLinkScopeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateLinkScopeResource.ValidateResourceId(id);
-                return new PrivateLinkScopeResource(client, id);
+                MonitorPrivateLinkScopeResource.ValidateResourceId(id);
+                return new MonitorPrivateLinkScopeResource(client, id);
             }
             );
         }
@@ -1241,20 +1806,20 @@ namespace Azure.ResourceManager.Monitor
         }
         #endregion
 
-        #region PrivateLinkScopedResource
+        #region MonitorPrivateLinkScopedResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateLinkScopedResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateLinkScopedResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkScopedResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MonitorPrivateLinkScopedResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorPrivateLinkScopedResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopedResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkScopedResource" /> object. </returns>
-        public static PrivateLinkScopedResource GetPrivateLinkScopedResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MonitorPrivateLinkScopedResource" /> object. </returns>
+        public static MonitorPrivateLinkScopedResource GetMonitorPrivateLinkScopedResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateLinkScopedResource.ValidateResourceId(id);
-                return new PrivateLinkScopedResource(client, id);
+                MonitorPrivateLinkScopedResource.ValidateResourceId(id);
+                return new MonitorPrivateLinkScopedResource(client, id);
             }
             );
         }

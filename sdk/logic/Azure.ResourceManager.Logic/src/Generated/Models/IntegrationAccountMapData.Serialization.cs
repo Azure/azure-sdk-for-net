@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Logic
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,30 +30,34 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("mapType");
+            writer.WritePropertyName("mapType"u8);
             writer.WriteStringValue(MapType.ToString());
             if (Optional.IsDefined(ParametersSchema))
             {
-                writer.WritePropertyName("parametersSchema");
+                writer.WritePropertyName("parametersSchema"u8);
                 writer.WriteObjectValue(ParametersSchema);
             }
             if (Optional.IsDefined(Content))
             {
-                writer.WritePropertyName("content");
-                writer.WriteStringValue(Content);
+                writer.WritePropertyName("content"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Content);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Content.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ContentType))
             {
-                writer.WritePropertyName("contentType");
-                writer.WriteStringValue(ContentType);
+                writer.WritePropertyName("contentType"u8);
+                writer.WriteStringValue(ContentType.Value.ToString());
             }
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
@@ -72,17 +76,17 @@ namespace Azure.ResourceManager.Logic
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            MapType mapType = default;
+            IntegrationAccountMapType mapType = default;
             Optional<IntegrationAccountMapPropertiesParametersSchema> parametersSchema = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
-            Optional<string> content = default;
-            Optional<string> contentType = default;
-            Optional<ContentLink> contentLink = default;
+            Optional<BinaryData> content = default;
+            Optional<ContentType> contentType = default;
+            Optional<LogicContentLink> contentLink = default;
             Optional<BinaryData> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,37 +101,37 @@ namespace Azure.ResourceManager.Logic
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,12 +140,12 @@ namespace Azure.ResourceManager.Logic
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("mapType"))
+                        if (property0.NameEquals("mapType"u8))
                         {
-                            mapType = new MapType(property0.Value.GetString());
+                            mapType = new IntegrationAccountMapType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("parametersSchema"))
+                        if (property0.NameEquals("parametersSchema"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -151,7 +155,7 @@ namespace Azure.ResourceManager.Logic
                             parametersSchema = IntegrationAccountMapPropertiesParametersSchema.DeserializeIntegrationAccountMapPropertiesParametersSchema(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("createdTime"))
+                        if (property0.NameEquals("createdTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -161,7 +165,7 @@ namespace Azure.ResourceManager.Logic
                             createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("changedTime"))
+                        if (property0.NameEquals("changedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -171,27 +175,37 @@ namespace Azure.ResourceManager.Logic
                             changedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("content"))
-                        {
-                            content = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("contentType"))
-                        {
-                            contentType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("contentLink"))
+                        if (property0.NameEquals("content"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contentLink = ContentLink.DeserializeContentLink(property0.Value);
+                            content = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("metadata"))
+                        if (property0.NameEquals("contentType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            contentType = new ContentType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("contentLink"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            contentLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("metadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -205,7 +219,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new IntegrationAccountMapData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, mapType, parametersSchema.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), content.Value, contentType.Value, contentLink.Value, metadata.Value);
+            return new IntegrationAccountMapData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, mapType, parametersSchema.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), content.Value, Optional.ToNullable(contentType), contentLink.Value, metadata.Value);
         }
     }
 }

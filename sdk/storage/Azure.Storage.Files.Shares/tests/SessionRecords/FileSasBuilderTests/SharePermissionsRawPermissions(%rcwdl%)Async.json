@@ -34,7 +34,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://kasobolcanadacentral.file.core.windows.net/test-share-91bb8318-284b-fd7a-5223-f529b96dac0d?sv=2021-08-06&st=2021-06-03T20%3A32%3A50Z&se=2021-06-03T22%3A32%3A50Z&sr=s&sp=rcwdl&sig=Sanitized&restype=directory",
+      "RequestUri": "https://kasobolcanadacentral.file.core.windows.net/test-share-91bb8318-284b-fd7a-5223-f529b96dac0d?sv=2021-12-02&st=2021-06-03T20%3A32%3A50Z&se=2021-06-03T22%3A32%3A50Z&sr=s&sp=rcwdl&sig=Sanitized&restype=directory",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",

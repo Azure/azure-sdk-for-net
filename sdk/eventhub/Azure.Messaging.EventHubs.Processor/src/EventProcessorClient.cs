@@ -31,10 +31,14 @@ namespace Azure.Messaging.EventHubs
     /// </summary>
     ///
     /// <remarks>
+    ///   To enable coordination for sharing of partitions between <see cref="EventProcessorClient"/> instances, they will assert exclusive read access to partitions
+    ///   for the consumer group.  No other readers should be active in the consumer group other than processors intending to collaborate.  Non-exclusive readers will
+    ///   be denied access; exclusive readers, including processors using a different storage locations, will interfere with the processor's operation and performance.
+    ///
     ///   The <see cref="EventProcessorClient" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
-    ///   processes events regularly or semi-regularly.  The processor holds responsibility for efficient resource management, working to keep resource usage low during
-    ///   periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="StopProcessingAsync" /> or <see cref="StopProcessing" />
-    ///   method when processing is complete or as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
+    ///   processes events regularly or semi-regularly.  The processor is responsible for ensuring efficient network, CPU, and memory use.  Calling either
+    ///   <see cref="StopProcessingAsync" /> or <see cref="StopProcessing" /> when processing is complete or as the application is shutting down will ensure
+    ///   that network resources and other unmanaged objects are properly cleaned up.
     /// </remarks>
     ///
     [SuppressMessage("Usage", "CA1001:Types that own disposable fields should be disposable.", Justification = "Disposal is managed internally as part of the Stop operation.")]
@@ -78,6 +82,14 @@ namespace Azure.Messaging.EventHubs
         ///   a deadlock scenario, especially if using the synchronous form of the call.
         /// </summary>
         ///
+        /// <remarks>
+        ///   This handler will be invoked concurrently, limited to one call per partition.  The processor will await each invocation before starting to process
+        ///   the associated partition.
+        ///
+        ///   The processor will wait indefinitely for execution of the handler to complete.  It is recommended for
+        ///   implementations to avoid long-running operations, as they will delay processing for the associated partition.
+        /// </remarks>
+        ///
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add a handler when one is currently registered.</exception>
@@ -118,6 +130,12 @@ namespace Azure.Messaging.EventHubs
         ///   <para>It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
         ///   a deadlock scenario, especially if using the synchronous form of the call.</para>
         /// </summary>
+        ///
+        /// <remarks>
+        ///   This handler will be invoked concurrently, as each close is independent.  No time limit is imposed on an invocation of this handler; it is safe for
+        ///   implementations to perform long-running operations and retries as needed.  This handler has no influence on processing for the associated partition
+        ///   and offers no guarantee that execution will complete before processing for the partition is restarted or migrates to a new host.
+        /// </remarks>
         ///
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
@@ -162,6 +180,14 @@ namespace Azure.Messaging.EventHubs
         ///   It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
         ///   a deadlock scenario, especially if using the synchronous form of the call.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   This handler will be invoked concurrently, limited to one call per partition.  The processor will await each invocation to ensure that the events from
+        ///   the same partition are processed one-at-a-time in the order that they were read from the partition.
+        ///
+        ///   No time limit is imposed on an invocation of this handler; the processor will wait indefinitely for execution to complete before dispatching another
+        ///   event for the associated partition.  It is safe for implementations to perform long-running operations, retries, delays, and dead-lettering activities.
+        /// </remarks>
         ///
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
@@ -215,6 +241,11 @@ namespace Azure.Messaging.EventHubs
         ///   As with event processing, should an exception occur in the code for the error handler, the event processor will allow it to bubble and will not attempt to handle
         ///   it in any way.  Developers are strongly encouraged to take exception scenarios into account and guard against them using try/catch blocks and other means as appropriate.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   This handler will be invoked concurrently and is not awaited by the processor, as each error is independent.  No time limit is imposed on an invocation of this handler;
+        ///   it is safe for implementations to perform long-running operations and retries as needed.
+        /// </remarks>
         ///
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
@@ -313,8 +344,8 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage. The associated container is expected to exist.</param>
-        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage.  Processor instances sharing this storage will attempt to coordinate and share work.  The associated container is expected to exist.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         ///
         /// <remarks>
@@ -341,8 +372,8 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage. The associated container is expected to exist.</param>
-        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage.  Processor instances sharing this storage will attempt to coordinate and share work.  The associated container is expected to exist.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
@@ -371,8 +402,8 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage. The associated container is expected to exist.</param>
-        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage.  Processor instances sharing this storage will attempt to coordinate and share work.  The associated container is expected to exist.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         ///
@@ -398,8 +429,8 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage. The associated container is expected to exist.</param>
-        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage.  Processor instances sharing this storage will attempt to coordinate and share work.  The associated container is expected to exist.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
@@ -431,8 +462,8 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage. The associated container is expected to exist.</param>
-        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage.  Processor instances sharing this storage will attempt to coordinate and share work.  The associated container is expected to exist.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
@@ -460,8 +491,8 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage. The associated container is expected to exist.</param>
-        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage.  Processor instances sharing this storage will attempt to coordinate and share work.  The associated container is expected to exist.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The shared access signature credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
@@ -489,8 +520,8 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage. The associated container is expected to exist.</param>
-        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage.  Processor instances sharing this storage will attempt to coordinate and share work.  The associated container is expected to exist.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The Azure identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
@@ -518,8 +549,8 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">Responsible for creation of checkpoints and for ownership claim.</param>
-        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="checkpointStore">Responsible for creation of checkpoints and for ownership claim.  Processor instances sharing this storage will attempt to coordinate and share work.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="cacheEventCount">The maximum number of events that will be read from the Event Hubs service and held in a local memory cache when reading is active and events are being emitted to an enumerator for processing.</param>
@@ -548,8 +579,8 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">Responsible for creation of checkpoints and for ownership claim.</param>
-        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="checkpointStore">Responsible for creation of checkpoints and for ownership claim.  Processor instances sharing this storage will attempt to coordinate and share work.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="cacheEventCount">The maximum number of events that will be read from the Event Hubs service and held in a local memory cache when reading is active and events are being emitted to an enumerator for processing.</param>
@@ -578,8 +609,8 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">Responsible for creation of checkpoints and for ownership claim.</param>
-        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="checkpointStore">Responsible for creation of checkpoints and for ownership claim.  Processor instances sharing this storage will attempt to coordinate and share work.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="cacheEventCount">The maximum number of events that will be read from the Event Hubs service and held in a local memory cache when reading is active and events are being emitted to an enumerator for processing.</param>

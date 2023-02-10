@@ -18,62 +18,62 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkPlugin))
             {
-                writer.WritePropertyName("networkPlugin");
+                writer.WritePropertyName("networkPlugin"u8);
                 writer.WriteStringValue(NetworkPlugin.Value.ToString());
             }
             if (Optional.IsDefined(NetworkPolicy))
             {
-                writer.WritePropertyName("networkPolicy");
+                writer.WritePropertyName("networkPolicy"u8);
                 writer.WriteStringValue(NetworkPolicy.Value.ToString());
             }
             if (Optional.IsDefined(NetworkMode))
             {
-                writer.WritePropertyName("networkMode");
+                writer.WritePropertyName("networkMode"u8);
                 writer.WriteStringValue(NetworkMode.Value.ToString());
             }
             if (Optional.IsDefined(PodCidr))
             {
-                writer.WritePropertyName("podCidr");
+                writer.WritePropertyName("podCidr"u8);
                 writer.WriteStringValue(PodCidr);
             }
             if (Optional.IsDefined(ServiceCidr))
             {
-                writer.WritePropertyName("serviceCidr");
+                writer.WritePropertyName("serviceCidr"u8);
                 writer.WriteStringValue(ServiceCidr);
             }
             if (Optional.IsDefined(DnsServiceIP))
             {
-                writer.WritePropertyName("dnsServiceIP");
+                writer.WritePropertyName("dnsServiceIP"u8);
                 writer.WriteStringValue(DnsServiceIP);
             }
             if (Optional.IsDefined(DockerBridgeCidr))
             {
-                writer.WritePropertyName("dockerBridgeCidr");
+                writer.WritePropertyName("dockerBridgeCidr"u8);
                 writer.WriteStringValue(DockerBridgeCidr);
             }
             if (Optional.IsDefined(OutboundType))
             {
-                writer.WritePropertyName("outboundType");
+                writer.WritePropertyName("outboundType"u8);
                 writer.WriteStringValue(OutboundType.Value.ToString());
             }
             if (Optional.IsDefined(LoadBalancerSku))
             {
-                writer.WritePropertyName("loadBalancerSku");
+                writer.WritePropertyName("loadBalancerSku"u8);
                 writer.WriteStringValue(LoadBalancerSku.Value.ToString());
             }
             if (Optional.IsDefined(LoadBalancerProfile))
             {
-                writer.WritePropertyName("loadBalancerProfile");
+                writer.WritePropertyName("loadBalancerProfile"u8);
                 writer.WriteObjectValue(LoadBalancerProfile);
             }
             if (Optional.IsDefined(NatGatewayProfile))
             {
-                writer.WritePropertyName("natGatewayProfile");
+                writer.WritePropertyName("natGatewayProfile"u8);
                 writer.WriteObjectValue(NatGatewayProfile);
             }
             if (Optional.IsCollectionDefined(PodCidrs))
             {
-                writer.WritePropertyName("podCidrs");
+                writer.WritePropertyName("podCidrs"u8);
                 writer.WriteStartArray();
                 foreach (var item in PodCidrs)
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             if (Optional.IsCollectionDefined(ServiceCidrs))
             {
-                writer.WritePropertyName("serviceCidrs");
+                writer.WritePropertyName("serviceCidrs"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceCidrs)
                 {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             if (Optional.IsCollectionDefined(IPFamilies))
             {
-                writer.WritePropertyName("ipFamilies");
+                writer.WritePropertyName("ipFamilies"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPFamilies)
                 {
@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceNetworkProfile DeserializeContainerServiceNetworkProfile(JsonElement element)
         {
-            Optional<NetworkPlugin> networkPlugin = default;
-            Optional<NetworkPolicy> networkPolicy = default;
-            Optional<NetworkMode> networkMode = default;
+            Optional<ContainerServiceNetworkPlugin> networkPlugin = default;
+            Optional<ContainerServiceNetworkPolicy> networkPolicy = default;
+            Optional<ContainerServiceNetworkMode> networkMode = default;
             Optional<string> podCidr = default;
             Optional<string> serviceCidr = default;
             Optional<string> dnsServiceIP = default;
             Optional<string> dockerBridgeCidr = default;
-            Optional<OutboundType> outboundType = default;
-            Optional<LoadBalancerSku> loadBalancerSku = default;
+            Optional<ContainerServiceOutboundType> outboundType = default;
+            Optional<ContainerServiceLoadBalancerSku> loadBalancerSku = default;
             Optional<ManagedClusterLoadBalancerProfile> loadBalancerProfile = default;
             Optional<ManagedClusterNatGatewayProfile> natGatewayProfile = default;
             Optional<IList<string>> podCidrs = default;
@@ -122,77 +122,77 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<IList<IPFamily>> ipFamilies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkPlugin"))
+                if (property.NameEquals("networkPlugin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkPlugin = new NetworkPlugin(property.Value.GetString());
+                    networkPlugin = new ContainerServiceNetworkPlugin(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkPolicy"))
+                if (property.NameEquals("networkPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkPolicy = new NetworkPolicy(property.Value.GetString());
+                    networkPolicy = new ContainerServiceNetworkPolicy(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkMode"))
+                if (property.NameEquals("networkMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkMode = new NetworkMode(property.Value.GetString());
+                    networkMode = new ContainerServiceNetworkMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("podCidr"))
+                if (property.NameEquals("podCidr"u8))
                 {
                     podCidr = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceCidr"))
+                if (property.NameEquals("serviceCidr"u8))
                 {
                     serviceCidr = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dnsServiceIP"))
+                if (property.NameEquals("dnsServiceIP"u8))
                 {
                     dnsServiceIP = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dockerBridgeCidr"))
+                if (property.NameEquals("dockerBridgeCidr"u8))
                 {
                     dockerBridgeCidr = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("outboundType"))
+                if (property.NameEquals("outboundType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    outboundType = new OutboundType(property.Value.GetString());
+                    outboundType = new ContainerServiceOutboundType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("loadBalancerSku"))
+                if (property.NameEquals("loadBalancerSku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    loadBalancerSku = new LoadBalancerSku(property.Value.GetString());
+                    loadBalancerSku = new ContainerServiceLoadBalancerSku(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("loadBalancerProfile"))
+                if (property.NameEquals("loadBalancerProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     loadBalancerProfile = ManagedClusterLoadBalancerProfile.DeserializeManagedClusterLoadBalancerProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("natGatewayProfile"))
+                if (property.NameEquals("natGatewayProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     natGatewayProfile = ManagedClusterNatGatewayProfile.DeserializeManagedClusterNatGatewayProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("podCidrs"))
+                if (property.NameEquals("podCidrs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     podCidrs = array;
                     continue;
                 }
-                if (property.NameEquals("serviceCidrs"))
+                if (property.NameEquals("serviceCidrs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     serviceCidrs = array;
                     continue;
                 }
-                if (property.NameEquals("ipFamilies"))
+                if (property.NameEquals("ipFamilies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

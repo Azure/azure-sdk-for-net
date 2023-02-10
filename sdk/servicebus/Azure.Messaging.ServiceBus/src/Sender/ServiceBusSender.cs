@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -20,6 +21,15 @@ namespace Azure.Messaging.ServiceBus
     ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity
     ///   (Queue or Topic). It can be used for both session and non-session entities. It is constructed by calling <see cref="ServiceBusClient.CreateSender(string)"/>.
     /// </summary>
+    /// <remarks>
+    ///   The <see cref="ServiceBusSender" /> is safe to cache and use for the lifetime of an
+    ///   application or until the <see cref="ServiceBusClient" /> that it was created by is disposed.
+    ///   Caching the sender is recommended when the application is publishing messages
+    ///   regularly or semi-regularly.  The sender is responsible for ensuring efficient network, CPU,
+    ///   and memory use.  Calling <see cref="DisposeAsync" /> on the associated <see cref="ServiceBusClient" />
+    ///   as the application is shutting down will ensure that network resources and other unmanaged objects used
+    ///   by the sender are properly cleaned up.
+    ///</remarks>
     ///
     public class ServiceBusSender : IAsyncDisposable
     {
@@ -65,8 +75,8 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
-        /// <remarks>Every new client has a unique ID.</remarks>
-        internal string Identifier { get; private set; }
+        ///
+        public virtual string Identifier { get; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -94,9 +104,11 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="entityPath">The entity path to send the message to.</param>
         /// <param name="connection">The connection for the sender.</param>
+        /// <param name="options">The set of options to use when configuring the sender.</param>
         internal ServiceBusSender(
             string entityPath,
-            ServiceBusConnection connection)
+            ServiceBusConnection connection,
+            ServiceBusSenderOptions options = default)
         {
             Logger.ClientCreateStart(typeof(ServiceBusSender), connection?.FullyQualifiedNamespace, entityPath);
             try
@@ -106,8 +118,10 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
                 connection.ThrowIfClosed();
 
+                options = options?.Clone() ?? new ServiceBusSenderOptions();
+
                 EntityPath = entityPath;
-                Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
+                Identifier = string.IsNullOrEmpty(options.Identifier) ? DiagnosticUtilities.GenerateIdentifier(EntityPath) : options.Identifier;
                 _connection = connection;
                 _retryPolicy = _connection.RetryOptions.ToRetryPolicy();
                 _innerSender = _connection.CreateTransportSender(
@@ -138,7 +152,18 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="client">The client instance to use for the sender.</param>
         /// <param name="queueOrTopicName">The name of the queue or topic to send to.</param>
         protected ServiceBusSender(ServiceBusClient client, string queueOrTopicName) :
-            this(queueOrTopicName, client.Connection)
+            this(queueOrTopicName, client.Connection, new ServiceBusSenderOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusSender"/> class for use with derived types.
+        /// </summary>
+        /// <param name="client">The client instance to use for the sender.</param>
+        /// <param name="queueOrTopicName">The name of the queue or topic to send to.</param>
+        /// <param name="options">The set of options to use when configuring the sender.</param>
+        protected ServiceBusSender(ServiceBusClient client, string queueOrTopicName, ServiceBusSenderOptions options) :
+            this(queueOrTopicName, client.Connection, options)
         {
         }
 
@@ -244,6 +269,23 @@ namespace Azure.Messaging.ServiceBus
                 DiagnosticScope.ActivityKind.Client);
 
             scope.SetMessageData(messages);
+
+            return scope;
+        }
+
+        private DiagnosticScope CreateDiagnosticScope(ServiceBusMessageBatch messageBatch, string activityName)
+        {
+            // Messages in a batch have already been instrumented when
+            // they are added to the batch so we don't need to instrument them here.
+            var messages = messageBatch.AsReadOnly<AmqpMessage>();
+
+            // create a new scope for the specified operation
+            DiagnosticScope scope = _scopeFactory.CreateScope(
+                activityName,
+                DiagnosticScope.ActivityKind.Client);
+
+            scope.SetMessageData(messages);
+
             return scope;
         }
 
@@ -333,7 +375,7 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(
-                messageBatch.AsReadOnly<ServiceBusMessage>(),
+                messageBatch,
                 DiagnosticProperty.SendActivityName);
             scope.Start();
 

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SessionId))
             {
-                writer.WritePropertyName("sessionId");
-                writer.WriteStringValue(SessionId);
+                writer.WritePropertyName("sessionId"u8);
+                writer.WriteStringValue(SessionId.Value);
             }
             if (Optional.IsDefined(Command))
             {
-                writer.WritePropertyName("command");
+                writer.WritePropertyName("command"u8);
                 writer.WriteStringValue(Command.Value.ToString());
             }
             if (Optional.IsDefined(CommandPayload))
             {
-                writer.WritePropertyName("commandPayload");
+                writer.WritePropertyName("commandPayload"u8);
                 writer.WriteObjectValue(CommandPayload);
             }
             writer.WriteEndObject();

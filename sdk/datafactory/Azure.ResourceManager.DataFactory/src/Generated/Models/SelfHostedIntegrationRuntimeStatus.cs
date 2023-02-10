@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Nodes = new ChangeTrackingList<SelfHostedIntegrationRuntimeNode>();
             Capabilities = new ChangeTrackingDictionary<string, string>();
-            ServiceUrls = new ChangeTrackingList<string>();
+            ServiceUris = new ChangeTrackingList<Uri>();
             Links = new ChangeTrackingList<LinkedIntegrationRuntime>();
             RuntimeType = IntegrationRuntimeType.SelfHosted;
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="createOn"> The time at which the integration runtime was created, in ISO8601 format. </param>
+        /// <param name="createdOn"> The time at which the integration runtime was created, in ISO8601 format. </param>
         /// <param name="taskQueueId"> The task queue id of the integration runtime. </param>
         /// <param name="internalChannelEncryption"> It is used to set the encryption mode for node-node communication channel (when more than 2 self-hosted integration runtime nodes exist). </param>
         /// <param name="version"> Version of the integration runtime. </param>
@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="updateDelayOffset"> The time in the date scheduled by service to update the integration runtime, e.g., PT03H is 3 hours. </param>
         /// <param name="localTimeZoneOffset"> The local time zone offset in hours. </param>
         /// <param name="capabilities"> Object with additional information about integration runtime capabilities. </param>
-        /// <param name="serviceUrls"> The URLs for the services used in integration runtime backend service. </param>
+        /// <param name="serviceUris"> The URLs for the services used in integration runtime backend service. </param>
         /// <param name="autoUpdate"> Whether Self-hosted integration runtime auto update has been turned on. </param>
         /// <param name="versionStatus"> Status of the integration runtime version. </param>
         /// <param name="links"> The list of linked integration runtimes that are created to share with this integration runtime. </param>
         /// <param name="pushedVersion"> The version that the integration runtime is going to update to. </param>
         /// <param name="latestVersion"> The latest version on download center. </param>
-        /// <param name="autoUpdateETA"> The estimated time when the self-hosted integration runtime will be updated. </param>
-        internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createOn, string taskQueueId, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, string updateDelayOffset, string localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<string> serviceUrls, IntegrationRuntimeAutoUpdate? autoUpdate, string versionStatus, IReadOnlyList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateETA) : base(runtimeType, dataFactoryName, state, additionalProperties)
+        /// <param name="autoUpdateEta"> The estimated time when the self-hosted integration runtime will be updated. </param>
+        internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createdOn, Guid? taskQueueId, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, TimeSpan? updateDelayOffset, TimeSpan? localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<Uri> serviceUris, IntegrationRuntimeAutoUpdate? autoUpdate, string versionStatus, IReadOnlyList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateEta) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
-            CreateOn = createOn;
+            CreatedOn = createdOn;
             TaskQueueId = taskQueueId;
             InternalChannelEncryption = internalChannelEncryption;
             Version = version;
@@ -56,20 +56,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             UpdateDelayOffset = updateDelayOffset;
             LocalTimeZoneOffset = localTimeZoneOffset;
             Capabilities = capabilities;
-            ServiceUrls = serviceUrls;
+            ServiceUris = serviceUris;
             AutoUpdate = autoUpdate;
             VersionStatus = versionStatus;
             Links = links;
             PushedVersion = pushedVersion;
             LatestVersion = latestVersion;
-            AutoUpdateETA = autoUpdateETA;
+            AutoUpdateEta = autoUpdateEta;
             RuntimeType = runtimeType;
         }
 
         /// <summary> The time at which the integration runtime was created, in ISO8601 format. </summary>
-        public DateTimeOffset? CreateOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The task queue id of the integration runtime. </summary>
-        public string TaskQueueId { get; }
+        public Guid? TaskQueueId { get; }
         /// <summary> It is used to set the encryption mode for node-node communication channel (when more than 2 self-hosted integration runtime nodes exist). </summary>
         public IntegrationRuntimeInternalChannelEncryptionMode? InternalChannelEncryption { get; }
         /// <summary> Version of the integration runtime. </summary>
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The date at which the integration runtime will be scheduled to update, in ISO8601 format. </summary>
         public DateTimeOffset? ScheduledUpdateOn { get; }
         /// <summary> The time in the date scheduled by service to update the integration runtime, e.g., PT03H is 3 hours. </summary>
-        public string UpdateDelayOffset { get; }
+        public TimeSpan? UpdateDelayOffset { get; }
         /// <summary> The local time zone offset in hours. </summary>
-        public string LocalTimeZoneOffset { get; }
+        public TimeSpan? LocalTimeZoneOffset { get; }
         /// <summary> Object with additional information about integration runtime capabilities. </summary>
         public IReadOnlyDictionary<string, string> Capabilities { get; }
         /// <summary> The URLs for the services used in integration runtime backend service. </summary>
-        public IReadOnlyList<string> ServiceUrls { get; }
+        public IReadOnlyList<Uri> ServiceUris { get; }
         /// <summary> Whether Self-hosted integration runtime auto update has been turned on. </summary>
         public IntegrationRuntimeAutoUpdate? AutoUpdate { get; }
         /// <summary> Status of the integration runtime version. </summary>
@@ -97,6 +97,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The latest version on download center. </summary>
         public string LatestVersion { get; }
         /// <summary> The estimated time when the self-hosted integration runtime will be updated. </summary>
-        public DateTimeOffset? AutoUpdateETA { get; }
+        public DateTimeOffset? AutoUpdateEta { get; }
     }
 }

@@ -3,10 +3,8 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -20,6 +18,13 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
+
+[assembly: InternalsVisibleTo("Azure.Storage.DataMovement.Blobs, PublicKey=" +
+    "0024000004800000940000000602000000240000525341310004000001000100d15ddcb2968829" +
+    "5338af4b7686603fe614abd555e09efba8fb88ee09e1f7b1ccaeed2e8f823fa9eef3fdd60217fc" +
+    "012ea67d2479751a0b8c087a4185541b851bd8b16f8d91b840e51b1cb0ba6fe647997e57429265" +
+    "e85ef62d565db50a69ae1647d54d7bd855e4db3d8a91510e5bcbd0edfbbecaa20a7bd9ae74593d" +
+    "aa7b11b4")]
 
 namespace Azure.Storage.Blobs.Specialized
 {
@@ -210,10 +215,12 @@ namespace Azure.Storage.Blobs.Specialized
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
-                encryptionScope: options.EncryptionScope);
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _blobRestClient = BuildBlobRestClient(_uri);
@@ -238,7 +245,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, BlobClientOptions options = default)
-            : this(blobUri, (HttpPipelinePolicy)null, options, null)
+            : this(blobUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential: null)
         {
         }
 
@@ -261,7 +268,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy(), options, credential)
+            : this(blobUri, credential.AsPolicy(), options, storageSharedKeyCredential: credential)
         {
         }
 
@@ -288,7 +295,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public BlobBaseClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy<BlobUriBuilder>(blobUri), options, null)
+            : this(blobUri, credential.AsPolicy<BlobUriBuilder>(blobUri), options, storageSharedKeyCredential: null)
         {
         }
 
@@ -311,9 +318,69 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy(options), options, null)
+            : this(blobUri, credential.AsPolicy(options), options, credential)
         {
             Errors.VerifyHttpsTokenAuth(blobUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
+        /// </param>
+        internal BlobBaseClient(
+            Uri blobUri,
+            HttpPipelinePolicy authentication,
+            BlobClientOptions options,
+            TokenCredential tokenCredential)
+        {
+            Argument.AssertNotNull(blobUri, nameof(blobUri));
+            options ??= new BlobClientOptions();
+            _uri = blobUri;
+            if (!string.IsNullOrEmpty(blobUri.Query))
+            {
+                UriQueryParamsCollection queryParamsCollection = new UriQueryParamsCollection(blobUri.Query);
+                if (queryParamsCollection.ContainsKey(Constants.SnapshotParameterName))
+                {
+                    _snapshot = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.SnapshotParameterName);
+                }
+                if (queryParamsCollection.ContainsKey(Constants.VersionIdParameterName))
+                {
+                    _blobVersionId = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.VersionIdParameterName);
+                }
+            }
+
+            _clientConfiguration = new BlobClientConfiguration(
+                pipeline: options.Build(authentication),
+                tokenCredential: tokenCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
+
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
+            _blobRestClient = BuildBlobRestClient(blobUri);
+
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
         }
 
         /// <summary>
@@ -362,10 +429,12 @@ namespace Azure.Storage.Blobs.Specialized
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
-                encryptionScope: options.EncryptionScope);
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _blobRestClient = BuildBlobRestClient(blobUri);
@@ -563,12 +632,48 @@ namespace Azure.Storage.Blobs.Specialized
         {
             if (_name == null || _containerName == null || _accountName == null)
             {
-                var builder = new BlobUriBuilder(Uri);
+                var builder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes);
                 _name = builder.BlobName;
                 _containerName = builder.BlobContainerName;
                 _accountName = builder.AccountName;
             }
         }
+
+        #region internal static accessors for Azure.Storage.DataMovement.Blobs
+        /// <summary>
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="TokenCredential"/>
+        /// for passing the authorization when performing service to service copy
+        /// where OAuth is necessary to authenticate the source.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's HttpPipeline.</returns>
+        internal static TokenCredential GetTokenCredential(BlobBaseClient client) =>
+            client.ClientConfiguration.OAuthTokenCredential;
+
+        /// <summary>
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
+        internal static BlobClientOptions GetClientOptions(BlobBaseClient client) =>
+            new BlobClientOptions(client.ClientConfiguration.Version)
+            {
+                // We only use this for communicating diagnostics, at the moment
+                Diagnostics =
+                {
+                    IsDistributedTracingEnabled = client.ClientConfiguration.ClientDiagnostics.IsActivityEnabled
+                }
+            };
+
+        /// <summary>
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
+        internal static bool GetUsingClientSideEncryption(BlobBaseClient client) => client.UsingClientSideEncryption;
+        #endregion protected static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>
         ///// Creates a clone of this instance that references a version ID rather than the base blob.
@@ -937,28 +1042,10 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            // TODO #27253
-            //BlobDownloadOptions options = default;
-            //if (range != default || conditions != default || rangeGetContentHash != default)
-            //{
-            //    options = new BlobDownloadOptions
-            //    {
-            //        Range = range,
-            //        Conditions = conditions,
-            //        RangeGetContentHash = rangeGetContentHash
-            //        // TODO #27253
-            //        //TransactionalHashingOptions = rangeGetContentHash
-            //        //    ? new DownloadTransactionalHashingOptions()
-            //        //    {
-            //        //        Algorithm = TransactionalHashAlgorithm.MD5
-            //        //    }
-            //        //    : default,
-            //    };
-            //}
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingDirect(
                 range,
                 conditions,
-                rangeGetContentHash,
+                rangeGetContentHash.ToValidationOptions(),
                 progressHandler: default,
                 $"{nameof(BlobBaseClient)}.{nameof(Download)}",
                 async,
@@ -1178,34 +1265,20 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<BlobDownloadStreamingResult> DownloadStreaming(
-            HttpRange range = default,
-            BlobRequestConditions conditions = default,
-            bool rangeGetContentHash = default,
-            IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange range,
+            BlobRequestConditions conditions,
+            bool rangeGetContentHash,
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken)
         {
-            // TODO #27253
-            //BlobDownloadOptions options = default;
-            //if (range != default || conditions != default || rangeGetContentHash != default)
-            //{
-            //    options = new BlobDownloadOptions
-            //    {
-            //        Range = range,
-            //        Conditions = conditions,
-            //        RangeGetContentHash = rangeGetContentHash
-            //        //TransactionalHashingOptions = rangeGetContentHash
-            //        //    ? new DownloadTransactionalHashingOptions()
-            //        //    {
-            //        //        Algorithm = TransactionalHashAlgorithm.MD5
-            //        //    }
-            //        //    : default
-            //    };
-            //}
             return DownloadStreamingDirect(
                 range,
                 conditions,
-                rangeGetContentHash,
+                rangeGetContentHash.ToValidationOptions(),
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 false, // async
@@ -1268,35 +1341,20 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingAsync(
-            HttpRange range = default,
-            BlobRequestConditions conditions = default,
-            bool rangeGetContentHash = default,
-            IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange range,
+            BlobRequestConditions conditions,
+            bool rangeGetContentHash,
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken)
         {
-            // TODO #27253
-            //BlobDownloadOptions options = default;
-            //if (range != default || conditions != default || rangeGetContentHash != default)
-            //{
-            //    options = new BlobDownloadOptions
-            //    {
-            //        Range = range,
-            //        Conditions = conditions,
-            //        RangeGetContentHash = rangeGetContentHash
-            //        // TODO #27253
-            //        //TransactionalHashingOptions = rangeGetContentHash
-            //        //    ? new DownloadTransactionalHashingOptions()
-            //        //    {
-            //        //        Algorithm = TransactionalHashAlgorithm.MD5
-            //        //    }
-            //        //    : default
-            //    };
-            //}
             return await DownloadStreamingDirect(
                 range,
                 conditions,
-                rangeGetContentHash,
+                rangeGetContentHash.ToValidationOptions(),
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 true, // async
@@ -1304,100 +1362,104 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
         }
 
-        // TODO #27253
-        ///// <summary>
-        ///// The <see cref="DownloadStreaming(BlobDownloadOptions, CancellationToken)"/>
-        ///// operation downloads a blob from the service, including its metadata
-        ///// and properties.
-        /////
-        ///// For more information, see
-        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
-        ///// Get Blob</see>.
-        ///// </summary>
-        ///// <param name="options">
-        ///// Optional parameters.
-        ///// </param>
-        ///// <param name="cancellationToken">
-        ///// Optional <see cref="CancellationToken"/> to propagate
-        ///// notifications that the operation should be cancelled.
-        ///// </param>
-        ///// <returns>
-        ///// A <see cref="Response{BlobDownloadStreamingResult}"/> describing the
-        ///// downloaded blob.  <see cref="BlobDownloadStreamingResult.Content"/> contains
-        ///// the blob's data.
-        ///// </returns>
-        ///// <remarks>
-        ///// A <see cref="RequestFailedException"/> will be thrown if
-        ///// a failure occurs.
-        /////
-        ///// This API gives access directly to network stream that should be disposed after usage.
-        ///// Consider the following alternatives:
-        ///// <list type="bullet">
-        /////     <item>
-        /////         <term>DownloadContentAsync</term>
-        /////         <description>as a prefered way of downloading small blobs that can fit into memory</description>
-        /////     </item>
-        /////     <item>
-        /////         <term>DownloadToAsync</term>
-        /////         <description>to stream blob content to a path or a <see cref="Stream"/></description>
-        /////     </item>
-        ///// </list>
-        ///// </remarks>
-        //public virtual Response<BlobDownloadStreamingResult> DownloadStreaming(
-        //    BlobDownloadOptions options,
-        //    CancellationToken cancellationToken = default)
-        //{
-        //    return DownloadStreamingInternal(
-        //        options,
-        //        $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
-        //        async: false,
-        //        cancellationToken).EnsureCompleted();
-        //}
+        /// <summary>
+        /// The <see cref="DownloadStreaming(BlobDownloadOptions, CancellationToken)"/>
+        /// operation downloads a blob from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadStreamingResult}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadStreamingResult.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        ///
+        /// This API gives access directly to network stream that should be disposed after usage.
+        /// Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadContentAsync</term>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadToAsync</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        /// </list>
+        /// </remarks>
+        public virtual Response<BlobDownloadStreamingResult> DownloadStreaming(
+            BlobDownloadOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return DownloadStreamingDirect(
+                options?.Range ?? default,
+                options?.Conditions,
+                options?.TransferValidation,
+                options?.ProgressHandler,
+                $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
+                async: false,
+                cancellationToken).EnsureCompleted();
+        }
 
-        // TODO #27253
-        ///// <summary>
-        ///// The <see cref="DownloadStreamingAsync(BlobDownloadOptions, CancellationToken)"/>
-        ///// operation downloads a blob from the service, including its metadata
-        ///// and properties.
-        /////
-        ///// For more information, see
-        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
-        ///// Get Blob</see>.
-        ///// </summary>
-        ///// <param name="options">Optional parameters.</param>
-        ///// <param name="cancellationToken"></param>
-        ///// <returns>
-        ///// A <see cref="Response{BlobDownloadStreamingResult}"/> describing the
-        ///// downloaded blob.  <see cref="BlobDownloadStreamingResult.Content"/> contains
-        ///// the blob's data.
-        ///// </returns>
-        ///// <remarks>
-        ///// A <see cref="RequestFailedException"/> will be thrown if
-        ///// a failure occurs.
-        /////
-        ///// This API gives access directly to network stream that should be disposed after usage.
-        ///// Consider the following alternatives:
-        ///// <list type="bullet">
-        /////     <item>
-        /////         <term>DownloadContentAsync</term>
-        /////         <description>as a prefered way of downloading small blobs that can fit into memory</description>
-        /////     </item>
-        /////     <item>
-        /////         <term>DownloadToAsync</term>
-        /////         <description>to stream blob content to a path or a <see cref="Stream"/></description>
-        /////     </item>
-        ///// </list>
-        ///// </remarks>
-        //public virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingAsync(
-        //    BlobDownloadOptions options,
-        //    CancellationToken cancellationToken = default)
-        //{
-        //    return await DownloadStreamingInternal(
-        //        options,
-        //        $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
-        //        async: true,
-        //        cancellationToken).ConfigureAwait(false);
-        //}
+        /// <summary>
+        /// The <see cref="DownloadStreamingAsync(BlobDownloadOptions, CancellationToken)"/>
+        /// operation downloads a blob from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="options">Optional parameters.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadStreamingResult}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadStreamingResult.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        ///
+        /// This API gives access directly to network stream that should be disposed after usage.
+        /// Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadContentAsync</term>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadToAsync</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        /// </list>
+        /// </remarks>
+        public virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingAsync(
+            BlobDownloadOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await DownloadStreamingDirect(
+                options?.Range ?? default,
+                options?.Conditions,
+                options?.TransferValidation,
+                options?.ProgressHandler,
+                $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Internal advanced download implementations should call into
@@ -1406,7 +1468,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="range"></param>
         /// <param name="conditions"></param>
-        /// <param name="rangeGetContentHash"></param>
+        /// <param name="transferValidationOverride"></param>
         /// <param name="progressHandler"></param>
         /// <param name="operationName"></param>
         /// <param name="async"></param>
@@ -1415,7 +1477,7 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingDirect(
             HttpRange range,
             BlobRequestConditions conditions,
-            bool rangeGetContentHash,
+            DownloadTransferValidationOptions transferValidationOverride,
             IProgress<long> progressHandler,
             string operationName,
             bool async,
@@ -1424,13 +1486,13 @@ namespace Azure.Storage.Blobs.Specialized
             HttpRange requestedRange = range;
             if (UsingClientSideEncryption)
             {
-                if ((await GetPropertiesInternal(conditions, async, cancellationToken).ConfigureAwait(false)).Value.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
+                if ((await GetPropertiesInternal(conditions, async, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false)).Value.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
                 {
                     range = BlobClientSideDecryptor.GetEncryptedBlobRange(range, rawEncryptiondata);
                 }
             }
 
-            var response = await DownloadStreamingInternal(range, conditions, rangeGetContentHash, progressHandler, operationName, async, cancellationToken).ConfigureAwait(false);
+            var response = await DownloadStreamingInternal(range, conditions, transferValidationOverride, progressHandler, operationName, async, cancellationToken).ConfigureAwait(false);
 
             // if using clientside encryption, wrap the auto-retry stream in a decryptor
             // we already return a nonseekable stream; returning a crypto stream is fine
@@ -1459,8 +1521,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="conditions">
         /// Access conditions.
         /// </param>
-        /// <param name="rangeGetContentHash">
-        /// Whether to request an MD5 on download.
+        /// <param name="transferValidationOverride">
+        /// Override options for transfer validation.
         /// </param>
         /// <param name="progressHandler">
         /// Progress handler.
@@ -1478,12 +1540,13 @@ namespace Azure.Storage.Blobs.Specialized
         internal virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             HttpRange range,
             BlobRequestConditions conditions,
-            bool rangeGetContentHash,
+            DownloadTransferValidationOptions transferValidationOverride,
             IProgress<long> progressHandler,
             string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
+            DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
@@ -1498,7 +1561,7 @@ namespace Azure.Storage.Blobs.Specialized
                     Response<BlobDownloadStreamingResult> response = await StartDownloadAsync(
                         range,
                         conditions,
-                        rangeGetContentHash,
+                        validationOptions,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -1521,7 +1584,7 @@ namespace Azure.Storage.Blobs.Specialized
                             StartDownloadAsync(
                                     range,
                                     conditionsWithEtag,
-                                    rangeGetContentHash,
+                                    validationOptions,
                                     startOffset,
                                     async,
                                     cancellationToken)
@@ -1531,7 +1594,7 @@ namespace Azure.Storage.Blobs.Specialized
                             (await StartDownloadAsync(
                                 range,
                                 conditionsWithEtag,
-                                rangeGetContentHash,
+                                validationOptions,
                                 startOffset,
                                 async,
                                 cancellationToken)
@@ -1542,32 +1605,29 @@ namespace Azure.Storage.Blobs.Specialized
 
                     stream = stream.WithNoDispose().WithProgress(progressHandler);
 
-                    /* NOTE: we do not currently support both features together. This remains here for the
-                     * potential future where we do.
-                     * Comparing hash results comes BEFORE decryption.
-                     * Buffer response stream and ensure it matches the transactional hash if any.
-                     * Storage will not return a hash for payload >4MB, so this buffer is capped similarly.
-                     * Hashing is opt-in, so this buffer is part of that opt-in */
-                    // TODO #27253
-                    //if (options?.TransactionalHashingOptions != default && options.TransactionalHashingOptions.Validate)
-                    //{
-                    //    // safe-buffer; transactional hash download limit well below maxInt
-                    //    var readDestStream = new MemoryStream((int)response.Value.Details.ContentLength);
-                    //    if (async)
-                    //    {
-                    //        await stream.CopyToAsync(readDestStream).ConfigureAwait(false);
-                    //    }
-                    //    else
-                    //    {
-                    //        stream.CopyTo(readDestStream);
-                    //    }
-                    //    readDestStream.Position = 0;
+                    /* Decryption handled by caller, so safe to check checksum now.
+                     * Buffer response stream and ensure it matches the transactional checksum if any.
+                     * Storage will not return a checksum for payload >4MB, so this buffer is capped similarly.
+                     * Checksum validation is opt-in, so this buffer is part of that opt-in. */
+                    if (validationOptions != default && validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None && validationOptions.AutoValidateChecksum)
+                    {
+                        // safe-buffer; transactional hash download limit well below maxInt
+                        var readDestStream = new MemoryStream((int)response.Value.Details.ContentLength);
+                        if (async)
+                        {
+                            await stream.CopyToAsync(readDestStream, 81920, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            stream.CopyTo(readDestStream);
+                        }
+                        readDestStream.Position = 0;
 
-                    //    ContentHasher.AssertResponseHashMatch(readDestStream, options.TransactionalHashingOptions.Algorithm, response.GetRawResponse());
+                        ContentHasher.AssertResponseHashMatch(readDestStream, validationOptions.ChecksumAlgorithm, response.GetRawResponse());
 
-                    //    // we've consumed the network stream to hash it; return buffered stream to the user
-                    //    stream = readDestStream;
-                    //}
+                        // we've consumed the network stream to hash it; return buffered stream to the user
+                        stream = readDestStream;
+                    }
 
                     response.Value.Content = stream;
                     return response;
@@ -1598,13 +1658,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// downloading this blob.
         /// </param>
-        /// <param name="rangeGetContentHash">
-        /// When set to true and specified together with the <paramref name="range"/>,
-        /// the service returns the MD5 hash for the range, as long as the
-        /// range is less than or equal to 4 MB in size.  If this value is
-        /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
-        /// is thrown.
+        /// <param name="validationOptions">
+        /// Options for requesting a checksum.
+        /// This method will not check client options for this parameter and
+        /// expects defaults to have already been evaluated.
         /// </param>
         /// <param name="startOffset">
         /// Starting offset to request - in the event of a retry.
@@ -1628,7 +1685,7 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response<BlobDownloadStreamingResult>> StartDownloadAsync(
             HttpRange range,
             BlobRequestConditions conditions,
-            bool rangeGetContentHash,
+            DownloadTransferValidationOptions validationOptions,
             long startOffset = 0,
             bool async = true,
             CancellationToken cancellationToken = default)
@@ -1662,9 +1719,8 @@ namespace Azure.Storage.Blobs.Specialized
                 response = await BlobRestClient.DownloadAsync(
                     range: pageRange?.ToString(),
                     leaseId: conditions?.LeaseId,
-                    // TODO #27253
-                    rangeGetContentMD5: rangeGetContentHash ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
-                    //rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
+                    rangeGetContentMD5: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
+                    rangeGetContentCRC64: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -1681,9 +1737,8 @@ namespace Azure.Storage.Blobs.Specialized
                 response = BlobRestClient.Download(
                     range: pageRange?.ToString(),
                     leaseId: conditions?.LeaseId,
-                    // TODO #27253
-                    rangeGetContentMD5: rangeGetContentHash ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
-                    //rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
+                    rangeGetContentMD5: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
+                    rangeGetContentCRC64: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -1913,6 +1968,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 progressHandler: default,
                 range: default,
+                transferValidationOverride: default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1968,6 +2024,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 progressHandler: default,
                 range: default,
+                transferValidationOverride: default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2020,15 +2077,19 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobDownloadResult> DownloadContent(
-            BlobRequestConditions conditions = default,
-            IProgress<long> progressHandler = default,
-            HttpRange range = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            BlobRequestConditions conditions,
+            IProgress<long> progressHandler,
+            HttpRange range,
+            CancellationToken cancellationToken) =>
             DownloadContentInternal(
                 conditions,
                 progressHandler,
                 range,
+                transferValidationOverride: default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2081,30 +2142,137 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobDownloadResult>> DownloadContentAsync(
-            BlobRequestConditions conditions = default,
-            IProgress<long> progressHandler = default,
-            HttpRange range = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            BlobRequestConditions conditions,
+            IProgress<long> progressHandler,
+            HttpRange range,
+            CancellationToken cancellationToken) =>
             await DownloadContentInternal(
                 conditions,
                 progressHandler,
                 range,
+                transferValidationOverride: default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DownloadContent(BlobDownloadOptions, CancellationToken)"/>
+        /// operation downloads a blob from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters for download operation.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadResult}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadResult.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        ///
+        /// This API is a prefered way to fetch blobs that can fit into memory.
+        /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
+        /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
+        /// Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadToAsync</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadStreamingAsync</term>
+        ///         <description>as a replacement to this API. Use it to access network stream directly for any advanced scenario.</description>
+        ///     </item>
+        /// </list>
+        /// </remarks>
+        public virtual Response<BlobDownloadResult> DownloadContent(
+            BlobDownloadOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            DownloadContentInternal(
+                options?.Conditions,
+                options?.ProgressHandler,
+                options?.Range ?? default,
+                options?.TransferValidation,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DownloadContentAsync(BlobDownloadOptions, CancellationToken)"/>
+        /// operation downloads a blob from the service, including its metadata
+        /// and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters for download operation.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadResult}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadResult.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        ///
+        /// This API is a prefered way to fetch blobs that can fit into memory.
+        /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
+        /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
+        /// Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadToAsync</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadStreamingAsync</term>
+        ///         <description>as a replacement to this API. Use it to access network stream directly for any advanced scenario.</description>
+        ///     </item>
+        /// </list>
+        /// </remarks>
+        public virtual async Task<Response<BlobDownloadResult>> DownloadContentAsync(
+            BlobDownloadOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await DownloadContentInternal(
+                options?.Conditions,
+                options?.ProgressHandler,
+                options?.Range ?? default,
+                options?.TransferValidation,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
 
         private async Task<Response<BlobDownloadResult>> DownloadContentInternal(
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             HttpRange range,
+            DownloadTransferValidationOptions transferValidationOverride,
             bool async,
             CancellationToken cancellationToken)
         {
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingDirect(
                 range,
                 conditions,
-                rangeGetContentHash: default,
+                transferValidationOverride: transferValidationOverride,
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}",
                 async: async,
@@ -2346,8 +2514,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                // TODO #27253
-                //options?.TransactionalHashingOptions,
+                options?.TransferValidation,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2386,8 +2553,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                // TODO #27253
-                //options?.TransactionalHashingOptions,
+                options?.TransferValidation,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2425,8 +2591,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                // TODO #27253
-                //options?.TransactionalHashingOptions,
+                options?.TransferValidation,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2465,8 +2630,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                // TODO #27253
-                //options?.TransactionalHashingOptions,
+                options?.TransferValidation,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2686,6 +2850,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
+        /// <param name="transferValidationOverride">
+        /// Override for client options on transfer validation.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2705,22 +2872,16 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
-            // TODO #27253
-            //DownloadTransactionalHashingOptions hashingOptions = default,
+            DownloadTransferValidationOptions transferValidationOverride = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            // TODO #27253
-            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, /*hashingOptions,*/ progressHandler);
+            DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
+
+            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, validationOptions, progressHandler);
 
             if (UsingClientSideEncryption)
             {
-                // TODO #27253
-                //if (hashingOptions != default)
-                //{
-                //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-                //}
-
                 ClientSideDecryptor.BeginContentEncryptionKeyCaching();
             }
             if (async)
@@ -2760,8 +2921,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
-                // TODO #27253
-                //hashingOptions: options?.TransactionalHashingOptions,
+                transferValidationOverride: options?.TransferValidation,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2790,8 +2950,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
-                // TODO #27253
-                //hashingOptions: options?.TransactionalHashingOptions,
+                transferValidationOverride: options?.TransferValidation,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2832,8 +2991,7 @@ namespace Azure.Storage.Blobs.Specialized
                 bufferSize,
                 conditions,
                 allowModifications: false,
-                // TODO #27253
-                //hashingOptions: default,
+                transferValidationOverride: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2911,8 +3069,7 @@ namespace Azure.Storage.Blobs.Specialized
                 bufferSize,
                 conditions,
                 allowModifications: false,
-                // TODO #27253
-                //hashingOptions: default,
+                transferValidationOverride: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2973,6 +3130,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="allowModifications">
         /// Whether to allow modifications during the read.
         /// </param>
+        /// <param name="transferValidationOverride">
+        /// Optional override for settings in the client options.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2991,13 +3151,14 @@ namespace Azure.Storage.Blobs.Specialized
             int? bufferSize,
             BlobRequestConditions conditions,
             bool allowModifications,
-            // TODO #27253
-            //DownloadTransactionalHashingOptions hashingOptions,
+            DownloadTransferValidationOptions transferValidationOverride,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
 #pragma warning restore CA1801
         {
+            DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? _clientConfiguration.TransferValidation.Download;
+
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -3013,14 +3174,11 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     scope.Start();
 
-                    // TODO #27253
-                    //if (UsingClientSideEncryption && hashingOptions != default)
-                    //{
-                    //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-                    //}
-
                     // This also makes sure that we fail fast if file doesn't exist.
-                    Response<BlobProperties> blobProperties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
+                    Response<BlobProperties> blobProperties = await GetPropertiesInternal(
+                        conditions: conditions,
+                        async,
+                        new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
 
                     ETag etag = blobProperties.Value.ETag;
                     var readConditions = conditions;
@@ -3043,7 +3201,7 @@ namespace Azure.Storage.Blobs.Specialized
                         : LazyLoadingReadOnlyStream<BlobProperties>.NoRangeAdjustment;
                     return new LazyLoadingReadOnlyStream<BlobProperties>(
                         async (HttpRange range,
-                        //DownloadTransactionalHashingOptions hashingOptions,
+                        DownloadTransferValidationOptions downloadValidationOptions,
                         bool async,
                         CancellationToken cancellationToken) =>
                         {
@@ -3056,7 +3214,7 @@ namespace Azure.Storage.Blobs.Specialized
                             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                                 range,
                                 readConditions,
-                                rangeGetContentHash: default,
+                                transferValidationOverride: downloadValidationOptions,
                                 progressHandler: default,
                                 operationName,
                                 async,
@@ -3079,9 +3237,11 @@ namespace Azure.Storage.Blobs.Specialized
                                 response.GetRawResponse());
                         },
                         async (bool async, CancellationToken cancellationToken)
-                            => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
-                        // TODO #27253
-                        //hashingOptions,
+                            => await GetPropertiesInternal(
+                                conditions: default,
+                                async,
+                                new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false),
+                        validationOptions,
                         allowModifications,
                         blobContentLength,
                         position,
@@ -4512,27 +4672,29 @@ namespace Azure.Storage.Blobs.Specialized
 
                 string operationName = $"{nameof(BlobBaseClient)}.{nameof(Exists)}";
 
+                // 404 isn't an error for checking if the resource exists, it's false
+                RequestContext context = new RequestContext() { CancellationToken = cancellationToken };
+                context.AddClassifier(new BlobBaseClientExistsClassifier());
+
                 try
                 {
                     Response<BlobProperties> response = await GetPropertiesInternal(
                         conditions: default,
                         async: async,
-                        cancellationToken: cancellationToken,
+                        context: context,
                         operationName)
                         .ConfigureAwait(false);
 
+                    if (BlobBaseClientExistsClassifier.IsResourceNotFoundResponse(response.GetRawResponse()))
+                    {
+                        return Response.FromValue(false, default);
+                    }
+                    if (BlobBaseClientExistsClassifier.IsUsesCustomerSpecifiedEncryptionResponse(response.GetRawResponse()))
+                    {
+                        return Response.FromValue(true, default);
+                    }
+
                     return Response.FromValue(true, response.GetRawResponse());
-                }
-                catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound
-                    || storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
-                {
-                    return Response.FromValue(false, default);
-                }
-                catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobUsesCustomerSpecifiedEncryption)
-                {
-                    return Response.FromValue(true, default);
                 }
                 catch (Exception ex)
                 {
@@ -4702,7 +4864,7 @@ namespace Azure.Storage.Blobs.Specialized
             GetPropertiesInternal(
                 conditions,
                 async: false,
-                cancellationToken)
+                new RequestContext() { CancellationToken = cancellationToken })
                 .EnsureCompleted();
 
         /// <summary>
@@ -4737,7 +4899,7 @@ namespace Azure.Storage.Blobs.Specialized
             await GetPropertiesInternal(
                 conditions,
                 async: true,
-                cancellationToken)
+                new RequestContext() { CancellationToken = cancellationToken})
                 .ConfigureAwait(false);
 
         /// <summary>
@@ -4757,9 +4919,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// <param name="context">
+        /// Optional <see cref="RequestContext"/> for the operation.
         /// </param>
         /// <param name="operationName">
         /// The name of the calling operation.
@@ -4775,9 +4936,10 @@ namespace Azure.Storage.Blobs.Specialized
         internal async Task<Response<BlobProperties>> GetPropertiesInternal(
             BlobRequestConditions conditions,
             bool async,
-            CancellationToken cancellationToken,
+            RequestContext context,
             string operationName = default)
         {
+            context ??= new RequestContext();
             operationName ??= $"{nameof(BlobBaseClient)}.{nameof(GetProperties)}";
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
@@ -4799,37 +4961,34 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobGetPropertiesHeaders> response;
+                    Response rawResponse;
 
                     if (async)
                     {
-                        response = await BlobRestClient.GetPropertiesAsync(
+                        rawResponse = await BlobRestClient.GetPropertiesAsync(
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm.ToEncryptionAlgorithmString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
-                            cancellationToken: cancellationToken)
+                            context: context)
                             .ConfigureAwait(false);
                     }
                     else
                     {
-                        response = BlobRestClient.GetProperties(
+                        rawResponse = BlobRestClient.GetProperties(
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm.ToEncryptionAlgorithmString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
-                            cancellationToken: cancellationToken);
+                            context: context);
                     }
+
+                    ResponseWithHeaders<BlobGetPropertiesHeaders> response = ResponseWithHeaders.FromValue(
+                        new BlobGetPropertiesHeaders(rawResponse), rawResponse);
 
                     return Response.FromValue(
                         response.ToBlobProperties(),

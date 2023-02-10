@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="login"> Login name of the server administrator. </param>
         /// <param name="sid"> SID (object ID) of the server administrator. </param>
         /// <param name="tenantId"> Tenant ID of the administrator. </param>
-        /// <param name="azureADOnlyAuthentication"> Azure Active Directory only Authentication enabled. </param>
-        internal SqlServerAzureADAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdministratorType? administratorType, string login, Guid? sid, Guid? tenantId, bool? azureADOnlyAuthentication) : base(id, name, resourceType, systemData)
+        /// <param name="isAzureADOnlyAuthenticationEnabled"> Azure Active Directory only Authentication enabled. </param>
+        internal SqlServerAzureADAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlAdministratorType? administratorType, string login, Guid? sid, Guid? tenantId, bool? isAzureADOnlyAuthenticationEnabled) : base(id, name, resourceType, systemData)
         {
             AdministratorType = administratorType;
             Login = login;
             Sid = sid;
             TenantId = tenantId;
-            AzureADOnlyAuthentication = azureADOnlyAuthentication;
+            IsAzureADOnlyAuthenticationEnabled = isAzureADOnlyAuthenticationEnabled;
         }
 
         /// <summary> Type of the sever administrator. </summary>
-        public AdministratorType? AdministratorType { get; set; }
+        public SqlAdministratorType? AdministratorType { get; set; }
         /// <summary> Login name of the server administrator. </summary>
         public string Login { get; set; }
         /// <summary> SID (object ID) of the server administrator. </summary>
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tenant ID of the administrator. </summary>
         public Guid? TenantId { get; set; }
         /// <summary> Azure Active Directory only Authentication enabled. </summary>
-        public bool? AzureADOnlyAuthentication { get; }
+        public bool? IsAzureADOnlyAuthenticationEnabled { get; }
     }
 }

@@ -15,9 +15,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             ContentType1.ApplicationOctetStream => "application/octet-stream",
             ContentType1.ApplicationPdf => "application/pdf",
-            ContentType1.ApplicationVndOpenxmlformatsOfficedocumentPresentationmlPresentation => "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-            ContentType1.ApplicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            ContentType1.ApplicationVndOpenxmlformatsOfficedocumentWordprocessingmlDocument => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             ContentType1.ImageBmp => "image/bmp",
             ContentType1.ImageHeif => "image/heif",
             ContentType1.ImageJpeg => "image/jpeg",
@@ -30,9 +27,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             if (string.Equals(value, "application/octet-stream", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ApplicationOctetStream;
             if (string.Equals(value, "application/pdf", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ApplicationPdf;
-            if (string.Equals(value, "application/vnd.openxmlformats-officedocument.presentationml.presentation", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ApplicationVndOpenxmlformatsOfficedocumentPresentationmlPresentation;
-            if (string.Equals(value, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ApplicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet;
-            if (string.Equals(value, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ApplicationVndOpenxmlformatsOfficedocumentWordprocessingmlDocument;
             if (string.Equals(value, "image/bmp", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImageBmp;
             if (string.Equals(value, "image/heif", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImageHeif;
             if (string.Equals(value, "image/jpeg", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImageJpeg;

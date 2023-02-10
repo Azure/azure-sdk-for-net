@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateListDescription>> ListByIotHubAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubCertificateListDescription>> ListByIotHubAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        CertificateListDescription value = default;
+                        IotHubCertificateListDescription value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateListDescription.DeserializeCertificateListDescription(document.RootElement);
+                        value = IotHubCertificateListDescription.DeserializeIotHubCertificateListDescription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateListDescription> ListByIotHub(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<IotHubCertificateListDescription> ListByIotHub(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        CertificateListDescription value = default;
+                        IotHubCertificateListDescription value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateListDescription.DeserializeCertificateListDescription(document.RootElement);
+                        value = IotHubCertificateListDescription.DeserializeIotHubCertificateListDescription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateDescriptionData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubCertificateDescriptionData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        CertificateDescriptionData value = default;
+                        IotHubCertificateDescriptionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateDescriptionData.DeserializeCertificateDescriptionData(document.RootElement);
+                        value = IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateDescriptionData)null, message.Response);
+                    return Response.FromValue((IotHubCertificateDescriptionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateDescriptionData> Get(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, CancellationToken cancellationToken = default)
+        public Response<IotHubCertificateDescriptionData> Get(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        CertificateDescriptionData value = default;
+                        IotHubCertificateDescriptionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateDescriptionData.DeserializeCertificateDescriptionData(document.RootElement);
+                        value = IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateDescriptionData)null, message.Response);
+                    return Response.FromValue((IotHubCertificateDescriptionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, CertificateDescriptionData data, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, IotHubCertificateDescriptionData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateDescriptionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, CertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubCertificateDescriptionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, IotHubCertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -259,9 +259,9 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                 case 201:
                     {
-                        CertificateDescriptionData value = default;
+                        IotHubCertificateDescriptionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateDescriptionData.DeserializeCertificateDescriptionData(document.RootElement);
+                        value = IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateDescriptionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, CertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<IotHubCertificateDescriptionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, IotHubCertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                 case 201:
                     {
-                        CertificateDescriptionData value = default;
+                        IotHubCertificateDescriptionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateDescriptionData.DeserializeCertificateDescriptionData(document.RootElement);
+                        value = IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/> or <paramref name="ifMatch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateWithNonceDescription>> GenerateVerificationCodeAsync(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubCertificateWithNonceDescription>> GenerateVerificationCodeAsync(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -432,9 +432,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        CertificateWithNonceDescription value = default;
+                        IotHubCertificateWithNonceDescription value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateWithNonceDescription.DeserializeCertificateWithNonceDescription(document.RootElement);
+                        value = IotHubCertificateWithNonceDescription.DeserializeIotHubCertificateWithNonceDescription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/> or <paramref name="ifMatch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateWithNonceDescription> GenerateVerificationCode(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CancellationToken cancellationToken = default)
+        public Response<IotHubCertificateWithNonceDescription> GenerateVerificationCode(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -465,9 +465,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        CertificateWithNonceDescription value = default;
+                        IotHubCertificateWithNonceDescription value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateWithNonceDescription.DeserializeCertificateWithNonceDescription(document.RootElement);
+                        value = IotHubCertificateWithNonceDescription.DeserializeIotHubCertificateWithNonceDescription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        internal HttpMessage CreateVerifyRequest(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CertificateVerificationDescription certificateVerificationBody)
+        internal HttpMessage CreateVerifyRequest(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, IotHubCertificateVerificationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -496,9 +496,9 @@ namespace Azure.ResourceManager.IotHub
             request.Headers.Add("If-Match", ifMatch);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(certificateVerificationBody);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -509,28 +509,28 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="resourceName"> The name of the IoT hub. </param>
         /// <param name="certificateName"> The name of the certificate. </param>
         /// <param name="ifMatch"> ETag of the Certificate. </param>
-        /// <param name="certificateVerificationBody"> The name of the certificate. </param>
+        /// <param name="content"> The name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/>, <paramref name="ifMatch"/> or <paramref name="certificateVerificationBody"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/>, <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateDescriptionData>> VerifyAsync(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CertificateVerificationDescription certificateVerificationBody, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubCertificateDescriptionData>> VerifyAsync(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, IotHubCertificateVerificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(certificateVerificationBody, nameof(certificateVerificationBody));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVerifyRequest(subscriptionId, resourceGroupName, resourceName, certificateName, ifMatch, certificateVerificationBody);
+            using var message = CreateVerifyRequest(subscriptionId, resourceGroupName, resourceName, certificateName, ifMatch, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CertificateDescriptionData value = default;
+                        IotHubCertificateDescriptionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateDescriptionData.DeserializeCertificateDescriptionData(document.RootElement);
+                        value = IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -544,28 +544,28 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="resourceName"> The name of the IoT hub. </param>
         /// <param name="certificateName"> The name of the certificate. </param>
         /// <param name="ifMatch"> ETag of the Certificate. </param>
-        /// <param name="certificateVerificationBody"> The name of the certificate. </param>
+        /// <param name="content"> The name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/>, <paramref name="ifMatch"/> or <paramref name="certificateVerificationBody"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/>, <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateDescriptionData> Verify(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CertificateVerificationDescription certificateVerificationBody, CancellationToken cancellationToken = default)
+        public Response<IotHubCertificateDescriptionData> Verify(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, IotHubCertificateVerificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(certificateVerificationBody, nameof(certificateVerificationBody));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVerifyRequest(subscriptionId, resourceGroupName, resourceName, certificateName, ifMatch, certificateVerificationBody);
+            using var message = CreateVerifyRequest(subscriptionId, resourceGroupName, resourceName, certificateName, ifMatch, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CertificateDescriptionData value = default;
+                        IotHubCertificateDescriptionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateDescriptionData.DeserializeCertificateDescriptionData(document.RootElement);
+                        value = IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

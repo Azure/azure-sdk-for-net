@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="migrationOperationStatus"> Status of the migration task. </param>
         /// <param name="operationId"> Operation ID for the migration task. </param>
-        /// <param name="localMySqlEnabled"> True if the web app has in app MySql enabled. </param>
+        /// <param name="isLocalMySqlEnabled"> True if the web app has in app MySql enabled. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal MigrateMySqlStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OperationStatus? migrationOperationStatus, string operationId, bool? localMySqlEnabled, string kind) : base(id, name, resourceType, systemData)
+        internal MigrateMySqlStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServiceOperationStatus? migrationOperationStatus, string operationId, bool? isLocalMySqlEnabled, string kind) : base(id, name, resourceType, systemData)
         {
             MigrationOperationStatus = migrationOperationStatus;
             OperationId = operationId;
-            LocalMySqlEnabled = localMySqlEnabled;
+            IsLocalMySqlEnabled = isLocalMySqlEnabled;
             Kind = kind;
         }
 
         /// <summary> Status of the migration task. </summary>
-        public OperationStatus? MigrationOperationStatus { get; }
+        public AppServiceOperationStatus? MigrationOperationStatus { get; }
         /// <summary> Operation ID for the migration task. </summary>
         public string OperationId { get; }
         /// <summary> True if the web app has in app MySql enabled. </summary>
-        public bool? LocalMySqlEnabled { get; }
+        public bool? IsLocalMySqlEnabled { get; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

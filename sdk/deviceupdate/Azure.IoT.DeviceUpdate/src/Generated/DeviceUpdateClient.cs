@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,6 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.IoT.DeviceUpdate
 {
+    // Data plane generated client.
     /// <summary> The DeviceUpdate service client. </summary>
     public partial class DeviceUpdateClient
     {
@@ -38,8 +36,8 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateClient. </summary>
-        /// <param name="endpoint"> Account endpoint. </param>
-        /// <param name="instanceId"> Account instance identifier. </param>
+        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
         public DeviceUpdateClient(Uri endpoint, string instanceId, TokenCredential credential) : this(endpoint, instanceId, credential, new DeviceUpdateClientOptions())
@@ -47,8 +45,8 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateClient. </summary>
-        /// <param name="endpoint"> Account endpoint. </param>
-        /// <param name="instanceId"> Account instance identifier. </param>
+        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
@@ -77,46 +75,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Update</c>:
-        /// <code>{
-        ///   updateId: {
-        ///     provider: string, # Required. Update provider.
-        ///     name: string, # Required. Update name.
-        ///     version: string, # Required. Update version.
-        ///   }, # Required. Update identity.
-        ///   description: string, # Optional. Update description specified by creator.
-        ///   friendlyName: string, # Optional. Friendly update name specified by importer.
-        ///   isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
-        ///   updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
-        ///   installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
-        ///   compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
-        ///   instructions: {
-        ///     steps: [
-        ///       {
-        ///         type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
-        ///         description: string, # Optional. Step description.
-        ///         handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
-        ///         handlerProperties: AnyObject, # Optional. Parameters to be passed to handler during execution.
-        ///         files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
-        ///         updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
-        ///       }
-        ///     ], # Required. Collection of installation steps.
-        ///   }, # Optional. Update install instructions.
-        ///   referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
-        ///   scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
-        ///   manifestVersion: string, # Required. Schema version of manifest used to import the update.
-        ///   importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
-        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
-        ///   etag: string, # Optional. Update ETag.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetUpdateAsync(String,String,String,ETag,RequestContext)']/*" />
         public virtual async Task<Response> GetUpdateAsync(string provider, string name, string version, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
@@ -147,46 +106,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Update</c>:
-        /// <code>{
-        ///   updateId: {
-        ///     provider: string, # Required. Update provider.
-        ///     name: string, # Required. Update name.
-        ///     version: string, # Required. Update version.
-        ///   }, # Required. Update identity.
-        ///   description: string, # Optional. Update description specified by creator.
-        ///   friendlyName: string, # Optional. Friendly update name specified by importer.
-        ///   isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
-        ///   updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
-        ///   installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
-        ///   compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
-        ///   instructions: {
-        ///     steps: [
-        ///       {
-        ///         type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
-        ///         description: string, # Optional. Step description.
-        ///         handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
-        ///         handlerProperties: AnyObject, # Optional. Parameters to be passed to handler during execution.
-        ///         files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
-        ///         updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
-        ///       }
-        ///     ], # Required. Collection of installation steps.
-        ///   }, # Optional. Update install instructions.
-        ///   referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
-        ///   scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
-        ///   manifestVersion: string, # Required. Schema version of manifest used to import the update.
-        ///   importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
-        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
-        ///   etag: string, # Optional. Update ETag.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetUpdate(String,String,String,ETag,RequestContext)']/*" />
         public virtual Response GetUpdate(string provider, string name, string version, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
@@ -218,40 +138,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>UpdateFile</c>:
-        /// <code>{
-        ///   fileName: string, # Required. File name.
-        ///   sizeInBytes: number, # Required. File size in number of bytes.
-        ///   hashes: Dictionary&lt;string, string&gt;, # Required. Mapping of hashing algorithm to base64 encoded hash values.
-        ///   mimeType: string, # Optional. File MIME type.
-        ///   scanResult: string, # Optional. Anti-malware scan result.
-        ///   scanDetails: string, # Optional. Anti-malware scan details.
-        ///   properties: Dictionary&lt;string, string&gt;, # Optional. Optional file properties (not consumed by service but pass-through to device).
-        ///   fileId: string, # Required. File identity, generated by server at import time.
-        ///   relatedFiles: [
-        ///     {
-        ///       fileName: string, # Required. File name.
-        ///       sizeInBytes: number, # Required. File size in number of bytes.
-        ///       hashes: Dictionary&lt;string, string&gt;, # Required. Mapping of hashing algorithm to base64 encoded hash values.
-        ///       mimeType: string, # Optional. File MIME type.
-        ///       scanResult: string, # Optional. Anti-malware scan result.
-        ///       scanDetails: string, # Optional. Anti-malware scan details.
-        ///       properties: Dictionary&lt;string, string&gt;, # Optional. Optional file properties (not consumed by service but pass-through to device).
-        ///     }
-        ///   ], # Optional. Optional related files metadata used together DownloadHandler metadata to download payload file.
-        ///   downloadHandler: {
-        ///     id: string, # Required. Download handler identifier.
-        ///   }, # Optional. Optional download handler for utilizing related files to download payload file.
-        ///   etag: string, # Optional. File ETag.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetFileAsync(String,String,String,String,ETag,RequestContext)']/*" />
         public virtual async Task<Response> GetFileAsync(string provider, string name, string version, string fileId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
@@ -284,40 +171,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>UpdateFile</c>:
-        /// <code>{
-        ///   fileName: string, # Required. File name.
-        ///   sizeInBytes: number, # Required. File size in number of bytes.
-        ///   hashes: Dictionary&lt;string, string&gt;, # Required. Mapping of hashing algorithm to base64 encoded hash values.
-        ///   mimeType: string, # Optional. File MIME type.
-        ///   scanResult: string, # Optional. Anti-malware scan result.
-        ///   scanDetails: string, # Optional. Anti-malware scan details.
-        ///   properties: Dictionary&lt;string, string&gt;, # Optional. Optional file properties (not consumed by service but pass-through to device).
-        ///   fileId: string, # Required. File identity, generated by server at import time.
-        ///   relatedFiles: [
-        ///     {
-        ///       fileName: string, # Required. File name.
-        ///       sizeInBytes: number, # Required. File size in number of bytes.
-        ///       hashes: Dictionary&lt;string, string&gt;, # Required. Mapping of hashing algorithm to base64 encoded hash values.
-        ///       mimeType: string, # Optional. File MIME type.
-        ///       scanResult: string, # Optional. Anti-malware scan result.
-        ///       scanDetails: string, # Optional. Anti-malware scan details.
-        ///       properties: Dictionary&lt;string, string&gt;, # Optional. Optional file properties (not consumed by service but pass-through to device).
-        ///     }
-        ///   ], # Optional. Optional related files metadata used together DownloadHandler metadata to download payload file.
-        ///   downloadHandler: {
-        ///     id: string, # Required. Download handler identifier.
-        ///   }, # Optional. Optional download handler for utilizing related files to download payload file.
-        ///   etag: string, # Optional. File ETag.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetFile(String,String,String,String,ETag,RequestContext)']/*" />
         public virtual Response GetFile(string provider, string name, string version, string fileId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
@@ -347,55 +201,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>UpdateOperation</c>:
-        /// <code>{
-        ///   operationId: string, # Required. Operation Id.
-        ///   status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
-        ///   update: {
-        ///     updateId: {
-        ///       provider: string, # Required. Update provider.
-        ///       name: string, # Required. Update name.
-        ///       version: string, # Required. Update version.
-        ///     }, # Required. Update identifier.
-        ///     description: string, # Optional. Update description.
-        ///     friendlyName: string, # Optional. Friendly update name.
-        ///   }, # Optional. The update being imported or deleted. For import, this property will only be populated after import manifest is processed successfully.
-        ///   resourceLocation: string, # Optional. Location of the imported update when operation is successful.
-        ///   error: {
-        ///     code: string, # Required. Server defined error code.
-        ///     message: string, # Required. A human-readable representation of the error.
-        ///     target: string, # Optional. The target of the error.
-        ///     details: [Error], # Optional. An array of errors that led to the reported error.
-        ///     innererror: {
-        ///       code: string, # Required. A more specific error code than what was provided by the containing error.
-        ///       message: string, # Optional. A human-readable representation of the error.
-        ///       errorDetail: string, # Optional. The internal error or exception message.
-        ///       innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-        ///     }, # Optional. An object containing more specific information than the current object about the error.
-        ///     occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-        ///   }, # Optional. Operation error encountered, if any.
-        ///   traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
-        ///   lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
-        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
-        ///   etag: string, # Optional. Operation ETag.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetOperationAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatusAsync(String,ETag,RequestContext)']/*" />
+        public virtual async Task<Response> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperation");
+            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperationStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetOperationRequest(operationId, ifNoneMatch, context);
+                using HttpMessage message = CreateGetOperationStatusRequest(operationId, ifNoneMatch, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -413,55 +228,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>UpdateOperation</c>:
-        /// <code>{
-        ///   operationId: string, # Required. Operation Id.
-        ///   status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
-        ///   update: {
-        ///     updateId: {
-        ///       provider: string, # Required. Update provider.
-        ///       name: string, # Required. Update name.
-        ///       version: string, # Required. Update version.
-        ///     }, # Required. Update identifier.
-        ///     description: string, # Optional. Update description.
-        ///     friendlyName: string, # Optional. Friendly update name.
-        ///   }, # Optional. The update being imported or deleted. For import, this property will only be populated after import manifest is processed successfully.
-        ///   resourceLocation: string, # Optional. Location of the imported update when operation is successful.
-        ///   error: {
-        ///     code: string, # Required. Server defined error code.
-        ///     message: string, # Required. A human-readable representation of the error.
-        ///     target: string, # Optional. The target of the error.
-        ///     details: [Error], # Optional. An array of errors that led to the reported error.
-        ///     innererror: {
-        ///       code: string, # Required. A more specific error code than what was provided by the containing error.
-        ///       message: string, # Optional. A human-readable representation of the error.
-        ///       errorDetail: string, # Optional. The internal error or exception message.
-        ///       innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-        ///     }, # Optional. An object containing more specific information than the current object about the error.
-        ///     occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-        ///   }, # Optional. Operation error encountered, if any.
-        ///   traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
-        ///   lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
-        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
-        ///   etag: string, # Optional. Operation ETag.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetOperation(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatus(String,ETag,RequestContext)']/*" />
+        public virtual Response GetOperationStatus(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperation");
+            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperationStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetOperationRequest(operationId, ifNoneMatch, context);
+                using HttpMessage message = CreateGetOperationStatusRequest(operationId, ifNoneMatch, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -473,190 +249,54 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get a list of all updates that have been imported to Device Update for IoT Hub. </summary>
         /// <param name="search"> Request updates matching a free-text search expression. </param>
-        /// <param name="filter"> Filter updates by its properties. </param>
+        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>UpdateListValue</c>:
-        /// <code>{
-        ///   updateId: {
-        ///     provider: string, # Required. Update provider.
-        ///     name: string, # Required. Update name.
-        ///     version: string, # Required. Update version.
-        ///   }, # Required. Update identity.
-        ///   description: string, # Optional. Update description specified by creator.
-        ///   friendlyName: string, # Optional. Friendly update name specified by importer.
-        ///   isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
-        ///   updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
-        ///   installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
-        ///   compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
-        ///   instructions: {
-        ///     steps: [
-        ///       {
-        ///         type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
-        ///         description: string, # Optional. Step description.
-        ///         handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
-        ///         handlerProperties: AnyObject, # Optional. Parameters to be passed to handler during execution.
-        ///         files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
-        ///         updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
-        ///       }
-        ///     ], # Required. Collection of installation steps.
-        ///   }, # Optional. Update install instructions.
-        ///   referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
-        ///   scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
-        ///   manifestVersion: string, # Required. Schema version of manifest used to import the update.
-        ///   importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
-        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
-        ///   etag: string, # Optional. Update ETag.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetUpdatesAsync(String,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetUpdatesAsync(string search = null, string filter = null, RequestContext context = null)
         {
-            return GetUpdatesImplementationAsync("DeviceUpdateClient.GetUpdates", search, filter, context);
-        }
-
-        private AsyncPageable<BinaryData> GetUpdatesImplementationAsync(string diagnosticsScopeName, string search, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetUpdatesRequest(search, filter, context)
-                        : CreateGetUpdatesNextPageRequest(nextLink, search, filter, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUpdatesRequest(search, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUpdatesNextPageRequest(nextLink, search, filter, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetUpdates", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all updates that have been imported to Device Update for IoT Hub. </summary>
         /// <param name="search"> Request updates matching a free-text search expression. </param>
-        /// <param name="filter"> Filter updates by its properties. </param>
+        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>UpdateListValue</c>:
-        /// <code>{
-        ///   updateId: {
-        ///     provider: string, # Required. Update provider.
-        ///     name: string, # Required. Update name.
-        ///     version: string, # Required. Update version.
-        ///   }, # Required. Update identity.
-        ///   description: string, # Optional. Update description specified by creator.
-        ///   friendlyName: string, # Optional. Friendly update name specified by importer.
-        ///   isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
-        ///   updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
-        ///   installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
-        ///   compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
-        ///   instructions: {
-        ///     steps: [
-        ///       {
-        ///         type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
-        ///         description: string, # Optional. Step description.
-        ///         handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
-        ///         handlerProperties: AnyObject, # Optional. Parameters to be passed to handler during execution.
-        ///         files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
-        ///         updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
-        ///       }
-        ///     ], # Required. Collection of installation steps.
-        ///   }, # Optional. Update install instructions.
-        ///   referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
-        ///   scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
-        ///   manifestVersion: string, # Required. Schema version of manifest used to import the update.
-        ///   importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
-        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
-        ///   etag: string, # Optional. Update ETag.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetUpdates(String,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetUpdates(string search = null, string filter = null, RequestContext context = null)
         {
-            return GetUpdatesImplementation("DeviceUpdateClient.GetUpdates", search, filter, context);
-        }
-
-        private Pageable<BinaryData> GetUpdatesImplementation(string diagnosticsScopeName, string search, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetUpdatesRequest(search, filter, context)
-                        : CreateGetUpdatesNextPageRequest(nextLink, search, filter, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUpdatesRequest(search, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUpdatesNextPageRequest(nextLink, search, filter, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetUpdates", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update providers that have been imported to Device Update for IoT Hub. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetProvidersAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetProvidersAsync(RequestContext context = null)
         {
-            return GetProvidersImplementationAsync("DeviceUpdateClient.GetProviders", context);
-        }
-
-        private AsyncPageable<BinaryData> GetProvidersImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProvidersRequest(context)
-                        : CreateGetProvidersNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProvidersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProvidersNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetProviders", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update providers that have been imported to Device Update for IoT Hub. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetProviders(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetProviders(RequestContext context = null)
         {
-            return GetProvidersImplementation("DeviceUpdateClient.GetProviders", context);
-        }
-
-        private Pageable<BinaryData> GetProvidersImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProvidersRequest(context)
-                        : CreateGetProvidersNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProvidersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProvidersNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetProviders", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update names that match the specified provider. </summary>
@@ -666,28 +306,14 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetNamesAsync(String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetNamesAsync(string provider, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return GetNamesImplementationAsync("DeviceUpdateClient.GetNames", provider, context);
-        }
-
-        private AsyncPageable<BinaryData> GetNamesImplementationAsync(string diagnosticsScopeName, string provider, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetNamesRequest(provider, context)
-                        : CreateGetNamesNextPageRequest(nextLink, provider, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNamesRequest(provider, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNamesNextPageRequest(nextLink, provider, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetNames", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update names that match the specified provider. </summary>
@@ -697,96 +323,54 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetNames(String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetNames(string provider, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return GetNamesImplementation("DeviceUpdateClient.GetNames", provider, context);
-        }
-
-        private Pageable<BinaryData> GetNamesImplementation(string diagnosticsScopeName, string provider, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetNamesRequest(provider, context)
-                        : CreateGetNamesNextPageRequest(nextLink, provider, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNamesRequest(provider, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNamesNextPageRequest(nextLink, provider, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetNames", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
-        /// <param name="filter"> Filter updates by its properties. </param>
+        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetVersionsAsync(String,String,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetVersionsAsync(string provider, string name, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetVersionsImplementationAsync("DeviceUpdateClient.GetVersions", provider, name, filter, context);
-        }
-
-        private AsyncPageable<BinaryData> GetVersionsImplementationAsync(string diagnosticsScopeName, string provider, string name, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetVersionsRequest(provider, name, filter, context)
-                        : CreateGetVersionsNextPageRequest(nextLink, provider, name, filter, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(provider, name, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, provider, name, filter, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetVersions", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
-        /// <param name="filter"> Filter updates by its properties. </param>
+        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetVersions(String,String,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetVersions(string provider, string name, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetVersionsImplementation("DeviceUpdateClient.GetVersions", provider, name, filter, context);
-        }
-
-        private Pageable<BinaryData> GetVersionsImplementation(string diagnosticsScopeName, string provider, string name, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetVersionsRequest(provider, name, filter, context)
-                        : CreateGetVersionsNextPageRequest(nextLink, provider, name, filter, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(provider, name, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, provider, name, filter, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetVersions", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update file identifiers for the specified version. </summary>
@@ -798,30 +382,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetFilesAsync(String,String,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetFilesAsync(string provider, string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return GetFilesImplementationAsync("DeviceUpdateClient.GetFiles", provider, name, version, context);
-        }
-
-        private AsyncPageable<BinaryData> GetFilesImplementationAsync(string diagnosticsScopeName, string provider, string name, string version, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetFilesRequest(provider, name, version, context)
-                        : CreateGetFilesNextPageRequest(nextLink, provider, name, version, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetFilesRequest(provider, name, version, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetFilesNextPageRequest(nextLink, provider, name, version, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetFiles", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update file identifiers for the specified version. </summary>
@@ -833,262 +403,44 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetFiles(String,String,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetFiles(string provider, string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return GetFilesImplementation("DeviceUpdateClient.GetFiles", provider, name, version, context);
-        }
-
-        private Pageable<BinaryData> GetFilesImplementation(string diagnosticsScopeName, string provider, string name, string version, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetFilesRequest(provider, name, version, context)
-                        : CreateGetFilesNextPageRequest(nextLink, provider, name, version, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetFilesRequest(provider, name, version, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetFilesNextPageRequest(nextLink, provider, name, version, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetFiles", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all import update operations. Completed operations are kept for 7 days before auto-deleted. Delete operations are not returned by this API version. </summary>
-        /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
+        /// <param name="filter"> Optional to filter operations by status property. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>UpdateOperationsListValue</c>:
-        /// <code>{
-        ///   operationId: string, # Required. Operation Id.
-        ///   status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
-        ///   update: {
-        ///     updateId: {
-        ///       provider: string, # Required. Update provider.
-        ///       name: string, # Required. Update name.
-        ///       version: string, # Required. Update version.
-        ///     }, # Required. Update identifier.
-        ///     description: string, # Optional. Update description.
-        ///     friendlyName: string, # Optional. Friendly update name.
-        ///   }, # Optional. The update being imported or deleted. For import, this property will only be populated after import manifest is processed successfully.
-        ///   resourceLocation: string, # Optional. Location of the imported update when operation is successful.
-        ///   error: {
-        ///     code: string, # Required. Server defined error code.
-        ///     message: string, # Required. A human-readable representation of the error.
-        ///     target: string, # Optional. The target of the error.
-        ///     details: [Error], # Optional. An array of errors that led to the reported error.
-        ///     innererror: {
-        ///       code: string, # Required. A more specific error code than what was provided by the containing error.
-        ///       message: string, # Optional. A human-readable representation of the error.
-        ///       errorDetail: string, # Optional. The internal error or exception message.
-        ///       innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-        ///     }, # Optional. An object containing more specific information than the current object about the error.
-        ///     occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-        ///   }, # Optional. Operation error encountered, if any.
-        ///   traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
-        ///   lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
-        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
-        ///   etag: string, # Optional. Operation ETag.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetOperationsAsync(string filter = null, int? top = null, RequestContext context = null)
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatusesAsync(String,Int32,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = null, int? top = null, RequestContext context = null)
         {
-            return GetOperationsImplementationAsync("DeviceUpdateClient.GetOperations", filter, top, context);
-        }
-
-        private AsyncPageable<BinaryData> GetOperationsImplementationAsync(string diagnosticsScopeName, string filter, int? top, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetOperationsRequest(filter, top, context)
-                        : CreateGetOperationsNextPageRequest(nextLink, filter, top, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationStatusesRequest(filter, top, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetOperationStatuses", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all import update operations. Completed operations are kept for 7 days before auto-deleted. Delete operations are not returned by this API version. </summary>
-        /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
+        /// <param name="filter"> Optional to filter operations by status property. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>UpdateOperationsListValue</c>:
-        /// <code>{
-        ///   operationId: string, # Required. Operation Id.
-        ///   status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
-        ///   update: {
-        ///     updateId: {
-        ///       provider: string, # Required. Update provider.
-        ///       name: string, # Required. Update name.
-        ///       version: string, # Required. Update version.
-        ///     }, # Required. Update identifier.
-        ///     description: string, # Optional. Update description.
-        ///     friendlyName: string, # Optional. Friendly update name.
-        ///   }, # Optional. The update being imported or deleted. For import, this property will only be populated after import manifest is processed successfully.
-        ///   resourceLocation: string, # Optional. Location of the imported update when operation is successful.
-        ///   error: {
-        ///     code: string, # Required. Server defined error code.
-        ///     message: string, # Required. A human-readable representation of the error.
-        ///     target: string, # Optional. The target of the error.
-        ///     details: [Error], # Optional. An array of errors that led to the reported error.
-        ///     innererror: {
-        ///       code: string, # Required. A more specific error code than what was provided by the containing error.
-        ///       message: string, # Optional. A human-readable representation of the error.
-        ///       errorDetail: string, # Optional. The internal error or exception message.
-        ///       innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-        ///     }, # Optional. An object containing more specific information than the current object about the error.
-        ///     occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-        ///   }, # Optional. Operation error encountered, if any.
-        ///   traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
-        ///   lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
-        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
-        ///   etag: string, # Optional. Operation ETag.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Pageable<BinaryData> GetOperations(string filter = null, int? top = null, RequestContext context = null)
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatuses(String,Int32,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetOperationStatuses(string filter = null, int? top = null, RequestContext context = null)
         {
-            return GetOperationsImplementation("DeviceUpdateClient.GetOperations", filter, top, context);
-        }
-
-        private Pageable<BinaryData> GetOperationsImplementation(string diagnosticsScopeName, string filter, int? top, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetOperationsRequest(filter, top, context)
-                        : CreateGetOperationsNextPageRequest(nextLink, filter, top, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
-        }
-
-        /// <summary> Import new update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ImportUpdateInput</c>:
-        /// <code>{
-        ///   importManifest: {
-        ///     url: string, # Required. Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
-        ///     sizeInBytes: number, # Required. File size in number of bytes.
-        ///     hashes: Dictionary&lt;string, string&gt;, # Required. A JSON object containing the hash(es) of the file. At least SHA256 hash is required. This object can be thought of as a set of key-value pairs where the key is the hash algorithm, and the value is the hash of the file calculated using that algorithm.
-        ///   }, # Required. Import manifest metadata like source URL, file size/hashes, etc.
-        ///   friendlyName: string, # Optional. Friendly update name.
-        ///   files: [
-        ///     {
-        ///       filename: string, # Required. Update file name as specified inside import manifest.
-        ///       url: string, # Required. Azure Blob location from which the update file can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
-        ///     }
-        ///   ], # Optional. One or more update file properties like filename and source URL.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Operation> ImportUpdateAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.ImportUpdate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateImportUpdateRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Import new update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ImportUpdateInput</c>:
-        /// <code>{
-        ///   importManifest: {
-        ///     url: string, # Required. Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
-        ///     sizeInBytes: number, # Required. File size in number of bytes.
-        ///     hashes: Dictionary&lt;string, string&gt;, # Required. A JSON object containing the hash(es) of the file. At least SHA256 hash is required. This object can be thought of as a set of key-value pairs where the key is the hash algorithm, and the value is the hash of the file calculated using that algorithm.
-        ///   }, # Required. Import manifest metadata like source URL, file size/hashes, etc.
-        ///   friendlyName: string, # Optional. Friendly update name.
-        ///   files: [
-        ///     {
-        ///       filename: string, # Required. Update file name as specified inside import manifest.
-        ///       url: string, # Required. Azure Blob location from which the update file can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
-        ///     }
-        ///   ], # Optional. One or more update file properties like filename and source URL.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Operation ImportUpdate(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.ImportUpdate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateImportUpdateRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationStatusesRequest(filter, top, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetOperationStatuses", "value", "nextLink", context);
         }
 
         /// <summary> Delete a specific update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
@@ -1101,6 +453,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='DeleteUpdateAsync(WaitUntil,String,String,String,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteUpdateAsync(WaitUntil waitUntil, string provider, string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
@@ -1131,6 +484,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='DeleteUpdate(WaitUntil,String,String,String,RequestContext)']/*" />
         public virtual Operation DeleteUpdate(WaitUntil waitUntil, string provider, string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
@@ -1143,6 +497,58 @@ namespace Azure.IoT.DeviceUpdate
             {
                 using HttpMessage message = CreateDeleteUpdateRequest(provider, name, version, context);
                 return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.DeleteUpdate", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Import new update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='StartImportUpdateAsync(WaitUntil,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Operation> StartImportUpdateAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.StartImportUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateStartImportUpdateRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.StartImportUpdate", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Import new update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='StartImportUpdate(WaitUntil,RequestContent,RequestContext)']/*" />
+        public virtual Operation StartImportUpdate(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.StartImportUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateStartImportUpdateRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.StartImportUpdate", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1173,25 +579,6 @@ namespace Azure.IoT.DeviceUpdate
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateImportUpdateRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/deviceUpdate/", false);
-            uri.AppendPath(_instanceId, false);
-            uri.AppendPath("/updates:import", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
             return message;
         }
 
@@ -1355,7 +742,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationsRequest(string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetOperationStatusesRequest(string filter, int? top, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1380,7 +767,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationRequest(string operationId, ETag? ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateGetOperationStatusRequest(string operationId, ETag? ifNoneMatch, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200304);
             var request = message.Request;
@@ -1399,6 +786,25 @@ namespace Azure.IoT.DeviceUpdate
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch.Value);
             }
+            return message;
+        }
+
+        internal HttpMessage CreateStartImportUpdateRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates:import", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 
@@ -1472,7 +878,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationsNextPageRequest(string nextLink, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetOperationStatusesNextPageRequest(string nextLink, string filter, int? top, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1488,9 +894,9 @@ namespace Azure.IoT.DeviceUpdate
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200304;
         private static ResponseClassifier ResponseClassifier200304 => _responseClassifier200304 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 304 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
     }
 }

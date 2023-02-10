@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [OneTimeTearDown]
-        public void GlobalTeardown()
+        public async Task GlobalTeardown()
         {
-            _sqlContainer.Delete(WaitUntil.Completed);
-            _sqlDatabase.Delete(WaitUntil.Completed);
-            _databaseAccount.Delete(WaitUntil.Completed);
+            await _sqlContainer.DeleteAsync(WaitUntil.Completed);
+            await _sqlDatabase.DeleteAsync(WaitUntil.Completed);
+            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
         }
 
         [SetUp]
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlUserDefinedFunctionCreateAndUpdate()
         {
             var userDefinedFunction = await CreateSqlUserDefinedFunction(null);
-            Assert.AreEqual(_userDefinedFunctionName, userDefinedFunction.Data.Resource.Id);
+            Assert.AreEqual(_userDefinedFunctionName, userDefinedFunction.Data.Resource.FunctionName);
             Assert.That(userDefinedFunction.Data.Resource.Body, Contains.Substring("First Hello World"));
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, container.Data.Options.Throughput);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.True(ifExists);
 
             CosmosDBSqlUserDefinedFunctionResource userDefinedFunction2 = await SqlUserDefinedFunctionCollection.GetAsync(_userDefinedFunctionName);
-            Assert.AreEqual(_userDefinedFunctionName, userDefinedFunction2.Data.Resource.Id);
+            Assert.AreEqual(_userDefinedFunctionName, userDefinedFunction2.Data.Resource.FunctionName);
 
             VerifySqlUserDefinedFunctions(userDefinedFunction, userDefinedFunction2);
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             });
 
             userDefinedFunction = (await SqlUserDefinedFunctionCollection.CreateOrUpdateAsync(WaitUntil.Completed, _userDefinedFunctionName, updateOptions)).Value;
-            Assert.AreEqual(_userDefinedFunctionName, userDefinedFunction.Data.Resource.Id);
+            Assert.AreEqual(_userDefinedFunctionName, userDefinedFunction.Data.Resource.FunctionName);
             Assert.That(userDefinedFunction.Data.Resource.Body, Contains.Substring("Second Hello World"));
 
             userDefinedFunction2 = await SqlUserDefinedFunctionCollection.GetAsync(_userDefinedFunctionName);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
+            Assert.AreEqual(expectedValue.Data.Resource.FunctionName, actualValue.Data.Resource.FunctionName);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
             Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
             Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);

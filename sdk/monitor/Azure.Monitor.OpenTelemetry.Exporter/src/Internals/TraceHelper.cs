@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, string roleName, string roleInstance, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource resource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
@@ -27,7 +29,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             foreach (var activity in batchActivity)
             {
                 var monitorTags = EnumerateActivityTags(activity);
-                telemetryItem = new TelemetryItem(activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                telemetryItem = new TelemetryItem(activity, ref monitorTags, resource, instrumentationKey);
+
+                // Check for Exceptions events
+                if (activity.Events.Any())
+                {
+                    AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems);
+                }
 
                 switch (activity.GetTelemetryType())
                 {
@@ -167,6 +175,117 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return activity.DisplayName;
+        }
+
+        private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
+        {
+            foreach (var evnt in activity.Events)
+            {
+                try
+                {
+                    if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
+                    {
+                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt.Tags);
+                        if (exceptionData != null)
+                        {
+                            var exceptionTelemetryItem = new TelemetryItem("Exception", telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                            exceptionTelemetryItem.Data = exceptionData;
+                            telemetryItems.Add(exceptionTelemetryItem);
+                        }
+                    }
+                    else
+                    {
+                        var messageData = GetTraceTelemetryData(evnt);
+                        if (messageData != null)
+                        {
+                            var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                            traceTelemetryItem.Data = messageData;
+                            telemetryItems.Add(traceTelemetryItem);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AzureMonitorExporterEventSource.Log.WriteError("FailedToExtractActivityEvent", ex);
+                }
+            }
+        }
+
+        private static MonitorBase GetTraceTelemetryData(ActivityEvent activityEvent)
+        {
+            if (activityEvent.Name == null)
+            {
+                return null;
+            }
+
+            var messageData = new MessageData(Version, activityEvent.Name);
+
+            foreach (var tag in activityEvent.Tags)
+            {
+                messageData.Properties.Add(tag.Key, tag.Value.ToString());
+            }
+
+            return new MonitorBase
+            {
+                BaseType = "MessageData",
+                BaseData = messageData,
+            };
+        }
+
+        private static MonitorBase GetExceptionDataDetailsOnTelemetryItem(IEnumerable<KeyValuePair<string, object>> activityEventTags)
+        {
+            string exceptionType = null;
+            string exceptionStackTrace = null;
+            string exceptionMessage = null;
+
+            // TODO: update to use perf improvements in .NET7.0
+            foreach (var tag in activityEventTags)
+            {
+                // TODO: see if these can be cached
+                if (tag.Key == SemanticConventions.AttributeExceptionType)
+                {
+                    exceptionType = tag.Value.ToString();
+                    continue;
+                }
+                if (tag.Key == SemanticConventions.AttributeExceptionMessage)
+                {
+                    exceptionMessage = tag.Value.ToString();
+                    continue;
+                }
+                if (tag.Key == SemanticConventions.AttributeExceptionStacktrace)
+                {
+                    exceptionStackTrace = tag.Value.ToString();
+                    continue;
+                }
+            }
+
+            if (exceptionMessage == null || exceptionType == null)
+            {
+                return null;
+            }
+
+            TelemetryExceptionDetails exceptionDetails = new(exceptionMessage.Truncate(SchemaConstants.ExceptionDetails_Message_MaxLength))
+            {
+                Stack = exceptionStackTrace.Truncate(SchemaConstants.ExceptionDetails_Stack_MaxLength),
+
+                HasFullStack = exceptionStackTrace.Length <= SchemaConstants.ExceptionDetails_Stack_MaxLength,
+
+                // TODO: Update swagger schema to mandate typename.
+                TypeName = exceptionType.Truncate(SchemaConstants.ExceptionDetails_TypeName_MaxLength),
+            };
+
+            List<TelemetryExceptionDetails> exceptions = new()
+            {
+                exceptionDetails
+            };
+
+            TelemetryExceptionData exceptionData = new(Version, exceptions);
+
+            return new MonitorBase
+            {
+                BaseType = "ExceptionData",
+                BaseData = exceptionData,
+            };
         }
     }
 }

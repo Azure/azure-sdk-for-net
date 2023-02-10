@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SecurityEncryptionType))
             {
-                writer.WritePropertyName("securityEncryptionType");
+                writer.WritePropertyName("securityEncryptionType"u8);
                 writer.WriteStringValue(SecurityEncryptionType.Value.ToString());
             }
             if (Optional.IsDefined(DiskEncryptionSet))
             {
-                writer.WritePropertyName("diskEncryptionSet");
+                writer.WritePropertyName("diskEncryptionSet"u8);
                 JsonSerializer.Serialize(writer, DiskEncryptionSet);
             }
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<WritableSubResource> diskEncryptionSet = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("securityEncryptionType"))
+                if (property.NameEquals("securityEncryptionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.Compute.Models
                     securityEncryptionType = new SecurityEncryptionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionSet"))
+                if (property.NameEquals("diskEncryptionSet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
             }

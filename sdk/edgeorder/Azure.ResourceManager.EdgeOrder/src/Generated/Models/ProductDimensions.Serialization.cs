@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<double> length = default;
             Optional<double> height = default;
             Optional<double> width = default;
-            Optional<LengthHeightUnit> lengthHeightUnit = default;
+            Optional<ProductLengthHeightWidthUnit> lengthHeightUnit = default;
             Optional<double> weight = default;
             Optional<double> depth = default;
-            Optional<WeightMeasurementUnit> weightUnit = default;
+            Optional<ProductWeightMeasurementUnit> weightUnit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("length"))
+                if (property.NameEquals("length"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     length = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("height"))
+                if (property.NameEquals("height"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     height = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("width"))
+                if (property.NameEquals("width"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     width = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("lengthHeightUnit"))
+                if (property.NameEquals("lengthHeightUnit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lengthHeightUnit = new LengthHeightUnit(property.Value.GetString());
+                    lengthHeightUnit = new ProductLengthHeightWidthUnit(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("weight"))
+                if (property.NameEquals("weight"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     weight = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("depth"))
+                if (property.NameEquals("depth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     depth = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("weightUnit"))
+                if (property.NameEquals("weightUnit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    weightUnit = new WeightMeasurementUnit(property.Value.GetString());
+                    weightUnit = new ProductWeightMeasurementUnit(property.Value.GetString());
                     continue;
                 }
             }

@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [OneTimeTearDown]
-        public virtual void GlobalTeardown()
+        public async Task GlobalTeardown()
         {
             if (_databaseAccountIdentifier != null)
             {
-                ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).Delete(WaitUntil.Completed);
+                await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task MongoDBDatabaseCreateAndUpdate()
         {
             var database = await CreateMongoDBDatabase(null);
-            Assert.AreEqual(_databaseName, database.Data.Resource.Id);
+            Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, database.Data.Options.Throughput);
 
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.True(ifExists);
 
             // NOT WORKING API
-            //ThroughputSettingsData throughtput = await database.GetMongoDBCollectionThroughputAsync();
+            //ThroughputSettingData throughtput = await database.GetMongoDBCollectionThroughputAsync();
             MongoDBDatabaseResource database2 = await MongoDBDatabaseCollection.GetAsync(_databaseName);
-            Assert.AreEqual(_databaseName, database2.Data.Resource.Id);
+            Assert.AreEqual(_databaseName, database2.Data.Resource.DatabaseName);
             //Assert.AreEqual(TestThroughput1, database2.Data.Options.Throughput);
 
             VerifyMongoDBDatabases(database, database2);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
 
             database = (await MongoDBDatabaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, _databaseName, updateOptions)).Value;
-            Assert.AreEqual(_databaseName, database.Data.Resource.Id);
+            Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
             database2 = await MongoDBDatabaseCollection.GetAsync(_databaseName);
             VerifyMongoDBDatabases(database, database2);
         }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBDatabaseToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
+            ThroughputSettingData throughputData = (await throughput.MigrateMongoDBDatabaseToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             MongoDBDatabaseThroughputSettingResource throughput = await database.GetMongoDBDatabaseThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBDatabaseToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
+            ThroughputSettingData throughputData = (await throughput.MigrateMongoDBDatabaseToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
+            Assert.AreEqual(expectedValue.Data.Resource.DatabaseName, actualValue.Data.Resource.DatabaseName);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
             Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
             Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);

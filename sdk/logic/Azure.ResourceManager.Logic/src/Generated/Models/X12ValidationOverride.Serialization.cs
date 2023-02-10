@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("messageId");
+            writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
-            writer.WritePropertyName("validateEDITypes");
-            writer.WriteBooleanValue(ValidateEDITypes);
-            writer.WritePropertyName("validateXSDTypes");
-            writer.WriteBooleanValue(ValidateXSDTypes);
-            writer.WritePropertyName("allowLeadingAndTrailingSpacesAndZeroes");
+            writer.WritePropertyName("validateEDITypes"u8);
+            writer.WriteBooleanValue(ValidateEdiTypes);
+            writer.WritePropertyName("validateXSDTypes"u8);
+            writer.WriteBooleanValue(ValidateXsdTypes);
+            writer.WritePropertyName("allowLeadingAndTrailingSpacesAndZeroes"u8);
             writer.WriteBooleanValue(AllowLeadingAndTrailingSpacesAndZeroes);
-            writer.WritePropertyName("validateCharacterSet");
+            writer.WritePropertyName("validateCharacterSet"u8);
             writer.WriteBooleanValue(ValidateCharacterSet);
-            writer.WritePropertyName("trimLeadingAndTrailingSpacesAndZeroes");
+            writer.WritePropertyName("trimLeadingAndTrailingSpacesAndZeroes"u8);
             writer.WriteBooleanValue(TrimLeadingAndTrailingSpacesAndZeroes);
-            writer.WritePropertyName("trailingSeparatorPolicy");
+            writer.WritePropertyName("trailingSeparatorPolicy"u8);
             writer.WriteStringValue(TrailingSeparatorPolicy.ToString());
             writer.WriteEndObject();
         }
@@ -35,51 +35,51 @@ namespace Azure.ResourceManager.Logic.Models
         internal static X12ValidationOverride DeserializeX12ValidationOverride(JsonElement element)
         {
             string messageId = default;
-            bool validateEDITypes = default;
-            bool validateXSDTypes = default;
+            bool validateEdiTypes = default;
+            bool validateXsdTypes = default;
             bool allowLeadingAndTrailingSpacesAndZeroes = default;
             bool validateCharacterSet = default;
             bool trimLeadingAndTrailingSpacesAndZeroes = default;
             TrailingSeparatorPolicy trailingSeparatorPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validateEDITypes"))
+                if (property.NameEquals("validateEDITypes"u8))
                 {
-                    validateEDITypes = property.Value.GetBoolean();
+                    validateEdiTypes = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("validateXSDTypes"))
+                if (property.NameEquals("validateXSDTypes"u8))
                 {
-                    validateXSDTypes = property.Value.GetBoolean();
+                    validateXsdTypes = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("allowLeadingAndTrailingSpacesAndZeroes"))
+                if (property.NameEquals("allowLeadingAndTrailingSpacesAndZeroes"u8))
                 {
                     allowLeadingAndTrailingSpacesAndZeroes = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("validateCharacterSet"))
+                if (property.NameEquals("validateCharacterSet"u8))
                 {
                     validateCharacterSet = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("trimLeadingAndTrailingSpacesAndZeroes"))
+                if (property.NameEquals("trimLeadingAndTrailingSpacesAndZeroes"u8))
                 {
                     trimLeadingAndTrailingSpacesAndZeroes = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("trailingSeparatorPolicy"))
+                if (property.NameEquals("trailingSeparatorPolicy"u8))
                 {
                     trailingSeparatorPolicy = new TrailingSeparatorPolicy(property.Value.GetString());
                     continue;
                 }
             }
-            return new X12ValidationOverride(messageId, validateEDITypes, validateXSDTypes, allowLeadingAndTrailingSpacesAndZeroes, validateCharacterSet, trimLeadingAndTrailingSpacesAndZeroes, trailingSeparatorPolicy);
+            return new X12ValidationOverride(messageId, validateEdiTypes, validateXsdTypes, allowLeadingAndTrailingSpacesAndZeroes, validateCharacterSet, trimLeadingAndTrailingSpacesAndZeroes, trailingSeparatorPolicy);
         }
     }
 }

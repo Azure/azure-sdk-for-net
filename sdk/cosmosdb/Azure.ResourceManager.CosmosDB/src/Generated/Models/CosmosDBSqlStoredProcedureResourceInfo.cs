@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -13,29 +14,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosDBSqlStoredProcedureResourceInfo
     {
         /// <summary> Initializes a new instance of CosmosDBSqlStoredProcedureResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL storedProcedure. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public CosmosDBSqlStoredProcedureResourceInfo(string id)
+        /// <param name="storedProcedureName"> Name of the Cosmos DB SQL storedProcedure. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
+        public CosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(storedProcedureName, nameof(storedProcedureName));
 
-            Id = id;
+            StoredProcedureName = storedProcedureName;
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlStoredProcedureResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL storedProcedure. </param>
+        /// <param name="storedProcedureName"> Name of the Cosmos DB SQL storedProcedure. </param>
         /// <param name="body"> Body of the Stored Procedure. </param>
-        internal CosmosDBSqlStoredProcedureResourceInfo(string id, string body)
+        internal CosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName, string body)
         {
-            Id = id;
+            StoredProcedureName = storedProcedureName;
             Body = body;
         }
 
         /// <summary> Name of the Cosmos DB SQL storedProcedure. </summary>
-        public string Id { get; set; }
+        public string StoredProcedureName { get; set; }
         /// <summary> Body of the Stored Procedure. </summary>
         public string Body { get; set; }
     }

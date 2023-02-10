@@ -18,7 +18,7 @@ namespace Azure.Communication
         {
             get
             {
-                return _rawId ??= $"4:{PhoneNumber.TrimStart('+')}";
+                return _rawId ??= $"4:{PhoneNumber}";
             }
         }
 

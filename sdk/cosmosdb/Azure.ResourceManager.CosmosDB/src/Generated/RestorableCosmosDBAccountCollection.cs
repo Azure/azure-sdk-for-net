@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,17 +54,21 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*&apos; permission.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}
-        /// Operation Id: RestorableDatabaseAccounts_GetByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDatabaseAccounts_GetByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public virtual async Task<Response<RestorableCosmosDBAccountResource>> GetAsync(string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorableCosmosDBAccountResource>> GetAsync(Guid instanceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
-
             using var scope = _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics.CreateScope("RestorableCosmosDBAccountCollection.Get");
             scope.Start();
             try
@@ -84,17 +87,21 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*&apos; permission.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}
-        /// Operation Id: RestorableDatabaseAccounts_GetByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDatabaseAccounts_GetByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public virtual Response<RestorableCosmosDBAccountResource> Get(string instanceId, CancellationToken cancellationToken = default)
+        public virtual Response<RestorableCosmosDBAccountResource> Get(Guid instanceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
-
             using var scope = _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics.CreateScope("RestorableCosmosDBAccountCollection.Get");
             scope.Start();
             try
@@ -113,71 +120,63 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription and in a region.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts
-        /// Operation Id: RestorableDatabaseAccounts_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDatabaseAccounts_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RestorableCosmosDBAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RestorableCosmosDBAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics.CreateScope("RestorableCosmosDBAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.ListByLocationAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorableCosmosDBAccountResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription and in a region.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts
-        /// Operation Id: RestorableDatabaseAccounts_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDatabaseAccounts_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RestorableCosmosDBAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RestorableCosmosDBAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics.CreateScope("RestorableCosmosDBAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.ListByLocation(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorableCosmosDBAccountResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}
-        /// Operation Id: RestorableDatabaseAccounts_GetByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDatabaseAccounts_GetByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(Guid instanceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
-
             using var scope = _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics.CreateScope("RestorableCosmosDBAccountCollection.Exists");
             scope.Start();
             try
@@ -194,17 +193,21 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}
-        /// Operation Id: RestorableDatabaseAccounts_GetByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDatabaseAccounts_GetByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public virtual Response<bool> Exists(string instanceId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(Guid instanceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
-
             using var scope = _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics.CreateScope("RestorableCosmosDBAccountCollection.Exists");
             scope.Start();
             try

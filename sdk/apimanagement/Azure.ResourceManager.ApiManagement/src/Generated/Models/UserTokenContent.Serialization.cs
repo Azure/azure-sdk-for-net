@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyType))
             {
-                writer.WritePropertyName("keyType");
+                writer.WritePropertyName("keyType"u8);
                 writer.WriteStringValue(KeyType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Expiry))
+            if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expiry");
-                writer.WriteStringValue(Expiry.Value, "O");
+                writer.WritePropertyName("expiry"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -1,6 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.MachineLearning.csproj" />
+    <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
+    <ProjectReference Include="..\..\..\compute\Azure.ResourceManager.Compute\src\Azure.ResourceManager.Compute.csproj" />
+    <ProjectReference Include="..\..\..\keyvault\Azure.ResourceManager.KeyVault\src\Azure.ResourceManager.KeyVault.csproj" />
   </ItemGroup>
 
   <ItemGroup>

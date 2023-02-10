@@ -18,9 +18,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("url");
+            writer.WritePropertyName("url"u8);
             writer.WriteObjectValue(Url);
-            writer.WritePropertyName("authenticationType");
+            writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
         }
@@ -36,22 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "ClientCertificate": return WebClientCertificateAuthentication.DeserializeWebClientCertificateAuthentication(element);
                 }
             }
-            object url = default;
-            WebAuthenticationType authenticationType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("url"))
-                {
-                    url = property.Value.GetObject();
-                    continue;
-                }
-                if (property.NameEquals("authenticationType"))
-                {
-                    authenticationType = new WebAuthenticationType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new WebLinkedServiceTypeProperties(url, authenticationType);
+            return UnknownWebLinkedServiceTypeProperties.DeserializeUnknownWebLinkedServiceTypeProperties(element);
         }
 
         internal partial class WebLinkedServiceTypePropertiesConverter : JsonConverter<WebLinkedServiceTypeProperties>

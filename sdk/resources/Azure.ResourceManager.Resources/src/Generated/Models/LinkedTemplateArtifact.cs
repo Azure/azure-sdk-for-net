@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> or <paramref name="template"/> is null. </exception>
         public LinkedTemplateArtifact(string path, BinaryData template)
         {
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
-            if (template == null)
-            {
-                throw new ArgumentNullException(nameof(template));
-            }
+            Argument.AssertNotNull(path, nameof(path));
+            Argument.AssertNotNull(template, nameof(template));
 
             Path = path;
             Template = template;
@@ -33,7 +28,36 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> A filesystem safe relative path of the artifact. </summary>
         public string Path { get; set; }
-        /// <summary> The Azure Resource Manager template. </summary>
+        /// <summary>
+        /// The Azure Resource Manager template.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Template { get; set; }
     }
 }

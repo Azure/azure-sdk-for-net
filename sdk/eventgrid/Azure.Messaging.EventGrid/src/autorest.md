@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/f8811b7dd784712c3fb0941e04d9042f59a4d367/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/8ba5121a93e44a6ab53e4bc12a56f96829e47a91/specification/eventgrid/data-plane/readme.md
 generation1-convenience-client: true
 ```
 
@@ -18,7 +18,13 @@ directive:
   where: $.definitions.CloudEventEvent
   transform: >
     $.properties.data["x-nullable"] = true;
-````
+```
+
+### Suppress Abstract Base Class
+
+``` yaml
+suppress-abstract-base-class: MediaJobOutput
+```
 
 ### Append `EventData` suffix to Resource Manager system event data models
 
@@ -91,8 +97,8 @@ directive:
       {
         $[path]["x-namespace"] = namespace;
       }
-      if (path.endsWith("EventData") || 
-          path.includes("EventGridEvent") || 
+      if (path.endsWith("EventData") ||
+          path.includes("EventGridEvent") ||
          ($[path]["x-ms-client-name"] && $[path]["x-ms-client-name"].endsWith("EventData")))
       {
         $[path]["x-csharp-usage"] = "model,output,converter";
@@ -135,7 +141,9 @@ directive:
 directive:
 - from: swagger-document
   where: $.definitions.MediaJobOutput
-  transform: $.required.push("@odata.type")
+  transform: >
+    $.required.push("@odata.type");
+    $["x-csharp-usage"] = "model,output";
 ```
 
 ### Fix Media types

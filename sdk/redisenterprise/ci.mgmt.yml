@@ -1,0 +1,23 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/redisenterprise/ci.mgmt.yml
+    - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: redisenterprise
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.RedisEnterprise
+      safeName: AzureResourceManagerRedisEnterprise

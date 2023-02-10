@@ -13,13 +13,12 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Conversations
 {
+    // Data plane generated client.
     /// <summary> The ConversationAnalysis service client. </summary>
     public partial class ConversationAnalysisClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
-        private const string AuthorizationHeader0 = "Ocp-Apim-Subscription-Key";
-        private readonly AzureKeyCredential _keyCredential0;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -41,54 +40,7 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// <details><summary>ConversationalTask</summary>Schema for <c>ConversationalTask</c>:
-        /// <code>{
-        ///   kind: Conversation, # Required. Enumeration of supported Conversation tasks.
-        ///   analysisInput: {
-        ///     conversationItem: {
-        ///       id: string, # Required. The ID of a conversation item.
-        ///       participantId: string, # Required. The participant ID of a conversation item.
-        ///       language: string, # Optional. The override language of a conversation item in BCP 47 language representation.
-        ///       modality: &quot;transcript&quot; | &quot;text&quot;, # Optional. Enumeration of supported conversational modalities.
-        ///       role: &quot;agent&quot; | &quot;customer&quot; | &quot;generic&quot;, # Optional. The role of the participant.
-        ///     }, # Required. The abstract base for a user input formatted conversation (e.g., Text, Transcript).
-        ///   }, # Required. The input ConversationItem and its optional parameters
-        ///   parameters: {
-        ///     projectName: string, # Required. The name of the project to use.
-        ///     deploymentName: string, # Required. The name of the deployment to use.
-        ///     verbose: boolean, # Optional. If true, the service will return more detailed information in the response.
-        ///     isLoggingEnabled: boolean, # Optional. If true, the service will keep the query for further review.
-        ///     stringIndexType: &quot;Utf16CodeUnit&quot;, # Optional. Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16.
-        ///     directTarget: string, # Optional. The name of a target project to forward the request to.
-        ///     targetProjectParameters: Dictionary&lt;string, AnalysisParameters&gt;, # Optional. A dictionary representing the parameters for each target project.
-        ///   }, # Required. Input parameters necessary for a Conversation task.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ConversationalTaskResult</summary>Schema for <c>ConversationalTaskResult</c>:
-        /// <code>{
-        ///   kind: ConversationResult, # Required. Enumeration of supported conversational task results
-        ///   result: {
-        ///     query: string, # Required. The conversation utterance given by the caller.
-        ///     detectedLanguage: string, # Optional. The system detected language for the query in BCP 47 language representation..
-        ///     prediction: {
-        ///       projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. The type of the project.
-        ///       topIntent: string, # Optional. The intent with the highest score.
-        ///     }, # Required. The prediction result of a conversation project.
-        ///   }, # Required. Represents a conversation analysis response.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversationAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AnalyzeConversationAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -113,54 +65,7 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// <details><summary>ConversationalTask</summary>Schema for <c>ConversationalTask</c>:
-        /// <code>{
-        ///   kind: Conversation, # Required. Enumeration of supported Conversation tasks.
-        ///   analysisInput: {
-        ///     conversationItem: {
-        ///       id: string, # Required. The ID of a conversation item.
-        ///       participantId: string, # Required. The participant ID of a conversation item.
-        ///       language: string, # Optional. The override language of a conversation item in BCP 47 language representation.
-        ///       modality: &quot;transcript&quot; | &quot;text&quot;, # Optional. Enumeration of supported conversational modalities.
-        ///       role: &quot;agent&quot; | &quot;customer&quot; | &quot;generic&quot;, # Optional. The role of the participant.
-        ///     }, # Required. The abstract base for a user input formatted conversation (e.g., Text, Transcript).
-        ///   }, # Required. The input ConversationItem and its optional parameters
-        ///   parameters: {
-        ///     projectName: string, # Required. The name of the project to use.
-        ///     deploymentName: string, # Required. The name of the deployment to use.
-        ///     verbose: boolean, # Optional. If true, the service will return more detailed information in the response.
-        ///     isLoggingEnabled: boolean, # Optional. If true, the service will keep the query for further review.
-        ///     stringIndexType: &quot;Utf16CodeUnit&quot;, # Optional. Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16.
-        ///     directTarget: string, # Optional. The name of a target project to forward the request to.
-        ///     targetProjectParameters: Dictionary&lt;string, AnalysisParameters&gt;, # Optional. A dictionary representing the parameters for each target project.
-        ///   }, # Required. Input parameters necessary for a Conversation task.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ConversationalTaskResult</summary>Schema for <c>ConversationalTaskResult</c>:
-        /// <code>{
-        ///   kind: ConversationResult, # Required. Enumeration of supported conversational task results
-        ///   result: {
-        ///     query: string, # Required. The conversation utterance given by the caller.
-        ///     detectedLanguage: string, # Optional. The system detected language for the query in BCP 47 language representation..
-        ///     prediction: {
-        ///       projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. The type of the project.
-        ///       topIntent: string, # Optional. The intent with the highest score.
-        ///     }, # Required. The prediction result of a conversation project.
-        ///   }, # Required. Represents a conversation analysis response.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversation(RequestContent,RequestContext)']/*" />
         public virtual Response AnalyzeConversation(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -179,65 +84,13 @@ namespace Azure.AI.Language.Conversations
             }
         }
 
-        /// <summary> Get the status of an analysis job. A job may consist of one or more tasks. Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task. </summary>
+        /// <summary> Get analysis status and results. </summary>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AnalyzeConversationJobState</c>:
-        /// <code>{
-        ///   displayName: string, # Optional.
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;partiallyCompleted&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
-        ///   nextLink: string, # Optional.
-        ///   tasks: {
-        ///     completed: number, # Required. Count of tasks completed successfully.
-        ///     failed: number, # Required. Count of tasks that failed.
-        ///     inProgress: number, # Required. Count of tasks in progress currently.
-        ///     total: number, # Required. Total count of tasks submitted as part of the job.
-        ///     items: [
-        ///       {
-        ///         lastUpdateDateTime: string (ISO 8601 Format), # Required. The last updated time in UTC for the task.
-        ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required. The status of the task at the mentioned last update time.
-        ///         taskName: string, # Optional.
-        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;, # Required. Enumeration of supported Conversation Analysis task results.
-        ///       }
-        ///     ], # Optional. List of results from tasks (if available).
-        ///   }, # Required.
-        ///   statistics: {
-        ///     transactionsCount: number, # Required. Number of transactions for the request.
-        ///     conversationsCount: number, # Required. Number of conversations submitted in the request.
-        ///     validConversationsCount: number, # Required. Number of conversations documents. This excludes empty, over-size limit or non-supported languages documents.
-        ///     erroneousConversationsCount: number, # Required. Number of invalid documents. This includes empty, over-size limit or non-supported languages documents.
-        ///   }, # Optional. if showStats=true was specified in the request this field will contain information about the request payload.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='GetAnalyzeConversationJobStatusAsync(Guid,Boolean,RequestContext)']/*" />
         public virtual async Task<Response> GetAnalyzeConversationJobStatusAsync(Guid jobId, bool? showStats = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.GetAnalyzeConversationJobStatus");
@@ -254,65 +107,13 @@ namespace Azure.AI.Language.Conversations
             }
         }
 
-        /// <summary> Get the status of an analysis job. A job may consist of one or more tasks. Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task. </summary>
+        /// <summary> Get analysis status and results. </summary>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AnalyzeConversationJobState</c>:
-        /// <code>{
-        ///   displayName: string, # Optional.
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;partiallyCompleted&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
-        ///   nextLink: string, # Optional.
-        ///   tasks: {
-        ///     completed: number, # Required. Count of tasks completed successfully.
-        ///     failed: number, # Required. Count of tasks that failed.
-        ///     inProgress: number, # Required. Count of tasks in progress currently.
-        ///     total: number, # Required. Total count of tasks submitted as part of the job.
-        ///     items: [
-        ///       {
-        ///         lastUpdateDateTime: string (ISO 8601 Format), # Required. The last updated time in UTC for the task.
-        ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required. The status of the task at the mentioned last update time.
-        ///         taskName: string, # Optional.
-        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;, # Required. Enumeration of supported Conversation Analysis task results.
-        ///       }
-        ///     ], # Optional. List of results from tasks (if available).
-        ///   }, # Required.
-        ///   statistics: {
-        ///     transactionsCount: number, # Required. Number of transactions for the request.
-        ///     conversationsCount: number, # Required. Number of conversations submitted in the request.
-        ///     validConversationsCount: number, # Required. Number of conversations documents. This excludes empty, over-size limit or non-supported languages documents.
-        ///     erroneousConversationsCount: number, # Required. Number of invalid documents. This includes empty, over-size limit or non-supported languages documents.
-        ///   }, # Optional. if showStats=true was specified in the request this field will contain information about the request payload.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='GetAnalyzeConversationJobStatus(Guid,Boolean,RequestContext)']/*" />
         public virtual Response GetAnalyzeConversationJobStatus(Guid jobId, bool? showStats = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.GetAnalyzeConversationJobStatus");
@@ -329,90 +130,14 @@ namespace Azure.AI.Language.Conversations
             }
         }
 
-        /// <summary> Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed. </summary>
+        /// <summary> Submit analysis job for conversations. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>AnalyzeConversationJobsInput</c>:
-        /// <code>{
-        ///   displayName: string, # Optional. Optional display name for the analysis job.
-        ///   analysisInput: {
-        ///     conversations: [
-        ///       {
-        ///         id: string, # Required. Unique identifier for the conversation.
-        ///         language: string, # Required. The language of the conversation item in BCP-47 format.
-        ///         modality: &quot;transcript&quot; | &quot;text&quot;, # Required. Enumeration of supported conversational modalities.
-        ///         domain: &quot;finance&quot; | &quot;healthcare&quot; | &quot;generic&quot;, # Optional. Enumeration of supported conversational domains.
-        ///       }
-        ///     ], # Required.
-        ///   }, # Required.
-        ///   tasks: [
-        ///     {
-        ///       taskName: string, # Optional.
-        ///       kind: &quot;ConversationalPIITask&quot; | &quot;ConversationalSummarizationTask&quot;, # Required. Enumeration of supported analysis tasks on a collection of conversations.
-        ///     }
-        ///   ], # Required. The set of tasks to execute on the input conversation.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AnalyzeConversationJobState</c>:
-        /// <code>{
-        ///   displayName: string, # Optional.
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;partiallyCompleted&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
-        ///   nextLink: string, # Optional.
-        ///   tasks: {
-        ///     completed: number, # Required. Count of tasks completed successfully.
-        ///     failed: number, # Required. Count of tasks that failed.
-        ///     inProgress: number, # Required. Count of tasks in progress currently.
-        ///     total: number, # Required. Total count of tasks submitted as part of the job.
-        ///     items: [
-        ///       {
-        ///         lastUpdateDateTime: string (ISO 8601 Format), # Required. The last updated time in UTC for the task.
-        ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required. The status of the task at the mentioned last update time.
-        ///         taskName: string, # Optional.
-        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;, # Required. Enumeration of supported Conversation Analysis task results.
-        ///       }
-        ///     ], # Optional. List of results from tasks (if available).
-        ///   }, # Required.
-        ///   statistics: {
-        ///     transactionsCount: number, # Required. Number of transactions for the request.
-        ///     conversationsCount: number, # Required. Number of conversations submitted in the request.
-        ///     validConversationsCount: number, # Required. Number of conversations documents. This excludes empty, over-size limit or non-supported languages documents.
-        ///     erroneousConversationsCount: number, # Required. Number of invalid documents. This includes empty, over-size limit or non-supported languages documents.
-        ///   }, # Optional. if showStats=true was specified in the request this field will contain information about the request payload.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='StartAnalyzeConversationAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         internal virtual async Task<Operation<BinaryData>> StartAnalyzeConversationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -431,90 +156,14 @@ namespace Azure.AI.Language.Conversations
             }
         }
 
-        /// <summary> Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed. </summary>
+        /// <summary> Submit analysis job for conversations. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>AnalyzeConversationJobsInput</c>:
-        /// <code>{
-        ///   displayName: string, # Optional. Optional display name for the analysis job.
-        ///   analysisInput: {
-        ///     conversations: [
-        ///       {
-        ///         id: string, # Required. Unique identifier for the conversation.
-        ///         language: string, # Required. The language of the conversation item in BCP-47 format.
-        ///         modality: &quot;transcript&quot; | &quot;text&quot;, # Required. Enumeration of supported conversational modalities.
-        ///         domain: &quot;finance&quot; | &quot;healthcare&quot; | &quot;generic&quot;, # Optional. Enumeration of supported conversational domains.
-        ///       }
-        ///     ], # Required.
-        ///   }, # Required.
-        ///   tasks: [
-        ///     {
-        ///       taskName: string, # Optional.
-        ///       kind: &quot;ConversationalPIITask&quot; | &quot;ConversationalSummarizationTask&quot;, # Required. Enumeration of supported analysis tasks on a collection of conversations.
-        ///     }
-        ///   ], # Required. The set of tasks to execute on the input conversation.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AnalyzeConversationJobState</c>:
-        /// <code>{
-        ///   displayName: string, # Optional.
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;partiallyCompleted&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
-        ///   nextLink: string, # Optional.
-        ///   tasks: {
-        ///     completed: number, # Required. Count of tasks completed successfully.
-        ///     failed: number, # Required. Count of tasks that failed.
-        ///     inProgress: number, # Required. Count of tasks in progress currently.
-        ///     total: number, # Required. Total count of tasks submitted as part of the job.
-        ///     items: [
-        ///       {
-        ///         lastUpdateDateTime: string (ISO 8601 Format), # Required. The last updated time in UTC for the task.
-        ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required. The status of the task at the mentioned last update time.
-        ///         taskName: string, # Optional.
-        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;, # Required. Enumeration of supported Conversation Analysis task results.
-        ///       }
-        ///     ], # Optional. List of results from tasks (if available).
-        ///   }, # Required.
-        ///   statistics: {
-        ///     transactionsCount: number, # Required. Number of transactions for the request.
-        ///     conversationsCount: number, # Required. Number of conversations submitted in the request.
-        ///     validConversationsCount: number, # Required. Number of conversations documents. This excludes empty, over-size limit or non-supported languages documents.
-        ///     erroneousConversationsCount: number, # Required. Number of invalid documents. This includes empty, over-size limit or non-supported languages documents.
-        ///   }, # Optional. if showStats=true was specified in the request this field will contain information about the request payload.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='StartAnalyzeConversation(WaitUntil,RequestContent,RequestContext)']/*" />
         internal virtual Operation<BinaryData> StartAnalyzeConversation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -539,6 +188,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='CancelAnalyzeConversationJobAsync(WaitUntil,Guid,RequestContext)']/*" />
         public virtual async Task<Operation> CancelAnalyzeConversationJobAsync(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.CancelAnalyzeConversationJob");
@@ -561,6 +211,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='CancelAnalyzeConversationJob(WaitUntil,Guid,RequestContext)']/*" />
         public virtual Operation CancelAnalyzeConversationJob(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.CancelAnalyzeConversationJob");

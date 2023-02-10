@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IncludePrivacy))
             {
-                writer.WritePropertyName("includePrivacy");
+                writer.WritePropertyName("includePrivacy"u8);
                 writer.WriteBooleanValue(IncludePrivacy.Value);
             }
-            if (Optional.IsDefined(ForTransfer))
+            if (Optional.IsDefined(IsForTransfer))
             {
-                writer.WritePropertyName("forTransfer");
-                writer.WriteBooleanValue(ForTransfer.Value);
+                writer.WritePropertyName("forTransfer"u8);
+                writer.WriteBooleanValue(IsForTransfer.Value);
             }
             writer.WriteEndObject();
         }

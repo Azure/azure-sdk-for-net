@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
     /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
     /// </summary>
-    public partial class CustomDomainHttpsContent
+    public abstract partial class CustomDomainHttpsContent
     {
         /// <summary> Initializes a new instance of CustomDomainHttpsContent. </summary>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
-        public CustomDomainHttpsContent(SecureDeliveryProtocolType protocolType)
+        protected CustomDomainHttpsContent(SecureDeliveryProtocolType protocolType)
         {
             ProtocolType = protocolType;
         }

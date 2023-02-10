@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -15,17 +16,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of ApplicationUserAssignedIdentity. </summary>
         /// <param name="name"> The friendly name of user assigned identity. </param>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="principalId"/> is null. </exception>
-        public ApplicationUserAssignedIdentity(string name, string principalId)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ApplicationUserAssignedIdentity(string name, Guid principalId)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (principalId == null)
-            {
-                throw new ArgumentNullException(nameof(principalId));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             PrincipalId = principalId;
@@ -34,6 +28,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> The friendly name of user assigned identity. </summary>
         public string Name { get; set; }
         /// <summary> The principal id of user assigned identity. </summary>
-        public string PrincipalId { get; set; }
+        public Guid PrincipalId { get; set; }
     }
 }

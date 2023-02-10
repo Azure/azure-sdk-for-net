@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@type");
+            writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
         }
@@ -34,16 +34,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "SpatialAnalysisTypedOperationBase": return SpatialAnalysisTypedOperationBase.DeserializeSpatialAnalysisTypedOperationBase(element);
                 }
             }
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new SpatialAnalysisOperationBase(type);
+            return UnknownSpatialAnalysisOperationBase.DeserializeUnknownSpatialAnalysisOperationBase(element);
         }
     }
 }

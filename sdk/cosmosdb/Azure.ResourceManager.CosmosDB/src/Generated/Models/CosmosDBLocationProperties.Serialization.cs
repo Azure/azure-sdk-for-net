@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Optional<bool> supportsAvailabilityZone = default;
             Optional<bool> isResidencyRestricted = default;
-            Optional<IReadOnlyList<BackupStorageRedundancy>> backupStorageRedundancies = default;
+            Optional<IReadOnlyList<CosmosDBBackupStorageRedundancy>> backupStorageRedundancies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("supportsAvailabilityZone"))
+                if (property.NameEquals("supportsAvailabilityZone"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     supportsAvailabilityZone = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isResidencyRestricted"))
+                if (property.NameEquals("isResidencyRestricted"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     isResidencyRestricted = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("backupStorageRedundancies"))
+                if (property.NameEquals("backupStorageRedundancies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BackupStorageRedundancy> array = new List<BackupStorageRedundancy>();
+                    List<CosmosDBBackupStorageRedundancy> array = new List<CosmosDBBackupStorageRedundancy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new BackupStorageRedundancy(item.GetString()));
+                        array.Add(new CosmosDBBackupStorageRedundancy(item.GetString()));
                     }
                     backupStorageRedundancies = array;
                     continue;

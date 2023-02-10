@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.Cdn
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Order))
             {
-                writer.WritePropertyName("order");
+                writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
             if (Optional.IsCollectionDefined(Conditions))
             {
-                writer.WritePropertyName("conditions");
+                writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsCollectionDefined(Actions))
             {
-                writer.WritePropertyName("actions");
+                writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(MatchProcessingBehavior))
             {
-                writer.WritePropertyName("matchProcessingBehavior");
+                writer.WritePropertyName("matchProcessingBehavior"u8);
                 writer.WriteStringValue(MatchProcessingBehavior.Value.ToString());
             }
             writer.WriteEndObject();
@@ -69,32 +69,32 @@ namespace Azure.ResourceManager.Cdn
             Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("ruleSetName"))
+                        if (property0.NameEquals("ruleSetName"u8))
                         {
                             ruleSetName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("order"))
+                        if (property0.NameEquals("order"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Cdn
                             order = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("conditions"))
+                        if (property0.NameEquals("conditions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn
                             conditions = array;
                             continue;
                         }
-                        if (property0.NameEquals("actions"))
+                        if (property0.NameEquals("actions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn
                             actions = array;
                             continue;
                         }
-                        if (property0.NameEquals("matchProcessingBehavior"))
+                        if (property0.NameEquals("matchProcessingBehavior"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
                             matchProcessingBehavior = new MatchProcessingBehavior(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Cdn
                             provisioningState = new FrontDoorProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("deploymentStatus"))
+                        if (property0.NameEquals("deploymentStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
