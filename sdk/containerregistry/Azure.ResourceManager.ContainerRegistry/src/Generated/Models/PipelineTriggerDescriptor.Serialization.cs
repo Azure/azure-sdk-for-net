@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<PipelineSourceTriggerDescriptor> sourceTrigger = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceTrigger"))
+                if (property.NameEquals("sourceTrigger"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

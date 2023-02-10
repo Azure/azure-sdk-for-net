@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(QueryParameterStripDirective))
             {
-                writer.WritePropertyName("queryParameterStripDirective");
+                writer.WritePropertyName("queryParameterStripDirective"u8);
                 writer.WriteStringValue(QueryParameterStripDirective.Value.ToString());
             }
             if (Optional.IsDefined(QueryParameters))
             {
-                writer.WritePropertyName("queryParameters");
+                writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStringValue(QueryParameters);
             }
             if (Optional.IsDefined(DynamicCompression))
             {
-                writer.WritePropertyName("dynamicCompression");
+                writer.WritePropertyName("dynamicCompression"u8);
                 writer.WriteStringValue(DynamicCompression.Value.ToString());
             }
             if (Optional.IsDefined(CacheDuration))
             {
-                writer.WritePropertyName("cacheDuration");
+                writer.WritePropertyName("cacheDuration"u8);
                 writer.WriteStringValue(CacheDuration.Value, "P");
             }
             writer.WriteEndObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<TimeSpan> cacheDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("queryParameterStripDirective"))
+                if (property.NameEquals("queryParameterStripDirective"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     queryParameterStripDirective = new FrontDoorQuery(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queryParameters"))
+                if (property.NameEquals("queryParameters"u8))
                 {
                     queryParameters = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dynamicCompression"))
+                if (property.NameEquals("dynamicCompression"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     dynamicCompression = new DynamicCompressionEnabled(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cacheDuration"))
+                if (property.NameEquals("cacheDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

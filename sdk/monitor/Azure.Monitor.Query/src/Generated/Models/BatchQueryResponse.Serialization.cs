@@ -21,12 +21,12 @@ namespace Azure.Monitor.Query.Models
             Optional<IReadOnlyDictionary<string, string>> headers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.Monitor.Query.Models
                     status = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("body"))
+                if (property.NameEquals("body"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.Monitor.Query.Models
                     body = LogsBatchQueryResult.DeserializeLogsBatchQueryResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("headers"))
+                if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

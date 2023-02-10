@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> diskStorageType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("volume"))
+                if (property.NameEquals("volume"u8))
                 {
                     volume = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskType"))
+                if (property.NameEquals("diskType"u8))
                 {
                     diskType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskCount"))
+                if (property.NameEquals("diskCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     diskCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("diskSizeGB"))
+                if (property.NameEquals("diskSizeGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     diskSizeGB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("diskIopsReadWrite"))
+                if (property.NameEquals("diskIopsReadWrite"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     diskIopsReadWrite = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("diskMBpsReadWrite"))
+                if (property.NameEquals("diskMBpsReadWrite"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     diskMBpsReadWrite = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("diskStorageType"))
+                if (property.NameEquals("diskStorageType"u8))
                 {
                     diskStorageType = property.Value.GetString();
                     continue;

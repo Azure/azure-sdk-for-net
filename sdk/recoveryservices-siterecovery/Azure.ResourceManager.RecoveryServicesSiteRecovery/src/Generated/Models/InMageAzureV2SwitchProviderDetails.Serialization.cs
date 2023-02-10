@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> targetApplianceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetVaultId"))
+                if (property.NameEquals("targetVaultId"u8))
                 {
                     targetVaultId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceId"))
+                if (property.NameEquals("targetResourceId"u8))
                 {
                     targetResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetFabricId"))
+                if (property.NameEquals("targetFabricId"u8))
                 {
                     targetFabricId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetApplianceId"))
+                if (property.NameEquals("targetApplianceId"u8))
                 {
                     targetApplianceId = property.Value.GetString();
                     continue;

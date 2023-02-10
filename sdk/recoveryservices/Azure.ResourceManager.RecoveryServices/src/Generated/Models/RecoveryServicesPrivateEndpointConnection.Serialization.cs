@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<IReadOnlyList<VaultSubResourceType>> groupIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateEndpoint"))
+                if (property.NameEquals("privateEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     privateEndpoint = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("privateLinkServiceConnectionState"))
+                if (property.NameEquals("privateLinkServiceConnectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     privateLinkServiceConnectionState = RecoveryServicesPrivateLinkServiceConnectionState.DeserializeRecoveryServicesPrivateLinkServiceConnectionState(property.Value);
                     continue;
                 }
-                if (property.NameEquals("groupIds"))
+                if (property.NameEquals("groupIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

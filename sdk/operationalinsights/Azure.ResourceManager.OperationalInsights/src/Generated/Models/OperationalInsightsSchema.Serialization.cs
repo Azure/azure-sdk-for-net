@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Columns))
             {
-                writer.WritePropertyName("columns");
+                writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<IReadOnlyList<string>> solutions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("columns"))
+                if (property.NameEquals("columns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     columns = array;
                     continue;
                 }
-                if (property.NameEquals("standardColumns"))
+                if (property.NameEquals("standardColumns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     standardColumns = array;
                     continue;
                 }
-                if (property.NameEquals("categories"))
+                if (property.NameEquals("categories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     categories = array;
                     continue;
                 }
-                if (property.NameEquals("labels"))
+                if (property.NameEquals("labels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     labels = array;
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     source = new OperationalInsightsTableCreator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tableType"))
+                if (property.NameEquals("tableType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     tableType = new OperationalInsightsTableType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tableSubType"))
+                if (property.NameEquals("tableSubType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     tableSubType = new OperationalInsightsTableSubType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("solutions"))
+                if (property.NameEquals("solutions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

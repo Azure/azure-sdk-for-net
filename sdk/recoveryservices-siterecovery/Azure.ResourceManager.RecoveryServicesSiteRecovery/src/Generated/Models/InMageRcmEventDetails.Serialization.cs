@@ -25,47 +25,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("protectedItemName"))
+                if (property.NameEquals("protectedItemName"u8))
                 {
                     protectedItemName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmName"))
+                if (property.NameEquals("vmName"u8))
                 {
                     vmName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latestAgentVersion"))
+                if (property.NameEquals("latestAgentVersion"u8))
                 {
                     latestAgentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricName"))
+                if (property.NameEquals("fabricName"u8))
                 {
                     fabricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applianceName"))
+                if (property.NameEquals("applianceName"u8))
                 {
                     applianceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverType"))
+                if (property.NameEquals("serverType"u8))
                 {
                     serverType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("componentDisplayName"))
+                if (property.NameEquals("componentDisplayName"u8))
                 {
                     componentDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

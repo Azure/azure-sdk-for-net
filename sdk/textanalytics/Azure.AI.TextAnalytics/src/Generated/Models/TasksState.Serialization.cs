@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
             AnalyzeTasks tasks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tasks"))
+                if (property.NameEquals("tasks"u8))
                 {
                     tasks = AnalyzeTasks.DeserializeAnalyzeTasks(property.Value);
                     continue;

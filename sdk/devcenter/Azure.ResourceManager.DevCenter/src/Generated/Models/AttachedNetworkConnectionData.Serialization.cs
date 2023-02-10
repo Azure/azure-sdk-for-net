@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.DevCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkConnectionId))
             {
-                writer.WritePropertyName("networkConnectionId");
+                writer.WritePropertyName("networkConnectionId"u8);
                 writer.WriteStringValue(NetworkConnectionId);
             }
             writer.WriteEndObject();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.DevCenter
             Optional<DomainJoinType> domainJoinType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevCenter
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,22 +75,22 @@ namespace Azure.ResourceManager.DevCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("networkConnectionId"))
+                        if (property0.NameEquals("networkConnectionId"u8))
                         {
                             networkConnectionId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("networkConnectionLocation"))
+                        if (property0.NameEquals("networkConnectionLocation"u8))
                         {
                             networkConnectionLocation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("healthCheckStatus"))
+                        if (property0.NameEquals("healthCheckStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevCenter
                             healthCheckStatus = new HealthCheckStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("domainJoinType"))
+                        if (property0.NameEquals("domainJoinType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

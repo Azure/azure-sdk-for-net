@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WorkloadInquiryDetailsType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkloadInquiryDetailsType);
             }
             if (Optional.IsDefined(ItemCount))
             {
-                writer.WritePropertyName("itemCount");
+                writer.WritePropertyName("itemCount"u8);
                 writer.WriteNumberValue(ItemCount.Value);
             }
             if (Optional.IsDefined(InquiryValidation))
             {
-                writer.WritePropertyName("inquiryValidation");
+                writer.WritePropertyName("inquiryValidation"u8);
                 writer.WriteObjectValue(InquiryValidation);
             }
             writer.WriteEndObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<InquiryValidation> inquiryValidation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("itemCount"))
+                if (property.NameEquals("itemCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     itemCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("inquiryValidation"))
+                if (property.NameEquals("inquiryValidation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,17 +19,17 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DetectedLanguage))
             {
-                writer.WritePropertyName("detectedLanguage");
+                writer.WritePropertyName("detectedLanguage"u8);
                 writer.WriteStringValue(DetectedLanguage);
             }
-            writer.WritePropertyName("entities");
+            writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
             foreach (var item in Entities)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("relations");
+            writer.WritePropertyName("relations"u8);
             writer.WriteStartArray();
             foreach (var item in Relations)
             {
@@ -38,12 +38,12 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(FhirBundle))
             {
-                writer.WritePropertyName("fhirBundle");
+                writer.WritePropertyName("fhirBundle"u8);
                 FhirBundle.WriteTo(writer);
             }
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            writer.WritePropertyName("warnings");
+            writer.WritePropertyName("warnings"u8);
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
@@ -52,7 +52,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
-                writer.WritePropertyName("statistics");
+                writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics.Value);
             }
             writer.WriteEndObject();
@@ -69,12 +69,12 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("detectedLanguage"))
+                if (property.NameEquals("detectedLanguage"u8))
                 {
                     detectedLanguage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("entities"))
+                if (property.NameEquals("entities"u8))
                 {
                     List<HealthcareEntityInternal> array = new List<HealthcareEntityInternal>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -84,7 +84,7 @@ namespace Azure.AI.TextAnalytics.Models
                     entities = array;
                     continue;
                 }
-                if (property.NameEquals("relations"))
+                if (property.NameEquals("relations"u8))
                 {
                     List<HealthcareRelationInternal> array = new List<HealthcareRelationInternal>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -94,17 +94,17 @@ namespace Azure.AI.TextAnalytics.Models
                     relations = array;
                     continue;
                 }
-                if (property.NameEquals("fhirBundle"))
+                if (property.NameEquals("fhirBundle"u8))
                 {
                     fhirBundle = property.Value.Clone();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("warnings"))
+                if (property.NameEquals("warnings"u8))
                 {
                     List<DocumentWarning> array = new List<DocumentWarning>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -114,7 +114,7 @@ namespace Azure.AI.TextAnalytics.Models
                     warnings = array;
                     continue;
                 }
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

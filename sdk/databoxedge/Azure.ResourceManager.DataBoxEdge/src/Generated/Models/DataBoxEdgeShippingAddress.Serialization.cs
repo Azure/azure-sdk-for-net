@@ -17,35 +17,35 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressLine1))
             {
-                writer.WritePropertyName("addressLine1");
+                writer.WritePropertyName("addressLine1"u8);
                 writer.WriteStringValue(AddressLine1);
             }
             if (Optional.IsDefined(AddressLine2))
             {
-                writer.WritePropertyName("addressLine2");
+                writer.WritePropertyName("addressLine2"u8);
                 writer.WriteStringValue(AddressLine2);
             }
             if (Optional.IsDefined(AddressLine3))
             {
-                writer.WritePropertyName("addressLine3");
+                writer.WritePropertyName("addressLine3"u8);
                 writer.WriteStringValue(AddressLine3);
             }
             if (Optional.IsDefined(PostalCode))
             {
-                writer.WritePropertyName("postalCode");
+                writer.WritePropertyName("postalCode"u8);
                 writer.WriteStringValue(PostalCode);
             }
             if (Optional.IsDefined(City))
             {
-                writer.WritePropertyName("city");
+                writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            writer.WritePropertyName("country");
+            writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
             writer.WriteEndObject();
         }
@@ -61,37 +61,37 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string country = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("addressLine1"))
+                if (property.NameEquals("addressLine1"u8))
                 {
                     addressLine1 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressLine2"))
+                if (property.NameEquals("addressLine2"u8))
                 {
                     addressLine2 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressLine3"))
+                if (property.NameEquals("addressLine3"u8))
                 {
                     addressLine3 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("postalCode"))
+                if (property.NameEquals("postalCode"u8))
                 {
                     postalCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("city"))
+                if (property.NameEquals("city"u8))
                 {
                     city = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"))
+                if (property.NameEquals("country"u8))
                 {
                     country = property.Value.GetString();
                     continue;

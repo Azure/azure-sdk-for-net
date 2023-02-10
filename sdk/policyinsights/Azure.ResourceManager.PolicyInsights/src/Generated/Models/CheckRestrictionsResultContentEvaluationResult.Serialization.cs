@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<IReadOnlyList<PolicyEvaluationResult>> policyEvaluations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyEvaluations"))
+                if (property.NameEquals("policyEvaluations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

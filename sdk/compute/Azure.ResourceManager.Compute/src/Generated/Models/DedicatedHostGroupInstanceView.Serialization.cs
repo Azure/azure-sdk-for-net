@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<DedicatedHostInstanceViewWithName>> hosts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hosts"))
+                if (property.NameEquals("hosts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

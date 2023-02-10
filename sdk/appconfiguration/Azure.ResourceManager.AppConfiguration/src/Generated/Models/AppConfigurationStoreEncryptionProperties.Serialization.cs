@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 if (KeyVaultProperties != null)
                 {
-                    writer.WritePropertyName("keyVaultProperties");
+                    writer.WritePropertyName("keyVaultProperties"u8);
                     writer.WriteObjectValue(KeyVaultProperties);
                 }
                 else
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             Optional<AppConfigurationKeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVaultProperties"))
+                if (property.NameEquals("keyVaultProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

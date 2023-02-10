@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> userData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hardwareProfile"))
+                if (property.NameEquals("hardwareProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
                     hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("storageProfile"))
+                if (property.NameEquals("storageProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
                     storageProfile = RestorePointSourceVmStorageProfile.DeserializeRestorePointSourceVmStorageProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("osProfile"))
+                if (property.NameEquals("osProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                     osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("diagnosticsProfile"))
+                if (property.NameEquals("diagnosticsProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.Compute.Models
                     diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("licenseType"))
+                if (property.NameEquals("licenseType"u8))
                 {
                     licenseType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmId"))
+                if (property.NameEquals("vmId"u8))
                 {
                     vmId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("securityProfile"))
+                if (property.NameEquals("securityProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
                     securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

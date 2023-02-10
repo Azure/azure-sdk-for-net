@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;

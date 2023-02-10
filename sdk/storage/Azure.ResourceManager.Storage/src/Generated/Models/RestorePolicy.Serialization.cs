@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enabled");
+            writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(Days))
             {
-                writer.WritePropertyName("days");
+                writer.WritePropertyName("days"u8);
                 writer.WriteNumberValue(Days.Value);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<DateTimeOffset> minRestoreTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("days"))
+                if (property.NameEquals("days"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Storage.Models
                     days = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lastEnabledTime"))
+                if (property.NameEquals("lastEnabledTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Storage.Models
                     lastEnabledTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("minRestoreTime"))
+                if (property.NameEquals("minRestoreTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

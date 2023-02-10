@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IReadOnlyList<HostingEnvironmentDeploymentInfo>> hostingEnvironmentDeploymentInfos = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("hostingEnvironments"))
+                if (property.NameEquals("hostingEnvironments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
                     hostingEnvironments = array;
                     continue;
                 }
-                if (property.NameEquals("hostingEnvironmentDeploymentInfos"))
+                if (property.NameEquals("hostingEnvironmentDeploymentInfos"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

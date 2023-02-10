@@ -18,12 +18,12 @@ namespace Azure.Communication.PhoneNumbers
             string abbreviatedName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("localizedName"))
+                if (property.NameEquals("localizedName"u8))
                 {
                     localizedName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("abbreviatedName"))
+                if (property.NameEquals("abbreviatedName"u8))
                 {
                     abbreviatedName = property.Value.GetString();
                     continue;

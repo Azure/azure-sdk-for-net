@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<int> manualCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("passedCount"))
+                if (property.NameEquals("passedCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     passedCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failedCount"))
+                if (property.NameEquals("failedCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     failedCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("manualCount"))
+                if (property.NameEquals("manualCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

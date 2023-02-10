@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<IReadOnlyList<ServiceAccountThrottlingMatchPattern>> matchPatterns = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("renewalPeriod"))
+                if (property.NameEquals("renewalPeriod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     renewalPeriod = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     count = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("minCount"))
+                if (property.NameEquals("minCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     minCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("dynamicThrottlingEnabled"))
+                if (property.NameEquals("dynamicThrottlingEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     dynamicThrottlingEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("matchPatterns"))
+                if (property.NameEquals("matchPatterns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,24 +17,24 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NetCoreMainEntryPath))
             {
-                writer.WritePropertyName("netCoreMainEntryPath");
+                writer.WritePropertyName("netCoreMainEntryPath"u8);
                 writer.WriteStringValue(NetCoreMainEntryPath);
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
-                writer.WritePropertyName("runtimeVersion");
+                writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
             if (Optional.IsDefined(RelativePath))
             {
-                writer.WritePropertyName("relativePath");
+                writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
@@ -49,27 +49,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("netCoreMainEntryPath"))
+                if (property.NameEquals("netCoreMainEntryPath"u8))
                 {
                     netCoreMainEntryPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runtimeVersion"))
+                if (property.NameEquals("runtimeVersion"u8))
                 {
                     runtimeVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativePath"))
+                if (property.NameEquals("relativePath"u8))
                 {
                     relativePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;

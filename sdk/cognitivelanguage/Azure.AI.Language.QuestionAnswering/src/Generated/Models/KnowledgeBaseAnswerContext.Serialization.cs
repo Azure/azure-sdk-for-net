@@ -15,11 +15,11 @@ namespace Azure.AI.Language.QuestionAnswering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("previousQnaId");
+            writer.WritePropertyName("previousQnaId"u8);
             writer.WriteNumberValue(PreviousQnaId);
             if (Optional.IsDefined(PreviousQuestion))
             {
-                writer.WritePropertyName("previousUserQuery");
+                writer.WritePropertyName("previousUserQuery"u8);
                 writer.WriteStringValue(PreviousQuestion);
             }
             writer.WriteEndObject();

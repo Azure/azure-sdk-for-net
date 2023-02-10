@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OldestRecoveryPoint))
             {
-                writer.WritePropertyName("oldestRecoveryPoint");
+                writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoveryPoint.Value, "O");
             }
             if (Optional.IsDefined(RecoveryPointCount))
             {
-                writer.WritePropertyName("recoveryPointCount");
+                writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
             if (Optional.IsDefined(PolicyState))
             {
-                writer.WritePropertyName("policyState");
+                writer.WritePropertyName("policyState"u8);
                 writer.WriteStringValue(PolicyState);
             }
             writer.WriteEndObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<DateTimeOffset> resourceStateSyncTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("oldestRecoveryPoint"))
+                if (property.NameEquals("oldestRecoveryPoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     oldestRecoveryPoint = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recoveryPointCount"))
+                if (property.NameEquals("recoveryPointCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("policyState"))
+                if (property.NameEquals("policyState"u8))
                 {
                     policyState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceState"))
+                if (property.NameEquals("resourceState"u8))
                 {
                     resourceState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceStateSyncTime"))
+                if (property.NameEquals("resourceStateSyncTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

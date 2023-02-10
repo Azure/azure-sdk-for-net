@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetNamespace))
             {
-                writer.WritePropertyName("targetNamespace");
+                writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<string> targetNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetNamespace"))
+                if (property.NameEquals("targetNamespace"u8))
                 {
                     targetNamespace = property.Value.GetString();
                     continue;

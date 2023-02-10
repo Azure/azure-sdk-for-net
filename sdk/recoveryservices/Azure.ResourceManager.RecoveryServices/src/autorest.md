@@ -46,6 +46,13 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+override-operation-name:
+  RecoveryServices_Capabilities: GetCapabilitiesRecoveryService
+
+rename-mapping:
+  DNSZoneResponse: DnsZoneResult
+  CapabilitiesResponse: CapabilitiesResult
+
 directive:
   - remove-operation: GetOperationStatus
   - remove-operation: GetOperationResult

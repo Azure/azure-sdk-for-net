@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Communication.Models
             Optional<string> errorCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Communication.Models
                     status = new DomainRecordVerificationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     errorCode = property.Value.GetString();
                     continue;

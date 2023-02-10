@@ -1915,7 +1915,7 @@
           ],
           "mentionees": [
             "sebrenna",
-            "mharlan", 
+            "mharlan",
             "chrissmiller"
           ]
         },
@@ -2954,6 +2954,19 @@
           "labels": [
             "Service Attention",
             "Monitor - Exporter"
+          ],
+          "mentionees": [
+            "cijothomas",
+            "reyang",
+            "rajkumar-rangaraj",
+            "TimothyMothra",
+            "vishweshbankwar"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Monitor - Distro"
           ],
           "mentionees": [
             "cijothomas",

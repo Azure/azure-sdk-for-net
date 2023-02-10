@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> securityPIN = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("token"))
+                if (property.NameEquals("token"u8))
                 {
                     token = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expiryTimeInUtcTicks"))
+                if (property.NameEquals("expiryTimeInUtcTicks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     expiryTimeInUtcTicks = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("securityPIN"))
+                if (property.NameEquals("securityPIN"u8))
                 {
                     securityPIN = property.Value.GetString();
                     continue;

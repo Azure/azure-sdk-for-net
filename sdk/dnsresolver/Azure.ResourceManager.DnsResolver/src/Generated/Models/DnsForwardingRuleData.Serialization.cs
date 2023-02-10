@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DnsResolver
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("domainName");
+            writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
-            writer.WritePropertyName("targetDnsServers");
+            writer.WritePropertyName("targetDnsServers"u8);
             writer.WriteStartArray();
             foreach (var item in TargetDnsServers)
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in Metadata)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
             if (Optional.IsDefined(DnsForwardingRuleState))
             {
-                writer.WritePropertyName("forwardingRuleState");
+                writer.WritePropertyName("forwardingRuleState"u8);
                 writer.WriteStringValue(DnsForwardingRuleState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DnsResolver
             Optional<DnsResolverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,22 +74,22 @@ namespace Azure.ResourceManager.DnsResolver
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DnsResolver
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.DnsResolver
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("domainName"))
+                        if (property0.NameEquals("domainName"u8))
                         {
                             domainName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetDnsServers"))
+                        if (property0.NameEquals("targetDnsServers"u8))
                         {
                             List<TargetDnsServer> array = new List<TargetDnsServer>();
                             foreach (var item in property0.Value.EnumerateArray())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DnsResolver
                             targetDnsServers = array;
                             continue;
                         }
-                        if (property0.NameEquals("metadata"))
+                        if (property0.NameEquals("metadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DnsResolver
                             metadata = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("forwardingRuleState"))
+                        if (property0.NameEquals("forwardingRuleState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DnsResolver
                             forwardingRuleState = new DnsForwardingRuleState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

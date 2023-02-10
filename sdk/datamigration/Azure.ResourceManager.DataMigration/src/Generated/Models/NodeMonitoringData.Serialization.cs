@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<double> receivedBytes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("additionalProperties"))
+                if (property.NameEquals("additionalProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalProperties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("nodeName"))
+                if (property.NameEquals("nodeName"u8))
                 {
                     nodeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("availableMemoryInMB"))
+                if (property.NameEquals("availableMemoryInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     availableMemoryInMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cpuUtilization"))
+                if (property.NameEquals("cpuUtilization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     cpuUtilization = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("concurrentJobsLimit"))
+                if (property.NameEquals("concurrentJobsLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     concurrentJobsLimit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("concurrentJobsRunning"))
+                if (property.NameEquals("concurrentJobsRunning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     concurrentJobsRunning = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentJobs"))
+                if (property.NameEquals("maxConcurrentJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     maxConcurrentJobs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sentBytes"))
+                if (property.NameEquals("sentBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     sentBytes = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("receivedBytes"))
+                if (property.NameEquals("receivedBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

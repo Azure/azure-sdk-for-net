@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(EventSerializationType.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(FieldDelimiter))
             {
-                writer.WritePropertyName("fieldDelimiter");
+                writer.WritePropertyName("fieldDelimiter"u8);
                 writer.WriteStringValue(FieldDelimiter);
             }
             if (Optional.IsDefined(Encoding))
             {
-                writer.WritePropertyName("encoding");
+                writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<StreamAnalyticsDataSerializationEncoding> encoding = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new EventSerializationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("fieldDelimiter"))
+                        if (property0.NameEquals("fieldDelimiter"u8))
                         {
                             fieldDelimiter = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("encoding"))
+                        if (property0.NameEquals("encoding"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

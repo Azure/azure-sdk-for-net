@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MinimumCount))
             {
-                writer.WritePropertyName("minimumCount");
+                writer.WritePropertyName("minimumCount"u8);
                 writer.WriteNumberValue(MinimumCount.Value);
             }
             if (Optional.IsDefined(MaximumCount))
             {
-                writer.WritePropertyName("maximumCount");
+                writer.WritePropertyName("maximumCount"u8);
                 writer.WriteNumberValue(MaximumCount.Value);
             }
             if (Optional.IsDefined(CurrentCount))
             {
-                writer.WritePropertyName("currentCount");
+                writer.WritePropertyName("currentCount"u8);
                 writer.WriteNumberValue(CurrentCount.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<int> currentCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minimumCount"))
+                if (property.NameEquals("minimumCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     minimumCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maximumCount"))
+                if (property.NameEquals("maximumCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     maximumCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("currentCount"))
+                if (property.NameEquals("currentCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

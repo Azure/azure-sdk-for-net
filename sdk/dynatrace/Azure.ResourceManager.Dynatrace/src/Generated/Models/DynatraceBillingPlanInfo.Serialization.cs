@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UsageType))
             {
-                writer.WritePropertyName("usageType");
+                writer.WritePropertyName("usageType"u8);
                 writer.WriteStringValue(UsageType);
             }
             if (Optional.IsDefined(BillingCycle))
             {
-                writer.WritePropertyName("billingCycle");
+                writer.WritePropertyName("billingCycle"u8);
                 writer.WriteStringValue(BillingCycle);
             }
             if (Optional.IsDefined(PlanDetails))
             {
-                writer.WritePropertyName("planDetails");
+                writer.WritePropertyName("planDetails"u8);
                 writer.WriteStringValue(PlanDetails);
             }
             if (Optional.IsDefined(EffectiveOn))
             {
-                writer.WritePropertyName("effectiveDate");
+                writer.WritePropertyName("effectiveDate"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -47,22 +47,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<DateTimeOffset> effectiveDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("usageType"))
+                if (property.NameEquals("usageType"u8))
                 {
                     usageType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("billingCycle"))
+                if (property.NameEquals("billingCycle"u8))
                 {
                     billingCycle = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("planDetails"))
+                if (property.NameEquals("planDetails"u8))
                 {
                     planDetails = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("effectiveDate"))
+                if (property.NameEquals("effectiveDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

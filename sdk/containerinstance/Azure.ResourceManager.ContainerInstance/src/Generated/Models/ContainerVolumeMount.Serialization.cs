@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("mountPath");
+            writer.WritePropertyName("mountPath"u8);
             writer.WriteStringValue(MountPath);
             if (Optional.IsDefined(IsReadOnly))
             {
-                writer.WritePropertyName("readOnly");
+                writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
             writer.WriteEndObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<bool> readOnly = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountPath"))
+                if (property.NameEquals("mountPath"u8))
                 {
                     mountPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("readOnly"))
+                if (property.NameEquals("readOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

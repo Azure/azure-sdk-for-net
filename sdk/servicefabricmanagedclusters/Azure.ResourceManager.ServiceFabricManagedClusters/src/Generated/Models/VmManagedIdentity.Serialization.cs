@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
-                writer.WritePropertyName("userAssignedIdentities");
+                writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserAssignedIdentities)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<IList<ResourceIdentifier>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userAssignedIdentities"))
+                if (property.NameEquals("userAssignedIdentities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

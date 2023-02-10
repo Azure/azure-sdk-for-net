@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("deploymentType");
+            writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
-            writer.WritePropertyName("appResourceGroup");
+            writer.WritePropertyName("appResourceGroup"u8);
             writer.WriteStringValue(AppResourceGroup);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Workloads.Models
             string appResourceGroup = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deploymentType"))
+                if (property.NameEquals("deploymentType"u8))
                 {
                     deploymentType = new SapDeploymentType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("appResourceGroup"))
+                if (property.NameEquals("appResourceGroup"u8))
                 {
                     appResourceGroup = property.Value.GetString();
                     continue;

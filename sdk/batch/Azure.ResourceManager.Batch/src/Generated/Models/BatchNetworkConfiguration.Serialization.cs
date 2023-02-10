@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SubnetId))
             {
-                writer.WritePropertyName("subnetId");
+                writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
             if (Optional.IsDefined(DynamicVNetAssignmentScope))
             {
-                writer.WritePropertyName("dynamicVnetAssignmentScope");
+                writer.WritePropertyName("dynamicVnetAssignmentScope"u8);
                 writer.WriteStringValue(DynamicVNetAssignmentScope.Value.ToSerialString());
             }
             if (Optional.IsDefined(EndpointConfiguration))
             {
-                writer.WritePropertyName("endpointConfiguration");
+                writer.WritePropertyName("endpointConfiguration"u8);
                 writer.WriteObjectValue(EndpointConfiguration);
             }
             if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
-                writer.WritePropertyName("publicIPAddressConfiguration");
+                writer.WritePropertyName("publicIPAddressConfiguration"u8);
                 writer.WriteObjectValue(PublicIPAddressConfiguration);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<BatchPublicIPAddressConfiguration> publicIPAddressConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subnetId"))
+                if (property.NameEquals("subnetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Batch.Models
                     subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dynamicVnetAssignmentScope"))
+                if (property.NameEquals("dynamicVnetAssignmentScope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Batch.Models
                     dynamicVnetAssignmentScope = property.Value.GetString().ToDynamicVNetAssignmentScope();
                     continue;
                 }
-                if (property.NameEquals("endpointConfiguration"))
+                if (property.NameEquals("endpointConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Batch.Models
                     endpointConfiguration = PoolEndpointConfiguration.DeserializePoolEndpointConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("publicIPAddressConfiguration"))
+                if (property.NameEquals("publicIPAddressConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEncryptionInTransitEnabled))
             {
-                writer.WritePropertyName("isEncryptionInTransitEnabled");
+                writer.WritePropertyName("isEncryptionInTransitEnabled"u8);
                 writer.WriteBooleanValue(IsEncryptionInTransitEnabled.Value);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<bool> isEncryptionInTransitEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isEncryptionInTransitEnabled"))
+                if (property.NameEquals("isEncryptionInTransitEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

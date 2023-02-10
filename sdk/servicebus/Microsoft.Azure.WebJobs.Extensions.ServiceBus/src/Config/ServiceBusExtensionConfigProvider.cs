@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
 
         internal static ParameterBindingData ConvertReceivedMessageToBindingData(ServiceBusReceivedMessage message)
         {
-            ReadOnlyMemory<byte> messageBytes = message.ToAmqpBytes().ToMemory();
+            ReadOnlyMemory<byte> messageBytes = message.GetRawAmqpMessage().ToBytes().ToMemory();
             byte[] lockTokenBytes = Guid.Parse(message.LockToken).ToByteArray();
 
             // The lock token is a 16 byte GUID

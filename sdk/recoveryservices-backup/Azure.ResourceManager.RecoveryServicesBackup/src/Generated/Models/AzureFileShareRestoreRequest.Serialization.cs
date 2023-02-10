@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryType))
             {
-                writer.WritePropertyName("recoveryType");
+                writer.WritePropertyName("recoveryType"u8);
                 writer.WriteStringValue(RecoveryType.Value.ToString());
             }
             if (Optional.IsDefined(SourceResourceId))
             {
-                writer.WritePropertyName("sourceResourceId");
+                writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
             if (Optional.IsDefined(CopyOptions))
             {
-                writer.WritePropertyName("copyOptions");
+                writer.WritePropertyName("copyOptions"u8);
                 writer.WriteStringValue(CopyOptions.Value.ToString());
             }
             if (Optional.IsDefined(RestoreRequestType))
             {
-                writer.WritePropertyName("restoreRequestType");
+                writer.WritePropertyName("restoreRequestType"u8);
                 writer.WriteStringValue(RestoreRequestType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(RestoreFileSpecs))
             {
-                writer.WritePropertyName("restoreFileSpecs");
+                writer.WritePropertyName("restoreFileSpecs"u8);
                 writer.WriteStartArray();
                 foreach (var item in RestoreFileSpecs)
                 {
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(TargetDetails))
             {
-                writer.WritePropertyName("targetDetails");
+                writer.WritePropertyName("targetDetails"u8);
                 writer.WriteObjectValue(TargetDetails);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryType"))
+                if (property.NameEquals("recoveryType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryType = new RecoveryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceResourceId"))
+                if (property.NameEquals("sourceResourceId"u8))
                 {
                     sourceResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("copyOptions"))
+                if (property.NameEquals("copyOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     copyOptions = new CopyOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("restoreRequestType"))
+                if (property.NameEquals("restoreRequestType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     restoreRequestType = new RestoreRequestType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("restoreFileSpecs"))
+                if (property.NameEquals("restoreFileSpecs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     restoreFileSpecs = array;
                     continue;
                 }
-                if (property.NameEquals("targetDetails"))
+                if (property.NameEquals("targetDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     targetDetails = TargetAFSRestoreInfo.DeserializeTargetAFSRestoreInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

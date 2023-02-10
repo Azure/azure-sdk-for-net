@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientSecretStoreId))
             {
-                writer.WritePropertyName("clientSecretStoreId");
+                writer.WritePropertyName("clientSecretStoreId"u8);
                 writer.WriteStringValue(ClientSecretStoreId);
             }
             if (Optional.IsDefined(ClientSecretStoreUri))
             {
-                writer.WritePropertyName("clientSecretStoreUrl");
+                writer.WritePropertyName("clientSecretStoreUrl"u8);
                 writer.WriteStringValue(ClientSecretStoreUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ChannelIntegrityKeyName))
             {
-                writer.WritePropertyName("channelIntegrityKeyName");
+                writer.WritePropertyName("channelIntegrityKeyName"u8);
                 writer.WriteStringValue(ChannelIntegrityKeyName);
             }
             if (Optional.IsDefined(ChannelIntegrityKeyVersion))
             {
-                writer.WritePropertyName("channelIntegrityKeyVersion");
+                writer.WritePropertyName("channelIntegrityKeyVersion"u8);
                 writer.WriteStringValue(ChannelIntegrityKeyVersion);
             }
             if (Optional.IsDefined(SyncStatus))
             {
-                writer.WritePropertyName("syncStatus");
+                writer.WritePropertyName("syncStatus"u8);
                 writer.WriteStringValue(SyncStatus.Value.ToString());
             }
             writer.WriteEndObject();

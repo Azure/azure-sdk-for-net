@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("objectName"))
+                if (property.NameEquals("objectName"u8))
                 {
                     objectName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startedOn"))
+                if (property.NameEquals("startedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     startedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedOn"))
+                if (property.NameEquals("endedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     endedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     state = new MigrationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("statusMessage"))
+                if (property.NameEquals("statusMessage"u8))
                 {
                     statusMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("itemsCount"))
+                if (property.NameEquals("itemsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     itemsCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("itemsCompletedCount"))
+                if (property.NameEquals("itemsCompletedCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                     itemsCompletedCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("errorPrefix"))
+                if (property.NameEquals("errorPrefix"u8))
                 {
                     errorPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultPrefix"))
+                if (property.NameEquals("resultPrefix"u8))
                 {
                     resultPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastStorageUpdate"))
+                if (property.NameEquals("lastStorageUpdate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     lastStorageUpdate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

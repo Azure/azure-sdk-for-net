@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DnsServers))
             {
-                writer.WritePropertyName("dnsServers");
+                writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
                 foreach (var item in DnsServers)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<string>> dnsServers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dnsServers"))
+                if (property.NameEquals("dnsServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryContainerId))
             {
-                writer.WritePropertyName("recoveryContainerId");
+                writer.WritePropertyName("recoveryContainerId"u8);
                 writer.WriteStringValue(RecoveryContainerId);
             }
             if (Optional.IsCollectionDefined(VmDisks))
             {
-                writer.WritePropertyName("vmDisks");
+                writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmDisks)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsCollectionDefined(VmManagedDisks))
             {
-                writer.WritePropertyName("vmManagedDisks");
+                writer.WritePropertyName("vmManagedDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmManagedDisks)
                 {
@@ -42,55 +42,55 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsDefined(RecoveryResourceGroupId))
             {
-                writer.WritePropertyName("recoveryResourceGroupId");
+                writer.WritePropertyName("recoveryResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryResourceGroupId);
             }
             if (Optional.IsDefined(RecoveryCloudServiceId))
             {
-                writer.WritePropertyName("recoveryCloudServiceId");
+                writer.WritePropertyName("recoveryCloudServiceId"u8);
                 writer.WriteStringValue(RecoveryCloudServiceId);
             }
             if (Optional.IsDefined(RecoveryAvailabilitySetId))
             {
-                writer.WritePropertyName("recoveryAvailabilitySetId");
+                writer.WritePropertyName("recoveryAvailabilitySetId"u8);
                 writer.WriteStringValue(RecoveryAvailabilitySetId);
             }
             if (Optional.IsDefined(PolicyId))
             {
-                writer.WritePropertyName("policyId");
+                writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
             if (Optional.IsDefined(RecoveryBootDiagStorageAccountId))
             {
-                writer.WritePropertyName("recoveryBootDiagStorageAccountId");
+                writer.WritePropertyName("recoveryBootDiagStorageAccountId"u8);
                 writer.WriteStringValue(RecoveryBootDiagStorageAccountId);
             }
             if (Optional.IsDefined(RecoveryAvailabilityZone))
             {
-                writer.WritePropertyName("recoveryAvailabilityZone");
+                writer.WritePropertyName("recoveryAvailabilityZone"u8);
                 writer.WriteStringValue(RecoveryAvailabilityZone);
             }
             if (Optional.IsDefined(RecoveryProximityPlacementGroupId))
             {
-                writer.WritePropertyName("recoveryProximityPlacementGroupId");
+                writer.WritePropertyName("recoveryProximityPlacementGroupId"u8);
                 writer.WriteStringValue(RecoveryProximityPlacementGroupId);
             }
             if (Optional.IsDefined(RecoveryVirtualMachineScaleSetId))
             {
-                writer.WritePropertyName("recoveryVirtualMachineScaleSetId");
+                writer.WritePropertyName("recoveryVirtualMachineScaleSetId"u8);
                 writer.WriteStringValue(RecoveryVirtualMachineScaleSetId);
             }
             if (Optional.IsDefined(RecoveryCapacityReservationGroupId))
             {
-                writer.WritePropertyName("recoveryCapacityReservationGroupId");
+                writer.WritePropertyName("recoveryCapacityReservationGroupId"u8);
                 writer.WriteStringValue(RecoveryCapacityReservationGroupId);
             }
             if (Optional.IsDefined(DiskEncryptionInfo))
             {
-                writer.WritePropertyName("diskEncryptionInfo");
+                writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo);
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

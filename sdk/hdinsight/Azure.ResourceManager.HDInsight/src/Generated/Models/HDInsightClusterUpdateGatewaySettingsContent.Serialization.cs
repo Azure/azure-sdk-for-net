@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsCredentialEnabled))
             {
-                writer.WritePropertyName("restAuthCredential.isEnabled");
+                writer.WritePropertyName("restAuthCredential.isEnabled"u8);
                 writer.WriteBooleanValue(IsCredentialEnabled.Value);
             }
             if (Optional.IsDefined(UserName))
             {
-                writer.WritePropertyName("restAuthCredential.username");
+                writer.WritePropertyName("restAuthCredential.username"u8);
                 writer.WriteStringValue(UserName);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("restAuthCredential.password");
+                writer.WritePropertyName("restAuthCredential.password"u8);
                 writer.WriteStringValue(Password);
             }
             writer.WriteEndObject();

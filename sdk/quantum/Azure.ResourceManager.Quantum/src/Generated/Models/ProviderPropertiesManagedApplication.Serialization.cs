@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Quantum.Models
             Optional<string> offerId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publisherId"))
+                if (property.NameEquals("publisherId"u8))
                 {
                     publisherId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offerId"))
+                if (property.NameEquals("offerId"u8))
                 {
                     offerId = property.Value.GetString();
                     continue;

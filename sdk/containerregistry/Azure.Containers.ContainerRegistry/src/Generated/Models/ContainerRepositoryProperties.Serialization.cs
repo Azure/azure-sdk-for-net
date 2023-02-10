@@ -27,37 +27,37 @@ namespace Azure.Containers.ContainerRegistry
             Optional<bool> readEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registry"))
+                if (property.NameEquals("registry"u8))
                 {
                     registry = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageName"))
+                if (property.NameEquals("imageName"u8))
                 {
                     imageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdateTime"))
+                if (property.NameEquals("lastUpdateTime"u8))
                 {
                     lastUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("manifestCount"))
+                if (property.NameEquals("manifestCount"u8))
                 {
                     manifestCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("tagCount"))
+                if (property.NameEquals("tagCount"u8))
                 {
                     tagCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("changeableAttributes"))
+                if (property.NameEquals("changeableAttributes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.Containers.ContainerRegistry
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("deleteEnabled"))
+                        if (property0.NameEquals("deleteEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -76,7 +76,7 @@ namespace Azure.Containers.ContainerRegistry
                             deleteEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("writeEnabled"))
+                        if (property0.NameEquals("writeEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -86,7 +86,7 @@ namespace Azure.Containers.ContainerRegistry
                             writeEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("listEnabled"))
+                        if (property0.NameEquals("listEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -96,7 +96,7 @@ namespace Azure.Containers.ContainerRegistry
                             listEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("readEnabled"))
+                        if (property0.NameEquals("readEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

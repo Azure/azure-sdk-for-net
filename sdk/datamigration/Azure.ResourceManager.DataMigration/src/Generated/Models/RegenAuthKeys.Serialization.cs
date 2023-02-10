@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyName))
             {
-                writer.WritePropertyName("keyName");
+                writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
             if (Optional.IsDefined(AuthKey1))
             {
-                writer.WritePropertyName("authKey1");
+                writer.WritePropertyName("authKey1"u8);
                 writer.WriteStringValue(AuthKey1);
             }
             if (Optional.IsDefined(AuthKey2))
             {
-                writer.WritePropertyName("authKey2");
+                writer.WritePropertyName("authKey2"u8);
                 writer.WriteStringValue(AuthKey2);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> authKey2 = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyName"))
+                if (property.NameEquals("keyName"u8))
                 {
                     keyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authKey1"))
+                if (property.NameEquals("authKey1"u8))
                 {
                     authKey1 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authKey2"))
+                if (property.NameEquals("authKey2"u8))
                 {
                     authKey2 = property.Value.GetString();
                     continue;

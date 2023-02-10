@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetConnectionInfo");
+            writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
-            writer.WritePropertyName("azureApp");
+            writer.WritePropertyName("azureApp"u8);
             writer.WriteObjectValue(AzureApp);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             AzureActiveDirectoryApp azureApp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetConnectionInfo"))
+                if (property.NameEquals("targetConnectionInfo"u8))
                 {
                     targetConnectionInfo = MISqlConnectionInfo.DeserializeMISqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("azureApp"))
+                if (property.NameEquals("azureApp"u8))
                 {
                     azureApp = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property.Value);
                     continue;

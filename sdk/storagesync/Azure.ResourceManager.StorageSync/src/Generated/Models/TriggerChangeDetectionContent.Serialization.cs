@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.StorageSync.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DirectoryPath))
             {
-                writer.WritePropertyName("directoryPath");
+                writer.WritePropertyName("directoryPath"u8);
                 writer.WriteStringValue(DirectoryPath);
             }
             if (Optional.IsDefined(ChangeDetectionMode))
             {
-                writer.WritePropertyName("changeDetectionMode");
+                writer.WritePropertyName("changeDetectionMode"u8);
                 writer.WriteStringValue(ChangeDetectionMode.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Paths))
             {
-                writer.WritePropertyName("paths");
+                writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
                 foreach (var item in Paths)
                 {

@@ -32,13 +32,25 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public async Task CompletionTest()
         {
-            var client = GetClient();
-            CompletionsOptions completionsRequest = new CompletionsOptions();
-            completionsRequest.Prompt.Add("Hello world");
-            completionsRequest.Prompt.Add("running over the same old ground");
-            Assert.That(completionsRequest, Is.InstanceOf<CompletionsOptions>());
-            var response = await client.GetCompletionsAsync(CompletionsDeploymentId, completionsRequest);
+            OpenAIClient client = GetClient();
+            CompletionsOptions requestOptions = new CompletionsOptions()
+            {
+                Prompt =
+                {
+                    "Hello world",
+                    "running over the same old ground",
+                },
+            };
+            Assert.That(requestOptions, Is.InstanceOf<CompletionsOptions>());
+            Response<Completions> response = await client.GetCompletionsAsync(
+                CompletionsDeploymentId,
+                requestOptions);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(requestOptions.Prompt.Count));
+            Assert.That(response.Value.Choices[0].FinishReason, Is.Not.Null.Or.Empty);
         }
 
         /// <summary>

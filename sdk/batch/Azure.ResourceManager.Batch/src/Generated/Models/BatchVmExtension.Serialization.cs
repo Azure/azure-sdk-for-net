@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("publisher");
+            writer.WritePropertyName("publisher"u8);
             writer.WriteStringValue(Publisher);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ExtensionType);
             if (Optional.IsDefined(TypeHandlerVersion))
             {
-                writer.WritePropertyName("typeHandlerVersion");
+                writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
             if (Optional.IsDefined(AutoUpgradeMinorVersion))
             {
-                writer.WritePropertyName("autoUpgradeMinorVersion");
+                writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
             if (Optional.IsDefined(Settings))
             {
-                writer.WritePropertyName("settings");
+                writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Settings);
 #else
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             if (Optional.IsDefined(ProtectedSettings))
             {
-                writer.WritePropertyName("protectedSettings");
+                writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ProtectedSettings);
 #else
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
             {
-                writer.WritePropertyName("provisionAfterExtensions");
+                writer.WritePropertyName("provisionAfterExtensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProvisionAfterExtensions)
                 {
@@ -76,27 +76,27 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<IList<string>> provisionAfterExtensions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publisher"))
+                if (property.NameEquals("publisher"u8))
                 {
                     publisher = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeHandlerVersion"))
+                if (property.NameEquals("typeHandlerVersion"u8))
                 {
                     typeHandlerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("autoUpgradeMinorVersion"))
+                if (property.NameEquals("autoUpgradeMinorVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Batch.Models
                     autoUpgradeMinorVersion = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("settings"))
+                if (property.NameEquals("settings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Batch.Models
                     settings = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("protectedSettings"))
+                if (property.NameEquals("protectedSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Batch.Models
                     protectedSettings = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("provisionAfterExtensions"))
+                if (property.NameEquals("provisionAfterExtensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

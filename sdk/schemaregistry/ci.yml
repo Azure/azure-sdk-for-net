@@ -24,6 +24,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: schemaregistry
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Data.SchemaRegistry

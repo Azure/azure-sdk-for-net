@@ -18,29 +18,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeySource))
             {
-                writer.WritePropertyName("keySource");
+                writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
             }
-            writer.WritePropertyName("keyVaultProperties");
+            writer.WritePropertyName("keyVaultProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyName))
             {
-                writer.WritePropertyName("keyName");
+                writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
             if (Optional.IsDefined(KeyVersion))
             {
-                writer.WritePropertyName("keyVersion");
+                writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
             if (Optional.IsDefined(KeyVaultUri))
             {
-                writer.WritePropertyName("keyVaultUri");
+                writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IdentityClientId))
             {
-                writer.WritePropertyName("identityClientId");
+                writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId.Value);
             }
             writer.WriteEndObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<Guid> identityClientId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keySource"))
+                if (property.NameEquals("keySource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     keySource = new ServiceAccountEncryptionKeySource(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyVaultProperties"))
+                if (property.NameEquals("keyVaultProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("keyName"))
+                        if (property0.NameEquals("keyName"u8))
                         {
                             keyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("keyVersion"))
+                        if (property0.NameEquals("keyVersion"u8))
                         {
                             keyVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("keyVaultUri"))
+                        if (property0.NameEquals("keyVaultUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                             keyVaultUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("identityClientId"))
+                        if (property0.NameEquals("identityClientId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Baseline))
             {
-                writer.WritePropertyName("baseline");
+                writer.WritePropertyName("baseline"u8);
                 writer.WriteObjectValue(Baseline);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ResultsNotInBaseline))
             {
-                writer.WritePropertyName("resultsNotInBaseline");
+                writer.WritePropertyName("resultsNotInBaseline"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResultsNotInBaseline)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             if (Optional.IsCollectionDefined(ResultsOnlyInBaseline))
             {
-                writer.WritePropertyName("resultsOnlyInBaseline");
+                writer.WritePropertyName("resultsOnlyInBaseline"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResultsOnlyInBaseline)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<IList<IList<string>>> resultsOnlyInBaseline = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("baseline"))
+                if (property.NameEquals("baseline"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     baseline = SqlVulnerabilityAssessmentBaseline.DeserializeSqlVulnerabilityAssessmentBaseline(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     status = new SqlVulnerabilityAssessmentScanResultRuleStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resultsNotInBaseline"))
+                if (property.NameEquals("resultsNotInBaseline"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     resultsNotInBaseline = array;
                     continue;
                 }
-                if (property.NameEquals("resultsOnlyInBaseline"))
+                if (property.NameEquals("resultsOnlyInBaseline"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TicketNumber))
             {
-                writer.WritePropertyName("ticketNumber");
+                writer.WritePropertyName("ticketNumber"u8);
                 writer.WriteNumberValue(TicketNumber.Value);
             }
             if (Optional.IsDefined(TicketLink))
             {
-                writer.WritePropertyName("ticketLink");
+                writer.WritePropertyName("ticketLink"u8);
                 writer.WriteStringValue(TicketLink);
             }
             if (Optional.IsDefined(TicketStatus))
             {
-                writer.WritePropertyName("ticketStatus");
+                writer.WritePropertyName("ticketStatus"u8);
                 writer.WriteStringValue(TicketStatus);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> ticketStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ticketNumber"))
+                if (property.NameEquals("ticketNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ticketNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ticketLink"))
+                if (property.NameEquals("ticketLink"u8))
                 {
                     ticketLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ticketStatus"))
+                if (property.NameEquals("ticketStatus"u8))
                 {
                     ticketStatus = property.Value.GetString();
                     continue;

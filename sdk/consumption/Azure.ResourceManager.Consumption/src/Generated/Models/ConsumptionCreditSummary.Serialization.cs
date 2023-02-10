@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("eTag");
+                writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<ConsumptionReseller> reseller = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,22 +54,22 @@ namespace Azure.ResourceManager.Consumption.Models
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("balanceSummary"))
+                        if (property0.NameEquals("balanceSummary"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             balanceSummary = CreditBalanceSummary.DeserializeCreditBalanceSummary(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("pendingCreditAdjustments"))
+                        if (property0.NameEquals("pendingCreditAdjustments"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             pendingCreditAdjustments = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("expiredCredit"))
+                        if (property0.NameEquals("expiredCredit"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             expiredCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("pendingEligibleCharges"))
+                        if (property0.NameEquals("pendingEligibleCharges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.Consumption.Models
                             pendingEligibleCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("creditCurrency"))
+                        if (property0.NameEquals("creditCurrency"u8))
                         {
                             creditCurrency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("billingCurrency"))
+                        if (property0.NameEquals("billingCurrency"u8))
                         {
                             billingCurrency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("reseller"))
+                        if (property0.NameEquals("reseller"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

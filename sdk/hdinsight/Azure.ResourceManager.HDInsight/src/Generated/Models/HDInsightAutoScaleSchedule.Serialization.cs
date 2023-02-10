@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Days))
             {
-                writer.WritePropertyName("days");
+                writer.WritePropertyName("days"u8);
                 writer.WriteStartArray();
                 foreach (var item in Days)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsDefined(TimeAndCapacity))
             {
-                writer.WritePropertyName("timeAndCapacity");
+                writer.WritePropertyName("timeAndCapacity"u8);
                 writer.WriteObjectValue(TimeAndCapacity);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<HDInsightAutoScaleTimeAndCapacity> timeAndCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("days"))
+                if (property.NameEquals("days"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     days = array;
                     continue;
                 }
-                if (property.NameEquals("timeAndCapacity"))
+                if (property.NameEquals("timeAndCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

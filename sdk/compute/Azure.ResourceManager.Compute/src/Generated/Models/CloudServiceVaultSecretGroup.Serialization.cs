@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceVault))
             {
-                writer.WritePropertyName("sourceVault");
+                writer.WritePropertyName("sourceVault"u8);
                 JsonSerializer.Serialize(writer, SourceVault);
             }
             if (Optional.IsCollectionDefined(VaultCertificates))
             {
-                writer.WritePropertyName("vaultCertificates");
+                writer.WritePropertyName("vaultCertificates"u8);
                 writer.WriteStartArray();
                 foreach (var item in VaultCertificates)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<CloudServiceVaultCertificate>> vaultCertificates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceVault"))
+                if (property.NameEquals("sourceVault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
                     sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("vaultCertificates"))
+                if (property.NameEquals("vaultCertificates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

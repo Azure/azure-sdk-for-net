@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(InstantRPDetails))
             {
-                writer.WritePropertyName("instantRPDetails");
+                writer.WritePropertyName("instantRPDetails"u8);
                 writer.WriteObjectValue(InstantRPDetails);
             }
             if (Optional.IsDefined(SchedulePolicy))
             {
-                writer.WritePropertyName("schedulePolicy");
+                writer.WritePropertyName("schedulePolicy"u8);
                 writer.WriteObjectValue(SchedulePolicy);
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
-                writer.WritePropertyName("retentionPolicy");
+                writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
             if (Optional.IsCollectionDefined(TieringPolicy))
             {
-                writer.WritePropertyName("tieringPolicy");
+                writer.WritePropertyName("tieringPolicy"u8);
                 writer.WriteStartObject();
                 foreach (var item in TieringPolicy)
                 {
@@ -44,29 +44,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(InstantRpRetentionRangeInDays))
             {
-                writer.WritePropertyName("instantRpRetentionRangeInDays");
+                writer.WritePropertyName("instantRpRetentionRangeInDays"u8);
                 writer.WriteNumberValue(InstantRpRetentionRangeInDays.Value);
             }
             if (Optional.IsDefined(TimeZone))
             {
-                writer.WritePropertyName("timeZone");
+                writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
             if (Optional.IsDefined(PolicyType))
             {
-                writer.WritePropertyName("policyType");
+                writer.WritePropertyName("policyType"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
             if (Optional.IsDefined(ProtectedItemsCount))
             {
-                writer.WritePropertyName("protectedItemsCount");
+                writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
-            writer.WritePropertyName("backupManagementType");
+            writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
             if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
-                writer.WritePropertyName("resourceGuardOperationRequests");
+                writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperationRequests)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<string>> resourceGuardOperationRequests = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("instantRPDetails"))
+                if (property.NameEquals("instantRPDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     instantRPDetails = InstantRPAdditionalDetails.DeserializeInstantRPAdditionalDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("schedulePolicy"))
+                if (property.NameEquals("schedulePolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     schedulePolicy = SchedulePolicy.DeserializeSchedulePolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("retentionPolicy"))
+                if (property.NameEquals("retentionPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tieringPolicy"))
+                if (property.NameEquals("tieringPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     tieringPolicy = dictionary;
                     continue;
                 }
-                if (property.NameEquals("instantRpRetentionRangeInDays"))
+                if (property.NameEquals("instantRpRetentionRangeInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     instantRpRetentionRangeInDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeZone"))
+                if (property.NameEquals("timeZone"u8))
                 {
                     timeZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyType"))
+                if (property.NameEquals("policyType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     policyType = new IaasVmPolicyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("protectedItemsCount"))
+                if (property.NameEquals("protectedItemsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectedItemsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("backupManagementType"))
+                if (property.NameEquals("backupManagementType"u8))
                 {
                     backupManagementType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGuardOperationRequests"))
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

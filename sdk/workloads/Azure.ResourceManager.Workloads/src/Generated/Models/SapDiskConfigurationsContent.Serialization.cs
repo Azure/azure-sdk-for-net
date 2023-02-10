@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("appLocation");
+            writer.WritePropertyName("appLocation"u8);
             writer.WriteStringValue(AppLocation);
-            writer.WritePropertyName("environment");
+            writer.WritePropertyName("environment"u8);
             writer.WriteStringValue(Environment.ToString());
-            writer.WritePropertyName("sapProduct");
+            writer.WritePropertyName("sapProduct"u8);
             writer.WriteStringValue(SapProduct.ToString());
-            writer.WritePropertyName("databaseType");
+            writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            writer.WritePropertyName("deploymentType");
+            writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
-            writer.WritePropertyName("dbVmSku");
+            writer.WritePropertyName("dbVmSku"u8);
             writer.WriteStringValue(DBVmSku);
             writer.WriteEndObject();
         }

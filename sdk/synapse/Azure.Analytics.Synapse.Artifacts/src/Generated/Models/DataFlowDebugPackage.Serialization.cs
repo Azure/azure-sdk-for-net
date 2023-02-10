@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SessionId))
             {
-                writer.WritePropertyName("sessionId");
+                writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
             if (Optional.IsDefined(DataFlow))
             {
-                writer.WritePropertyName("dataFlow");
+                writer.WritePropertyName("dataFlow"u8);
                 writer.WriteObjectValue(DataFlow);
             }
             if (Optional.IsCollectionDefined(DataFlows))
             {
-                writer.WritePropertyName("dataFlows");
+                writer.WritePropertyName("dataFlows"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(Datasets))
             {
-                writer.WritePropertyName("datasets");
+                writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(LinkedServices))
             {
-                writer.WritePropertyName("linkedServices");
+                writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
                 foreach (var item in LinkedServices)
                 {
@@ -61,12 +61,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(Staging))
             {
-                writer.WritePropertyName("staging");
+                writer.WritePropertyName("staging"u8);
                 writer.WriteObjectValue(Staging);
             }
             if (Optional.IsDefined(DebugSettings))
             {
-                writer.WritePropertyName("debugSettings");
+                writer.WritePropertyName("debugSettings"u8);
                 writer.WriteObjectValue(DebugSettings);
             }
             foreach (var item in AdditionalProperties)
@@ -90,12 +90,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sessionId"))
+                if (property.NameEquals("sessionId"u8))
                 {
                     sessionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataFlow"))
+                if (property.NameEquals("dataFlow"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dataFlow = DataFlowDebugResource.DeserializeDataFlowDebugResource(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataFlows"))
+                if (property.NameEquals("dataFlows"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dataFlows = array;
                     continue;
                 }
-                if (property.NameEquals("datasets"))
+                if (property.NameEquals("datasets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -135,7 +135,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     datasets = array;
                     continue;
                 }
-                if (property.NameEquals("linkedServices"))
+                if (property.NameEquals("linkedServices"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,7 +150,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     linkedServices = array;
                     continue;
                 }
-                if (property.NameEquals("staging"))
+                if (property.NameEquals("staging"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -160,7 +160,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("debugSettings"))
+                if (property.NameEquals("debugSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

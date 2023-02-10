@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WorkLoadType))
             {
-                writer.WritePropertyName("workLoadType");
+                writer.WritePropertyName("workLoadType"u8);
                 writer.WriteStringValue(WorkLoadType.Value.ToString());
             }
             if (Optional.IsDefined(Settings))
             {
-                writer.WritePropertyName("settings");
+                writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
             if (Optional.IsCollectionDefined(SubProtectionPolicy))
             {
-                writer.WritePropertyName("subProtectionPolicy");
+                writer.WritePropertyName("subProtectionPolicy"u8);
                 writer.WriteStartArray();
                 foreach (var item in SubProtectionPolicy)
                 {
@@ -38,19 +38,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(MakePolicyConsistent))
             {
-                writer.WritePropertyName("makePolicyConsistent");
+                writer.WritePropertyName("makePolicyConsistent"u8);
                 writer.WriteBooleanValue(MakePolicyConsistent.Value);
             }
             if (Optional.IsDefined(ProtectedItemsCount))
             {
-                writer.WritePropertyName("protectedItemsCount");
+                writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
-            writer.WritePropertyName("backupManagementType");
+            writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
             if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
-                writer.WritePropertyName("resourceGuardOperationRequests");
+                writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperationRequests)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<string>> resourceGuardOperationRequests = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workLoadType"))
+                if (property.NameEquals("workLoadType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     workLoadType = new WorkloadType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("settings"))
+                if (property.NameEquals("settings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     settings = Settings.DeserializeSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("subProtectionPolicy"))
+                if (property.NameEquals("subProtectionPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     subProtectionPolicy = array;
                     continue;
                 }
-                if (property.NameEquals("makePolicyConsistent"))
+                if (property.NameEquals("makePolicyConsistent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     makePolicyConsistent = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("protectedItemsCount"))
+                if (property.NameEquals("protectedItemsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectedItemsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("backupManagementType"))
+                if (property.NameEquals("backupManagementType"u8))
                 {
                     backupManagementType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGuardOperationRequests"))
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
