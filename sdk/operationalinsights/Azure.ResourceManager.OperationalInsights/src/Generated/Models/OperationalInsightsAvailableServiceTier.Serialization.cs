@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastSkuUpdate = property.Value.GetDateTimeOffset();
+                    lastSkuUpdate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
