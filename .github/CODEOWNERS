@@ -497,7 +497,10 @@
 # PRLabel: %Monitor - Exporter
 # ServiceLabel: %Monitor - Exporter %Service Attention
 /sdk/monitor/Azure.Monitor.OpenTelemetry.*/                        @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
-/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter*                 @SameergMS @dadunl
+
+# PRLabel: %Monitor - Distro
+# ServiceLabel: %Monitor - Distro %Service Attention
+/sdk/monitor/Azure.Monitor.OpenTelemetry/     @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
 # ServiceLabel: %Monitor - Metrics %Service Attention
 #/<NotInRepo>/                                                     @AzMonEssential

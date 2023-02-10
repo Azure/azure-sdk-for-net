@@ -17,26 +17,26 @@ namespace Azure.ResourceManager.ServiceBus
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("action");
+                writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
             if (Optional.IsDefined(FilterType))
             {
-                writer.WritePropertyName("filterType");
+                writer.WritePropertyName("filterType"u8);
                 writer.WriteStringValue(FilterType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SqlFilter))
             {
-                writer.WritePropertyName("sqlFilter");
+                writer.WritePropertyName("sqlFilter"u8);
                 writer.WriteObjectValue(SqlFilter);
             }
             if (Optional.IsDefined(CorrelationFilter))
             {
-                writer.WritePropertyName("correlationFilter");
+                writer.WritePropertyName("correlationFilter"u8);
                 writer.WriteObjectValue(CorrelationFilter);
             }
             writer.WriteEndObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<ServiceBusCorrelationFilter> correlationFilter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.ServiceBus
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ServiceBus
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ServiceBus
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("action"))
+                        if (property0.NameEquals("action"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceBus
                             action = ServiceBusFilterAction.DeserializeServiceBusFilterAction(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("filterType"))
+                        if (property0.NameEquals("filterType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ServiceBus
                             filterType = property0.Value.GetString().ToServiceBusFilterType();
                             continue;
                         }
-                        if (property0.NameEquals("sqlFilter"))
+                        if (property0.NameEquals("sqlFilter"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceBus
                             sqlFilter = ServiceBusSqlFilter.DeserializeServiceBusSqlFilter(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("correlationFilter"))
+                        if (property0.NameEquals("correlationFilter"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

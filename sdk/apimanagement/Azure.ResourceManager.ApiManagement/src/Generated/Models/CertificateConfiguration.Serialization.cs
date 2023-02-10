@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EncodedCertificate))
             {
-                writer.WritePropertyName("encodedCertificate");
+                writer.WritePropertyName("encodedCertificate"u8);
                 writer.WriteStringValue(EncodedCertificate);
             }
             if (Optional.IsDefined(CertificatePassword))
             {
-                writer.WritePropertyName("certificatePassword");
+                writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
             }
-            writer.WritePropertyName("storeName");
+            writer.WritePropertyName("storeName"u8);
             writer.WriteStringValue(StoreName.ToString());
             if (Optional.IsDefined(Certificate))
             {
-                writer.WritePropertyName("certificate");
+                writer.WritePropertyName("certificate"u8);
                 writer.WriteObjectValue(Certificate);
             }
             writer.WriteEndObject();
@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<CertificateInformation> certificate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("encodedCertificate"))
+                if (property.NameEquals("encodedCertificate"u8))
                 {
                     encodedCertificate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certificatePassword"))
+                if (property.NameEquals("certificatePassword"u8))
                 {
                     certificatePassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storeName"))
+                if (property.NameEquals("storeName"u8))
                 {
                     storeName = new CertificateConfigurationStoreName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("certificate"))
+                if (property.NameEquals("certificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -30,7 +30,7 @@ namespace Azure.Monitor.Query.Models
             Optional<IReadOnlyList<LocalizableString>> dimensions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isDimensionRequired"))
+                if (property.NameEquals("isDimensionRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,17 +40,17 @@ namespace Azure.Monitor.Query.Models
                     isDimensionRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,17 +60,17 @@ namespace Azure.Monitor.Query.Models
                     name = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }
-                if (property.NameEquals("displayDescription"))
+                if (property.NameEquals("displayDescription"u8))
                 {
                     displayDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricClass"))
+                if (property.NameEquals("metricClass"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.Monitor.Query.Models
                     metricClass = new MetricClass(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.Monitor.Query.Models
                     unit = new MetricUnit(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryAggregationType"))
+                if (property.NameEquals("primaryAggregationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.Monitor.Query.Models
                     primaryAggregationType = property.Value.GetString().ToMetricAggregationType();
                     continue;
                 }
-                if (property.NameEquals("supportedAggregationTypes"))
+                if (property.NameEquals("supportedAggregationTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +115,7 @@ namespace Azure.Monitor.Query.Models
                     supportedAggregationTypes = array;
                     continue;
                 }
-                if (property.NameEquals("metricAvailabilities"))
+                if (property.NameEquals("metricAvailabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,12 +130,12 @@ namespace Azure.Monitor.Query.Models
                     metricAvailabilities = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dimensions"))
+                if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

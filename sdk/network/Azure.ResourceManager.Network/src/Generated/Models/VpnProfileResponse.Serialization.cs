@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<Uri> profileUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("profileUrl"))
+                if (property.NameEquals("profileUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

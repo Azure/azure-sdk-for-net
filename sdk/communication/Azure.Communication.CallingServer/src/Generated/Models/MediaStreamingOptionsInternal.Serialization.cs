@@ -15,13 +15,13 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("transportUrl");
+            writer.WritePropertyName("transportUrl"u8);
             writer.WriteStringValue(TransportUrl);
-            writer.WritePropertyName("transportType");
+            writer.WritePropertyName("transportType"u8);
             writer.WriteStringValue(TransportType.ToString());
-            writer.WritePropertyName("contentType");
+            writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType.ToString());
-            writer.WritePropertyName("audioChannelType");
+            writer.WritePropertyName("audioChannelType"u8);
             writer.WriteStringValue(AudioChannelType.ToString());
             writer.WriteEndObject();
         }

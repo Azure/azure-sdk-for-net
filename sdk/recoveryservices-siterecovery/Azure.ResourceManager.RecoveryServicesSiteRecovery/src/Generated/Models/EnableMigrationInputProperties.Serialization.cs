@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("policyId");
+            writer.WritePropertyName("policyId"u8);
             writer.WriteStringValue(PolicyId);
-            writer.WritePropertyName("providerSpecificDetails");
+            writer.WritePropertyName("providerSpecificDetails"u8);
             writer.WriteObjectValue(ProviderSpecificDetails);
             writer.WriteEndObject();
         }

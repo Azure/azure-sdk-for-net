@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtensionType))
             {
-                writer.WritePropertyName("extensionType");
+                writer.WritePropertyName("extensionType"u8);
                 writer.WriteStringValue(ExtensionType);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             if (Optional.IsDefined(Settings))
             {
-                writer.WritePropertyName("settings");
+                writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Settings);
 #else
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             if (Optional.IsDefined(ProtectedSettings))
             {
-                writer.WritePropertyName("protectedSettings");
+                writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ProtectedSettings);
 #else
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<BinaryData> protectedSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("extensionType"))
+                        if (property0.NameEquals("extensionType"u8))
                         {
                             extensionType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("settings"))
+                        if (property0.NameEquals("settings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             settings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("protectedSettings"))
+                        if (property0.NameEquals("protectedSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("skuName");
+            writer.WritePropertyName("skuName"u8);
             writer.WriteStringValue(SkuName);
-            writer.WritePropertyName("family");
+            writer.WritePropertyName("family"u8);
             writer.WriteStringValue(Family.ToString());
-            writer.WritePropertyName("capacity");
+            writer.WritePropertyName("capacity"u8);
             writer.WriteNumberValue(Capacity);
             writer.WriteEndObject();
         }
@@ -38,27 +38,27 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<ResourceIdentifier> cacheResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skuName"))
+                if (property.NameEquals("skuName"u8))
                 {
                     skuName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = new RedisCacheFamily(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     capacity = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cacheResourceId"))
+                if (property.NameEquals("cacheResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

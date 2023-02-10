@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DirectoryType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DirectoryType.Value.ToString());
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsDefined(LogicalName))
             {
-                writer.WritePropertyName("logicalName");
+                writer.WritePropertyName("logicalName"u8);
                 writer.WriteStringValue(LogicalName);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> logicalName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     type = new SQLDataDirectoryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("logicalName"))
+                if (property.NameEquals("logicalName"u8))
                 {
                     logicalName = property.Value.GetString();
                     continue;

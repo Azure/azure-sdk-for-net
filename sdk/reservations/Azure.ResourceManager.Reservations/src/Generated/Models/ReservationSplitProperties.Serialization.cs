@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<string> splitSource = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("splitDestinations"))
+                if (property.NameEquals("splitDestinations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     splitDestinations = array;
                     continue;
                 }
-                if (property.NameEquals("splitSource"))
+                if (property.NameEquals("splitSource"u8))
                 {
                     splitSource = property.Value.GetString();
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Groups))
             {
-                writer.WritePropertyName("groups");
+                writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {

@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Interval))
             {
-                writer.WritePropertyName("interval");
+                writer.WritePropertyName("interval"u8);
                 writer.WriteObjectValue(Interval);
             }
             if (Optional.IsDefined(Top))
             {
-                writer.WritePropertyName("$top");
+                writer.WritePropertyName("$top"u8);
                 writer.WriteNumberValue(Top.Value);
             }
             if (Optional.IsDefined(Skip))
             {
-                writer.WritePropertyName("$skip");
+                writer.WritePropertyName("$skip"u8);
                 writer.WriteNumberValue(Skip.Value);
             }
             if (Optional.IsDefined(SkipToken))
             {
-                writer.WritePropertyName("$skipToken");
+                writer.WritePropertyName("$skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
             if (Optional.IsDefined(ResultFormat))
             {
-                writer.WritePropertyName("resultFormat");
+                writer.WritePropertyName("resultFormat"u8);
                 writer.WriteStringValue(ResultFormat.Value.ToSerialString());
             }
             writer.WriteEndObject();

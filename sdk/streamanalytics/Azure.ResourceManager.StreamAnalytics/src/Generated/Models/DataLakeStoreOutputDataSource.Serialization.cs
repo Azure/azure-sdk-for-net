@@ -16,53 +16,53 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RefreshToken))
             {
-                writer.WritePropertyName("refreshToken");
+                writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
             if (Optional.IsDefined(TokenUserPrincipalName))
             {
-                writer.WritePropertyName("tokenUserPrincipalName");
+                writer.WritePropertyName("tokenUserPrincipalName"u8);
                 writer.WriteStringValue(TokenUserPrincipalName);
             }
             if (Optional.IsDefined(TokenUserDisplayName))
             {
-                writer.WritePropertyName("tokenUserDisplayName");
+                writer.WritePropertyName("tokenUserDisplayName"u8);
                 writer.WriteStringValue(TokenUserDisplayName);
             }
             if (Optional.IsDefined(AccountName))
             {
-                writer.WritePropertyName("accountName");
+                writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(FilePathPrefix))
             {
-                writer.WritePropertyName("filePathPrefix");
+                writer.WritePropertyName("filePathPrefix"u8);
                 writer.WriteStringValue(FilePathPrefix);
             }
             if (Optional.IsDefined(DateFormat))
             {
-                writer.WritePropertyName("dateFormat");
+                writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
             if (Optional.IsDefined(TimeFormat))
             {
-                writer.WritePropertyName("timeFormat");
+                writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
             if (Optional.IsDefined(AuthenticationMode))
             {
-                writer.WritePropertyName("authenticationMode");
+                writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,27 +97,27 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("refreshToken"))
+                        if (property0.NameEquals("refreshToken"u8))
                         {
                             refreshToken = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tokenUserPrincipalName"))
+                        if (property0.NameEquals("tokenUserPrincipalName"u8))
                         {
                             tokenUserPrincipalName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tokenUserDisplayName"))
+                        if (property0.NameEquals("tokenUserDisplayName"u8))
                         {
                             tokenUserDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("accountName"))
+                        if (property0.NameEquals("accountName"u8))
                         {
                             accountName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tenantId"))
+                        if (property0.NameEquals("tenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -127,22 +127,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             tenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("filePathPrefix"))
+                        if (property0.NameEquals("filePathPrefix"u8))
                         {
                             filePathPrefix = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dateFormat"))
+                        if (property0.NameEquals("dateFormat"u8))
                         {
                             dateFormat = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("timeFormat"))
+                        if (property0.NameEquals("timeFormat"u8))
                         {
                             timeFormat = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authenticationMode"))
+                        if (property0.NameEquals("authenticationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

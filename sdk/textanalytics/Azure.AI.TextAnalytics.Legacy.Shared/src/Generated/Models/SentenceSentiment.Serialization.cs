@@ -25,32 +25,32 @@ namespace Azure.AI.TextAnalytics.Legacy
             Optional<IReadOnlyList<SentenceAssessment>> assessments = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sentiment"))
+                if (property.NameEquals("sentiment"u8))
                 {
                     sentiment = property.Value.GetString().ToSentenceSentimentValue();
                     continue;
                 }
-                if (property.NameEquals("confidenceScores"))
+                if (property.NameEquals("confidenceScores"u8))
                 {
                     confidenceScores = SentimentConfidenceScorePerLabel.DeserializeSentimentConfidenceScorePerLabel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     offset = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("length"))
+                if (property.NameEquals("length"u8))
                 {
                     length = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("targets"))
+                if (property.NameEquals("targets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     targets = array;
                     continue;
                 }
-                if (property.NameEquals("assessments"))
+                if (property.NameEquals("assessments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

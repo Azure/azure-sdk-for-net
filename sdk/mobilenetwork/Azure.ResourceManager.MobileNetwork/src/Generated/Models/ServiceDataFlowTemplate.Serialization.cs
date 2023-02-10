@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("templateName");
+            writer.WritePropertyName("templateName"u8);
             writer.WriteStringValue(TemplateName);
-            writer.WritePropertyName("direction");
+            writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
-            writer.WritePropertyName("protocol");
+            writer.WritePropertyName("protocol"u8);
             writer.WriteStartArray();
             foreach (var item in Protocol)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("remoteIpList");
+            writer.WritePropertyName("remoteIpList"u8);
             writer.WriteStartArray();
             foreach (var item in RemoteIPList)
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Ports))
             {
-                writer.WritePropertyName("ports");
+                writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
                 foreach (var item in Ports)
                 {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<IList<string>> ports = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("templateName"))
+                if (property.NameEquals("templateName"u8))
                 {
                     templateName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     direction = new SdfDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     protocol = array;
                     continue;
                 }
-                if (property.NameEquals("remoteIpList"))
+                if (property.NameEquals("remoteIpList"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     remoteIPList = array;
                     continue;
                 }
-                if (property.NameEquals("ports"))
+                if (property.NameEquals("ports"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

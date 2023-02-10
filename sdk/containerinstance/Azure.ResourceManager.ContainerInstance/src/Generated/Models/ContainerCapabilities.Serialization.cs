@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<ContainerSupportedCapabilities> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipAddressType"))
+                if (property.NameEquals("ipAddressType"u8))
                 {
                     ipAddressType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("gpu"))
+                if (property.NameEquals("gpu"u8))
                 {
                     gpu = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

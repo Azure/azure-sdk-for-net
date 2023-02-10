@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<TlsProperties> tls = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("host"))
+                if (property.NameEquals("host"u8))
                 {
                     host = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tls"))
+                if (property.NameEquals("tls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

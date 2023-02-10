@@ -20,37 +20,37 @@ namespace Azure.Communication.JobRouter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ChannelReference))
             {
-                writer.WritePropertyName("channelReference");
+                writer.WritePropertyName("channelReference"u8);
                 writer.WriteStringValue(ChannelReference);
             }
             if (Optional.IsDefined(ChannelId))
             {
-                writer.WritePropertyName("channelId");
+                writer.WritePropertyName("channelId"u8);
                 writer.WriteStringValue(ChannelId);
             }
             if (Optional.IsDefined(ClassificationPolicyId))
             {
-                writer.WritePropertyName("classificationPolicyId");
+                writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
             if (Optional.IsDefined(QueueId))
             {
-                writer.WritePropertyName("queueId");
+                writer.WritePropertyName("queueId"u8);
                 writer.WriteStringValue(QueueId);
             }
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
+                writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
             if (Optional.IsDefined(DispositionCode))
             {
-                writer.WritePropertyName("dispositionCode");
+                writer.WritePropertyName("dispositionCode"u8);
                 writer.WriteStringValue(DispositionCode);
             }
             if (Optional.IsCollectionDefined(_requestedWorkerSelectors))
             {
-                writer.WritePropertyName("requestedWorkerSelectors");
+                writer.WritePropertyName("requestedWorkerSelectors"u8);
                 writer.WriteStartArray();
                 foreach (var item in _requestedWorkerSelectors)
                 {
@@ -60,7 +60,7 @@ namespace Azure.Communication.JobRouter.Models
             }
             if (Optional.IsCollectionDefined(_labels))
             {
-                writer.WritePropertyName("labels");
+                writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
                 foreach (var item in _labels)
                 {
@@ -71,7 +71,7 @@ namespace Azure.Communication.JobRouter.Models
             }
             if (Optional.IsCollectionDefined(_tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in _tags)
                 {
@@ -82,7 +82,7 @@ namespace Azure.Communication.JobRouter.Models
             }
             if (Optional.IsCollectionDefined(_notes))
             {
-                writer.WritePropertyName("notes");
+                writer.WritePropertyName("notes"u8);
                 writer.WriteStartObject();
                 foreach (var item in _notes)
                 {
@@ -113,17 +113,17 @@ namespace Azure.Communication.JobRouter.Models
             Optional<IDictionary<string, string>> notes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("channelReference"))
+                if (property.NameEquals("channelReference"u8))
                 {
                     channelReference = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobStatus"))
+                if (property.NameEquals("jobStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +133,7 @@ namespace Azure.Communication.JobRouter.Models
                     jobStatus = new RouterJobStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enqueueTimeUtc"))
+                if (property.NameEquals("enqueueTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,22 +143,22 @@ namespace Azure.Communication.JobRouter.Models
                     enqueueTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("channelId"))
+                if (property.NameEquals("channelId"u8))
                 {
                     channelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("classificationPolicyId"))
+                if (property.NameEquals("classificationPolicyId"u8))
                 {
                     classificationPolicyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queueId"))
+                if (property.NameEquals("queueId"u8))
                 {
                     queueId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("priority"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -168,12 +168,12 @@ namespace Azure.Communication.JobRouter.Models
                     priority = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dispositionCode"))
+                if (property.NameEquals("dispositionCode"u8))
                 {
                     dispositionCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestedWorkerSelectors"))
+                if (property.NameEquals("requestedWorkerSelectors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -188,7 +188,7 @@ namespace Azure.Communication.JobRouter.Models
                     requestedWorkerSelectors = array;
                     continue;
                 }
-                if (property.NameEquals("attachedWorkerSelectors"))
+                if (property.NameEquals("attachedWorkerSelectors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -203,7 +203,7 @@ namespace Azure.Communication.JobRouter.Models
                     attachedWorkerSelectors = array;
                     continue;
                 }
-                if (property.NameEquals("labels"))
+                if (property.NameEquals("labels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -218,7 +218,7 @@ namespace Azure.Communication.JobRouter.Models
                     labels = dictionary;
                     continue;
                 }
-                if (property.NameEquals("assignments"))
+                if (property.NameEquals("assignments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -233,7 +233,7 @@ namespace Azure.Communication.JobRouter.Models
                     assignments = dictionary;
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -248,7 +248,7 @@ namespace Azure.Communication.JobRouter.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("notes"))
+                if (property.NameEquals("notes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

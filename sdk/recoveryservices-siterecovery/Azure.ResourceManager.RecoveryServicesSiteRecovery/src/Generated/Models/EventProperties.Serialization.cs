@@ -29,37 +29,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<HealthError>> healthErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eventCode"))
+                if (property.NameEquals("eventCode"u8))
                 {
                     eventCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventType"))
+                if (property.NameEquals("eventType"u8))
                 {
                     eventType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("affectedObjectFriendlyName"))
+                if (property.NameEquals("affectedObjectFriendlyName"u8))
                 {
                     affectedObjectFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("affectedObjectCorrelationId"))
+                if (property.NameEquals("affectedObjectCorrelationId"u8))
                 {
                     affectedObjectCorrelationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     severity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeOfOccurrence"))
+                if (property.NameEquals("timeOfOccurrence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     timeOfOccurrence = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("fabricId"))
+                if (property.NameEquals("fabricId"u8))
                 {
                     fabricId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerSpecificDetails"))
+                if (property.NameEquals("providerSpecificDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     providerSpecificDetails = EventProviderSpecificDetails.DeserializeEventProviderSpecificDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("eventSpecificDetails"))
+                if (property.NameEquals("eventSpecificDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     eventSpecificDetails = EventSpecificDetails.DeserializeEventSpecificDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("healthErrors"))
+                if (property.NameEquals("healthErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

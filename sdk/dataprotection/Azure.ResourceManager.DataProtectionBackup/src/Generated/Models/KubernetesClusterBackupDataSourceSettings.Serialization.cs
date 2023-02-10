@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("snapshotVolumes");
+            writer.WritePropertyName("snapshotVolumes"u8);
             writer.WriteBooleanValue(IsSnapshotVolumesEnabled);
-            writer.WritePropertyName("includeClusterScopeResources");
+            writer.WritePropertyName("includeClusterScopeResources"u8);
             writer.WriteBooleanValue(IsClusterScopeResourcesIncluded);
             if (Optional.IsCollectionDefined(IncludedNamespaces))
             {
-                writer.WritePropertyName("includedNamespaces");
+                writer.WritePropertyName("includedNamespaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in IncludedNamespaces)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             if (Optional.IsCollectionDefined(ExcludedNamespaces))
             {
-                writer.WritePropertyName("excludedNamespaces");
+                writer.WritePropertyName("excludedNamespaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludedNamespaces)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             if (Optional.IsCollectionDefined(IncludedResourceTypes))
             {
-                writer.WritePropertyName("includedResourceTypes");
+                writer.WritePropertyName("includedResourceTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in IncludedResourceTypes)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             if (Optional.IsCollectionDefined(ExcludedResourceTypes))
             {
-                writer.WritePropertyName("excludedResourceTypes");
+                writer.WritePropertyName("excludedResourceTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludedResourceTypes)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             if (Optional.IsCollectionDefined(LabelSelectors))
             {
-                writer.WritePropertyName("labelSelectors");
+                writer.WritePropertyName("labelSelectors"u8);
                 writer.WriteStartArray();
                 foreach (var item in LabelSelectors)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -87,17 +87,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("snapshotVolumes"))
+                if (property.NameEquals("snapshotVolumes"u8))
                 {
                     snapshotVolumes = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("includeClusterScopeResources"))
+                if (property.NameEquals("includeClusterScopeResources"u8))
                 {
                     includeClusterScopeResources = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("includedNamespaces"))
+                if (property.NameEquals("includedNamespaces"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     includedNamespaces = array;
                     continue;
                 }
-                if (property.NameEquals("excludedNamespaces"))
+                if (property.NameEquals("excludedNamespaces"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     excludedNamespaces = array;
                     continue;
                 }
-                if (property.NameEquals("includedResourceTypes"))
+                if (property.NameEquals("includedResourceTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     includedResourceTypes = array;
                     continue;
                 }
-                if (property.NameEquals("excludedResourceTypes"))
+                if (property.NameEquals("excludedResourceTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     excludedResourceTypes = array;
                     continue;
                 }
-                if (property.NameEquals("labelSelectors"))
+                if (property.NameEquals("labelSelectors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     labelSelectors = array;
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

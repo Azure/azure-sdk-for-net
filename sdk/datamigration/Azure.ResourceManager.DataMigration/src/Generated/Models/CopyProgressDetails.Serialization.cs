@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<int> copyDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tableName"))
+                if (property.NameEquals("tableName"u8))
                 {
                     tableName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parallelCopyType"))
+                if (property.NameEquals("parallelCopyType"u8))
                 {
                     parallelCopyType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("usedParallelCopies"))
+                if (property.NameEquals("usedParallelCopies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     usedParallelCopies = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dataRead"))
+                if (property.NameEquals("dataRead"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     dataRead = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("dataWritten"))
+                if (property.NameEquals("dataWritten"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     dataWritten = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("rowsRead"))
+                if (property.NameEquals("rowsRead"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     rowsRead = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("rowsCopied"))
+                if (property.NameEquals("rowsCopied"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     rowsCopied = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("copyStart"))
+                if (property.NameEquals("copyStart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     copyStart = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("copyThroughput"))
+                if (property.NameEquals("copyThroughput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     copyThroughput = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("copyDuration"))
+                if (property.NameEquals("copyDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

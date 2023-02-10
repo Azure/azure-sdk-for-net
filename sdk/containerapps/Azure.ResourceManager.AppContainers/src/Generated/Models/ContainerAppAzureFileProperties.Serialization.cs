@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountName))
             {
-                writer.WritePropertyName("accountName");
+                writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
             if (Optional.IsDefined(AccountKey))
             {
-                writer.WritePropertyName("accountKey");
+                writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
             if (Optional.IsDefined(AccessMode))
             {
-                writer.WritePropertyName("accessMode");
+                writer.WritePropertyName("accessMode"u8);
                 writer.WriteStringValue(AccessMode.Value.ToString());
             }
             if (Optional.IsDefined(ShareName))
             {
-                writer.WritePropertyName("shareName");
+                writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);
             }
             writer.WriteEndObject();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> shareName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountKey"))
+                if (property.NameEquals("accountKey"u8))
                 {
                     accountKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessMode"))
+                if (property.NameEquals("accessMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     accessMode = new ContainerAppAccessMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("shareName"))
+                if (property.NameEquals("shareName"u8))
                 {
                     shareName = property.Value.GetString();
                     continue;

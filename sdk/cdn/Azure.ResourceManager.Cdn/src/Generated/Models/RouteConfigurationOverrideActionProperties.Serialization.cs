@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("typeName");
+            writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
             if (Optional.IsDefined(OriginGroupOverride))
             {
                 if (OriginGroupOverride != null)
                 {
-                    writer.WritePropertyName("originGroupOverride");
+                    writer.WritePropertyName("originGroupOverride"u8);
                     writer.WriteObjectValue(OriginGroupOverride);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(CacheConfiguration))
             {
-                writer.WritePropertyName("cacheConfiguration");
+                writer.WritePropertyName("cacheConfiguration"u8);
                 writer.WriteObjectValue(CacheConfiguration);
             }
             writer.WriteEndObject();
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<CacheConfiguration> cacheConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("typeName"))
+                if (property.NameEquals("typeName"u8))
                 {
                     typeName = new RouteConfigurationOverrideActionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("originGroupOverride"))
+                if (property.NameEquals("originGroupOverride"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     originGroupOverride = OriginGroupOverride.DeserializeOriginGroupOverride(property.Value);
                     continue;
                 }
-                if (property.NameEquals("cacheConfiguration"))
+                if (property.NameEquals("cacheConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

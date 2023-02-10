@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateEndpoint))
             {
-                writer.WritePropertyName("privateEndpoint");
+                writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             if (Optional.IsDefined(ConnectionState))
             {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
+                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
             writer.WriteEndObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<IReadOnlyList<string>> groupIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("privateEndpoint"))
+                if (property.NameEquals("privateEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("privateLinkServiceConnectionState"))
+                if (property.NameEquals("privateLinkServiceConnectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     privateLinkServiceConnectionState = HybridComputePrivateLinkServiceConnectionStateProperty.DeserializeHybridComputePrivateLinkServiceConnectionStateProperty(property.Value);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupIds"))
+                if (property.NameEquals("groupIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,32 +17,32 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(QuarantinePolicy))
             {
-                writer.WritePropertyName("quarantinePolicy");
+                writer.WritePropertyName("quarantinePolicy"u8);
                 writer.WriteObjectValue(QuarantinePolicy);
             }
             if (Optional.IsDefined(TrustPolicy))
             {
-                writer.WritePropertyName("trustPolicy");
+                writer.WritePropertyName("trustPolicy"u8);
                 writer.WriteObjectValue(TrustPolicy);
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
-                writer.WritePropertyName("retentionPolicy");
+                writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
             if (Optional.IsDefined(ExportPolicy))
             {
-                writer.WritePropertyName("exportPolicy");
+                writer.WritePropertyName("exportPolicy"u8);
                 writer.WriteObjectValue(ExportPolicy);
             }
             if (Optional.IsDefined(AzureADAuthenticationAsArmPolicy))
             {
-                writer.WritePropertyName("azureADAuthenticationAsArmPolicy");
+                writer.WritePropertyName("azureADAuthenticationAsArmPolicy"u8);
                 writer.WriteObjectValue(AzureADAuthenticationAsArmPolicy);
             }
             if (Optional.IsDefined(SoftDeletePolicy))
             {
-                writer.WritePropertyName("softDeletePolicy");
+                writer.WritePropertyName("softDeletePolicy"u8);
                 writer.WriteObjectValue(SoftDeletePolicy);
             }
             writer.WriteEndObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<ContainerRegistrySoftDeletePolicy> softDeletePolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("quarantinePolicy"))
+                if (property.NameEquals("quarantinePolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     quarantinePolicy = ContainerRegistryQuarantinePolicy.DeserializeContainerRegistryQuarantinePolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("trustPolicy"))
+                if (property.NameEquals("trustPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     trustPolicy = ContainerRegistryTrustPolicy.DeserializeContainerRegistryTrustPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("retentionPolicy"))
+                if (property.NameEquals("retentionPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     retentionPolicy = ContainerRegistryRetentionPolicy.DeserializeContainerRegistryRetentionPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("exportPolicy"))
+                if (property.NameEquals("exportPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     exportPolicy = ContainerRegistryExportPolicy.DeserializeContainerRegistryExportPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("azureADAuthenticationAsArmPolicy"))
+                if (property.NameEquals("azureADAuthenticationAsArmPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     azureADAuthenticationAsArmPolicy = AzureADAuthenticationAsArmPolicy.DeserializeAzureADAuthenticationAsArmPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("softDeletePolicy"))
+                if (property.NameEquals("softDeletePolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
-                writer.WritePropertyName("resourceGuardOperationRequests");
+                writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperationRequests)
                 {

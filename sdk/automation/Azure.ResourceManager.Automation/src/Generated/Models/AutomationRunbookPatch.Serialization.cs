@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -36,26 +36,26 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(IsLogVerboseEnabled))
             {
-                writer.WritePropertyName("logVerbose");
+                writer.WritePropertyName("logVerbose"u8);
                 writer.WriteBooleanValue(IsLogVerboseEnabled.Value);
             }
             if (Optional.IsDefined(IsLogProgressEnabled))
             {
-                writer.WritePropertyName("logProgress");
+                writer.WritePropertyName("logProgress"u8);
                 writer.WriteBooleanValue(IsLogProgressEnabled.Value);
             }
             if (Optional.IsDefined(LogActivityTrace))
             {
-                writer.WritePropertyName("logActivityTrace");
+                writer.WritePropertyName("logActivityTrace"u8);
                 writer.WriteNumberValue(LogActivityTrace.Value);
             }
             writer.WriteEndObject();

@@ -11,7 +11,6 @@ using OpenTelemetry.Trace;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using System;
 using System.Threading;
 
@@ -63,8 +62,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("200", resultCode);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.IsAutoCollectedKey, out var isAutoCollectedFlag));
             Assert.Equal("True", isAutoCollectedFlag);
-            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.IsSyntheticKey, out var isSynthetic));
-            Assert.Equal("False", isSynthetic);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleInstanceKey, out _));
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleNameKey, out _));
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.MetricIdKey, out var metricId));
@@ -117,8 +114,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("200", resultCode);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.IsAutoCollectedKey, out var isAutoCollectedFlag));
             Assert.Equal("True", isAutoCollectedFlag);
-            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.IsSyntheticKey, out var isSynthetic));
-            Assert.Equal("False", isSynthetic);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleInstanceKey, out _));
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleNameKey, out _));
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.MetricIdKey, out var metricId));

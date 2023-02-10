@@ -19,22 +19,22 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             writer.WriteStartObject();
             if (Optional.IsDefined(MediaType))
             {
-                writer.WritePropertyName("mediaType");
+                writer.WritePropertyName("mediaType"u8);
                 writer.WriteStringValue(MediaType);
             }
             if (Optional.IsDefined(Size))
             {
-                writer.WritePropertyName("size");
+                writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
             }
             if (Optional.IsDefined(Digest))
             {
-                writer.WritePropertyName("digest");
+                writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
             }
             if (Optional.IsCollectionDefined(Urls))
             {
-                writer.WritePropertyName("urls");
+                writer.WritePropertyName("urls"u8);
                 writer.WriteStartArray();
                 foreach (var item in Urls)
                 {
@@ -46,7 +46,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 if (Annotations != null)
                 {
-                    writer.WritePropertyName("annotations");
+                    writer.WritePropertyName("annotations"u8);
                     writer.WriteObjectValue(Annotations);
                 }
                 else
@@ -66,12 +66,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Optional<OciAnnotations> annotations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mediaType"))
+                if (property.NameEquals("mediaType"u8))
                 {
                     mediaType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,12 +81,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     size = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("digest"))
+                if (property.NameEquals("digest"u8))
                 {
                     digest = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("urls"))
+                if (property.NameEquals("urls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +101,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     urls = array;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Hash))
             {
-                writer.WritePropertyName("hash");
+                writer.WritePropertyName("hash"u8);
                 writer.WriteObjectValue(Hash);
             }
             if (Optional.IsDefined(SourceType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hash"))
+                if (property.NameEquals("hash"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Automation.Models
                     hash = AutomationContentHash.DeserializeAutomationContentHash(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Automation.Models
                     type = new AutomationContentSourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;

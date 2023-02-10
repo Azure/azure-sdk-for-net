@@ -137,7 +137,7 @@
       "type": "parameter",
       "datatype": "text",
       "isRequired": false,
-      "defaultValue": "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/stress/TemplateClientTest.cs",
+      "defaultValue": "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/stress/README.md",
       "replaces": "StressSampleLink"
     },
     "testSampleLink": {

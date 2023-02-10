@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(KeyVaultUrl))
             {
-                writer.WritePropertyName("keyVaultUrl");
+                writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUrl);
             }
             writer.WriteEndObject();
@@ -37,12 +37,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> keyVaultUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultUrl"))
+                if (property.NameEquals("keyVaultUrl"u8))
                 {
                     keyVaultUrl = property.Value.GetString();
                     continue;

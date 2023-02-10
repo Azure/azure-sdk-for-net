@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(NetworkId))
             {
-                writer.WritePropertyName("networkId");
+                writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
             if (Optional.IsDefined(NicType))
             {
-                writer.WritePropertyName("nicType");
+                writer.WritePropertyName("nicType"u8);
                 writer.WriteStringValue(NicType.Value.ToString());
             }
             if (Optional.IsDefined(PowerOnBoot))
             {
-                writer.WritePropertyName("powerOnBoot");
+                writer.WritePropertyName("powerOnBoot"u8);
                 writer.WriteStringValue(PowerOnBoot.Value.ToString());
             }
             if (Optional.IsDefined(DeviceKey))
             {
-                writer.WritePropertyName("deviceKey");
+                writer.WritePropertyName("deviceKey"u8);
                 writer.WriteNumberValue(DeviceKey.Value);
             }
             writer.WriteEndObject();

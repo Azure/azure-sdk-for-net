@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Peering.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<string> bgpCommunity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Peering.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Peering.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("prefix"))
+                        if (property0.NameEquals("prefix"u8))
                         {
                             prefix = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("azureRegion"))
+                        if (property0.NameEquals("azureRegion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.Peering.Models
                             azureRegion = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("azureService"))
+                        if (property0.NameEquals("azureService"u8))
                         {
                             azureService = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isPrimaryRegion"))
+                        if (property0.NameEquals("isPrimaryRegion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Peering.Models
                             isPrimaryRegion = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("bgpCommunity"))
+                        if (property0.NameEquals("bgpCommunity"u8))
                         {
                             bgpCommunity = property0.Value.GetString();
                             continue;

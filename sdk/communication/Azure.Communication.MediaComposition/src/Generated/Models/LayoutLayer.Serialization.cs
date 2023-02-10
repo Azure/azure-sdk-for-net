@@ -16,11 +16,11 @@ namespace Azure.Communication.MediaComposition.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("zIndex");
+            writer.WritePropertyName("zIndex"u8);
             writer.WriteNumberValue(ZIndex);
             if (Optional.IsDefined(Visibility))
             {
-                writer.WritePropertyName("visibility");
+                writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
             }
             writer.WriteEndObject();
@@ -32,12 +32,12 @@ namespace Azure.Communication.MediaComposition.Models
             Optional<LayerVisibility> visibility = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("zIndex"))
+                if (property.NameEquals("zIndex"u8))
                 {
                     zIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("visibility"))
+                if (property.NameEquals("visibility"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EndpointUri))
             {
-                writer.WritePropertyName("endpointUri");
+                writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(ExtensionCategories))
             {
-                writer.WritePropertyName("extensionCategories");
+                writer.WritePropertyName("extensionCategories"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExtensionCategories)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
             writer.WriteEndObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<TimeSpan> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointUri"))
+                if (property.NameEquals("endpointUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     endpointUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("extensionCategories"))
+                if (property.NameEquals("extensionCategories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     extensionCategories = array;
                     continue;
                 }
-                if (property.NameEquals("timeout"))
+                if (property.NameEquals("timeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountUrl))
             {
-                writer.WritePropertyName("accountUrl");
+                writer.WritePropertyName("accountUrl"u8);
                 writer.WriteStringValue(AccountUrl);
             }
             if (Optional.IsDefined(Filesystem))
             {
-                writer.WritePropertyName("filesystem");
+                writer.WritePropertyName("filesystem"u8);
                 writer.WriteStringValue(Filesystem);
             }
             writer.WriteEndObject();
@@ -37,12 +37,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> filesystem = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountUrl"))
+                if (property.NameEquals("accountUrl"u8))
                 {
                     accountUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filesystem"))
+                if (property.NameEquals("filesystem"u8))
                 {
                     filesystem = property.Value.GetString();
                     continue;

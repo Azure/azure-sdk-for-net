@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BillingMeterCategory))
             {
-                writer.WritePropertyName("billingMeterCategory");
+                writer.WritePropertyName("billingMeterCategory"u8);
                 writer.WriteStringValue(BillingMeterCategory.Value.ToString());
             }
             if (Optional.IsDefined(Applicability))
             {
-                writer.WritePropertyName("applicability");
+                writer.WritePropertyName("applicability"u8);
                 writer.WriteStringValue(Applicability.Value.ToString());
             }
             if (Optional.IsDefined(Cores))
             {
-                writer.WritePropertyName("cores");
+                writer.WritePropertyName("cores"u8);
                 writer.WriteNumberValue(Cores.Value);
             }
             if (Optional.IsDefined(MemoryInGiB))
             {
-                writer.WritePropertyName("memoryGiB");
+                writer.WritePropertyName("memoryGiB"u8);
                 writer.WriteNumberValue(MemoryInGiB.Value);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingMeterCategory"))
+                if (property.NameEquals("billingMeterCategory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     billingMeterCategory = new ContainerAppBillingMeterCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("applicability"))
+                if (property.NameEquals("applicability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     applicability = new ContainerAppAvailableWorkloadProfileApplicability(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cores"))
+                if (property.NameEquals("cores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     cores = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("memoryGiB"))
+                if (property.NameEquals("memoryGiB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     memoryGiB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;

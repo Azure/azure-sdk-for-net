@@ -18,11 +18,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(DefaultValue))
             {
-                writer.WritePropertyName("defaultValue");
+                writer.WritePropertyName("defaultValue"u8);
                 writer.WriteObjectValue(DefaultValue);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new VariableType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("defaultValue"))
+                if (property.NameEquals("defaultValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

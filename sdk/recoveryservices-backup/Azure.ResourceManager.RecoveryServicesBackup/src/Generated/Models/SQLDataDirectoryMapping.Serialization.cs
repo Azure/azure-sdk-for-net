@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MappingType))
             {
-                writer.WritePropertyName("mappingType");
+                writer.WritePropertyName("mappingType"u8);
                 writer.WriteStringValue(MappingType.Value.ToString());
             }
             if (Optional.IsDefined(SourceLogicalName))
             {
-                writer.WritePropertyName("sourceLogicalName");
+                writer.WritePropertyName("sourceLogicalName"u8);
                 writer.WriteStringValue(SourceLogicalName);
             }
             if (Optional.IsDefined(SourcePath))
             {
-                writer.WritePropertyName("sourcePath");
+                writer.WritePropertyName("sourcePath"u8);
                 writer.WriteStringValue(SourcePath);
             }
             if (Optional.IsDefined(TargetPath))
             {
-                writer.WritePropertyName("targetPath");
+                writer.WritePropertyName("targetPath"u8);
                 writer.WriteStringValue(TargetPath);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> targetPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mappingType"))
+                if (property.NameEquals("mappingType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     mappingType = new SQLDataDirectoryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceLogicalName"))
+                if (property.NameEquals("sourceLogicalName"u8))
                 {
                     sourceLogicalName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourcePath"))
+                if (property.NameEquals("sourcePath"u8))
                 {
                     sourcePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetPath"))
+                if (property.NameEquals("targetPath"u8))
                 {
                     targetPath = property.Value.GetString();
                     continue;

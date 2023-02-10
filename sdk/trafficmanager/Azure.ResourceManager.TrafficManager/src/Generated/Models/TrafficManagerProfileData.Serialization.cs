@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.TrafficManager
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,49 +30,49 @@ namespace Azure.ResourceManager.TrafficManager
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ResourceType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProfileStatus))
             {
-                writer.WritePropertyName("profileStatus");
+                writer.WritePropertyName("profileStatus"u8);
                 writer.WriteStringValue(ProfileStatus.Value.ToString());
             }
             if (Optional.IsDefined(TrafficRoutingMethod))
             {
-                writer.WritePropertyName("trafficRoutingMethod");
+                writer.WritePropertyName("trafficRoutingMethod"u8);
                 writer.WriteStringValue(TrafficRoutingMethod.Value.ToString());
             }
             if (Optional.IsDefined(DnsConfig))
             {
-                writer.WritePropertyName("dnsConfig");
+                writer.WritePropertyName("dnsConfig"u8);
                 writer.WriteObjectValue(DnsConfig);
             }
             if (Optional.IsDefined(MonitorConfig))
             {
-                writer.WritePropertyName("monitorConfig");
+                writer.WritePropertyName("monitorConfig"u8);
                 writer.WriteObjectValue(MonitorConfig);
             }
             if (Optional.IsCollectionDefined(Endpoints))
             {
-                writer.WritePropertyName("endpoints");
+                writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.TrafficManager
             }
             if (Optional.IsDefined(TrafficViewEnrollmentStatus))
             {
-                writer.WritePropertyName("trafficViewEnrollmentStatus");
+                writer.WritePropertyName("trafficViewEnrollmentStatus"u8);
                 writer.WriteStringValue(TrafficViewEnrollmentStatus.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AllowedEndpointRecordTypes))
             {
-                writer.WritePropertyName("allowedEndpointRecordTypes");
+                writer.WritePropertyName("allowedEndpointRecordTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedEndpointRecordTypes)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 if (MaxReturn != null)
                 {
-                    writer.WritePropertyName("maxReturn");
+                    writer.WritePropertyName("maxReturn"u8);
                     writer.WriteNumberValue(MaxReturn.Value);
                 }
                 else
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.TrafficManager
             Optional<long?> maxReturn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.TrafficManager
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.TrafficManager
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,12 +163,12 @@ namespace Azure.ResourceManager.TrafficManager
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.TrafficManager
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.TrafficManager
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("profileStatus"))
+                        if (property0.NameEquals("profileStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.TrafficManager
                             profileStatus = new TrafficManagerProfileStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("trafficRoutingMethod"))
+                        if (property0.NameEquals("trafficRoutingMethod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.TrafficManager
                             trafficRoutingMethod = new TrafficRoutingMethod(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("dnsConfig"))
+                        if (property0.NameEquals("dnsConfig"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.TrafficManager
                             dnsConfig = TrafficManagerDnsConfig.DeserializeTrafficManagerDnsConfig(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("monitorConfig"))
+                        if (property0.NameEquals("monitorConfig"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.TrafficManager
                             monitorConfig = TrafficManagerMonitorConfig.DeserializeTrafficManagerMonitorConfig(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("endpoints"))
+                        if (property0.NameEquals("endpoints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.TrafficManager
                             endpoints = array;
                             continue;
                         }
-                        if (property0.NameEquals("trafficViewEnrollmentStatus"))
+                        if (property0.NameEquals("trafficViewEnrollmentStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.TrafficManager
                             trafficViewEnrollmentStatus = new TrafficViewEnrollmentStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("allowedEndpointRecordTypes"))
+                        if (property0.NameEquals("allowedEndpointRecordTypes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.TrafficManager
                             allowedEndpointRecordTypes = array;
                             continue;
                         }
-                        if (property0.NameEquals("maxReturn"))
+                        if (property0.NameEquals("maxReturn"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DataType))
             {
-                writer.WritePropertyName("dataType");
+                writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType.Value.ToString());
             }
             if (Optional.IsDefined(Precision))
             {
-                writer.WritePropertyName("precision");
+                writer.WritePropertyName("precision"u8);
                 writer.WriteNumberValue(Precision.Value);
             }
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<CosmosDBIndexKind> kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataType"))
+                if (property.NameEquals("dataType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     dataType = new CosmosDBDataType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("precision"))
+                if (property.NameEquals("precision"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     precision = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

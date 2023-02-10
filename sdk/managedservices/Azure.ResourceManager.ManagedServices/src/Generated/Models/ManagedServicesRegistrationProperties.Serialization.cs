@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("authorizations");
+            writer.WritePropertyName("authorizations"u8);
             writer.WriteStartArray();
             foreach (var item in Authorizations)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(EligibleAuthorizations))
             {
-                writer.WritePropertyName("eligibleAuthorizations");
+                writer.WritePropertyName("eligibleAuthorizations"u8);
                 writer.WriteStartArray();
                 foreach (var item in EligibleAuthorizations)
                 {
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
             }
             if (Optional.IsDefined(RegistrationDefinitionName))
             {
-                writer.WritePropertyName("registrationDefinitionName");
+                writer.WritePropertyName("registrationDefinitionName"u8);
                 writer.WriteStringValue(RegistrationDefinitionName);
             }
-            writer.WritePropertyName("managedByTenantId");
+            writer.WritePropertyName("managedByTenantId"u8);
             writer.WriteStringValue(ManagedByTenantId);
             writer.WriteEndObject();
         }
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Optional<string> managedByTenantName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authorizations"))
+                if (property.NameEquals("authorizations"u8))
                 {
                     List<ManagedServicesAuthorization> array = new List<ManagedServicesAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     authorizations = array;
                     continue;
                 }
-                if (property.NameEquals("eligibleAuthorizations"))
+                if (property.NameEquals("eligibleAuthorizations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     eligibleAuthorizations = array;
                     continue;
                 }
-                if (property.NameEquals("registrationDefinitionName"))
+                if (property.NameEquals("registrationDefinitionName"u8))
                 {
                     registrationDefinitionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedByTenantId"))
+                if (property.NameEquals("managedByTenantId"u8))
                 {
                     managedByTenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     provisioningState = new ManagedServicesProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("manageeTenantId"))
+                if (property.NameEquals("manageeTenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     manageeTenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("manageeTenantName"))
+                if (property.NameEquals("manageeTenantName"u8))
                 {
                     manageeTenantName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedByTenantName"))
+                if (property.NameEquals("managedByTenantName"u8))
                 {
                     managedByTenantName = property.Value.GetString();
                     continue;

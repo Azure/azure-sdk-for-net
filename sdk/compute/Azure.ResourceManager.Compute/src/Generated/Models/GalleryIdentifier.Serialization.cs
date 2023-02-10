@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> uniqueName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uniqueName"))
+                if (property.NameEquals("uniqueName"u8))
                 {
                     uniqueName = property.Value.GetString();
                     continue;

@@ -15,16 +15,16 @@ namespace Azure.Communication
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("userId");
+            writer.WritePropertyName("userId"u8);
             writer.WriteStringValue(UserId);
             if (Optional.IsDefined(IsAnonymous))
             {
-                writer.WritePropertyName("isAnonymous");
+                writer.WritePropertyName("isAnonymous"u8);
                 writer.WriteBooleanValue(IsAnonymous.Value);
             }
             if (Optional.IsDefined(Cloud))
             {
-                writer.WritePropertyName("cloud");
+                writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud.Value.ToString());
             }
             writer.WriteEndObject();
@@ -37,12 +37,12 @@ namespace Azure.Communication
             Optional<CommunicationCloudEnvironmentModel> cloud = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userId"))
+                if (property.NameEquals("userId"u8))
                 {
                     userId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isAnonymous"))
+                if (property.NameEquals("isAnonymous"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.Communication
                     isAnonymous = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cloud"))
+                if (property.NameEquals("cloud"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

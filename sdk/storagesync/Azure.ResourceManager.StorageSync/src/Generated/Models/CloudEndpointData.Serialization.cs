@@ -18,46 +18,46 @@ namespace Azure.ResourceManager.StorageSync
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountResourceId))
             {
-                writer.WritePropertyName("storageAccountResourceId");
+                writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
             if (Optional.IsDefined(AzureFileShareName))
             {
-                writer.WritePropertyName("azureFileShareName");
+                writer.WritePropertyName("azureFileShareName"u8);
                 writer.WriteStringValue(AzureFileShareName);
             }
             if (Optional.IsDefined(StorageAccountTenantId))
             {
-                writer.WritePropertyName("storageAccountTenantId");
+                writer.WritePropertyName("storageAccountTenantId"u8);
                 writer.WriteStringValue(StorageAccountTenantId.Value);
             }
             if (Optional.IsDefined(PartnershipId))
             {
-                writer.WritePropertyName("partnershipId");
+                writer.WritePropertyName("partnershipId"u8);
                 writer.WriteStringValue(PartnershipId);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(LastWorkflowId))
             {
-                writer.WritePropertyName("lastWorkflowId");
+                writer.WritePropertyName("lastWorkflowId"u8);
                 writer.WriteStringValue(LastWorkflowId);
             }
             if (Optional.IsDefined(LastOperationName))
             {
-                writer.WritePropertyName("lastOperationName");
+                writer.WritePropertyName("lastOperationName"u8);
                 writer.WriteStringValue(LastOperationName);
             }
             writer.WriteEndObject();
@@ -82,22 +82,22 @@ namespace Azure.ResourceManager.StorageSync
             Optional<CloudEndpointChangeEnumerationStatus> changeEnumerationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.StorageSync
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageSync
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("storageAccountResourceId"))
+                        if (property0.NameEquals("storageAccountResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.StorageSync
                             storageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("azureFileShareName"))
+                        if (property0.NameEquals("azureFileShareName"u8))
                         {
                             azureFileShareName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("storageAccountTenantId"))
+                        if (property0.NameEquals("storageAccountTenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -141,37 +141,37 @@ namespace Azure.ResourceManager.StorageSync
                             storageAccountTenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("partnershipId"))
+                        if (property0.NameEquals("partnershipId"u8))
                         {
                             partnershipId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("backupEnabled"))
+                        if (property0.NameEquals("backupEnabled"u8))
                         {
                             backupEnabled = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastWorkflowId"))
+                        if (property0.NameEquals("lastWorkflowId"u8))
                         {
                             lastWorkflowId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastOperationName"))
+                        if (property0.NameEquals("lastOperationName"u8))
                         {
                             lastOperationName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("changeEnumerationStatus"))
+                        if (property0.NameEquals("changeEnumerationStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

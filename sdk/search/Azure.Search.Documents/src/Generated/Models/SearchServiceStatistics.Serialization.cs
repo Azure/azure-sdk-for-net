@@ -18,12 +18,12 @@ namespace Azure.Search.Documents.Indexes.Models
             SearchServiceLimits limits = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("counters"))
+                if (property.NameEquals("counters"u8))
                 {
                     counters = SearchServiceCounters.DeserializeSearchServiceCounters(property.Value);
                     continue;
                 }
-                if (property.NameEquals("limits"))
+                if (property.NameEquals("limits"u8))
                 {
                     limits = SearchServiceLimits.DeserializeSearchServiceLimits(property.Value);
                     continue;

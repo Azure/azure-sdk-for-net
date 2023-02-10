@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<IReadOnlyDictionary<string, string>> correlationData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("outputs"))
+                if (property.NameEquals("outputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     outputs = array;
                     continue;
                 }
-                if (property.NameEquals("previousState"))
+                if (property.NameEquals("previousState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     previousState = property.Value.GetString().ToMediaJobState();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     state = property.Value.GetString().ToMediaJobState();
                     continue;
                 }
-                if (property.NameEquals("correlationData"))
+                if (property.NameEquals("correlationData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

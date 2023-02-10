@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             if (Optional.IsDefined(StandbyAvailabilityZone))
             {
-                writer.WritePropertyName("standbyAvailabilityZone");
+                writer.WritePropertyName("standbyAvailabilityZone"u8);
                 writer.WriteStringValue(StandbyAvailabilityZone);
             }
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<string> standbyAvailabilityZone = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     mode = new MySqlFlexibleServerHighAvailabilityMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     state = new MySqlFlexibleServerHighAvailabilityState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("standbyAvailabilityZone"))
+                if (property.NameEquals("standbyAvailabilityZone"u8))
                 {
                     standbyAvailabilityZone = property.Value.GetString();
                     continue;
