@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
             if (Optional.IsDefined(Markdown))
             {
-                writer.WritePropertyName("markdown");
+                writer.WritePropertyName("markdown"u8);
                 writer.WriteStringValue(Markdown);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> markdown = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     enabled = new DevTestLabEnableStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("markdown"))
+                if (property.NameEquals("markdown"u8))
                 {
                     markdown = property.Value.GetString();
                     continue;

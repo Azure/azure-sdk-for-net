@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IReadOnlyList<LogProfileData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<LogProfileData> array = new List<LogProfileData>();
                     foreach (var item in property.Value.EnumerateArray())

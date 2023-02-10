@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TlsSettings))
             {
-                writer.WritePropertyName("tlsSettings");
+                writer.WritePropertyName("tlsSettings"u8);
                 writer.WriteObjectValue(TlsSettings);
             }
             if (Optional.IsDefined(DnsZone))
             {
-                writer.WritePropertyName("azureDnsZone");
+                writer.WritePropertyName("azureDnsZone"u8);
                 JsonSerializer.Serialize(writer, DnsZone);
             }
             if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
                 if (PreValidatedCustomDomainResource != null)
                 {
-                    writer.WritePropertyName("preValidatedCustomDomainResourceId");
+                    writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
                     writer.WriteObjectValue(PreValidatedCustomDomainResource);
                 }
                 else

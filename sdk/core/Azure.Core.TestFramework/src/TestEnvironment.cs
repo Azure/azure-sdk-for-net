@@ -309,7 +309,7 @@ namespace Azure.Core.TestFramework
             string clientSecret = GetOptionalVariable("CLIENT_SECRET");
             string authorityHost = GetOptionalVariable("AZURE_AUTHORITY_HOST");
 
-            if (tenantId == null || clientId == null || clientSecret == null || authorityHost == null)
+            if (tenantId == null || clientId == null || clientSecret == null || authorityHost == null || ResourceManagerUrl == null)
             {
                 return;
             }

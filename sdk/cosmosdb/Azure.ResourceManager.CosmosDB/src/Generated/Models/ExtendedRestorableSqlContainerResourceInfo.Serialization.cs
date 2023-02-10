@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<RestorableSqlContainerPropertiesResourceContainer> container = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("_rid"))
+                if (property.NameEquals("_rid"u8))
                 {
                     rid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationType"))
+                if (property.NameEquals("operationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     operationType = new CosmosDBOperationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("eventTimestamp"))
+                if (property.NameEquals("eventTimestamp"u8))
                 {
                     eventTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ownerId"))
+                if (property.NameEquals("ownerId"u8))
                 {
                     ownerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ownerResourceId"))
+                if (property.NameEquals("ownerResourceId"u8))
                 {
                     ownerResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("container"))
+                if (property.NameEquals("container"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

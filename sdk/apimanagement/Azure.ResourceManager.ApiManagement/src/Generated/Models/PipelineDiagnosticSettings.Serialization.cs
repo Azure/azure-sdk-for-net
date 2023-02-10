@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Request))
             {
-                writer.WritePropertyName("request");
+                writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
             if (Optional.IsDefined(Response))
             {
-                writer.WritePropertyName("response");
+                writer.WritePropertyName("response"u8);
                 writer.WriteObjectValue(Response);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<HttpMessageDiagnostic> response = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("request"))
+                if (property.NameEquals("request"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     request = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value);
                     continue;
                 }
-                if (property.NameEquals("response"))
+                if (property.NameEquals("response"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

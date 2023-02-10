@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> unit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("meterParameter"))
+                if (property.NameEquals("meterParameter"u8))
                 {
                     meterParameter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("meter"))
+                if (property.NameEquals("meter"u8))
                 {
                     meter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;

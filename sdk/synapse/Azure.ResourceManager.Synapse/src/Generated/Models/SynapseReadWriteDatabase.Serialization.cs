@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SoftDeletePeriod))
             {
-                writer.WritePropertyName("softDeletePeriod");
+                writer.WritePropertyName("softDeletePeriod"u8);
                 writer.WriteStringValue(SoftDeletePeriod.Value, "P");
             }
             if (Optional.IsDefined(HotCachePeriod))
             {
-                writer.WritePropertyName("hotCachePeriod");
+                writer.WritePropertyName("hotCachePeriod"u8);
                 writer.WriteStringValue(HotCachePeriod.Value, "P");
             }
             writer.WriteEndObject();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<bool> isFollowed = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,27 +65,27 @@ namespace Azure.ResourceManager.Synapse.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new SynapseKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             provisioningState = new ResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("softDeletePeriod"))
+                        if (property0.NameEquals("softDeletePeriod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             softDeletePeriod = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("hotCachePeriod"))
+                        if (property0.NameEquals("hotCachePeriod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             hotCachePeriod = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("statistics"))
+                        if (property0.NameEquals("statistics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("isFollowed"))
+                        if (property0.NameEquals("isFollowed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Elastic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VmResourceId))
             {
-                writer.WritePropertyName("vmResourceId");
+                writer.WritePropertyName("vmResourceId"u8);
                 writer.WriteStringValue(VmResourceId);
             }
             if (Optional.IsDefined(OperationName))
             {
-                writer.WritePropertyName("operationName");
+                writer.WritePropertyName("operationName"u8);
                 writer.WriteStringValue(OperationName.Value.ToString());
             }
             writer.WriteEndObject();

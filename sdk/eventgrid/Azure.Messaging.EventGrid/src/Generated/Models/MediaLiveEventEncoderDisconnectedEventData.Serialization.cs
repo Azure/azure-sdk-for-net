@@ -24,27 +24,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> resultCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ingestUrl"))
+                if (property.NameEquals("ingestUrl"u8))
                 {
                     ingestUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("streamId"))
+                if (property.NameEquals("streamId"u8))
                 {
                     streamId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encoderIp"))
+                if (property.NameEquals("encoderIp"u8))
                 {
                     encoderIp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encoderPort"))
+                if (property.NameEquals("encoderPort"u8))
                 {
                     encoderPort = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultCode"))
+                if (property.NameEquals("resultCode"u8))
                 {
                     resultCode = property.Value.GetString();
                     continue;

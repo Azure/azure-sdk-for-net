@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source);
-            writer.WritePropertyName("relativeMountPath");
+            writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
             if (Optional.IsDefined(MountOptions))
             {
-                writer.WritePropertyName("mountOptions");
+                writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
             }
             writer.WriteEndObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<string> mountOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativeMountPath"))
+                if (property.NameEquals("relativeMountPath"u8))
                 {
                     relativeMountPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountOptions"))
+                if (property.NameEquals("mountOptions"u8))
                 {
                     mountOptions = property.Value.GetString();
                     continue;

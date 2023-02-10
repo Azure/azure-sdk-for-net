@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ProvisioningIssues))
             {
-                writer.WritePropertyName("provisioningIssues");
+                writer.WritePropertyName("provisioningIssues"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningIssues)
                 {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.EventHubs.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                             provisioningState = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningIssues"))
+                        if (property0.NameEquals("provisioningIssues"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                             provisioningIssues = array;
                             continue;
                         }
-                        if (property0.NameEquals("networkSecurityPerimeter"))
+                        if (property0.NameEquals("networkSecurityPerimeter"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                             networkSecurityPerimeter = EventHubsNetworkSecurityPerimeter.DeserializeEventHubsNetworkSecurityPerimeter(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("resourceAssociation"))
+                        if (property0.NameEquals("resourceAssociation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                             resourceAssociation = EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation.DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("profile"))
+                        if (property0.NameEquals("profile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

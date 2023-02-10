@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(IsIPv6Enabled))
             {
-                writer.WritePropertyName("enableIpv6");
+                writer.WritePropertyName("enableIpv6"u8);
                 writer.WriteBooleanValue(IsIPv6Enabled.Value);
             }
             if (Optional.IsDefined(PrivateEndpointNetworkPolicies))
             {
-                writer.WritePropertyName("privateEndpointNetworkPolicies");
+                writer.WritePropertyName("privateEndpointNetworkPolicies"u8);
                 writer.WriteStringValue(PrivateEndpointNetworkPolicies.Value.ToString());
             }
             if (Optional.IsDefined(PrivateLinkServiceNetworkPolicies))
             {
-                writer.WritePropertyName("privateLinkServiceNetworkPolicies");
+                writer.WritePropertyName("privateLinkServiceNetworkPolicies"u8);
                 writer.WriteStringValue(PrivateLinkServiceNetworkPolicies.Value.ToString());
             }
             if (Optional.IsDefined(NetworkSecurityGroupId))
             {
-                writer.WritePropertyName("networkSecurityGroupId");
+                writer.WritePropertyName("networkSecurityGroupId"u8);
                 writer.WriteStringValue(NetworkSecurityGroupId);
             }
             writer.WriteEndObject();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<ResourceIdentifier> networkSecurityGroupId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enableIpv6"))
+                if (property.NameEquals("enableIpv6"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     enableIPv6 = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("privateEndpointNetworkPolicies"))
+                if (property.NameEquals("privateEndpointNetworkPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     privateEndpointNetworkPolicies = new ManagedClusterSubnetPrivateEndpointNetworkPoliciesState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateLinkServiceNetworkPolicies"))
+                if (property.NameEquals("privateLinkServiceNetworkPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     privateLinkServiceNetworkPolicies = new ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkSecurityGroupId"))
+                if (property.NameEquals("networkSecurityGroupId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

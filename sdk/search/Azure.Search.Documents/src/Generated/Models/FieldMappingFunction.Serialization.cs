@@ -16,13 +16,13 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 if (Parameters != null)
                 {
-                    writer.WritePropertyName("parameters");
+                    writer.WritePropertyName("parameters"u8);
                     writer.WriteStartObject();
                     foreach (var item in Parameters)
                     {
@@ -45,12 +45,12 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<IDictionary<string, object>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

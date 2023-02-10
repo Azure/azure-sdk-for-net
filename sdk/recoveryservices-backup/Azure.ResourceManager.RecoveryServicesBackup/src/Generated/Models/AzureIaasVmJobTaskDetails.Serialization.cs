@@ -18,42 +18,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TaskId))
             {
-                writer.WritePropertyName("taskId");
+                writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
             }
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(InstanceId))
             {
-                writer.WritePropertyName("instanceId");
+                writer.WritePropertyName("instanceId"u8);
                 writer.WriteStringValue(InstanceId);
             }
             if (Optional.IsDefined(Duration))
             {
-                writer.WritePropertyName("duration");
+                writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(ProgressPercentage))
             {
-                writer.WritePropertyName("progressPercentage");
+                writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
             if (Optional.IsDefined(TaskExecutionDetails))
             {
-                writer.WritePropertyName("taskExecutionDetails");
+                writer.WritePropertyName("taskExecutionDetails"u8);
                 writer.WriteStringValue(TaskExecutionDetails);
             }
             writer.WriteEndObject();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> taskExecutionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("taskId"))
+                if (property.NameEquals("taskId"u8))
                 {
                     taskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("instanceId"))
+                if (property.NameEquals("instanceId"u8))
                 {
                     instanceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("duration"))
+                if (property.NameEquals("duration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     duration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("progressPercentage"))
+                if (property.NameEquals("progressPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     progressPercentage = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("taskExecutionDetails"))
+                if (property.NameEquals("taskExecutionDetails"u8))
                 {
                     taskExecutionDetails = property.Value.GetString();
                     continue;

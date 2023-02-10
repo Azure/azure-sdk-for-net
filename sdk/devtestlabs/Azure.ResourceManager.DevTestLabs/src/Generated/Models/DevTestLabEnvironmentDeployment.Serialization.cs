@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ArmTemplateId))
             {
-                writer.WritePropertyName("armTemplateId");
+                writer.WritePropertyName("armTemplateId"u8);
                 writer.WriteStringValue(ArmTemplateId);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<IList<DevTestLabArmTemplateParameter>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("armTemplateId"))
+                if (property.NameEquals("armTemplateId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     armTemplateId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

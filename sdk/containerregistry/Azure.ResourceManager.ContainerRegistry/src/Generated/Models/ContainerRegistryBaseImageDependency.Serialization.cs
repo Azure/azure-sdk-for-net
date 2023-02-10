@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> digest = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,22 +31,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     type = new ContainerRegistryBaseImageDependencyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("registry"))
+                if (property.NameEquals("registry"u8))
                 {
                     registry = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("repository"))
+                if (property.NameEquals("repository"u8))
                 {
                     repository = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     tag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("digest"))
+                if (property.NameEquals("digest"u8))
                 {
                     digest = property.Value.GetString();
                     continue;

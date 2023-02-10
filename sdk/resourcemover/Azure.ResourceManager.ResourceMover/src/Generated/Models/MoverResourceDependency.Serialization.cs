@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<bool> isOptional = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resolutionStatus"))
+                if (property.NameEquals("resolutionStatus"u8))
                 {
                     resolutionStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resolutionType"))
+                if (property.NameEquals("resolutionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     resolutionType = new MoverResourceResolutionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dependencyType"))
+                if (property.NameEquals("dependencyType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     dependencyType = new MoverDependencyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("manualResolution"))
+                if (property.NameEquals("manualResolution"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     manualResolution = ManualResolutionProperties.DeserializeManualResolutionProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("automaticResolution"))
+                if (property.NameEquals("automaticResolution"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     automaticResolution = AutomaticResolutionProperties.DeserializeAutomaticResolutionProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("isOptional"))
+                if (property.NameEquals("isOptional"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

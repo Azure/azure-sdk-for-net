@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SegmentName))
             {
-                writer.WritePropertyName("segmentName");
+                writer.WritePropertyName("segmentName"u8);
                 writer.WriteStringValue(SegmentName);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> segmentName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("segmentName"))
+                if (property.NameEquals("segmentName"u8))
                 {
                     segmentName = property.Value.GetString();
                     continue;

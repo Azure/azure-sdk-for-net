@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
             IReadOnlyDictionary<string, IList<string>> clusters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clusters"))
+                if (property.NameEquals("clusters"u8))
                 {
                     Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
                     foreach (var property0 in property.Value.EnumerateObject())

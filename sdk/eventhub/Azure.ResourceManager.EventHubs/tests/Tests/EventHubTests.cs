@@ -89,7 +89,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string eventHubName = Recording.GenerateAssetName("eventhub");
             EventHubData parameter = new EventHubData()
             {
-                MessageRetentionInDays = 4,
                 PartitionCount = 4,
                 Status = EventHubEntityStatus.Active,
                 CaptureDescription = new CaptureDescription()
@@ -115,7 +114,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(eventHub.Data.Status, parameter.Status);
             Assert.AreEqual(eventHub.Data.PartitionCount, parameter.PartitionCount);
             Assert.AreEqual(eventHub.Data.CaptureDescription.IntervalInSeconds, parameter.CaptureDescription.IntervalInSeconds);
-            Assert.AreEqual(eventHub.Data.MessageRetentionInDays,parameter.MessageRetentionInDays);
             Assert.AreEqual(eventHub.Data.CaptureDescription.SizeLimitInBytes, parameter.CaptureDescription.SizeLimitInBytes);
             Assert.AreEqual(eventHub.Data.CaptureDescription.Destination.Name, parameter.CaptureDescription.Destination.Name);
             Assert.AreEqual(eventHub.Data.CaptureDescription.Destination.BlobContainer, parameter.CaptureDescription.Destination.BlobContainer);

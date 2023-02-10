@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<AvsSubscriptionQuotaEnabled> quotaEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hostsRemaining"))
+                if (property.NameEquals("hostsRemaining"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Avs.Models
                     hostsRemaining = dictionary;
                     continue;
                 }
-                if (property.NameEquals("quotaEnabled"))
+                if (property.NameEquals("quotaEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

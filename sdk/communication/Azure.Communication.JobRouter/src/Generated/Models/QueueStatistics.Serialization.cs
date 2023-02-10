@@ -21,17 +21,17 @@ namespace Azure.Communication.JobRouter.Models
             Optional<double> longestJobWaitTimeMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("queueId"))
+                if (property.NameEquals("queueId"u8))
                 {
                     queueId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("length"))
+                if (property.NameEquals("length"u8))
                 {
                     length = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("estimatedWaitTimeMinutes"))
+                if (property.NameEquals("estimatedWaitTimeMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.Communication.JobRouter.Models
                     estimatedWaitTimeMinutes = dictionary;
                     continue;
                 }
-                if (property.NameEquals("longestJobWaitTimeMinutes"))
+                if (property.NameEquals("longestJobWaitTimeMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

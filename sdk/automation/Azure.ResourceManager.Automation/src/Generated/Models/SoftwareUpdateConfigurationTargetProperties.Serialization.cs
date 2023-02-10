@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AzureQueries))
             {
-                writer.WritePropertyName("azureQueries");
+                writer.WritePropertyName("azureQueries"u8);
                 writer.WriteStartArray();
                 foreach (var item in AzureQueries)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsCollectionDefined(NonAzureQueries))
             {
-                writer.WritePropertyName("nonAzureQueries");
+                writer.WritePropertyName("nonAzureQueries"u8);
                 writer.WriteStartArray();
                 foreach (var item in NonAzureQueries)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<IList<NonAzureQueryProperties>> nonAzureQueries = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureQueries"))
+                if (property.NameEquals("azureQueries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Automation.Models
                     azureQueries = array;
                     continue;
                 }
-                if (property.NameEquals("nonAzureQueries"))
+                if (property.NameEquals("nonAzureQueries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

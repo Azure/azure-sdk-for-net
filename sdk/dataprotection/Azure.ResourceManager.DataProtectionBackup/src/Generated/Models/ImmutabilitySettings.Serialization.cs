@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WriteEndObject();
@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ImmutabilitySettings DeserializeImmutabilitySettings(JsonElement element)
         {
-            Optional<ImmutabilityState> state = default;
+            Optional<BackupVaultImmutabilityState> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = new ImmutabilityState(property.Value.GetString());
+                    state = new BackupVaultImmutabilityState(property.Value.GetString());
                     continue;
                 }
             }

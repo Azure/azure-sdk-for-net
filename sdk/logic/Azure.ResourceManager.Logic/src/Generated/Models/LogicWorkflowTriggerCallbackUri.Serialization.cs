@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<LogicWorkflowTriggerCallbackQueryParameterInfo> queries = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("method"))
+                if (property.NameEquals("method"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.Logic.Models
                     method = new RequestMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("basePath"))
+                if (property.NameEquals("basePath"u8))
                 {
                     basePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativePath"))
+                if (property.NameEquals("relativePath"u8))
                 {
                     relativePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativePathParameters"))
+                if (property.NameEquals("relativePathParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Models
                     relativePathParameters = array;
                     continue;
                 }
-                if (property.NameEquals("queries"))
+                if (property.NameEquals("queries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,7 +19,7 @@ namespace Azure.AI.AnomalyDetector
             Optional<IReadOnlyList<string>> changedVariables = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("changedVariables"))
+                if (property.NameEquals("changedVariables"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

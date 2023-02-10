@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceResourceId");
+            writer.WritePropertyName("sourceResourceId"u8);
             writer.WriteStringValue(SourceResourceId);
-            writer.WritePropertyName("sourceRegion");
+            writer.WritePropertyName("sourceRegion"u8);
             writer.WriteStringValue(SourceRegion);
-            writer.WritePropertyName("dataMoveLevel");
+            writer.WritePropertyName("dataMoveLevel"u8);
             writer.WriteStringValue(DataMoveLevel.ToString());
-            writer.WritePropertyName("correlationId");
+            writer.WritePropertyName("correlationId"u8);
             writer.WriteStringValue(CorrelationId);
             if (Optional.IsCollectionDefined(SourceContainerArmIds))
             {
-                writer.WritePropertyName("sourceContainerArmIds");
+                writer.WritePropertyName("sourceContainerArmIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceContainerArmIds)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(PauseGC))
             {
-                writer.WritePropertyName("pauseGC");
+                writer.WritePropertyName("pauseGC"u8);
                 writer.WriteBooleanValue(PauseGC.Value);
             }
             writer.WriteEndObject();

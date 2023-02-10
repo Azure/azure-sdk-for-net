@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (DeploymentName != null)
                 {
-                    writer.WritePropertyName("deploymentName");
+                    writer.WritePropertyName("deploymentName"u8);
                     writer.WriteStringValue(DeploymentName);
                 }
                 else
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> deploymentName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deploymentName"))
+                if (property.NameEquals("deploymentName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

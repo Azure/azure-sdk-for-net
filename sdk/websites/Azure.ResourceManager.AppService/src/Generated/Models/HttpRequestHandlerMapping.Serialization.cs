@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Extension))
             {
-                writer.WritePropertyName("extension");
+                writer.WritePropertyName("extension"u8);
                 writer.WriteStringValue(Extension);
             }
             if (Optional.IsDefined(ScriptProcessor))
             {
-                writer.WritePropertyName("scriptProcessor");
+                writer.WritePropertyName("scriptProcessor"u8);
                 writer.WriteStringValue(ScriptProcessor);
             }
             if (Optional.IsDefined(Arguments))
             {
-                writer.WritePropertyName("arguments");
+                writer.WritePropertyName("arguments"u8);
                 writer.WriteStringValue(Arguments);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> arguments = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extension"))
+                if (property.NameEquals("extension"u8))
                 {
                     extension = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scriptProcessor"))
+                if (property.NameEquals("scriptProcessor"u8))
                 {
                     scriptProcessor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("arguments"))
+                if (property.NameEquals("arguments"u8))
                 {
                     arguments = property.Value.GetString();
                     continue;

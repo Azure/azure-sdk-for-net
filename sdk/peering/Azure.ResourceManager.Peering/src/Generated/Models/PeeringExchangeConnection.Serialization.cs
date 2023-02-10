@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Peering.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PeeringDBFacilityId))
             {
-                writer.WritePropertyName("peeringDBFacilityId");
+                writer.WritePropertyName("peeringDBFacilityId"u8);
                 writer.WriteNumberValue(PeeringDBFacilityId.Value);
             }
             if (Optional.IsDefined(BgpSession))
             {
-                writer.WritePropertyName("bgpSession");
+                writer.WritePropertyName("bgpSession"u8);
                 writer.WriteObjectValue(BgpSession);
             }
             if (Optional.IsDefined(ConnectionIdentifier))
             {
-                writer.WritePropertyName("connectionIdentifier");
+                writer.WritePropertyName("connectionIdentifier"u8);
                 writer.WriteStringValue(ConnectionIdentifier.Value);
             }
             writer.WriteEndObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("peeringDBFacilityId"))
+                if (property.NameEquals("peeringDBFacilityId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Peering.Models
                     peeringDBFacilityId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("connectionState"))
+                if (property.NameEquals("connectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Peering.Models
                     connectionState = new PeeringConnectionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("bgpSession"))
+                if (property.NameEquals("bgpSession"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Peering.Models
                     bgpSession = PeeringBgpSession.DeserializePeeringBgpSession(property.Value);
                     continue;
                 }
-                if (property.NameEquals("connectionIdentifier"))
+                if (property.NameEquals("connectionIdentifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Peering.Models
                     connectionIdentifier = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;

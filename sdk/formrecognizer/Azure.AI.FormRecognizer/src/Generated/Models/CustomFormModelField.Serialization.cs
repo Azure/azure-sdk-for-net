@@ -18,12 +18,12 @@ namespace Azure.AI.FormRecognizer.Training
             float? accuracy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fieldName"))
+                if (property.NameEquals("fieldName"u8))
                 {
                     fieldName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accuracy"))
+                if (property.NameEquals("accuracy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
