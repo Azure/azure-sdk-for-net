@@ -9,7 +9,7 @@
 ### Breaking Changes
 - `ListAssociatedResources` available in beta version is removed from the stable version.
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.2 (2022-10-19)
 
 ### Features Added
 
