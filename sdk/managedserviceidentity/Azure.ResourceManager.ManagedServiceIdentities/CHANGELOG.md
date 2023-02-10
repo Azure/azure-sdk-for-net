@@ -1,5 +1,17 @@
 # Release History
 
+## 2.0.0
+
+### Features Added
+Create/Update/Delete federated identity credentials.
+
+### Breaking Changes
+`ListAssociatedResources` available in beta version is removed from the stable version.
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
