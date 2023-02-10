@@ -76,6 +76,11 @@ namespace Azure.Core.Pipeline
             _activityAdapter?.AddTag(name, value);
         }
 
+        public void AddIntegerAttribute(string name, int value)
+        {
+            _activityAdapter?.AddTag(name, value);
+        }
+
         public void AddAttribute<T>(string name,
 #if AZURE_NULLABLE
             [AllowNull]
@@ -221,7 +226,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            public void AddTag(string name, string value)
+            public void AddTag(string name, object value)
             {
                 if (_currentActivity == null)
                 {
@@ -232,7 +237,7 @@ namespace Azure.Core.Pipeline
                 }
                 else
                 {
-                    _currentActivity?.AddTag(name, value!);
+                    _currentActivity?.AddObjectTag(name, value);
                 }
             }
 
@@ -318,7 +323,7 @@ namespace Azure.Core.Pipeline
                     {
                         foreach (var tag in _tagCollection)
                         {
-                            _currentActivity.AddTag(tag.Key, (string)tag.Value);
+                            _currentActivity.AddObjectTag(tag.Key, tag.Value);
                         }
                     }
 
@@ -410,6 +415,7 @@ namespace Azure.Core.Pipeline
         private static Func<Activity, string?>? GetTraceStateStringMethod;
         private static Action<Activity, string?>? SetTraceStateStringMethod;
         private static Func<Activity, int>? GetIdFormatMethod;
+        private static Action<Activity, string, object?>? ActivityAddTagMethod;
         private static Func<object, string, int, string?, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>? ActivitySourceStartActivityMethod;
         private static Func<object, bool>? ActivitySourceHasListenersMethod;
         private static Func<string, string?, ICollection<KeyValuePair<string, object>>?, object?>? CreateActivityLinkMethod;
@@ -549,6 +555,40 @@ namespace Azure.Core.Pipeline
             }
 
             SetTraceStateStringMethod(activity, tracestate);
+        }
+
+        public static void AddObjectTag(this Activity activity, string name, object value)
+        {
+            if (ActivityAddTagMethod == null)
+            {
+                var method = typeof(Activity).GetMethod("AddTag", BindingFlags.Instance | BindingFlags.Public, null, new Type[]
+                {
+                    typeof(string),
+                    typeof(object)
+                }, null);
+
+                if (method == null)
+                {
+                    // If the object overload is not available, fall back to the string overload. The assumption is that the object overload
+                    // not being available means that we cannot be using activity source, so the string cast should never fail because we will always
+                    // be passing a string value.
+                    ActivityAddTagMethod = (activityParameter, nameParameter, valueParameter) => activityParameter.AddTag(
+                        nameParameter,
+                        // null check is required to keep nullable reference compilation happy
+                        valueParameter == null ? null : (string)valueParameter);
+                }
+                else
+                {
+                    var nameParameter = Expression.Parameter(typeof(string));
+                    var valueParameter = Expression.Parameter(typeof(object));
+
+                    ActivityAddTagMethod = Expression.Lambda<Action<Activity, string, object?>>(
+                        Expression.Call(ActivityParameter, method, nameParameter, valueParameter),
+                        ActivityParameter, nameParameter, valueParameter).Compile();
+                }
+            }
+
+            ActivityAddTagMethod(activity, name, value);
         }
 
         public static bool SupportsActivitySource()
