@@ -41,6 +41,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public ETag ETag { get; internal set; }
 
         /// <summary>
+        /// CreatedOn.
+        /// </summary>
+        public DateTimeOffset? CreatedOn { get; internal set; }
+
+        /// <summary>
         /// This header returns the value that was specified for the Content-Encoding request header.
         /// </summary>
         public string ContentEncoding { get; internal set; }
