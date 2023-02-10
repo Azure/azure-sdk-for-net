@@ -220,6 +220,9 @@ namespace Azure.ResourceManager.ManagementGroups
 
         internal HttpMessage CreateCreateOrUpdateRequest(string groupId, ManagementGroupCreateOrUpdateContent content, string cacheControl)
         {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNull(content, nameof(content));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
@@ -247,18 +250,13 @@ namespace Azure.ResourceManager.ManagementGroups
         /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
         /// 
         /// </summary>
-        /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="content"> Management group creation parameters. </param>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string groupId, ManagementGroupCreateOrUpdateContent content, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCreateOrUpdateRequest(groupId, content, cacheControl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -275,18 +273,13 @@ namespace Azure.ResourceManager.ManagementGroups
         /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
         /// 
         /// </summary>
-        /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="content"> Management group creation parameters. </param>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string groupId, ManagementGroupCreateOrUpdateContent content, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response CreateOrUpdate(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCreateOrUpdateRequest(groupId, content, cacheControl);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -386,6 +379,8 @@ namespace Azure.ResourceManager.ManagementGroups
 
         internal HttpMessage CreateDeleteRequest(string groupId, string cacheControl)
         {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
@@ -409,16 +404,13 @@ namespace Azure.ResourceManager.ManagementGroups
         /// If a management group contains child resources, the request will fail.
         /// 
         /// </summary>
-        /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string groupId, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> DeleteAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateDeleteRequest(groupId, cacheControl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -435,16 +427,13 @@ namespace Azure.ResourceManager.ManagementGroups
         /// If a management group contains child resources, the request will fail.
         /// 
         /// </summary>
-        /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string groupId, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response Delete(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateDeleteRequest(groupId, cacheControl);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

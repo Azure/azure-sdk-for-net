@@ -394,6 +394,9 @@ namespace Azure.ResourceManager.Resources
 
         internal HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, TagResourceData data)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(data, nameof(data));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
@@ -414,16 +417,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
-        /// <param name="scope"> The resource scope. </param>
-        /// <param name="data"> The TagResource to use. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAtScopeAsync(string scope, TagResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAtScopeAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCreateOrUpdateAtScopeRequest(scope, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -436,16 +436,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
-        /// <param name="scope"> The resource scope. </param>
-        /// <param name="data"> The TagResource to use. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
-        public Response CreateOrUpdateAtScope(string scope, TagResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response CreateOrUpdateAtScope(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCreateOrUpdateAtScopeRequest(scope, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -459,6 +456,9 @@ namespace Azure.ResourceManager.Resources
 
         internal HttpMessage CreateUpdateAtScopeRequest(string scope, TagResourcePatch patch)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(patch, nameof(patch));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
@@ -479,16 +479,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
-        /// <param name="scope"> The resource scope. </param>
-        /// <param name="patch"> The TagResourcePatch to use. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="patch"/> is null. </exception>
-        public async Task<Response> UpdateAtScopeAsync(string scope, TagResourcePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> UpdateAtScopeAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateUpdateAtScopeRequest(scope, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -501,16 +498,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
-        /// <param name="scope"> The resource scope. </param>
-        /// <param name="patch"> The TagResourcePatch to use. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="patch"/> is null. </exception>
-        public Response UpdateAtScope(string scope, TagResourcePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response UpdateAtScope(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateUpdateAtScopeRequest(scope, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -593,6 +587,8 @@ namespace Azure.ResourceManager.Resources
 
         internal HttpMessage CreateDeleteAtScopeRequest(string scope)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
@@ -609,14 +605,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes the entire set of tags on a resource or subscription. </summary>
-        /// <param name="scope"> The resource scope. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response> DeleteAtScopeAsync(string scope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> DeleteAtScopeAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateDeleteAtScopeRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -629,14 +624,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes the entire set of tags on a resource or subscription. </summary>
-        /// <param name="scope"> The resource scope. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response DeleteAtScope(string scope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response DeleteAtScope(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateDeleteAtScopeRequest(scope);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

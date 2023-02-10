@@ -186,8 +186,9 @@ namespace Azure.ResourceManager.ManagementGroups
             scope.Start();
             try
             {
-                var response = await _managementGroupRestClient.DeleteAsync(Id.Name, cacheControl, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementGroupsArmOperation(_managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateDeleteRequest(Id.Name, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _managementGroupRestClient.CreateDeleteRequest(Id.Name, cacheControl);
+                var response = await _managementGroupRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagementGroupsArmOperation(_managementGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -223,8 +224,9 @@ namespace Azure.ResourceManager.ManagementGroups
             scope.Start();
             try
             {
-                var response = _managementGroupRestClient.Delete(Id.Name, cacheControl, cancellationToken);
-                var operation = new ManagementGroupsArmOperation(_managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateDeleteRequest(Id.Name, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _managementGroupRestClient.CreateDeleteRequest(Id.Name, cacheControl);
+                var response = _managementGroupRestClient.Delete(message, cancellationToken);
+                var operation = new ManagementGroupsArmOperation(_managementGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

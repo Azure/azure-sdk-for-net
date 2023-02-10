@@ -85,8 +85,9 @@ namespace Azure.ResourceManager.ManagementGroups
             scope.Start();
             try
             {
-                var response = await _managementGroupRestClient.CreateOrUpdateAsync(groupId, content, cacheControl, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementGroupsArmOperation<ManagementGroupResource>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, content, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, content, cacheControl);
+                var response = await _managementGroupRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagementGroupsArmOperation<ManagementGroupResource>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,8 +130,9 @@ namespace Azure.ResourceManager.ManagementGroups
             scope.Start();
             try
             {
-                var response = _managementGroupRestClient.CreateOrUpdate(groupId, content, cacheControl, cancellationToken);
-                var operation = new ManagementGroupsArmOperation<ManagementGroupResource>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, content, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, content, cacheControl);
+                var response = _managementGroupRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ManagementGroupsArmOperation<ManagementGroupResource>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
