@@ -15,7 +15,6 @@ namespace Azure.AI.OpenAI
         public int? Created { get { throw null; } }
         public string Id { get { throw null; } }
         public string Model { get { throw null; } }
-        public string Object { get { throw null; } }
         public Azure.AI.OpenAI.CompletionsUsage Usage { get { throw null; } }
     }
     public partial class CompletionsLogProbability
@@ -58,14 +57,12 @@ namespace Azure.AI.OpenAI
         internal EmbeddingItem() { }
         public System.Collections.Generic.IReadOnlyList<float> Embedding { get { throw null; } }
         public int Index { get { throw null; } }
-        public string Object { get { throw null; } }
     }
     public partial class Embeddings
     {
         internal Embeddings() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.EmbeddingItem> Data { get { throw null; } }
         public string Model { get { throw null; } }
-        public string Object { get { throw null; } }
         public Azure.AI.OpenAI.EmbeddingsUsage Usage { get { throw null; } }
     }
     public partial class EmbeddingsOptions

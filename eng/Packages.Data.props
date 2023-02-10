@@ -99,7 +99,7 @@
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.13.1" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.11.1" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.3.2" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.4.0" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.1" />
@@ -160,7 +160,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230207.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230208.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20230131.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />

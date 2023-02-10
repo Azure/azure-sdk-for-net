@@ -28,7 +28,7 @@ namespace Azure.Core.Amqp
         public Azure.Core.Amqp.AmqpMessageProperties Properties { get { throw null; } }
         public static Azure.Core.Amqp.AmqpAnnotatedMessage FromBytes(System.BinaryData messageBytes) { throw null; }
         public bool HasSection(Azure.Core.Amqp.AmqpMessageSection section) { throw null; }
-        public virtual System.BinaryData ToBytes() { throw null; }
+        public System.BinaryData ToBytes() { throw null; }
     }
     public partial class AmqpMessageBody
     {
