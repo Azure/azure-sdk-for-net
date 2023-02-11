@@ -294,10 +294,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanCheckOptionalProperty()
         {
-            dynamic json = GetDynamicJson(@"
+            dynamic json = GetDynamicJson("""
                 {
-                  ""Foo"" : ""foo""
-                }");
+                  "Foo" : "foo"
+                }
+                """);
 
             // Property is present
             Assert.IsFalse(json.Foo == null);
@@ -309,13 +310,14 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanCheckOptionalPropertyWithChanges()
         {
-            dynamic json = GetDynamicJson(@"
+            dynamic json = GetDynamicJson("""
                 {
-                  ""Foo"" : ""foo"",
-                  ""Bar"" : {
-                    ""A"" : ""a""
+                  "Foo" : "foo",
+                  "Bar" : {
+                    "A" : "a"
                   }
-                }");
+                }
+            """);
 
             // Add property Baz
             json.Baz = "baz";
@@ -335,10 +337,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetOptionalProperty()
         {
-            dynamic json = GetDynamicJson(@"
+            dynamic json = GetDynamicJson("""
                 {
-                  ""Foo"" : ""foo""
-                }");
+                  "Foo" : "foo"
+                }
+                """);
 
             // Property is absent
             Assert.IsTrue(json.OptionalValue == null);
