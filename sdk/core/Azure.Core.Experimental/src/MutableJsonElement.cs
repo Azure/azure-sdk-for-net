@@ -50,7 +50,7 @@ namespace Azure.Core.Dynamic
         {
             if (!TryGetProperty(name, out MutableJsonElement value))
             {
-                throw new InvalidOperationException($"{_path} does not containe property called {name}");
+                throw new InvalidOperationException($"{_path} does not contain property called {name}");
             }
 
             return value;
