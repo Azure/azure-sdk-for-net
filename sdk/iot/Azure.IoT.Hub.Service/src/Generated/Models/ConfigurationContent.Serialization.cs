@@ -18,7 +18,7 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DeviceContent))
             {
-                writer.WritePropertyName("deviceContent");
+                writer.WritePropertyName("deviceContent"u8);
                 writer.WriteStartObject();
                 foreach (var item in DeviceContent)
                 {
@@ -29,7 +29,7 @@ namespace Azure.IoT.Hub.Service.Models
             }
             if (Optional.IsCollectionDefined(ModulesContent))
             {
-                writer.WritePropertyName("modulesContent");
+                writer.WritePropertyName("modulesContent"u8);
                 writer.WriteStartObject();
                 foreach (var item in ModulesContent)
                 {
@@ -46,7 +46,7 @@ namespace Azure.IoT.Hub.Service.Models
             }
             if (Optional.IsCollectionDefined(ModuleContent))
             {
-                writer.WritePropertyName("moduleContent");
+                writer.WritePropertyName("moduleContent"u8);
                 writer.WriteStartObject();
                 foreach (var item in ModuleContent)
                 {
@@ -65,7 +65,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<IDictionary<string, object>> moduleContent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceContent"))
+                if (property.NameEquals("deviceContent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.IoT.Hub.Service.Models
                     deviceContent = dictionary;
                     continue;
                 }
-                if (property.NameEquals("modulesContent"))
+                if (property.NameEquals("modulesContent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.IoT.Hub.Service.Models
                     modulesContent = dictionary;
                     continue;
                 }
-                if (property.NameEquals("moduleContent"))
+                if (property.NameEquals("moduleContent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

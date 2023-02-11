@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("mediaLink");
+            writer.WritePropertyName("mediaLink"u8);
             writer.WriteStringValue(MediaLink);
             if (Optional.IsDefined(DefaultConfigurationLink))
             {
-                writer.WritePropertyName("defaultConfigurationLink");
+                writer.WritePropertyName("defaultConfigurationLink"u8);
                 writer.WriteStringValue(DefaultConfigurationLink);
             }
             writer.WriteEndObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> defaultConfigurationLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mediaLink"))
+                if (property.NameEquals("mediaLink"u8))
                 {
                     mediaLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultConfigurationLink"))
+                if (property.NameEquals("defaultConfigurationLink"u8))
                 {
                     defaultConfigurationLink = property.Value.GetString();
                     continue;

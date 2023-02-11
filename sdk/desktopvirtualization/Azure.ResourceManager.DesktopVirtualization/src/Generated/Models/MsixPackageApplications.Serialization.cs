@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AppId))
             {
-                writer.WritePropertyName("appId");
+                writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(AppUserModelId))
             {
-                writer.WritePropertyName("appUserModelID");
+                writer.WritePropertyName("appUserModelID"u8);
                 writer.WriteStringValue(AppUserModelId);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(IconImageName))
             {
-                writer.WritePropertyName("iconImageName");
+                writer.WritePropertyName("iconImageName"u8);
                 writer.WriteStringValue(IconImageName);
             }
             if (Optional.IsDefined(RawIcon))
             {
-                writer.WritePropertyName("rawIcon");
+                writer.WritePropertyName("rawIcon"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(RawIcon);
 #else
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             if (Optional.IsDefined(RawPng))
             {
-                writer.WritePropertyName("rawPng");
+                writer.WritePropertyName("rawPng"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(RawPng);
 #else
@@ -73,32 +73,32 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<BinaryData> rawPng = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("appId"))
+                if (property.NameEquals("appId"u8))
                 {
                     appId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appUserModelID"))
+                if (property.NameEquals("appUserModelID"u8))
                 {
                     appUserModelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iconImageName"))
+                if (property.NameEquals("iconImageName"u8))
                 {
                     iconImageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rawIcon"))
+                if (property.NameEquals("rawIcon"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     rawIcon = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("rawPng"))
+                if (property.NameEquals("rawPng"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

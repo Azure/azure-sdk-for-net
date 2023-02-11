@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query.Models
             Optional<string> metricNamespaceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metricNamespaceName"))
+                if (property.NameEquals("metricNamespaceName"u8))
                 {
                     metricNamespaceName = property.Value.GetString();
                     continue;

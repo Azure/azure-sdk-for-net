@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppContainers
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
-                writer.WritePropertyName("extendedLocation");
+                writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,23 +35,23 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StaticIP))
             {
-                writer.WritePropertyName("staticIp");
+                writer.WritePropertyName("staticIp"u8);
                 writer.WriteStringValue(StaticIP.ToString());
             }
             if (Optional.IsDefined(DaprAIConnectionString))
             {
-                writer.WritePropertyName("daprAIConnectionString");
+                writer.WritePropertyName("daprAIConnectionString"u8);
                 writer.WriteStringValue(DaprAIConnectionString);
             }
             if (Optional.IsDefined(CustomDomainConfiguration))
             {
-                writer.WritePropertyName("customDomainConfiguration");
+                writer.WritePropertyName("customDomainConfiguration"u8);
                 writer.WriteObjectValue(CustomDomainConfiguration);
             }
             writer.WriteEndObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extendedLocation"))
+                if (property.NameEquals("extendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppContainers
                     extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,27 +100,27 @@ namespace Azure.ResourceManager.AppContainers
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppContainers
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -149,17 +149,17 @@ namespace Azure.ResourceManager.AppContainers
                             provisioningState = new ContainerAppConnectedEnvironmentProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("deploymentErrors"))
+                        if (property0.NameEquals("deploymentErrors"u8))
                         {
                             deploymentErrors = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("defaultDomain"))
+                        if (property0.NameEquals("defaultDomain"u8))
                         {
                             defaultDomain = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("staticIp"))
+                        if (property0.NameEquals("staticIp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.AppContainers
                             staticIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("daprAIConnectionString"))
+                        if (property0.NameEquals("daprAIConnectionString"u8))
                         {
                             daprAIConnectionString = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("customDomainConfiguration"))
+                        if (property0.NameEquals("customDomainConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

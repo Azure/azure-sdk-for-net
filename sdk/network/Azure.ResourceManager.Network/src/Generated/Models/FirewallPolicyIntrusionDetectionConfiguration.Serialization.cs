@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SignatureOverrides))
             {
-                writer.WritePropertyName("signatureOverrides");
+                writer.WritePropertyName("signatureOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in SignatureOverrides)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(BypassTrafficSettings))
             {
-                writer.WritePropertyName("bypassTrafficSettings");
+                writer.WritePropertyName("bypassTrafficSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in BypassTrafficSettings)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>> bypassTrafficSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("signatureOverrides"))
+                if (property.NameEquals("signatureOverrides"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                     signatureOverrides = array;
                     continue;
                 }
-                if (property.NameEquals("bypassTrafficSettings"))
+                if (property.NameEquals("bypassTrafficSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

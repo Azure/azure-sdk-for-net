@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("scaleType");
+            writer.WritePropertyName("scaleType"u8);
             writer.WriteStringValue(ScaleType.ToString());
             writer.WriteEndObject();
         }

@@ -15,9 +15,9 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ref");
+            writer.WritePropertyName("ref"u8);
             writer.WriteStringValue(Ref);
-            writer.WritePropertyName("role");
+            writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.AI.TextAnalytics.Models
             string role = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ref"))
+                if (property.NameEquals("ref"u8))
                 {
                     @ref = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("role"))
+                if (property.NameEquals("role"u8))
                 {
                     role = property.Value.GetString();
                     continue;

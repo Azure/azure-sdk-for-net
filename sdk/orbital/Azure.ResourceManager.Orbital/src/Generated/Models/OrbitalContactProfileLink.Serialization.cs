@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.Orbital.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("polarization");
+            writer.WritePropertyName("polarization"u8);
             writer.WriteStringValue(Polarization.ToString());
-            writer.WritePropertyName("direction");
+            writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
             if (Optional.IsDefined(GainOverTemperature))
             {
-                writer.WritePropertyName("gainOverTemperature");
+                writer.WritePropertyName("gainOverTemperature"u8);
                 writer.WriteNumberValue(GainOverTemperature.Value);
             }
             if (Optional.IsDefined(EirpdBW))
             {
-                writer.WritePropertyName("eirpdBW");
+                writer.WritePropertyName("eirpdBW"u8);
                 writer.WriteNumberValue(EirpdBW.Value);
             }
-            writer.WritePropertyName("channels");
+            writer.WritePropertyName("channels"u8);
             writer.WriteStartArray();
             foreach (var item in Channels)
             {
@@ -52,22 +52,22 @@ namespace Azure.ResourceManager.Orbital.Models
             IList<OrbitalContactProfileLinkChannel> channels = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("polarization"))
+                if (property.NameEquals("polarization"u8))
                 {
                     polarization = new OrbitalLinkPolarization(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     direction = new OrbitalLinkDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("gainOverTemperature"))
+                if (property.NameEquals("gainOverTemperature"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     gainOverTemperature = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("eirpdBW"))
+                if (property.NameEquals("eirpdBW"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     eirpdBW = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("channels"))
+                if (property.NameEquals("channels"u8))
                 {
                     List<OrbitalContactProfileLinkChannel> array = new List<OrbitalContactProfileLinkChannel>();
                     foreach (var item in property.Value.EnumerateArray())

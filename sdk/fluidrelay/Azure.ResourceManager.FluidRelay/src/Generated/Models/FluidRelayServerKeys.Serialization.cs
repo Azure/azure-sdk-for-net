@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.FluidRelay.Models
             Optional<string> key2 = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key1"))
+                if (property.NameEquals("key1"u8))
                 {
                     key1 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key2"))
+                if (property.NameEquals("key2"u8))
                 {
                     key2 = property.Value.GetString();
                     continue;

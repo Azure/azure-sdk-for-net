@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VolumeOptions))
             {
-                writer.WritePropertyName("volumeOptions");
+                writer.WritePropertyName("volumeOptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in VolumeOptions)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsCollectionDefined(DiskSignatureOptions))
             {
-                writer.WritePropertyName("diskSignatureOptions");
+                writer.WritePropertyName("diskSignatureOptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in DiskSignatureOptions)
                 {

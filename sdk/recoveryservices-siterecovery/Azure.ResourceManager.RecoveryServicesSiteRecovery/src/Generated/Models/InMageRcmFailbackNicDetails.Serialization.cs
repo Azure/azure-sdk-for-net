@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> sourceIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("macAddress"))
+                if (property.NameEquals("macAddress"u8))
                 {
                     macAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkName"))
+                if (property.NameEquals("networkName"u8))
                 {
                     networkName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adapterType"))
+                if (property.NameEquals("adapterType"u8))
                 {
                     adapterType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceIpAddress"))
+                if (property.NameEquals("sourceIpAddress"u8))
                 {
                     sourceIPAddress = property.Value.GetString();
                     continue;

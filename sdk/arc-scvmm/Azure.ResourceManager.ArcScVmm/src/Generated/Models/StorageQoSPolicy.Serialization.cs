@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             Optional<string> policyId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iopsMaximum"))
+                if (property.NameEquals("iopsMaximum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     iopsMaximum = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("iopsMinimum"))
+                if (property.NameEquals("iopsMinimum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     iopsMinimum = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("bandwidthLimit"))
+                if (property.NameEquals("bandwidthLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     bandwidthLimit = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("policyId"))
+                if (property.NameEquals("policyId"u8))
                 {
                     policyId = property.Value.GetString();
                     continue;

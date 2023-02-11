@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CarrierAccountNumber))
             {
-                writer.WritePropertyName("carrierAccountNumber");
+                writer.WritePropertyName("carrierAccountNumber"u8);
                 writer.WriteStringValue(CarrierAccountNumber);
             }
             if (Optional.IsDefined(CarrierName))
             {
-                writer.WritePropertyName("carrierName");
+                writer.WritePropertyName("carrierName"u8);
                 writer.WriteStringValue(CarrierName);
             }
             if (Optional.IsDefined(TrackingId))
             {
-                writer.WritePropertyName("trackingId");
+                writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> trackingId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("carrierAccountNumber"))
+                if (property.NameEquals("carrierAccountNumber"u8))
                 {
                     carrierAccountNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("carrierName"))
+                if (property.NameEquals("carrierName"u8))
                 {
                     carrierName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackingId"))
+                if (property.NameEquals("trackingId"u8))
                 {
                     trackingId = property.Value.GetString();
                     continue;

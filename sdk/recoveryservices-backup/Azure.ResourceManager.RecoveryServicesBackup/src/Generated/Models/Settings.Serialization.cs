@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TimeZone))
             {
-                writer.WritePropertyName("timeZone");
+                writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
             if (Optional.IsDefined(IsSqlCompression))
             {
-                writer.WritePropertyName("issqlcompression");
+                writer.WritePropertyName("issqlcompression"u8);
                 writer.WriteBooleanValue(IsSqlCompression.Value);
             }
             if (Optional.IsDefined(IsCompression))
             {
-                writer.WritePropertyName("isCompression");
+                writer.WritePropertyName("isCompression"u8);
                 writer.WriteBooleanValue(IsCompression.Value);
             }
             writer.WriteEndObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<bool> isCompression = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeZone"))
+                if (property.NameEquals("timeZone"u8))
                 {
                     timeZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issqlcompression"))
+                if (property.NameEquals("issqlcompression"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isSqlCompression = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isCompression"))
+                if (property.NameEquals("isCompression"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

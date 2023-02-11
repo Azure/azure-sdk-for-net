@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LoginServer))
             {
-                writer.WritePropertyName("loginServer");
+                writer.WritePropertyName("loginServer"u8);
                 writer.WriteStringValue(LoginServer);
             }
             if (Optional.IsDefined(ImageName))
             {
-                writer.WritePropertyName("imageName");
+                writer.WritePropertyName("imageName"u8);
                 writer.WriteStringValue(ImageName);
             }
             if (Optional.IsDefined(Digest))
             {
-                writer.WritePropertyName("digest");
+                writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<string> digest = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("loginServer"))
+                if (property.NameEquals("loginServer"u8))
                 {
                     loginServer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageName"))
+                if (property.NameEquals("imageName"u8))
                 {
                     imageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("digest"))
+                if (property.NameEquals("digest"u8))
                 {
                     digest = property.Value.GetString();
                     continue;

@@ -17,17 +17,17 @@ namespace Azure.Core.TestFramework.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowAutoRedirect))
             {
-                writer.WritePropertyName("AllowAutoRedirect");
+                writer.WritePropertyName("AllowAutoRedirect"u8);
                 writer.WriteBooleanValue(AllowAutoRedirect.Value);
             }
             if (Optional.IsDefined(TLSValidationCert))
             {
-                writer.WritePropertyName("TLSValidationCert");
+                writer.WritePropertyName("TLSValidationCert"u8);
                 writer.WriteStringValue(TLSValidationCert);
             }
             if (Optional.IsCollectionDefined(Certificates))
             {
-                writer.WritePropertyName("Certificates");
+                writer.WritePropertyName("Certificates"u8);
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {

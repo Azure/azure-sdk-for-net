@@ -18,7 +18,7 @@ namespace Azure.Maps.Routing.Models
             Optional<IReadOnlyList<EffectiveSetting>> effectiveSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("effectiveSettings"))
+                if (property.NameEquals("effectiveSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

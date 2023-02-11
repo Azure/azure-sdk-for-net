@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DriverPackageName))
             {
-                writer.WritePropertyName("driverPackageName");
+                writer.WritePropertyName("driverPackageName"u8);
                 writer.WriteStringValue(DriverPackageName);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> driverPackageName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("driverPackageName"))
+                if (property.NameEquals("driverPackageName"u8))
                 {
                     driverPackageName = property.Value.GetString();
                     continue;

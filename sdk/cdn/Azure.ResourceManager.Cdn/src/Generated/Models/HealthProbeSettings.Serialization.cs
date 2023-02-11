@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProbePath))
             {
-                writer.WritePropertyName("probePath");
+                writer.WritePropertyName("probePath"u8);
                 writer.WriteStringValue(ProbePath);
             }
             if (Optional.IsDefined(ProbeRequestType))
             {
-                writer.WritePropertyName("probeRequestType");
+                writer.WritePropertyName("probeRequestType"u8);
                 writer.WriteStringValue(ProbeRequestType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ProbeProtocol))
             {
-                writer.WritePropertyName("probeProtocol");
+                writer.WritePropertyName("probeProtocol"u8);
                 writer.WriteStringValue(ProbeProtocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(ProbeIntervalInSeconds))
             {
-                writer.WritePropertyName("probeIntervalInSeconds");
+                writer.WritePropertyName("probeIntervalInSeconds"u8);
                 writer.WriteNumberValue(ProbeIntervalInSeconds.Value);
             }
             writer.WriteEndObject();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<int> probeIntervalInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("probePath"))
+                if (property.NameEquals("probePath"u8))
                 {
                     probePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("probeRequestType"))
+                if (property.NameEquals("probeRequestType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     probeRequestType = property.Value.GetString().ToHealthProbeRequestType();
                     continue;
                 }
-                if (property.NameEquals("probeProtocol"))
+                if (property.NameEquals("probeProtocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     probeProtocol = property.Value.GetString().ToHealthProbeProtocol();
                     continue;
                 }
-                if (property.NameEquals("probeIntervalInSeconds"))
+                if (property.NameEquals("probeIntervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

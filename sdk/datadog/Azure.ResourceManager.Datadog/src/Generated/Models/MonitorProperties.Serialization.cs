@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Datadog.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MonitoringStatus))
             {
-                writer.WritePropertyName("monitoringStatus");
+                writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
             if (Optional.IsDefined(DatadogOrganizationProperties))
             {
-                writer.WritePropertyName("datadogOrganizationProperties");
+                writer.WritePropertyName("datadogOrganizationProperties"u8);
                 writer.WriteObjectValue(DatadogOrganizationProperties);
             }
             if (Optional.IsDefined(UserInfo))
             {
-                writer.WritePropertyName("userInfo");
+                writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo);
             }
             writer.WriteEndObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<int> liftrResourcePreference = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("monitoringStatus"))
+                if (property.NameEquals("monitoringStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     monitoringStatus = new MonitoringStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("marketplaceSubscriptionStatus"))
+                if (property.NameEquals("marketplaceSubscriptionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     marketplaceSubscriptionStatus = new MarketplaceSubscriptionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("datadogOrganizationProperties"))
+                if (property.NameEquals("datadogOrganizationProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     datadogOrganizationProperties = DatadogOrganizationProperties.DeserializeDatadogOrganizationProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("userInfo"))
+                if (property.NameEquals("userInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     userInfo = UserInfo.DeserializeUserInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("liftrResourceCategory"))
+                if (property.NameEquals("liftrResourceCategory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     liftrResourceCategory = new LiftrResourceCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("liftrResourcePreference"))
+                if (property.NameEquals("liftrResourcePreference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

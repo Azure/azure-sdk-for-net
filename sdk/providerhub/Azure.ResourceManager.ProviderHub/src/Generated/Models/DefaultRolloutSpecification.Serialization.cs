@@ -19,47 +19,47 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpeditedRollout))
             {
-                writer.WritePropertyName("expeditedRollout");
+                writer.WritePropertyName("expeditedRollout"u8);
                 writer.WriteObjectValue(ExpeditedRollout);
             }
             if (Optional.IsDefined(Canary))
             {
-                writer.WritePropertyName("canary");
+                writer.WritePropertyName("canary"u8);
                 writer.WriteObjectValue(Canary);
             }
             if (Optional.IsDefined(LowTraffic))
             {
-                writer.WritePropertyName("lowTraffic");
+                writer.WritePropertyName("lowTraffic"u8);
                 writer.WriteObjectValue(LowTraffic);
             }
             if (Optional.IsDefined(MediumTraffic))
             {
-                writer.WritePropertyName("mediumTraffic");
+                writer.WritePropertyName("mediumTraffic"u8);
                 writer.WriteObjectValue(MediumTraffic);
             }
             if (Optional.IsDefined(HighTraffic))
             {
-                writer.WritePropertyName("highTraffic");
+                writer.WritePropertyName("highTraffic"u8);
                 writer.WriteObjectValue(HighTraffic);
             }
             if (Optional.IsDefined(RestOfTheWorldGroupOne))
             {
-                writer.WritePropertyName("restOfTheWorldGroupOne");
+                writer.WritePropertyName("restOfTheWorldGroupOne"u8);
                 writer.WriteObjectValue(RestOfTheWorldGroupOne);
             }
             if (Optional.IsDefined(RestOfTheWorldGroupTwo))
             {
-                writer.WritePropertyName("restOfTheWorldGroupTwo");
+                writer.WritePropertyName("restOfTheWorldGroupTwo"u8);
                 writer.WriteObjectValue(RestOfTheWorldGroupTwo);
             }
             if (Optional.IsDefined(ProviderRegistration))
             {
-                writer.WritePropertyName("providerRegistration");
+                writer.WritePropertyName("providerRegistration"u8);
                 writer.WriteObjectValue(ProviderRegistration);
             }
             if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
             {
-                writer.WritePropertyName("resourceTypeRegistrations");
+                writer.WritePropertyName("resourceTypeRegistrations"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypeRegistrations)
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("expeditedRollout"))
+                if (property.NameEquals("expeditedRollout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     expeditedRollout = DefaultRolloutSpecificationExpeditedRollout.DeserializeDefaultRolloutSpecificationExpeditedRollout(property.Value);
                     continue;
                 }
-                if (property.NameEquals("canary"))
+                if (property.NameEquals("canary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     canary = DefaultRolloutSpecificationCanary.DeserializeDefaultRolloutSpecificationCanary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("lowTraffic"))
+                if (property.NameEquals("lowTraffic"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     lowTraffic = DefaultRolloutSpecificationLowTraffic.DeserializeDefaultRolloutSpecificationLowTraffic(property.Value);
                     continue;
                 }
-                if (property.NameEquals("mediumTraffic"))
+                if (property.NameEquals("mediumTraffic"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     mediumTraffic = DefaultRolloutSpecificationMediumTraffic.DeserializeDefaultRolloutSpecificationMediumTraffic(property.Value);
                     continue;
                 }
-                if (property.NameEquals("highTraffic"))
+                if (property.NameEquals("highTraffic"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     highTraffic = DefaultRolloutSpecificationHighTraffic.DeserializeDefaultRolloutSpecificationHighTraffic(property.Value);
                     continue;
                 }
-                if (property.NameEquals("restOfTheWorldGroupOne"))
+                if (property.NameEquals("restOfTheWorldGroupOne"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     restOfTheWorldGroupOne = DefaultRolloutSpecificationRestOfTheWorldGroupOne.DeserializeDefaultRolloutSpecificationRestOfTheWorldGroupOne(property.Value);
                     continue;
                 }
-                if (property.NameEquals("restOfTheWorldGroupTwo"))
+                if (property.NameEquals("restOfTheWorldGroupTwo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     restOfTheWorldGroupTwo = DefaultRolloutSpecificationRestOfTheWorldGroupTwo.DeserializeDefaultRolloutSpecificationRestOfTheWorldGroupTwo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("providerRegistration"))
+                if (property.NameEquals("providerRegistration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     providerRegistration = DefaultRolloutSpecificationProviderRegistration.DeserializeDefaultRolloutSpecificationProviderRegistration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resourceTypeRegistrations"))
+                if (property.NameEquals("resourceTypeRegistrations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<Uri> modifiedSwaggerUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("originalSwaggerUrl"))
+                if (property.NameEquals("originalSwaggerUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
                     originalSwaggerUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("modifiedSwaggerUrl"))
+                if (property.NameEquals("modifiedSwaggerUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

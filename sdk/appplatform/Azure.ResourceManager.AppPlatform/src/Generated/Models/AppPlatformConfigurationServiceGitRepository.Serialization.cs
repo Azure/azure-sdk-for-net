@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("patterns");
+            writer.WritePropertyName("patterns"u8);
             writer.WriteStartArray();
             foreach (var item in Patterns)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("uri");
+            writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            writer.WritePropertyName("label");
+            writer.WritePropertyName("label"u8);
             writer.WriteStringValue(Label);
             if (Optional.IsCollectionDefined(SearchPaths))
             {
-                writer.WritePropertyName("searchPaths");
+                writer.WritePropertyName("searchPaths"u8);
                 writer.WriteStartArray();
                 foreach (var item in SearchPaths)
                 {
@@ -42,32 +42,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
+                writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsDefined(HostKey))
             {
-                writer.WritePropertyName("hostKey");
+                writer.WritePropertyName("hostKey"u8);
                 writer.WriteStringValue(HostKey);
             }
             if (Optional.IsDefined(HostKeyAlgorithm))
             {
-                writer.WritePropertyName("hostKeyAlgorithm");
+                writer.WritePropertyName("hostKeyAlgorithm"u8);
                 writer.WriteStringValue(HostKeyAlgorithm);
             }
             if (Optional.IsDefined(PrivateKey))
             {
-                writer.WritePropertyName("privateKey");
+                writer.WritePropertyName("privateKey"u8);
                 writer.WriteStringValue(PrivateKey);
             }
             if (Optional.IsDefined(IsHostKeyCheckingStrict))
             {
-                writer.WritePropertyName("strictHostKeyChecking");
+                writer.WritePropertyName("strictHostKeyChecking"u8);
                 writer.WriteBooleanValue(IsHostKeyCheckingStrict.Value);
             }
             writer.WriteEndObject();
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<bool> strictHostKeyChecking = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("patterns"))
+                if (property.NameEquals("patterns"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -103,17 +103,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     patterns = array;
                     continue;
                 }
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("searchPaths"))
+                if (property.NameEquals("searchPaths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,32 +128,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     searchPaths = array;
                     continue;
                 }
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostKey"))
+                if (property.NameEquals("hostKey"u8))
                 {
                     hostKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostKeyAlgorithm"))
+                if (property.NameEquals("hostKeyAlgorithm"u8))
                 {
                     hostKeyAlgorithm = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateKey"))
+                if (property.NameEquals("privateKey"u8))
                 {
                     privateKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("strictHostKeyChecking"))
+                if (property.NameEquals("strictHostKeyChecking"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

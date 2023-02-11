@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
-                writer.WritePropertyName("extendedLocation");
+                writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -56,31 +56,31 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Cidr))
             {
-                writer.WritePropertyName("cidr");
+                writer.WritePropertyName("cidr"u8);
                 writer.WriteStringValue(Cidr);
             }
             if (Optional.IsDefined(SignedMessage))
             {
-                writer.WritePropertyName("signedMessage");
+                writer.WritePropertyName("signedMessage"u8);
                 writer.WriteStringValue(SignedMessage);
             }
             if (Optional.IsDefined(AuthorizationMessage))
             {
-                writer.WritePropertyName("authorizationMessage");
+                writer.WritePropertyName("authorizationMessage"u8);
                 writer.WriteStringValue(AuthorizationMessage);
             }
             if (Optional.IsDefined(CustomIPPrefixParent))
             {
-                writer.WritePropertyName("customIpPrefixParent");
+                writer.WritePropertyName("customIpPrefixParent"u8);
                 writer.WriteObjectValue(CustomIPPrefixParent);
             }
             if (Optional.IsDefined(CommissionedState))
             {
-                writer.WritePropertyName("commissionedState");
+                writer.WritePropertyName("commissionedState"u8);
                 writer.WriteStringValue(CommissionedState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extendedLocation"))
+                if (property.NameEquals("extendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network
                     extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,12 +154,12 @@ namespace Azure.ResourceManager.Network
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -203,22 +203,22 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("cidr"))
+                        if (property0.NameEquals("cidr"u8))
                         {
                             cidr = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("signedMessage"))
+                        if (property0.NameEquals("signedMessage"u8))
                         {
                             signedMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authorizationMessage"))
+                        if (property0.NameEquals("authorizationMessage"u8))
                         {
                             authorizationMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("customIpPrefixParent"))
+                        if (property0.NameEquals("customIpPrefixParent"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
                             customIPPrefixParent = DeserializeCustomIPPrefixData(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("childCustomIpPrefixes"))
+                        if (property0.NameEquals("childCustomIpPrefixes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Network
                             childCustomIPPrefixes = array;
                             continue;
                         }
-                        if (property0.NameEquals("commissionedState"))
+                        if (property0.NameEquals("commissionedState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
                             commissionedState = new CommissionedState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("publicIpPrefixes"))
+                        if (property0.NameEquals("publicIpPrefixes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
                             publicIPPrefixes = array;
                             continue;
                         }
-                        if (property0.NameEquals("resourceGuid"))
+                        if (property0.NameEquals("resourceGuid"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -278,12 +278,12 @@ namespace Azure.ResourceManager.Network
                             resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("failedReason"))
+                        if (property0.NameEquals("failedReason"u8))
                         {
                             failedReason = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

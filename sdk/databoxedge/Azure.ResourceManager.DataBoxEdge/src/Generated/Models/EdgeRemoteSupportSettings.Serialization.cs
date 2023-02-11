@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RemoteApplicationType))
             {
-                writer.WritePropertyName("remoteApplicationType");
+                writer.WritePropertyName("remoteApplicationType"u8);
                 writer.WriteStringValue(RemoteApplicationType.Value.ToString());
             }
             if (Optional.IsDefined(AccessLevel))
             {
-                writer.WritePropertyName("accessLevel");
+                writer.WritePropertyName("accessLevel"u8);
                 writer.WriteStringValue(AccessLevel.Value.ToString());
             }
             if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expirationTimeStampInUTC");
+                writer.WritePropertyName("expirationTimeStampInUTC"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DateTimeOffset> expirationTimeStampInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("remoteApplicationType"))
+                if (property.NameEquals("remoteApplicationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     remoteApplicationType = new EdgeRemoteApplicationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("accessLevel"))
+                if (property.NameEquals("accessLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     accessLevel = new EdgeRemoteApplicationAccessLevel(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("expirationTimeStampInUTC"))
+                if (property.NameEquals("expirationTimeStampInUTC"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

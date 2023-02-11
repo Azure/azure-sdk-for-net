@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedActions))
             {
-                writer.WritePropertyName("allowedActions");
+                writer.WritePropertyName("allowedActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedActions)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<IList<string>> allowedActions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedActions"))
+                if (property.NameEquals("allowedActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

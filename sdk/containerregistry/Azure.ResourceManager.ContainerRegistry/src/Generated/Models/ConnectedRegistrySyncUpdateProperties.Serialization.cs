@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Schedule))
             {
-                writer.WritePropertyName("schedule");
+                writer.WritePropertyName("schedule"u8);
                 writer.WriteStringValue(Schedule);
             }
             if (Optional.IsDefined(SyncWindow))
             {
-                writer.WritePropertyName("syncWindow");
+                writer.WritePropertyName("syncWindow"u8);
                 writer.WriteStringValue(SyncWindow.Value, "P");
             }
             if (Optional.IsDefined(MessageTtl))
             {
-                writer.WritePropertyName("messageTtl");
+                writer.WritePropertyName("messageTtl"u8);
                 writer.WriteStringValue(MessageTtl.Value, "P");
             }
             writer.WriteEndObject();

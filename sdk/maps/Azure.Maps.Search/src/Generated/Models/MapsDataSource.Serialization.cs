@@ -17,7 +17,7 @@ namespace Azure.Maps.Search.Models
             Optional<GeometryIdentifier> geometry = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("geometry"))
+                if (property.NameEquals("geometry"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

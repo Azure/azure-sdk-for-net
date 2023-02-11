@@ -17,17 +17,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LowerBound))
             {
-                writer.WritePropertyName("lowerBound");
+                writer.WritePropertyName("lowerBound"u8);
                 writer.WriteNumberValue(LowerBound.Value);
             }
             if (Optional.IsDefined(UpperBound))
             {
-                writer.WritePropertyName("upperBound");
+                writer.WritePropertyName("upperBound"u8);
                 writer.WriteNumberValue(UpperBound.Value);
             }
-            writer.WritePropertyName("anomalyDetectorDirection");
+            writer.WritePropertyName("anomalyDetectorDirection"u8);
             writer.WriteStringValue(AnomalyDetectorDirection.ToString());
-            writer.WritePropertyName("suppressCondition");
+            writer.WritePropertyName("suppressCondition"u8);
             writer.WriteObjectValue(SuppressCondition);
             writer.WriteEndObject();
         }
@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             SuppressCondition suppressCondition = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lowerBound"))
+                if (property.NameEquals("lowerBound"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     lowerBound = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("upperBound"))
+                if (property.NameEquals("upperBound"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,12 +60,12 @@ namespace Azure.AI.MetricsAdvisor.Models
                     upperBound = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("anomalyDetectorDirection"))
+                if (property.NameEquals("anomalyDetectorDirection"u8))
                 {
                     anomalyDetectorDirection = new AnomalyDetectorDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("suppressCondition"))
+                if (property.NameEquals("suppressCondition"u8))
                 {
                     suppressCondition = Models.SuppressCondition.DeserializeSuppressCondition(property.Value);
                     continue;

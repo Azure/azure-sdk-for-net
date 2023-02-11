@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<Uri> governmentCloud = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicAzure"))
+                if (property.NameEquals("publicAzure"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
                     publicAzure = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("governmentCloud"))
+                if (property.NameEquals("governmentCloud"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

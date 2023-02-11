@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Optional<bool> migrationState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     subscriptionId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     state = new DataLakeStoreSubscriptionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maxAccountCount"))
+                if (property.NameEquals("maxAccountCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     maxAccountCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("accountCount"))
+                if (property.NameEquals("accountCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     accountCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("migrationState"))
+                if (property.NameEquals("migrationState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

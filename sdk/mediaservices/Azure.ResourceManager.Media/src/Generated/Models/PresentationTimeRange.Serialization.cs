@@ -17,32 +17,32 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StartTimestamp))
             {
-                writer.WritePropertyName("startTimestamp");
+                writer.WritePropertyName("startTimestamp"u8);
                 writer.WriteNumberValue(StartTimestamp.Value);
             }
             if (Optional.IsDefined(EndTimestamp))
             {
-                writer.WritePropertyName("endTimestamp");
+                writer.WritePropertyName("endTimestamp"u8);
                 writer.WriteNumberValue(EndTimestamp.Value);
             }
             if (Optional.IsDefined(PresentationWindowDuration))
             {
-                writer.WritePropertyName("presentationWindowDuration");
+                writer.WritePropertyName("presentationWindowDuration"u8);
                 writer.WriteNumberValue(PresentationWindowDuration.Value);
             }
             if (Optional.IsDefined(LiveBackoffDuration))
             {
-                writer.WritePropertyName("liveBackoffDuration");
+                writer.WritePropertyName("liveBackoffDuration"u8);
                 writer.WriteNumberValue(LiveBackoffDuration.Value);
             }
             if (Optional.IsDefined(Timescale))
             {
-                writer.WritePropertyName("timescale");
+                writer.WritePropertyName("timescale"u8);
                 writer.WriteNumberValue(Timescale.Value);
             }
             if (Optional.IsDefined(ForceEndTimestamp))
             {
-                writer.WritePropertyName("forceEndTimestamp");
+                writer.WritePropertyName("forceEndTimestamp"u8);
                 writer.WriteBooleanValue(ForceEndTimestamp.Value);
             }
             writer.WriteEndObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<bool> forceEndTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startTimestamp"))
+                if (property.NameEquals("startTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media.Models
                     startTimestamp = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("endTimestamp"))
+                if (property.NameEquals("endTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Media.Models
                     endTimestamp = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("presentationWindowDuration"))
+                if (property.NameEquals("presentationWindowDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     presentationWindowDuration = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("liveBackoffDuration"))
+                if (property.NameEquals("liveBackoffDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Media.Models
                     liveBackoffDuration = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("timescale"))
+                if (property.NameEquals("timescale"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Media.Models
                     timescale = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("forceEndTimestamp"))
+                if (property.NameEquals("forceEndTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

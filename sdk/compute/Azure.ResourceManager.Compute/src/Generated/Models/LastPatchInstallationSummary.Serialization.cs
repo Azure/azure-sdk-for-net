@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<ComputeApiError> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Compute.Models
                     status = new PatchOperationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("installationActivityId"))
+                if (property.NameEquals("installationActivityId"u8))
                 {
                     installationActivityId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maintenanceWindowExceeded"))
+                if (property.NameEquals("maintenanceWindowExceeded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     maintenanceWindowExceeded = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("notSelectedPatchCount"))
+                if (property.NameEquals("notSelectedPatchCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
                     notSelectedPatchCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("excludedPatchCount"))
+                if (property.NameEquals("excludedPatchCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
                     excludedPatchCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("pendingPatchCount"))
+                if (property.NameEquals("pendingPatchCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
                     pendingPatchCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("installedPatchCount"))
+                if (property.NameEquals("installedPatchCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                     installedPatchCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failedPatchCount"))
+                if (property.NameEquals("failedPatchCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                     failedPatchCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedTime"))
+                if (property.NameEquals("lastModifiedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
                     lastModifiedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

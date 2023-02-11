@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IReadOnlyList<ResourceIdentifier>> deployments = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deployments"))
+                if (property.NameEquals("deployments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

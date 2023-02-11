@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             long numberOfDocuments = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("numberOfDocuments"))
+                if (property.NameEquals("numberOfDocuments"u8))
                 {
                     numberOfDocuments = property.Value.GetInt64();
                     continue;

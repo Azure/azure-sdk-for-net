@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OpenIdIssuer))
             {
-                writer.WritePropertyName("openIdIssuer");
+                writer.WritePropertyName("openIdIssuer"u8);
                 writer.WriteStringValue(OpenIdIssuer);
             }
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(ClientSecretSettingName))
             {
-                writer.WritePropertyName("clientSecretSettingName");
+                writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
             if (Optional.IsDefined(ClientSecretCertificateThumbprint))
             {
-                writer.WritePropertyName("clientSecretCertificateThumbprint");
+                writer.WritePropertyName("clientSecretCertificateThumbprint"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ClientSecretCertificateThumbprint);
 #else
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(ClientSecretCertificateSubjectAlternativeName))
             {
-                writer.WritePropertyName("clientSecretCertificateSubjectAlternativeName");
+                writer.WritePropertyName("clientSecretCertificateSubjectAlternativeName"u8);
                 writer.WriteStringValue(ClientSecretCertificateSubjectAlternativeName);
             }
             if (Optional.IsDefined(ClientSecretCertificateIssuer))
             {
-                writer.WritePropertyName("clientSecretCertificateIssuer");
+                writer.WritePropertyName("clientSecretCertificateIssuer"u8);
                 writer.WriteStringValue(ClientSecretCertificateIssuer);
             }
             writer.WriteEndObject();
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> clientSecretCertificateIssuer = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("openIdIssuer"))
+                if (property.NameEquals("openIdIssuer"u8))
                 {
                     openIdIssuer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientSecretSettingName"))
+                if (property.NameEquals("clientSecretSettingName"u8))
                 {
                     clientSecretSettingName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientSecretCertificateThumbprint"))
+                if (property.NameEquals("clientSecretCertificateThumbprint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.AppService.Models
                     clientSecretCertificateThumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("clientSecretCertificateSubjectAlternativeName"))
+                if (property.NameEquals("clientSecretCertificateSubjectAlternativeName"u8))
                 {
                     clientSecretCertificateSubjectAlternativeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientSecretCertificateIssuer"))
+                if (property.NameEquals("clientSecretCertificateIssuer"u8))
                 {
                     clientSecretCertificateIssuer = property.Value.GetString();
                     continue;

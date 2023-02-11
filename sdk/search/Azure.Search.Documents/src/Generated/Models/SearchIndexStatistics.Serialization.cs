@@ -18,12 +18,12 @@ namespace Azure.Search.Documents.Indexes.Models
             long storageSize = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("documentCount"))
+                if (property.NameEquals("documentCount"u8))
                 {
                     documentCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("storageSize"))
+                if (property.NameEquals("storageSize"u8))
                 {
                     storageSize = property.Value.GetInt64();
                     continue;

@@ -18,12 +18,12 @@ namespace Azure.Maps.Rendering
             Optional<string> copyrightsCaption = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("formatVersion"))
+                if (property.NameEquals("formatVersion"u8))
                 {
                     formatVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("copyrightsCaption"))
+                if (property.NameEquals("copyrightsCaption"u8))
                 {
                     copyrightsCaption = property.Value.GetString();
                     continue;

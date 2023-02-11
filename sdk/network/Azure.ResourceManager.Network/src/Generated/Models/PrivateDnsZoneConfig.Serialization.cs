@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateDnsZoneId))
             {
-                writer.WritePropertyName("privateDnsZoneId");
+                writer.WritePropertyName("privateDnsZoneId"u8);
                 writer.WriteStringValue(PrivateDnsZoneId);
             }
             writer.WriteEndObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<RecordSet>> recordSets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("privateDnsZoneId"))
+                        if (property0.NameEquals("privateDnsZoneId"u8))
                         {
                             privateDnsZoneId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("recordSets"))
+                        if (property0.NameEquals("recordSets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

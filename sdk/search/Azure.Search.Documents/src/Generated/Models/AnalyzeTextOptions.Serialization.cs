@@ -15,26 +15,26 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("text");
+            writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             if (Optional.IsDefined(AnalyzerName))
             {
-                writer.WritePropertyName("analyzer");
+                writer.WritePropertyName("analyzer"u8);
                 writer.WriteStringValue(AnalyzerName.Value.ToString());
             }
             if (Optional.IsDefined(TokenizerName))
             {
-                writer.WritePropertyName("tokenizer");
+                writer.WritePropertyName("tokenizer"u8);
                 writer.WriteStringValue(TokenizerName.Value.ToString());
             }
             if (Optional.IsDefined(NormalizerName))
             {
-                writer.WritePropertyName("normalizer");
+                writer.WritePropertyName("normalizer"u8);
                 writer.WriteStringValue(NormalizerName.Value.ToString());
             }
             if (Optional.IsCollectionDefined(TokenFilters))
             {
-                writer.WritePropertyName("tokenFilters");
+                writer.WritePropertyName("tokenFilters"u8);
                 writer.WriteStartArray();
                 foreach (var item in TokenFilters)
                 {
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(CharFilters))
             {
-                writer.WritePropertyName("charFilters");
+                writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();
                 foreach (var item in CharFilters)
                 {

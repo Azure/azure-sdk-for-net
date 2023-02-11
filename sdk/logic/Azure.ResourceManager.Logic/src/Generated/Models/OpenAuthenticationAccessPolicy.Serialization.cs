@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProviderType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ProviderType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Claims))
             {
-                writer.WritePropertyName("claims");
+                writer.WritePropertyName("claims"u8);
                 writer.WriteStartArray();
                 foreach (var item in Claims)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<IList<OpenAuthenticationPolicyClaim>> claims = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
                     type = new OpenAuthenticationProviderType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("claims"))
+                if (property.NameEquals("claims"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

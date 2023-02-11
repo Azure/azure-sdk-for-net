@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<IReadOnlyList<string>> adminUsers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isSsoEnabled"))
+                if (property.NameEquals("isSsoEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     isSsoEnabled = new DynatraceSsoStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("metadataUrl"))
+                if (property.NameEquals("metadataUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     metadataUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("singleSignOnUrl"))
+                if (property.NameEquals("singleSignOnUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     singleSignOnUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("aadDomains"))
+                if (property.NameEquals("aadDomains"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     aadDomains = array;
                     continue;
                 }
-                if (property.NameEquals("adminUsers"))
+                if (property.NameEquals("adminUsers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

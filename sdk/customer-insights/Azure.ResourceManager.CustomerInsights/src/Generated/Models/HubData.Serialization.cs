@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CustomerInsights
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TenantFeatures))
             {
-                writer.WritePropertyName("tenantFeatures");
+                writer.WritePropertyName("tenantFeatures"u8);
                 writer.WriteNumberValue(TenantFeatures.Value);
             }
             if (Optional.IsDefined(HubBillingInfo))
             {
-                writer.WritePropertyName("hubBillingInfo");
+                writer.WritePropertyName("hubBillingInfo"u8);
                 writer.WriteObjectValue(HubBillingInfo);
             }
             writer.WriteEndObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<HubBillingInfoFormat> hubBillingInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,27 +77,27 @@ namespace Azure.ResourceManager.CustomerInsights
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,22 +116,22 @@ namespace Azure.ResourceManager.CustomerInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("apiEndpoint"))
+                        if (property0.NameEquals("apiEndpoint"u8))
                         {
                             apiEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("webEndpoint"))
+                        if (property0.NameEquals("webEndpoint"u8))
                         {
                             webEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tenantFeatures"))
+                        if (property0.NameEquals("tenantFeatures"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             tenantFeatures = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("hubBillingInfo"))
+                        if (property0.NameEquals("hubBillingInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(MaximumCapacity))
             {
-                writer.WritePropertyName("maximumCapacity");
+                writer.WritePropertyName("maximumCapacity"u8);
                 writer.WriteNumberValue(MaximumCapacity.Value);
             }
             if (Optional.IsDefined(ReservationCapacity))
             {
-                writer.WritePropertyName("reservationCapacity");
+                writer.WritePropertyName("reservationCapacity"u8);
                 writer.WriteNumberValue(ReservationCapacity.Value);
             }
             if (Optional.IsDefined(TotalApplicationCapacity))
             {
-                writer.WritePropertyName("totalApplicationCapacity");
+                writer.WritePropertyName("totalApplicationCapacity"u8);
                 writer.WriteNumberValue(TotalApplicationCapacity.Value);
             }
             writer.WriteEndObject();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<long> totalApplicationCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maximumCapacity"))
+                if (property.NameEquals("maximumCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     maximumCapacity = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("reservationCapacity"))
+                if (property.NameEquals("reservationCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     reservationCapacity = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalApplicationCapacity"))
+                if (property.NameEquals("totalApplicationCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             if (Optional.IsDefined(KeyUri))
             {
-                writer.WritePropertyName("keyUrl");
+                writer.WritePropertyName("keyUrl"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             Optional<Uri> keyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     identity = LoadTestingCmkIdentity.DeserializeLoadTestingCmkIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keyUrl"))
+                if (property.NameEquals("keyUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

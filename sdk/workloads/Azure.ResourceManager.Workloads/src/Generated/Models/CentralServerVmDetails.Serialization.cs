@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<ResourceIdentifier> virtualMachineId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     type = new CentralServerVirtualMachineType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("virtualMachineId"))
+                if (property.NameEquals("virtualMachineId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

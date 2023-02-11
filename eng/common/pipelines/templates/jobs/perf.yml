@@ -17,6 +17,9 @@ parameters:
 - name: Language
   type: string
   default: ''
+- name: LanguageVersion
+  type: string
+  default: ''
 - name: LanguageRepoName
   type: string
   default: $(Build.Repository.Name)
@@ -36,9 +39,6 @@ parameters:
   type: stepList
   default: []
 - name: ServiceDirectory
-  type: string
-  default: ''
-- name: Services
   type: string
   default: ''
 - name: PackageVersions
@@ -118,17 +118,12 @@ jobs:
       Location: westus
       ResourceType: perf
 
-  - pwsh: |
-      set-content -path config.yml -value "WorkingDirectories:"
-      add-content -path config.yml -value "  ${{ parameters.Language }}: $(Agent.BuildDirectory)/s"
-    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
-    displayName: Create config.yml
-
   - script: >-
       dotnet run -- run
-      --no-sync
-      --languages ${{ parameters.Language }}
-      --services "${{ parameters.Services }}"
+      --language ${{ parameters.Language }}
+      --language-version ${{ parameters.LanguageVersion }}
+      --repo-root $(System.DefaultWorkingDirectory)
+      --tests-file $(System.DefaultWorkingDirectory)/sdk/${{ parameters.ServiceDirectory }}/perf-tests.yml
       --package-versions "${{ parameters.PackageVersions }}"
       --tests "${{ parameters.Tests }}"
       --arguments "${{ parameters.Arguments }}"

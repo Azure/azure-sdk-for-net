@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Chaos.Models
             Optional<string> kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;

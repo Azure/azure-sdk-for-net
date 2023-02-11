@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IReadOnlyList<AppPlatformSkuZoneDetails>> zoneDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("zoneDetails"))
+                if (property.NameEquals("zoneDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

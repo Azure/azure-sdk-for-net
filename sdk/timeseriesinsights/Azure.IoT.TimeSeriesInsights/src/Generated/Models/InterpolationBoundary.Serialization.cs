@@ -18,7 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             if (Optional.IsDefined(Span))
             {
-                writer.WritePropertyName("span");
+                writer.WritePropertyName("span"u8);
                 writer.WriteStringValue(Span.Value, "P");
             }
             writer.WriteEndObject();
@@ -29,7 +29,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<TimeSpan> span = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("span"))
+                if (property.NameEquals("span"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

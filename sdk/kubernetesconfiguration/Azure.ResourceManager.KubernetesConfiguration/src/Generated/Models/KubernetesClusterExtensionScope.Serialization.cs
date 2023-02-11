@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Cluster != null)
                 {
-                    writer.WritePropertyName("cluster");
+                    writer.WritePropertyName("cluster"u8);
                     writer.WriteObjectValue(Cluster);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Namespace != null)
                 {
-                    writer.WritePropertyName("namespace");
+                    writer.WritePropertyName("namespace"u8);
                     writer.WriteObjectValue(Namespace);
                 }
                 else
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<ScopeNamespace> @namespace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cluster"))
+                if (property.NameEquals("cluster"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     cluster = ScopeCluster.DeserializeScopeCluster(property.Value);
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

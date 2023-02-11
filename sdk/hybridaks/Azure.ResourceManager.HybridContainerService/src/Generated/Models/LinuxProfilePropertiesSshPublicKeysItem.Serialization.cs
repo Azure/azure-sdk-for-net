@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyData))
             {
-                writer.WritePropertyName("keyData");
+                writer.WritePropertyName("keyData"u8);
                 writer.WriteStringValue(KeyData);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> keyData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyData"))
+                if (property.NameEquals("keyData"u8))
                 {
                     keyData = property.Value.GetString();
                     continue;

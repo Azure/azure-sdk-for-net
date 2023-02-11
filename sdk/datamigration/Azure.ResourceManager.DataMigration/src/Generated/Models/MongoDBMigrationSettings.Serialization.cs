@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BoostRUs))
             {
-                writer.WritePropertyName("boostRUs");
+                writer.WritePropertyName("boostRUs"u8);
                 writer.WriteNumberValue(BoostRUs.Value);
             }
-            writer.WritePropertyName("databases");
+            writer.WritePropertyName("databases"u8);
             writer.WriteStartObject();
             foreach (var item in Databases)
             {
@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteEndObject();
             if (Optional.IsDefined(Replication))
             {
-                writer.WritePropertyName("replication");
+                writer.WritePropertyName("replication"u8);
                 writer.WriteStringValue(Replication.Value.ToString());
             }
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source);
-            writer.WritePropertyName("target");
+            writer.WritePropertyName("target"u8);
             writer.WriteObjectValue(Target);
             if (Optional.IsDefined(Throttling))
             {
-                writer.WritePropertyName("throttling");
+                writer.WritePropertyName("throttling"u8);
                 writer.WriteObjectValue(Throttling);
             }
             writer.WriteEndObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<MongoDBThrottlingSettings> throttling = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("boostRUs"))
+                if (property.NameEquals("boostRUs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     boostRUs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("databases"))
+                if (property.NameEquals("databases"u8))
                 {
                     Dictionary<string, MongoDBDatabaseSettings> dictionary = new Dictionary<string, MongoDBDatabaseSettings>();
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     databases = dictionary;
                     continue;
                 }
-                if (property.NameEquals("replication"))
+                if (property.NameEquals("replication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                     replication = new MongoDBReplication(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = MongoDBConnectionInfo.DeserializeMongoDBConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     target = MongoDBConnectionInfo.DeserializeMongoDBConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("throttling"))
+                if (property.NameEquals("throttling"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

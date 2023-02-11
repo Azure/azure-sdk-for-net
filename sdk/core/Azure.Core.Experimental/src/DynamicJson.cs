@@ -22,8 +22,6 @@ namespace Azure.Core.Dynamic
         private static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
-        private static readonly BinaryData nullJsonData = BinaryData.FromString("null");
-
         private MutableJsonElement _element;
 
         internal DynamicJson(MutableJsonElement element)
@@ -38,17 +36,17 @@ namespace Azure.Core.Dynamic
             writer.Flush();
         }
 
-        private object GetProperty(string name)
+        private object? GetProperty(string name)
         {
             if (_element.TryGetProperty(name, out MutableJsonElement element))
             {
                 return new DynamicJson(element);
             }
 
-            return new DynamicJson(MutableJsonDocument.Parse(nullJsonData).RootElement);
+            return null;
         }
 
-        private object GetViaIndexer(object index)
+        private object? GetViaIndexer(object index)
         {
             switch (index)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("preferredShipmentType");
+            writer.WritePropertyName("preferredShipmentType"u8);
             writer.WriteStringValue(PreferredShipmentType.ToString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             TransportShipmentType preferredShipmentType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preferredShipmentType"))
+                if (property.NameEquals("preferredShipmentType"u8))
                 {
                     preferredShipmentType = new TransportShipmentType(property.Value.GetString());
                     continue;

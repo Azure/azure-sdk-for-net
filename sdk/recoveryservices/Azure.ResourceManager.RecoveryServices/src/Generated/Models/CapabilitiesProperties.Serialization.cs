@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DnsZones))
             {
-                writer.WritePropertyName("dnsZones");
+                writer.WritePropertyName("dnsZones"u8);
                 writer.WriteStartArray();
                 foreach (var item in DnsZones)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<IList<DnsZone>> dnsZones = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dnsZones"))
+                if (property.NameEquals("dnsZones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

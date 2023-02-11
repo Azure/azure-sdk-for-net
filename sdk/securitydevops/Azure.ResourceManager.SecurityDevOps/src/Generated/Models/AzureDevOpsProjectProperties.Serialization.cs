@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(ProjectId))
             {
-                writer.WritePropertyName("projectId");
+                writer.WritePropertyName("projectId"u8);
                 writer.WriteStringValue(ProjectId);
             }
             if (Optional.IsDefined(OrgName))
             {
-                writer.WritePropertyName("orgName");
+                writer.WritePropertyName("orgName"u8);
                 writer.WriteStringValue(OrgName);
             }
             if (Optional.IsDefined(AutoDiscovery))
             {
-                writer.WritePropertyName("autoDiscovery");
+                writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             Optional<AutoDiscovery> autoDiscovery = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("projectId"))
+                if (property.NameEquals("projectId"u8))
                 {
                     projectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("orgName"))
+                if (property.NameEquals("orgName"u8))
                 {
                     orgName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("autoDiscovery"))
+                if (property.NameEquals("autoDiscovery"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

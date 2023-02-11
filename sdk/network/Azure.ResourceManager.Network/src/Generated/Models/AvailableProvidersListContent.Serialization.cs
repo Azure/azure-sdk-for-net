@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AzureLocations))
             {
-                writer.WritePropertyName("azureLocations");
+                writer.WritePropertyName("azureLocations"u8);
                 writer.WriteStartArray();
                 foreach (var item in AzureLocations)
                 {
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(Country))
             {
-                writer.WritePropertyName("country");
+                writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
             if (Optional.IsDefined(City))
             {
-                writer.WritePropertyName("city");
+                writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
             writer.WriteEndObject();
