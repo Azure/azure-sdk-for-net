@@ -187,7 +187,7 @@ while (!loaded)
 {
     ledgerEntry = getResponse.Content.ToDynamic();
 
-    loaded = (LedgerEntry)ledgerEntry.entry != null;
+    loaded = ledgerEntry.entry != null;
     if (loaded)
     {
         contents = ledgerEntry.entry.contents;
@@ -228,6 +228,7 @@ Console.WriteLine($"The latest ledger entry from the default collection is {late
 string collectionTransactionId = collectionPostOperation.Id;
 
 getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
+
 // Try until the entry is available.
 loaded = false;
 string collectionEntry = null;
@@ -235,7 +236,7 @@ while (!loaded)
 {
     ledgerEntry = getResponse.Content.ToDynamic();
 
-    loaded = (LedgerEntry)ledgerEntry.entry != null;
+    loaded = ledgerEntry.entry != null;
     if (loaded)
     {
         collectionEntry = ledgerEntry.entry.contents;

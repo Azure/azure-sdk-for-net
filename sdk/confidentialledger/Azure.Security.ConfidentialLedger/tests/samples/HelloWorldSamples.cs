@@ -165,7 +165,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             {
                 ledgerEntry = getResponse.Content.ToDynamic();
 
-                loaded = (LedgerEntry)ledgerEntry.entry != null;
+                loaded = ledgerEntry.entry != null;
                 if (loaded)
                 {
                     contents = ledgerEntry.entry.contents;
@@ -212,6 +212,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             string collectionTransactionId = collectionPostOperation.Id;
 
             getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
+
             // Try until the entry is available.
             loaded = false;
             string collectionEntry = null;
@@ -219,7 +220,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             {
                 ledgerEntry = getResponse.Content.ToDynamic();
 
-                loaded = (LedgerEntry)ledgerEntry.entry != null;
+                loaded = ledgerEntry.entry != null;
                 if (loaded)
                 {
                     collectionEntry = ledgerEntry.entry.contents;
@@ -290,11 +291,6 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             Console.WriteLine(enclavesJson);
 
             #endregion
-        }
-
-        private class LedgerEntry
-        {
-            public string contents { get; set; }
         }
     }
 }
