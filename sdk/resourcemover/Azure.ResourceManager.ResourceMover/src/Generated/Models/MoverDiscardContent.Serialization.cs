@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ValidateOnly))
             {
-                writer.WritePropertyName("validateOnly");
+                writer.WritePropertyName("validateOnly"u8);
                 writer.WriteBooleanValue(ValidateOnly.Value);
             }
-            writer.WritePropertyName("moveResources");
+            writer.WritePropertyName("moveResources"u8);
             writer.WriteStartArray();
             foreach (var item in MoverResources)
             {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(MoverResourceInputType))
             {
-                writer.WritePropertyName("moveResourceInputType");
+                writer.WritePropertyName("moveResourceInputType"u8);
                 writer.WriteStringValue(MoverResourceInputType.Value.ToString());
             }
             writer.WriteEndObject();

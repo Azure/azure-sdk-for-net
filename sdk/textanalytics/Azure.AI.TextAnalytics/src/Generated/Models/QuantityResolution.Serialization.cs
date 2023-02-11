@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Models
             double value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetDouble();
                     continue;

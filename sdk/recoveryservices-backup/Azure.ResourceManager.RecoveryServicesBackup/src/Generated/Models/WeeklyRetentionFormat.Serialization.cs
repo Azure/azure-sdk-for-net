@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DaysOfTheWeek))
             {
-                writer.WritePropertyName("daysOfTheWeek");
+                writer.WritePropertyName("daysOfTheWeek"u8);
                 writer.WriteStartArray();
                 foreach (var item in DaysOfTheWeek)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsCollectionDefined(WeeksOfTheMonth))
             {
-                writer.WritePropertyName("weeksOfTheMonth");
+                writer.WritePropertyName("weeksOfTheMonth"u8);
                 writer.WriteStartArray();
                 foreach (var item in WeeksOfTheMonth)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<WeekOfMonth>> weeksOfTheMonth = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("daysOfTheWeek"))
+                if (property.NameEquals("daysOfTheWeek"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     daysOfTheWeek = array;
                     continue;
                 }
-                if (property.NameEquals("weeksOfTheMonth"))
+                if (property.NameEquals("weeksOfTheMonth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

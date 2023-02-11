@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<UpsertManagedServerOperationParameters> requestedParameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("currentParameters"))
+                if (property.NameEquals("currentParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
                     currentParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value);
                     continue;
                 }
-                if (property.NameEquals("requestedParameters"))
+                if (property.NameEquals("requestedParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

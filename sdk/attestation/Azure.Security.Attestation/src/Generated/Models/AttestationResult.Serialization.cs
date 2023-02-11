@@ -53,17 +53,17 @@ namespace Azure.Security.Attestation
             Optional<string> rpData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jti"))
+                if (property.NameEquals("jti"u8))
                 {
                     jti = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iss"))
+                if (property.NameEquals("iss"u8))
                 {
                     iss = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iat"))
+                if (property.NameEquals("iat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.Security.Attestation
                     iat = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("exp"))
+                if (property.NameEquals("exp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.Security.Attestation
                     exp = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("nbf"))
+                if (property.NameEquals("nbf"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.Security.Attestation
                     nbf = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("cnf"))
+                if (property.NameEquals("cnf"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,17 +103,17 @@ namespace Azure.Security.Attestation
                     cnf = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("nonce"))
+                if (property.NameEquals("nonce"u8))
                 {
                     nonce = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-ver"))
+                if (property.NameEquals("x-ms-ver"u8))
                 {
                     xMsVer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-runtime"))
+                if (property.NameEquals("x-ms-runtime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +123,7 @@ namespace Azure.Security.Attestation
                     xMsRuntime = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("x-ms-inittime"))
+                if (property.NameEquals("x-ms-inittime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +133,7 @@ namespace Azure.Security.Attestation
                     xMsInittime = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("x-ms-policy"))
+                if (property.NameEquals("x-ms-policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,12 +143,12 @@ namespace Azure.Security.Attestation
                     xMsPolicy = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("x-ms-attestation-type"))
+                if (property.NameEquals("x-ms-attestation-type"u8))
                 {
                     xMsAttestationType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-policy-signer"))
+                if (property.NameEquals("x-ms-policy-signer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -158,12 +158,12 @@ namespace Azure.Security.Attestation
                     xMsPolicySigner = JsonWebKey.DeserializeJsonWebKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("x-ms-policy-hash"))
+                if (property.NameEquals("x-ms-policy-hash"u8))
                 {
                     xMsPolicyHash = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-sgx-is-debuggable"))
+                if (property.NameEquals("x-ms-sgx-is-debuggable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,7 +173,7 @@ namespace Azure.Security.Attestation
                     xMsSgxIsDebuggable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("x-ms-sgx-product-id"))
+                if (property.NameEquals("x-ms-sgx-product-id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -183,17 +183,17 @@ namespace Azure.Security.Attestation
                     xMsSgxProductId = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("x-ms-sgx-mrenclave"))
+                if (property.NameEquals("x-ms-sgx-mrenclave"u8))
                 {
                     xMsSgxMrenclave = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-sgx-mrsigner"))
+                if (property.NameEquals("x-ms-sgx-mrsigner"u8))
                 {
                     xMsSgxMrsigner = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-sgx-svn"))
+                if (property.NameEquals("x-ms-sgx-svn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -203,12 +203,12 @@ namespace Azure.Security.Attestation
                     xMsSgxSvn = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("x-ms-sgx-ehd"))
+                if (property.NameEquals("x-ms-sgx-ehd"u8))
                 {
                     xMsSgxEhd = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x-ms-sgx-collateral"))
+                if (property.NameEquals("x-ms-sgx-collateral"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -218,12 +218,12 @@ namespace Azure.Security.Attestation
                     xMsSgxCollateral = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("ver"))
+                if (property.NameEquals("ver"u8))
                 {
                     ver = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("is-debuggable"))
+                if (property.NameEquals("is-debuggable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -233,7 +233,7 @@ namespace Azure.Security.Attestation
                     isDebuggable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maa-attestationcollateral"))
+                if (property.NameEquals("maa-attestationcollateral"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -243,17 +243,17 @@ namespace Azure.Security.Attestation
                     maaAttestationcollateral = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("aas-ehd"))
+                if (property.NameEquals("aas-ehd"u8))
                 {
                     aasEhd = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maa-ehd"))
+                if (property.NameEquals("maa-ehd"u8))
                 {
                     maaEhd = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("product-id"))
+                if (property.NameEquals("product-id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -263,17 +263,17 @@ namespace Azure.Security.Attestation
                     productId = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("sgx-mrenclave"))
+                if (property.NameEquals("sgx-mrenclave"u8))
                 {
                     sgxMrenclave = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sgx-mrsigner"))
+                if (property.NameEquals("sgx-mrsigner"u8))
                 {
                     sgxMrsigner = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("svn"))
+                if (property.NameEquals("svn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -283,12 +283,12 @@ namespace Azure.Security.Attestation
                     svn = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("tee"))
+                if (property.NameEquals("tee"u8))
                 {
                     tee = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policy_signer"))
+                if (property.NameEquals("policy_signer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -298,12 +298,12 @@ namespace Azure.Security.Attestation
                     policySigner = JsonWebKey.DeserializeJsonWebKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policy_hash"))
+                if (property.NameEquals("policy_hash"u8))
                 {
                     policyHash = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rp_data"))
+                if (property.NameEquals("rp_data"u8))
                 {
                     rpData = property.Value.GetString();
                     continue;

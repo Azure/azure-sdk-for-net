@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;

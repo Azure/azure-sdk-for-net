@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails>> details = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

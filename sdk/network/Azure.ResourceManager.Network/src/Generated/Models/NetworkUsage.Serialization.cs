@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkUsageName name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,22 +31,22 @@ namespace Azure.ResourceManager.Network.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = new NetworkUsageUnit(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     currentValue = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     limit = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = NetworkUsageName.DeserializeNetworkUsageName(property.Value);
                     continue;

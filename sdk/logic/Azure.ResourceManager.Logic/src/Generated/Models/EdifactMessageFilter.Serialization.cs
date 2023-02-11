@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("messageFilterType");
+            writer.WritePropertyName("messageFilterType"u8);
             writer.WriteStringValue(MessageFilterType.ToString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Logic.Models
             MessageFilterType messageFilterType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageFilterType"))
+                if (property.NameEquals("messageFilterType"u8))
                 {
                     messageFilterType = new MessageFilterType(property.Value.GetString());
                     continue;

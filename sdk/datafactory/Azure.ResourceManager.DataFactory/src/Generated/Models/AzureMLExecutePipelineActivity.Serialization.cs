@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
-                writer.WritePropertyName("linkedServiceName");
+                writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
-                writer.WritePropertyName("policy");
+                writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn");
+                writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(UserProperties))
             {
-                writer.WritePropertyName("userProperties");
+                writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(MlPipelineId))
             {
-                writer.WritePropertyName("mlPipelineId");
+                writer.WritePropertyName("mlPipelineId"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MlPipelineId);
 #else
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(MlPipelineEndpointId))
             {
-                writer.WritePropertyName("mlPipelineEndpointId");
+                writer.WritePropertyName("mlPipelineEndpointId"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MlPipelineEndpointId);
 #else
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Version);
 #else
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(ExperimentName))
             {
-                writer.WritePropertyName("experimentName");
+                writer.WritePropertyName("experimentName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ExperimentName);
 #else
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(MlPipelineParameters))
             {
-                writer.WritePropertyName("mlPipelineParameters");
+                writer.WritePropertyName("mlPipelineParameters"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MlPipelineParameters);
 #else
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(DataPathAssignments))
             {
-                writer.WritePropertyName("dataPathAssignments");
+                writer.WritePropertyName("dataPathAssignments"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DataPathAssignments);
 #else
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(MlParentRunId))
             {
-                writer.WritePropertyName("mlParentRunId");
+                writer.WritePropertyName("mlParentRunId"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MlParentRunId);
 #else
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(ContinueOnStepFailure))
             {
-                writer.WritePropertyName("continueOnStepFailure");
+                writer.WritePropertyName("continueOnStepFailure"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ContinueOnStepFailure);
 #else
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,22 +184,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"))
+                if (property.NameEquals("userProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     userProperties = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("mlPipelineId"))
+                        if (property0.NameEquals("mlPipelineId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             mlPipelineId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("mlPipelineEndpointId"))
+                        if (property0.NameEquals("mlPipelineEndpointId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             mlPipelineEndpointId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             version = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("experimentName"))
+                        if (property0.NameEquals("experimentName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             experimentName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("mlPipelineParameters"))
+                        if (property0.NameEquals("mlPipelineParameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             mlPipelineParameters = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("dataPathAssignments"))
+                        if (property0.NameEquals("dataPathAssignments"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             dataPathAssignments = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("mlParentRunId"))
+                        if (property0.NameEquals("mlParentRunId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             mlParentRunId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("continueOnStepFailure"))
+                        if (property0.NameEquals("continueOnStepFailure"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

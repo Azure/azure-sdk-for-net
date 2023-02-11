@@ -55,7 +55,7 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly AsyncLockWithValue<TokenCredential> _credentialLock;
 
-        private TokenCredential[] _sources;
+        internal TokenCredential[] _sources;
 
         internal DefaultAzureCredential() : this(false) { }
 

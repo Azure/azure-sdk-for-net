@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsSystemAssignedIdentity))
             {
-                writer.WritePropertyName("isSystemAssignedIdentity");
+                writer.WritePropertyName("isSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(IsSystemAssignedIdentity.Value);
             }
             if (Optional.IsDefined(ManagedIdentityResourceId))
             {
-                writer.WritePropertyName("managedIdentityResourceId");
+                writer.WritePropertyName("managedIdentityResourceId"u8);
                 writer.WriteStringValue(ManagedIdentityResourceId);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> managedIdentityResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isSystemAssignedIdentity"))
+                if (property.NameEquals("isSystemAssignedIdentity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isSystemAssignedIdentity = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("managedIdentityResourceId"))
+                if (property.NameEquals("managedIdentityResourceId"u8))
                 {
                     managedIdentityResourceId = property.Value.GetString();
                     continue;

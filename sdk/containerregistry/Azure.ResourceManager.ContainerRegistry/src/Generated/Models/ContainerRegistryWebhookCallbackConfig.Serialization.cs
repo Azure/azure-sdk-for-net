@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<IReadOnlyDictionary<string, string>> customHeaders = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceUri"))
+                if (property.NameEquals("serviceUri"u8))
                 {
                     serviceUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("customHeaders"))
+                if (property.NameEquals("customHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

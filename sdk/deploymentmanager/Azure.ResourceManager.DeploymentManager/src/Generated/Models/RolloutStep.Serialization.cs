@@ -23,22 +23,22 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Optional<IReadOnlyList<Message>> messages = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stepGroup"))
+                if (property.NameEquals("stepGroup"u8))
                 {
                     stepGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationInfo"))
+                if (property.NameEquals("operationInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     operationInfo = StepOperationInfo.DeserializeStepOperationInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resourceOperations"))
+                if (property.NameEquals("resourceOperations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     resourceOperations = array;
                     continue;
                 }
-                if (property.NameEquals("messages"))
+                if (property.NameEquals("messages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

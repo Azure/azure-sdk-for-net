@@ -43,7 +43,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-1290?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-1290?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

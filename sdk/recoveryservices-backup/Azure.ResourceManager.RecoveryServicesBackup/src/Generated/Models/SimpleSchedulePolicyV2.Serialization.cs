@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ScheduleRunFrequency))
             {
-                writer.WritePropertyName("scheduleRunFrequency");
+                writer.WritePropertyName("scheduleRunFrequency"u8);
                 writer.WriteStringValue(ScheduleRunFrequency.Value.ToString());
             }
             if (Optional.IsDefined(HourlySchedule))
             {
-                writer.WritePropertyName("hourlySchedule");
+                writer.WritePropertyName("hourlySchedule"u8);
                 writer.WriteObjectValue(HourlySchedule);
             }
             if (Optional.IsDefined(DailySchedule))
             {
-                writer.WritePropertyName("dailySchedule");
+                writer.WritePropertyName("dailySchedule"u8);
                 writer.WriteObjectValue(DailySchedule);
             }
             if (Optional.IsDefined(WeeklySchedule))
             {
-                writer.WritePropertyName("weeklySchedule");
+                writer.WritePropertyName("weeklySchedule"u8);
                 writer.WriteObjectValue(WeeklySchedule);
             }
-            writer.WritePropertyName("schedulePolicyType");
+            writer.WritePropertyName("schedulePolicyType"u8);
             writer.WriteStringValue(SchedulePolicyType);
             writer.WriteEndObject();
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string schedulePolicyType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scheduleRunFrequency"))
+                if (property.NameEquals("scheduleRunFrequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     scheduleRunFrequency = new ScheduleRunType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hourlySchedule"))
+                if (property.NameEquals("hourlySchedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     hourlySchedule = HourlySchedule.DeserializeHourlySchedule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dailySchedule"))
+                if (property.NameEquals("dailySchedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     dailySchedule = DailySchedule.DeserializeDailySchedule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("weeklySchedule"))
+                if (property.NameEquals("weeklySchedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     weeklySchedule = WeeklySchedule.DeserializeWeeklySchedule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("schedulePolicyType"))
+                if (property.NameEquals("schedulePolicyType"u8))
                 {
                     schedulePolicyType = property.Value.GetString();
                     continue;

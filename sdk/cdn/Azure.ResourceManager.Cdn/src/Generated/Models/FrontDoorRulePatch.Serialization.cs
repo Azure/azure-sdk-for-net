@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Order))
             {
-                writer.WritePropertyName("order");
+                writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
             if (Optional.IsCollectionDefined(Conditions))
             {
-                writer.WritePropertyName("conditions");
+                writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsCollectionDefined(Actions))
             {
-                writer.WritePropertyName("actions");
+                writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(MatchProcessingBehavior))
             {
-                writer.WritePropertyName("matchProcessingBehavior");
+                writer.WritePropertyName("matchProcessingBehavior"u8);
                 writer.WriteStringValue(MatchProcessingBehavior.Value.ToString());
             }
             writer.WriteEndObject();

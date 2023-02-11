@@ -15,36 +15,36 @@ namespace Azure.ResourceManager.Subscription.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Workload))
             {
-                writer.WritePropertyName("workload");
+                writer.WritePropertyName("workload"u8);
                 writer.WriteStringValue(Workload.Value.ToString());
             }
             if (Optional.IsDefined(BillingScope))
             {
-                writer.WritePropertyName("billingScope");
+                writer.WritePropertyName("billingScope"u8);
                 writer.WriteStringValue(BillingScope);
             }
             if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId");
+                writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
             if (Optional.IsDefined(ResellerId))
             {
-                writer.WritePropertyName("resellerId");
+                writer.WritePropertyName("resellerId"u8);
                 writer.WriteStringValue(ResellerId);
             }
             if (Optional.IsDefined(AdditionalProperties))
             {
-                writer.WritePropertyName("additionalProperties");
+                writer.WritePropertyName("additionalProperties"u8);
                 writer.WriteObjectValue(AdditionalProperties);
             }
             writer.WriteEndObject();

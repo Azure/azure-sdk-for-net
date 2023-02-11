@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PublicKeys))
             {
-                writer.WritePropertyName("publicKeys");
+                writer.WritePropertyName("publicKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in PublicKeys)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<IList<HDInsightSshPublicKey>> publicKeys = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicKeys"))
+                if (property.NameEquals("publicKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

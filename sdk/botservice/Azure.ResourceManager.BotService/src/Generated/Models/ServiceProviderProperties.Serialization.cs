@@ -24,22 +24,22 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<IReadOnlyList<ServiceProviderParameter>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceProviderName"))
+                if (property.NameEquals("serviceProviderName"u8))
                 {
                     serviceProviderName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("devPortalUrl"))
+                if (property.NameEquals("devPortalUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.BotService.Models
                     devPortalUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("iconUrl"))
+                if (property.NameEquals("iconUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.BotService.Models
                     iconUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

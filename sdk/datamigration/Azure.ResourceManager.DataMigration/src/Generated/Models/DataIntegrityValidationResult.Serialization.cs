@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<ValidationError> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("failedObjects"))
+                if (property.NameEquals("failedObjects"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     failedObjects = dictionary;
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

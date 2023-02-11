@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<AppServiceHostNameType> hostNameType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("siteNames"))
+                if (property.NameEquals("siteNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.AppService.Models
                     siteNames = array;
                     continue;
                 }
-                if (property.NameEquals("azureResourceName"))
+                if (property.NameEquals("azureResourceName"u8))
                 {
                     azureResourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureResourceType"))
+                if (property.NameEquals("azureResourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
                     azureResourceType = property.Value.GetString().ToAppServiceResourceType();
                     continue;
                 }
-                if (property.NameEquals("customHostNameDnsRecordType"))
+                if (property.NameEquals("customHostNameDnsRecordType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
                     customHostNameDnsRecordType = property.Value.GetString().ToCustomHostNameDnsRecordType();
                     continue;
                 }
-                if (property.NameEquals("hostNameType"))
+                if (property.NameEquals("hostNameType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

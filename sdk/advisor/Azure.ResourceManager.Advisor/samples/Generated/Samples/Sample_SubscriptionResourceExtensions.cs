@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Advisor;
 using Azure.ResourceManager.Advisor.Models;
 using Azure.ResourceManager.Resources;
 

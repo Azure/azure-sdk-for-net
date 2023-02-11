@@ -17,69 +17,69 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EventName))
             {
-                writer.WritePropertyName("eventName");
+                writer.WritePropertyName("eventName"u8);
                 writer.WriteStringValue(EventName);
             }
             if (Optional.IsDefined(EventSource))
             {
-                writer.WritePropertyName("eventSource");
+                writer.WritePropertyName("eventSource"u8);
                 writer.WriteStringValue(EventSource);
             }
             if (Optional.IsDefined(Level))
             {
-                writer.WritePropertyName("level");
+                writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level);
             }
             if (Optional.IsDefined(OperationName))
             {
-                writer.WritePropertyName("operationName");
+                writer.WritePropertyName("operationName"u8);
                 writer.WriteStringValue(OperationName);
             }
             if (Optional.IsDefined(ResourceGroupName))
             {
-                writer.WritePropertyName("resourceGroupName");
+                writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
             if (Optional.IsDefined(ResourceProviderName))
             {
-                writer.WritePropertyName("resourceProviderName");
+                writer.WritePropertyName("resourceProviderName"u8);
                 writer.WriteStringValue(ResourceProviderName);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(SubStatus))
             {
-                writer.WritePropertyName("subStatus");
+                writer.WritePropertyName("subStatus"u8);
                 writer.WriteStringValue(SubStatus);
             }
             if (Optional.IsDefined(Claims))
             {
-                writer.WritePropertyName("claims");
+                writer.WritePropertyName("claims"u8);
                 writer.WriteObjectValue(Claims);
             }
-            writer.WritePropertyName("odata.type");
+            writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceUri");
+                writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(LegacyResourceId))
             {
-                writer.WritePropertyName("legacyResourceId");
+                writer.WritePropertyName("legacyResourceId"u8);
                 writer.WriteStringValue(LegacyResourceId);
             }
             if (Optional.IsDefined(ResourceLocation))
             {
-                writer.WritePropertyName("resourceLocation");
+                writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
             if (Optional.IsDefined(MetricNamespace))
             {
-                writer.WritePropertyName("metricNamespace");
+                writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
             writer.WriteEndObject();
@@ -103,47 +103,47 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> metricNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eventName"))
+                if (property.NameEquals("eventName"u8))
                 {
                     eventName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventSource"))
+                if (property.NameEquals("eventSource"u8))
                 {
                     eventSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("level"))
+                if (property.NameEquals("level"u8))
                 {
                     level = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationName"))
+                if (property.NameEquals("operationName"u8))
                 {
                     operationName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroupName"))
+                if (property.NameEquals("resourceGroupName"u8))
                 {
                     resourceGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceProviderName"))
+                if (property.NameEquals("resourceProviderName"u8))
                 {
                     resourceProviderName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subStatus"))
+                if (property.NameEquals("subStatus"u8))
                 {
                     subStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("claims"))
+                if (property.NameEquals("claims"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.Monitor.Models
                     claims = RuleManagementEventClaimsDataSource.DeserializeRuleManagementEventClaimsDataSource(property.Value);
                     continue;
                 }
-                if (property.NameEquals("odata.type"))
+                if (property.NameEquals("odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceUri"))
+                if (property.NameEquals("resourceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     resourceUri = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("legacyResourceId"))
+                if (property.NameEquals("legacyResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -178,12 +178,12 @@ namespace Azure.ResourceManager.Monitor.Models
                     legacyResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceLocation"))
+                if (property.NameEquals("resourceLocation"u8))
                 {
                     resourceLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricNamespace"))
+                if (property.NameEquals("metricNamespace"u8))
                 {
                     metricNamespace = property.Value.GetString();
                     continue;

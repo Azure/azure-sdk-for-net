@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Endpoints))
             {
-                writer.WritePropertyName("endpoints");
+                writer.WritePropertyName("endpoints"u8);
                 writer.WriteObjectValue(Endpoints);
             }
             if (Optional.IsCollectionDefined(Routes))
             {
-                writer.WritePropertyName("routes");
+                writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             if (Optional.IsDefined(FallbackRoute))
             {
-                writer.WritePropertyName("fallbackRoute");
+                writer.WritePropertyName("fallbackRoute"u8);
                 writer.WriteObjectValue(FallbackRoute);
             }
             if (Optional.IsCollectionDefined(Enrichments))
             {
-                writer.WritePropertyName("enrichments");
+                writer.WritePropertyName("enrichments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Enrichments)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<IList<IotHubEnrichmentProperties>> enrichments = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpoints"))
+                if (property.NameEquals("endpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     endpoints = RoutingEndpoints.DeserializeRoutingEndpoints(property.Value);
                     continue;
                 }
-                if (property.NameEquals("routes"))
+                if (property.NameEquals("routes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     routes = array;
                     continue;
                 }
-                if (property.NameEquals("fallbackRoute"))
+                if (property.NameEquals("fallbackRoute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     fallbackRoute = IotHubFallbackRouteProperties.DeserializeIotHubFallbackRouteProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("enrichments"))
+                if (property.NameEquals("enrichments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

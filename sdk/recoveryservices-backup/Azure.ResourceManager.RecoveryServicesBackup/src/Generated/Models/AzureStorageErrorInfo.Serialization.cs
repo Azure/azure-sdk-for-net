@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ErrorCode))
             {
-                writer.WritePropertyName("errorCode");
+                writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
             if (Optional.IsDefined(ErrorString))
             {
-                writer.WritePropertyName("errorString");
+                writer.WritePropertyName("errorString"u8);
                 writer.WriteStringValue(ErrorString);
             }
             if (Optional.IsCollectionDefined(Recommendations))
             {
-                writer.WritePropertyName("recommendations");
+                writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Recommendations)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<string>> recommendations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     errorCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("errorString"))
+                if (property.NameEquals("errorString"u8))
                 {
                     errorString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendations"))
+                if (property.NameEquals("recommendations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

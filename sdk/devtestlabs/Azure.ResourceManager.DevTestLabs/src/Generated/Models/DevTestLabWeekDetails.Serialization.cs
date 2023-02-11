@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Weekdays))
             {
-                writer.WritePropertyName("weekdays");
+                writer.WritePropertyName("weekdays"u8);
                 writer.WriteStartArray();
                 foreach (var item in Weekdays)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             if (Optional.IsDefined(Time))
             {
-                writer.WritePropertyName("time");
+                writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> time = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("weekdays"))
+                if (property.NameEquals("weekdays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     weekdays = array;
                     continue;
                 }
-                if (property.NameEquals("time"))
+                if (property.NameEquals("time"u8))
                 {
                     time = property.Value.GetString();
                     continue;

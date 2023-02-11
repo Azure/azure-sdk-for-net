@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<int> unsupportedProviderCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("unHealthyVmCount"))
+                if (property.NameEquals("unHealthyVmCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     unHealthyVmCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("unHealthyProviderCount"))
+                if (property.NameEquals("unHealthyProviderCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     unHealthyProviderCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("eventsCount"))
+                if (property.NameEquals("eventsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     eventsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("deprecatedProviderCount"))
+                if (property.NameEquals("deprecatedProviderCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     deprecatedProviderCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("supportedProviderCount"))
+                if (property.NameEquals("supportedProviderCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     supportedProviderCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("unsupportedProviderCount"))
+                if (property.NameEquals("unsupportedProviderCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

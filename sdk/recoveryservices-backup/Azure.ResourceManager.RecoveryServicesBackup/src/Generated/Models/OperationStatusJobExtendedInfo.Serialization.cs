@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

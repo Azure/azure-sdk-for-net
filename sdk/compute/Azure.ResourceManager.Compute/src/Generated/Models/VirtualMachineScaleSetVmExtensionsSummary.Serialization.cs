@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<VirtualMachineStatusCodeCount>> statusesSummary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusesSummary"))
+                if (property.NameEquals("statusesSummary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

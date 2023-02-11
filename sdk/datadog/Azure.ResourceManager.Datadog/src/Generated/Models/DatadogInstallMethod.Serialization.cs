@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<string> installerVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tool"))
+                if (property.NameEquals("tool"u8))
                 {
                     tool = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("toolVersion"))
+                if (property.NameEquals("toolVersion"u8))
                 {
                     toolVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("installerVersion"))
+                if (property.NameEquals("installerVersion"u8))
                 {
                     installerVersion = property.Value.GetString();
                     continue;

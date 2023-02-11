@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("startRange");
+            writer.WritePropertyName("startRange"u8);
             writer.WriteStringValue(StartRange);
-            writer.WritePropertyName("endRange");
+            writer.WritePropertyName("endRange"u8);
             writer.WriteStringValue(EndRange);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Storage.Models
             string endRange = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startRange"))
+                if (property.NameEquals("startRange"u8))
                 {
                     startRange = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endRange"))
+                if (property.NameEquals("endRange"u8))
                 {
                     endRange = property.Value.GetString();
                     continue;

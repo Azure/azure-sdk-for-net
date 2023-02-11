@@ -80,23 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 if (activityTag.Value is Array array)
                 {
-                    StringBuilder sw = new StringBuilder();
-                    foreach (var item in array)
-                    {
-                        // TODO: Consider changing it to JSon array.
-                        if (item != null)
-                        {
-                            sw.Append(item);
-                            sw.Append(',');
-                        }
-                    }
-
-                    if (sw.Length > 0)
-                    {
-                        sw.Length--;
-                    }
-
-                    AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object>(activityTag.Key, sw.ToString()));
+                    AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object>(activityTag.Key, array.ToCommaDelimitedString()));
                     continue;
                 }
 

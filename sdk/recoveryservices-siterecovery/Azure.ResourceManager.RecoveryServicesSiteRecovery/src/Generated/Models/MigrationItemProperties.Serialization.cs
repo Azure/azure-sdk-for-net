@@ -38,32 +38,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<MigrationProviderSpecificSettings> providerSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("machineName"))
+                if (property.NameEquals("machineName"u8))
                 {
                     machineName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyId"))
+                if (property.NameEquals("policyId"u8))
                 {
                     policyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyFriendlyName"))
+                if (property.NameEquals("policyFriendlyName"u8))
                 {
                     policyFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryServicesProviderId"))
+                if (property.NameEquals("recoveryServicesProviderId"u8))
                 {
                     recoveryServicesProviderId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("replicationStatus"))
+                if (property.NameEquals("replicationStatus"u8))
                 {
                     replicationStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("migrationState"))
+                if (property.NameEquals("migrationState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     migrationState = new MigrationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("migrationStateDescription"))
+                if (property.NameEquals("migrationStateDescription"u8))
                 {
                     migrationStateDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastTestMigrationTime"))
+                if (property.NameEquals("lastTestMigrationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     lastTestMigrationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastTestMigrationStatus"))
+                if (property.NameEquals("lastTestMigrationStatus"u8))
                 {
                     lastTestMigrationStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastMigrationTime"))
+                if (property.NameEquals("lastMigrationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     lastMigrationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastMigrationStatus"))
+                if (property.NameEquals("lastMigrationStatus"u8))
                 {
                     lastMigrationStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testMigrateState"))
+                if (property.NameEquals("testMigrateState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     testMigrateState = new TestMigrationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("testMigrateStateDescription"))
+                if (property.NameEquals("testMigrateStateDescription"u8))
                 {
                     testMigrateStateDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("health"))
+                if (property.NameEquals("health"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     health = new ProtectionHealth(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthErrors"))
+                if (property.NameEquals("healthErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     healthErrors = array;
                     continue;
                 }
-                if (property.NameEquals("allowedOperations"))
+                if (property.NameEquals("allowedOperations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     allowedOperations = array;
                     continue;
                 }
-                if (property.NameEquals("currentJob"))
+                if (property.NameEquals("currentJob"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     currentJob = CurrentJobDetails.DeserializeCurrentJobDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("criticalJobHistory"))
+                if (property.NameEquals("criticalJobHistory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -188,12 +188,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     criticalJobHistory = array;
                     continue;
                 }
-                if (property.NameEquals("eventCorrelationId"))
+                if (property.NameEquals("eventCorrelationId"u8))
                 {
                     eventCorrelationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerSpecificDetails"))
+                if (property.NameEquals("providerSpecificDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

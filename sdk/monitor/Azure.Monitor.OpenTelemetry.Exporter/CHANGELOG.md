@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.8 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.7 (2023-02-07)
 
 ### Features Added
@@ -15,8 +25,8 @@ Exceptions reported via ActivityEvents will continue to be exported to Exception
 ### Other Changes
 
 * Update OpenTelemetry dependencies
-  ([#33471](https://github.com/Azure/azure-sdk-for-net/pull/33471))
-  - OpenTelemetry 1.4.0-rc.2
+  ([#33859](https://github.com/Azure/azure-sdk-for-net/pull/33859))
+  - OpenTelemetry 1.4.0-rc.3
 
 ## 1.0.0-beta.6 (2023-01-10)
 

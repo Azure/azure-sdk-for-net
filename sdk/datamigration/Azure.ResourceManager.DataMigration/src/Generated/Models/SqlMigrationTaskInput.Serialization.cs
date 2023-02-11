@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceConnectionInfo");
+            writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            writer.WritePropertyName("targetConnectionInfo");
+            writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             SqlConnectionInfo targetConnectionInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceConnectionInfo"))
+                if (property.NameEquals("sourceConnectionInfo"u8))
                 {
                     sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetConnectionInfo"))
+                if (property.NameEquals("targetConnectionInfo"u8))
                 {
                     targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;

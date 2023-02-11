@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<bool> isEnumerationInProgress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccountName"))
+                if (property.NameEquals("storageAccountName"u8))
                 {
                     storageAccountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transferType"))
+                if (property.NameEquals("transferType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     transferType = property.Value.GetString().ToDataBoxJobTransferType();
                     continue;
                 }
-                if (property.NameEquals("dataAccountType"))
+                if (property.NameEquals("dataAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     dataAccountType = property.Value.GetString().ToDataAccountType();
                     continue;
                 }
-                if (property.NameEquals("accountId"))
+                if (property.NameEquals("accountId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     accountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("bytesProcessed"))
+                if (property.NameEquals("bytesProcessed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     bytesProcessed = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalBytesToProcess"))
+                if (property.NameEquals("totalBytesToProcess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     totalBytesToProcess = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("filesProcessed"))
+                if (property.NameEquals("filesProcessed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     filesProcessed = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalFilesToProcess"))
+                if (property.NameEquals("totalFilesToProcess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     totalFilesToProcess = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("invalidFilesProcessed"))
+                if (property.NameEquals("invalidFilesProcessed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     invalidFilesProcessed = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("invalidFileBytesUploaded"))
+                if (property.NameEquals("invalidFileBytesUploaded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     invalidFileBytesUploaded = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("renamedContainerCount"))
+                if (property.NameEquals("renamedContainerCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     renamedContainerCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("filesErroredOut"))
+                if (property.NameEquals("filesErroredOut"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     filesErroredOut = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("directoriesErroredOut"))
+                if (property.NameEquals("directoriesErroredOut"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     directoriesErroredOut = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("invalidDirectoriesProcessed"))
+                if (property.NameEquals("invalidDirectoriesProcessed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     invalidDirectoriesProcessed = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("isEnumerationInProgress"))
+                if (property.NameEquals("isEnumerationInProgress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

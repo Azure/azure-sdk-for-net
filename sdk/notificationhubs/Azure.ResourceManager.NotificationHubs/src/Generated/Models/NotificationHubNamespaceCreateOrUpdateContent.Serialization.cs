@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -34,73 +34,73 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(NamespaceName))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamespaceName);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(Region))
             {
-                writer.WritePropertyName("region");
+                writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("createdAt");
+                writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(UpdatedOn))
             {
-                writer.WritePropertyName("updatedAt");
+                writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(ServiceBusEndpoint))
             {
-                writer.WritePropertyName("serviceBusEndpoint");
+                writer.WritePropertyName("serviceBusEndpoint"u8);
                 writer.WriteStringValue(ServiceBusEndpoint.AbsoluteUri);
             }
             if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId");
+                writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
             if (Optional.IsDefined(ScaleUnit))
             {
-                writer.WritePropertyName("scaleUnit");
+                writer.WritePropertyName("scaleUnit"u8);
                 writer.WriteStringValue(ScaleUnit);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(IsCritical))
             {
-                writer.WritePropertyName("critical");
+                writer.WritePropertyName("critical"u8);
                 writer.WriteBooleanValue(IsCritical.Value);
             }
             if (Optional.IsDefined(DataCenter))
             {
-                writer.WritePropertyName("dataCenter");
+                writer.WritePropertyName("dataCenter"u8);
                 writer.WriteStringValue(DataCenter);
             }
             if (Optional.IsDefined(NamespaceType))
             {
-                writer.WritePropertyName("namespaceType");
+                writer.WritePropertyName("namespaceType"u8);
                 writer.WriteStringValue(NamespaceType.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Optional<NotificationHubNamespaceType> namespaceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,27 +157,27 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -196,32 +196,32 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("name"))
+                        if (property0.NameEquals("name"u8))
                         {
                             name0 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("region"))
+                        if (property0.NameEquals("region"u8))
                         {
                             region = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("metricId"))
+                        if (property0.NameEquals("metricId"u8))
                         {
                             metricId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             status = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdAt"))
+                        if (property0.NameEquals("createdAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                             createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("updatedAt"))
+                        if (property0.NameEquals("updatedAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                             updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("serviceBusEndpoint"))
+                        if (property0.NameEquals("serviceBusEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -251,17 +251,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                             serviceBusEndpoint = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("subscriptionId"))
+                        if (property0.NameEquals("subscriptionId"u8))
                         {
                             subscriptionId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("scaleUnit"))
+                        if (property0.NameEquals("scaleUnit"u8))
                         {
                             scaleUnit = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("enabled"))
+                        if (property0.NameEquals("enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("critical"))
+                        if (property0.NameEquals("critical"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -281,12 +281,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                             critical = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("dataCenter"))
+                        if (property0.NameEquals("dataCenter"u8))
                         {
                             dataCenter = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("namespaceType"))
+                        if (property0.NameEquals("namespaceType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

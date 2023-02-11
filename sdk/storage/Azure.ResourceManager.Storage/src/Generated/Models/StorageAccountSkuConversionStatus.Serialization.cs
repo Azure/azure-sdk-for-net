@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetSkuName))
             {
-                writer.WritePropertyName("targetSkuName");
+                writer.WritePropertyName("targetSkuName"u8);
                 writer.WriteStringValue(TargetSkuName.Value.ToString());
             }
             writer.WriteEndObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<DateTimeOffset> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("skuConversionStatus"))
+                if (property.NameEquals("skuConversionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
                     skuConversionStatus = new StorageAccountSkuConversionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetSkuName"))
+                if (property.NameEquals("targetSkuName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
                     targetSkuName = new StorageSkuName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

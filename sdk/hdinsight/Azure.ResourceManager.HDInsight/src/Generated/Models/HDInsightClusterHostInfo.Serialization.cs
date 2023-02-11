@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<Uri> effectiveDiskEncryptionKeyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("effectiveDiskEncryptionKeyUrl"))
+                if (property.NameEquals("effectiveDiskEncryptionKeyUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

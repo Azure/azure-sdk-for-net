@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkInterface))
             {
-                writer.WritePropertyName("networkInterface");
+                writer.WritePropertyName("networkInterface"u8);
                 writer.WriteStringValue(NetworkInterface);
             }
             if (Optional.IsCollectionDefined(NetworkSecurityGroups))
             {
-                writer.WritePropertyName("networkSecurityGroups");
+                writer.WritePropertyName("networkSecurityGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityGroups)
                 {
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<IList<string>> networkSecurityGroups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkInterface"))
+                if (property.NameEquals("networkInterface"u8))
                 {
                     networkInterface = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkSecurityGroups"))
+                if (property.NameEquals("networkSecurityGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

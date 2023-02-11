@@ -48,8 +48,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 new TextDocumentInput("3", documentC)
             };
 
-            DynamicClassifyOptions options = new() { IncludeStatistics = true };
-
+            TextAnalyticsRequestOptions options = new() { IncludeStatistics = true };
             Response<DynamicClassifyDocumentResultCollection> response = client.DynamicClassifyBatch(documents, categories, options: options);
             DynamicClassifyDocumentResultCollection batchResults = response.Value;
 

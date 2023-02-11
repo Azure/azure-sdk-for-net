@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DefaultValues))
             {
-                writer.WritePropertyName("defaultValues");
+                writer.WritePropertyName("defaultValues"u8);
                 writer.WriteStartArray();
                 foreach (var item in DefaultValues)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(AdditionalOptions))
             {
-                writer.WritePropertyName("additionalOptions");
+                writer.WritePropertyName("additionalOptions"u8);
                 writer.WriteStartObject();
                 foreach (var item in AdditionalOptions)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, string>> additionalOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultValues"))
+                if (property.NameEquals("defaultValues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     defaultValues = array;
                     continue;
                 }
-                if (property.NameEquals("additionalOptions"))
+                if (property.NameEquals("additionalOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

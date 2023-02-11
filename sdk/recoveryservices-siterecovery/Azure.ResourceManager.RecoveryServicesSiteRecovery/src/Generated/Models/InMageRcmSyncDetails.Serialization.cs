@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<int> progressPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("progressHealth"))
+                if (property.NameEquals("progressHealth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     progressHealth = new DiskReplicationProgressHealth(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("transferredBytes"))
+                if (property.NameEquals("transferredBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     transferredBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("last15MinutesTransferredBytes"))
+                if (property.NameEquals("last15MinutesTransferredBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     last15MinutesTransferredBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastDataTransferTimeUtc"))
+                if (property.NameEquals("lastDataTransferTimeUtc"u8))
                 {
                     lastDataTransferTimeUtc = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("processedBytes"))
+                if (property.NameEquals("processedBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     processedBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     startTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastRefreshTime"))
+                if (property.NameEquals("lastRefreshTime"u8))
                 {
                     lastRefreshTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("progressPercentage"))
+                if (property.NameEquals("progressPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

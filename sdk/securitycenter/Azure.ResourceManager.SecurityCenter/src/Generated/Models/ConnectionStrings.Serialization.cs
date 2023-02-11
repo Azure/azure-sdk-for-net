@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IReadOnlyList<IngestionConnectionString> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<IngestionConnectionString> array = new List<IngestionConnectionString>();
                     foreach (var item in property.Value.EnumerateArray())

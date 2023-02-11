@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsCollectionDefined(DependsOnStepGroups))
             {
-                writer.WritePropertyName("dependsOnStepGroups");
+                writer.WritePropertyName("dependsOnStepGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOnStepGroups)
                 {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             }
             if (Optional.IsCollectionDefined(PreDeploymentSteps))
             {
-                writer.WritePropertyName("preDeploymentSteps");
+                writer.WritePropertyName("preDeploymentSteps"u8);
                 writer.WriteStartArray();
                 foreach (var item in PreDeploymentSteps)
                 {
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("deploymentTargetId");
+            writer.WritePropertyName("deploymentTargetId"u8);
             writer.WriteStringValue(DeploymentTargetId);
             if (Optional.IsCollectionDefined(PostDeploymentSteps))
             {
-                writer.WritePropertyName("postDeploymentSteps");
+                writer.WritePropertyName("postDeploymentSteps"u8);
                 writer.WriteStartArray();
                 foreach (var item in PostDeploymentSteps)
                 {
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Optional<IList<PrePostStep>> postDeploymentSteps = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOnStepGroups"))
+                if (property.NameEquals("dependsOnStepGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     dependsOnStepGroups = array;
                     continue;
                 }
-                if (property.NameEquals("preDeploymentSteps"))
+                if (property.NameEquals("preDeploymentSteps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     preDeploymentSteps = array;
                     continue;
                 }
-                if (property.NameEquals("deploymentTargetId"))
+                if (property.NameEquals("deploymentTargetId"u8))
                 {
                     deploymentTargetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("postDeploymentSteps"))
+                if (property.NameEquals("postDeploymentSteps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

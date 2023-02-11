@@ -15,11 +15,11 @@ namespace Azure.Communication.Email.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("attachmentType");
+            writer.WritePropertyName("attachmentType"u8);
             writer.WriteStringValue(AttachmentType.ToString());
-            writer.WritePropertyName("contentBytesBase64");
+            writer.WritePropertyName("contentBytesBase64"u8);
             writer.WriteStringValue(ContentBytesBase64);
             writer.WriteEndObject();
         }

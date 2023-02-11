@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="location"> Location of the resource. </param>
         /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CapabilitiesResponse>> CapabilitiesRecoveryServiceAsync(AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CapabilitiesResult>> GetCapabilitiesRecoveryServiceAsync(AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
-            using var scope = RecoveryServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CapabilitiesRecoveryService");
+            using var scope = RecoveryServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilitiesRecoveryService");
             scope.Start();
             try
             {
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="location"> Location of the resource. </param>
         /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CapabilitiesResponse> CapabilitiesRecoveryService(AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        public virtual Response<CapabilitiesResult> GetCapabilitiesRecoveryService(AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
-            using var scope = RecoveryServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CapabilitiesRecoveryService");
+            using var scope = RecoveryServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilitiesRecoveryService");
             scope.Start();
             try
             {

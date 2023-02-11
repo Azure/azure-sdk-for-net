@@ -44,7 +44,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourcegroups/hybridaksresgrp-netsdk?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourcegroups/hybridaksresgrp-netsdk?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

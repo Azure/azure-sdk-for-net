@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<string> content = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("content"))
+                if (property.NameEquals("content"u8))
                 {
                     content = property.Value.GetString();
                     continue;

@@ -17,22 +17,22 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MethodName))
             {
-                writer.WritePropertyName("methodName");
+                writer.WritePropertyName("methodName"u8);
                 writer.WriteStringValue(MethodName);
             }
             if (Optional.IsDefined(Payload))
             {
-                writer.WritePropertyName("payload");
+                writer.WritePropertyName("payload"u8);
                 writer.WriteObjectValue(Payload);
             }
             if (Optional.IsDefined(ResponseTimeoutInSeconds))
             {
-                writer.WritePropertyName("responseTimeoutInSeconds");
+                writer.WritePropertyName("responseTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ResponseTimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(ConnectTimeoutInSeconds))
             {
-                writer.WritePropertyName("connectTimeoutInSeconds");
+                writer.WritePropertyName("connectTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ConnectTimeoutInSeconds.Value);
             }
             writer.WriteEndObject();
@@ -46,12 +46,12 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<int> connectTimeoutInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("methodName"))
+                if (property.NameEquals("methodName"u8))
                 {
                     methodName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("payload"))
+                if (property.NameEquals("payload"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.IoT.Hub.Service.Models
                     payload = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("responseTimeoutInSeconds"))
+                if (property.NameEquals("responseTimeoutInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.IoT.Hub.Service.Models
                     responseTimeoutInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("connectTimeoutInSeconds"))
+                if (property.NameEquals("connectTimeoutInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

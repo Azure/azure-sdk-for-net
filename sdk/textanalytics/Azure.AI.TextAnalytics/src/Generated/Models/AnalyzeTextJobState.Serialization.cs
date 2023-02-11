@@ -29,12 +29,12 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tasks"))
+                if (property.NameEquals("tasks"u8))
                 {
                     tasks = AnalyzeTasks.DeserializeAnalyzeTasks(property.Value);
                     continue;
                 }
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,17 +44,17 @@ namespace Azure.AI.TextAnalytics.Models
                     statistics = TextDocumentBatchStatistics.DeserializeTextDocumentBatchStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"))
+                if (property.NameEquals("createdDateTime"u8))
                 {
                     createdDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("expirationDateTime"))
+                if (property.NameEquals("expirationDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,22 +64,22 @@ namespace Azure.AI.TextAnalytics.Models
                     expirationDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedDateTime"))
+                if (property.NameEquals("lastUpdatedDateTime"u8))
                 {
                     lastUpdatedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new TextAnalyticsOperationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.AI.TextAnalytics.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

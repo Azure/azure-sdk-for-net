@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Sites))
             {
-                writer.WritePropertyName("sites");
+                writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sites)
                 {
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(ChannelId))
             {
-                writer.WritePropertyName("channelId");
+                writer.WritePropertyName("channelId"u8);
                 writer.WriteStringValue(ChannelId);
             }
             if (Optional.IsDefined(ChannelDisplayName))
             {
-                writer.WritePropertyName("channelDisplayName");
+                writer.WritePropertyName("channelDisplayName"u8);
                 writer.WriteStringValue(ChannelDisplayName);
             }
             if (Optional.IsDefined(BotId))
             {
-                writer.WritePropertyName("botId");
+                writer.WritePropertyName("botId"u8);
                 writer.WriteStringValue(BotId);
             }
             if (Optional.IsDefined(BotIconUri))
             {
-                writer.WritePropertyName("botIconUrl");
+                writer.WritePropertyName("botIconUrl"u8);
                 writer.WriteStringValue(BotIconUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("isEnabled");
+                writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(DisableLocalAuth))
             {
-                writer.WritePropertyName("disableLocalAuth");
+                writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
             writer.WriteEndObject();
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<bool> disableLocalAuth = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extensionKey1"))
+                if (property.NameEquals("extensionKey1"u8))
                 {
                     extensionKey1 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extensionKey2"))
+                if (property.NameEquals("extensionKey2"u8))
                 {
                     extensionKey2 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sites"))
+                if (property.NameEquals("sites"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,22 +98,22 @@ namespace Azure.ResourceManager.BotService.Models
                     sites = array;
                     continue;
                 }
-                if (property.NameEquals("channelId"))
+                if (property.NameEquals("channelId"u8))
                 {
                     channelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("channelDisplayName"))
+                if (property.NameEquals("channelDisplayName"u8))
                 {
                     channelDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("botId"))
+                if (property.NameEquals("botId"u8))
                 {
                     botId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("botIconUrl"))
+                if (property.NameEquals("botIconUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.BotService.Models
                     botIconUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.BotService.Models
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("disableLocalAuth"))
+                if (property.NameEquals("disableLocalAuth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

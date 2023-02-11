@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(VariableType.ToString());
             if (Optional.IsDefined(DefaultValue))
             {
-                writer.WritePropertyName("defaultValue");
+                writer.WritePropertyName("defaultValue"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DefaultValue);
 #else
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new PipelineVariableType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("defaultValue"))
+                if (property.NameEquals("defaultValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
             if (Optional.IsDefined(Customsubdomain))
             {
-                writer.WritePropertyName("customsubdomain");
+                writer.WritePropertyName("customsubdomain"u8);
                 writer.WriteStringValue(Customsubdomain);
             }
             writer.WriteEndObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<string> customsubdomain = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     value = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("customsubdomain"))
+                if (property.NameEquals("customsubdomain"u8))
                 {
                     customsubdomain = property.Value.GetString();
                     continue;

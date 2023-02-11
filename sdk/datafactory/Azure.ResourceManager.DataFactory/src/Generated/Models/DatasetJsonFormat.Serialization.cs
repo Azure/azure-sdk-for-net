@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FilePattern))
             {
-                writer.WritePropertyName("filePattern");
+                writer.WritePropertyName("filePattern"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(FilePattern);
 #else
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(NestingSeparator))
             {
-                writer.WritePropertyName("nestingSeparator");
+                writer.WritePropertyName("nestingSeparator"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(NestingSeparator);
 #else
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(EncodingName))
             {
-                writer.WritePropertyName("encodingName");
+                writer.WritePropertyName("encodingName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EncodingName);
 #else
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(JsonNodeReference))
             {
-                writer.WritePropertyName("jsonNodeReference");
+                writer.WritePropertyName("jsonNodeReference"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(JsonNodeReference);
 #else
@@ -55,18 +55,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(JsonPathDefinition))
             {
-                writer.WritePropertyName("jsonPathDefinition");
+                writer.WritePropertyName("jsonPathDefinition"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(JsonPathDefinition);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(JsonPathDefinition.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
             if (Optional.IsDefined(Serializer))
             {
-                writer.WritePropertyName("serializer");
+                writer.WritePropertyName("serializer"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Serializer);
 #else
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Deserializer))
             {
-                writer.WritePropertyName("deserializer");
+                writer.WritePropertyName("deserializer"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Deserializer);
 #else
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filePattern"))
+                if (property.NameEquals("filePattern"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     filePattern = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("nestingSeparator"))
+                if (property.NameEquals("nestingSeparator"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     nestingSeparator = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("encodingName"))
+                if (property.NameEquals("encodingName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     encodingName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("jsonNodeReference"))
+                if (property.NameEquals("jsonNodeReference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     jsonNodeReference = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("jsonPathDefinition"))
+                if (property.NameEquals("jsonPathDefinition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -158,12 +158,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     jsonPathDefinition = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serializer"))
+                if (property.NameEquals("serializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     serializer = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("deserializer"))
+                if (property.NameEquals("deserializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

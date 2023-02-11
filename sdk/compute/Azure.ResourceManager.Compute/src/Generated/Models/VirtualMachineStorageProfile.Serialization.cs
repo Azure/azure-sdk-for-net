@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ImageReference))
             {
-                writer.WritePropertyName("imageReference");
+                writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
             if (Optional.IsDefined(OSDisk))
             {
-                writer.WritePropertyName("osDisk");
+                writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
             if (Optional.IsCollectionDefined(DataDisks))
             {
-                writer.WritePropertyName("dataDisks");
+                writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(DiskControllerType))
             {
-                writer.WritePropertyName("diskControllerType");
+                writer.WritePropertyName("diskControllerType"u8);
                 writer.WriteStringValue(DiskControllerType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<DiskControllerType> diskControllerType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("imageReference"))
+                if (property.NameEquals("imageReference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
                     imageReference = ImageReference.DeserializeImageReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("osDisk"))
+                if (property.NameEquals("osDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
                     osDisk = VirtualMachineOSDisk.DeserializeVirtualMachineOSDisk(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataDisks"))
+                if (property.NameEquals("dataDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     dataDisks = array;
                     continue;
                 }
-                if (property.NameEquals("diskControllerType"))
+                if (property.NameEquals("diskControllerType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

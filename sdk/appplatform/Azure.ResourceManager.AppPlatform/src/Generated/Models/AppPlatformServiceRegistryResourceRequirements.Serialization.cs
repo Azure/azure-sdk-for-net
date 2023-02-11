@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<int> instanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cpu"))
+                if (property.NameEquals("cpu"u8))
                 {
                     cpu = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("memory"))
+                if (property.NameEquals("memory"u8))
                 {
                     memory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceCount"))
+                if (property.NameEquals("instanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
