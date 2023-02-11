@@ -28,7 +28,7 @@ namespace Azure.Communication.Email
 
         internal EmailSendOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            IOperation<OperationStatus> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            IOperation<OperationStatus> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.AzureAsyncOperation);
             _operation = new OperationInternal<OperationStatus>(clientDiagnostics, nextLinkOperation, response, "EmailSendOperation");
         }
 

@@ -22,21 +22,21 @@ namespace Azure.Communication.Email.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string NotStartedValue = "notStarted";
-        private const string RunningValue = "running";
-        private const string SucceededValue = "succeeded";
-        private const string FailedValue = "failed";
-        private const string CanceledValue = "canceled";
+        private const string NotStartedValue = "NotStarted";
+        private const string RunningValue = "Running";
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
 
-        /// <summary> notStarted. </summary>
+        /// <summary> NotStarted. </summary>
         public static EmailSendOperationStatus NotStarted { get; } = new EmailSendOperationStatus(NotStartedValue);
-        /// <summary> running. </summary>
+        /// <summary> Running. </summary>
         public static EmailSendOperationStatus Running { get; } = new EmailSendOperationStatus(RunningValue);
-        /// <summary> succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static EmailSendOperationStatus Succeeded { get; } = new EmailSendOperationStatus(SucceededValue);
-        /// <summary> failed. </summary>
+        /// <summary> Failed. </summary>
         public static EmailSendOperationStatus Failed { get; } = new EmailSendOperationStatus(FailedValue);
-        /// <summary> canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static EmailSendOperationStatus Canceled { get; } = new EmailSendOperationStatus(CanceledValue);
         /// <summary> Determines if two <see cref="EmailSendOperationStatus"/> values are the same. </summary>
         public static bool operator ==(EmailSendOperationStatus left, EmailSendOperationStatus right) => left.Equals(right);

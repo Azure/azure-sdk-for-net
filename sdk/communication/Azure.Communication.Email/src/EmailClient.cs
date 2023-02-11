@@ -74,23 +74,23 @@ namespace Azure.Communication.Email
         { }
 
         private EmailClient(ConnectionString connectionString, EmailClientOptions options)
-            : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
+            : this(new Uri(connectionString.GetRequired("endpoint")), options.BuildHttpPipeline(connectionString), options)
         {
         }
 
-        private EmailClient(string endpoint, HttpPipeline httpPipeline, EmailClientOptions options)
+        private EmailClient(Uri endpoint, HttpPipeline httpPipeline, EmailClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
             RestClient = new EmailRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
         private EmailClient(string endpoint, AzureKeyCredential keyCredential, EmailClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(keyCredential), options)
+            : this(new Uri(endpoint), options.BuildHttpPipeline(keyCredential), options)
         {
         }
 
         private EmailClient(string endpoint, TokenCredential tokenCredential, EmailClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
+            : this(new Uri(endpoint), options.BuildHttpPipeline(tokenCredential), options)
         { }
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>

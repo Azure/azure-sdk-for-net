@@ -17,7 +17,7 @@ namespace Azure.Communication.Email
         {
             _response = response;
         }
-        /// <summary> Minimum amount of time in seconds to wait before polling for operation status again. </summary>
+        /// <summary> This header will only be present when the status is a non-terminal status. It indicates the minimum amount of time in seconds to wait before polling for operation status again. </summary>
         public int? RetryAfter => _response.Headers.TryGetValue("retry-after", out int? value) ? value : null;
     }
 }

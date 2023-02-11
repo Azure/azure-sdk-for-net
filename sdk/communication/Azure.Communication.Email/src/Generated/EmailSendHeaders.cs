@@ -19,7 +19,7 @@ namespace Azure.Communication.Email
         }
         /// <summary> Location url of where to poll the status of this operation from. </summary>
         public string OperationLocation => _response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
-        /// <summary> Minimum amount of time in seconds to wait before polling for operation status again. </summary>
+        /// <summary> This header will only be present when the operation status is a non-terminal status. It indicates the minimum amount of time in seconds to wait before polling for operation status again. </summary>
         public int? RetryAfter => _response.Headers.TryGetValue("retry-after", out int? value) ? value : null;
     }
 }
