@@ -69,9 +69,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private OperationType _tempActivityType;
         public OperationType activityType;
 
-        public void ForEach(IEnumerable<KeyValuePair<string, object>> activityTags)
+        public void ForEach(IEnumerable<KeyValuePair<string, object?>> activityTags)
         {
-            foreach (KeyValuePair<string, object> activityTag in activityTags)
+            foreach (KeyValuePair<string, object?> activityTag in activityTags)
             {
                 if (activityTag.Value == null)
                 {
