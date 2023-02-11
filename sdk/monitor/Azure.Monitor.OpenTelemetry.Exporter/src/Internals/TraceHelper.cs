@@ -222,7 +222,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             foreach (var tag in activityEvent.Tags)
             {
-                messageData.Properties.Add(tag.Key, tag.Value.ToString());
+                if (tag.Value is Array arrayValue)
+                {
+                    messageData.Properties.Add(tag.Key, arrayValue.ToCommaDelimitedString());
+                }
+                else
+                {
+                    messageData.Properties.Add(tag.Key, tag.Value.ToString());
+                }
             }
 
             return new MonitorBase
