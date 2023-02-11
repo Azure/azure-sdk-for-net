@@ -22,7 +22,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="isRunningSynchronously"></param>
         /// <param name="clientDiagnostics"></param>
         /// <param name="cancellationToken"></param>
-        internal UploadFailedEventArgs(List<object> failedLogs, Exception exception, bool isRunningSynchronously, ClientDiagnostics clientDiagnostics, CancellationToken cancellationToken) : this (failedLogs, exception, isRunningSynchronously, cancellationToken)
+        internal UploadFailedEventArgs(IEnumerable<object> failedLogs, Exception exception, bool isRunningSynchronously, ClientDiagnostics clientDiagnostics, CancellationToken cancellationToken) : this (failedLogs, exception, isRunningSynchronously, cancellationToken)
         {
             ClientDiagnostics = clientDiagnostics;
         }
@@ -34,7 +34,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="exception"></param>
         /// <param name="isRunningSynchronously"></param>
         /// <param name="cancellationToken"></param>
-        public UploadFailedEventArgs(List<object> failedLogs, Exception exception, bool isRunningSynchronously, CancellationToken cancellationToken) : base(isRunningSynchronously, cancellationToken)
+        public UploadFailedEventArgs(IEnumerable<object> failedLogs, Exception exception, bool isRunningSynchronously, CancellationToken cancellationToken) : base(isRunningSynchronously, cancellationToken)
         {
             FailedLogs = failedLogs;
             Exception = exception;
@@ -43,7 +43,7 @@ namespace Azure.Monitor.Ingestion
         /// <summary>
         /// The list of logs in the batch that failed to upload.
         /// </summary>
-        public IReadOnlyList<object> FailedLogs { get; }
+        public IEnumerable<object> FailedLogs { get; }
         /// <summary>
         /// The exception from the batch that failed to upload.
         /// </summary>
