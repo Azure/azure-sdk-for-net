@@ -189,22 +189,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             foreach (KeyValuePair<string, object?> item in stateDictionary)
             {
-                if (item.Key == "{OriginalFormat}")
-                {
-                    if (message == null)
-                    {
-                        message = item.Value?.ToString();
-                    }
-                    else
-                    {
-                        properties.Add("OriginalFormat", item.Value?.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
-                    }
-                }
-                else if (item.Key.Length <= SchemaConstants.KVP_MaxKeyLength)
+                if (item.Key.Length <= SchemaConstants.KVP_MaxKeyLength && item.Value != null)
                 {
                     // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
 
-                    properties.Add(item.Key, item.Value?.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+                    if (item.Key == "{OriginalFormat}")
+                    {
+                        if (message == null)
+                        {
+                            message = item.Value.ToString();
+                        }
+                        else
+                        {
+                            properties.Add("OriginalFormat", item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength));
+                        }
+                    }
+                    else
+                    {
+                        properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength));
+                    }
                 }
             }
         }
