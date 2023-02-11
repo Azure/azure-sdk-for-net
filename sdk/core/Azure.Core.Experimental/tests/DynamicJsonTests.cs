@@ -300,10 +300,10 @@ namespace Azure.Core.Experimental.Tests
                 }");
 
             // Property is present
-            Assert.IsFalse((string)json.Foo == null);
+            Assert.IsFalse(json.Foo == null);
 
             // Property is absent
-            Assert.IsTrue((string)json.Bar == null);
+            Assert.IsTrue(json.Bar == null);
         }
 
         [Test]
@@ -324,12 +324,30 @@ namespace Azure.Core.Experimental.Tests
             json.Bar = new { B = "b" };
 
             // Properties are present
-            Assert.IsFalse((string)json.Foo == null);
-            Assert.IsFalse((string)json.Bar.B == null);
-            Assert.IsFalse((string)json.Baz == null);
+            Assert.IsFalse(json.Foo == null);
+            Assert.IsFalse(json.Bar.B == null);
+            Assert.IsFalse(json.Baz == null);
 
             // Properties are absent
-            Assert.IsTrue((string)json.Bar.A == null);
+            Assert.IsTrue(json.Bar.A == null);
+        }
+
+        [Test]
+        public void CanSetOptionalProperty()
+        {
+            dynamic json = GetDynamicJson(@"
+                {
+                  ""Foo"" : ""foo""
+                }");
+
+            // Property is absent
+            Assert.IsTrue(json.OptionalValue == null);
+
+            json.OptionalValue = 5;
+
+            // Property is present
+            Assert.IsFalse(json.OptionalValue == null);
+            Assert.AreEqual(5, (int)json.OptionalValue);
         }
 
         #region Helpers
