@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of IaasVmBackupJobExtendedInfo. </summary>
         public IaasVmBackupJobExtendedInfo()
         {
-            TasksList = new ChangeTrackingList<IaasVmBakupJobTaskDetails>();
+            TasksList = new ChangeTrackingList<IaasVmBackupJobTaskDetails>();
             PropertyBag = new ChangeTrackingDictionary<string, string>();
             InternalPropertyBag = new ChangeTrackingDictionary<string, string>();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="progressPercentage"> Indicates progress of the job. Null if it has not started or completed. </param>
         /// <param name="estimatedRemainingDurationValue"> Time remaining for execution of this job. </param>
         /// <param name="dynamicErrorMessage"> Non localized error message on job execution. </param>
-        internal IaasVmBackupJobExtendedInfo(IList<IaasVmBakupJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, IDictionary<string, string> internalPropertyBag, double? progressPercentage, string estimatedRemainingDurationValue, string dynamicErrorMessage)
+        internal IaasVmBackupJobExtendedInfo(IList<IaasVmBackupJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, IDictionary<string, string> internalPropertyBag, double? progressPercentage, string estimatedRemainingDurationValue, string dynamicErrorMessage)
         {
             TasksList = tasksList;
             PropertyBag = propertyBag;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> List of tasks associated with this job. </summary>
-        public IList<IaasVmBakupJobTaskDetails> TasksList { get; }
+        public IList<IaasVmBackupJobTaskDetails> TasksList { get; }
         /// <summary> Job properties. </summary>
         public IDictionary<string, string> PropertyBag { get; }
         /// <summary> Job internal properties. </summary>

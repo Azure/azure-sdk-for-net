@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static IaasVmBackupJobExtendedInfo DeserializeIaasVmBackupJobExtendedInfo(JsonElement element)
         {
-            Optional<IList<IaasVmBakupJobTaskDetails>> tasksList = default;
+            Optional<IList<IaasVmBackupJobTaskDetails>> tasksList = default;
             Optional<IDictionary<string, string>> propertyBag = default;
             Optional<IDictionary<string, string>> internalPropertyBag = default;
             Optional<double> progressPercentage = default;
@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IaasVmBakupJobTaskDetails> array = new List<IaasVmBakupJobTaskDetails>();
+                    List<IaasVmBackupJobTaskDetails> array = new List<IaasVmBackupJobTaskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IaasVmBakupJobTaskDetails.DeserializeIaasVmBakupJobTaskDetails(item));
+                        array.Add(IaasVmBackupJobTaskDetails.DeserializeIaasVmBackupJobTaskDetails(item));
                     }
                     tasksList = array;
                     continue;

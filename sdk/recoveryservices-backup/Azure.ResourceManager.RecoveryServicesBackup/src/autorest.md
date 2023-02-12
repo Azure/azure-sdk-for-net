@@ -64,7 +64,7 @@ rename-mapping:
   AzureIaaSVMHealthDetails: IaasVmHealthDetails
   AzureIaaSVMJob: IaasVmBackupJob
   AzureIaaSVMJobExtendedInfo: IaasVmBackupJobExtendedInfo
-  AzureIaaSVMJobTaskDetails: IaasVmBakupJobTaskDetails
+  AzureIaaSVMJobTaskDetails: IaasVmBackupJobTaskDetails
   AzureIaaSVMJobV2: IaasVmBackupJobV2
   AzureIaaSVMProtectedItem: IaasVmProtectedItem
   AzureIaaSVMProtectedItemExtendedInfo: IaasVmProtectedItemExtendedInfo

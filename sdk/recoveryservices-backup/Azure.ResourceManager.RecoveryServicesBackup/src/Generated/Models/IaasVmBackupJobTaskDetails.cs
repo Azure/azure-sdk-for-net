@@ -10,14 +10,14 @@ using System;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure IaaS VM workload-specific job task details. </summary>
-    public partial class IaasVmBakupJobTaskDetails
+    public partial class IaasVmBackupJobTaskDetails
     {
-        /// <summary> Initializes a new instance of IaasVmBakupJobTaskDetails. </summary>
-        public IaasVmBakupJobTaskDetails()
+        /// <summary> Initializes a new instance of IaasVmBackupJobTaskDetails. </summary>
+        public IaasVmBackupJobTaskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of IaasVmBakupJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of IaasVmBackupJobTaskDetails. </summary>
         /// <param name="taskId"> The task display name. </param>
         /// <param name="startOn"> The start time. </param>
         /// <param name="endOn"> The end time. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Details about execution of the task.
         /// eg: number of bytes transferred etc
         /// </param>
-        internal IaasVmBakupJobTaskDetails(string taskId, DateTimeOffset? startOn, DateTimeOffset? endOn, string instanceId, TimeSpan? duration, string status, double? progressPercentage, string taskExecutionDetails)
+        internal IaasVmBackupJobTaskDetails(string taskId, DateTimeOffset? startOn, DateTimeOffset? endOn, string instanceId, TimeSpan? duration, string status, double? progressPercentage, string taskExecutionDetails)
         {
             TaskId = taskId;
             StartOn = startOn;

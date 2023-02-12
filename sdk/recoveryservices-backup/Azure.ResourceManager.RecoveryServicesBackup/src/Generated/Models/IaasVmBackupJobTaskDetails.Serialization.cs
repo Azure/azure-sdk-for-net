@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmBakupJobTaskDetails : IUtf8JsonSerializable
+    public partial class IaasVmBackupJobTaskDetails : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static IaasVmBakupJobTaskDetails DeserializeIaasVmBakupJobTaskDetails(JsonElement element)
+        internal static IaasVmBackupJobTaskDetails DeserializeIaasVmBackupJobTaskDetails(JsonElement element)
         {
             Optional<string> taskId = default;
             Optional<DateTimeOffset> startTime = default;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new IaasVmBakupJobTaskDetails(taskId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), instanceId.Value, Optional.ToNullable(duration), status.Value, Optional.ToNullable(progressPercentage), taskExecutionDetails.Value);
+            return new IaasVmBackupJobTaskDetails(taskId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), instanceId.Value, Optional.ToNullable(duration), status.Value, Optional.ToNullable(progressPercentage), taskExecutionDetails.Value);
         }
     }
 }

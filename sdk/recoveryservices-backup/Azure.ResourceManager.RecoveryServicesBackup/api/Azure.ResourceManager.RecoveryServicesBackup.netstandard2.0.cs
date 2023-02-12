@@ -1531,7 +1531,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public System.Collections.Generic.IDictionary<string, string> InternalPropertyBag { get { throw null; } }
         public double? ProgressPercentage { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> PropertyBag { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmBakupJobTaskDetails> TasksList { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmBackupJobTaskDetails> TasksList { get { throw null; } }
+    }
+    public partial class IaasVmBackupJobTaskDetails
+    {
+        public IaasVmBackupJobTaskDetails() { }
+        public System.TimeSpan? Duration { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public string InstanceId { get { throw null; } set { } }
+        public double? ProgressPercentage { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public string Status { get { throw null; } set { } }
+        public string TaskExecutionDetails { get { throw null; } set { } }
+        public string TaskId { get { throw null; } set { } }
     }
     public partial class IaasVmBackupJobV2 : Azure.ResourceManager.RecoveryServicesBackup.Models.BackupGenericJob
     {
@@ -1542,18 +1554,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmErrorInfo> ErrorDetails { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmBackupJobExtendedInfo ExtendedInfo { get { throw null; } set { } }
         public string VirtualMachineVersion { get { throw null; } set { } }
-    }
-    public partial class IaasVmBakupJobTaskDetails
-    {
-        public IaasVmBakupJobTaskDetails() { }
-        public System.TimeSpan? Duration { get { throw null; } set { } }
-        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
-        public string InstanceId { get { throw null; } set { } }
-        public double? ProgressPercentage { get { throw null; } set { } }
-        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
-        public string Status { get { throw null; } set { } }
-        public string TaskExecutionDetails { get { throw null; } set { } }
-        public string TaskId { get { throw null; } set { } }
     }
     public partial class IaasVmContainer : Azure.ResourceManager.RecoveryServicesBackup.Models.BackupGenericProtectionContainer
     {
