@@ -72,6 +72,9 @@ namespace Azure.Identity.Tests.Mock
             string loginHint,
             string tenantId,
             bool enableCae,
+            bool? useEmbeddedWebView,
+            SystemWebViewOptions systemWebViewOptions,
+            EmbeddedWebViewOptions embeddedWebViewOptions,
             bool async,
             CancellationToken cancellationToken)
         {

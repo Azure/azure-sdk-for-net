@@ -123,7 +123,7 @@ namespace Azure.Identity
                 .ConfigureAwait(false);
         }
 
-        public async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, bool async, CancellationToken cancellationToken)
+        public async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, bool? useEmbeddedWebView, SystemWebViewOptions systemWebViewOptions, EmbeddedWebViewOptions embeddedWebViewOptions, bool async, CancellationToken cancellationToken)
         {
             if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA && !IdentityCompatSwitches.DisableInteractiveBrowserThreadpoolExecution)
             {
@@ -137,7 +137,7 @@ namespace Azure.Identity
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 return Task.Run(async () =>
                 {
-                    var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, true, cancellationToken).ConfigureAwait(false);
+                    var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, useEmbeddedWebView, systemWebViewOptions, embeddedWebViewOptions, true, cancellationToken).ConfigureAwait(false);
                     LogAccountDetails(result);
                     return result;
                 }).GetAwaiter().GetResult();
@@ -146,12 +146,13 @@ namespace Azure.Identity
 
             AzureIdentityEventSource.Singleton.InteractiveAuthenticationExecutingInline();
 
-            var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, useEmbeddedWebView, systemWebViewOptions, embeddedWebViewOptions, async, cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
 
-        protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, bool? useEmbeddedWebView, SystemWebViewOptions systemWebViewOptions, EmbeddedWebViewOptions embeddedWebViewOptions,
+            bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
 
@@ -167,6 +168,18 @@ namespace Azure.Identity
             if (tenantId != null)
             {
                 builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
+            }
+            if (useEmbeddedWebView != null)
+            {
+                builder.WithUseEmbeddedWebView(useEmbeddedWebView.Value);
+            }
+            if (systemWebViewOptions != null)
+            {
+                builder.WithSystemWebViewOptions(systemWebViewOptions);
+            }
+            if (embeddedWebViewOptions != null)
+            {
+                builder.WithEmbeddedWebViewOptions(embeddedWebViewOptions);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)
