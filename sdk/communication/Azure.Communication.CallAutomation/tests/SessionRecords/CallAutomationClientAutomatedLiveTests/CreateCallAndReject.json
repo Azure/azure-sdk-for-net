@@ -221,12 +221,14 @@
       },
       "ResponseBody": {
         "callConnectionId": "421f0b00-e4c3-4a77-b1e6-c5932a9db58b",
-        "sourceDisplayName": "",
-        "sourceIdentity": {
-          "rawId": "Sanitized",
-          "kind": "communicationUser",
-          "communicationUser": {
-            "id": "Sanitized"
+        "source": {
+          "displayName": "",
+          "identifier": {
+            "rawId": "Sanitized",
+            "kind": "communicationUser",
+            "communicationUser": {
+              "id": "Sanitized"
+            }
           }
         },
         "targets": [
