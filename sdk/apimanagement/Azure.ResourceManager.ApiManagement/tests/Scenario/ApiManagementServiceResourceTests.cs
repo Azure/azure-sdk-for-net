@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ApiManagement.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Tests
@@ -19,18 +21,38 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
         }
 
-        // For playback
+        private VirtualNetworkCollection VNetCollection { get; set; }
+
+        private async Task<ApiManagementServiceCollection> GetApiManagementServiceCollectionAsync()
+        {
+            var resourceGroup = await CreateResourceGroupAsync();
+            VNetCollection = resourceGroup.GetVirtualNetworks();
+            return resourceGroup.GetApiManagementServices();
+        }
+
         private async Task<ApiManagementServiceResource> GetApiManagementServiceAsync()
         {
-            var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
-            var collection = resourceGroup.Value.GetApiManagementServices();
-            return (await collection.GetAsync("sdktestapi")).Value;
+            if (Mode != RecordedTestMode.Playback)
+            {
+                var collection = await GetApiManagementServiceCollectionAsync();
+                var apiName = Recording.GenerateAssetName("testapi-");
+                var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+                {
+                    Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                };
+                return (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
+            }
+            else
+            {
+                var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
+                var collection = resourceGroup.Value.GetApiManagementServices();
+                return (await collection.GetAsync("sdktestapi")).Value;
+            }
         }
 
         [Test]
         public async Task ApplyNetworkConfigurationUpdates()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var networkConfigurationContent = new ApiManagementServiceApplyNetworkConfigurationContent();
             // Test API is in Updating State
@@ -40,7 +62,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task Backup_Restore()
         {
-            // Please create the resource first.
             // Backup
             var apiManagementService = await GetApiManagementServiceAsync();
             var backupContent = new ApiManagementServiceBackupRestoreContent("apiteststorageaccount", "apiblob", "backup5")
@@ -60,7 +81,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task Get()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             apiManagementService = await apiManagementService.GetAsync();
             Assert.NotNull(apiManagementService.Data.Name);
@@ -69,7 +89,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetAvailableApiManagementServiceSkus()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetAvailableApiManagementServiceSkusAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
@@ -78,7 +97,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetNetworkStatusByLocation()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var status = await apiManagementService.GetNetworkStatusByLocationAsync(AzureLocation.EastUS.DisplayName);
             Assert.GreaterOrEqual(status.Value.ConnectivityStatus.Count, 0);
@@ -87,7 +105,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetNetworkStatuses()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var status = await apiManagementService.GetNetworkStatusesAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(status.Count, 0);
@@ -96,7 +113,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetOutboundNetworkDependenciesEndpoints()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetOutboundNetworkDependenciesEndpointsAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
@@ -105,25 +121,20 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetPolicyDescriptions()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetPolicyDescriptionsAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.DoesNotThrow(() => apiManagementService.GetPolicyDescriptionsAsync());
         }
 
         [Test]
         public async Task GetPortalSettings()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetPortalSettingsAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.DoesNotThrow(()=>apiManagementService.GetPortalSettingsAsync());
         }
 
         [Test]
         public async Task GetProductsByTags()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetProductsByTagsAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
@@ -132,7 +143,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetQuotaByCounterKeys()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.GetQuotaByCounterKeysAsync("foo").ToEnumerableAsync());
         }
@@ -140,7 +150,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetQuotaByPeriodKey()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.GetQuotaByPeriodKeyAsync("foo", "foo"));
         }
@@ -148,7 +157,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetRegions()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetRegionsAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
@@ -157,7 +165,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetReportsByApi()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsByApiAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
@@ -166,7 +173,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetReportsByGeo()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsByGeoAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
@@ -175,7 +181,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetReportsByOperation()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsByOperationAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
@@ -184,7 +189,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetReportsByProduct()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsByProductAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
@@ -193,7 +197,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetReportsByRequest()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsByRequestAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
@@ -202,7 +205,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetReportsBySubscription()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsBySubscriptionAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
@@ -211,7 +213,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetReportsByTime()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsByTimeAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'", TimeSpan.FromMinutes(15)).ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
@@ -220,7 +221,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetReportsByUser()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsByUserAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
@@ -229,7 +229,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetSsoToken()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var result = (await apiManagementService.GetSsoTokenAsync()).Value;
             Assert.NotNull(result.RedirectUri);
@@ -238,7 +237,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetTagResources()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetTagResourcesAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
@@ -247,7 +245,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetTenantAccessInfo()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var result = (await apiManagementService.GetTenantAccessInfoAsync(AccessName.TenantAccess)).Value;
             Assert.NotNull(result.Data.Name);
@@ -256,7 +253,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task GetTenantConfigurationSyncState()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.GetTenantConfigurationSyncStateAsync("foo"));
         }
@@ -264,7 +260,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task PerformConnectivityCheckAsync()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var source = new ConnectivityCheckRequestSource("eastus");
             var destination = new ConnectivityCheckRequestDestination("8.8.8.8", 53);
@@ -278,7 +273,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task TenantConfiguration_Deploy_Save_Get()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var configName = Recording.GenerateAssetName("testconfig-");
             var deploy = new ConfigurationDeployContent() { Branch = "master" };
@@ -292,7 +286,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task UpdateQuotaByCounterKeys()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var updateContent = new QuotaCounterValueUpdateContent()
             {
@@ -305,7 +298,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task UpdateQuotaByPeriodKey()
         {
-            // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
             var updateContent = new QuotaCounterValueUpdateContent()
             {

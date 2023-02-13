@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task CreateOrUpdate_GetAll_Get_Exists_Delete ()
         {
-            // Please create the resource first.
             await CreateApiService();
             var collection = ApiServiceResource.GetApis();
             var apiName = Recording.GenerateAssetName("testapi-");

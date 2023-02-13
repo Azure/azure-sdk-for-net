@@ -313,26 +313,6 @@ directive:
       $.PortalSettingsContractProperties.properties.subscriptions['x-ms-client-name'] = 'IsSubscriptions';
       $.PortalSettingsContractProperties.properties.userRegistration['x-ms-client-name'] = 'IsUserRegistration';
       $.PrivateEndpointConnectionRequest.properties.id['x-ms-format'] = 'arm-id';
-      $.AccessInformationUpdateParameterProperties.properties.enabled['x-ms-client-name'] = 'IsEnabled';
-      $.AuthenticationSettingsContract.properties.oAuth2["x-nullable"] = true;
-      $.AuthenticationSettingsContract.properties.openid["x-nullable"] = true;
-      $.ApiEntityBaseContract.properties.authenticationSettings["x-nullable"] = true;
-      $.ApiEntityBaseContract.properties.subscriptionKeyParameterNames["x-nullable"] = true;
-      $.LoggerContractProperties.properties.resourceId["x-nullable"] = true;
-      $.ApiContractProperties.properties.protocols["x-nullable"] = true;
-      $.ApiTagResourceContractProperties.properties.protocols["x-nullable"] = true;
-      $.ApiContractUpdateProperties.properties.protocols["x-nullable"] = true;
-      $.NamedValueEntityBaseParameters.properties.tags["x-nullable"] = true;
-      $.SubscriptionContractProperties.properties.startDate["x-nullable"] = true;
-      $.SubscriptionContractProperties.properties.expirationDate["x-nullable"] = true;
-      $.SubscriptionContractProperties.properties.endDate["x-nullable"] = true;
-      $.SubscriptionContractProperties.properties.notificationDate["x-nullable"] = true;
-      $.PortalSettingsContractProperties.properties.termsOfService["x-nullable"] = true;
-# policyDescriptions scope could be int: 268435487, string: "product" 
-      $.PolicyDescriptionContractProperties.properties.scope = {
-          "description": "Binary OR value of the Snippet scope.",
-          "readOnly": true
-        }
   - from: apimskus.json
     where: $.definitions
     transform: >
@@ -347,21 +327,6 @@ directive:
       $.ResourceSkuResult.properties.resourceType['x-ms-format'] = 'resource-type';
       $.ApiManagementServiceBaseProperties.properties.publicIpAddressId['x-ms-format'] = 'arm-id';
       $.AdditionalLocation.properties.publicIpAddressId['x-ms-format'] = 'arm-id';
-      $.HostnameConfiguration.properties.encodedCertificate["x-nullable"] = true;
-      $.HostnameConfiguration.properties.keyVaultId["x-nullable"] = true;
-      $.HostnameConfiguration.properties.certificatePassword["x-nullable"] = true;
-      $.HostnameConfiguration.properties.certificate["x-nullable"] = true;
-      $.HostnameConfiguration.properties.identityClientId["x-nullable"] = true;
-      $.HostnameConfiguration.properties.certificateStatus["x-nullable"] = true;
-      $.ApiManagementServiceBaseProperties.properties.privateIPAddresses["x-nullable"] = true;
-      $.ApiManagementServiceBaseProperties.properties.additionalLocations["x-nullable"] = true;
-      $.ApiManagementServiceBaseProperties.properties.virtualNetworkConfiguration["x-nullable"] = true;
-      $.ApiManagementServiceBaseProperties.properties.certificates["x-nullable"] = true;
-      $.ApiManagementServiceBaseProperties.properties.publicIpAddressId["x-nullable"] = true;
-      $.ApiManagementServiceBaseProperties.properties.privateEndpointConnections["x-nullable"] = true;
-      $.ApiVersionConstraint.properties.minApiVersion["x-nullable"] = true;
-      $.ApiManagementServiceResource.properties.identity["x-nullable"] = true;
-      $.ApiManagementServiceResource.properties.zones["x-nullable"] = true;
   - from: apimanagement.json
     where: $.parameters
     transform: >

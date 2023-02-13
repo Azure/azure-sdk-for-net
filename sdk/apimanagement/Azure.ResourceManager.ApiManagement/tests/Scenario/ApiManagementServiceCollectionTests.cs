@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // Update
             var patch = new ApiManagementServicePatch() { Tags = { { "newkey", "newvalue" } } };
             var updated = await apiManagementService.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.IsTrue(apiManagementService.Data.Tags.ContainsKey("newkey"));
-            Assert.AreEqual(apiManagementService.Data.Tags["newkey"], "newvalue");
+            Assert.IsTrue(updated.Value.Data.Tags.ContainsKey("newkey"));
+            Assert.AreEqual(updated.Value.Data.Tags["newkey"], "newvalue");
 
             // Delete
             await apiManagementService.DeleteAsync(WaitUntil.Completed);
@@ -70,19 +70,47 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task Get()
         {
-            // Please create the resource first.
-            var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
-            var collection = resourceGroup.Value.GetApiManagementServices();
-            var apiManagementService = (await collection.GetAsync("sdktestapi")).Value;
+            ApiManagementServiceCollection collection;
+            var apiName = "";
+            if (Mode != RecordedTestMode.Playback)
+            {
+                collection = await GetApiManagementServiceCollectionAsync();
+                apiName = Recording.GenerateAssetName("testapi-");
+                var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+                {
+                    Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                };
+                await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data);
+            }
+            else
+            {
+                apiName = "sdktestapi";
+                var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
+                collection = resourceGroup.Value.GetApiManagementServices();
+            }
+            var apiManagementService = (await collection.GetAsync(apiName)).Value;
             Assert.NotNull(apiManagementService.Data.Name);
         }
 
         [Test]
         public async Task GetAll()
         {
-            // Please create the resource first.
-            var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
-            var collection = resourceGroup.Value.GetApiManagementServices();
+            ApiManagementServiceCollection collection;
+            if (Mode != RecordedTestMode.Playback)
+            {
+                collection = await GetApiManagementServiceCollectionAsync();
+                var apiName = Recording.GenerateAssetName("testapi-");
+                var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+                {
+                    Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                };
+                await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data);
+            }
+            else
+            {
+                var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
+                collection = resourceGroup.Value.GetApiManagementServices();
+            }
             var apiManagementServices = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(apiManagementServices.Count, 1);
         }
@@ -90,10 +118,25 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task Exists()
         {
-            // Please create the resource first.
-            var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
-            var collection = resourceGroup.Value.GetApiManagementServices();
-            var apiManagementServiceTrue = await collection.ExistsAsync("sdktestapi");
+            ApiManagementServiceCollection collection;
+            var apiName = "";
+            if (Mode != RecordedTestMode.Playback)
+            {
+                collection = await GetApiManagementServiceCollectionAsync();
+                apiName = Recording.GenerateAssetName("testapi-");
+                var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+                {
+                    Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                };
+                await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data);
+            }
+            else
+            {
+                apiName = "sdktestapi";
+                var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
+                collection = resourceGroup.Value.GetApiManagementServices();
+            }
+            var apiManagementServiceTrue = await collection.ExistsAsync(apiName);
             var apiManagementServiceFalse = await collection.ExistsAsync("foo");
             Assert.IsTrue(apiManagementServiceTrue);
             Assert.IsFalse(apiManagementServiceFalse);

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Policy description. </param>
         /// <param name="scope"> Binary OR value of the Snippet scope. </param>
-        internal PolicyDescriptionContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, BinaryData scope) : base(id, name, resourceType, systemData)
+        internal PolicyDescriptionContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, long? scope) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Scope = scope;
@@ -34,36 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Policy description. </summary>
         public string Description { get; }
-        /// <summary>
-        /// Binary OR value of the Snippet scope.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Scope { get; }
+        /// <summary> Binary OR value of the Snippet scope. </summary>
+        public long? Scope { get; }
     }
 }

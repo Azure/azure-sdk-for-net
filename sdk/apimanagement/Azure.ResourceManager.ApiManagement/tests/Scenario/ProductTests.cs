@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             //
             // Product Subscriptions test
             //
-            var listSubscriptionsResponse = await product.GetProductSubscriptionsAsync().ToEnumerableAsync();
+            var listSubscriptionsResponse = await product.GetAllProductSubscriptionDataAsync().ToEnumerableAsync();
 
             Assert.NotNull(listSubscriptionsResponse);
             Assert.AreEqual(listSubscriptionsResponse.Count, 1);

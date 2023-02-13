@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(firstSubscription.Data.OwnerId, getResponse.Data.OwnerId);
             Assert.AreEqual(firstSubscription.Data.CreatedOn, getResponse.Data.CreatedOn);
             Assert.AreEqual(firstSubscription.Data.EndOn, getResponse.Data.EndOn);
-            Assert.AreEqual(firstSubscription.Data.ExpiresOn, getResponse.Data.ExpiresOn);
+            Assert.AreEqual(firstSubscription.Data.ExpireOn, getResponse.Data.ExpireOn);
 
             // update product to accept unlimited number or subscriptions
             var product = (await ApiServiceResource.GetApiManagementProducts().GetAsync("starter")).Value;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(subscriptionResponse.Data.DisplayName);
 
             // list product subscriptions
-            var productSubscriptions = await product.GetProductSubscriptionsAsync().ToEnumerableAsync();
+            var productSubscriptions = await product.GetAllProductSubscriptionDataAsync().ToEnumerableAsync();
             Assert.NotNull(productSubscriptions);
             Assert.AreEqual(2, productSubscriptions.Count);
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                     DisplayName = patchedName,
                     PrimaryKey = patchedPk,
                     SecondaryKey = patchedSk,
-                    ExpiresOn = patchedExpirationDate
+                    ExpireOn = patchedExpirationDate
                 });
 
             // get patched subscription to check it was actually patched

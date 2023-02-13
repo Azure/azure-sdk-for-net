@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        authenticationSettings = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property.Value);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        subscriptionKeyParameterNames = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property.Value);

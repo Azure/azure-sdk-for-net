@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task CreateOrUpdate_GetAll_Get_Exists_Delete()
         {
-            // Please create the resource first.
             await CreateApiAsync();
             var collection = Resources.GetApiDiagnostics();
             var logColle = ApiServiceResource.GetApiManagementLoggers();

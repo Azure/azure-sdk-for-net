@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        protocols = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApiOperationInvokableProtocol> array = new List<ApiOperationInvokableProtocol>();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        authenticationSettings = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property.Value);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        subscriptionKeyParameterNames = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property.Value);
