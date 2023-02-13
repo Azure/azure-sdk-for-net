@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class ScheduledEventsProfile : IUtf8JsonSerializable
+    public partial class ComputeScheduledEventsProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,12 +20,18 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("terminateNotificationProfile"u8);
                 writer.WriteObjectValue(TerminateNotificationProfile);
             }
+            if (Optional.IsDefined(OSImageNotificationProfile))
+            {
+                writer.WritePropertyName("osImageNotificationProfile"u8);
+                writer.WriteObjectValue(OSImageNotificationProfile);
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScheduledEventsProfile DeserializeScheduledEventsProfile(JsonElement element)
+        internal static ComputeScheduledEventsProfile DeserializeComputeScheduledEventsProfile(JsonElement element)
         {
             Optional<TerminateNotificationProfile> terminateNotificationProfile = default;
+            Optional<OSImageNotificationProfile> osImageNotificationProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("terminateNotificationProfile"u8))
@@ -38,8 +44,18 @@ namespace Azure.ResourceManager.Compute.Models
                     terminateNotificationProfile = TerminateNotificationProfile.DeserializeTerminateNotificationProfile(property.Value);
                     continue;
                 }
+                if (property.NameEquals("osImageNotificationProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    osImageNotificationProfile = OSImageNotificationProfile.DeserializeOSImageNotificationProfile(property.Value);
+                    continue;
+                }
             }
-            return new ScheduledEventsProfile(terminateNotificationProfile.Value);
+            return new ComputeScheduledEventsProfile(terminateNotificationProfile.Value, osImageNotificationProfile.Value);
         }
     }
 }
