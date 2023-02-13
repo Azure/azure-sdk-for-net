@@ -9,7 +9,7 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 
-namespace Azure.Core.Dynamic
+namespace Azure.Core.Json
 {
     public partial struct MutableJsonElement
     {

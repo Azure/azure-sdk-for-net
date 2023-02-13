@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Azure.Core.Dynamic
+namespace Azure.Core.Json
 {
     /// <summary>
     /// A mutable representation of a JSON value.

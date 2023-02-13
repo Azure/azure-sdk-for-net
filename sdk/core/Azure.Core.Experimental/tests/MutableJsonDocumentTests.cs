@@ -3,9 +3,8 @@
 
 using System;
 using System.IO;
-using System.Security.Cryptography;
 using System.Text.Json;
-using Azure.Core.Dynamic;
+using Azure.Core.Json;
 using NUnit.Framework;
 
 namespace Azure.Core.Experimental.Tests
