@@ -12,7 +12,7 @@ namespace Azure.Core.Json
     /// <summary>
     /// A mutable representation of a JSON element.
     /// </summary>
-    public partial struct MutableJsonElement
+    public readonly partial struct MutableJsonElement
     {
         private readonly MutableJsonDocument _root;
         private readonly JsonElement _element;
