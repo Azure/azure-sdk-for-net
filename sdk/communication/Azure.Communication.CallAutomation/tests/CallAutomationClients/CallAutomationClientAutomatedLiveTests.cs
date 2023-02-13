@@ -42,6 +42,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
                     // create call and assert response
                     var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+<<<<<<< HEAD
+=======
+
+>>>>>>> daebdfee62... fix merge conflicts
                     CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                     callConnectionId = response.CallConnectionProperties.CallConnectionId;
                     Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
@@ -52,6 +56,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
                     // answer the call
                     var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
+<<<<<<< HEAD
+=======
+
+>>>>>>> daebdfee62... fix merge conflicts
                     AnswerCallResult answerResponse = await client.AnswerCallAsync(answerCallOptions);
 
                     // wait for callConnected
@@ -66,6 +74,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
                     // try hangup
                     var hangUpOptions = new HangUpOptions(true);
+<<<<<<< HEAD
+=======
+
+>>>>>>> daebdfee62... fix merge conflicts
                     await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
