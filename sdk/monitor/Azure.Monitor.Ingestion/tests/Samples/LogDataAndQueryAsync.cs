@@ -140,10 +140,11 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             {
                 // Throw exception from EventHandler to stop Upload if there is a failure
                 IReadOnlyList<object> failedLogs = e.FailedLogs;
+                // 413 status is RequestTooLarge - don't throw here because other batches can successfully upload
                 if ((e.Exception is RequestFailedException) && (((RequestFailedException)e.Exception).Status != 413))
                     throw e.Exception;
                 else
-                    continue;
+                    return Task.CompletedTask;
             }
             #endregion
         }

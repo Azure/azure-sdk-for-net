@@ -216,7 +216,11 @@ Task Options_UploadFailed(UploadFailedEventArgs e)
 {
     // Throw exception from EventHandler to stop Upload if there is a failure
     IReadOnlyList<object> failedLogs = e.FailedLogs;
-    throw e.Exception;
+    // 413 status is RequestTooLarge - don't throw here because other batches can successfully upload
+    if ((e.Exception is RequestFailedException) && (((RequestFailedException)e.Exception).Status != 413))
+        throw e.Exception;
+    else
+        return Task.CompletedTask;
 }
 ```
 
