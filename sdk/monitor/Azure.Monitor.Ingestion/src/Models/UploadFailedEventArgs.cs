@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
@@ -36,14 +37,14 @@ namespace Azure.Monitor.Ingestion
         /// <param name="cancellationToken"></param>
         public UploadFailedEventArgs(IEnumerable<object> failedLogs, Exception exception, bool isRunningSynchronously, CancellationToken cancellationToken) : base(isRunningSynchronously, cancellationToken)
         {
-            FailedLogs = failedLogs;
+            FailedLogs = failedLogs.ToList();
             Exception = exception;
         }
 
         /// <summary>
         /// The list of logs in the batch that failed to upload.
         /// </summary>
-        public IEnumerable<object> FailedLogs { get; }
+        public IReadOnlyList<object> FailedLogs { get; }
         /// <summary>
         /// The exception from the batch that failed to upload.
         /// </summary>

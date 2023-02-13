@@ -23,7 +23,7 @@ namespace Azure.Monitor.Ingestion
     {
         public UploadFailedEventArgs(System.Collections.Generic.IEnumerable<object> failedLogs, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
         public System.Exception Exception { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<object> FailedLogs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<object> FailedLogs { get { throw null; } }
     }
     public partial class UploadOptions
     {
