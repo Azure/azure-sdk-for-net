@@ -72,11 +72,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             this.telemetryOutput.Write(telemetryItems);
             var telemetryItem = telemetryItems.Single();
 
-            TelemetryItemValidationHelper.AssertLog_As_MessageTelemetry(
+            TelemetryItemValidationHelper.AssertMessageTelemetry(
                 telemetryItem: telemetryItem,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Hello {name}.",
-                expectedMeessageProperties: new Dictionary<string, string> { { "name", "World" }},
+                expectedMessageProperties: new Dictionary<string, string> { { "name", "World" }},
                 expectedSpanId: null,
                 expectedTraceId: null);
         }

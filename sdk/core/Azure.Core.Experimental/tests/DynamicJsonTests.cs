@@ -291,6 +291,68 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(2, (int)jsonData.Bar);
         }
 
+        [Test]
+        public void CanCheckOptionalProperty()
+        {
+            dynamic json = GetDynamicJson("""
+                {
+                  "Foo" : "foo"
+                }
+                """);
+
+            // Property is present
+            Assert.IsFalse(json.Foo == null);
+
+            // Property is absent
+            Assert.IsTrue(json.Bar == null);
+        }
+
+        [Test]
+        public void CanCheckOptionalPropertyWithChanges()
+        {
+            dynamic json = GetDynamicJson("""
+                {
+                  "Foo" : "foo",
+                  "Bar" : {
+                    "A" : "a"
+                  }
+                }
+            """);
+
+            // Add property Baz
+            json.Baz = "baz";
+
+            // Remove property A
+            json.Bar = new { B = "b" };
+
+            // Properties are present
+            Assert.IsFalse(json.Foo == null);
+            Assert.IsFalse(json.Bar.B == null);
+            Assert.IsFalse(json.Baz == null);
+
+            // Properties are absent
+            Assert.IsTrue(json.Bar.A == null);
+        }
+
+        [Test]
+        public void CanSetOptionalProperty()
+        {
+            dynamic json = GetDynamicJson("""
+                {
+                  "Foo" : "foo"
+                }
+                """);
+
+            // Property is absent
+            Assert.IsTrue(json.OptionalValue == null);
+
+            json.OptionalValue = 5;
+
+            // Property is present
+            Assert.IsFalse(json.OptionalValue == null);
+            Assert.AreEqual(5, (int)json.OptionalValue);
+        }
+
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {
@@ -300,6 +362,6 @@ namespace Azure.Core.Experimental.Tests
         internal class CustomType
         {
         }
-#endregion
+        #endregion
     }
 }

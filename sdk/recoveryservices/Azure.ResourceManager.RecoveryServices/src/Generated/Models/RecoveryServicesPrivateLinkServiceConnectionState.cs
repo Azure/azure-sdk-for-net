@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="status"> Gets or sets the status. </param>
         /// <param name="description"> Gets or sets description. </param>
         /// <param name="actionsRequired"> Gets or sets actions required. </param>
-        internal RecoveryServicesPrivateLinkServiceConnectionState(PrivateEndpointConnectionStatus? status, string description, string actionsRequired)
+        internal RecoveryServicesPrivateLinkServiceConnectionState(RecoveryServicesPrivateEndpointConnectionStatus? status, string description, string actionsRequired)
         {
             Status = status;
             Description = description;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Gets or sets the status. </summary>
-        public PrivateEndpointConnectionStatus? Status { get; }
+        public RecoveryServicesPrivateEndpointConnectionStatus? Status { get; }
         /// <summary> Gets or sets description. </summary>
         public string Description { get; }
         /// <summary> Gets or sets actions required. </summary>
