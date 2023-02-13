@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class TelemetryItem
     {
-        public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags, AzureMonitorResource resource, string instrumentationKey) :
+        public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags, AzureMonitorResource? resource, string instrumentationKey) :
             this(activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency", FormatUtcTimestamp(activity.StartTimeUtc))
         {
             if (activity.ParentSpanId != default)
@@ -73,7 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             SampleRate = telemetryItem.SampleRate;
         }
 
-        public TelemetryItem (LogRecord logRecord, AzureMonitorResource resource, string instrumentationKey) :
+        public TelemetryItem (LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey) :
             this(logRecord.Exception != null ? "Exception" : "Message", FormatUtcTimestamp(logRecord.Timestamp))
         {
             if (logRecord.TraceId != default)

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> vmId = default;
             Optional<SecurityProfile> securityProfile = default;
             Optional<AzureLocation> location = default;
+            Optional<string> userData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hardwareProfile"u8))
@@ -94,8 +95,13 @@ namespace Azure.ResourceManager.Compute.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("userData"u8))
+                {
+                    userData = property.Value.GetString();
+                    continue;
+                }
             }
-            return new RestorePointSourceMetadata(hardwareProfile.Value, storageProfile.Value, osProfile.Value, diagnosticsProfile.Value, licenseType.Value, vmId.Value, securityProfile.Value, Optional.ToNullable(location));
+            return new RestorePointSourceMetadata(hardwareProfile.Value, storageProfile.Value, osProfile.Value, diagnosticsProfile.Value, licenseType.Value, vmId.Value, securityProfile.Value, Optional.ToNullable(location), userData.Value);
         }
     }
 }
