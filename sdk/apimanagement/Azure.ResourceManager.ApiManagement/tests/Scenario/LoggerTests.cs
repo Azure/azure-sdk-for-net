@@ -14,6 +14,7 @@ using Azure.ResourceManager.EventHubs.Models;
 using NUnit.Framework;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Tests
 {
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         public LoggerTests(bool isAsync)
                     : base(isAsync)//, RecordedTestMode.Record)
         {
+            IgnoreApiVersionInEventHubOperations();
         }
 
         private ResourceGroupResource ResourceGroup { get; set; }
@@ -44,6 +46,17 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
+        }
+
+        private void IgnoreApiVersionInEventHubOperations()
+        {
+            // Ignore the api-version of EventHub operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers/Microsoft.EventHub/namespaces/([\S]+)?pi-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
         }
 
         [Test]
