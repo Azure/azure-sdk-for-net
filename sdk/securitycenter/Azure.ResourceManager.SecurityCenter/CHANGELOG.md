@@ -2,9 +2,6 @@
 
 ## 1.1.0 (2023-02-13)
 
-### Features Added
-
-
 ### Bugs Fixed
 
 - Fixed `AddRules` methods in `SqlVulnerabilityAssessmentBaselineRuleCollection`.
