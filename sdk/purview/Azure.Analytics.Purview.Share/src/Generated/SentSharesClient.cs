@@ -120,17 +120,17 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetInvitationAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetInvitationAsync(string sentShareId, string sentShareInvitationId, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShareInvitationAsync(String,String,RequestContext)']/*" />
+        public virtual async Task<Response> GetSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.GetInvitation");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.GetSentShareInvitation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetInvitationRequest(sentShareId, sentShareInvitationId, context);
+                using HttpMessage message = CreateGetSentShareInvitationRequest(sentShareId, sentShareInvitationId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -148,17 +148,17 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetInvitation(String,String,RequestContext)']/*" />
-        public virtual Response GetInvitation(string sentShareId, string sentShareInvitationId, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShareInvitation(String,String,RequestContext)']/*" />
+        public virtual Response GetSentShareInvitation(string sentShareId, string sentShareInvitationId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.GetInvitation");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.GetSentShareInvitation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetInvitationRequest(sentShareId, sentShareInvitationId, context);
+                using HttpMessage message = CreateGetSentShareInvitationRequest(sentShareId, sentShareInvitationId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -177,18 +177,18 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateInvitationAsync(String,String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateInvitationAsync(string sentShareId, string sentShareInvitationId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateSentShareInvitationAsync(String,String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.CreateInvitation");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.CreateSentShareInvitation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateInvitationRequest(sentShareId, sentShareInvitationId, content, context);
+                using HttpMessage message = CreateCreateSentShareInvitationRequest(sentShareId, sentShareInvitationId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -207,18 +207,18 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateInvitation(String,String,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateInvitation(string sentShareId, string sentShareInvitationId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateSentShareInvitation(String,String,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateSentShareInvitation(string sentShareId, string sentShareInvitationId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.CreateInvitation");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.CreateSentShareInvitation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateInvitationRequest(sentShareId, sentShareInvitationId, content, context);
+                using HttpMessage message = CreateCreateSentShareInvitationRequest(sentShareId, sentShareInvitationId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -237,17 +237,17 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserInvitationAsync(String,String,String,RequestContext)']/*" />
-        public virtual async Task<Response> NotifyUserInvitationAsync(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserSentShareInvitationAsync(String,String,String,RequestContext)']/*" />
+        public virtual async Task<Response> NotifyUserSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.NotifyUserInvitation");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.NotifyUserSentShareInvitation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateNotifyUserInvitationRequest(sentShareId, sentShareInvitationId, repeatabilityRequestId, context);
+                using HttpMessage message = CreateNotifyUserSentShareInvitationRequest(sentShareId, sentShareInvitationId, repeatabilityRequestId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -266,17 +266,17 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserInvitation(String,String,String,RequestContext)']/*" />
-        public virtual Response NotifyUserInvitation(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserSentShareInvitation(String,String,String,RequestContext)']/*" />
+        public virtual Response NotifyUserSentShareInvitation(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.NotifyUserInvitation");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.NotifyUserSentShareInvitation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateNotifyUserInvitationRequest(sentShareId, sentShareInvitationId, repeatabilityRequestId, context);
+                using HttpMessage message = CreateNotifyUserSentShareInvitationRequest(sentShareId, sentShareInvitationId, repeatabilityRequestId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -295,14 +295,14 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentSharesAsync(String,String,String,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSentSharesAsync(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentSharesAsync(String,String,String,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetAllSentSharesAsync(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSentSharesRequest(referenceName, skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSentSharesNextPageRequest(nextLink, referenceName, skipToken, filter, orderby, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetSentShares", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentSharesRequest(referenceName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentSharesNextPageRequest(nextLink, referenceName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShares", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of sent shares. </summary>
@@ -314,14 +314,14 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShares(String,String,String,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSentShares(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentShares(String,String,String,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetAllSentShares(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSentSharesRequest(referenceName, skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSentSharesNextPageRequest(nextLink, referenceName, skipToken, filter, orderby, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetSentShares", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentSharesRequest(referenceName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentSharesNextPageRequest(nextLink, referenceName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShares", "value", "nextLink", context);
         }
 
         /// <summary> List all sent share invitations in a sent share. </summary>
@@ -334,14 +334,14 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetInvitationsAsync(String,String,String,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetInvitationsAsync(string sentShareId, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentShareInvitationsAsync(String,String,String,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetAllSentShareInvitationsAsync(string sentShareId, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetInvitationsRequest(sentShareId, skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetInvitationsNextPageRequest(nextLink, sentShareId, skipToken, filter, orderby, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetInvitations", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentShareInvitationsRequest(sentShareId, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentShareInvitationsNextPageRequest(nextLink, sentShareId, skipToken, filter, orderby, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShareInvitations", "value", "nextLink", context);
         }
 
         /// <summary> List all sent share invitations in a sent share. </summary>
@@ -354,14 +354,14 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetInvitations(String,String,String,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetInvitations(string sentShareId, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentShareInvitations(String,String,String,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetAllSentShareInvitations(string sentShareId, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetInvitationsRequest(sentShareId, skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetInvitationsNextPageRequest(nextLink, sentShareId, skipToken, filter, orderby, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetInvitations", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentShareInvitationsRequest(sentShareId, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentShareInvitationsNextPageRequest(nextLink, sentShareId, skipToken, filter, orderby, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShareInvitations", "value", "nextLink", context);
         }
 
         /// <summary> Create or replace a sent share. </summary>
@@ -373,18 +373,18 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CreateAsync(WaitUntil waitUntil, string sentShareId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateSentShareAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> CreateSentShareAsync(WaitUntil waitUntil, string sentShareId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.Create");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.CreateSentShare");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(sentShareId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.Create", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateSentShareRequest(sentShareId, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.CreateSentShare", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -402,18 +402,18 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='Create(WaitUntil,String,RequestContent,RequestContext)']/*" />
-        public virtual Operation<BinaryData> Create(WaitUntil waitUntil, string sentShareId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateSentShare(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        public virtual Operation<BinaryData> CreateSentShare(WaitUntil waitUntil, string sentShareId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.Create");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.CreateSentShare");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(sentShareId, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SentSharesClient.Create", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateCreateSentShareRequest(sentShareId, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SentSharesClient.CreateSentShare", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -430,17 +430,17 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteAsync(WaitUntil,String,RequestContext)']/*" />
-        public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string sentShareId, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShareAsync(WaitUntil,String,RequestContext)']/*" />
+        public virtual async Task<Operation> DeleteSentShareAsync(WaitUntil waitUntil, string sentShareId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.DeleteSentShare");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(sentShareId, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.Delete", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteSentShareRequest(sentShareId, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteSentShare", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -457,17 +457,17 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='Delete(WaitUntil,String,RequestContext)']/*" />
-        public virtual Operation Delete(WaitUntil waitUntil, string sentShareId, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShare(WaitUntil,String,RequestContext)']/*" />
+        public virtual Operation DeleteSentShare(WaitUntil waitUntil, string sentShareId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.DeleteSentShare");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(sentShareId, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "SentSharesClient.Delete", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateDeleteSentShareRequest(sentShareId, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteSentShare", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -485,18 +485,18 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteInvitationAsync(WaitUntil,String,String,RequestContext)']/*" />
-        public virtual async Task<Operation> DeleteInvitationAsync(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShareInvitationAsync(WaitUntil,String,String,RequestContext)']/*" />
+        public virtual async Task<Operation> DeleteSentShareInvitationAsync(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.DeleteInvitation");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.DeleteSentShareInvitation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteInvitationRequest(sentShareId, sentShareInvitationId, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteInvitation", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteSentShareInvitationRequest(sentShareId, sentShareInvitationId, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteSentShareInvitation", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -514,18 +514,18 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteInvitation(WaitUntil,String,String,RequestContext)']/*" />
-        public virtual Operation DeleteInvitation(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShareInvitation(WaitUntil,String,String,RequestContext)']/*" />
+        public virtual Operation DeleteSentShareInvitation(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.DeleteInvitation");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.DeleteSentShareInvitation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteInvitationRequest(sentShareId, sentShareInvitationId, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteInvitation", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateDeleteSentShareInvitationRequest(sentShareId, sentShareInvitationId, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteSentShareInvitation", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -534,7 +534,7 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        internal HttpMessage CreateGetSentSharesRequest(string referenceName, string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllSentSharesRequest(string referenceName, string skipToken, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -576,7 +576,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateCreateRequest(string sentShareId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateSentShareRequest(string sentShareId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -593,7 +593,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string sentShareId, RequestContext context)
+        internal HttpMessage CreateDeleteSentShareRequest(string sentShareId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -608,7 +608,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateGetInvitationsRequest(string sentShareId, string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllSentShareInvitationsRequest(string sentShareId, string skipToken, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -636,7 +636,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateGetInvitationRequest(string sentShareId, string sentShareInvitationId, RequestContext context)
+        internal HttpMessage CreateGetSentShareInvitationRequest(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -653,7 +653,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateCreateInvitationRequest(string sentShareId, string sentShareInvitationId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateSentShareInvitationRequest(string sentShareId, string sentShareInvitationId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -672,7 +672,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateDeleteInvitationRequest(string sentShareId, string sentShareInvitationId, RequestContext context)
+        internal HttpMessage CreateDeleteSentShareInvitationRequest(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -689,7 +689,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateNotifyUserInvitationRequest(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId, RequestContext context)
+        internal HttpMessage CreateNotifyUserSentShareInvitationRequest(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -711,7 +711,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateGetSentSharesNextPageRequest(string nextLink, string referenceName, string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllSentSharesNextPageRequest(string nextLink, string referenceName, string skipToken, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -724,7 +724,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateGetInvitationsNextPageRequest(string nextLink, string sentShareId, string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllSentShareInvitationsNextPageRequest(string nextLink, string sentShareId, string skipToken, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

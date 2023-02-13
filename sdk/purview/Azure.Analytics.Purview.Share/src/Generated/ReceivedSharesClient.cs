@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -217,14 +220,14 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAttachedsAsync(String,String,String,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAttachedsAsync(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllAttachedReceivedSharesAsync(String,String,String,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetAllAttachedReceivedSharesAsync(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAttachedsRequest(referenceName, skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAttachedsNextPageRequest(nextLink, referenceName, skipToken, filter, orderby, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAttacheds", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllAttachedReceivedSharesRequest(referenceName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllAttachedReceivedSharesNextPageRequest(nextLink, referenceName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllAttachedReceivedShares", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of attached received shares. </summary>
@@ -236,14 +239,14 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAttacheds(String,String,String,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAttacheds(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllAttachedReceivedShares(String,String,String,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetAllAttachedReceivedShares(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAttachedsRequest(referenceName, skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAttachedsNextPageRequest(nextLink, referenceName, skipToken, filter, orderby, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAttacheds", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllAttachedReceivedSharesRequest(referenceName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllAttachedReceivedSharesNextPageRequest(nextLink, referenceName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllAttachedReceivedShares", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of detached received shares. </summary>
@@ -253,12 +256,12 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetDetachedsAsync(String,String,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDetachedsAsync(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllDetachedReceivedSharesAsync(String,String,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetAllDetachedReceivedSharesAsync(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDetachedsRequest(skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDetachedsNextPageRequest(nextLink, skipToken, filter, orderby, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetDetacheds", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDetachedReceivedSharesRequest(skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDetachedReceivedSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllDetachedReceivedShares", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of detached received shares. </summary>
@@ -268,12 +271,12 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetDetacheds(String,String,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDetacheds(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllDetachedReceivedShares(String,String,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetAllDetachedReceivedShares(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDetachedsRequest(skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDetachedsNextPageRequest(nextLink, skipToken, filter, orderby, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetDetacheds", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDetachedReceivedSharesRequest(skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDetachedReceivedSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllDetachedReceivedShares", "value", "nextLink", context);
         }
 
         /// <summary> Create or replace a received share. </summary>
@@ -285,18 +288,18 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='CreateAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CreateAsync(WaitUntil waitUntil, string receivedShareId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='CreateOrUpdateReceivedShareAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> CreateOrUpdateReceivedShareAsync(WaitUntil waitUntil, string receivedShareId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.Create");
+            using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.CreateOrUpdateReceivedShare");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(receivedShareId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ReceivedSharesClient.Create", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateOrUpdateReceivedShareRequest(receivedShareId, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ReceivedSharesClient.CreateOrUpdateReceivedShare", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -314,18 +317,18 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='Create(WaitUntil,String,RequestContent,RequestContext)']/*" />
-        public virtual Operation<BinaryData> Create(WaitUntil waitUntil, string receivedShareId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='CreateOrUpdateReceivedShare(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        public virtual Operation<BinaryData> CreateOrUpdateReceivedShare(WaitUntil waitUntil, string receivedShareId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.Create");
+            using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.CreateOrUpdateReceivedShare");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(receivedShareId, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ReceivedSharesClient.Create", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateCreateOrUpdateReceivedShareRequest(receivedShareId, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ReceivedSharesClient.CreateOrUpdateReceivedShare", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -342,17 +345,17 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='DeleteAsync(WaitUntil,String,RequestContext)']/*" />
-        public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string receivedShareId, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='DeleteReceivedShareAsync(WaitUntil,String,RequestContext)']/*" />
+        public virtual async Task<Operation> DeleteReceivedShareAsync(WaitUntil waitUntil, string receivedShareId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
 
-            using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.DeleteReceivedShare");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(receivedShareId, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ReceivedSharesClient.Delete", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteReceivedShareRequest(receivedShareId, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ReceivedSharesClient.DeleteReceivedShare", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -369,17 +372,17 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='Delete(WaitUntil,String,RequestContext)']/*" />
-        public virtual Operation Delete(WaitUntil waitUntil, string receivedShareId, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='DeleteReceivedShare(WaitUntil,String,RequestContext)']/*" />
+        public virtual Operation DeleteReceivedShare(WaitUntil waitUntil, string receivedShareId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
 
-            using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.DeleteReceivedShare");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(receivedShareId, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ReceivedSharesClient.Delete", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateDeleteReceivedShareRequest(receivedShareId, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ReceivedSharesClient.DeleteReceivedShare", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -403,7 +406,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateCreateRequest(string receivedShareId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateReceivedShareRequest(string receivedShareId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -420,7 +423,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string receivedShareId, RequestContext context)
+        internal HttpMessage CreateDeleteReceivedShareRequest(string receivedShareId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -435,7 +438,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateGetAttachedsRequest(string referenceName, string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllAttachedReceivedSharesRequest(string referenceName, string skipToken, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -462,7 +465,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateGetDetachedsRequest(string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllDetachedReceivedSharesRequest(string skipToken, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -526,7 +529,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateGetAttachedsNextPageRequest(string nextLink, string referenceName, string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllAttachedReceivedSharesNextPageRequest(string nextLink, string referenceName, string skipToken, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -539,7 +542,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateGetDetachedsNextPageRequest(string nextLink, string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllDetachedReceivedSharesNextPageRequest(string nextLink, string skipToken, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

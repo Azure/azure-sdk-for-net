@@ -48,7 +48,7 @@ namespace Azure.Analytics.Purview.Share.Tests
 
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            Operation<BinaryData> createResponse = await client.CreateAsync(WaitUntil.Completed, "2d18740a-786b-475c-b791-c36fcaf884e7", RequestContent.Create(data));
+            Operation<BinaryData> createResponse = await client.CreateOrUpdateReceivedShareAsync(WaitUntil.Completed, "2d18740a-786b-475c-b791-c36fcaf884e7", RequestContent.Create(data));
 
             Assert.IsTrue(createResponse.HasCompleted);
 
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Purview.Share.Tests
         {
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            Operation response = await client.DeleteAsync(WaitUntil.Completed, "58657a0e-3591-48e8-9904-7fc0d2a93b80");
+            Operation response = await client.DeleteReceivedShareAsync(WaitUntil.Completed, "58657a0e-3591-48e8-9904-7fc0d2a93b80");
 
             Assert.IsTrue(response.HasCompleted);
         }
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Purview.Share.Tests
         {
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            List<BinaryData> detachedReceivedShares = await client.GetDetachedsAsync().ToEnumerableAsync();
+            List<BinaryData> detachedReceivedShares = await client.GetAllDetachedReceivedSharesAsync().ToEnumerableAsync();
 
             Assert.AreEqual(1, detachedReceivedShares.Count);
 
@@ -110,7 +110,7 @@ namespace Azure.Analytics.Purview.Share.Tests
         {
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            List<BinaryData> detachedReceivedShares = await client.GetAttachedsAsync("").ToEnumerableAsync();
+            List<BinaryData> detachedReceivedShares = await client.GetAllAttachedReceivedSharesAsync("").ToEnumerableAsync();
         }
 
         #region Helpers
