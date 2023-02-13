@@ -1,13 +1,11 @@
 # Release History
 
-## 2.0.0 (2023-02-20)
+## 1.1.0 (2023-02-20)
 
 ### Features Added
 - Upgrade to API version 2023-01-31.
 - Create/Update/Delete federated identity credentials.
-
-### Breaking Changes
-- `ListAssociatedResources` available in beta version is removed from the stable version.
+- `ListAssociatedResources` method available in `1.1.0-beta.1` version is not added to this stable version.
 
 ## 1.1.0-beta.2 (2022-10-19)
 
