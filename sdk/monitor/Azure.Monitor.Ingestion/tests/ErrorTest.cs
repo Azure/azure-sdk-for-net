@@ -127,7 +127,7 @@ namespace Azure.Monitor.Ingestion.Tests
                 });
 
             // Make the request
-            UploadOptions options = new UploadOptions();
+            UploadLogsOptions options = new UploadLogsOptions();
             var cts = new CancellationTokenSource();
             bool isTriggered = false;
             options.UploadFailed += Options_UploadFailed;
@@ -168,7 +168,7 @@ namespace Azure.Monitor.Ingestion.Tests
                 });
 
             // Make the request
-            UploadOptions options = new UploadOptions();
+            UploadLogsOptions options = new UploadLogsOptions();
             bool isTriggered = false;
             options.UploadFailed += Options_UploadFailed;
             await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);

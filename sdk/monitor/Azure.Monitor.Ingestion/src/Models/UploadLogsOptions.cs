@@ -15,7 +15,7 @@ namespace Azure.Monitor.Ingestion
     /// <summary>
     /// The options model to configure the request to upload logs to Azure Monitor.
     /// </summary>
-    public class UploadOptions
+    public class UploadLogsOptions
     {
         /// <summary>
         /// The serializer to use to convert the log objects to JSON.
