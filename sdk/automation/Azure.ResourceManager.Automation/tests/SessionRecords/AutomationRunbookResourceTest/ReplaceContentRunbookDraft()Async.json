@@ -1,0 +1,379 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-feaae13f28eaa74b96ac79fca90fd673-bfaae4283a84e04f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "da9dbfb3ef8b84459b06da0720cd92fa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 13 Feb 2023 06:51:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "13cde3ed-8a63-43bd-b559-971491a2f92b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "13cde3ed-8a63-43bd-b559-971491a2f92b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230213T065147Z:13cde3ed-8a63-43bd-b559-971491a2f92b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/test-automation-2512?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "22",
+        "Content-Type": "application/json",
+        "traceparent": "00-602657ac19f5bd469d701ad628c92b20-94d6681f68c4194c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "806e832d1aed3980ceb1d63bb91b7fae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus2"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "238",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 13 Feb 2023 06:51:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "bead0784-d539-445f-8f64-fea77c0dd02f",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "bead0784-d539-445f-8f64-fea77c0dd02f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230213T065151Z:bead0784-d539-445f-8f64-fea77c0dd02f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-automation-2512",
+        "name": "test-automation-2512",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus2",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-automation-2512/providers/Microsoft.Automation/automationAccounts/testAutomationAccount-4701?api-version=2021-06-22",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "95",
+        "Content-Type": "application/json",
+        "traceparent": "00-b7258bc7ca543544b521cf7839084637-774b4551e98cca40-00",
+        "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230213.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "6059b6752e6c1b26f66cb6fc9f1418b8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "testAutomationAccount-4701",
+        "location": "eastus2",
+        "properties": {
+          "sku": {
+            "name": "Free"
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1151",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 13 Feb 2023 06:51:59 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-automation-2512/providers/Microsoft.Automation/automationAccounts/testAutomationAccount-4701?api-version=2021-06-22",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "66658859-2301-40da-bfe8-92aefe2e4236",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "22dea49b-90f3-4aaf-891b-7da5e1b2db8e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230213T065159Z:66658859-2301-40da-bfe8-92aefe2e4236"
+      },
+      "ResponseBody": {
+        "name": "testAutomationAccount-4701",
+        "systemData": {
+          "createdAt": "2023-02-13T06:51:57.37\u002B00:00",
+          "lastModifiedAt": "2023-02-13T06:51:57.37\u002B00:00"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-automation-2512/providers/Microsoft.Automation/automationAccounts/testAutomationAccount-4701",
+        "type": "Microsoft.Automation/AutomationAccounts",
+        "location": "eastus2",
+        "tags": {},
+        "etag": null,
+        "properties": {
+          "disableLocalAuth": false,
+          "sku": {
+            "name": "Basic",
+            "family": null,
+            "capacity": null
+          },
+          "state": "Ok",
+          "RegistrationUrl": "https://df96a18a-4c74-4504-abf8-f7638f38dce4.agentsvc.eus2.azure-automation.net/accounts/df96a18a-4c74-4504-abf8-f7638f38dce4",
+          "encryption": {
+            "keySource": "Microsoft.Automation",
+            "identity": {
+              "userAssignedIdentity": null
+            }
+          },
+          "automationHybridServiceUrl": "https://df96a18a-4c74-4504-abf8-f7638f38dce4.jrds.eus2.azure-automation.net/automationAccounts/df96a18a-4c74-4504-abf8-f7638f38dce4",
+          "RuntimeConfiguration": {
+            "powershell": {
+              "builtinModules": {
+                "Az": "8.0.0"
+              }
+            },
+            "powershell7": {
+              "builtinModules": {
+                "Az": "8.0.0"
+              }
+            }
+          },
+          "creationTime": "2023-02-13T06:51:57.37\u002B00:00",
+          "lastModifiedBy": null,
+          "lastModifiedTime": "2023-02-13T06:51:57.37\u002B00:00"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-automation-2512/providers/Microsoft.Automation/automationAccounts/testAutomationAccount-4701/runbooks/Get-AzureVMTutorial?api-version=2018-06-30",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "549",
+        "Content-Type": "application/json",
+        "traceparent": "00-50db57d20c2d4b46a9209e8ab609d1f2-4c575cc99110684f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230213.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "406bf7e4c5df1ca5a1bd3d6f48e2eb5b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "Get-AzureVMTutorial",
+        "location": "eastus2",
+        "tags": {
+          "tag01": "value01",
+          "tag02": "value02"
+        },
+        "properties": {
+          "logVerbose": false,
+          "logProgress": true,
+          "runbookType": "PowerShellWorkflow",
+          "publishContentLink": {
+            "uri": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.automation/101-automation/scripts/AzureAutomationTutorial.ps1",
+            "contentHash": {
+              "algorithm": "SHA256",
+              "value": "115775B8FF2BE672D8A946BD0B489918C724DDE15A440373CA54461D53010A80"
+            }
+          },
+          "description": "Description of the Runbook",
+          "logActivityTrace": 1
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "785",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 13 Feb 2023 06:52:05 GMT",
+        "ETag": "\u0022638118679242200000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-automation-2512/providers/Microsoft.Automation/automationAccounts/testAutomationAccount-4701/runbooks/Get-AzureVMTutorial?api-version=2018-06-30",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b3402e69-83ff-4928-b68c-325c03f46c03",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "b73ee5a6-0e78-4683-bb6b-0686e9d06c92",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230213T065206Z:b3402e69-83ff-4928-b68c-325c03f46c03"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-automation-2512/providers/Microsoft.Automation/automationAccounts/testAutomationAccount-4701/runbooks/Get-AzureVMTutorial",
+        "name": "Get-AzureVMTutorial",
+        "type": "Microsoft.Automation/AutomationAccounts/Runbooks",
+        "location": "eastus2",
+        "tags": {
+          "tag01": "value01",
+          "tag02": "value02"
+        },
+        "etag": "\u0022638118679242200000\u0022",
+        "properties": {
+          "description": "Description of the Runbook",
+          "logVerbose": false,
+          "logProgress": true,
+          "logActivityTrace": 1,
+          "runbookType": "PowerShellWorkflow",
+          "parameters": {},
+          "state": "Published",
+          "jobCount": 0,
+          "provisioningState": "Succeeded",
+          "serviceManagementTags": null,
+          "outputTypes": [],
+          "creationTime": "2023-02-13T06:52:04.213\u002B00:00",
+          "lastModifiedBy": null,
+          "lastModifiedTime": "2023-02-13T06:52:04.22\u002B00:00"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-automation-2512/providers/Microsoft.Automation/automationAccounts/testAutomationAccount-4701/runbooks/Get-AzureVMTutorial/draft/content?api-version=2018-06-30",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "1837",
+        "Content-Type": "text/powershell",
+        "traceparent": "00-cc4841312f23e84c88864374528522a4-6cbb52e8a01efd42-00",
+        "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230213.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "dc581e583fa055c14865f7aeca3d2e9d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": [
+        "\u003C#\r\n",
+        "        .DESCRIPTION\r\n",
+        "            An example runbook which prints out the first10 Azure VMs in your subscription (ordered alphabetically).\r\n",
+        "            For more information about how this runbook authenticates to your Azure subscription, see our documentation here: http: //aka.ms/fxu3mn\r\n",
+        "\r\n",
+        "        .NOTES\r\n",
+        "            AUTHOR: Azure Automation Team\r\n",
+        "            LASTEDIT: Feb 13,\r\n",
+        "            2023\r\n",
+        "    #\u003E\r\n",
+        "    workflow Get-AzureVMTutorial{\r\n",
+        "        #The name of the Automation Credential Asset this runbook will use to authenticate to Azure.\r\n",
+        "        $CredentialAssetName = \u0027DefaultAzureCredential\u0027\r\n",
+        "\r\n",
+        "        #Get the credential with the above name from the Automation Asset store\r\n",
+        "        $Cred = Get-AutomationPSCredential -Name $CredentialAssetName\r\n",
+        "        if(!$Cred){\r\n",
+        "            Throw\u0022Could not find an Automation Credential Asset named \u0027${CredentialAssetName}\u0027. Make sure you have created one in this Automation Account.\u0022\r\n",
+        "                }\r\n",
+        "\r\n",
+        "        #Connect to your Azure Account\r\n",
+        "        $Account = Add-AzureAccount -Credential $Cred\r\n",
+        "        if(!$Account){\r\n",
+        "            Throw\u0022Could not authenticate to Azure using the credential asset \u0027${CredentialAssetName}\u0027. Make sure the user name and password are correct.\u0022\r\n",
+        "                }\r\n",
+        "\r\n",
+        "        #TODO (optional): pick the right subscription to use. Without this line, the default subscription for your Azure Account will be used.\r\n",
+        "        #Select-AzureSubscription -SubscriptionName\u0022TODO: your Azure subscription name here\u0022\r\n",
+        "        \r\n",
+        "        #Get all the VMs you have in your Azure subscription\r\n",
+        "        $VMs = Get-AzureVM\r\n",
+        "\r\n",
+        "        #Print out up to10 of those VMs\r\n",
+        "        if(!$VMs){\r\n",
+        "            Write-Output\u0022No VMs were found in your subscription.\u0022\r\n",
+        "                } else{\r\n",
+        "            Write-Output $VMs[0..9\r\n",
+        "                    ]\r\n",
+        "                }\r\n",
+        "            }"
+      ],
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Mon, 13 Feb 2023 06:52:06 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-automation-2512/providers/Microsoft.Automation/automationAccounts/testAutomationAccount-4701/runbooks/Get-AzureVMTutorial/operationResults/865f862d-05c3-49a0-8657-874229fd39cf?api-version=2018-06-30",
+        "ocp-automation-operationresultid": [
+          "865f862d-05c3-49a0-8657-874229fd39cf",
+          "865f862d-05c3-49a0-8657-874229fd39cf"
+        ],
+        "Pragma": "no-cache",
+        "Retry-After": "5",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "35626ae4-54e6-44a2-900d-412b77b4f689",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "7631406a-467d-4ab5-bb2a-ba18411e179e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230213T065206Z:35626ae4-54e6-44a2-900d-412b77b4f689"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-automation-2512/providers/Microsoft.Automation/automationAccounts/testAutomationAccount-4701/runbooks/Get-AzureVMTutorial/operationResults/865f862d-05c3-49a0-8657-874229fd39cf?api-version=2018-06-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cc4841312f23e84c88864374528522a4-8929ecd3f65ccd49-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "23d483bd6d14af22113dbfaef0b6d213",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Content-Type": "text/plain; charset=utf-8",
+        "Date": "Mon, 13 Feb 2023 06:52:06 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "995a91ff-02ed-4a11-8165-5f3c5d7daff8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "75e62929-c2ed-41e4-89d9-e0061676fd23",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230213T065207Z:995a91ff-02ed-4a11-8165-5f3c5d7daff8"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "16823813",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

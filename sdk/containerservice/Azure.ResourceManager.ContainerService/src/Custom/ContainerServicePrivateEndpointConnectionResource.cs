@@ -35,8 +35,9 @@ namespace Azure.ResourceManager.ContainerService
             scope.Start();
             try
             {
-                var response = await _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location, "2017-08-31");
+                using var message = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerServiceArmOperation(_containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location, "2017-08-31");
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -61,8 +62,9 @@ namespace Azure.ResourceManager.ContainerService
             scope.Start();
             try
             {
-                var response = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location, "2017-08-31");
+                using var message = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(message, cancellationToken);
+                var operation = new ContainerServiceArmOperation(_containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location, "2017-08-31");
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

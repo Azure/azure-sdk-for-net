@@ -506,8 +506,9 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _dnsZoneZonesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsArmOperation(_dnsZoneZonesClientDiagnostics, Pipeline, _dnsZoneZonesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _dnsZoneZonesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch);
+                var response = await _dnsZoneZonesRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsArmOperation(_dnsZoneZonesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -533,8 +534,9 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _dnsZoneZonesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, cancellationToken);
-                var operation = new DnsArmOperation(_dnsZoneZonesClientDiagnostics, Pipeline, _dnsZoneZonesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _dnsZoneZonesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch);
+                var response = _dnsZoneZonesRestClient.Delete(message, cancellationToken);
+                var operation = new DnsArmOperation(_dnsZoneZonesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
