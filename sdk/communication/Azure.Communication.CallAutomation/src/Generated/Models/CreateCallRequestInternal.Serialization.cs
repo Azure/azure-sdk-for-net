@@ -32,8 +32,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("sourceDisplayName");
                 writer.WriteStringValue(SourceDisplayName);
             }
-            writer.WritePropertyName("callSourceIdentifier");
-            writer.WriteObjectValue(CallSourceIdentifier);
+            if (Optional.IsDefined(CallSourceIdentifier))
+            {
+                writer.WritePropertyName("callSourceIdentifier");
+                writer.WriteObjectValue(CallSourceIdentifier);
+            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext");

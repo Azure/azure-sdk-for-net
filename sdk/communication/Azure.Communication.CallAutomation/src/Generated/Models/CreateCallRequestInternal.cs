@@ -18,17 +18,14 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of CreateCallRequestInternal. </summary>
         /// <param name="targets"> The targets of the call. </param>
-        /// <param name="callSourceIdentifier"> The identifier of the source of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="callSourceIdentifier"/> or <paramref name="callbackUri"/> is null. </exception>
-        public CreateCallRequestInternal(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel callSourceIdentifier, string callbackUri)
+        /// <exception cref="ArgumentNullException"> <paramref name="targets"/> or <paramref name="callbackUri"/> is null. </exception>
+        public CreateCallRequestInternal(IEnumerable<CommunicationIdentifierModel> targets, string callbackUri)
         {
             Argument.AssertNotNull(targets, nameof(targets));
-            Argument.AssertNotNull(callSourceIdentifier, nameof(callSourceIdentifier));
             Argument.AssertNotNull(callbackUri, nameof(callbackUri));
 
             Targets = targets.ToList();
-            CallSourceIdentifier = callSourceIdentifier;
             CallbackUri = callbackUri;
         }
 
@@ -42,7 +39,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Display name of the call if dialing out to a pstn number. </summary>
         public string SourceDisplayName { get; set; }
         /// <summary> The identifier of the source of the call. </summary>
-        public CommunicationIdentifierModel CallSourceIdentifier { get; }
+        public CommunicationIdentifierModel CallSourceIdentifier { get; set; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
         /// <summary> The callback URI. </summary>

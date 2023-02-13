@@ -299,10 +299,11 @@ namespace Azure.Communication.CallAutomation
             {
                 throw new ArgumentException(CallAutomationErrorMessages.UserToUserInformationExceedsMaxLength);
             }
-            else
-            {
-                request.UserToUserInformation = options.UserToUserInformation;
-            }
+            // TODO: update logic
+            // else
+            // {
+            //     request.UserToUserInformation = options.UserToUserInformation;
+            // }
             if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
             {
                 throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
@@ -571,7 +572,8 @@ namespace Azure.Communication.CallAutomation
                 // validate RequestInitiator is not null or empty
                 Argument.AssertNotNullOrEmpty(options.ParticipantsToRemove, nameof(options.ParticipantsToRemove));
 
-                RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(options.ParticipantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
+                // TODO: update logic
+                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantsToRemove[0]));
                 var repeatabilityHeaders = new RepeatabilityHeaders();
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
@@ -628,7 +630,8 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(options.ParticipantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
+                // TODO: update logic
+                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantsToRemove[0]));
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)

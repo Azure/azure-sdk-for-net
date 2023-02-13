@@ -626,13 +626,13 @@ namespace Azure.Communication.CallAutomation
         {
             CreateCallRequestInternal request = new(
                 targets: new List<CommunicationIdentifierModel>() { { CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target) } },
-                callSourceIdentifier: CommunicationIdentifierSerializer.Serialize(Source),
                 callbackUri: options.CallbackUri.AbsoluteUri)
             {
                 SourceCallerIdNumber = options?.CallInvite?.SourceCallerIdNumber == null
                     ? null
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.CallInvite?.SourceDisplayName,
+                CallSourceIdentifier = CommunicationIdentifierSerializer.Serialize(Source),
             };
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)
@@ -653,13 +653,13 @@ namespace Azure.Communication.CallAutomation
         {
             CreateCallRequestInternal request = new(
                 targets: options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
-                callSourceIdentifier: CommunicationIdentifierSerializer.Serialize(Source),
                 callbackUri: options.CallbackUri.AbsoluteUri)
             {
                 SourceCallerIdNumber = options?.SourceCallerIdNumber == null
                     ? null
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
+                CallSourceIdentifier = CommunicationIdentifierSerializer.Serialize(Source),
             };
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)

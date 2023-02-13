@@ -10,14 +10,26 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The call connection properties. </summary>
     public class CallConnectionProperties
     {
-        internal CallConnectionProperties(string callConnectionId, string serverCallId, CallSource callSource, IEnumerable<CommunicationIdentifier> targets, CallConnectionState callConnectionState, Uri callbackEndpoint, string mediaSubscriptionId)
+        internal CallConnectionProperties(
+            string callConnectionId,
+            string serverCallId,
+            IEnumerable<CommunicationIdentifier> targets,
+            CallConnectionState callConnectionState,
+            Uri callbackEndpoint,
+            CommunicationIdentifier sourceIdentity,
+            PhoneNumberIdentifier sourceCallerIdNumber,
+            string sourceDisplayName,
+            string mediaSubscriptionId
+            )
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
-            CallSource = callSource;
             Targets = targets == null ? new List<CommunicationIdentifier>() : targets.ToList();
-            CallConnectionState = callConnectionState == default(CallConnectionState) ? CallConnectionState.Unknown : callConnectionState;
+            CallConnectionState = callConnectionState == default ? CallConnectionState.Unknown : callConnectionState;
             CallbackEndpoint = callbackEndpoint;
+            SourceIdentity = sourceIdentity;
+            SourceCallerIdNumber = sourceCallerIdNumber;
+            SourceDisplayName = sourceDisplayName;
             MediaSubscriptionId = mediaSubscriptionId;
         }
 
@@ -25,11 +37,6 @@ namespace Azure.Communication.CallAutomation
         {
             CallConnectionId = callConnectionPropertiesDtoInternal.CallConnectionId;
             ServerCallId = callConnectionPropertiesDtoInternal.ServerCallId;
-            CallSource = new CallSource(CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source.Identifier))
-            {
-                CallerId = callConnectionPropertiesDtoInternal.Source.CallerId == null ? null : new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.Source.CallerId.Value),
-                DisplayName = callConnectionPropertiesDtoInternal.Source.DisplayName,
-            };
             Targets = callConnectionPropertiesDtoInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
 
             if (callConnectionPropertiesDtoInternal.CallConnectionState == null || callConnectionPropertiesDtoInternal.CallConnectionState ==  default(CallConnectionState))
@@ -43,14 +50,23 @@ namespace Azure.Communication.CallAutomation
 
             CallbackEndpoint = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
             MediaSubscriptionId = callConnectionPropertiesDtoInternal.MediaSubscriptionId;
+            SourceIdentity = CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.SourceIdentity);
+            SourceDisplayName = callConnectionPropertiesDtoInternal.SourceDisplayName;
+
+            if (callConnectionPropertiesDtoInternal.SourceCallerIdNumber != null)
+            {
+                var communicationIdentifierModel = new CommunicationIdentifierModel
+                {
+                    PhoneNumber = callConnectionPropertiesDtoInternal.SourceCallerIdNumber,
+                };
+                SourceCallerIdNumber = (PhoneNumberIdentifier)CommunicationIdentifierSerializer.Deserialize(communicationIdentifierModel);
+            }
         }
 
         /// <summary> The call connection id. </summary>
         public string CallConnectionId { get; }
         /// <summary> The server call id. </summary>
         public string ServerCallId { get; }
-        /// <summary> The source of the call. </summary>
-        public CallSource CallSource { get; }
         /// <summary> The targets of the call. </summary>
         public IReadOnlyList<CommunicationIdentifier> Targets { get; }
         /// <summary> The state of the call connection. </summary>
@@ -59,5 +75,17 @@ namespace Azure.Communication.CallAutomation
         public Uri CallbackEndpoint { get; }
         /// <summary> SubscriptionId for media streaming. </summary>
         public string MediaSubscriptionId { get; }
+        /// <summary>
+        /// Caller ID phone number to appear on the invitee.
+        /// </summary>
+        public PhoneNumberIdentifier SourceCallerIdNumber { get; }
+        /// <summary>
+        /// Display name to appear on the invitee.
+        /// </summary>
+        public string SourceDisplayName { get; }
+        /// <summary>
+        /// Source identity.
+        /// </summary>
+        public CommunicationIdentifier SourceIdentity { get; }
     }
 }

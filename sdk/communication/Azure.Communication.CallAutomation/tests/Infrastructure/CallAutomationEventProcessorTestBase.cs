@@ -85,31 +85,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             return callconn;
         }
 
-        protected CallConnectionProperties CreateMoakCallConnectionProperties(
-            string? callConnectionId = default,
-            string? servercallId = default,
-            CallSource? source = default,
-            IEnumerable<CommunicationIdentifier>? targets = default,
-            CallConnectionState connectionState = default)
-        {
-            CallConnectionProperties callconnprops = new CallConnectionProperties(
-                callConnectionId == default ? CallConnectionId : callConnectionId,
-                servercallId == default ? ServerCallId : servercallId,
-                source == default ? CreateMoakCallSource() : source,
-                targets == default ? CreateMoakTargets() : targets,
-                connectionState == default ? CallConnectionState.Unknown : connectionState,
-                null, null);
-
-            return callconnprops;
-        }
-
-        protected CallSource CreateMoakCallSource(CommunicationIdentifier? identifier = default)
-        {
-            var callsource = new CallSource(identifier == default ? new CommunicationUserIdentifier(SourceUser) : identifier);
-
-            return callsource;
-        }
-
         protected IEnumerable<CommunicationIdentifier> CreateMoakTargets(IEnumerable<CommunicationIdentifier>? targets = default)
         {
             var targetsOutput = targets == default ? new List<CommunicationIdentifier> { new CommunicationUserIdentifier(TargetUser) } : targets;
