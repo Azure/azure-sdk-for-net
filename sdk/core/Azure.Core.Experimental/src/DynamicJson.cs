@@ -36,12 +36,17 @@ namespace Azure.Core.Dynamic
             writer.Flush();
         }
 
-        private object GetProperty(string name)
+        private object? GetProperty(string name)
         {
-            return new DynamicJson(_element.GetProperty(name));
+            if (_element.TryGetProperty(name, out MutableJsonElement element))
+            {
+                return new DynamicJson(element);
+            }
+
+            return null;
         }
 
-        private object GetViaIndexer(object index)
+        private object? GetViaIndexer(object index)
         {
             switch (index)
             {
