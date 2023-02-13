@@ -281,7 +281,7 @@ namespace Azure.Monitor.Ingestion
                     if (ex is OperationCanceledException && cancellationToken.IsCancellationRequested)
                     {
                         shouldAbort = true;
-                        AddException(ref exceptions, new OperationCanceledException());
+                        AddException(ref exceptions, ex);
                     }
                 }
             }
@@ -404,7 +404,7 @@ namespace Azure.Monitor.Ingestion
                     if (ex is OperationCanceledException && cancellationToken.IsCancellationRequested)
                     {
                         shouldAbort = true;
-                        AddException(ref exceptions, new OperationCanceledException());
+                        AddException(ref exceptions, ex);
                     }
                 }
             }

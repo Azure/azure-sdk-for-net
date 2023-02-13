@@ -151,7 +151,7 @@ Response response = await client.UploadAsync(
 
 ### Upload custom logs as IEnumerable
 
-You can upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method. In these two methods, logs are passed in a generic `IEnumerable` type. Additionally, there's an `UploadLogsOptions`-typed parameter in which a serializer, concurrency, and EventHandler can be set.
+You can also upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method in which  logs are passed in a generic `IEnumerable` type along with an optional `UploadLogsOptions` parameter. The `UploadLogsOptions` parameter includes a serializer, concurrency, and an EventHandler.
 
 ```C# Snippet:UploadLogDataIEnumerableAsync
 var endpoint = new Uri("<data_collection_endpoint_uri>");
