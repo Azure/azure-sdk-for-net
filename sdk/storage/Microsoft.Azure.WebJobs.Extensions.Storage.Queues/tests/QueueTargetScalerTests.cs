@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
@@ -41,7 +43,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
 
-            QueueTargetScaler targetScaler = new QueueTargetScaler("testFunctionId", null, options, _loggerFactory);
+            Mock<QueueClient> mockQueueClient = new Mock<QueueClient>();
+            mockQueueClient.Setup(q => q.Name).Returns("testQueue");
+
+            QueueTargetScaler targetScaler = new QueueTargetScaler("testFunctionId", mockQueueClient.Object, options, _loggerFactory);
             TargetScalerResult result = targetScaler.GetScaleResultInternal(context, queueLength);
             Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
         }
