@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement
         public bool? IsSubscriptionRequired { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation License { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } }
         public System.Uri ServiceUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceApiId { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get { throw null; } set { } }
@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.ApiManagement
         public string DisplayName { get { throw null; } set { } }
         public bool? IsSecret { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.KeyVaultContractProperties KeyVaultDetails { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Tags { get { throw null; } }
         public string Value { get { throw null; } set { } }
     }
     public partial class ApiManagementNamedValueResource : Azure.ResourceManager.ArmResource
@@ -1349,8 +1349,8 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ApiManagementServiceData(Azure.Core.AzureLocation location, Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuProperties sku, string publisherEmail, string publisherName) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.AdditionalLocation> AdditionalLocations { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.CertificateConfiguration> Certificates { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.AdditionalLocation> AdditionalLocations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.CertificateConfiguration> Certificates { get { throw null; } }
         public System.DateTimeOffset? CreatedAtUtc { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> CustomProperties { get { throw null; } }
         public System.Uri DeveloperPortalUri { get { throw null; } }
@@ -1366,7 +1366,7 @@ namespace Azure.ResourceManager.ApiManagement
         public string NotificationSenderEmail { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.PlatformVersion? PlatformVersion { get { throw null; } }
         public System.Uri PortalUri { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.RemotePrivateEndpointConnectionWrapper> PrivateEndpointConnections { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.RemotePrivateEndpointConnectionWrapper> PrivateEndpointConnections { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> PrivateIPAddresses { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> PublicIPAddresses { get { throw null; } }
@@ -1380,7 +1380,7 @@ namespace Azure.ResourceManager.ApiManagement
         public string TargetProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ApiManagement.Models.VirtualNetworkConfiguration VirtualNetworkConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType? VirtualNetworkType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Zones { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
     public partial class ApiManagementServiceResource : Azure.ResourceManager.ArmResource
     {
@@ -2295,7 +2295,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public bool? IsSubscriptionRequired { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation License { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } }
         public System.Uri ServiceUri { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SoapApiType? SoapApiType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceApiId { get { throw null; } set { } }
@@ -2498,7 +2498,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string DisplayName { get { throw null; } set { } }
         public bool? IsSecret { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.KeyVaultContractCreateProperties KeyVault { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Tags { get { throw null; } }
         public string Value { get { throw null; } set { } }
     }
     public partial class ApiManagementNamedValuePatch
@@ -2507,7 +2507,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string DisplayName { get { throw null; } set { } }
         public bool? IsSecret { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.KeyVaultContractCreateProperties KeyVault { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Tags { get { throw null; } }
         public string Value { get { throw null; } set { } }
     }
     public partial class ApiManagementOpenIdConnectProviderPatch
@@ -2660,8 +2660,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class ApiManagementServicePatch : Azure.ResourceManager.Models.ResourceData
     {
         public ApiManagementServicePatch() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.AdditionalLocation> AdditionalLocations { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.CertificateConfiguration> Certificates { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.AdditionalLocation> AdditionalLocations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.CertificateConfiguration> Certificates { get { throw null; } }
         public System.DateTimeOffset? CreatedAtUtc { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> CustomProperties { get { throw null; } }
         public System.Uri DeveloperPortalUri { get { throw null; } }
@@ -2677,7 +2677,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string NotificationSenderEmail { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.PlatformVersion? PlatformVersion { get { throw null; } }
         public System.Uri PortalUri { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.RemotePrivateEndpointConnectionWrapper> PrivateEndpointConnections { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.RemotePrivateEndpointConnectionWrapper> PrivateEndpointConnections { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> PrivateIPAddresses { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> PublicIPAddresses { get { throw null; } }
@@ -2926,7 +2926,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public bool? IsSubscriptionRequired { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation License { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } }
         public System.Uri ServiceUri { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get { throw null; } set { } }
         public System.Uri TermsOfServiceUri { get { throw null; } set { } }
@@ -3574,7 +3574,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public bool? IsSubscriptionRequired { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation License { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } }
         public System.Uri ServiceUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceApiId { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get { throw null; } set { } }
@@ -4034,7 +4034,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         public PolicyDescriptionContractData() { }
         public string Description { get { throw null; } }
-        public System.BinaryData Scope { get { throw null; } }
+        public long? Scope { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyExportFormat : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.PolicyExportFormat>
@@ -4150,7 +4150,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public bool? IsSubscriptionRequired { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation License { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } }
         public System.Uri ServiceUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceApiId { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get { throw null; } set { } }
